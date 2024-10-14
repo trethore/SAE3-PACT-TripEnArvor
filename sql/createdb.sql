@@ -3,6 +3,11 @@ CREATE SCHEMA pact;
 SET SCHEMA 'pact';
 
 
+/* ********************************************************************* */
+/*                                Comptes                                */
+/* ********************************************************************* */
+
+
 CREATE TABLE _compte (
     id          SERIAL,
     nom         VARCHAR(30),
@@ -65,4 +70,19 @@ CREATE VIEW compte_membre AS
     SELECT * 
     FROM _compte
     NATURAL JOIN _compte_membre;
+
+
+/* ********************************************************************* */
+/*                              Utilitaires                              */
+/* ********************************************************************* */
+
+
+CREATE TABLE _address (
+    numEtNomDeVoie      VARCHAR(255),
+    complementAdresse   VARCHAR(255),
+    codePostal          VARCHAR(6),
+    ville               VARCHAR(255),
+    pays                VARCHAR(255),
+    CONSTRAINT _address_pk PRIMARY KEY (numEtNomDeVoie, complementAdresse, codePostal, ville, pays)
+);
 
