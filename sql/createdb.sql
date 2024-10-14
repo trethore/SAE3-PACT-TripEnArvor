@@ -22,3 +22,20 @@ CREATE TABLE _compte_professionnel (
     CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id),
     CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
 );
+
+
+CREATE TABLE _compte_professionnel_prive (
+    id      INTEGER,
+    siren   VARCHAR(255),
+    CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id),
+    CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel.id
+);
+
+
+CREATE TABLE _compte_professionnel_publique (
+    id      INTEGER,
+    CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id),
+    CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel.id
+)
+
+
