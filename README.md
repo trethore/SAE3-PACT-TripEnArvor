@@ -7,3 +7,7 @@ Tuto comment se connecté au projet :
 dans le terminal :
 - git config --global user.name "< nomGithub >"
 - git config --global user.email "< emailGithub >"
+
+Pour changer de branche :
+- git pull
+  
