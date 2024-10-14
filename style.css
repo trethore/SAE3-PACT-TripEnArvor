@@ -1,0 +1,754 @@
+.back-office-accueil {
+  background-color: #ececec;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.back-office-accueil .div {
+  background-color: var(--variable-collection-blanc);
+  width: 1440px;
+  height: 2085px;
+  position: relative;
+}
+
+.back-office-accueil .step {
+  position: absolute;
+  width: 1300px;
+  height: 545px;
+  top: 182px;
+  left: 69px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px #000000bf;
+  background: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+}
+
+.back-office-accueil .overlap {
+  position: absolute;
+  width: 629px;
+  height: 63px;
+  top: 22px;
+  left: 35px;
+}
+
+.back-office-accueil .rectangle {
+  position: absolute;
+  width: 629px;
+  height: 62px;
+  top: 1px;
+  left: 0;
+  background-color: var(--variable-collection-blanc);
+  border-radius: 15px;
+}
+
+.back-office-accueil .text-wrapper {
+  position: absolute;
+  width: 627px;
+  top: 0;
+  left: 2px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: var(--variable-collection-orange-secondaire-1);
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .compoback-caroussel {
+  position: absolute;
+  width: 1226px;
+  height: 396px;
+  top: 114px;
+  left: 35px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.back-office-accueil .overlap-group {
+  position: absolute;
+  width: 1247px;
+  height: 454px;
+  top: -10px;
+  left: -21px;
+}
+
+.back-office-accueil .caroussel {
+  width: 1247px;
+  height: 454px;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.back-office-accueil .restaurant-wrapper {
+  position: relative;
+  width: 1226px;
+  height: 396px;
+  top: 10px;
+  left: 21px;
+  background-image: url(https://c.animaapp.com/KXCkBuNy/img/rectangle-11-2.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.back-office-accueil .restaurant {
+  position: absolute;
+  width: 1226px;
+  height: 396px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.back-office-accueil .lieu {
+  position: absolute;
+  width: 341px;
+  height: 37px;
+  top: 349px;
+  left: 18px;
+}
+
+.back-office-accueil .overlap-2 {
+  position: relative;
+  width: 339px;
+  height: 37px;
+}
+
+.back-office-accueil .rectangle-2 {
+  position: absolute;
+  width: 328px;
+  height: 37px;
+  top: 0;
+  left: 11px;
+  background-color: #d9d9d9bb;
+  border-radius: 20px;
+}
+
+.back-office-accueil .text-wrapper-2 {
+  position: absolute;
+  width: 203px;
+  height: 23px;
+  top: 7px;
+  left: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .fleche-navigation {
+  left: 1188px;
+  position: absolute;
+  width: 38px;
+  height: 39px;
+  top: 347px;
+  object-fit: cover;
+}
+
+.back-office-accueil .img {
+  left: 1140px;
+  position: absolute;
+  width: 38px;
+  height: 39px;
+  top: 347px;
+  object-fit: cover;
+}
+
+.back-office-accueil .front-office-filtre {
+  position: absolute;
+  width: 150px;
+  height: 43px;
+  top: 346px;
+  left: 207px;
+}
+
+.back-office-accueil .star {
+  left: 11px;
+  position: absolute;
+  width: 23px;
+  height: 21px;
+  top: 10px;
+}
+
+.back-office-accueil .star-2 {
+  left: 64px;
+  position: absolute;
+  width: 23px;
+  height: 21px;
+  top: 10px;
+}
+
+.back-office-accueil .star-3 {
+  left: 37px;
+  position: absolute;
+  width: 23px;
+  height: 21px;
+  top: 10px;
+}
+
+.back-office-accueil .star-4 {
+  left: 90px;
+  position: absolute;
+  width: 23px;
+  height: 21px;
+  top: 10px;
+}
+
+.back-office-accueil .star-5 {
+  left: 116px;
+  position: absolute;
+  width: 23px;
+  height: 21px;
+  top: 10px;
+}
+
+.back-office-accueil .hotel-wrapper {
+  width: 1226px;
+  height: 396px;
+  left: 1419px;
+  position: absolute;
+  top: 0;
+}
+
+.back-office-accueil .hotel {
+  position: absolute;
+  width: 1226px;
+  height: 396px;
+  top: -13745px;
+  left: 16407px;
+  object-fit: cover;
+}
+
+.back-office-accueil .liste-der-wrapper {
+  position: absolute;
+  width: 1360px;
+  height: 748px;
+  top: 925px;
+  left: 40px;
+  background-image: url(https://c.animaapp.com/KXCkBuNy/img/vos-derni-res-offres.png);
+  background-size: 100% 100%;
+}
+
+.back-office-accueil .liste-der {
+  display: flex;
+  width: 1171px;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  top: 118px;
+  left: 100px;
+}
+
+.back-office-accueil .overlap-wrapper {
+  position: relative;
+  width: 379px;
+  height: 506px;
+  background-color: var(--variable-collection-blanc);
+  border-radius: 15px;
+}
+
+.back-office-accueil .overlap-3 {
+  position: relative;
+  width: 339px;
+  height: 470px;
+  top: 19px;
+  left: 20px;
+}
+
+.back-office-accueil .rectangle-3 {
+  position: absolute;
+  width: 339px;
+  height: 460px;
+  top: 0;
+  left: 0;
+  background-color: var(--variable-collection-beige);
+  border-radius: 15px 15px 10px 10px;
+}
+
+.back-office-accueil .img-2 {
+  position: absolute;
+  width: 321px;
+  height: 208px;
+  top: 10px;
+  left: 9px;
+  object-fit: cover;
+}
+
+.back-office-accueil .text-wrapper-3 {
+  position: absolute;
+  width: 214px;
+  height: 46px;
+  top: 223px;
+  left: 9px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 700;
+  color: var(--variable-collection-noir-noir);
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+.back-office-accueil .text-wrapper-4 {
+  position: absolute;
+  width: 205px;
+  height: 19px;
+  top: 275px;
+  left: 9px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--variable-collection-noir-noir);
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .front-office-filtre-2 {
+  position: absolute;
+  width: 150px;
+  height: 43px;
+  top: 300px;
+  left: 0;
+}
+
+.back-office-accueil .text-wrapper-5 {
+  position: absolute;
+  width: 67px;
+  top: 309px;
+  left: 142px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  color: var(--variable-collection-noir-noir);
+  font-size: 17px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .prix {
+  position: absolute;
+  width: 69px;
+  height: 74px;
+  top: 396px;
+  left: 242px;
+}
+
+.back-office-accueil .flexcontainer-wrapper {
+  width: 67px;
+  height: 74px;
+  background-color: var(--variable-collection-orange-principale);
+}
+
+.back-office-accueil .flexcontainer {
+  width: 65px;
+  height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  left: 1px;
+}
+
+.back-office-accueil .text-i {
+  position: relative;
+  align-self: stretch;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: var(--variable-collection-blanc);
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .span {
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: #ececec;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.back-office-accueil .text-wrapper-6 {
+  font-size: 20px;
+}
+
+.back-office-accueil .overlap-group-wrapper {
+  position: absolute;
+  width: 119px;
+  height: 37px;
+  top: 20px;
+  left: 19px;
+}
+
+.back-office-accueil .div-wrapper {
+  position: relative;
+  width: 117px;
+  height: 37px;
+  background-color: #d9d9d9bb;
+  border-radius: 20px;
+}
+
+.back-office-accueil .text-wrapper-7 {
+  position: absolute;
+  width: 91px;
+  height: 23px;
+  top: 7px;
+  left: 13px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .ouverture {
+  position: absolute;
+  width: 70px;
+  height: 37px;
+  top: 20px;
+  left: 252px;
+}
+
+.back-office-accueil .overlap-4 {
+  position: relative;
+  width: 68px;
+  height: 37px;
+  background-color: #d9d9d9bb;
+  border-radius: 20px;
+}
+
+.back-office-accueil .text-wrapper-8 {
+  position: absolute;
+  width: 68px;
+  height: 23px;
+  top: 7px;
+  left: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  color: var(--variable-collection-noir-noir);
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .piece-de-monnaie {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 255px;
+  left: 285px;
+  object-fit: cover;
+}
+
+.back-office-accueil .signaltique {
+  position: absolute;
+  width: 175px;
+  height: 64px;
+  top: 339px;
+  left: 15px;
+}
+
+.back-office-accueil .overlap-5 {
+  position: relative;
+  width: 163px;
+  height: 64px;
+}
+
+.back-office-accueil .overlap-6 {
+  position: absolute;
+  width: 163px;
+  height: 64px;
+  top: 0;
+  left: 0;
+}
+
+.back-office-accueil .text-wrapper-9 {
+  position: absolute;
+  height: 24px;
+  top: 0;
+  left: 107px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .overlap-7 {
+  position: absolute;
+  width: 159px;
+  height: 24px;
+  top: 40px;
+  left: 0;
+}
+
+.back-office-accueil .text-wrapper-10 {
+  left: 127px;
+  position: absolute;
+  height: 24px;
+  top: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .text-wrapper-11 {
+  position: absolute;
+  width: 159px;
+  height: 16px;
+  top: 4px;
+  left: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  color: var(--variable-collection-noir-noir);
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.back-office-accueil .overlap-8 {
+  position: absolute;
+  width: 163px;
+  height: 24px;
+  top: 20px;
+  left: 0;
+}
+
+.back-office-accueil .text-wrapper-12 {
+  left: 157px;
+  position: absolute;
+  height: 24px;
+  top: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .text-wrapper-13 {
+  position: absolute;
+  width: 104px;
+  height: 16px;
+  top: 4px;
+  left: 0;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  color: var(--variable-collection-noir-noir);
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.back-office-accueil .flexcontainer-i {
+  width: 66px;
+  height: 59px;
+  top: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  left: 1px;
+}
+
+.back-office-accueil .p {
+  position: relative;
+  align-self: stretch;
+  margin-bottom: -10px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: var(--variable-collection-blanc);
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .text-wrapper-14 {
+  font-size: 24px;
+}
+
+.back-office-accueil .compte-premium {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 255px;
+  left: 295px;
+  object-fit: cover;
+}
+
+.back-office-accueil .signaltique-2 {
+  position: absolute;
+  width: 180px;
+  height: 64px;
+  top: 339px;
+  left: 15px;
+}
+
+.back-office-accueil .overlap-9 {
+  position: relative;
+  width: 168px;
+  height: 64px;
+}
+
+.back-office-accueil .overlap-10 {
+  position: absolute;
+  width: 168px;
+  height: 64px;
+  top: 0;
+  left: 0;
+}
+
+.back-office-accueil .overlap-11 {
+  position: absolute;
+  width: 168px;
+  height: 24px;
+  top: 20px;
+  left: 0;
+}
+
+.back-office-accueil .compoback-gros {
+  position: absolute;
+  width: 1300px;
+  height: 94px;
+  top: 789px;
+  left: 64px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px #000000bf;
+  background: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+}
+
+.back-office-accueil .text-wrapper-15 {
+  position: absolute;
+  width: 512px;
+  top: 7px;
+  left: 394px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: var(--variable-collection-blanc);
+  font-size: 52px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .compoback-crer-offre {
+  position: absolute;
+  width: 1300px;
+  height: 94px;
+  top: 1695px;
+  left: 69px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px #000000bf;
+  background: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+}
+
+.back-office-accueil .text-wrapper-16 {
+  position: absolute;
+  width: 717px;
+  top: 7px;
+  left: 292px;
+  font-family: "Poppins", Helvetica;
+  font-weight: 600;
+  color: var(--variable-collection-blanc);
+  font-size: 52px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.back-office-accueil .compoback-header {
+  position: absolute;
+  width: 1440px;
+  height: 120px;
+  top: 0;
+  left: 0;
+  box-shadow: 0px 10px 30px #000000bf;
+  background: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+}
+
+.back-office-accueil .logo-nom {
+  position: absolute;
+  width: 263px;
+  height: 105px;
+  top: 8px;
+  left: 29px;
+}
+
+.back-office-accueil .logo {
+  position: absolute;
+  width: 72px;
+  height: 105px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.back-office-accueil .text-wrapper-17 {
+  position: absolute;
+  top: 28px;
+  left: 83px;
+  font-family: "Inter", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.back-office-accueil .cherchero-wrapper {
+  position: absolute;
+  width: 540px;
+  height: 50px;
+  top: 35px;
+  left: 620px;
+  background-image: url(https://c.animaapp.com/KXCkBuNy/img/recherche-1.png);
+  background-size: 100% 100%;
+}
+
+.back-office-accueil .cherchero {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  left: 490px;
+  object-fit: cover;
+}
+
+.back-office-accueil .ICON-utilisateur {
+  position: absolute;
+  width: 53px;
+  height: 60px;
+  top: 25px;
+  left: 1353px;
+  object-fit: cover;
+}
+
+.back-office-accueil .ICON-accueil {
+  position: absolute;
+  width: 65px;
+  height: 60px;
+  top: 25px;
+  left: 1257px;
+  object-fit: cover;
+}
