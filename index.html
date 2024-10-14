@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulter vos offres</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Liste des Offres Disponibles</h1>
+
+    <div class="conteneur">
+        <h2>Une Recherche en Particulier ? Filtrez !</h2>
+
+        <div class="filters">
+            <!-- Catégorie -->
+            <div class="categorie">
+                <h3>Catégorie</h3>
+                <div class="second-background">
+                    <label><input type="checkbox"> Parc d'Attraction</label>
+                    <label><input type="checkbox"> Restaurant</label>
+                    <label><input type="checkbox"> Visite</label>
+                    <label><input type="checkbox"> Spectacle</label>
+                    <label><input type="checkbox"> Activité</label>
+                </div>
+            </div>
+
+            <!-- Disponibilité -->
+            <div class="disponibilite">
+                <h3>Disponibilité</h3>
+                <div class="second-background">
+                    <label><input type="radio" name="disponibilite"> Ouvert</label>
+                    <label><input type="radio" name="disponibilite"> Fermé</label>
+                </div>
+            </div>
+
+            <!-- Localisation -->
+            <div class="localisation">
+                <h3>Localisation</h3>
+                <div class="second-background">
+                    <label><input type="radio" name="localisation"> Autour de moi</label>
+                    <label><input type="radio" name="localisation"> Rechercher</label>
+                    <input type="text" placeholder="Rechercher...">
+                </div>
+            </div>
+
+            <!-- Trier -->
+            <div class="trier">
+                <h3>Trier</h3>
+                <div class="second-background">
+                    <label>Note minimum:</label>
+                    <select>
+                        <option>★★★★★</option>
+                        <option>★★★★</option>
+                        <option>★★★</option>
+                        <option>★★</option>
+                        <option>★</option>
+                    </select>
+                    <label>Prix minimum:</label>
+                    <input type="number" min="0">
+                    <label>Prix maximum:</label>
+                    <input type="number" min="0">
+                    <label>Trier par:</label>
+                    <select>
+                        <option>Date</option>
+                        <option>Prix</option>
+                        <option>Popularité</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Date -->
+            <div class="date">
+                <h3>Date</h3>
+                <div class="second-background">
+                    <label>Date de début:</label>
+                    <input type="date">
+                    <label>Date de fin:</label>
+                    <input type="date">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

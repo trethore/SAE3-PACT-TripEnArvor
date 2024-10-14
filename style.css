@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --noir-noir: rgba(0, 0, 0, 1);
+    --noir: rgba(32, 37, 32, 1);
+    --blanc-blanc: rgba(255, 255, 255, 1);
+    --blanc: rgba(236, 236, 236, 1);
+    --beige: rgba(234, 226, 218, 1);
+    --bleu-secondaire: rgba(47, 89, 82, 1);
+    --vert-principale: rgba(98, 107, 32, 1);
+    --vert-secondaire: rgba(152, 166, 50, 1);
+    --marron: rgba(191, 140, 44, 1);
+    --orange-principale: rgba(217, 102, 54, 1);
+    --orange-secondaire-1: rgba(217, 111, 50, 1);
+    --orange-secondaire-2: rgba(242, 139, 48, 1);
+    --fond-bouton: rgba(217, 217, 217, 0.73);
+    --mobile-star-size: 30px;
+    --like-size: 35px;
+    --jaune-toile: rgba(254, 194, 1, 1);
+    --gris-toile: rgba(128, 128, 128, 1);
+    --gris: rgba(193, 192, 192, 1);
+
+    --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
+    --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    position: absolute;
+    width: 95%;
+    height: 95px;
+    left: 50%;
+    transform: translate(-50%);
+
+    font-weight: 600;
+    font-style: normal;
+    font-size: 64px;
+    line-height: 96px;
+    text-align: center;
+
+    color: #ECECEC;
+
+    filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.75));
+
+    background: linear-gradient(119.86deg, #2F5952 13.56%, #626B20 59.07%, #98A632 90.93%);
+    border-radius: 15px;
+}
+
+.conteneur {
+    position: absolute;
+    width: 95%;
+    height: 2016px;
+    left: 50%;
+    top: calc(95px + 130px);
+    transform: translate(-50%);
+
+
+    background: linear-gradient(119.86deg, #2F5952 13.56%, #626B20 59.07%, #98A632 90.93%);
+    border-radius: 15px;
+}
+
+h2 {
+    width: 50%;
+    text-align: center;
+    color: #626B20;
+    margin: 20px auto 20px auto;
+    background: #ECECEC;
+    border-radius: 15px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #ececec;
+}
+
+.categorie, .localisation, .disponibilite, .trier, .date {
+    flex: 1 1 30%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+}
+
+input[type="text"], input[type="number"], input[type="date"], select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.second-background {
+    background: linear-gradient(119.86deg, #2F5952 14.43%, #626B20 59.07%, #98A632 90.93%);
+    border-radius: 15px;
+}
