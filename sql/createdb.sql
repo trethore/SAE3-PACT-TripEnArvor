@@ -36,6 +36,13 @@ CREATE TABLE _compte_professionnel_publique (
     id      INTEGER,
     CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id),
     CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel.id
-)
+);
 
+
+CREATE TABLE _membre (
+    id      INTEGER,
+    pseudo  VARCHAR(255),
+    CONSTRAINT _compte_membre_pk PRIMARY KEY (id),
+    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
+);
 
