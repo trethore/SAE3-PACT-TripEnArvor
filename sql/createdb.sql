@@ -39,10 +39,30 @@ CREATE TABLE _compte_professionnel_publique (
 );
 
 
-CREATE TABLE _membre (
+CREATE TABLE _compte_membre (
     id      INTEGER,
     pseudo  VARCHAR(255),
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id),
     CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
 );
+
+
+CREATE VIEW compte_professionnel_prive AS
+    SELECT * 
+    FROM _compte
+    NATURAL JOIN _compte_professionnel
+    NATURAL JOIN _compte_professionnel_prive;
+
+
+CREATE VIEW compte_professionnel_publique AS
+    SELECT * 
+    FROM _compte
+    NATURAL JOIN _compte_professionnel
+    NATURAL JOIN _compte_professionnel_publique;
+
+
+CREATE VIEW compte_membre AS
+    SELECT * 
+    FROM _compte
+    NATURAL JOIN _compte_membre;
 
