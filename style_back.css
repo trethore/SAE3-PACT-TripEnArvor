@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --black: #000000;
+    --gris: #C1C0C0;
+    --blanc: #ffffff;
+    --blanc-leger: #ececec;
+    --beige: #eae2da;
+    --vert-principale: #626B20;
+    --vert-secondaire: #98A632;
+    --bleu: #2F5952;
+    --marron: #BF8C2C;
+    --orange-principale: #D96636;
+    --orange-secondaire-1: #D96F32;
+    --orange-secondaire-2: #F28B30;
+
+    --bg-bouton: rgba(217, 217, 217, 0.73);
+
+    --jaune-etoile: #FEC201;
+    --gris-etoile: #808080;
+
+    --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
+    --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
+}
+
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}
+
+h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
