@@ -5,5 +5,5 @@ Tuto comment se connecté au projet :
 - puis pacer dans votre dossier de travail
 
 dans le terminal :
-- git config --global user.name "<nomGithub>"
-- git config --global user.email "<emailGithub>"
+- git config --global user.name "< nomGithub >"
+- git config --global user.email "< emailGithub >"
