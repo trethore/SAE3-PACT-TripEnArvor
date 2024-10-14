@@ -13,3 +13,12 @@ CREATE TABLE _compte (
     CONSTRAINT _compte_pk PRIMARY KEY (id)
 );
 
+
+CREATE TABLE _compte_professionnel (
+    id              INTEGER,
+    denomination    VARCHAR(255),
+    aPropos         VARCHAR(255),
+    siteWeb         VARCHAR(255),
+    CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id),
+    CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
+);
