@@ -77,12 +77,12 @@ CREATE VIEW compte_membre AS
 /* ********************************************************************* */
 
 
-CREATE TABLE _address (
+CREATE TABLE _adresse (
     numEtNomDeVoie      VARCHAR(255),
     complementAdresse   VARCHAR(255),
     codePostal          VARCHAR(6),
     ville               VARCHAR(255),
     pays                VARCHAR(255),
-    CONSTRAINT _address_pk PRIMARY KEY (numEtNomDeVoie, complementAdresse, codePostal, ville, pays)
+    CONSTRAINT _adresse_pk PRIMARY KEY (numEtNomDeVoie, complementAdresse, codePostal, ville, pays)
 );
 
