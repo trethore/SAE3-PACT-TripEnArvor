@@ -114,6 +114,15 @@ CREATE TABLE _offre_spectacle (
 );
 
 
+CREATE TABLE _offre_parc_attraction (
+    id              INTEGER,
+    nbAttractions   INTEGER NOT NULL,
+    ageMin          INTEGER NOT NULL,
+    CONSTRAINT _offre_parc_attraction_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+);
+
+
 /* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
