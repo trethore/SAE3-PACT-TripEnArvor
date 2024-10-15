@@ -172,3 +172,6 @@ CREATE TABLE _type_repas (
     typeRepas   typeRepas_t NOT NULL
 );
 
+CREATE TABLE _image (
+    lienFichier VARCHAR(255) NOT NULL
+);
