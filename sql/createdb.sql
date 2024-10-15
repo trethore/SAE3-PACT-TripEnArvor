@@ -200,5 +200,11 @@ CREATE TABLE _horaire (
 );
 
 
+CREATE TABLE _tag (
+    nomTag  VARCHAR(64),
+    CONSTRAINT _tag_pk PRIMARY KEY (nomTag)
+);
+
+
 COMMIT;
 
