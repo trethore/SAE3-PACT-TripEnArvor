@@ -90,6 +90,7 @@ h2 {
     margin-top: 2em;
     margin-left: 2em;
     margin-right: 2em;
+    height: 370px;
 }
 
 .carte {
@@ -197,6 +198,158 @@ input[type="checkbox"]:not(:disabled):checked {
 }
 
 .offre {
+    position: relative;
+    width: 379px;
+    height: 506px;
+    left: 32px;
+    top: 26px;
+
     background: #ECECEC;
     border-radius: 15px;
+}
+
+.offre div {
+    position: absolute;
+    left: 5.28%;
+    right: 5.28%;
+    top: 3.75%;
+    bottom: 5.34%;
+
+    background: #EAE2DA;
+    border-radius: 15px 15px 10px 10px;
+}
+
+.lieu-offre {
+    z-index: 1;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    right: 0;
+
+    color: #000000;
+
+    height: 37px;
+    width: 117px;
+
+    opacity: 73%;
+
+    background: var(--fond-bouton) !important;
+    border-radius: 20px !important;
+}
+
+.ouverture-offre {
+    z-index: 1;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 75% !important;
+
+    color: var(--noir-noir);
+
+    height: 37px;
+    width: 67.8px;
+
+    opacity: 73%;
+
+    background: var(--fond-bouton) !important;
+    border-radius: 20px !important;
+}
+
+.offre div img {
+    position: absolute;
+    width: 339px;
+    height: 208px;
+    left: auto;
+    top: auto;
+
+    background: url(images/hotel.png) center;
+    background-size: cover;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.titre-offre {
+    position: absolute;
+    left: 7.61%;
+    right: 35.96%;
+    top: 48.02%;
+    bottom: 42.89%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+
+.description-offre {
+    position: absolute;
+    left: 7.65%;
+    right: 8.62%;
+    top: 63.24%;
+    bottom: 20.16%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: #000000;
+}
+
+.categorie-offre {
+    position: absolute;
+    left: 7.61%;
+    right: 38.32%;
+    top: 58.3%;
+    bottom: 37.94%;
+
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+
+.nom-offre {
+    position: absolute;
+    left: 69.66%;
+    right: 7.77%;
+    top: 49.01%;
+    bottom: 48.02%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #000000;
+}
+
+.offre span {
+    color: var(--vert-principale);
+    text-decoration: underline;
 }
