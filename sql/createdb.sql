@@ -97,6 +97,14 @@ CREATE TABLE _offre_activite (
 );
 
 
+CREATE TABLE _offre_visite (
+    id      INTEGER,
+    duree   INTEGER NOT NULL,
+    CONSTRAINT _offre_visite_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+);
+
+
 /* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
@@ -116,5 +124,11 @@ CREATE TABLE _prestation (
     nom         VARCHAR(128),
     description VARCHAR(1024) NOT NULL,
     CONSTRAINT _prestation_pk PRIMARY KEY (nom)
+);
+
+
+CREATE TABLE _langue (
+    nom VARCHAR(128)
+    CONSTRAINT _langue_pk PRIMARY KEY (nom)
 );
 
