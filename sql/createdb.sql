@@ -88,6 +88,15 @@ CREATE TABLE _offre (
 );
 
 
+CREATE TABLE _offre_activite (
+    id      INTEGER,
+    duree   INTEGER NOT NULL,
+    ageMin  INTEGER NOT NULL,
+    CONSTRAINT _offre_activite_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_activite_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+);
+
+
 /* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
@@ -100,5 +109,12 @@ CREATE TABLE _adresse (
     ville               VARCHAR(255),
     pays                VARCHAR(255),
     CONSTRAINT _adresse_pk PRIMARY KEY (numEtNomDeVoie, complementAdresse, codePostal, ville, pays)
+);
+
+
+CREATE TABLE _prestation (
+    nom         VARCHAR(128),
+    description VARCHAR(1024) NOT NULL,
+    CONSTRAINT _prestation_pk PRIMARY KEY (nom)
 );
 
