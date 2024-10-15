@@ -21,4 +21,6 @@
 
   --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
   --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
+  --gradient-orange-2: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+
 }
