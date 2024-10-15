@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Création offre</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -47,7 +48,7 @@
             <label for= "cp">Code Postal * </label>
             <input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required>
             <label for= "ville">Ville *</label>
-            <input type="ville" id="ville" name ="ville" placeholder="nom de ville" required>
+            <input type="text" id="ville" name ="ville" placeholder="nom de ville" required>
             <br>
             <label for="photo"> Photo (max. 5)</label>
             <input type="file" id="photo1" name="photo1">
@@ -140,15 +141,16 @@
         </tr>
     </table>
 
-
+    </form>
 
 
     </main>
 
-    <input type="submit" value="Créer une offre">
-    <a href="#" class="btn btn-default">Retour en haut ↑</a>
-    <button type="button" class="scroll-top"><img src="Comportement-lapin.png"></button>
+    <input class="valider"type="submit" value="Créer une offre">
 
+    <a href="#" id="back-to-top">
+        <img src="Comportement-lapin.png" alt="Retour en haut" width="50" height="50">
+    </a>
 
     <footer>
         <!-- a inclure lorque le po aura fait son travail -->
