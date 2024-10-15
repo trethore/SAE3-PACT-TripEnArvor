@@ -11,16 +11,16 @@
     </header>
 
     <main>
-        <h1> Creation d'une offre</h1>
+        <h2> Creation d'une offre</h2>
         <form action = "creationoffre.php" method = "post" enctype="multipart/form-data">
-            <h2>Informations importante</h2>
+            <h3>Informations importante</h3>
             <label>
 
 
-            <label for="titre">Titre :</label> 
+            <label for="titre">Titre </label> 
             <input type="text" id="titre" name ="titre" required>
             <br>
-            <label for="categorie">Categorie :</label>
+            <label for="categorie">Categorie </label>
             <select id = "categorie" name = "lacat">
                 <option value = "restaurant"> Restaurant</option>
                 <option value = "parc"> Parc d'attraction</option>
@@ -29,7 +29,7 @@
                 <option value = "activite"> Activité</option>
             </select>
             <br>
-            <label for="dispo">Disponibilité :</label>
+            <label for="dispo">Disponibilité </label>
             <select id = "dispo" name = "ladispo">
                 <option value = "ouvert"> Ouvert </option>
                 <option value = "ferme"> Fermé </option>
@@ -37,6 +37,30 @@
             <br>
             <label for= "adresse">Adresse</label>
             <input type="text" id="adresse" name ="adresse" required>
+            <label for= "cp">Code Postal</label>
+            <input type="text" id="cp" name ="cp" required>
+            <label for= "ville">Ville</label>
+            <input type="ville" id="ville" name ="ville" required>
+            <br>
+            <select id = "type" name = "letype">
+                <option value = "payante"> Offre Payante </option>
+                <option value = "ferme"> Offre Gratuite </option>
+            </select>
+            <br>
+            <h3>Tags de l'offre</h3>
+            <br>
+            <p> -- Choisir une catégorie -- </p>
+            <h3>A propos de l'offre</h3>
+            <br>
+            <label for="description">Courte Description</label>
+            <input type="text" id ="description" name="description" required>
+            <br>
+            <label for="lien">Lien externe</label>
+            <input type="url" id="lien" name="lien">
+            <br>
+            <label for="tel">Numéro de téléphone</label>
+            <input type="tel" name="mobile" pattern="[0-9]{10}">
+            
 
 
             <input type="submit" value="Envoyer">
@@ -51,3 +75,5 @@
 
 </body>
 </html>
+
+
