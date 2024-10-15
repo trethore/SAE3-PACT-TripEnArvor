@@ -173,5 +173,7 @@ CREATE TABLE _type_repas (
 );
 
 CREATE TABLE _image (
-    lienFichier VARCHAR(255) NOT NULL
+    lienFichier VARCHAR(255) NOT NULL,
+    CONSTRAINT _image_pk PRIMARY KEY (lienFichier)
 );
+
