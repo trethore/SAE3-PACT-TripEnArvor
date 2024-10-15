@@ -10,6 +10,7 @@ SET SCHEMA 'pact';
 
 CREATE TYPE gammePrix_t AS ENUM ('€', '€€', '€€€');
 CREATE TYPE typeRepas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
+CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 
 
 /* ********************************************************************* */
@@ -180,5 +181,18 @@ CREATE TABLE _image (
 
 CREATE TABLE _tarif (
     prix    INTEGER NOT NULL
+);
+
+
+CREATE TABLE _horaires_du_jour (
+    id      SERIAL,
+    nomJour jour_t NOT NULL,
+    CONSTRAINT _horaires_du_jour_pk PRIMARY KEY (id)
+);
+
+
+CREATE TABLE _horaire (
+    ouverture   CHAR(5),
+    fermeture   CHAR(5)
 );
 
