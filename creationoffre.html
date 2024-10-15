@@ -17,9 +17,11 @@
             <label>
 
 
-            <label for="titre">Titre </label> 
-            <input type="text" id="titre" name ="titre" required>
+            <label for="titre">Titre *</label> 
+            <input type="text" id="titre" name ="titre" placeholder="insérer un titre" required>
+            
             <br>
+            
             <label for="categorie">Categorie </label>
             <select id = "categorie" name = "lacat">
                 <option value = "restaurant"> Restaurant</option>
@@ -28,46 +30,125 @@
                 <option value = "visite"> Visite</option>
                 <option value = "activite"> Activité</option>
             </select>
+            
             <br>
+            
             <label for="dispo">Disponibilité </label>
             <select id = "dispo" name = "ladispo">
                 <option value = "ouvert"> Ouvert </option>
                 <option value = "ferme"> Fermé </option>
             </select>
+            
             <br>
-            <label for= "adresse">Adresse</label>
-            <input type="text" id="adresse" name ="adresse" required>
-            <label for= "cp">Code Postal</label>
-            <input type="text" id="cp" name ="cp" required>
-            <label for= "ville">Ville</label>
-            <input type="ville" id="ville" name ="ville" required>
+
+            <label for= "adresse">Adresse *</label>
+            <input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Monparnasse)" required>
             <br>
+            <label for= "cp">Code Postal * </label>
+            <input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required>
+            <label for= "ville">Ville *</label>
+            <input type="ville" id="ville" name ="ville" placeholder="nom de ville" required>
+            <br>
+            <label for="photo"> Photo (max. 5)</label>
+            <input type="file" id="photo1" name="photo1">
+
+            <br>
+            
             <select id = "type" name = "letype">
                 <option value = "payante"> Offre Payante </option>
                 <option value = "ferme"> Offre Gratuite </option>
             </select>
+            
             <br>
+            
             <h3>Tags de l'offre</h3>
-            <br>
+            
             <p> -- Choisir une catégorie -- </p>
             <h3>A propos de l'offre</h3>
             <br>
-            <label for="description">Courte Description</label>
-            <input type="text" id ="description" name="description" required>
+            <label for="descriptionC">Courte Description *</label>
+            <input type="text" id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required>
             <br>
             <label for="lien">Lien externe</label>
             <input type="url" id="lien" name="lien">
             <br>
             <label for="tel">Numéro de téléphone</label>
-            <input type="tel" name="mobile" pattern="[0-9]{10}">
-            
+            <input type="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)">
+            <h3>Description détaillée de l'offre</h3>
+            <input type="text" id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillé... ">
+            <h3>Tarifs</h3>
+            <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "nom du tarif" required>
+            <input type="number" name="tarif1" min="0" placeholder="prix">€
+            <br>
+            <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "nom du tarif">
+            <input type="number" name="tarif2" min="0" placeholder="prix">€
+            <br>
+            <input type="text" id="tarif3nom" name="tarif33nom" placeholder= "nom du tarif">
+            <input type="number" name="tarif3" min="0" placeholder="prix">€
+            <br>
+            <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "nom du tarif">
+            <input type="number" name="tarif4" min="0" placeholder="prix">€
+            <br>
+            <label for="grilleT">Grille tarifaire complète</label>
+            <input type="file" id="grilleT" name="grilleT">
+            <br>
 
 
-            <input type="submit" value="Envoyer">
+    <h3>Ouverture</h3>
+    <table border="0">
+        <tr>
+            <td>Lundi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+        </tr>
+        <tr>
+            <td>Mardi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+        </tr>
+        <tr>
+            <td>Mercredi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+        </tr>
+        <tr>
+            <td>Jeudi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+        </tr>
+        <tr>
+            <td>Vendredi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+        </tr>
+        <tr>
+            <td>Samedi</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+        </tr>
+        <tr>
+            <td>Dimanche</td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td>-></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+        </tr>
+    </table>
+
 
 
 
     </main>
+
+    <input type="submit" value="Créer une offre">
+    <a href="#" class="btn btn-default">Retour en haut ↑</a>
+    <button type="button" class="scroll-top"><img src="Comportement-lapin.png"></button>
+
 
     <footer>
         <!-- a inclure lorque le po aura fait son travail -->
