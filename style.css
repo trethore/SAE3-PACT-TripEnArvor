@@ -266,7 +266,7 @@ input[type="checkbox"]:not(:disabled):checked {
     border-radius: 20px !important;
 }
 
-.offre div img {
+.carte-offre {
     position: absolute;
     width: 339px;
     height: 208px;
@@ -352,4 +352,28 @@ input[type="checkbox"]:not(:disabled):checked {
 .offre span {
     color: var(--vert-principale);
     text-decoration: underline;
+}
+
+.bas-offre {
+    position: relative !important;
+    background-color: transparent !important;
+    top: 25em !important;
+}
+
+.etoiles {
+    position: relative !important;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: left;
+    align-items: center;
+    background-color: transparent !important;
+
+    left: 0 !important;
+    top: -1em !important;
+}
+
+.etoiles img {
+    height: 24px;
+    width: 24px;
 }
