@@ -123,6 +123,14 @@ CREATE TABLE _offre_parc_attraction (
 );
 
 
+CREATE TABLE _offre_restauration (
+    id          INTEGER,
+    gammePrix   VARCHAR(3) NOT NULL,
+    CONSTRAINT _offre_restauration_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+);
+
+
 /* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
