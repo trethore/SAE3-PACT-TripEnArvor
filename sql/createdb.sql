@@ -3,6 +3,9 @@ CREATE SCHEMA pact;
 SET SCHEMA 'pact';
 
 
+START TRANSACTION;
+
+
 /* ********************************************************************* */
 /*                                 Types                                 */
 /* ********************************************************************* */
@@ -35,7 +38,7 @@ CREATE TABLE _compte_professionnel (
     aPropos         VARCHAR(255) NOT NULL,
     siteWeb         VARCHAR(255) NOT NULL,
     CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id),
-    CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
+    CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id) REFERENCES _compte(id)
 );
 
 
@@ -43,14 +46,14 @@ CREATE TABLE _compte_professionnel_prive (
     id      INTEGER,
     siren   VARCHAR(255) NOT NULL,
     CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id),
-    CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel.id
+    CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel(id)
 );
 
 
 CREATE TABLE _compte_professionnel_publique (
     id      INTEGER,
-    CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id),
-    CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel.id
+    CONSTRAINT _compte_professionnel_publique_pk PRIMARY KEY (id),
+    CONSTRAINT _compte_professionnel_publique_fk_compte_professionnel FOREIGN KEY (id) REFERENCES _compte_professionnel(id)
 );
 
 
@@ -58,7 +61,7 @@ CREATE TABLE _compte_membre (
     id      INTEGER,
     pseudo  VARCHAR(255) NOT NULL,
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id),
-    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id) REFERENCES _compte.id
+    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id) REFERENCES _compte(id)
 );
 
 
@@ -94,7 +97,7 @@ CREATE TABLE _offre (
     ville               VARCHAR(255) NOT NULL,
     descriptionDetaille VARCHAR(1024),
     siteWeb             VARCHAR(255),
-    CONSTRAINT _offre_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_pk PRIMARY KEY (id)
 );
 
 
@@ -103,7 +106,7 @@ CREATE TABLE _offre_activite (
     duree   INTEGER NOT NULL,
     ageMin  INTEGER NOT NULL,
     CONSTRAINT _offre_activite_pk PRIMARY KEY (id),
-    CONSTRAINT _offre_activite_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+    CONSTRAINT _offre_activite_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
 
 
@@ -111,7 +114,7 @@ CREATE TABLE _offre_visite (
     id      INTEGER,
     duree   INTEGER NOT NULL,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id),
-    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
 
 
@@ -120,7 +123,7 @@ CREATE TABLE _offre_spectacle (
     duree       INTEGER NOT NULL,
     capacite    INTEGER NOT NULL,
     CONSTRAINT _offre_spectacle_pk PRIMARY KEY (id),
-    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
 
 
@@ -129,7 +132,7 @@ CREATE TABLE _offre_parc_attraction (
     nbAttractions   INTEGER NOT NULL,
     ageMin          INTEGER NOT NULL,
     CONSTRAINT _offre_parc_attraction_pk PRIMARY KEY (id),
-    CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+    CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
 
 
@@ -137,7 +140,7 @@ CREATE TABLE _offre_restauration (
     id          INTEGER,
     gammePrix   gammePrix_t NOT NULL,
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id),
-    CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+    CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
 
 
@@ -164,7 +167,7 @@ CREATE TABLE _prestation (
 
 
 CREATE TABLE _langue (
-    nom VARCHAR(128)
+    nom VARCHAR(128),
     CONSTRAINT _langue_pk PRIMARY KEY (nom)
 );
 
@@ -195,4 +198,7 @@ CREATE TABLE _horaire (
     ouverture   CHAR(5),
     fermeture   CHAR(5)
 );
+
+
+COMMIT;
 
