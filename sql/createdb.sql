@@ -28,6 +28,7 @@ CREATE TABLE _compte (
     email       VARCHAR(320) NOT NULL,
     tel         VARCHAR(12),
     motDePasse  VARCHAR(255) NOT NULL,
+    adresse     INTEGER,
     CONSTRAINT _compte_pk PRIMARY KEY (id)
 );
 
@@ -150,12 +151,13 @@ CREATE TABLE _offre_restauration (
 
 
 CREATE TABLE _adresse (
-    numEtNomDeVoie      VARCHAR(255),
+    id                  SERIAL,
+    numEtNomDeVoie      VARCHAR(255) NOT NULL,
     complementAdresse   VARCHAR(255),
-    codePostal          VARCHAR(6),
-    ville               VARCHAR(255),
-    pays                VARCHAR(255),
-    CONSTRAINT _adresse_pk PRIMARY KEY (numEtNomDeVoie, complementAdresse, codePostal, ville, pays)
+    codePostal          VARCHAR(6) NOT NULL,
+    ville               VARCHAR(255) NOT NULL,
+    pays                VARCHAR(255) NOT NULL,
+    CONSTRAINT _adresse_pk PRIMARY KEY (id)
 );
 
 
@@ -204,6 +206,17 @@ CREATE TABLE _tag (
     nomTag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nomTag)
 );
+
+
+/* ********************************************************************* */
+/*                              Associations                             */
+/* ********************************************************************* */
+
+
+ALTER TABLE _compte
+    ADD CONSTRAINT _compte_fk_adresse 
+    FOREIGN KEY (adresse) REFERENCES _adresse(id)
+;
 
 
 COMMIT;
