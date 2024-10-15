@@ -105,6 +105,15 @@ CREATE TABLE _offre_visite (
 );
 
 
+CREATE TABLE _offre_spectacle (
+    id          INTEGER,
+    duree       INTEGER NOT NULL,
+    capacite    INTEGER NOT NULL,
+    CONSTRAINT _offre_spectacle_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
+);
+
+
 /* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
