@@ -98,7 +98,9 @@ CREATE TABLE _offre (
     ville                   VARCHAR(255) NOT NULL,
     description_detaille    VARCHAR(1024),
     siteWeb                 VARCHAR(255),
-    CONSTRAINT _offre_pk PRIMARY KEY (id)
+    professionnel           INTEGER,
+    CONSTRAINT _offre_pk PRIMARY KEY (id),
+    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (professionnel) REFERENCES _compte_professionnel(id)
 );
 
 
@@ -180,7 +182,7 @@ CREATE TABLE _type_repas (
 
 CREATE TABLE _image (
     lien_fichier    VARCHAR(255),
-    CONSTRAINT _image_pk PRIMARY KEY (lienFichier)
+    CONSTRAINT _image_pk PRIMARY KEY (lien_fichier)
 );
 
 
@@ -204,13 +206,13 @@ CREATE TABLE _horaire (
     fermeture           CHAR(5),
     horaires_du_jour    INTEGER,
     CONSTRAINT _horaire_pk PRIMARY KEY (id),
-    CONSTRAINT _horaire_fk_horaires_du_jour FOREIGN KEY (horairesDuJour) REFERENCES _horaires_du_jour(id)
+    CONSTRAINT _horaire_fk_horaires_du_jour FOREIGN KEY (horaires_du_jour) REFERENCES _horaires_du_jour(id)
 );
 
 
 CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
-    CONSTRAINT _tag_pk PRIMARY KEY (nomTag)
+    CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
 
 
