@@ -4,6 +4,15 @@ SET SCHEMA 'pact';
 
 
 /* ********************************************************************* */
+/*                                 Types                                 */
+/* ********************************************************************* */
+
+
+CREATE TYPE gammePrix_t AS ENUM ('€', '€€', '€€€');
+CREATE TYPE typeRepas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
+
+
+/* ********************************************************************* */
 /*                                Comptes                                */
 /* ********************************************************************* */
 
@@ -125,7 +134,7 @@ CREATE TABLE _offre_parc_attraction (
 
 CREATE TABLE _offre_restauration (
     id          INTEGER,
-    gammePrix   VARCHAR(3) NOT NULL,
+    gammePrix   gammePrix_t NOT NULL,
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES (_offre.id)
 );
@@ -156,5 +165,10 @@ CREATE TABLE _prestation (
 CREATE TABLE _langue (
     nom VARCHAR(128)
     CONSTRAINT _langue_pk PRIMARY KEY (nom)
+);
+
+
+CREATE TABLE _type_repas (
+    typeRepas   typeRepas_t NOT NULL
 );
 
