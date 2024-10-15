@@ -99,6 +99,7 @@ CREATE TABLE _offre (
     description_detaille    VARCHAR(1024),
     siteWeb                 VARCHAR(255),
     professionnel           INTEGER,
+    adresse                 INTEGER,
     CONSTRAINT _offre_pk PRIMARY KEY (id),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (professionnel) REFERENCES _compte_professionnel(id)
 );
@@ -223,6 +224,12 @@ CREATE TABLE _tag (
 
 ALTER TABLE _compte
     ADD CONSTRAINT _compte_fk_adresse 
+    FOREIGN KEY (adresse) REFERENCES _adresse(id)
+;
+
+
+ALTER TABLE _offre
+    ADD CONSTRAINT _offre_fk_adresse 
     FOREIGN KEY (adresse) REFERENCES _adresse(id)
 ;
 
