@@ -234,5 +234,14 @@ ALTER TABLE _offre
 ;
 
 
+CREATE TABLE _offre_contient_image (
+    id_offre    INTEGER,
+    id_image    VARCHAR(255),
+    CONSTRAINT _offre_contient_image_pk PRIMARY KEY (id_offre, id_image),
+    CONSTRAINT _offre_contient_image_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id),
+    CONSTRAINT _offre_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+);
+
+
 COMMIT;
 
