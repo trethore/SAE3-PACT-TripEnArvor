@@ -73,6 +73,22 @@ CREATE VIEW compte_membre AS
 
 
 /* ********************************************************************* */
+/*                                Offres                                 */
+/* ********************************************************************* */
+
+
+CREATE TABLE _offre (
+    id                  SERIAL,
+    titre               VARCHAR(128),
+    resume              VARCHAR(255),
+    ville               VARCHAR(255),
+    descriptionDetaille VARCHAR(1024),
+    siteWeb             VARCHAR(255),
+    CONSTRAINT _offre_pk PRIMARY KEY (id),
+);
+
+
+/* ********************************************************************* */
 /*                              Utilitaires                              */
 /* ********************************************************************* */
 
