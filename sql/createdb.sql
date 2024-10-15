@@ -22,13 +22,13 @@ CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', '
 
 
 CREATE TABLE _compte (
-    id          SERIAL,
-    nom         VARCHAR(30),
-    prenom      VARCHAR(30),
-    email       VARCHAR(320) NOT NULL,
-    tel         VARCHAR(12),
-    motDePasse  VARCHAR(255) NOT NULL,
-    adresse     INTEGER,
+    id              SERIAL,
+    nom             VARCHAR(30),
+    prenom          VARCHAR(30),
+    email           VARCHAR(320) NOT NULL,
+    tel             VARCHAR(12),
+    mot_de_passe    VARCHAR(255) NOT NULL,
+    adresse         INTEGER,
     CONSTRAINT _compte_pk PRIMARY KEY (id)
 );
 
@@ -36,8 +36,8 @@ CREATE TABLE _compte (
 CREATE TABLE _compte_professionnel (
     id              INTEGER,
     denomination    VARCHAR(255) NOT NULL,
-    aPropos         VARCHAR(255) NOT NULL,
-    siteWeb         VARCHAR(255) NOT NULL,
+    a_propos         VARCHAR(255) NOT NULL,
+    site_web         VARCHAR(255) NOT NULL,
     CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id),
     CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id) REFERENCES _compte(id)
 );
@@ -92,12 +92,12 @@ CREATE VIEW compte_membre AS
 
 
 CREATE TABLE _offre (
-    id                  SERIAL,
-    titre               VARCHAR(128) NOT NULL,
-    resume              VARCHAR(255) NOT NULL,
-    ville               VARCHAR(255) NOT NULL,
-    descriptionDetaille VARCHAR(1024),
-    siteWeb             VARCHAR(255),
+    id                      SERIAL,
+    titre                   VARCHAR(128) NOT NULL,
+    resume                  VARCHAR(255) NOT NULL,
+    ville                   VARCHAR(255) NOT NULL,
+    description_detaille    VARCHAR(1024),
+    siteWeb                 VARCHAR(255),
     CONSTRAINT _offre_pk PRIMARY KEY (id)
 );
 
@@ -105,7 +105,7 @@ CREATE TABLE _offre (
 CREATE TABLE _offre_activite (
     id      INTEGER,
     duree   INTEGER NOT NULL,
-    ageMin  INTEGER NOT NULL,
+    age_min  INTEGER NOT NULL,
     CONSTRAINT _offre_activite_pk PRIMARY KEY (id),
     CONSTRAINT _offre_activite_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
@@ -130,8 +130,8 @@ CREATE TABLE _offre_spectacle (
 
 CREATE TABLE _offre_parc_attraction (
     id              INTEGER,
-    nbAttractions   INTEGER NOT NULL,
-    ageMin          INTEGER NOT NULL,
+    nb_attractions   INTEGER NOT NULL,
+    age_min          INTEGER NOT NULL,
     CONSTRAINT _offre_parc_attraction_pk PRIMARY KEY (id),
     CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
@@ -139,7 +139,7 @@ CREATE TABLE _offre_parc_attraction (
 
 CREATE TABLE _offre_restauration (
     id          INTEGER,
-    gammePrix   gammePrix_t NOT NULL,
+    gamme_prix  gammePrix_t NOT NULL,
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
@@ -152,9 +152,9 @@ CREATE TABLE _offre_restauration (
 
 CREATE TABLE _adresse (
     id                  SERIAL,
-    numEtNomDeVoie      VARCHAR(255) NOT NULL,
-    complementAdresse   VARCHAR(255),
-    codePostal          VARCHAR(6) NOT NULL,
+    num_et_nom_de_voie  VARCHAR(255) NOT NULL,
+    complement_adresse  VARCHAR(255),
+    code_postal         VARCHAR(6) NOT NULL,
     ville               VARCHAR(255) NOT NULL,
     pays                VARCHAR(255) NOT NULL,
     CONSTRAINT _adresse_pk PRIMARY KEY (id)
@@ -175,11 +175,11 @@ CREATE TABLE _langue (
 
 
 CREATE TABLE _type_repas (
-    typeRepas   typeRepas_t NOT NULL
+    type_repas  typeRepas_t NOT NULL
 );
 
 CREATE TABLE _image (
-    lienFichier VARCHAR(255),
+    lien_fichier    VARCHAR(255),
     CONSTRAINT _image_pk PRIMARY KEY (lienFichier)
 );
 
@@ -190,15 +190,21 @@ CREATE TABLE _tarif (
 
 
 CREATE TABLE _horaires_du_jour (
-    id      SERIAL,
-    nomJour jour_t NOT NULL,
-    CONSTRAINT _horaires_du_jour_pk PRIMARY KEY (id)
+    id          SERIAL,
+    nom_jour    jour_t NOT NULL,
+    offre       INTEGER NOT NULL,
+    CONSTRAINT _horaires_du_jour_pk PRIMARY KEY (id),
+    CONSTRAINT _horaires_du_jour_fk_offre FOREIGN KEY (offre) REFERENCES _offre(id)
 );
 
 
 CREATE TABLE _horaire (
-    ouverture   CHAR(5),
-    fermeture   CHAR(5)
+    id                  SERIAL,
+    ouverture           CHAR(5),
+    fermeture           CHAR(5),
+    horaires_du_jour    INTEGER,
+    CONSTRAINT _horaire_pk PRIMARY KEY (id),
+    CONSTRAINT _horaire_fk_horaires_du_jour FOREIGN KEY (horairesDuJour) REFERENCES _horaires_du_jour(id)
 );
 
 
