@@ -173,7 +173,12 @@ CREATE TABLE _type_repas (
 );
 
 CREATE TABLE _image (
-    lienFichier VARCHAR(255) NOT NULL,
+    lienFichier VARCHAR(255),
     CONSTRAINT _image_pk PRIMARY KEY (lienFichier)
+);
+
+
+CREATE TABLE _tarif (
+    prix    INTEGER NOT NULL
 );
 
