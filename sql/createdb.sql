@@ -25,6 +25,9 @@ CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', '
 /* ********************************************************************* */
 
 
+/* -------------------------- COMPTE ABSTRAIT -------------------------- */
+
+
 CREATE TABLE _compte (
     id_compte       SERIAL,
     nom_compte      VARCHAR(30),
@@ -37,6 +40,9 @@ CREATE TABLE _compte (
 );
 
 
+/* ------------------- COMPTE PROFESSIONNEL ABSTRAIT ------------------- */
+
+
 CREATE TABLE _compte_professionnel (
     id_compte       INTEGER,
     denomination    VARCHAR(255) NOT NULL,
@@ -47,6 +53,9 @@ CREATE TABLE _compte_professionnel (
 );
 
 
+/* ---------------- COMPTE PROFESSIONNEL PRIVÉ CONCRET ----------------- */
+
+
 CREATE TABLE _compte_professionnel_prive (
     id_compte   INTEGER,
     siren       VARCHAR(255) NOT NULL,
@@ -55,11 +64,17 @@ CREATE TABLE _compte_professionnel_prive (
 );
 
 
+/* --------------- COMPTE PROFESSIONNEL PUBLIQUE CONCRET --------------- */
+
+
 CREATE TABLE _compte_professionnel_publique (
     id_compte   INTEGER,
     CONSTRAINT _compte_professionnel_publique_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_professionnel_publique_fk_compte_professionnel FOREIGN KEY (id_compte) REFERENCES _compte_professionnel(id_compte)
 );
+
+
+/* ----------------------- COMPTE MEMBRE CONCRET ----------------------- */
 
 
 CREATE TABLE _compte_membre (
@@ -98,6 +113,9 @@ CREATE VIEW compte_membre AS
 /* ********************************************************************* */
 
 
+/* -------------------------- OFFRE ABSTRAITE -------------------------- */
+
+
 CREATE TABLE _offre (
     id_offre                SERIAL,
     titre                   VARCHAR(128) NOT NULL,
@@ -112,6 +130,9 @@ CREATE TABLE _offre (
 );
 
 
+/* ---------------------- OFFRE ACTIVITÉ CONCRETE ---------------------- */
+
+
 CREATE TABLE _offre_activite (
     id_offre    INTEGER,
     duree       INTEGER NOT NULL,
@@ -121,12 +142,18 @@ CREATE TABLE _offre_activite (
 );
 
 
+/* ----------------------- OFFRE VISITE CONCRETE ----------------------- */
+
+
 CREATE TABLE _offre_visite (
     id_offre    INTEGER,
     duree       INTEGER NOT NULL,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
+
+
+/* --------------------- OFFRE SPECTACLE CONCRETE ---------------------- */
 
 
 CREATE TABLE _offre_spectacle (
@@ -138,6 +165,9 @@ CREATE TABLE _offre_spectacle (
 );
 
 
+/* ----------------- OFFRE PARC D'ATTRACTIONS CONCRETE ----------------- */
+
+
 CREATE TABLE _offre_parc_attraction (
     id_offre         INTEGER,
     nb_attractions   INTEGER NOT NULL,
@@ -145,6 +175,9 @@ CREATE TABLE _offre_parc_attraction (
     CONSTRAINT _offre_parc_attraction_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
+
+
+/* -------------------- OFFRE RESTAURATION CONCRETE -------------------- */
 
 
 CREATE TABLE _offre_restauration (
