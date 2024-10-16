@@ -1,10 +1,9 @@
 body {
 	background-color: var(--blanc-leger);
 	width: 1440px;
-	height: 2085px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	width: 100%;
 }
@@ -63,7 +62,7 @@ header {
 }
 
 .ICON-accueil {
-	margin: 0 15px;
+	margin: 0 15px 0 80px;
 	width: 65px;
 	height: 60px;
 	object-fit: cover;
@@ -72,31 +71,37 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background-color: var(--blanc-leger);
-	width: 100%;
+	background-image: linear-gradient(0deg, rgba(217, 111, 50, 1) 0%, rgba(217, 102, 54, 1) 23.1%, rgba(242, 139, 48, 1) 100%);
 	width: 1440px;
 	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
 	align-items: center;
 	padding: 20px;
   }
   
   /* Section supérieure avec le gradient */
   .footer-top {
-	background-image: linear-gradient(0deg, rgba(217, 111, 50, 1) 0%, rgba(217, 102, 54, 1) 23.1%, rgba(242, 139, 48, 1) 100%);
 	width: 100%;
-	padding: 40px 20px;
+	padding: 20px 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
   }
   
-  .footer-logo-wrapper {
+  .footer-top-left {
 	display: flex;
-	flex-direction: row;
-	align-items: center;
+	flex-direction: column;
+	align-items: end;
+	padding-right: 20px;
+	border-right: solid var(--blanc);
+  }
+
+  .footer-top-right {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
   }
   
   .footer-logo {
@@ -118,6 +123,13 @@ footer {
 	font-size: 48px;
 	color: white;
 	margin-left: 20px;
+  }
+
+  .footer-connect {
+	font-family: 'SeoulNamsan', sans-serif;
+	font-size: 32px;
+	color: white;
+	margin-bottom: 10px;
   }
   
   /* Section des icônes sociales */
