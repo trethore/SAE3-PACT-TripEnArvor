@@ -56,12 +56,46 @@ CREATE TABLE _compte_professionnel (
 /* ================ COMPTE PROFESSIONNEL PRIVÉ CONCRET ================= */
 
 
+-- -- TABLE & VUES -- --
+
 CREATE TABLE _compte_professionnel_prive (
     id_compte   INTEGER,
     siren       VARCHAR(255) NOT NULL,
     CONSTRAINT _compte_professionnel_prive_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_professionnel_prive_fk_compte_professionnel FOREIGN KEY (id_compte) REFERENCES _compte_professionnel(id_compte)
 );
+
+CREATE VIEW compte_professionnel_prive AS
+    SELECT * 
+    FROM _compte
+    NATURAL JOIN _compte_professionnel
+    NATURAL JOIN _compte_professionnel_prive
+;
+
+
+-- -- CRUD -- --
+
+-- CREATE
+
+CREATE OR REPLACE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
+DECLARE
+    id_compte_temp _compte.id_compte%type;
+BEGIN
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+        RETURNING id_compte INTO id_compte_temp;
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel_prive(id_compte, siren)
+        VALUES (id_compte_temp, NEW.siren);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_compte_professionnel_prive
+INSTEAD OF INSERT
+ON compte_professionnel_prive FOR EACH ROW
+EXECUTE PROCEDURE create_compte_professionnel_prive();
 
 
 /* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
@@ -83,14 +117,6 @@ CREATE TABLE _compte_membre (
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
-
-
-CREATE VIEW compte_professionnel_prive AS
-    SELECT * 
-    FROM _compte
-    NATURAL JOIN _compte_professionnel
-    NATURAL JOIN _compte_professionnel_prive
-;
 
 
 CREATE VIEW compte_professionnel_publique AS
