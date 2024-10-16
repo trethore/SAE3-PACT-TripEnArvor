@@ -48,7 +48,7 @@ header {
 }
 
 .ICON-accueil {
-	margin: 0 15px 0 30px;
+	margin: 0 15px 0 50px;
 	width: 65px;
 	height: 60px;
 	object-fit: cover;
@@ -147,17 +147,17 @@ footer {
 }
  /* search component in header*/
 .search-box {
-	padding-top: 10px;
+	margin-top: 5px;
 	width: fit-content;
 	height: fit-content;
 	position: relative;
 }
 
 .input-search {
-	height: 50px;
+	height: 60px;
 	width: 50px;
 	border-style: none;
-	padding: 10px;
+	padding: 20px;
 	font-size: 18px;
 	letter-spacing: 2px;
 	outline: none;
@@ -208,6 +208,6 @@ footer {
 }
 
 .cherchero {
-	height: 40px;
-	width: 40px;
+	height: 60px;
+	width: 60px;
 }
