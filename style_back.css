@@ -106,44 +106,56 @@ h3 {
 }
 
 .filtre-tri label {
-    margin: 5px 0;
+    margin: 0.4em 0.4em 0.4em 0;
 }
 
-.filtre-tri .trier div {
+.filtre-tri .trier > div {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1em;
 }
 
-.filtre-tri .trier div div {
+.filtre-tri .trier > div > div {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
 }
 
 .filtre-tri .trier div div div{
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    margin-right: 1em;
 }
 
 .filtre-tri .trier div div div div {
-    display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-around;
 }
 
-.filtre-tri input[type="text"],
-.filtre-tri input[type="number"],
-.filtre-tri input[type="date"],
-.filtre-tri select {
-    width: 68px;
+
+
+.filtre-tri .trier input[type="text"],
+.filtre-tri .trier [type="number"] {
+    width: 40px;
     height: 19px;
-    padding: 5px;
-    margin: 5px 0;
+    margin: 0.2em 0.4em;
     border-radius: 5px;
-    border: 1px solid var(--blanc-leger);
+    border: none;
+    text-align: center;
+}
+
+
+
+.filtre-tri select {
+    width: 110px;
+    height: 31px;
+    border: none;
+    border-radius: 10px;
+}
+
+.filtre-tri input[type="date"] {
+
 }
 
 input[type="radio"] {
