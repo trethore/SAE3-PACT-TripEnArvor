@@ -27,7 +27,7 @@ CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', '
 
 CREATE TABLE _compte (
     id_compte       SERIAL,
-    nom             VARCHAR(30),
+    nom_compte      VARCHAR(30),
     prenom          VARCHAR(30),
     email           VARCHAR(320) NOT NULL,
     tel             VARCHAR(12),
@@ -169,15 +169,15 @@ CREATE TABLE _adresse (
 
 
 CREATE TABLE _prestation (
-    nom         VARCHAR(128),
-    description VARCHAR(1024) NOT NULL,
-    CONSTRAINT _prestation_pk PRIMARY KEY (nom)
+    nom_prestation  VARCHAR(128),
+    description     VARCHAR(1024) NOT NULL,
+    CONSTRAINT _prestation_pk PRIMARY KEY (nom_prestation)
 );
 
 
 CREATE TABLE _langue (
-    nom VARCHAR(128),
-    CONSTRAINT _langue_pk PRIMARY KEY (nom)
+    nom_langue  VARCHAR(128),
+    CONSTRAINT _langue_pk PRIMARY KEY (nom_langue)
 );
 
 
@@ -202,21 +202,21 @@ CREATE TABLE _tarif (
 
 
 CREATE TABLE _horaires_du_jour (
-    id          SERIAL,
-    nom_jour    jour_t NOT NULL,
-    id_offre       INTEGER NOT NULL,
-    CONSTRAINT _horaires_du_jour_pk PRIMARY KEY (id),
+    id_horaires_du_jour   SERIAL,
+    nom_jour            jour_t NOT NULL,
+    id_offre            INTEGER NOT NULL,
+    CONSTRAINT _horaires_du_jour_pk PRIMARY KEY (id_horaires_du_jour),
     CONSTRAINT _horaires_du_jour_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
 
 CREATE TABLE _horaire (
-    id                  SERIAL,
+    id_horaire          SERIAL,
     ouverture           CHAR(5),
     fermeture           CHAR(5),
     horaires_du_jour    INTEGER,
-    CONSTRAINT _horaire_pk PRIMARY KEY (id),
-    CONSTRAINT _horaire_fk_horaires_du_jour FOREIGN KEY (horaires_du_jour) REFERENCES _horaires_du_jour(id)
+    CONSTRAINT _horaire_pk PRIMARY KEY (id_horaire),
+    CONSTRAINT _horaire_fk_horaires_du_jour FOREIGN KEY (horaires_du_jour) REFERENCES _horaires_du_jour(id_horaires_du_jour)
 );
 
 
