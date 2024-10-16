@@ -1,6 +1,5 @@
 :root {
   --noir: rgba(0, 0, 0, 1);
-  --noir-trans: rgba(0, 0, 0, 0.2);
   --blanc: rgba(255, 255, 255, 1);
   --blanc-leger: rgba(236, 236, 236, 1);
   --beige: rgba(234, 226, 218, 1);
@@ -13,6 +12,7 @@
   --orange-secondaire-2: rgba(242, 139, 48, 1);
   --fond-bouton: rgba(217, 217, 217, 0.73);
   --transparent: rgba(255, 255, 255, 0);
+  --semi-trans: rgba(255, 255, 255, 0.5);
 
   --mobile-star-size: 30px;
   --like-size: 35px;

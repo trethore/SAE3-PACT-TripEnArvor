@@ -57,7 +57,7 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background-image: linear-gradient(0deg, rgba(217, 111, 50, 1) 0%, rgba(217, 102, 54, 1) 23.1%, rgba(242, 139, 48, 1) 100%);
+	background: var(--gradient-orange);
 	width: 1440px;
 	display: flex;
 	flex-direction: column;
@@ -142,7 +142,7 @@ footer {
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	font-size: 20px;
-	color: rgba(217, 102, 54, 1);
+	color: var(--orange-principale);
 	border: 1px solid rgba(0, 0, 0, 1);
 }
  /* search component in header*/
@@ -169,7 +169,7 @@ footer {
 }
 
 .input-search::placeholder {
-	color: rgba(255, 255, 255, .5);
+	color: var(--semi-trans);
 	font-size: 18px;
 	letter-spacing: 2px;
 	font-weight: 100;
@@ -195,7 +195,7 @@ footer {
 	width: 500px;
 	border-radius: 0px;
 	background-color: transparent;
-	border-bottom: 1px solid rgba(255, 255, 255, .5);
+	border-bottom: 1px solid var(--semi-trans);
 	transition: all 500ms ;
 }
 
@@ -203,7 +203,7 @@ footer {
 	width: 500px;
 	border-radius: 0px;
 	background-color: transparent;
-	border-bottom: 1px solid rgba(255, 255, 255, .5);
+	border-bottom: 1px solid var(--semi-trans);
 	transition: all 500ms ;
 }
 
