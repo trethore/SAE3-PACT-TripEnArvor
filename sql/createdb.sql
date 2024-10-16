@@ -179,7 +179,7 @@ CREATE TABLE _langue (
 
 CREATE TABLE _type_repas (
     type_repas  type_repas_t,
-    
+    CONSTRAINT _type_repas_pk PRIMARY KEY (type_repas)    
 );
 
 CREATE TABLE _image (
@@ -259,6 +259,15 @@ CREATE TABLE _offre_restauration_contient_image (
     CONSTRAINT _offre_restauration_contient_image_pk PRIMARY KEY (id_offre, id_image),
     CONSTRAINT _offre_restauration_contient_image_fk_offre_restauration FOREIGN KEY (id_offre) REFERENCES _offre(id),
     CONSTRAINT _offre_restauration_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+);
+
+
+CREATE TABLE _offre_restauration_propose_repas (
+    id_offre_restauration   INTEGER,
+    type_repas              type_repas_t,
+    CONSTRAINT _offre_restauration_propose_repas_pk PRIMARY KEY (id_offre_restauration, type_repas),
+    CONSTRAINT _offre_restauration_propose_repas_fk_offre_restauration FOREIGN KEY (id_offre_restauration) REFERENCES _offre_restauration(id),
+    CONSTRAINT _offre_restauration_propose_repas_fk_type_repas FOREIGN KEY (type_repas) REFERENCES _type_repas(type_repas)
 );
 
 
