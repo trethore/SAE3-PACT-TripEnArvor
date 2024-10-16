@@ -11,8 +11,8 @@ START TRANSACTION;
 /* ********************************************************************* */
 
 
-CREATE TYPE gammePrix_t AS ENUM ('€', '€€', '€€€');
-CREATE TYPE typeRepas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
+CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
+CREATE TYPE typ_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 
 
@@ -97,7 +97,7 @@ CREATE TABLE _offre (
     resume                  VARCHAR(255) NOT NULL,
     ville                   VARCHAR(255) NOT NULL,
     description_detaille    VARCHAR(1024),
-    siteWeb                 VARCHAR(255),
+    site_web                VARCHAR(255),
     professionnel           INTEGER,
     adresse                 INTEGER,
     CONSTRAINT _offre_pk PRIMARY KEY (id),
@@ -142,7 +142,7 @@ CREATE TABLE _offre_parc_attraction (
 
 CREATE TABLE _offre_restauration (
     id          INTEGER,
-    gamme_prix  gammePrix_t NOT NULL,
+    gamme_prix  gamme_prix_t NOT NULL,
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id) REFERENCES _offre(id)
 );
@@ -178,7 +178,7 @@ CREATE TABLE _langue (
 
 
 CREATE TABLE _type_repas (
-    type_repas  typeRepas_t NOT NULL
+    type_repas  typ_repas_t NOT NULL
 );
 
 CREATE TABLE _image (
