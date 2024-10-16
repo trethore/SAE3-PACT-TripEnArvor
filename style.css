@@ -23,6 +23,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+  /***************/
+ /*** ÉTOILES ***/
+/***************/
+
+.etoile {
+    display: flex;
+    width: 42px;
+    height: 42px;
+}
 
   /*************/
  /*** CORPS ***/
@@ -38,10 +47,24 @@ body {
 
 h1 {
     font-size: 64px;
+    display: flex;
+    justify-content: center;
 }
 
 h2 {
     font-size: 36px;
+}
+
+.size-32 {
+    font-size: 32px;
+}
+
+.size-36 {
+    font-size: 36px;
+}
+
+.size-40 {
+    font-size: 40px;
 }
 
   /*************/
@@ -90,6 +113,7 @@ p > a:hover {
     flex: 1.5; 
     background-color: var(--blanc-leger);
     padding: 10px;
+    margin-left: 20px;
 }
 
 .info-blocs-grand {
@@ -128,6 +152,12 @@ td {
     font-weight: 600;
 }
 
+  /*******************************************/
+ /*** LISTE DES INFORMATIONS D'OUVERTURES ***/
+/*******************************************/
+
+
+
   /********************************************/
  /*** LISTE DES CARACTÉRISTIQUE DE L'OFFRE ***/
 /********************************************/
@@ -151,7 +181,7 @@ li > img {
  /*** LOCALISATION DE L'OFFRE ***/
 /*******************************/
 
-div > img {
+.carte {
     width: 70%;
     padding-left: 15%;
 }
@@ -159,10 +189,6 @@ div > img {
   /*******************************/
  /*** LOCALISATION DE L'OFFRE ***/
 /*******************************/
-
-.rating {
-    color: var(--jaune-etoile);
-}
 
 .review {
     background: var(--blanc-leger);
@@ -172,64 +198,49 @@ div > img {
     border-radius: 5px;
 }
 
+  /*************************/
+ /*** IMAGES DE L'OFFRE ***/
+/*************************/
 
-
-
-/* Ajustements de style pour la section Les Embruns du Phare */
-
-/* Galerie d'images */
 .image-gallery {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        "image1 image2 image3"
+        "image1 image4 image5";
+    grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 10px;
+    gap: 10px; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 0;
 }
 
-.image-gallery img:first-child {
-    grid-row: span 2; /* L'image de gauche occupe deux lignes */
-    width: 50%;
-    height: 50%;
-    object-fit: cover;
-    border-radius: 10px;
+.image-gallery img:nth-child(1) {
+    grid-area: image1;
+    height: 100%;
+    width: 100%;
 }
 
-.image-gallery img:not(:first-child) {
-    width: 25%;
-    height: 25%;
-    object-fit: cover;
-    border-radius: 10px;
+.image-gallery img:nth-child(2) {
+    grid-area: image2;
+    height: 100%;
+    width: 100%;
 }
 
-/* Mise en page et style des informations de l'hôtel */
-.offer-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+.image-gallery img:nth-child(3) {
+    grid-area: image3;
+    height: 100%;
+    width: 100%;
 }
 
-.hotel-info {
-    background: var(--blanc-leger);
-    color: var(--black);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px var(--gris);
+.image-gallery img:nth-child(4) {
+    grid-area: image4;
+    height: 100%;
+    width: 100%;
 }
 
-.hotel-info p, .hotel-info .rating, .hotel-info address {
-    margin: 5px 0;
-}
-
-.hotel-info .rating {
-    color: var(--jaune-etoile);
-    font-weight: bold;
-}
-
-.hotel-info .rating a {
-    color: var(--vert-principale);
-    text-decoration: none;
-}
-
-.hotel-info .rating a:hover {
-    text-decoration: underline;
+.image-gallery img:nth-child(5) {
+    grid-area: image5;
+    height: 100%;
+    width: 100%;
 }
