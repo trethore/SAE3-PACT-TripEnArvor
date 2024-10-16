@@ -243,5 +243,23 @@ CREATE TABLE _offre_contient_image (
 );
 
 
+CREATE TABLE _offre_parc_attraction_contient_image (
+    id_offre    INTEGER,
+    id_image    VARCHAR(255),
+    CONSTRAINT _offre_parc_attraction_contient_image_pk PRIMARY KEY (id_offre, id_image),
+    CONSTRAINT _offre_parc_attraction_contient_image_fk_offre_parc_attraction FOREIGN KEY (id_offre) REFERENCES _offre(id),
+    CONSTRAINT _offre_parc_attraction_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+);
+
+
+CREATE TABLE _offre_restauration_contient_image (
+    id_offre    INTEGER,
+    id_image    VARCHAR(255),
+    CONSTRAINT _offre_restauration_contient_image_pk PRIMARY KEY (id_offre, id_image),
+    CONSTRAINT _offre_restauration_contient_image_fk_offre_restauration FOREIGN KEY (id_offre) REFERENCES _offre(id),
+    CONSTRAINT _offre_restauration_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+);
+
+
 COMMIT;
 
