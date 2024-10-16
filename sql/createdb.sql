@@ -12,7 +12,7 @@ START TRANSACTION;
 
 
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
-CREATE TYPE typ_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
+CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 
 
@@ -178,7 +178,8 @@ CREATE TABLE _langue (
 
 
 CREATE TABLE _type_repas (
-    type_repas  typ_repas_t NOT NULL
+    type_repas  type_repas_t,
+    
 );
 
 CREATE TABLE _image (
