@@ -55,10 +55,11 @@ h1 {
 .conteneur {
     position: absolute;
     width: 95%;
-    height: auto;
+    height: 2800px;
     left: 50%;
     top: calc(95px + 130px);
     transform: translate(-50%);
+    margin-bottom: 10px;
 
     background: linear-gradient(119.86deg, #2F5952 13.56%, #626B20 59.07%, #98A632 90.93%);
     border-radius: 15px;
@@ -198,14 +199,15 @@ input[type="checkbox"]:not(:disabled):checked {
 
 section {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    justify-content: flex-start;
-    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 31px;
 }
 
 .offre {
     position: relative;
-    width: 379px;
+    max-width: 379px;
+    min-width: 379px;
     height: 506px;
     left: 32px;
     top: 26px;
@@ -213,12 +215,7 @@ section {
     background: #ECECEC;
     border-radius: 15px;
 
-    flex: 1 1 339px;
-    padding: 20px;
-}
-
-.offre:first-child {
-    margin-left: 0;
+    margin-right: 4em;
 }
 
 .offre div {
