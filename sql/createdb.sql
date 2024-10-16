@@ -98,6 +98,30 @@ ON compte_professionnel_prive FOR EACH ROW
 EXECUTE PROCEDURE create_compte_professionnel_prive();
 
 
+-- READ
+
+/* SELECT * FROM compte_professionnel_prive; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_compte <> OLD.id_compte) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.'
+    END IF;
+    -- // TODO Finir la fonction update_compte_professionnel_prive().
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_compte_professionnel_prive
+INSTEAD OF UPDATE
+ON compte_professionnel_prive
+FOR EACH ROW
+EXECUTE PROCEDURE update_compte_professionnel_prive();
+
+
 /* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
 
 
