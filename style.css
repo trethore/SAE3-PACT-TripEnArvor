@@ -55,11 +55,10 @@ h1 {
 .conteneur {
     position: absolute;
     width: 95%;
-    height: 2016px;
+    height: auto;
     left: 50%;
     top: calc(95px + 130px);
     transform: translate(-50%);
-
 
     background: linear-gradient(119.86deg, #2F5952 13.56%, #626B20 59.07%, #98A632 90.93%);
     border-radius: 15px;
@@ -197,6 +196,13 @@ input[type="checkbox"]:not(:disabled):checked {
     flex: 6;
 }
 
+section {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: flex-start;
+    gap: 15px;
+}
+
 .offre {
     position: relative;
     width: 379px;
@@ -206,6 +212,13 @@ input[type="checkbox"]:not(:disabled):checked {
 
     background: #ECECEC;
     border-radius: 15px;
+
+    flex: 1 1 339px;
+    padding: 20px;
+}
+
+.offre:first-child {
+    margin-left: 0;
 }
 
 .offre div {
@@ -280,10 +293,9 @@ input[type="checkbox"]:not(:disabled):checked {
 
 .titre-offre {
     position: absolute;
-    left: 7.61%;
-    right: 35.96%;
-    top: 48.02%;
-    bottom: 42.89%;
+    left: 2%;
+    right: 36%;
+    top: 42%;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -296,28 +308,10 @@ input[type="checkbox"]:not(:disabled):checked {
     color: #000000;
 }
 
-.description-offre {
-    position: absolute;
-    left: 7.65%;
-    right: 8.62%;
-    top: 63.24%;
-    bottom: 20.16%;
-
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-
-    color: #000000;
-}
-
 .categorie-offre {
     position: absolute;
-    left: 7.61%;
-    right: 38.32%;
-    top: 58.3%;
-    bottom: 37.94%;
+    left: 2%;
+    top: 54%;
 
     font-family: 'Poppins';
     font-style: italic;
@@ -330,12 +324,24 @@ input[type="checkbox"]:not(:disabled):checked {
     color: #000000;
 }
 
+.description-offre {
+    position: absolute;
+    left: 2%;
+    top: 60%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: #000000;
+}
+
 .nom-offre {
     position: absolute;
-    left: 69.66%;
-    right: 7.77%;
-    top: 49.01%;
-    bottom: 48.02%;
+    left: 73%;
+    top: 43%;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -374,6 +380,38 @@ input[type="checkbox"]:not(:disabled):checked {
 }
 
 .etoiles img {
-    height: 24px;
-    width: 24px;
+    height: 30px;
+    width: 30px;
+}
+
+.nombre-notes {
+    margin-left: 5px;
+    padding-top: 4px;
+}
+
+.prix {
+    background: var(--vert-secondaire);
+    color: var(--blanc);
+
+    position: absolute;
+    left: 65%;
+    bottom: -30%;
+
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+
+    width: 66.65px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.prix span {
+    font-size: 24px;
+    text-decoration: none;
+    color: var(--blanc);
+    margin-top: 16px;
 }
