@@ -12,87 +12,103 @@
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
             <div>
-                <!-- Catégorie -->
-                <div class="categorie">
-                    <h3>Catégorie</h3>
-                    <div>
-                        <label><input type="checkbox"> Parc d'Attraction</label>
-                        <label><input type="checkbox"> Restaurant</label>
-                        <label><input type="checkbox"> Visite</label>
-                        <label><input type="checkbox"> Spectacle</label>
-                        <label><input type="checkbox"> Activité</label>
-                    </div>
-                </div>
-    
-                <!-- Disponibilité -->
-                <div class="disponibilite">
-                    <h3>Disponibilité</h3>
-                    <div>
-                        <label><input type="radio" name="disponibilite"> Ouvert</label>
-                        <label><input type="radio" name="disponibilite"> Fermé</label>
-                    </div>
-                </div>
-    
-                <!-- Trier -->
-                <div class="trier">
-                    <h3>Trier</h3>
-                    <div>
+                <div>
+                    <!-- Catégorie -->
+                    <div class="categorie">
+                        <h3>Catégorie</h3>
                         <div>
-                            <label>Note minimum :</label>
-                            <select>
-                                <option>★★★★★</option>
-                                <option>★★★★</option>
-                                <option>★★★</option>
-                                <option>★★</option>
-                                <option>★</option>
-                            </select>
+                            <label><input type="checkbox"> Parc d'Attraction</label>
+                            <label><input type="checkbox"> Restaurant</label>
+                            <label><input type="checkbox"> Visite</label>
+                            <label><input type="checkbox"> Spectacle</label>
+                            <label><input type="checkbox"> Activité</label>
                         </div>
+                    </div>
+
+                    <!-- Disponibilité -->
+                    <div class="disponibilite">
+                        <h3>Disponibilité</h3>
+                        <div>
+                            <label><input type="radio" name="disponibilite"> Ouvert</label>
+                            <label><input type="radio" name="disponibilite"> Fermé</label>
+                        </div>
+                    </div>
                         
+                    <!-- Trier -->
+                    <div class="trier">
+                        <h3>Trier</h3>
                         <div>
                             <div>
-                                <div>
-                                    <label>Prix minimum :</label>
-                                    <input type="number" min="0">
-                                </div>
-                                <div>
-                                    <label>Prix maximum :</label>
-                                    <input type="number" min="0">
-                                </div>
-                            </div>
-                            <div>
+                                <label>Note minimum :</label>
                                 <select>
-                                    <option>Trier par :</option>
-                                    <option>Date</option>
-                                    <option>Prix</option>
-                                    <option>Popularité</option>
+                                    <option></option>
+                                    <option>★★★★★</option>
+                                    <option>★★★★</option>
+                                    <option>★★★</option>
+                                    <option>★★</option>
+                                    <option>★</option>
                                 </select>
                             </div>
+                            
+                            <div>
+                                <div>
+                                    <div>
+                                        <label>Prix minimum &nbsp;:</label>
+                                        <input type="number" min="0">
+                                    </div>
+                                    <div>
+                                        <label>Prix maximum :</label>
+                                        <input type="number" min="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <select>
+                                        <option>Trier par :</option>
+                                        <option>Date</option>
+                                        <option>Prix</option>
+                                        <option>Popularité</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-    
-                <div class="retour"></div>
-    
-                <!-- Localisation -->
-                <div class="localisation">
-                    <h3>Localisation</h3>
-                    <div>
-                        <label><input type="radio" name="localisation"> Autour de moi</label>
-                        <label><input type="radio" name="localisation"> Rechercher</label>
-                        <input type="text" placeholder="Rechercher...">
+                <div>
+                    <!-- Localisation -->
+                    <div class="localisation">
+                        <h3>Localisation</h3>
+                        <div>
+                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <div>
+                                <label><input type="radio" name="localisation"> Rechercher</label>
+                                <input type="text" placeholder="Rechercher...">
+                            </div>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="vide"></div>
-    
-                <!-- Date -->
-                <div class="date">
-                    <h3>Date</h3>
-                    <div>
-                        <label>Date de début:</label>
-                        <input type="date">
-                        <label>Date de fin:</label>
-                        <input type="date">
+
+                    <!-- Type d'offre -->
+                    <div class="typeOffre">
+                        <h3>Type d'offre</h3>
+                        <div>
+                            <label><input type="radio" name="typeOffre"> Payante</label>
+                            <label><input type="radio" name="typeOffre"> Premium</label>
+                        </div>
+                    </div>
+        
+                    <!-- Date -->
+                    <div class="date">
+                        <h3>Date</h3>
+                        <div>
+                            <div>
+                                <label>Date de début &nbsp;:</label>
+                                <input type="date">
+                            </div>
+                            <div>
+                                <label>Date de fin &emsp;&emsp;:</label>
+                                <input type="date">
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
