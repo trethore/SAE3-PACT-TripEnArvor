@@ -10,22 +10,22 @@ COMMIT;
 START TRANSACTION;
 
 
-/* ********************************************************************* */
-/*                                 Types                                 */
-/* ********************************************************************* */
+/* ##################################################################### */
+/*                                 TYPES                                 */
+/* ##################################################################### */
 
 
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
-CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
+CREATE TYPE type_repas_t AS ENUM ('Petit=déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 
 
-/* ********************************************************************* */
-/*                                Comptes                                */
-/* ********************************************************************* */
+/* ##################################################################### */
+/*                                COMPTES                                */
+/* ##################################################################### */
 
 
-/* -------------------------- COMPTE ABSTRAIT -------------------------- */
+/* ========================== COMPTE ABSTRAIT ========================== */
 
 
 CREATE TABLE _compte (
@@ -40,7 +40,7 @@ CREATE TABLE _compte (
 );
 
 
-/* ------------------- COMPTE PROFESSIONNEL ABSTRAIT ------------------- */
+/* =================== COMPTE PROFESSIONNEL ABSTRAIT =================== */
 
 
 CREATE TABLE _compte_professionnel (
@@ -53,7 +53,7 @@ CREATE TABLE _compte_professionnel (
 );
 
 
-/* ---------------- COMPTE PROFESSIONNEL PRIVÉ CONCRET ----------------- */
+/* ================ COMPTE PROFESSIONNEL PRIVÉ CONCRET ================= */
 
 
 CREATE TABLE _compte_professionnel_prive (
@@ -64,7 +64,7 @@ CREATE TABLE _compte_professionnel_prive (
 );
 
 
-/* --------------- COMPTE PROFESSIONNEL PUBLIQUE CONCRET --------------- */
+/* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
 
 
 CREATE TABLE _compte_professionnel_publique (
@@ -74,7 +74,7 @@ CREATE TABLE _compte_professionnel_publique (
 );
 
 
-/* ----------------------- COMPTE MEMBRE CONCRET ----------------------- */
+/* ======================= COMPTE MEMBRE CONCRET ======================= */
 
 
 CREATE TABLE _compte_membre (
@@ -108,12 +108,12 @@ CREATE VIEW compte_membre AS
 ;
 
 
-/* ********************************************************************* */
-/*                                Offres                                 */
-/* ********************************************************************* */
+/* ##################################################################### */
+/*                                OFFRES                                 */
+/* ##################################################################### */
 
 
-/* -------------------------- OFFRE ABSTRAITE -------------------------- */
+/* ========================== OFFRE ABSTRAITE ========================== */
 
 
 CREATE TABLE _offre (
@@ -130,7 +130,7 @@ CREATE TABLE _offre (
 );
 
 
-/* ---------------------- OFFRE ACTIVITÉ CONCRETE ---------------------- */
+/* ====================== OFFRE ACTIVITÉ CONCRETE ====================== */
 
 
 CREATE TABLE _offre_activite (
@@ -142,7 +142,7 @@ CREATE TABLE _offre_activite (
 );
 
 
-/* ----------------------- OFFRE VISITE CONCRETE ----------------------- */
+/* ======================= OFFRE VISITE CONCRETE ======================= */
 
 
 CREATE TABLE _offre_visite (
@@ -153,7 +153,7 @@ CREATE TABLE _offre_visite (
 );
 
 
-/* --------------------- OFFRE SPECTACLE CONCRETE ---------------------- */
+/* ===================== OFFRE SPECTACLE CONCRETE ====================== */
 
 
 CREATE TABLE _offre_spectacle (
@@ -165,7 +165,7 @@ CREATE TABLE _offre_spectacle (
 );
 
 
-/* ----------------- OFFRE PARC D'ATTRACTIONS CONCRETE ----------------- */
+/* ================= OFFRE PARC D'ATTRACTIONS CONCRETE ================= */
 
 
 CREATE TABLE _offre_parc_attraction (
@@ -177,7 +177,7 @@ CREATE TABLE _offre_parc_attraction (
 );
 
 
-/* -------------------- OFFRE RESTAURATION CONCRETE -------------------- */
+/* ==================== OFFRE RESTAURATION CONCRETE ==================== */
 
 
 CREATE TABLE _offre_restauration (
@@ -223,9 +223,9 @@ CREATE VIEW offre_restauration AS
 ;
 
 
-/* ********************************************************************* */
-/*                              Utilitaires                              */
-/* ********************************************************************* */
+/* ##################################################################### */
+/*                              UTILITAIRES                              */
+/* ##################################################################### */
 
 
 CREATE TABLE _adresse (
@@ -297,9 +297,9 @@ CREATE TABLE _tag (
 );
 
 
-/* ********************************************************************* */
-/*                              Associations                             */
-/* ********************************************************************* */
+/* ##################################################################### */
+/*                              ASSOCIATIONS                             */
+/* ##################################################################### */
 
 
 ALTER TABLE _compte
