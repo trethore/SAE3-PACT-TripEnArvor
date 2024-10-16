@@ -25,6 +25,22 @@
     --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
     --gradient-orange-2: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
   
+    /* Regular */
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+
+    /* Medium */
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+
+    /* Semi-Bold */
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+
+    /* Bold */
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+
   }
 
   h2 {
@@ -37,27 +53,35 @@
 
 h3 {
     width: 55%;
-    margin: 20px auto 20px auto;
+    /* margin: 20px auto 20px auto; */
     border-radius: 15px;
     font-size: 32px;
+    font-weight: 500;
 }
 
+label{
+    font-weight: 400;
+}
+
+p{
+    color: var(--gris-toile);
+}
 
 body {
-    font-family: "Poppins", sans-serif;
-    background-color: var(--beige);
-    margin-top: 50px;
-    padding: 0;
+    background-color: var(--blanc-leger);
+	width: 1440px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
     
 }
 
 main {
-    position: absolute;
     width: 1338px;
     background-color: var(--blanc);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-left: 50px;
-    margin-right: auto;
     margin-bottom: 20px;
     border-radius: 15px;
     padding: 10px;
@@ -72,7 +96,6 @@ label {font-size: 24px;}
     border: 0;
     text-align: center;
     font-size: 40px;
-    position: absolute;
     width: 517px;
     height: 97px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -81,21 +104,196 @@ label {font-size: 24px;}
 }
 
 input[type="text"], input[type="url"], input[type="number"], input[type="tel"]{
-    background-color: var(--gris);
-    color: var(--gris-toile);
+    background-color: var(--blanc-leger);
+    color: black;
     border: 0;
     border-radius: 10px;
     width: 200px;
     height: 50px;
 }
 
-input[name="tarif1"]{
+input[name='tarif1'],input[name='tarif2'], input[name='tarif3'], input[name='tarif4']{
+    width: 70px;
+}
+
+.required{
+    color: red;
+}
+
+input[placeholder]{
+    font-size:24px;
+    font-style: italic;
+    text-align: center;
+    color: var(--gris-toile);
+}
+
+input[placeholder = "00"]{
     width: 50px;
+}
+
+.custom-select{
+    height: 50px;
+    background-color: var(--blanc-leger);
 }
 
 
 
-/* mettre asterisque en rouge */
+
+
+
+
+header {
+	background: var(--gradient-orange);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 1440px;
+	height: 120px;
+	box-shadow: 0px 10px 30px #000000bf;
+	padding: 0 30px;
+}
+
+.logo {
+	width: 72px;
+	height: 105px;
+  }
+
+.text-wrapper-17 {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+}
+
+.cherchero-wrapper {
+	position: relative;
+	margin-left: 320px;
+	width: 540px;
+	height: 50px;
+	background-image: url(https://c.animaapp.com/KXCkBuNy/img/recherche-1.png);
+	background-size: 100% 100%;
+  }
+  
+  .cherchero {
+	position: absolute;
+	right: 0; /* Position à droite */
+	width: 50px;
+	height: 50px;
+  }
+  
+
+.ICON-utilisateur {
+	margin-left: 15px;
+	width: 53px;
+	height: 60px;
+	object-fit: cover;
+	
+}
+
+.ICON-accueil {
+	margin: 0 15px 0 80px;
+	width: 65px;
+	height: 60px;
+	object-fit: cover;
+}
+
+/* Footer principal */
+/* Footer principal */
+footer {
+	background-image: linear-gradient(0deg, rgba(217, 111, 50, 1) 0%, rgba(217, 102, 54, 1) 23.1%, rgba(242, 139, 48, 1) 100%);
+	width: 1440px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+  }
+  
+  /* Section supérieure avec le gradient */
+  .footer-top {
+	width: 100%;
+	padding: 20px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+  }
+  
+  .footer-top-left {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	padding-right: 20px;
+	border-right: solid var(--blanc);
+  }
+
+  .footer-top-right {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+  }
+  
+  .footer-logo {
+	width: 75px;
+	height: 75px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-right: 20px;
+  }
+  
+  .footer-title {
+	font-family: 'Seymour One', sans-serif;
+	font-size: 48px;
+	color: white;
+  }
+  
+  .footer-subtitle {
+	font-family: 'SeoulNamsan', sans-serif;
+	font-size: 48px;
+	color: white;
+	margin-left: 20px;
+  }
+
+  .footer-connect {
+	font-family: 'SeoulNamsan', sans-serif;
+	font-size: 32px;
+	color: white;
+	margin-bottom: 10px;
+  }
+  
+  /* Section des icônes sociales */
+  .social-icons {
+	display: flex;
+	gap: 15px;
+  }
+  
+  .social-icon {
+	width: 73px;
+	height: 73px;
+	background-repeat: no-repeat;
+	background-size: cover;
+  }
+  
+  /* Barre en bas du footer */
+  .footer-bottom {
+	background-color: white;
+	border-radius: 15px;
+	width: 100%;
+	max-width: 1380px;
+	padding: 10px;
+	margin-top: 20px;
+	text-align: center;
+	font-family: 'Poppins', sans-serif;
+	font-size: 20px;
+	color: rgba(217, 102, 54, 1);
+	border: 1px solid rgba(0, 0, 0, 1);
+  }
+
 
 
 

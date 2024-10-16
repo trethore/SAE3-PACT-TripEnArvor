@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <!-- a inclure lorque le po aura fait son travail -->
+        <img class="logo" src="images/Logo_SAE3_blanc.png" />
+        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="cherchero-wrapper">
+            <img class="cherchero" src="images/cherchero_1.png" />
+        </div>
+        <img class="ICON-accueil" src="images/icon-accueil.png" />
+        <img class="ICON-utilisateur" src="images/icon-utilisateur.png" />
     </header>
 
     <main>
@@ -18,47 +26,53 @@
             <label>
 
 
-            <label for="titre">Titre *</label> 
+            <label for="titre">Titre <span class="required">*</span></label> 
             <input type="text" id="titre" name ="titre" placeholder="insérer un titre" required>
             
             <br>
-            
             <label for="categorie">Categorie </label>
-            <select id = "categorie" name = "lacat">
-                <option value = "restaurant"> Restaurant</option>
-                <option value = "parc"> Parc d'attraction</option>
-                <option value = "spectacle"> Spectacle</option>
-                <option value = "visite"> Visite</option>
-                <option value = "activite"> Activité</option>
-            </select>
+            <div class="custom-select">
+                <select id = "categorie" name = "lacat"> 
+                    <option value="">Choisir une categorie</option>
+                    <option value = "restaurant"> Restaurant</option>
+                    <option value = "parc"> Parc d'attraction</option>
+                    <option value = "spectacle"> Spectacle</option>
+                    <option value = "visite"> Visite</option>
+                    <option value = "activite"> Activité</option>
+                </select>
+            </div>
             
             <br>
             
             <label for="dispo">Disponibilité </label>
-            <select id = "dispo" name = "ladispo">
-                <option value = "ouvert"> Ouvert </option>
-                <option value = "ferme"> Fermé </option>
-            </select>
+            <div class="custom-select">
+                <select id = "dispo" name = "ladispo">
+                    <option value="">Choisir une disponibilité</option>
+                    <option value = "ouvert"> Ouvert </option>
+                    <option value = "ferme"> Fermé </option>
+                </select>
+            </div>
             
             <br>
 
-            <label for= "adresse">Adresse *</label>
+            <label for= "adresse">Adresse <span class="required">*</span></label>
             <input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Monparnasse)" required>
             <br>
-            <label for= "cp">Code Postal * </label>
+            <label for= "cp">Code Postal <span class="required">*</span> </label>
             <input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required>
-            <label for= "ville">Ville *</label>
+            <label for= "ville">Ville<span class="required">*</span></label>
             <input type="text" id="ville" name ="ville" placeholder="nom de ville" required>
             <br>
             <label for="photo"> Photo (max. 5)</label>
             <input type="file" id="photo1" name="photo1">
 
             <br>
-            
-            <select id = "type" name = "letype">
-                <option value = "payante"> Offre Payante </option>
-                <option value = "ferme"> Offre Gratuite </option>
-            </select>
+            <div class="custom-select">
+                <select id = "type" name = "letype">
+                    <option value = "payante"> Offre Payante </option>
+                    <option value = "ferme"> Offre Gratuite </option>
+                </select>
+            </div>
             
             <br>
             
@@ -67,7 +81,7 @@
             <p> -- Choisir une catégorie -- </p>
             <h3>A propos de l'offre</h3>
             <br>
-            <label for="descriptionC">Courte Description *</label>
+            <label for="descriptionC">Courte Description <span class="required">*</span></label>
             <input type="text" id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required>
             <br>
             <label for="lien">Lien externe</label>
@@ -153,7 +167,29 @@
     </a>
 
     <footer>
-        <!-- a inclure lorque le po aura fait son travail -->
+        <!-- Section supérieure avec le gradient -->
+    <div class="footer-top">
+        <div class="footer-top-left">
+          <span class="footer-subtitle">P.A.C.T</span>
+          <span class="footer-title">TripEnArmor</span>
+        </div>
+        <div class="footer-top-right">
+          <span class="footer-connect">Restons connectés !</span>
+          <div class="social-icons">
+            <div class="social-icon" style="background-image: url('images/logo_x_2.png');"></div>
+            <div class="social-icon" style="background-image: url('images/image__1__1.png');"></div>
+            <div class="social-icon" style="background-image: url('images/jouer_1.png');"></div>
+            <div class="social-icon" style="background-image: url('images/image__1__2.png');"></div>
+          </div>
+        </div>
+        
+    
+        <!-- Barre en bas du footer incluse ici -->
+        
+      </div>
+      <div class="footer-bottom">
+        Politique de confidentialité - Politique RGPD - Mentions légales - Plan du site - Conditions générales - © Redden’s, Inc.
+      </div>
     </footer>
 
 </body>
