@@ -74,20 +74,23 @@ CREATE VIEW compte_professionnel_prive AS
     SELECT * 
     FROM _compte
     NATURAL JOIN _compte_professionnel
-    NATURAL JOIN _compte_professionnel_prive;
+    NATURAL JOIN _compte_professionnel_prive
+;
 
 
 CREATE VIEW compte_professionnel_publique AS
     SELECT * 
     FROM _compte
     NATURAL JOIN _compte_professionnel
-    NATURAL JOIN _compte_professionnel_publique;
+    NATURAL JOIN _compte_professionnel_publique
+;
 
 
 CREATE VIEW compte_membre AS
     SELECT * 
     FROM _compte
-    NATURAL JOIN _compte_membre;
+    NATURAL JOIN _compte_membre
+;
 
 
 /* ********************************************************************* */
@@ -150,6 +153,41 @@ CREATE TABLE _offre_restauration (
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
+
+
+CREATE VIEW offre_activite AS
+    SELECT *
+    FROM _offre_activite
+    NATURAL JOIN _offre
+;
+
+
+CREATE VIEW offre_visite AS
+    SELECT *
+    FROM _offre_visite
+    NATURAL JOIN _offre
+;
+
+
+CREATE VIEW offre_spectacle AS
+    SELECT *
+    FROM _offre_spectacle
+    NATURAL JOIN _offre
+;
+
+
+CREATE VIEW offre_parc_attraction AS
+    SELECT * 
+    FROM _offre_parc_attraction
+    NATURAL JOIN _offre
+;
+
+
+CREATE VIEW offre_restauration AS
+    SELECT *
+    FROM _offre_restauration
+    NATURAL JOIN _offre
+;
 
 
 /* ********************************************************************* */
