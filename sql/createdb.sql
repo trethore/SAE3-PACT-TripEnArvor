@@ -189,7 +189,11 @@ CREATE TABLE _image (
 
 
 CREATE TABLE _tarif (
-    prix    INTEGER NOT NULL
+    id_tarif    SERIAL,
+    prix        INTEGER NOT NULL,
+    id_offre    INTEGER NOT NULL,
+    CONSTRAINT _tarif_pk PRIMARY KEY (id),
+    CONSTRAINT _tarif_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id)
 );
 
 
