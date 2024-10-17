@@ -56,8 +56,6 @@ CREATE TABLE _compte_professionnel (
 /* ================ COMPTE PROFESSIONNEL PRIVÉ CONCRET ================= */
 
 
--- -- TABLE & VUES -- --
-
 CREATE TABLE _compte_professionnel_prive (
     id_compte   INTEGER,
     siren       VARCHAR(255) NOT NULL,
@@ -71,98 +69,6 @@ CREATE VIEW compte_professionnel_prive AS
     NATURAL JOIN _compte_professionnel
     NATURAL JOIN _compte_professionnel_prive
 ;
-
-
--- -- CRUD -- --
-
--- CREATE
-
-CREATE OR REPLACE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
-DECLARE
-    id_compte_temp _compte.id_compte%type;
-BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
-        RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
-        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
-    INSERT INTO _compte_professionnel_prive(id_compte, siren)
-        VALUES (id_compte_temp, NEW.siren);
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_compte_professionnel_prive
-INSTEAD OF INSERT
-ON compte_professionnel_prive FOR EACH ROW
-EXECUTE PROCEDURE create_compte_professionnel_prive();
-
-
--- READ
-
-/* SELECT * FROM compte_professionnel_prive; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_compte <> OLD.id_compte) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
-    END IF;
-
-    UPDATE _compte
-    SET nom_compte = NEW.nom_compte,
-        prenom = NEW.prenom,
-        email = NEW.email,
-        tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
-    WHERE id_compte = NEW.id_compte;
-
-    UPDATE _compte_professionnel
-    SET denomination = NEW.denomination,
-        a_propos = NEW.a_propos,
-        site_web = NEW.site_web
-    WHERE id_compte = NEW.id_compte;
-
-    UPDATE _compte_professionnel_prive
-    SET siren = NEW.siren
-    WHERE id_compte = NEW.id_compte;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_compte_professionnel_prive
-INSTEAD OF UPDATE
-ON compte_professionnel_prive
-FOR EACH ROW
-EXECUTE PROCEDURE update_compte_professionnel_prive();
-
-
--- DELETE
-
-CREATE FUNCTION delete_compte_professionnel_prive() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _compte_professionnel_prive
-    WHERE id_compte = OLD.id_compte;
-
-    DELETE FROM _compte_professionnel
-    WHERE id_compte = OLD.id_compte;
-
-    DELETE FROM _compte
-    WHERE id_compte = OLD.id_compte;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_compte_professionnel_prive
-INSTEAD OF DELETE
-ON compte_professionnel_prive
-FOR EACH ROW
-EXECUTE PROCEDURE delete_compte_professionnel_prive();
 
 
 /* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
@@ -441,6 +347,103 @@ CREATE TABLE _offre_restauration_propose_repas (
     CONSTRAINT _offre_restauration_propose_repas_fk_offre_restauration FOREIGN KEY (id_offre_restauration) REFERENCES _offre_restauration(id_offre),
     CONSTRAINT _offre_restauration_propose_repas_fk_type_repas FOREIGN KEY (type_repas) REFERENCES _type_repas(type_repas)
 );
+
+
+/* ##################################################################### */
+/*                                  CRUD                                 */
+/* ##################################################################### */
+
+
+/* ================ COMPTE PROFESSIONNEL PRIVÉ CONCRET ================= */
+
+-- CREATE
+
+CREATE OR REPLACE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
+DECLARE
+    id_compte_temp _compte.id_compte%type;
+BEGIN
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+        RETURNING id_compte INTO id_compte_temp;
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel_prive(id_compte, siren)
+        VALUES (id_compte_temp, NEW.siren);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_compte_professionnel_prive
+INSTEAD OF INSERT
+ON compte_professionnel_prive FOR EACH ROW
+EXECUTE PROCEDURE create_compte_professionnel_prive();
+
+
+-- READ
+
+/* SELECT * FROM compte_professionnel_prive; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_compte <> OLD.id_compte) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
+    END IF;
+
+    UPDATE _compte
+    SET nom_compte = NEW.nom_compte,
+        prenom = NEW.prenom,
+        email = NEW.email,
+        tel = NEW.tel,
+        mot_de_passe = NEW.mot_de_passe,
+        id_adresse = NEW.id_adresse
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_professionnel
+    SET denomination = NEW.denomination,
+        a_propos = NEW.a_propos,
+        site_web = NEW.site_web
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_professionnel_prive
+    SET siren = NEW.siren
+    WHERE id_compte = NEW.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_compte_professionnel_prive
+INSTEAD OF UPDATE
+ON compte_professionnel_prive
+FOR EACH ROW
+EXECUTE PROCEDURE update_compte_professionnel_prive();
+
+
+-- DELETE
+
+CREATE FUNCTION delete_compte_professionnel_prive() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _compte_professionnel_prive
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte_professionnel
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte
+    WHERE id_compte = OLD.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_compte_professionnel_prive
+INSTEAD OF DELETE
+ON compte_professionnel_prive
+FOR EACH ROW
+EXECUTE PROCEDURE delete_compte_professionnel_prive();
 
 
 COMMIT;
