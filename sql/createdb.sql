@@ -354,7 +354,7 @@ CREATE TABLE _offre_restauration_propose_repas (
 /* ##################################################################### */
 
 
-/* ========================== COMPTE ABSTRAIT ========================== */
+/* ============================== COMPTE =============================== */
 
 CREATE OR REPLACE VIEW totalite_compte AS
 SELECT id_compte FROM _compte
@@ -382,6 +382,36 @@ ON _compte
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE _compte_is_abstract();
+
+
+/* ======================= COMPTE PROFESSIONNEL ======================== */
+
+CREATE OR REPLACE VIEW totalite_compte_professionnel AS
+SELECT id_compte FROM _compte_professionnel
+EXCEPT
+(
+    SELECT id_compte FROM _compte_professionnel_prive
+    UNION
+    SELECT id_compte FROM _compte_professionnel_publique
+);
+
+CREATE FUNCTION _compte_professionnel_is_abstract() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM totalite_compte_professionnel;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas instancier un _compte_professionnel.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS tg_compte_professionnel_is_abstract ON _compte_professionnel;
+CREATE CONSTRAINT TRIGGER tg_compte_professionnel_is_abstract
+AFTER INSERT
+ON _compte_professionnel
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE _compte_professionnel_is_abstract();
 
 
 /* ##################################################################### */
