@@ -24,53 +24,60 @@
         <h2> Creation d'une offre</h2>
         <form action = "creationoffre.php" method = "post" enctype="multipart/form-data">
             <h3>Informations importante</h3>
-
-            <label for="titre">Titre <span class="required">*</span></label> 
-            <input type="text" id="titre" name ="titre" placeholder="insérer un titre" required>
-            
-            <br>
-            <label for="categorie">Catégorie </label>
-            <div class="custom-select">
-                <select id = "categorie" name = "lacat"> 
-                    <option value="">Choisir une categorie</option>
-                    <option value = "restaurant"> Restaurant</option>
-                    <option value = "parc"> Parc d'attraction</option>
-                    <option value = "spectacle"> Spectacle</option>
-                    <option value = "visite"> Visite</option>
-                    <option value = "activite"> Activité</option>
-                </select>
-            </div>
-            
-            <br>
-            
-            <label for="dispo">Disponibilité </label>
-            <div class="custom-select">
-                <select id = "dispo" name = "ladispo">
-                    <option value="">Choisir une disponibilité</option>
-                    <option value = "ouvert"> Ouvert </option>
-                    <option value = "ferme"> Fermé </option>
-                </select>
-            </div>
-            
-            <br>
-
-            <label for= "adresse">Adresse <span class="required">*</span></label>
-            <input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Monparnasse)" required>
-            <br>
-            <label for= "cp">Code Postal <span class="required">*</span> </label>
-            <input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required>
-            <label for= "ville">Ville<span class="required">*</span></label>
-            <input type="text" id="ville" name ="ville" placeholder="nom de ville" required>
-            <br>
-            <label for="photo"> Photo (max. 5)</label>
-            <input type="file" id="photo1" name="photo1">
-
-            <br>
-            <div class="custom-select">
-                <select id = "type" name = "letype">
-                    <option value = "payante"> Offre Payante </option>
-                    <option value = "ferme"> Offre Gratuite </option>
-                </select>
+            <div class="important">
+            <table border="1">
+                <tr>
+                    <td><label for="titre">Titre <span class="required">*</span></label> </td>
+                    <td><input type="text" id="titre" name ="titre" placeholder="insérer un titre" required></td>
+                </tr>
+                <tr>
+                <td><label for="categorie">Catégorie </label></td>
+                    <td><div class="custom-select">
+                        <select id = "categorie" name = "lacat"> 
+                            <option value="">Choisir une categorie</option>
+                            <option value = "restaurant"> Restaurant</option>
+                            <option value = "parc"> Parc d'attraction</option>
+                            <option value = "spectacle"> Spectacle</option>
+                            <option value = "visite"> Visite</option>
+                            <option value = "activite"> Activité</option>
+                        </select>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td><label for="dispo">Disponibilité </label></td>
+                    <td><div class="custom-select">
+                        <select id = "dispo" name = "ladispo">
+                            <option value="">Choisir une disponibilité</option>
+                            <option value = "ouvert"> Ouvert </option>
+                            <option value = "ferme"> Fermé </option>
+                        </select>
+                    </div></td>
+                </tr>
+                
+                <tr>
+                    <td><label for= "adresse">Adresse <span class="required">*</span></label></td>
+                    <td><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Monparnasse)" required></td>
+                </tr>
+                <tr>
+                    <td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
+                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required></td>
+                    <td><label for= "ville">Ville<span class="required">*</span></label></td>
+                    <td><input type="text" id="ville" name ="ville" placeholder="nom de ville" required></td>
+                </tr>
+                <tr>
+                    <td><label for="photo"> Photo (max. 5)</label></td>
+                    <td><input type="file" id="photo1" name="photo1"></td>
+                </tr>
+                <tr>
+                    <td><label for="type">Type de l'offre</label></td>
+                    <td><div class="custom-select">
+                        <select id = "type" name = "letype">
+                            <option value = "payante"> Offre Payante </option>
+                            <option value = "ferme"> Offre Gratuite </option>
+                        </select>
+                    </div></td>
+                </tr>
+            </table>
             </div>
             
             <br>
@@ -78,17 +85,37 @@
             <h3>Tags de l'offre</h3>
             
             <p> -- Choisir une catégorie -- </p>
-            <h3>A propos de l'offre</h3>
-            <label for="descriptionC">Courte Description <span class="required">*</span></label>
-            <input type="text" id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required>
-            <br>
-            <label for="lien">Lien externe</label>
-            <input type="url" id="lien" name="lien" placeholder="insérer un lien vers un site internet">
-            <br>
-            <label for="tel">Numéro de téléphone</label>
-            <input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)">
+            <div class="apropos">
+                <table border="0">
+                    <tr>
+                        <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
+                        <td><textarea id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required></textarea></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><label for="lien">Lien externe</label></td>
+                        <td><input type="url" id="lien" name="lien" placeholder="insérer un lien vers un site internet"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="tel">Numéro de téléphone</label></td>
+                        <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)"></td>
+                    </tr>
+                    </table>
+
+                <!-- <h3>A propos de l'offre</h3>
+                <label for="descriptionC">Courte Description <span class="required">*</span></label>
+                <input type="text" id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required>
+                <br>
+                <label for="lien">Lien externe</label>
+                <input type="url" id="lien" name="lien" placeholder="insérer un lien vers un site internet">
+                <br>
+                <label for="tel">Numéro de téléphone</label>
+                <input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)"> -->
+            </div>
+            
             <h3>Description détaillée de l'offre</h3>
-            <input type="text" id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillé... ">
+            <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillé... "></textarea>
+            
             <h3>Tarifs</h3>
             <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "nom du tarif" required>
             <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
@@ -158,7 +185,7 @@
 
     </main>
     <div>
-        <input class="valider"type="submit" value="Créer une offre">
+        <input class="valider"type="submit" value="Créer l'offre">
 
         <a href="#" id="back-to-top">
             <img src="Comportement-lapin.png" alt="Retour en haut" width="50" height="50">

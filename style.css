@@ -56,10 +56,16 @@ h3 {
     border-radius: 15px;
     font-size: 32px;
     font-weight: 500;
+    margin-bottom: 15px;
 }
 
 label{
     font-weight: 400;
+}
+
+label, input{
+  font-size: 24px;
+  margin:5px 5px 0 0;
 }
 
 p{
@@ -67,7 +73,7 @@ p{
 }
 
 body {
-    background-color: var(--blanc-leger);
+  background-color: var(--blanc-leger);
 	width: 1440px;
 	display: flex;
 	flex-direction: column;
@@ -84,13 +90,11 @@ main {
     margin-bottom: 20px;
     margin-top: 20px;
     border-radius: 15px;
-    padding: 10px;
+    padding: 50px;
+
 }
 
-label, input{
-    font-size: 24px;
-    margin:5px 0;
-}
+
 
 main + div{
     width: 1338px;
@@ -116,27 +120,94 @@ main + div{
     width: 100px;
 }
 
+input[placeholder="(ex : 01 23 45 67 89)"]{
+  width: 500px;
+}
 
-input[type="text"], input[type="url"], input[type="number"], input[type="tel"]{
+
+input[type="text"], input[type="url"], input[type="number"], input[type="tel"], textarea{
     background-color: var(--blanc-leger);
     color: black;
     border: 0;
     border-radius: 10px;
-    resize: both;
-    width: 900px;
+    resize: vertical;
+    /*width: 900px;*/
     height: 50px;
+    font-style: normal;
+    text-align: center;
+    font-size: 24px;
 }
 
 input[name='tarif1'],input[name='tarif2'], input[name='tarif3'], input[name='tarif4']{
-    width: 70px;
+    width: 100px;
+}
+
+input[name ="titre"], input[name="adresse"]{
+  width: 70%;
+}
+
+.apropos table{
+
 }
 
 .required{
     color: red;
 }
 
-input[placeholder]{
-    font-size:24px;
+.apropos tr + td{
+  width: auto;
+  padding: 5px 0;
+}
+
+.apropos td + td{
+    padding: 5px 0 5px 10%;
+    width: 75%;
+}
+
+.apropos textarea{
+  width: 130%;
+  min-height: 150px;
+  height: fit-content;
+}
+
+input[type="url"], input[type="tel"]{
+  width: 65%;
+}
+
+textarea{
+  min-height: 150px;
+  height: fit-content;
+  word-wrap: break-word;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+textarea[placeholder]{
+  text-align: left;
+}
+
+.important tr + td {
+  width: auto;
+} 
+
+.important td + td {
+  width: 70%;
+}
+
+
+
+/* .important table :nth-child(5) td + td{
+  width: 50px;
+}  */
+
+.important table :nth-child(5) td + td + td{
+  width: 20px;
+} 
+
+
+
+::placeholder{
     font-style: italic;
     text-align: center;
     color: var(--gris-toile);
