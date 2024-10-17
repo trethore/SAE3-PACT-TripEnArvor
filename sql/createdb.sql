@@ -10,6 +10,7 @@ COMMIT;
 START TRANSACTION;
 
 
+
 /* ##################################################################### */
 /*                                 TYPES                                 */
 /* ##################################################################### */
@@ -20,13 +21,13 @@ CREATE TYPE type_repas_t AS ENUM ('Petit=déjeuner', 'Brunch', 'Déjeuner', 'Dî
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 
 
+
 /* ##################################################################### */
 /*                                COMPTES                                */
 /* ##################################################################### */
 
 
 /* ========================== COMPTE ABSTRAIT ========================== */
-
 
 CREATE TABLE _compte (
     id_compte       SERIAL,
@@ -42,7 +43,6 @@ CREATE TABLE _compte (
 
 /* =================== COMPTE PROFESSIONNEL ABSTRAIT =================== */
 
-
 CREATE TABLE _compte_professionnel (
     id_compte       INTEGER,
     denomination    VARCHAR(255) NOT NULL,
@@ -54,7 +54,6 @@ CREATE TABLE _compte_professionnel (
 
 
 /* ================ COMPTE PROFESSIONNEL PRIVÉ CONCRET ================= */
-
 
 CREATE TABLE _compte_professionnel_prive (
     id_compte   INTEGER,
@@ -73,7 +72,6 @@ CREATE VIEW compte_professionnel_prive AS
 
 /* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
 
-
 CREATE TABLE _compte_professionnel_publique (
     id_compte   INTEGER,
     CONSTRAINT _compte_professionnel_publique_pk PRIMARY KEY (id_compte),
@@ -90,7 +88,6 @@ CREATE VIEW compte_professionnel_publique AS
 
 /* ======================= COMPTE MEMBRE CONCRET ======================= */
 
-
 CREATE TABLE _compte_membre (
     id_compte   INTEGER,
     pseudo      VARCHAR(255) NOT NULL,
@@ -105,13 +102,13 @@ CREATE VIEW compte_membre AS
 ;
 
 
+
 /* ##################################################################### */
 /*                                OFFRES                                 */
 /* ##################################################################### */
 
 
 /* ========================== OFFRE ABSTRAITE ========================== */
-
 
 CREATE TABLE _offre (
     id_offre                SERIAL,
@@ -129,7 +126,6 @@ CREATE TABLE _offre (
 
 /* ====================== OFFRE ACTIVITÉ CONCRETE ====================== */
 
-
 CREATE TABLE _offre_activite (
     id_offre    INTEGER,
     duree       INTEGER NOT NULL,
@@ -141,7 +137,6 @@ CREATE TABLE _offre_activite (
 
 /* ======================= OFFRE VISITE CONCRETE ======================= */
 
-
 CREATE TABLE _offre_visite (
     id_offre    INTEGER,
     duree       INTEGER NOT NULL,
@@ -151,7 +146,6 @@ CREATE TABLE _offre_visite (
 
 
 /* ===================== OFFRE SPECTACLE CONCRETE ====================== */
-
 
 CREATE TABLE _offre_spectacle (
     id_offre    INTEGER,
@@ -164,7 +158,6 @@ CREATE TABLE _offre_spectacle (
 
 /* ================= OFFRE PARC D'ATTRACTIONS CONCRETE ================= */
 
-
 CREATE TABLE _offre_parc_attraction (
     id_offre         INTEGER,
     nb_attractions   INTEGER NOT NULL,
@@ -175,7 +168,6 @@ CREATE TABLE _offre_parc_attraction (
 
 
 /* ==================== OFFRE RESTAURATION CONCRETE ==================== */
-
 
 CREATE TABLE _offre_restauration (
     id_offre    INTEGER,
@@ -220,6 +212,7 @@ CREATE VIEW offre_restauration AS
 ;
 
 
+
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
 /* ##################################################################### */
@@ -253,6 +246,7 @@ CREATE TABLE _type_repas (
     type_repas  type_repas_t,
     CONSTRAINT _type_repas_pk PRIMARY KEY (type_repas)    
 );
+
 
 CREATE TABLE _image (
     lien_fichier    VARCHAR(255),
@@ -292,6 +286,7 @@ CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
+
 
 
 /* ##################################################################### */
@@ -345,6 +340,7 @@ CREATE TABLE _offre_restauration_propose_repas (
     CONSTRAINT _offre_restauration_propose_repas_fk_offre_restauration FOREIGN KEY (id_offre_restauration) REFERENCES _offre_restauration(id_offre),
     CONSTRAINT _offre_restauration_propose_repas_fk_type_repas FOREIGN KEY (type_repas) REFERENCES _type_repas(type_repas)
 );
+
 
 
 /* ##################################################################### */
@@ -446,6 +442,7 @@ ON _offre
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE _offre_is_abstract();
+
 
 
 /* ##################################################################### */
