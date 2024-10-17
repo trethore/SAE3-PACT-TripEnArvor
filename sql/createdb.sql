@@ -108,9 +108,28 @@ EXECUTE PROCEDURE create_compte_professionnel_prive();
 CREATE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
 BEGIN
     IF (NEW.id_compte <> OLD.id_compte) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.'
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
     END IF;
-    -- // TODO Finir la fonction update_compte_professionnel_prive().
+
+    UPDATE _compte
+    SET nom_compte = NEW.nom_compte,
+        prenom = NEW.prenom,
+        email = NEW.email,
+        tel = NEW.tel,
+        mot_de_passe = NEW.mot_de_passe,
+        id_adresse = NEW.id_adresse
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_professionnel
+    SET denomination = NEW.denomination,
+        a_propos = NEW.a_propos,
+        site_web = NEW.site_web
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_professionnel_prive
+    SET siren = NEW.siren
+    WHERE id_compte = NEW.id_compte;
+
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
