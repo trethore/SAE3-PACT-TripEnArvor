@@ -879,5 +879,92 @@ FOR EACH ROW
 EXECUTE PROCEDURE delete_offre_visite();
 
 
+/* ========================== OFFRE SPECTACLE ========================== */
+
+-- CREATE
+
+CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+        RETURNING id_offre INTO id_offre_temp;
+    INSERT INTO _offre_spectacle(id_offre, duree, capacite)
+        VALUES (id_offre_temp, NEW.duree, NEW.capacite);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_offre_spectacle
+INSTEAD OF INSERT
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_spectacle();
+
+
+-- READ
+
+/* SELECT * FROM offre_spectacle; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_offre_spectacle() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre = NEW.titre,
+        resume = NEW.resume,
+        ville = NEW.ville,
+        description_detaille = NEW.description_detaille,
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_spectacle
+    SET duree = NEW.duree,
+        capacite = NEW.capacite
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_offre_spectacle
+INSTEAD OF UPDATE
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_spectacle();
+
+
+-- DELETE
+
+CREATE FUNCTION delete_offre_spectacle() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_spectacle
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_offre_spectacle
+INSTEAD OF DELETE
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_spectacle();
+
+
 COMMIT;
 
