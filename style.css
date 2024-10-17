@@ -39,6 +39,7 @@ header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: end;
 	width: 1440px;
 	height: 120px;
 	box-shadow: 0px 10px 30px var(--noir);
@@ -48,7 +49,7 @@ header {
 .logo {
 	width: 72px;
 	height: 105px;
-  }
+}
 
 .text-wrapper-17 {
 	font-family: "Inter", Helvetica;
@@ -60,35 +61,20 @@ header {
 	line-height: normal;
 	white-space: nowrap;
 	margin: 0 10px;
+	margin-right: auto;
 }
 
-.cherchero-wrapper {
-	position: relative;
-	margin-left: 320px;
-	width: 540px;
-	height: 50px;
-	background-image: url(https://c.animaapp.com/KXCkBuNy/img/recherche-1.png);
-	background-size: 100% 100%;
-  }
-  
-  .cherchero {
-	position: absolute;
-	right: 0; /* Position à droite */
-	width: 50px;
-	height: 50px;
-  }
-  
 
 .ICON-utilisateur {
 	margin-left: 15px;
 	width: 53px;
 	height: 60px;
 	object-fit: cover;
-	
+
 }
 
 .ICON-accueil {
-	margin: 0 15px 0 80px;
+	margin: 0 15px 0 50px;
 	width: 65px;
 	height: 60px;
 	object-fit: cover;
@@ -97,82 +83,82 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background-image: linear-gradient(0deg, rgba(217, 111, 50, 1) 0%, rgba(217, 102, 54, 1) 23.1%, rgba(242, 139, 48, 1) 100%);
+	background: var(--gradient-orange);
 	width: 1440px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	padding: 20px;
-  }
-  
-  /* Section supérieure avec le gradient */
-  .footer-top {
+}
+
+/* Section supérieure avec le gradient */
+.footer-top {
 	width: 100%;
-	padding: 20px 10px;
+	padding: 0 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
-  }
-  
-  .footer-top-left {
+}
+
+.footer-top-left {
 	display: flex;
 	flex-direction: column;
 	align-items: end;
 	padding-right: 20px;
 	border-right: solid var(--blanc);
-  }
+}
 
-  .footer-top-right {
+.footer-top-right {
 	display: flex;
 	flex-direction: column;
 	align-items: end;
-  }
-  
-  .footer-logo {
+}
+
+.footer-logo {
 	width: 75px;
 	height: 75px;
 	background-repeat: no-repeat;
 	background-size: cover;
 	margin-right: 20px;
-  }
-  
-  .footer-title {
+}
+
+.footer-title {
 	font-family: 'Seymour One', sans-serif;
 	font-size: 48px;
 	color: white;
-  }
-  
-  .footer-subtitle {
+}
+
+.footer-subtitle {
 	font-family: 'SeoulNamsan', sans-serif;
 	font-size: 48px;
 	color: white;
 	margin-left: 20px;
-  }
+}
 
-  .footer-connect {
+.footer-connect {
 	font-family: 'SeoulNamsan', sans-serif;
 	font-size: 32px;
 	color: white;
 	margin-bottom: 10px;
-  }
-  
-  /* Section des icônes sociales */
-  .social-icons {
+}
+
+/* Section des icônes sociales */
+.social-icons {
 	display: flex;
 	gap: 15px;
-  }
-  
-  .social-icon {
+}
+
+.social-icon {
 	width: 73px;
 	height: 73px;
 	background-repeat: no-repeat;
 	background-size: cover;
-  }
-  
-  /* Barre en bas du footer */
-  .footer-bottom {
+}
+
+/* Barre en bas du footer */
+.footer-bottom {
 	background-color: white;
 	border-radius: 15px;
 	width: 100%;
@@ -182,7 +168,77 @@ footer {
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	font-size: 20px;
-	color: rgba(217, 102, 54, 1);
+	color: var(--orange-principale);
 	border: 1px solid rgba(0, 0, 0, 1);
-  }
-  
+}
+
+.footer-bottom > a {
+	color: var(--orange-principale);
+}
+
+ /* search component in header*/
+.search-box {
+	margin-top: 5px;
+	width: fit-content;
+	height: fit-content;
+	position: relative;
+}
+
+.input-search {
+	height: 60px;
+	width: 50px;
+	border-style: none;
+	padding: 20px;
+	font-size: 18px;
+	letter-spacing: 2px;
+	outline: none;
+	border-radius: 25px;
+	transition: all .5s ease-in-out;
+	background-color:var(--transparent);
+	padding-right: 40px;
+	color: #fff;
+}
+
+.input-search::placeholder {
+	color: var(--semi-trans);
+	font-size: 18px;
+	letter-spacing: 2px;
+	font-weight: 100;
+}
+
+.btn-search {
+	width: 50px;
+	height: 50px;
+	border-style: none;
+	font-size: 20px;
+	font-weight: bold;
+	outline: none;
+	cursor: pointer;
+	border-radius: 50%;
+	position: absolute;
+	right: 0px;
+	color: #ffffff;
+	background-color: transparent;
+	pointer-events: painted;
+}
+
+.btn-search:focus~.input-search {
+	width: 500px;
+	border-radius: 0px;
+	background-color: transparent;
+	border-bottom: 1px solid var(--semi-trans);
+	transition: all 500ms ;
+}
+
+.input-search:focus {
+	width: 500px;
+	border-radius: 0px;
+	background-color: transparent;
+	border-bottom: 1px solid var(--semi-trans);
+	transition: all 500ms ;
+}
+
+.cherchero {
+	height: 60px;
+	width: 60px;
+}
