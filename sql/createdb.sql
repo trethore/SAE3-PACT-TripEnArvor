@@ -141,6 +141,30 @@ FOR EACH ROW
 EXECUTE PROCEDURE update_compte_professionnel_prive();
 
 
+-- DELETE
+
+CREATE FUNCTION delete_compte_professionnel_prive() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _compte_professionnel_prive
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte_professionnel
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte
+    WHERE id_compte = OLD.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_compte_professionnel_prive
+INSTEAD OF DELETE
+ON compte_professionnel_prive
+FOR EACH ROW
+EXECUTE PROCEDURE delete_compte_professionnel_prive();
+
+
 /* =============== COMPTE PROFESSIONNEL PUBLIQUE CONCRET =============== */
 
 
