@@ -145,6 +145,11 @@ footer {
 	color: var(--orange-principale);
 	border: 1px solid rgba(0, 0, 0, 1);
 }
+
+.footer-bottom > a {
+	color: var(--orange-principale);
+}
+
  /* search component in header*/
 .search-box {
 	margin-top: 5px;
