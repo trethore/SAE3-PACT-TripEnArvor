@@ -15,12 +15,11 @@
   --mobile-star-size: 30px;
   --like-size: 35px;
 
-  --jaune-toile: rgba(254, 194, 1, 1);
-  --gris-toile: rgba(128, 128, 128, 1);
+  --jaune-etoile: rgba(254, 194, 1, 1);
+  --gris-etoile: rgba(128, 128, 128, 1);
   --gris: rgba(193, 192, 192, 1);
 
-  --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
-  --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
-  --gradient-orange-2: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
+  --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
+  --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
 
 }
