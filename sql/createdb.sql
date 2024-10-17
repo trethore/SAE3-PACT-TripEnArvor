@@ -966,5 +966,92 @@ FOR EACH ROW
 EXECUTE PROCEDURE delete_offre_spectacle();
 
 
+/* ===================== OFFRE PARC D'ATTRACTIONS ====================== */
+
+-- CREATE
+
+CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+        RETURNING id_offre INTO id_offre_temp;
+    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min)
+        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_offre_parc_attraction
+INSTEAD OF INSERT
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_parc_attraction();
+
+
+-- READ
+
+/* SELECT * FROM offre_parc_attraction; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_offre_parc_attraction() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre = NEW.titre,
+        resume = NEW.resume,
+        ville = NEW.ville,
+        description_detaille = NEW.description_detaille,
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_parc_attraction
+    SET nb_attractions = NEW.nb_attractions,
+        age_min = NEW.age_min
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_offre_parc_attraction
+INSTEAD OF UPDATE
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_parc_attraction();
+
+
+-- DELETE
+
+CREATE FUNCTION delete_offre_parc_attraction() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_parc_attraction
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_offre_parc_attraction
+INSTEAD OF DELETE
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_parc_attraction();
+
+
 COMMIT;
 
