@@ -134,6 +134,12 @@ CREATE TABLE _offre_activite (
     CONSTRAINT _offre_activite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
+CREATE VIEW offre_activite AS
+    SELECT *
+    FROM _offre_activite
+    NATURAL JOIN _offre
+;
+
 
 /* ======================= OFFRE VISITE CONCRETE ======================= */
 
@@ -143,6 +149,12 @@ CREATE TABLE _offre_visite (
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
+
+CREATE VIEW offre_visite AS
+    SELECT *
+    FROM _offre_visite
+    NATURAL JOIN _offre
+;
 
 
 /* ===================== OFFRE SPECTACLE CONCRETE ====================== */
@@ -155,6 +167,12 @@ CREATE TABLE _offre_spectacle (
     CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
+CREATE VIEW offre_spectacle AS
+    SELECT *
+    FROM _offre_spectacle
+    NATURAL JOIN _offre
+;
+
 
 /* ================= OFFRE PARC D'ATTRACTIONS CONCRETE ================= */
 
@@ -166,6 +184,12 @@ CREATE TABLE _offre_parc_attraction (
     CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
+CREATE VIEW offre_parc_attraction AS
+    SELECT * 
+    FROM _offre_parc_attraction
+    NATURAL JOIN _offre
+;
+
 
 /* ==================== OFFRE RESTAURATION CONCRETE ==================== */
 
@@ -175,35 +199,6 @@ CREATE TABLE _offre_restauration (
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
-
-
-CREATE VIEW offre_activite AS
-    SELECT *
-    FROM _offre_activite
-    NATURAL JOIN _offre
-;
-
-
-CREATE VIEW offre_visite AS
-    SELECT *
-    FROM _offre_visite
-    NATURAL JOIN _offre
-;
-
-
-CREATE VIEW offre_spectacle AS
-    SELECT *
-    FROM _offre_spectacle
-    NATURAL JOIN _offre
-;
-
-
-CREATE VIEW offre_parc_attraction AS
-    SELECT * 
-    FROM _offre_parc_attraction
-    NATURAL JOIN _offre
-;
-
 
 CREATE VIEW offre_restauration AS
     SELECT *
