@@ -80,6 +80,13 @@ CREATE TABLE _compte_professionnel_publique (
     CONSTRAINT _compte_professionnel_publique_fk_compte_professionnel FOREIGN KEY (id_compte) REFERENCES _compte_professionnel(id_compte)
 );
 
+CREATE VIEW compte_professionnel_publique AS
+    SELECT * 
+    FROM _compte
+    NATURAL JOIN _compte_professionnel
+    NATURAL JOIN _compte_professionnel_publique
+;
+
 
 /* ======================= COMPTE MEMBRE CONCRET ======================= */
 
@@ -90,15 +97,6 @@ CREATE TABLE _compte_membre (
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
-
-
-CREATE VIEW compte_professionnel_publique AS
-    SELECT * 
-    FROM _compte
-    NATURAL JOIN _compte_professionnel
-    NATURAL JOIN _compte_professionnel_publique
-;
-
 
 CREATE VIEW compte_membre AS
     SELECT * 
@@ -356,7 +354,7 @@ CREATE TABLE _offre_restauration_propose_repas (
 
 /* ============================== COMPTE =============================== */
 
-CREATE OR REPLACE VIEW totalite_compte AS
+CREATE VIEW totalite_compte AS
 SELECT id_compte FROM _compte
 EXCEPT
 (
@@ -386,7 +384,7 @@ EXECUTE PROCEDURE _compte_is_abstract();
 
 /* ======================= COMPTE PROFESSIONNEL ======================== */
 
-CREATE OR REPLACE VIEW totalite_compte_professionnel AS
+CREATE VIEW totalite_compte_professionnel AS
 SELECT id_compte FROM _compte_professionnel
 EXCEPT
 (
@@ -423,7 +421,7 @@ EXECUTE PROCEDURE _compte_professionnel_is_abstract();
 
 -- CREATE
 
-CREATE OR REPLACE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
+CREATE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
@@ -509,6 +507,94 @@ INSTEAD OF DELETE
 ON compte_professionnel_prive
 FOR EACH ROW
 EXECUTE PROCEDURE delete_compte_professionnel_prive();
+
+
+/* =================== COMPTE PROFESSIONNEL PUBLIQUE =================== */
+
+-- CREATE
+
+CREATE FUNCTION create_compte_professionnel_publique() RETURNS TRIGGER AS $$
+DECLARE
+    id_compte_temp _compte.id_compte%type;
+BEGIN
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+        RETURNING id_compte INTO id_compte_temp;
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel_publique(id_compte)
+        VALUES (id_compte_temp);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_compte_professionnel_publique
+INSTEAD OF INSERT
+ON compte_professionnel_publique FOR EACH ROW
+EXECUTE PROCEDURE create_compte_professionnel_publique();
+
+
+-- READ
+
+/* SELECT * FROM compte_professionnel_publique; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_compte_professionnel_publique() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_compte <> OLD.id_compte) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
+    END IF;
+
+    UPDATE _compte
+    SET nom_compte = NEW.nom_compte,
+        prenom = NEW.prenom,
+        email = NEW.email,
+        tel = NEW.tel,
+        mot_de_passe = NEW.mot_de_passe,
+        id_adresse = NEW.id_adresse
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_professionnel
+    SET denomination = NEW.denomination,
+        a_propos = NEW.a_propos,
+        site_web = NEW.site_web
+    WHERE id_compte = NEW.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_compte_professionnel_publique
+INSTEAD OF UPDATE
+ON compte_professionnel_publique
+FOR EACH ROW
+EXECUTE PROCEDURE update_compte_professionnel_publique();
+
+
+-- DELETE
+
+CREATE FUNCTION delete_compte_professionnel_publique() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _compte_professionnel_publique
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte_professionnel
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte
+    WHERE id_compte = OLD.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_compte_professionnel_publique
+INSTEAD OF DELETE
+ON compte_professionnel_publique
+FOR EACH ROW
+EXECUTE PROCEDURE delete_compte_professionnel_publique();
 
 
 COMMIT;
