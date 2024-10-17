@@ -120,7 +120,7 @@ CREATE TABLE _offre (
     ville                   VARCHAR(255) NOT NULL,
     description_detaille    VARCHAR(1024),
     site_web                VARCHAR(255),
-    id_compte_professionnel INTEGER,
+    id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte)
@@ -410,6 +410,42 @@ ON _compte_professionnel
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE _compte_professionnel_is_abstract();
+
+
+/* =============================== OFFRE =============================== */
+
+CREATE VIEW totalite_offre AS
+SELECT id_offre FROM _offre
+EXCEPT
+(
+    SELECT id_offre FROM _offre_activite
+    UNION
+    SELECT id_offre FROM _offre_visite
+    UNION
+    SELECT id_offre FROM _offre_spectacle
+    UNION
+    SELECT id_offre FROM _offre_parc_attraction
+    UNION
+    SELECT id_offre FROM _offre_restauration
+);
+
+CREATE FUNCTION _offre_is_abstract() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM totalite_offre;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas instancier une _offre.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS tg_offre_is_abstract ON _offre;
+CREATE CONSTRAINT TRIGGER tg_offre_is_abstract
+AFTER INSERT
+ON _offre
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE _offre_is_abstract();
 
 
 /* ##################################################################### */
