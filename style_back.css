@@ -333,7 +333,7 @@ h3 {
     margin-right: 4em;
 }
 
-.lesOffres article  div {
+.lesOffres article div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
@@ -391,78 +391,65 @@ h3 {
     border-radius: 20px !important;
 }
 
-.carte-offre {
+.lesOffres article > div div + img {
     position: absolute;
-    width: 339px;
+    width: 321px;
     height: 208px;
+    margin: 0.5em;
     left: auto;
     top: auto;
-
-    background: url(images/hotel.png) center;
-    background-size: cover;
     border-radius: 5px 5px 0px 0px;
 }
 
-.titre-offre {
+.lesOffres .ouverture-offre + img + p {
     position: absolute;
     left: 2%;
     right: 36%;
-    top: 42%;
+    top: 43%;
 
-    font-family: 'Poppins';
-    font-style: normal;
     font-weight: 700;
     font-size: 20px;
     line-height: 25px;
     display: flex;
     align-items: center;
-
-    color: var(--noir);
 }
 
-.categorie-offre {
+.lesOffres .ouverture-offre + img + p + p {
     position: absolute;
     left: 2%;
     top: 54%;
 
-    font-family: 'Poppins';
     font-style: italic;
     font-weight: 400;
     font-size: 15px;
     line-height: 22px;
     display: flex;
     align-items: center;
-
-    color: var(--noir);
 }
 
-.description-offre {
+.lesOffres article p + p + img {
     position: absolute;
-    left: 2%;
-    top: 60%;
+    top: 50%;
+    right: 5%;
+}
 
-    font-family: 'Poppins';
-    font-style: normal;
+.lesOffres .etoiles + div {
+    position: absolute;
+    left: 5%;
+    top: 72%;
     font-weight: 400;
     font-size: 14px;
-    line-height: 21px;
-
-    color: var(--noir);
+    line-height: 10px;
+    background: none;
 }
 
 .lesOffres span {
-    color: var(--vert-principale);
-    text-decoration: underline;
-}
-
-.bas-offre {
-    position: relative !important;
-    background-color: transparent !important;
-    top: 25em !important;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .etoiles {
-    position: relative !important;
+    position: absolute !important;
     display: flex;
     flex-direction: row;
 
@@ -470,8 +457,8 @@ h3 {
     align-items: center;
     background-color: transparent !important;
 
-    left: 0 !important;
-    top: -1em !important;
+    left: 3% !important;
+    top: 40%!important;
 }
 
 .lesOffres article > div p + img {
@@ -479,29 +466,29 @@ h3 {
     height: 35px;
 }
 
-.etoiles img {
+.lesOffres .etoiles img {
     height: 30px;
     width: 30px;
 }
 
-.nombre-notes {
+.lesOffres .etoiles p {
     margin-left: 5px;
     padding-top: 4px;
 }
 
-.prix {
-    background: var(--vert-secondaire);
+.lesOffres .etoiles + div + p {
+    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
-    left: 65%;
-    bottom: -30%;
+    left: 70%;
+    bottom: -2em;
 
     font-size: 10px;
     font-weight: 600;
     text-align: center;
 
-    width: 66.65px;
+    width: 66px;
     height: 74px;
     display: flex;
     justify-content: center;
@@ -509,7 +496,7 @@ h3 {
     flex-direction: column;
 }
 
-.prix span {
+.lesOffres .etoiles + div + p span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);
