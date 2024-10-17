@@ -597,5 +597,86 @@ FOR EACH ROW
 EXECUTE PROCEDURE delete_compte_professionnel_publique();
 
 
+/* =========================== COMPTE MEMBRE =========================== */
+
+-- CREATE
+
+CREATE FUNCTION create_compte_membre() RETURNS TRIGGER AS $$
+DECLARE
+    id_compte_temp _compte.id_compte%type;
+BEGIN
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+        RETURNING id_compte INTO id_compte_temp;
+    INSERT INTO _compte_membre(id_compte, pseudo)
+        VALUES (id_compte_temp, NEW.pseudo);
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_create_compte_membre
+INSTEAD OF INSERT
+ON compte_membre FOR EACH ROW
+EXECUTE PROCEDURE create_compte_membre();
+
+
+-- READ
+
+/* SELECT * FROM compte_membre; */
+
+
+-- UPDATE
+
+CREATE FUNCTION update_compte_membre() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_compte <> OLD.id_compte) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
+    END IF;
+
+    UPDATE _compte
+    SET nom_compte = NEW.nom_compte,
+        prenom = NEW.prenom,
+        email = NEW.email,
+        tel = NEW.tel,
+        mot_de_passe = NEW.mot_de_passe,
+        id_adresse = NEW.id_adresse
+    WHERE id_compte = NEW.id_compte;
+
+    UPDATE _compte_membre
+    SET pseudo = NEW.pseudo
+    WHERE id_compte = NEW.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_update_compte_membre
+INSTEAD OF UPDATE
+ON compte_membre
+FOR EACH ROW
+EXECUTE PROCEDURE update_compte_membre();
+
+
+-- DELETE
+
+CREATE FUNCTION delete_compte_membre() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _compte_membre
+    WHERE id_compte = OLD.id_compte;
+
+    DELETE FROM _compte
+    WHERE id_compte = OLD.id_compte;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER tg_delete_compte_membre
+INSTEAD OF DELETE
+ON compte_membre
+FOR EACH ROW
+EXECUTE PROCEDURE delete_compte_membre();
+
+
 COMMIT;
 
