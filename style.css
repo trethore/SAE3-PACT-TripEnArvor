@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
     --black: #000000;
     --gris: #C1C0C0;
@@ -21,174 +23,324 @@
     --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-  /***************/
- /*** ÉTOILES ***/
-/***************/
-
-.etoile {
-    display: flex;
-    width: 42px;
-    height: 42px;
-}
-
   /*************/
  /*** CORPS ***/
 /*************/
 
-body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--blanc-leger);
-    background: var(--beige);
-    margin: 0;
-    padding: 0;
-}
+    body {
+        font-family: 'Poppins', sans-serif;
+        font-size:  24px;
+        color: var(--blanc);
+        background: var(--beige);
+        margin: 0;
+        padding: 0;
+    }
 
-h1 {
-    font-size: 64px;
-    display: flex;
-    justify-content: center;
-}
 
-h2 {
-    font-size: 36px;
-}
 
-.size-32 {
-    font-size: 32px;
-}
+  /**************/
+ /*** TITRES ***/
+/**************/
 
-.size-36 {
-    font-size: 36px;
-}
+    h1 {
+        font-size: 64px;
+        display: flex;
+        justify-content: center;
+    }
 
-.size-40 {
-    font-size: 40px;
-}
+    h2 {
+        font-size: 36px;
+        margin-bottom: 5px;
+    }
+
+    .titre {
+        margin-left: 20px;
+    }
+
+
+
+  /*************************/
+ /*** TAILLES SPÉCIALES ***/
+/*************************/
+
+    .size-32 {
+        font-size: 32px;
+    }
+
+    .size-36 {
+        font-size: 36px;
+    }
+
+    .size-40 {
+        font-size: 40px;
+    }
+
+    .margin-left-20 {
+        margin-left: 20px;
+    }
 
   /*************/
  /*** LIENS ***/
 /*************/
 
-a {
-    color: var(--blanc-leger);
-}
+    a {
+        color: var(--blanc-leger);
+    }
 
-  /**************/
- /*** BOUTON ***/
-/**************/
 
-p > a {
-    background-color: var(--blanc-leger);
-    color: var(--vert-principale);
-    border-radius: 15px;
-    padding: 15px;
-    text-decoration: none;
-}
 
-p > a:hover {
-    background-color: var(--vert-principale);
-    color: var(--blanc-leger);
-}
+  /***************/
+ /*** BOUTONS ***/
+/***************/
+
+    p > a {
+        background-color: var(--blanc-leger);
+        color: var(--vert-principale);
+        border-radius: 15px;
+        padding: 15px;
+        text-decoration: none;
+    }
+
+    p > a:hover {
+        background-color: var(--vert-principale);
+        color: var(--blanc-leger);
+    }
+
+
 
   /*************************/
  /*** BLOCS DE LA PAGE ***/
 /************************/
 
-.fond-blocs {
-    background: var(--gradient-vert);
-    padding: 20px 40px;
-    margin: 20px 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 1px var(--black);
-}
+    .fond-blocs {
+        background: var(--gradient-vert);
+        padding: 20px 40px;
+        margin: 20px 20px 0;
+        border-radius: 10px;
+        box-shadow: 0 0 1px var(--black);
+    }
 
-.container {
-    display: flex;
-    justify-content: space-between; 
-}
+    .container {
+        display: flex;
+        justify-content: space-between; 
+    }
 
-.info-blocs-petit {
-    flex: 1.5; 
-    background-color: var(--blanc-leger);
-    padding: 10px;
-    margin-left: 20px;
-}
+    .info-blocs-petit {
+        flex: 1.75; 
+        background-color: var(--blanc-leger);
+        padding: 10px;
+    }
 
-.info-blocs-grand {
-    flex: 2.5; 
-    background-color: var(--blanc-leger);
-    padding: 10px;
-}
+    .info-blocs-grand {
+        flex: 2.5; 
+        background-color: var(--blanc-leger);
+        padding: 10px;
+    }
 
-  /**************************/
- /*** TABLEAU DES TARIFS ***/
-/**************************/
+    .info-blocs-ouverture {
+        flex: 1.5; 
+        background-color: var(--blanc-leger);
+        padding: 10px;
+    }
 
-.tarif {
-    display: flex;
-}
-
-.tarif:first-child {
-    margin-left: 20px;
-}
-
-div > div + p {
-    margin-left: 20px;
-}
-
-table {
-    width: 60%;
-    margin: 10px 0;
-    border-collapse: separate;
-    border-spacing: 9px;
-}
-
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid var(--blanc-leger);  
-    font-weight: 600;
-}
-
-  /*******************************************/
- /*** LISTE DES INFORMATIONS D'OUVERTURES ***/
-/*******************************************/
+    .info-blocs-tarif {
+        flex: 3; 
+        background-color: var(--blanc-leger);
+        padding: 10px;
+    }
 
 
 
-  /********************************************/
- /*** LISTE DES CARACTÉRISTIQUE DE L'OFFRE ***/
-/********************************************/
+  /*******************/
+ /*** LES EMBRUNS ***/
+/*******************/
 
-li {
-    list-style: none;
-    display: flex;
-    align-items: center; 
-    margin: 10px 0; 
-}
+      /***************/
+     /*** IMAGES  ***/
+    /***************/
 
-li > img {
-    min-width: 50px;
-    max-width: 50px;
-    height: auto;
-    margin-right: 10px;
-    border-radius: 5px; 
-}
+    .image-gallery {
+        display: grid;
+        grid-template-areas: 
+            "image1 image2 image3"
+            "image1 image4 image5";
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px; 
+        justify-content: center; 
+        align-items: center; 
+        padding: 0;
+    }
 
-  /*******************************/
- /*** LOCALISATION DE L'OFFRE ***/
-/*******************************/
+    .image-gallery img:nth-child(1) {
+        grid-area: image1;
+        height: 100%;
+        width: 100%;
+    }
 
-.carte {
-    width: 70%;
-    padding-left: 15%;
-}
+    .image-gallery img:nth-child(2) {
+        grid-area: image2;
+        height: 100%;
+        width: 100%;
+    }
 
-  /*******************************/
- /*** LOCALISATION DE L'OFFRE ***/
-/*******************************/
+    .image-gallery img:nth-child(3) {
+        grid-area: image3;
+        height: 100%;
+        width: 100%;
+    }
+
+    .image-gallery img:nth-child(4) {
+        grid-area: image4;
+        height: 100%;
+        width: 100%;
+    }
+
+    .image-gallery img:nth-child(5) {
+        grid-area: image5;
+        height: 100%;
+        width: 100%;
+    }
+
+      /***************/
+     /*** ÉTOILES ***/
+    /***************/
+
+    .etoile {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        gap: 5px; /* Espace entre les éléments */
+    }
+    
+    .note-moyenne {
+        display: flex;
+        gap: 5px;
+    }
+
+    .note-moyenne p {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+
+
+
+
+  /***********************/
+ /*** CARACTÉRISTIQUE ***/
+/***********************/
+
+      /*************/
+     /*** LISTE ***/
+    /*************/
+
+    .liste-caracteristique {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    li {
+        list-style: none;
+        display: flex;
+        align-items: center; 
+        margin-top: 20px;
+        padding: 0;
+    }
+
+    li > p {
+        margin: 0;
+    }
+
+    li > img {
+        min-width: 50px;
+        max-width: 50px;
+        height: auto;
+        margin-right: 5px;
+        border-radius: 5px; 
+    }    
+
+
+
+  /****************/
+ /*** À PROPOS ***/
+/****************/
+
+    .lien {
+        width: 21px;
+        height: 23px;
+        margin-right: 5px;
+    }
+
+    .align-lien {
+        display: flex;
+        align-items: center;
+    }
+
+
+
+  /**************/
+ /*** TARIFS ***/
+/**************/
+
+    .tarif {
+        display: flex;
+        align-items: top; /* Align items vertically */
+        margin-left: 20px; /* Ensure it aligns with other content */
+    }
+
+      /**************/
+     /*** BOUTON ***/
+    /**************/
+
+    .tarif-bouton {
+        margin-left: 20px;
+    }
+
+      /***************/
+     /*** TABLEAU ***/
+    /***************/
+
+    .tarif:first-child {
+        margin-left: 20px;
+    }
+
+    table {
+        width: 80%;
+        margin: 10px 0;
+        border-collapse: separate;
+        border-spacing: 9px;
+    }
+
+    td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid var(--blanc-leger);  
+        font-weight: 600;
+    }
+
+  /*****************/
+ /*** OUVERTURE ***/
+/*****************/
+
+    .horaires-ouverture {
+        margin: 5px 0 0 20px;
+    }
+
+    .margin-top-horaires {
+        margin-top: 5px;
+    }
+
+
+
+  /********************/
+ /*** LOCALISATION ***/
+/********************/
+
+    .carte {
+        margin: auto;
+    }
+
+
 
 .review {
     background: var(--blanc-leger);
@@ -198,49 +350,3 @@ li > img {
     border-radius: 5px;
 }
 
-  /*************************/
- /*** IMAGES DE L'OFFRE ***/
-/*************************/
-
-.image-gallery {
-    display: grid;
-    grid-template-areas: 
-        "image1 image2 image3"
-        "image1 image4 image5";
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px; 
-    justify-content: center; 
-    align-items: center; 
-    padding: 0;
-}
-
-.image-gallery img:nth-child(1) {
-    grid-area: image1;
-    height: 100%;
-    width: 100%;
-}
-
-.image-gallery img:nth-child(2) {
-    grid-area: image2;
-    height: 100%;
-    width: 100%;
-}
-
-.image-gallery img:nth-child(3) {
-    grid-area: image3;
-    height: 100%;
-    width: 100%;
-}
-
-.image-gallery img:nth-child(4) {
-    grid-area: image4;
-    height: 100%;
-    width: 100%;
-}
-
-.image-gallery img:nth-child(5) {
-    grid-area: image5;
-    height: 100%;
-    width: 100%;
-}

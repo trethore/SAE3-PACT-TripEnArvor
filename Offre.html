@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <title>Offre</title>
     </head>
 
@@ -29,20 +31,19 @@
             
                     <div>
                         <div class="container">
-                            <p class="size-32"><em>Hotel, Ouvert</em></p>
+                            <p class="size-32"><em>Hôtel, Ouvert</em></p>
                             <p class="size-32">25 rue Romain Poupon, Saint-Malo</p>
                         </div>
-                        <div class="container">
-                            <div class="etoile">
-                                <img src="Images/etoile-jaune.png">
-                                <img src="Images/etoile-jaune.png">
-                                <img src="Images/etoile-jaune.png">
-                                <img src="Images/etoile-grise.png">
-                                <img src="Images/etoile-grise.png">
-                                <p>(120)</p>
-                            </div>
-                            <a href="#">Voir les avis</a>
+                        <div class="note-moyenne">
+                            <img src="Images/etoile-jaune.png" class="etoile">
+                            <img src="Images/etoile-jaune.png" class="etoile">
+                            <img src="Images/etoile-jaune.png" class="etoile">
+                            <img src="Images/etoile-grise.png" class="etoile">
+                            <img src="Images/etoile-grise.png" class="etoile">
+                            <p>(120)</p>
+                            <a href="#" class="note-moyenne">Voir les avis</a>
                         </div>
+
                         <div class="container">
                             <p class="size-32">Proposée par : Eric Dupont</p>
                             <p><a href="#" class="size-40">À partir de 80€ la nuit</a></p>
@@ -54,32 +55,31 @@
             <section class="container">
 
                 <div class="fond-blocs info-blocs-petit">
-                    <ul>
-                        <li>
-                        <img src="Images/hotel.png"><h2>Hôtel charmant</h2></li>
-                        <li><img src="Images/mer.png"><h2>Vue sur mer</h2></li>
-                        <li><img src="Images/coeur.png"><h2>Service attentionné</h2></li>
-                        <li><img src="Images/dej.png"><h2>Petit déjeuner maison</h2></li>
+                    <ul class="liste-caracteristique">
+                        <li><img src="Images/hotel.png"><p class="size-40">Hôtel charmant<p></li>
+                        <li><img src="Images/mer.png"><p class="size-40">Vue sur mer</p></li>
+                        <li><img src="Images/coeur.png"><p class="size-40">Service attentionné</p></li>
+                        <li><img src="Images/dej.png"><p class="size-40">Petit déjeuner maison</p></li>
                     </ul>
                 </div>  
                     
-                <div class=" fond-blocs info-blocs-grand">
-                    <h2>À propos d'Eric Dupont :</h2>
-                    <p>Fondée en 2010, Hôtels de Charme Bretons est une entreprise familiale dédiée à l'hôtellerie de luxe et au tourisme de qualité en Bretagne. Notre mission est de créer des expériences mémorables pour nos clients en leur offrant des séjours uniques dans des cadres enchanteurs.</p>
-                    <a href="https://les-embruns-du-phare.fr">les-embruns-du-phare.fr</a>
-                    <p>Numéro : 02 05 87 65 12</p>
+                <div class="fond-blocs info-blocs-grand">
+                    <h2 class="margin-left-20">À propos d'Eric Dupont :</h2>
+                    <p class="margin-left-20">&emsp;Fondée en 2010, Hôtels de Charme Bretons est une entreprise familiale dédiée à l'hôtellerie de luxe et au tourisme de qualité en Bretagne. Notre mission est de créer des expériences mémorables pour nos clients en leur offrant des séjours uniques dans des cadres enchanteurs.</p>
+                    <a href="https://les-embruns-du-phare.fr" class="margin-left-20"><img src="Images/lien.png" class="lien">les-embruns-du-phare.fr</a>
+                    <p class="margin-left-20">Numéro : 02 05 87 65 12</p>
                 </div>
                 
             </section>
 
                 <div class="fond-blocs">
                     <h2>Description détaillée de l'offre :</h2>
-                    <p>L'offre "Les Embruns du Phare" est conçue pour ceux qui recherchent un moment de détente et de bien-être. Situé en bord de mer, cet hôtel charmant offre une vue imprenable sur l'océan et les paysages côtiers. Les chambres, décorées avec goût, sont équipées de tout le confort nécessaire pour un séjour agréable : literie de qualité, salle de bain privative, et accès à une connexion Wi-Fi gratuite.</p>
-                    <p>En plus de l'hébergement, cette offre inclut des repas gastronomiques préparés par notre chef renommé. Vous pourrez déguster des plats locaux frais et savoureux, accompagnés de vins fins. L'hôtel propose également un spa avec des soins de bien-être, une piscine intérieure chauffée et un jacuzzi pour vous détendre après une journée de découverte.</p>
+                    <p>&emsp;L'offre "Les Embruns du Phare" est conçue pour ceux qui recherchent un moment de détente et de bien-être. Situé en bord de mer, cet hôtel charmant offre une vue imprenable sur l'océan et les paysages côtiers. Les chambres, décorées avec goût, sont équipées de tout le confort nécessaire pour un séjour agréable : literie de qualité, salle de bain privative, et accès à une connexion Wi-Fi gratuite.</p>
+                    <p>&emsp;En plus de l'hébergement, cette offre inclut des repas gastronomiques préparés par notre chef renommé. Vous pourrez déguster des plats locaux frais et savoureux, accompagnés de vins fins. L'hôtel propose également un spa avec des soins de bien-être, une piscine intérieure chauffée et un jacuzzi pour vous détendre après une journée de découverte.</p>
                 </div>
     
             <section class="container">
-                <div class="fond-blocs info-blocs-grand">
+                <div class="fond-blocs info-blocs-tarif">
                     <div class="tarif">
                         <h2>Tarifs :</h2>
                         <table>
@@ -93,19 +93,29 @@
                             </tr>
                         </table>
                     </div>
-                    <p><a href="#">Téléchargez la grille des tarifs</a></p>
+                    <div class="tarif-bouton">
+                        <p><a href="#">Téléchargez la grille des tarifs</a></p>
+                    </div>
                 </div>
             
-                <div class="fond-blocs info-blocs-petit ">
-                    <h2>Ouverture :</h2>
-                    <p><em>Lundi : 07h - 20h<br>Mardi : 08h - 20h<br>Mercredi : 07h - 22h<br>Jeudi : 07h - 21h<br>Vendredi : 07h - 20h<br>Samedi : 08h - 20h<br>Dimanche : 08h - 20h</em></p>
+                <div class="fond-blocs info-blocs-ouverture">
+                    <h2 class="margin-left-20">Ouverture :</h2>
+                    <ul class="margin-top-horaires">
+                        <li class="horaires-ouverture"><em>Lundi : 07h - 20h</em><br></li>
+                        <li class="horaires-ouverture"><em>Mardi : 08h - 20h</em><br></li>
+                        <li class="horaires-ouverture"><em>Mercredi : 07h - 22h</em><br></li>
+                        <li class="horaires-ouverture"><em>Jeudi : 07h - 21h</em><br></li>
+                        <li class="horaires-ouverture"><em>Vendredi : 07h - 20h</em><br></li>
+                        <li class="horaires-ouverture"><em>Samedi : 08h - 20h</em><br></li>
+                        <li class="horaires-ouverture"><em>Dimanche : 08h - 20h</em></li>
+                    </ul>
                 </div>
             </section>
 
             <section>
                 <div class="fond-blocs">
                     <h1>Localisation</h1>
-                    <img class="carte" src="Images/carte.png">
+                    <div id="map" style="width: 1000px; height: 750px;" class="carte"></div>
                 </div>
             </section>
     
@@ -126,6 +136,19 @@
         <footer>
             <!-- À rajouter plus tard -->
         </footer>
+
+        <script>
+            let map = L.map('map').setView([48.6493, -2.0257], 13); // Coordonnées pour Saint-Malo, France
+    
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+    
+            L.marker([48.6493, -2.0257]).addTo(map)
+                .bindPopup('Les Embruns du Phare<br>Saint-Malo')
+                .openPopup();
+        </script>
+
     </body>
 
 </html>
