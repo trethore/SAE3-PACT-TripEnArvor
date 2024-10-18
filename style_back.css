@@ -232,7 +232,7 @@ h3 {
 
 .filtre-tri .trier input[type="text"],
 .filtre-tri .trier [type="number"] {
-    width: 40px;
+    width: 50px;
     height: 19px;
     margin: 0.2em 0.4em;
     border-radius: 5px;

@@ -138,6 +138,14 @@
                     <p>A partir de <span>80€</span></p>
                 </div>
             </article>
+            <?php 
+                if ($pageNumber > 1) { ?>
+                    <a href="http://localhost:8888/exo3.php?page=<?php echo $pageNumber - 1?>">Page précédente</a>
+                <?php } ?>
+                <?php
+                if ($pageNumber < ceil(count($regions)/LIG)) { ?>
+                    <a href="http://localhost:8888/exo3.php?page=<?php echo $pageNumber + 1?>">Page suivante</a>
+                <?php } ?>
         </section>
     </main>
 </body>
