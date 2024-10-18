@@ -1,14 +1,27 @@
+* {
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+
 body {
-    background-color: var(--blanc-leger);
-    display: flex;
-    flex-direction: column; /* Disposition en colonne (verticale) */
-    align-items: stretch; /* Les enfants prennent toute la largeur disponible */
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
+	background-color: var(--blanc-leger);
+	color: var(--noir);
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
 	justify-content: space-between;
-    min-height: 100vh; /* Assure que le body prend toute la hauteur de la page */
-    width: 100%; /* Le body prend toute la largeur disponible */
+	min-height: 100vh;
+	width: 100%;
 	min-width: 900px;
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 header {
@@ -17,8 +30,10 @@ header {
 	flex-direction: row;
 	align-items: center;
 	justify-content: end;
-    width: 100%; /* Chaque élément prend toute la largeur disponible */
-    min-height: auto; /* La hauteur minimale dépend du contenu */
+	width: 100%;
+	/* Chaque élément prend toute la largeur disponible */
+	min-height: auto;
+	/* La hauteur minimale dépend du contenu */
 	box-shadow: 0px 10px 30px #000000bf;
 	padding: 0 30px;
 }
@@ -61,8 +76,10 @@ header {
 /* Footer principal */
 footer {
 	background: var(--gradient-vert);
-	width: 100%; /* Chaque élément prend toute la largeur disponible */
-    min-height: auto; /* La hauteur minimale dépend du contenu */
+	width: 100%;
+	/* Chaque élément prend toute la largeur disponible */
+	min-height: auto;
+	/* La hauteur minimale dépend du contenu */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -150,11 +167,11 @@ footer {
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
-.footer-bottom > a {
+.footer-bottom>a {
 	color: var(--vert-principale);
 }
 
- /* search component in header*/
+/* search component in header*/
 .search-box {
 	margin-top: 5px;
 	width: fit-content;
@@ -172,7 +189,7 @@ footer {
 	outline: none;
 	border-radius: 25px;
 	transition: all .5s ease-in-out;
-	background-color:var(--transparent);
+	background-color: var(--transparent);
 	padding-right: 40px;
 	color: #fff;
 }
@@ -205,7 +222,7 @@ footer {
 	border-radius: 0px;
 	background-color: transparent;
 	border-bottom: 1px solid var(--semi-trans);
-	transition: all 500ms ;
+	transition: all 500ms;
 }
 
 .input-search:focus {
@@ -213,7 +230,7 @@ footer {
 	border-radius: 0px;
 	background-color: transparent;
 	border-bottom: 1px solid var(--semi-trans);
-	transition: all 500ms ;
+	transition: all 500ms;
 }
 
 .cherchero {
