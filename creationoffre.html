@@ -21,14 +21,14 @@
     </header>
 
     <main>
-        <h2> Creation d'une offre</h2>
+        <h2> Création d'une offre</h2>
         <form action = "creationoffre.php" method = "post" enctype="multipart/form-data">
             <h3>Informations importante</h3>
             <div class="important">
-            <table border="1">
+            <table border="0">
                 <tr>
                     <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                    <td><input type="text" id="titre" name ="titre" placeholder="insérer un titre" required></td>
+                    <td colspan="3"><input type="text" id="titre" name ="titre" placeholder="insérer un titre" required></td>
                 </tr>
                 <tr>
                 <td><label for="categorie">Catégorie </label></td>
@@ -56,13 +56,14 @@
                 
                 <tr>
                     <td><label for= "adresse">Adresse <span class="required">*</span></label></td>
-                    <td><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Monparnasse)" required></td>
+                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)" required></td>
                 </tr>
                 <tr>
-                    <td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
+                    <tr><td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
                     <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required></td>
                     <td><label for= "ville">Ville<span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name ="ville" placeholder="nom de ville" required></td>
+                </tr>
                 </tr>
                 <tr>
                     <td><label for="photo"> Photo (max. 5)</label></td>
