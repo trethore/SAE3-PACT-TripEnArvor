@@ -30,8 +30,8 @@
     body {
         font-family: 'Poppins', sans-serif;
         font-size:  24px;
-        color: var(--blanc);
-        background: var(--beige);
+        color: var(--blanc-leger);
+        background: var(--blanc);
         margin: 0;
         padding: 0;
     }
@@ -79,32 +79,43 @@
         margin-left: 20px;
     }
 
-  /*************/
- /*** LIENS ***/
-/*************/
-
-    a {
-        color: var(--blanc-leger);
-    }
-
 
 
   /***************/
  /*** BOUTONS ***/
 /***************/
 
-    p > a {
+    a {
         background-color: var(--blanc-leger);
-        color: var(--vert-principale);
+        color: var(--bleu);
         border-radius: 15px;
         padding: 15px;
         text-decoration: none;
     }
 
-    p > a:hover {
-        background-color: var(--vert-principale);
+    a:hover {
+        background-color: var(--bleu);
         color: var(--blanc-leger);
+        border: 2px solid var(--blanc-leger);
     }
+
+
+
+  /*************/
+ /*** LIENS ***/
+/*************/
+
+    .lien {
+        color: var(--blanc-leger);
+        background: none;
+        margin-left: 0;
+        text-decoration: underline;
+    }    
+
+    .lien:hover {
+        border: none;
+    }   
+    
 
 
 
@@ -113,7 +124,7 @@
 /************************/
 
     .fond-blocs {
-        background: var(--gradient-vert);
+        background: var(--bleu);
         padding: 20px 40px;
         margin: 20px 20px 0;
         border-radius: 10px;
@@ -127,25 +138,25 @@
 
     .info-blocs-petit {
         flex: 1.75; 
-        background-color: var(--blanc-leger);
+        background-color: var(--);
         padding: 10px;
     }
 
     .info-blocs-grand {
         flex: 2.5; 
-        background-color: var(--blanc-leger);
+        background-color: var(--bleu);
         padding: 10px;
     }
 
     .info-blocs-ouverture {
         flex: 1.5; 
-        background-color: var(--blanc-leger);
+        background-color: var(--bleu);
         padding: 10px;
     }
 
     .info-blocs-tarif {
         flex: 3; 
-        background-color: var(--blanc-leger);
+        background-color: var(--bleu);
         padding: 10px;
     }
 
@@ -219,8 +230,12 @@
     }
 
     .note-moyenne p {
-        margin-top: 20px;
+        margin: 20px 0 0;
         font-size: 20px;
+    }
+
+    .informations-offre{
+        margin: 10px 0;
     }
 
 
@@ -233,11 +248,6 @@
       /*************/
      /*** LISTE ***/
     /*************/
-
-    .liste-caracteristique {
-        display: flex;
-        flex-wrap: wrap;
-    }
 
     li {
         list-style: none;
@@ -284,8 +294,6 @@
 
     .tarif {
         display: flex;
-        align-items: top; /* Align items vertically */
-        margin-left: 20px; /* Ensure it aligns with other content */
     }
 
       /**************/
@@ -339,6 +347,17 @@
     .carte {
         margin: auto;
     }
+
+
+
+  /************/
+ /*** AVIS ***/
+/************/
+
+.bouton-publier {
+    margin-left: 45%;
+}
+
 
 
 

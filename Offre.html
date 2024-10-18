@@ -31,8 +31,8 @@
             
                     <div>
                         <div class="container">
-                            <p class="size-32"><em>Hôtel, Ouvert</em></p>
-                            <p class="size-32">25 rue Romain Poupon, Saint-Malo</p>
+                            <p class="size-32 informations-offre"><em>Hôtel, Ouvert</em></p>
+                            <p class="size-32 informations-offre">25 rue Romain Poupon, Saint-Malo</p>
                         </div>
                         <div class="note-moyenne">
                             <img src="Images/etoile-jaune.png" class="etoile">
@@ -41,9 +41,8 @@
                             <img src="Images/etoile-grise.png" class="etoile">
                             <img src="Images/etoile-grise.png" class="etoile">
                             <p>(120)</p>
-                            <a href="#" class="note-moyenne">Voir les avis</a>
+                            <a href="#" class="note-moyenne lien">Voir les avis</a>
                         </div>
-
                         <div class="container">
                             <p class="size-32">Proposée par : Eric Dupont</p>
                             <p><a href="#" class="size-40">À partir de 80€ la nuit</a></p>
@@ -66,7 +65,7 @@
                 <div class="fond-blocs info-blocs-grand">
                     <h2 class="margin-left-20">À propos d'Eric Dupont :</h2>
                     <p class="margin-left-20">&emsp;Fondée en 2010, Hôtels de Charme Bretons est une entreprise familiale dédiée à l'hôtellerie de luxe et au tourisme de qualité en Bretagne. Notre mission est de créer des expériences mémorables pour nos clients en leur offrant des séjours uniques dans des cadres enchanteurs.</p>
-                    <a href="https://les-embruns-du-phare.fr" class="margin-left-20"><img src="Images/lien.png" class="lien">les-embruns-du-phare.fr</a>
+                    <a href="https://les-embruns-du-phare.fr" class="margin-left-20 lien"><img src="Images/lien.png" class="lien">les-embruns-du-phare.fr</a>
                     <p class="margin-left-20">Numéro : 02 05 87 65 12</p>
                 </div>
                 
@@ -94,7 +93,7 @@
                         </table>
                     </div>
                     <div class="tarif-bouton">
-                        <p><a href="#">Téléchargez la grille des tarifs</a></p>
+                        <a href="#">Téléchargez la grille des tarifs</a>
                     </div>
                 </div>
             
@@ -119,9 +118,17 @@
                 </div>
             </section>
     
-            <section class="reviews fond-blocs">
-                <h3>Note moyenne : ★★★☆☆ (120 avis)</h3>
-                <p><a href="#">Publier un avis</a></p>
+            <section class="reviews fond-blocs">    
+                <div class="note-moyenne">
+                    <h2 class="margin-top-horaires">Note moyenne :</h2>
+                    <img src="Images/etoile-jaune.png" class="etoile">
+                    <img src="Images/etoile-jaune.png" class="etoile">
+                    <img src="Images/etoile-jaune.png" class="etoile">
+                    <img src="Images/etoile-grise.png" class="etoile">
+                    <img src="Images/etoile-grise.png" class="etoile">
+                    <p>(120)</p>
+                </div>
+                <a class="bouton-publier" href="#">Publier un avis</a>
                 <div class="review">
                     <p><strong>Titouan</strong> ★☆☆☆☆ <span>24/07/2023</span></p>
                     <p>Personnel qui ne se soucie pas de ses clients, personne pour nous indiquer comment allumer la télévision...</p>
@@ -138,7 +145,7 @@
         </footer>
 
         <script>
-            let map = L.map('map').setView([48.6493, -2.0257], 13); // Coordonnées pour Saint-Malo, France
+            let map = L.map('map').setView([48.6493, -2.0257], 13); 
     
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
