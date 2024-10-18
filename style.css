@@ -46,6 +46,7 @@
         font-size: 64px;
         display: flex;
         justify-content: center;
+        margin: 20px;
     }
 
     h2 {
@@ -105,16 +106,16 @@
  /*** LIENS ***/
 /*************/
 
-    .lien {
-        color: var(--blanc-leger);
+    .epingle {
         background: none;
-        margin-left: 0;
+        color: var(--blanc-leger);
+        padding: 15px;
         text-decoration: underline;
-    }    
+    }
 
-    .lien:hover {
+    .epingle:hover {
         border: none;
-    }   
+    }
     
 
 
@@ -170,74 +171,73 @@
      /*** IMAGES  ***/
     /***************/
 
-    .image-gallery {
-        display: grid;
-        grid-template-areas: 
-            "image1 image2 image3"
-            "image1 image4 image5";
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 10px; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 0;
-    }
+        .image-gallery {
+            display: grid;
+            grid-template-areas: 
+                "image1 image2 image3"
+                "image1 image4 image5";
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 0;
+        }
 
-    .image-gallery img:nth-child(1) {
-        grid-area: image1;
-        height: 100%;
-        width: 100%;
-    }
+        .image-gallery img:nth-child(1) {
+            grid-area: image1;
+            height: 100%;
+            width: 100%;
+        }
 
-    .image-gallery img:nth-child(2) {
-        grid-area: image2;
-        height: 100%;
-        width: 100%;
-    }
+        .image-gallery img:nth-child(2) {
+            grid-area: image2;
+            height: 100%;
+            width: 100%;
+        }
 
-    .image-gallery img:nth-child(3) {
-        grid-area: image3;
-        height: 100%;
-        width: 100%;
-    }
+        .image-gallery img:nth-child(3) {
+            grid-area: image3;
+            height: 100%;
+            width: 100%;
+        }
 
-    .image-gallery img:nth-child(4) {
-        grid-area: image4;
-        height: 100%;
-        width: 100%;
-    }
+        .image-gallery img:nth-child(4) {
+            grid-area: image4;
+            height: 100%;
+            width: 100%;
+        }
 
-    .image-gallery img:nth-child(5) {
-        grid-area: image5;
-        height: 100%;
-        width: 100%;
-    }
+        .image-gallery img:nth-child(5) {
+            grid-area: image5;
+            height: 100%;
+            width: 100%;
+        }
 
       /***************/
      /*** ÉTOILES ***/
     /***************/
 
-    .etoile {
-        width: 42px;
-        height: 42px;
-        display: flex;
-        gap: 5px; /* Espace entre les éléments */
-    }
-    
-    .note-moyenne {
-        display: flex;
-        gap: 5px;
-    }
+        .etoile {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            gap: 5px; 
+        }
+        
+        .note-moyenne {
+            display: flex;
+            gap: 5px;
+        }
 
-    .note-moyenne p {
-        margin: 20px 0 0;
-        font-size: 20px;
-    }
+        .note-moyenne p {
+            margin: 20px 0 0;
+            font-size: 20px;
+        }
 
-    .informations-offre{
-        margin: 10px 0;
-    }
-
+        .informations-offre{
+            margin: 10px 0;
+        }
 
 
 
@@ -249,25 +249,25 @@
      /*** LISTE ***/
     /*************/
 
-    li {
-        list-style: none;
-        display: flex;
-        align-items: center; 
-        margin-top: 20px;
-        padding: 0;
-    }
+        li {
+            list-style: none;
+            display: flex;
+            align-items: center; 
+            margin-top: 20px;
+            padding: 0;
+        }
 
-    li > p {
-        margin: 0;
-    }
+        li > p {
+            margin: 0;
+        }
 
-    li > img {
-        min-width: 50px;
-        max-width: 50px;
-        height: auto;
-        margin-right: 5px;
-        border-radius: 5px; 
-    }    
+        li > img {
+            min-width: 50px;
+            max-width: 50px;
+            height: auto;
+            margin-right: 5px;
+            border-radius: 5px; 
+        }    
 
 
 
@@ -300,31 +300,31 @@
      /*** BOUTON ***/
     /**************/
 
-    .tarif-bouton {
-        margin-left: 20px;
-    }
+        .tarif-bouton {
+            margin-left: 20px;
+        }
 
       /***************/
      /*** TABLEAU ***/
     /***************/
 
-    .tarif:first-child {
-        margin-left: 20px;
-    }
+        .tarif:first-child {
+            margin-left: 20px;
+        }
 
-    table {
-        width: 80%;
-        margin: 10px 0;
-        border-collapse: separate;
-        border-spacing: 9px;
-    }
+        table {
+            width: 80%;
+            margin: 10px 0;
+            border-collapse: separate;
+            border-spacing: 9px;
+        }
 
-    td {
-        padding: 20px;
-        text-align: center;
-        border: 1px solid var(--blanc-leger);  
-        font-weight: 600;
-    }
+        td {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--blanc-leger);  
+            font-weight: 600;
+        }
 
   /*****************/
  /*** OUVERTURE ***/
@@ -346,6 +346,7 @@
 
     .carte {
         margin: auto;
+        margin-bottom: 20px;
     }
 
 
@@ -354,18 +355,97 @@
  /*** AVIS ***/
 /************/
 
-.bouton-publier {
-    margin-left: 45%;
-}
+    .note-moyenne > h2 {
+        margin: 0;
+        padding-bottom: 30px;
+    }
+    .avatar {
+        width: 64px;
+        height: 64px;
+    }
 
+    .fond-avis {
+        background-color: var(--blanc-leger);
+        color: var(--black);
+        border-radius: 10px;
+        margin-top: 40px;
+        padding: 40px;
 
+    }
 
+    .fond-avis > div {
+        display: flex;
+        gap: 5px;
+    }
+    
+    .mise-en-page {
+        margin: 0 20px;
+    }
 
-.review {
-    background: var(--blanc-leger);
-    color: var(--black);
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-}
+    .alignement {
+        display: flex;
+        align-items: center; 
+        gap: 10px; 
+        margin-bottom: 10px;
+    }    
 
+      /***************/
+     /*** RÉPONSE ***/
+    /***************/
+
+        .compte-pro {
+            margin-left: 90px;
+        }
+
+        .reponse-pro {
+            margin: 0 0 0 180px;
+        }
+
+      /************/
+     /*** AVIS ***/
+    /************/
+
+        .avis {
+            margin: 0 0 40px 95px;
+        }
+
+        .conteneur-page {
+            display: flex;
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+        }
+
+        .zone-bouton-navigation {
+            background: var(--blanc);
+            padding: 50px 20px;
+            margin: 0;
+            border-radius: 10px;
+        }
+
+        .bouton-navigation {
+            background-color: var(--bleu);
+            color: var(--blanc-leger);
+            border-radius: 15px;
+            text-decoration: none;
+            margin: 0;
+        }
+    
+        .bouton-navigation:hover {
+            background-color: var(--blanc-leger);
+            color: var(--bleu);
+            margin: 0;
+        }
+
+        .bouton-page-suivante {
+            display: inline-block; /* S'assure que la largeur dépend du contenu */
+            width: auto; /* Ajuste la taille à la largeur du contenu */
+            padding: 10px 20px; /* Ajoute un peu de remplissage pour l'apparence */
+            cursor: pointer; /* Curseur pointeur pour une apparence de bouton */
+            font-size: 20px;
+        }
+
+        .container-parent {
+            display: flex;
+            justify-content: flex-end; /* Aligne le bouton à droite */
+            margin-top: 20px; /* Espacement entre les avis et le bouton */
+        }
