@@ -1,56 +1,73 @@
 
 :root {
-    --noir: rgba(0, 0, 0, 1);
-    --blanc: rgba(255, 255, 255, 1);
-    --blanc-leger: rgba(236, 236, 236, 1);
-    --beige: rgba(234, 226, 218, 1);
-    --bleu: rgba(47, 89, 82, 1);
-    --vert-principale: rgba(98, 107, 32, 1);
-    --vert-secondaire: rgba(152, 166, 50, 1);
-    --marron: rgba(191, 140, 44, 1);
-    --orange-principale: rgba(217, 102, 54, 1);
-    --orange-secondaire-1: rgba(217, 111, 50, 1);
-    --orange-secondaire-2: rgba(242, 139, 48, 1);
-    --fond-bouton: rgba(217, 217, 217, 0.73);
-  
-    --mobile-star-size: 30px;
-    --like-size: 35px;
-  
-    --jaune-toile: rgba(254, 194, 1, 1);
-    --gris-toile: rgba(128, 128, 128, 1);
-    --gris: rgba(193, 192, 192, 1);
-  
-    --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
-    --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
-    --gradient-orange-2: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
-  
-    /* Regular */
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
+  --noir: rgba(0, 0, 0, 1);
+  --blanc: rgba(255, 255, 255, 1);
+  --blanc-leger: rgba(236, 236, 236, 1);
+  --beige: rgba(234, 226, 218, 1);
+  --bleu: rgba(47, 89, 82, 1);
+  --vert-principale: rgba(98, 107, 32, 1);
+  --vert-secondaire: rgba(152, 166, 50, 1);
+  --marron: rgba(191, 140, 44, 1);
+  --orange-principale: rgba(217, 102, 54, 1);
+  --orange-secondaire-1: rgba(217, 111, 50, 1);
+  --orange-secondaire-2: rgba(242, 139, 48, 1);
+  --fond-bouton: rgba(217, 217, 217, 0.73);
 
-    /* Medium */
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
+  --mobile-star-size: 30px;
+  --like-size: 35px;
 
-    /* Semi-Bold */
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
+  --jaune-toile: rgba(254, 194, 1, 1);
+  --gris-toile: rgba(128, 128, 128, 1);
+  --gris: rgba(193, 192, 192, 1);
 
-    /* Bold */
-    font-family: "Poppins", sans-serif;
-    font-weight: 700;
+  --gradient-vert: linear-gradient(119.86deg, var(--bleu) 13.56%, var(--vert-principale) 59.07%, var(--vert-secondaire) 90.93%);
+  --gradient-orange: linear-gradient(119.86deg, var(--orange-principale) 10%, var(--orange-secondaire-1) 23%, var(--orange-secondaire-2) 90.93%);
+  --gradient-orange-2: linear-gradient(180deg, rgb(217, 111, 50) 0%, rgb(217, 102, 54) 23.1%, rgb(242, 139, 48) 100%);
 
-  }
+  /* Regular */
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
 
-  h2 {
-    width: 55%;
-    text-align: center;
-    margin: 20px auto 20px auto;
-    border-radius: 15px;
-    font-size: 48px;
+  /* Medium */
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+
+  /* Semi-Bold */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+
+  /* Bold */
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+
+}
+
+body {
+  background-color: var(--blanc-leger);
+  width: 1440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+    
+}
+
+main, div{
+  font: "Poppins";
+  font-weight: 400;
+}
+
+h2 {
+  width: 55%;
+  text-align: center;
+  margin: 20px auto 20px auto;
+  border-radius: 15px;
+  font-size: 48px;
 }
 
 h3 {
+    padding-top: 5px;
     width: 55%;
     /* margin: 20px auto 20px auto; */
     border-radius: 15px;
@@ -59,13 +76,10 @@ h3 {
     margin-bottom: 15px;
 }
 
-label{
-    font-weight: 400;
-}
-
-label, input{
+label, input, p{
   font-size: 24px;
   margin:5px 5px 0 0;
+  font-weight: 400;
 }
 
 p{
@@ -73,16 +87,14 @@ p{
     text-align: center;
 }
 
-body {
-  background-color: var(--blanc-leger);
-	width: 1440px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-    
+table{
+  font-size: 24px;
 }
+
+.required{  /* asterisques en rouge*/
+  color: red;
+}
+
 
 main {
     width: 1338px;
@@ -97,41 +109,8 @@ main {
 
 
 
-main + div{
-    width: 1438px;
-    margin: 20px 0;
-    display: flex;
-    justify-content: space-between;
 
-}
-
-.valider{
-    background: var(--gradient-orange);
-    color: var(--blanc);
-    padding: 10px 20px;
-    border: 0;
-    text-align: center;
-    font-size: 40px;
-    width: 517px;
-    height: 97px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-    margin-left: 0;
-    
-}
-
-.valider+a{
-  
-}
-
-input[id="tel"], input[id="cp"]{  /*nul a chier */
-    width: 100px;
-}
-
-input[placeholder="(ex : 01 23 45 67 89)"]{
-  width: 500px;
-}
-
+/***Inputs Textuels (avec url,...)***/
 
 input[type="text"], input[type="url"], input[type="number"], input[type="tel"], textarea{
     background-color: var(--blanc-leger);
@@ -139,7 +118,6 @@ input[type="text"], input[type="url"], input[type="number"], input[type="tel"], 
     border: 0;
     border-radius: 10px;
     resize: vertical;
-    /*width: 900px;*/
     height: 50px;
     font-style: normal;
     text-align: center;
@@ -150,30 +128,141 @@ input[name='tarif1'],input[name='tarif2'], input[name='tarif3'], input[name='tar
     width: 100px;
 }
 
-input[name ="titre"], input[name="adresse"]{
-  width: 70%;
+textarea{
+  min-height: 150px;
+  height: fit-content;
+  word-wrap: break-word;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  font-family: "Poppins"
 }
 
-.apropos table{
 
+/*HORAIRES*/
+input[placeholder = "00"]{
+  width: 50px;
 }
 
-.required{
-    color: red;
+::placeholder{   /*guidage*/
+  font-style: italic;
+  text-align: center;
+  color: var(--gris-toile);
 }
 
+/***Tableaux**/
+
+.apropos table, .important table{
+  width: 100%;
+}
+
+/****INFORMATIONS IMPORTANTES****/
+
+.important input[id="titre"], .important input[id="adresse"]{
+  width: 100%;
+}
+
+.important td {
+  padding: 5px;
+}
+
+.important td+td{
+  width: 40%;
+  padding-left: 5%;
+}
+
+.important table :nth-child(5) td + td + td{ /*"ville *" */
+  width: 10%;
+  padding-left: 0;
+} 
+
+/***Selects***/
+
+.custom-select-container {
+  display: inline-block;
+  position: relative;
+  width: 75%;
+}
+
+.custom-select {
+  appearance: none; /* Remove default select styling */
+  background-color: var(--blanc-leger);
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 24px;
+  width: 100%; 
+  border-radius: 5px;
+  color: var(--gris-toile);
+  cursor: pointer;
+  
+}
+
+/* Adding a custom dropdown arrow */
+.custom-select-container::after {
+  content: '▼'; /* Add arrow symbol */
+  font-size: 24px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--gris-toile); /* Arrow color */
+}
+
+/* Optional: Hover effect for the dropdown */
+/* .custom-select:hover {
+  cursor: pointer;
+  border-color: var(--gradient-orange);
+  border: 10px solid var(--gradient-orange);
+} *//*marche pô*/
+
+/***Importer une image***/
+
+.custom-file-input {
+  position: relative;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 170px;
+  height: 170px;
+  display: grid;
+  place-items: center;
+}
+
+.upload-image {
+  cursor: pointer; 
+  width: 50px;
+  height: auto; 
+  height: auto;
+}
+
+/* Masquer le vrai input file */
+#file-upload {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+
+
+
+/****A PROPOS DE L'OFFRE****/
 .apropos tr + td, .important tr+td{
   width: auto;
-  padding: 5px 0;
+  padding: 5% 5px;
 }
 
 .apropos td + td{
-    padding: 5px 0 5px 10%;
+    padding: 5px 0 5px 5%;
     width: 75%;
 }
 
 .apropos textarea{
-  width: 130%;
+  width: 100%;
   min-height: 150px;
   height: fit-content;
 }
@@ -182,71 +271,98 @@ input[type="url"], input[type="tel"]{
   width: 65%;
 }
 
-textarea{
-  min-height: 150px;
-  height: fit-content;
-  word-wrap: break-word;
-  padding: 5px;
-  width: 100%;
-  text-align: left;
+
+
+
+
+/***Boutons***/
+input::file-selector-button{
+  border: 0;
+  border-radius: 10px;
+  background: var(--gradient-orange);
+  color: var(--blanc);
+  width: 200px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
-textarea[placeholder]{
-  text-align: left;
+input::file-selector-button:hover{
+  background: #fff;
+  color: var(--orange-principale);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  transition: 0.3s ease-in-out;
 }
 
-.important input[id="titre"], .important input[id="adresse"]{
-  width: 100%;
+
+
+
+
+
+/****AVANT LE FOOTER****/
+
+main + div{
+  width: 1438px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
+.valider{
+  background: var(--gradient-orange);
+  color: var(--blanc);
+  padding: 10px 20px;
+  border: 0;
+  text-align: center;
+  font-size: 40px;
+  width: 517px;
+  height: 97px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  margin-left: 0;
+}
 
+.valider:hover{
+  background: var(--blanc-leger);
+  color: var(--orange-principale);
+  transition: 0.3s ease-in-out;
+}
 
-.important td+td{
+.valider+a{
   width: 50px;
+  height: 50px;
+  background: var(--gradient-orange);
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
 }
 
+.valider + a :hover{
+  background: var(--blanc-leger);
+  content: url("images/fleche-vers-le-haut-orange.png");
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+} /* il reste une bordure jsp pourquoi"*/
 
-
-/* .important table :nth-child(5) td + td{
-  width: 50px;
-}  */
-
-.important table :nth-child(5) td + td + td{
-  width: 20px;
-} 
-
-
-
-::placeholder{
-    font-style: italic;
-    text-align: center;
-    color: var(--gris-toile);
-}
-
-input[placeholder = "00"]{
-    width: 50px;
-}
-
-table, span{
-    font-weight: 400;
-}
-
-table{
-    font-size: 24px;
-}
-
-
-input[type="file"]{
-  background-image: "./Comportement-lapin.png";
-  border: 1px solid black;
-  width: 100px;
-  height: 100px;
+.valider+a img {
+  width: 90%;
+  height: 90%;
+  transition: 0.3s ease-in-out; /* Ajoute une transition fluide au changement d'image */
 }
 
 
 
 
 
+
+
+
+/****HEADER****/
 
 header {
 	background: var(--gradient-orange);

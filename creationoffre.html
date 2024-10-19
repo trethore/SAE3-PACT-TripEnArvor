@@ -32,8 +32,8 @@
                 </tr>
                 <tr>
                 <td><label for="categorie">Catégorie </label></td>
-                    <td><div class="custom-select">
-                        <select id = "categorie" name = "lacat"> 
+                    <td><div class="custom-select-container">
+                        <select class="custom-select" id = "categorie" name = "lacat"> 
                             <option value="">Choisir une categorie</option>
                             <option value = "restaurant"> Restaurant</option>
                             <option value = "parc"> Parc d'attraction</option>
@@ -45,8 +45,8 @@
                 </tr>
                 <tr>
                     <td><label for="dispo">Disponibilité </label></td>
-                    <td><div class="custom-select">
-                        <select id = "dispo" name = "ladispo">
+                    <td><div class="custom-select-container">
+                        <select class="custom-select" id = "dispo" name = "ladispo">
                             <option value="">Choisir une disponibilité</option>
                             <option value = "ouvert"> Ouvert </option>
                             <option value = "ferme"> Fermé </option>
@@ -59,20 +59,27 @@
                     <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)" required></td>
                 </tr>
                 <tr>
-                    <tr><td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
+                    <td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
                     <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required></td>
-                    <td><label for= "ville">Ville<span class="required">*</span></label></td>
+                    <td><label for= "ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name ="ville" placeholder="nom de ville" required></td>
-                </tr>
+                
                 </tr>
                 <tr>
                     <td><label for="photo"> Photo (max. 5)</label></td>
-                    <td><input type="file" id="photo1" name="photo1"></td>
+                    <td><div class="custom-file-input">
+                        <label for="file-upload">
+                            <img src="images/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
+                        </label>
+                        <input id="file-upload" type="file" />
+                    </div></td>
+                    
                 </tr>
                 <tr>
                     <td><label for="type">Type de l'offre</label></td>
-                    <td><div class="custom-select">
-                        <select id = "type" name = "letype">
+                    <td><div class="custom-select-container">
+                        <select class="custom-select" id = "type" name = "letype">
+                            <option value="">Choisir le type d'offre</option>
                             <option value = "payante"> Offre Payante </option>
                             <option value = "ferme"> Offre Gratuite </option>
                         </select>
@@ -86,11 +93,12 @@
             <h3>Tags de l'offre</h3>
             
             <p> -- Choisir une catégorie -- </p>
+            <h3>A propos de l'offre</h3>
             <div class="apropos">
                 <table border="0">
                     <tr>
                         <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
-                        <td><textarea id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required></textarea></td>
+                        <td><textarea id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required></textarea></td>
                         
                     </tr>
                     <tr>
@@ -103,7 +111,7 @@
                     </tr>
                     </table>
 
-                <!-- <h3>A propos de l'offre</h3>
+                <!-- 
                 <label for="descriptionC">Courte Description <span class="required">*</span></label>
                 <input type="text" id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte déscription sur l’offre..." required>
                 <br>
@@ -115,7 +123,7 @@
             </div>
             
             <h3>Description détaillée de l'offre</h3>
-            <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillé... "></textarea>
+            <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
             
             <h3>Tarifs</h3>
             <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "nom du tarif" required>
@@ -189,7 +197,7 @@
         <input class="valider"type="submit" value="Créer l'offre">
 
         <a href="#" id="back-to-top">
-            <img src="Comportement-lapin.png" alt="Retour en haut" width="50" height="50">
+            <img src="images/fleche-vers-le-haut.png" alt="Retour en haut" width="50" height="50">
         </a>
     </div>
 
