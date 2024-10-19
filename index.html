@@ -23,137 +23,152 @@
     <a href="index.html"><img class="ICON-utilisateur" src="images/universel/icones/icon_utilisateur.png" /></a>
   </header>
   <main>
-    <h1>Liste de vos offre</h1>
-    <article class="filtre-tri">
-      <h2>Une Recherche en Particulier ? Filtrez !</h2>
-      <div>
-        <div>
-          <!-- Catégorie -->
-          <div class="categorie">
-            <h3>Catégorie</h3>
-            <div>
-              <label><input type="checkbox"> Parc d'Attraction</label>
-              <label><input type="checkbox"> Restaurant</label>
-              <label><input type="checkbox"> Visite</label>
-              <label><input type="checkbox"> Spectacle</label>
-              <label><input type="checkbox"> Activité</label>
-            </div>
-          </div>
-
-          <!-- Disponibilité -->
-          <div class="disponibilite">
-            <h3>Disponibilité</h3>
-            <div>
-              <label><input type="radio" name="disponibilite"> Ouvert</label>
-              <label><input type="radio" name="disponibilite"> Fermé</label>
-            </div>
-          </div>
-
-          <!-- Trier -->
-          <div class="trier">
-            <h3>Trier</h3>
-            <div>
-              <div>
-                <label>Note minimum :</label>
-                <select>
-                  <option></option>
-                  <option>★★★★★</option>
-                  <option>★★★★</option>
-                  <option>★★★</option>
-                  <option>★★</option>
-                  <option>★</option>
-                </select>
+    <section>
+      <div class="fond-blocs">
+          <div>
+              <h1>Côté Plage</h1>
+              <div class="image-gallery"> 
+                  <img src="images/universel/photos/hotel_2.png" alt="Image 1">
+                  <img src="images/universel/photos/hotel_2_2.png" alt="Image 2">
+                  <img src="images/universel/photos/hotel_2_3.png" alt="Image 3">
+                  <img src="images/universel/photos/hotel_2_4.png" alt="Image 4">
+                  <img src="images/universel/photos/hotel_2_5.png" alt="Image 5">
               </div>
-
-              <div>
-                <div>
-                  <div>
-                    <label>Prix minimum &nbsp;:</label>
-                    <input type="number" min="0">
-                  </div>
-                  <div>
-                    <label>Prix maximum :</label>
-                    <input type="number" min="0">
-                  </div>
-                </div>
-                <div>
-                  <select>
-                    <option>Trier par :</option>
-                    <option>Date</option>
-                    <option>Prix</option>
-                    <option>Popularité</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <!-- Localisation -->
-          <div class="localisation">
-            <h3>Localisation</h3>
-            <div>
-              <label><input type="radio" name="localisation"> Autour de moi</label>
-              <div>
-                <label><input type="radio" name="localisation"> Rechercher</label>
-                <input type="text" placeholder="Rechercher...">
-              </div>
-            </div>
-          </div>
-
-          <!-- Type d'offre -->
-          <div class="typeOffre">
-            <h3>Type d'offre</h3>
-            <div>
-              <label><input type="radio" name="typeOffre"> Payante</label>
-              <label><input type="radio" name="typeOffre"> Premium</label>
-            </div>
-          </div>
-
-          <!-- Date -->
-          <div class="date">
-            <h3>Date</h3>
-            <div>
-              <div>
-                <label>Date de début &nbsp;:</label>
-                <input type="date">
-              </div>
-              <div>
-                <label>Date de fin &emsp;&emsp;:</label>
-                <input type="date">
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-    <section class="lesOffres">
-      <article>
-        <div>
-          <div class="lieu-offre">Sarzeau</div>
-          <div class="ouverture-offre">Ouvert</div>
-          <img src="images/universel/photos/coteplage_facade.jpg">
-          <p>Côté-Plage</p>
-          <p>Restaurant</p>
-          <img src="images/backOffice/icones/payante.png" alt="">
-          <div class="etoiles">
-            <img src="images/universel/icones/etoile-pleine.png">
-            <img src="images/universel/icones/etoile-pleine.png">
-            <img src="images/universel/icones/etoile-pleine.png">
-            <img src="images/universel/icones/etoile-pleine.png">
-            <img src="images/universel/icones/etoile-pleine.png">
-            <p>(49)</p>
           </div>
           <div>
-            <p>Avis non lues : <span><b>4</b></span></p>
-            <p>Avis non répondues : <span><b>1</b></span></p>
-            <p>Avis blacklistés : <span><b>0</b></span></p>
+              <div class="container">
+                  <p class="size-32 informations-offre"><em>Restaurant, Ouvert</em></p>
+                  <p class="size-32 informations-offre">1 Rue Koz Ker, 56370 SARZEAU</p>
+              </div>
+              <div class="note-moyenne">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <p>(49)</p>
+                  <a href="#avis" class="epingle">Voir les avis</a>
+              </div>
+              <div class="container">
+                  <p class="size-32">Proposée par : David Guillet</p>
+                  <p><a href="#" class="size-40">Voir les tarifs</a></p>
+              </div>
           </div>
-          <p>A partir de <span>80€</span></p>
-        </div>
-      </article>
-    </section>
+      </div>
+  </section>
+
+  <section class="container">
+      <div class="fond-blocs info-blocs-petit">
+          <ul class="liste-caracteristique">
+              <li><img src="images/universel/icones/hotel.png"><h2 class="size-40 margin-top-horaires">Cuisine traditionnelle<h2></li>
+              <li><img src="images/universel/icones/mer.png"><h2 class="size-40 margin-top-horaires">Vue sur mer</h2></li>
+              <li><img src="images/universel/icones/coeur.png"><h2 class="size-40 margin-top-horaires">Service attentionné</h2></li>
+          </ul>
+      </div>     
+      <div class="fond-blocs info-blocs-grand">
+          <h2 class="margin-left-20">À propos de Côté Plage :</h2>
+          <p class="margin-left-20">&emsp;Repris en 2010, le restaurant propose une cuisine traditionnelle axée sur les poissons et fruits de mer, mettant en avant des produits locaux et de saison. Depuis sa reprise, David Guillet a renouvelé l'équipe et introduit de nouvelles initiatives, telles qu'une terrasse lounge pour les apéritifs, dans une ambiance conviviale et les pieds dans l’eau​</p>
+          <a href="https://les-embruns-du-phare.fr" class="margin-left-20 epingle"><img src="images/universel/icones/lien.png" class="lien">restaurant-cote-plage.fr</a>
+          <p class="margin-left-20">Numéro : 04 94 66 97 64</p>
+      </div>
+      
+  </section>
+
+      <div class="fond-blocs">
+          <h2>Description détaillée de l'offre :</h2>
+          <p>Les pieds dans l’eau sur la plage du Roaliguen. Nous proposons une cuisine de caractère, inventive à base de produits locaux et de saison. Tout cela dans une ambiance conviviale.</p>
+          <p>Nouveau : Terrasse Lounge pour vos moments apéritif.</p>
+          <p>Ouvert d'avril à novembre.<br>Fermé le mercredi en juillet-août.<br>Fermé le mercredi et le jeudi hors saison.</p>
+      </div>
+
+  <section class="container">
+      <div class="fond-blocs info-blocs-tarif">
+          <div class="tarif">
+              <h2>Tarifs :</h2>
+              <table>
+                  <tr>
+                      <td>Dunburi de Poulet 22 €</td>
+                      <td>Burger de Boeuf 24,50 €</td>
+                  </tr>
+                  <tr>
+                      <td>Menu Petit Plagiste 11,80 €</td>
+                      <td>Veggie Bowl 18 €</td>
+                  </tr>
+              </table>
+          </div>
+          <div class="tarif-bouton">
+              <a href="#">Accéder à la carte complète</a>
+          </div>
+      </div>
+      <div class="fond-blocs info-blocs-ouverture">
+          <h2 class="margin-left-20">Ouverture :</h2>
+          <ul class="margin-top-horaires margin-left-20">
+              <li class="horaires-ouverture"><em>Lundi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Mardi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Mercredi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Jeudi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Vendredi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Samedi : 09h - 23h</em></li>
+              <li class="horaires-ouverture"><em>Dimanche : 09h - 20h</em></li>
+          </ul>
+      </div>
+  </section>
+
+  <section>
+      <div class="fond-blocs">
+          <h1>Localisation</h1>
+          <div id="map" style="width: 1000px; height: 750px;" class="carte"></div>
+      </div>
+  </section>
+
+  <section id="avis">
+      <div class="fond-blocs">
+          <div class="container">
+              <div class="note-moyenne">
+                  <h2>Note moyenne :</h2>
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                  <p>49 avis</p>
+              </div>
+          </div>
+          <div class="fond-avis">
+              <div class="container">
+                  <div class="alignement">
+                      <img src="images/universel/icones/avatar-homme-1.png" class="avatar">
+                      <p class="mise-en-page size-32"><strong>Stanislas</strong></p>
+                      <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                      <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                      <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                      <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                      <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                      <p class="mise-en-page"><em>14/08/2023</em></p>
+                  </div>
+                  <p class="size-40"><strong>⁝</strong></p>
+              </div>
+              <p class="avis">Restaurant très bon avec des ingrédients de qualité</p>
+              <div class="container-pouce alignement">
+                  <a href="#" class="repondre"><strong>Répondre</strong></a>
+                  <p>0</p>
+                  <img src="images/universel/icones/pouce-up.png">
+                  <p>0</p>
+                  <img src="images/universel/icones/pouce-down.png">
+              </div>
+          </div>
+          <div class="container-parent">
+              <a href="#" class="bouton-page-suivante">Page suivante</a>
+          </div>  
+      </div>
+      <div class="zone-bouton-navigation">        
+          <div class="container">
+              <a href="#" class="size-40 bouton-navigation">Retour à la liste des offres</a>
+              <a href="#" class="size-40 bouton-navigation"><img src="images/universel/icones/fleche-haut.png"></a>
+          </div>
+      </div> 
+  </div>
+  </section>
   </main>
   <footer>
     <div class="footer-top">
