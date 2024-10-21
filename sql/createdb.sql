@@ -1204,23 +1204,21 @@ EXECUTE PROCEDURE delete_offre_restauration();
 /* ##################################################################### */
 
 
-CREATE FUNCTION offre_pas_plus_de_7_jours() RETURNS TRIGGER AS $$
-DECLARE
-    nb_jours INTEGER;
+CREATE FUNCTION offre_jours_uniques() RETURNS TRIGGER AS $$
 BEGIN
-    nb_jours = (SELECT COUNT(*) FROM _horaires_du_jour WHERE id_offre = NEW.id_offre);
-    IF (nb_jours > 7) THEN
-        RAISE EXCEPTION 'Il ne peut pas y avoir plus de 7 jours.';
+    PERFORM * FROM _horaires_du_jour WHERE nom_jour = NEW.nom_jour AND id_offre = NEW.id_offre;
+    IF (FOUND) THEN
+        RAISE EXCEPTION 'Il ne peut pas y avoir plusieurs fois le même jour.';
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER offre_pas_plus_de_7_jours_tg
-AFTER INSERT
+CREATE TRIGGER offre_jours_uniques_tg
+BEFORE INSERT
 ON _horaires_du_jour
 FOR EACH ROW
-EXECUTE PROCEDURE offre_pas_plus_de_7_jours();
+EXECUTE PROCEDURE offre_jours_uniques();
 
 
 COMMIT;
