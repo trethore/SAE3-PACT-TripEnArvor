@@ -14,7 +14,7 @@
         <img class="logo" src="images/Logo_SAE3_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="cherchero-wrapper">
-            <img class="cherchero" src="images/cherchero_1.png" />
+            <img class="cherchero" src="images/cherchero_1.png"/>
         </div>
         <img class="ICON-accueil" src="images/icon-accueil.png" />
         <img class="ICON-utilisateur" src="images/icon-utilisateur.png" />
@@ -123,7 +123,7 @@
             
             <h3>Description détaillée de l'offre</h3>
             <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
-
+            
             if(letype="payante"){
                 <h3>Tarifs</h3>
                 <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
@@ -272,5 +272,10 @@ document.getElementById('categorie').addEventListener('change', function() {
         let nom = "duree";
     }
 });
+
+function getcategorie(){
+    let lacategorie = document.getElementById("categorie");
+    alert(categorie)
+}
 
 </script>
