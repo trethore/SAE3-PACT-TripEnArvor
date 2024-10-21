@@ -1,16 +1,6 @@
-START TRANSACTION;
-
 DROP SCHEMA IF EXISTS pact CASCADE;
 CREATE SCHEMA pact;
 SET SCHEMA 'pact';
-
-COMMIT;
-
--- ROLLBACK;
-
-
-START TRANSACTION;
-
 
 
 /* ##################################################################### */
@@ -1224,7 +1214,7 @@ EXECUTE PROCEDURE delete_offre_restauration();
 CREATE FUNCTION offre_jours_uniques() RETURNS TRIGGER AS $$
 BEGIN
     PERFORM * FROM _horaires_du_jour WHERE nom_jour = NEW.nom_jour AND id_offre = NEW.id_offre;
-    IF (FOUND) THEN
+    IF FOUND THEN
         RAISE EXCEPTION 'Il ne peut pas y avoir plusieurs fois le même jour.';
     END IF;
     RETURN NEW;
@@ -1236,6 +1226,24 @@ BEFORE INSERT
 ON _horaires_du_jour
 FOR EACH ROW
 EXECUTE PROCEDURE offre_jours_uniques();
+
+
+CREATE FUNCTION offre_activite_propose_au_moins_une_prestation() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_activite_propose_prestation WHERE id_offre_activite = NEW.id_offre;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Une offre activité doit proposer au moins une prestation.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER offre_activite_propose_au_moins_une_prestation_tg
+AFTER INSERT
+ON _offre_activite
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE offre_activite_propose_au_moins_une_prestation();
 
 
 COMMIT;
