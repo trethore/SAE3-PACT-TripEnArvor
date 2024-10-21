@@ -137,6 +137,14 @@ textarea{
   font-family: "Poppins"
 }
 
+/****TARIFS****/
+#tarifs{
+  display: none;
+}
+
+#options{
+  display: none;
+}
 
 /*HORAIRES*/
 input[placeholder = "00"]{

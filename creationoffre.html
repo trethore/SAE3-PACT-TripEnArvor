@@ -80,22 +80,21 @@
                     
                 </tr>
                <tr>
+                <td>
                     <td><label for="type">Type de l'offre <span>*</span></label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "type" name = "letype">
                             <option value="">Choisir le type d'offre</option>
                             <option value = "payante"> Offre Payante </option>
-                            <option value = "gratuite"> Offre Gratuite </option>
+                            <option value = "ferme"> Offre Gratuite </option>
                         </select>
                     </div></td></tr>
             </table>
-            <div id="options">
                     <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
                     <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
-            </div>
-                </td>
-               </tr>
-            </table>
+
+                
+               
         
             </div>
             
@@ -126,7 +125,7 @@
             <h3>Description détaillée de l'offre</h3>
             <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
             
-            <div id = "tarifs">
+            if(letype=="payante"){
                 <h3>Tarifs</h3>
                 <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
                 <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
@@ -143,8 +142,8 @@
                 <label for="grilleT">Grille tarifaire complète</label>
                 <input type="file" id="grilleT" name="grilleT">
 
+            }
             
-            </div>
             <br>
 
 
@@ -233,23 +232,53 @@
         Politique de confidentialité - Politique RGPD - Mentions légales - Plan du site - Conditions générales - © Redden’s, Inc.
       </div>
     </footer>
-    <script>
-        let element = document.getElementById('type');
-        element.addEventListener('change', function() {
-            const type = this.value;
-            console.log(type);
-            if (type == "payante") {
-                document.getElementById('options').style.display = 'block';
-                document.getElementById('tarifs').style.display = 'block';
-            } else{
-                document.getElementById('options').style.display = 'none';
-                document.getElementById('options').style.display = 'none';
-            }
-        })
-        </script>
 
 </body>
 </html>
 
+<script>
+    
+document.getElementById('categorie').addEventListener('change', function() {
+    const lacat = this.value; // Récupère la valeur sélectionnée
+    const fieldContainer = document.getElementById('fieldContainer'); // Conteneur des champs du formulaire
+    
+    // Réinitialise les champs avant d'ajouter les nouveaux
+    fieldContainer.innerHTML = '';
+
+    fieldContainer.innerHTML = '';
+    if(lacat=="restaurant"){
+        let lab = "Prix"; 
+        let nom="gammePrix";
+
+        fieldContainer.innerHTML = `
+            <label for="${nom1}">${lab1}</label>
+            <input type="number" id="${nom1}" name="${nom1}"><br>
+        `;
+    }
+    if(lacat == "parc"){
+        let lab = "Attractions"
+        let nom = "nbAttrations";
+        let lab2 ="Age minimum";
+        let nom2 = "ageMin";
+    }
+
+    if(lacat== "activite"){
+        let lab ="Durée";
+        let nom="duree";
+        let lab2 = "Age minimum";
+        let nom2 ="ageMin";
+    }
+    if(lacat =="visite"){
+        let lab = "Durée";
+        let nom = "duree";
+    }
+});
 
 
+
+function getcategorie(){
+    let lacategorie = document.getElementById("categorie");
+    alert(categorie)
+}
+
+</script>
