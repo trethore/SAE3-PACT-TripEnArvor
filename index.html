@@ -17,12 +17,26 @@
         <label>Quelle est votre adresse mail ?</label>
         <input type="email" id="email" name="email" required/>
         <br>
-        <label>Créer un mot de passe</label>
-        <input type="text" id="mdp" name="mdp" required/>
+        <section>
+            <label>Quel est votre mot de passe ?</label>
+            <input type="checkbox" onclick="myFunction()">
+            <label>Afficher</label>
+        </section>
+        <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
         <br>
         <br>
         <br>
         <button>Connexion</button>
     </main>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("mdp");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>

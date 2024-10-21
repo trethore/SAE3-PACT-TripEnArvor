@@ -31,6 +31,7 @@ body.connecter {
     align-items: center;
     height: 100vh;
     margin: 0;
+    position: relative;
 }
 
 /* Conteneur */
@@ -44,7 +45,11 @@ body.connecter {
 
 /* Logo */
 .connecter img {
-    display: flex;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    max-width: 63px;
+    max-height: 95px;
 }
 
 /* Titres */
@@ -78,6 +83,7 @@ body.connecter {
     font-size: 16px;
 
     color: var(--noir);
+    opacity: ;
 
     margin: 0 0 5px 0;
 
@@ -106,7 +112,7 @@ body.connecter {
 
     color: var(--noir);
 
-    padding-left: 1em;
+    padding-left: 1.5em;
 }
 
 .connecter button {
@@ -129,3 +135,18 @@ body.connecter {
 
     color: var(--blanc-leger);
 }
+
+section {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    text-align: left;
+}
+
+section label:last-child {
+    text-align: right;
+}
+
+/*section input {
+
+}*/
