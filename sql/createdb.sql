@@ -289,17 +289,23 @@ CREATE TABLE _tag (
 /* ##################################################################### */
 
 
+/* ======================= COMPTE HABITE ADRESSE ======================= */
+
 ALTER TABLE _compte
     ADD CONSTRAINT _compte_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
 
 
+/* ====================== OFFRE SE SITUE ADRESSE ======================= */
+
 ALTER TABLE _offre
     ADD CONSTRAINT _offre_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
 
+
+/* ======================= OFFRE CONTIENT IMAGE ======================== */
 
 CREATE TABLE _offre_contient_image (
     id_offre    INTEGER,
@@ -310,23 +316,29 @@ CREATE TABLE _offre_contient_image (
 );
 
 
-CREATE TABLE _offre_parc_attraction_contient_image (
+/* ================ OFFRE PARC ATTRACTION POSSÈDE PLAN ================= */
+
+CREATE TABLE _offre_parc_attraction_possede_plan (
     id_offre    INTEGER,
     id_image    VARCHAR(255),
-    CONSTRAINT _offre_parc_attraction_contient_image_pk PRIMARY KEY (id_offre, id_image),
-    CONSTRAINT _offre_parc_attraction_contient_image_fk_offre_parc_attraction FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
-    CONSTRAINT _offre_parc_attraction_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+    CONSTRAINT _offre_parc_attraction_possede_plan_pk PRIMARY KEY (id_offre, id_image),
+    CONSTRAINT _offre_parc_attraction_possede_plan_fk_offre_parc_attraction FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_parc_attraction_possede_plan_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
 );
 
 
-CREATE TABLE _offre_restauration_contient_image (
+/* ================= OFFRE RESTAURATION POSSÈDE CARTE ================== */
+
+CREATE TABLE _offre_restauration_possede_carte (
     id_offre    INTEGER,
     id_image    VARCHAR(255),
-    CONSTRAINT _offre_restauration_contient_image_pk PRIMARY KEY (id_offre, id_image),
-    CONSTRAINT _offre_restauration_contient_image_fk_offre_restauration FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
-    CONSTRAINT _offre_restauration_contient_image_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
+    CONSTRAINT _offre_restauration_possede_carte_pk PRIMARY KEY (id_offre, id_image),
+    CONSTRAINT _offre_restauration_possede_carte_fk_offre_restauration FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_restauration_possede_carte_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
 );
 
+
+/* ================= OFFRE RESTAURATION PROPOSE REPAS ================== */
 
 CREATE TABLE _offre_restauration_propose_repas (
     id_offre_restauration   INTEGER,
@@ -334,6 +346,15 @@ CREATE TABLE _offre_restauration_propose_repas (
     CONSTRAINT _offre_restauration_propose_repas_pk PRIMARY KEY (id_offre_restauration, type_repas),
     CONSTRAINT _offre_restauration_propose_repas_fk_offre_restauration FOREIGN KEY (id_offre_restauration) REFERENCES _offre_restauration(id_offre),
     CONSTRAINT _offre_restauration_propose_repas_fk_type_repas FOREIGN KEY (type_repas) REFERENCES _type_repas(type_repas)
+);
+
+
+/* ========================= OFFRE POSSÈDE TAG ========================= */
+
+CREATE TABLE _offre_possede_tag (
+    id_offre    INTEGER,
+    nom_tag     VARCHAR(64),
+    CONSTRAINT
 );
 
 
