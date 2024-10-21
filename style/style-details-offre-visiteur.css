@@ -70,7 +70,7 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > a {
+.display-ligne-espace > button {
     color: var(--vert-principale);
     text-decoration: none;
     font-size: 40px;
@@ -79,7 +79,7 @@ a {
     border-radius: 15px;
 }
 
-.display-ligne-espace > a:hover {
+.display-ligne-espace > button:hover {
     color: var(--blanc-leger);
     background: var(--vert-principale);
     border: 1px solid var(--blanc-leger);
