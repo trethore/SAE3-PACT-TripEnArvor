@@ -1,3 +1,9 @@
+<?php
+if (isset($_POST['titre']))
+    $submitted = false;
+else
+    $submitted = true;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +25,12 @@
         <img class="ICON-accueil" src="images/icon-accueil.png" />
         <img class="ICON-utilisateur" src="images/icon-utilisateur.png" />
     </header>
-
+<?php
+if (!$submitted) {
+?>
     <main>
         <h2> Création d'une offre</h2>
-        <form action = "creationoffre.php" method = "post" enctype="multipart/form-data" id="dynamicForm">
+        <form action="creationoffrepayante1.php" method="post" enctype="multipart/form-data" id="dynamicForm">
             <h3>Informations importante</h3>
             <div class="important">
             <table border="0">
@@ -194,19 +202,24 @@
         </tr>
     </table>
 
+        <input class="valider"type="submit" value="Créer l'offre">
     </form>
 
 
     </main>
     <div>
-        <input class="valider"type="submit" value="Créer l'offre">
 
         <a href="#" id="back-to-top">
             <img src="images/fleche-vers-le-haut.png" alt="Retour en haut" width="50" height="50">
         </a>
     </div>
 
+<?php
+}
+else {
     
+}
+?>    
 
     <footer>
         <!-- Section supérieure avec le gradient -->
