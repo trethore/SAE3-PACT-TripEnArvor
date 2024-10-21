@@ -18,7 +18,7 @@
 
 <body>
 
-    <header>
+    <header id="header">
         <img class="logo" src="images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
@@ -29,23 +29,22 @@
         <a href="index.html"><img class="ICON-utilisateur" src="images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <main>
-
-        <div class="display-ligne-espace bouton-modifier">
-            <p class="transparent">.</p> 
-            <div>
-                <div id="confirm">
-                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                    <div class="close">
-                        <button onclick="closeConfirmConfirmer()">Mettre hors ligne</button>
-                        <button onclick="closeConfirmAnnuler()">Annuler</button>
-                    </div>
+    <div class="display-ligne-espace bouton-modifier">
+        <p class="transparent">.</p> 
+        <div>
+            <div id="confirm">
+                <p>Voulez-vous mettre votre offre hors ligne ?</p>
+                <div class="close">
+                    <button onclick="closeConfirmConfirmer()">Mettre hors ligne</button>
+                    <button onclick="closeConfirmAnnuler()">Annuler</button>
                 </div>
-                <button onclick="showConfirm()">Mettre hors ligne</button>
-                <button>Modifier l'offre</button>
             </div>
+            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <button id="bouton2">Modifier l'offre</button>
         </div>
+    </div>
 
+    <main id="body">
         <section class="fond-blocs"><!---->
 
             <h1>Côté Plage</h1>
@@ -201,7 +200,7 @@
 
     </main>
 
-    <footer>
+    <footer id="footer">
         <div class="footer-top">
         <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
@@ -256,14 +255,46 @@
         var confirmDiv = document.getElementById("confirm");
         function showConfirm() {
             confirmDiv.style.display = "block";
+            let header = document.getElementById('header');
+            header.style.filter = "blur(4px)";
+            let body = document.getElementById('body');
+            body.style.filter = "blur(4px)";
+            let footer = document.getElementById('footer');
+            footer.style.filter = "blur(4px)";
+            let bouton1 = document.getElementById('bouton1');
+            bouton1.style.filter = "blur(4px)";
+            let bouton2 = document.getElementById('bouton2');
+            bouton2.style.filter = "blur(4px)";
+            let popup = document.getElementById('confirm');
+            popup.style.filter = "none";
         }
 
         function closeConfirmAnnuler() {
             confirmDiv.style.display = "none";
+            let header = document.getElementById('header');
+            header.style.filter = "blur(0px)";
+            let body = document.getElementById('body');
+            body.style.filter = "blur(0px)";
+            let footer = document.getElementById('footer');
+            footer.style.filter = "blur(0px)";
+            let bouton1 = document.getElementById('bouton1');
+            bouton1.style.filter = "blur(0px)";
+            let bouton2 = document.getElementById('bouton2');
+            bouton2.style.filter = "blur(0px)";
         }
 
         function closeConfirmConfirmer() {
             confirmDiv.style.display = "none";
+            let header = document.getElementById('header');
+            header.style.filter = "blur(0px)";
+            let body = document.getElementById('body');
+            body.style.filter = "blur(0px)";
+            let footer = document.getElementById('footer');
+            footer.style.filter = "blur(0px)";
+            let bouton1 = document.getElementById('bouton1');
+            bouton1.style.filter = "blur(0px)";
+            let bouton2 = document.getElementById('bouton2');
+            bouton2.style.filter = "blur(0px)";
             alert("Offre hors ligne");
         }
 
