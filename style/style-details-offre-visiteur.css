@@ -190,7 +190,7 @@ a {
             BLOC TARIFS                             
     ***************************/
 
-    .bloc-tarif > a {
+    .bloc-tarif > button {
         color: var(--vert-principale);
         text-decoration: none;
         font-size: 20px;
@@ -199,7 +199,7 @@ a {
         border-radius: 15px;
     }
 
-    .bloc-tarif > a:hover {
+    .bloc-tarif > button:hover {
         color: var(--blanc-leger);
         background: var(--vert-principale);
         border: 1px solid var(--blanc-leger);
@@ -364,7 +364,7 @@ a {
     margin: 30px;
 }
 
-.navigation > a {
+.navigation > button {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
@@ -373,7 +373,7 @@ a {
     border-radius: 15px;
 }
 
-.navigation > a:hover {
+.navigation > button:hover {
     color: var(--vert-principale);
     background: var(--blanc-leger);
     border: 1px solid var(--vert-principale);
