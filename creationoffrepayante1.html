@@ -79,22 +79,18 @@
                     </div></td>
                     
                 </tr>
-                <tr>
-                    <td><label for="type">Type de l'offre <span>*</span></label></td>
-                    <td><div class="custom-select-container">
-                        <select class="custom-select" id = "type" name = "letype">
-                            <option value="">Choisir le type d'offre</option>
-                            <option value = "payante"> Offre Payante </option>
-                            <option value = "ferme"> Offre Gratuite </option>
-                        </select>
-                    </div></td>
-                </tr>
+               <tr>
+                <td>
+                    Options
+                </td>
+                <td>
+                    <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
+                    <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
+
+                </td>
+               </tr>
             </table>
-            if(letype == "payante"){
-                <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
-                <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
-            }
-            
+        
             </div>
             
             <br>
@@ -124,7 +120,7 @@
             <h3>Description détaillée de l'offre</h3>
             <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
             
-            if(letype="payante"){
+            if(letype=="payante"){
                 <h3>Tarifs</h3>
                 <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
                 <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
@@ -272,6 +268,8 @@ document.getElementById('categorie').addEventListener('change', function() {
         let nom = "duree";
     }
 });
+
+
 
 function getcategorie(){
     let lacategorie = document.getElementById("categorie");
