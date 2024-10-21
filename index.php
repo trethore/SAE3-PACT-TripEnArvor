@@ -1,9 +1,22 @@
+<?php
+// on se connecte à MySQL
+mysql_connect(
+    string $server = ini_get("mysql.default_host"),
+    string $username = ini_get("mysql.default_user"),
+    string $password = ini_get("mysql.default_password"),
+    bool $new_link = false,
+    int $client_flags = 0
+)
+
+// on sélectionne la base
+mysql_select_db('nom_de_la_base',$db)
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style_back.css">
+    <link rel="stylesheet" href="style_backListe.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -114,6 +127,9 @@
             </div>
         </article>
         <section class="lesOffres">
+            <?php 
+            $req = mysql_query('SELECT * FROM offre');
+            ?>
             <article>
                 <div>
                     <div class="lieu-offre">Sarzeau</div>
