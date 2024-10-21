@@ -332,6 +332,17 @@ CREATE TABLE _offre_activite_propose_prestation (
 );
 
 
+/* ===================== OFFRE VISITE DANS LANGUE ====================== */
+
+CREATE TABLE _offre_visite_dans_langue (
+    id_offre_visite INTEGER,
+    nom_langue      VARCHAR(128),
+    CONSTRAINT _offre_visite_dans_langue_pk PRIMARY KEY (id_offre_visite, nom_langue),
+    CONSTRAINT _offre_visite_dans_langue_fk_offre_visite FOREIGN KEY (id_offre_visite) REFERENCES _offre_visite(id_offre),
+    CONSTRAINT _offre_visite_dans_langue_fk_langue FOREIGN KEY (nom_langue) REFERENCES _langue(nom_langue)
+);
+
+
 /* ================ OFFRE PARC ATTRACTION POSSÈDE PLAN ================= */
 
 CREATE TABLE _offre_parc_attraction_possede_plan (
