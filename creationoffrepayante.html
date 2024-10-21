@@ -22,7 +22,7 @@
 
     <main>
         <h2> Création d'une offre</h2>
-        <form action = "creationoffre.php" method = "post" enctype="multipart/form-data">
+        <form action = "creationoffre.php" method = "post" enctype="multipart/form-data" id="dynamicForm">
             <h3>Informations importante</h3>
             <div class="important">
             <table border="0">
@@ -44,6 +44,9 @@
                     </div></td>
                 </tr>
                 <tr>
+                    <label for=""></label>
+                </tr>
+                <tr>
                     <td><label for="dispo">Disponibilité </label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "dispo" name = "ladispo">
@@ -54,13 +57,14 @@
                     </div></td>
                 </tr>
                 
+                
                 <tr>
-                    <td><label for= "adresse">Adresse <span class="required">*</span></label></td>
+                    <td><label for= "adresse">Adresse</label></td>
                     <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)" required></td>
                 </tr>
                 <tr>
-                    <td><label for= "cp">Code Postal <span class="required">*</span> </label></td>
-                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5" required></td>
+                    <td><label for= "cp">Code Postal </label></td>
+                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5"></td>
                     <td><label for= "ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name ="ville" placeholder="Nom de ville" required></td>
                 
@@ -146,45 +150,45 @@
     <table border="0">
         <tr>
             <td>Lundi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Mardi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Mercredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Jeudi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Vendredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Samedi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
         <tr>
             <td>Dimanche</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" required></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
     </table>
 
@@ -231,4 +235,42 @@
 </body>
 </html>
 
+<script>
+    
+document.getElementById('categorie').addEventListener('change', function() {
+    const lacat = this.value; // Récupère la valeur sélectionnée
+    const fieldContainer = document.getElementById('fieldContainer'); // Conteneur des champs du formulaire
+    
+    // Réinitialise les champs avant d'ajouter les nouveaux
+    fieldContainer.innerHTML = '';
 
+    fieldContainer.innerHTML = '';
+    if(lacat=="restaurant"){
+        let lab = "Prix"; 
+        let nom="gammePrix";
+
+        fieldContainer.innerHTML = `
+            <label for="${nom1}">${lab1}</label>
+            <input type="number" id="${nom1}" name="${nom1}"><br>
+        `;
+    }
+    if(lacat == "parc"){
+        let lab = "Attractions"
+        let nom = "nbAttrations";
+        let lab2 ="Age minimum";
+        let nom2 = "ageMin";
+    }
+
+    if(lacat== "activite"){
+        let lab ="Durée";
+        let nom="duree";
+        let lab2 = "Age minimum";
+        let nom2 ="ageMin";
+    }
+    if(lacat =="visite"){
+        let lab = "Durée";
+        let nom = "duree";
+    }
+});
+
+</script>

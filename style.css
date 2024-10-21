@@ -170,7 +170,7 @@ input[placeholder = "00"]{
   padding-left: 5%;
 }
 
-.important table :nth-child(5) td + td + td{ /*"ville *" */
+.important table :nth-child(6) td + td + td{ /*"ville *" */
   width: 10%;
   padding-left: 0;
 } 
