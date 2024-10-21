@@ -319,6 +319,17 @@ CREATE TABLE _offre_contient_image (
 );
 
 
+/* ================= OFFRE ACTIVITÉ PROPOSE PRESTATION ================= */
+
+CREATE TABLE _offre_activite_propose_prestation (
+    nom_prestation      VARCHAR(128),
+    id_offre_activite   INTEGER,
+    CONSTRAINT _offre_activite_propose_prestation_pk PRIMARY KEY (nom_prestation, id_offre_activite),
+    CONSTRAINT _offre_activite_propose_prestation_fk_offre_activite FOREIGN KEY (id_offre_activite) REFERENCES offre_activite(id_offre),
+    CONSTRAINT _offre_activite_propose_prestation_fk_prestation FOREIGN KEY (nom_prestation) REFERENCES _prestation(nom_prestation)
+);
+
+
 /* ================ OFFRE PARC ATTRACTION POSSÈDE PLAN ================= */
 
 CREATE TABLE _offre_parc_attraction_possede_plan (
