@@ -386,6 +386,23 @@ CREATE TABLE _offre_possede_tag (
 );
 
 
+/* ==================== OFFRE EN LIGNE / HORS LIGNE ==================== */
+
+CREATE TABLE _dates_mise_en_ligne_offre (
+    id_offre    INTEGER,
+    date_heure  TIMESTAMP,
+    CONSTRAINT _dates_mise_en_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
+    CONSTRAINT _dates_mise_en_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+);
+
+CREATE TABLE _dates_mise_hors_ligne_offre (
+    id_offre    INTEGER,
+    date_heure  TIMESTAMP,
+    CONSTRAINT _dates_mise_hors_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
+    CONSTRAINT _dates_mise_hors_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+);
+
+
 
 /* ##################################################################### */
 /*                       TRIGGERS TABLES ABSTRAITES                      */
