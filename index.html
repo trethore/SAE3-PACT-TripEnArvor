@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </head>
@@ -32,7 +33,10 @@
 
         <div class="display-ligne-espace bouton-modifier">
             <p class="transparent">.</p> 
-            <a href="#">Modifier l'offre</a>
+            <div>
+                <a href="#">Mettre hors ligne</a>
+                <a href="#">Modifier l'offre</a>
+            </div>
         </div>
 
         <section class="fond-blocs"><!---->
@@ -134,7 +138,7 @@
         <section class="fond-blocs">
 
             <h1>Localisation</h1>
-            <div id="map" style="width: 1000px; height: 750px;" class="carte"></div>
+            <div id="map" class="carte"></div>
 
         </section>
 
@@ -226,7 +230,6 @@
         
     </footer>
 
-    <!-- PROBLÈME CARTE
     <script>
 
         let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
@@ -240,7 +243,6 @@
             .openPopup();
 
     </script>
-    -->
 
 </body>
 

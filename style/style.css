@@ -50,15 +50,19 @@ a {
     margin: 30px 30px 0 30px;
 }
 
-.bouton-modifier > a {
-    background: none;
+.bouton-modifier > div > a {
+    background: var(--blanc-leger);
     color: var(--orange-principale);
     border: 1px solid var(--noir);
+    text-decoration: none;
+    font-size: 40px;
+    padding: 10px 80px;
+    border-radius: 15px;
 }
 
-.bouton-modifier > a:hover {
-    background: none;
-    color: var(--orange-principale);
+.bouton-modifier > div > a:hover {
+    color: var(--blanc-leger);
+    background: var(--orange-principale);
     border: 1px solid var(--noir);
 }
 
@@ -257,6 +261,16 @@ a {
     .bloc-ouverture > ul > li {
         list-style: none;
     }
+
+/**************************
+        BLOCS CARTE                                                   
+**************************/
+
+.carte {
+    width: 1000px; 
+    height: 750px;
+    margin: auto; 
+}
 
 /*************************
         BLOCS AVIS                                                   
