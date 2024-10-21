@@ -149,7 +149,7 @@ input[placeholder = "00"]{
   color: var(--gris-toile);
 }
 
-/***Tableaux**/
+/***Tableaux***/
 
 .apropos table, .important table{
   width: 100%;

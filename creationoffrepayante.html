@@ -76,7 +76,7 @@
                     
                 </tr>
                 <tr>
-                    <td><label for="type">Type de l'offre</label></td>
+                    <td><label for="type">Type de l'offre <span>*</span></label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "type" name = "letype">
                             <option value="">Choisir le type d'offre</option>
@@ -86,8 +86,11 @@
                     </div></td>
                 </tr>
             </table>
-            <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
-            <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
+            if(letype == "payante"){
+                <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
+                <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
+            }
+            
             </div>
             
             <br>
@@ -116,22 +119,26 @@
             
             <h3>Description détaillée de l'offre</h3>
             <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
+
+            if(letype="payante"){
+                <h3>Tarifs</h3>
+                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
+                <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
+                <br>
+                <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif">
+                <input type="number" name="tarif2" min="0" placeholder="prix"><span>€</span>
+                <br>
+                <input type="text" id="tarif3nom" name="tarif3nom" placeholder= "Nom du tarif">
+                <input type="number" name="tarif3" min="0" placeholder="prix"><span>€</span>
+                <br>
+                <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "Nom du tarif">
+                <input type="number" name="tarif4" min="0" placeholder="prix"><span>€</span>
+                <br>
+                <label for="grilleT">Grille tarifaire complète</label>
+                <input type="file" id="grilleT" name="grilleT">
+
+            }
             
-            <h3>Tarifs</h3>
-            <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
-            <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
-            <br>
-            <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif">
-            <input type="number" name="tarif2" min="0" placeholder="prix"><span>€</span>
-            <br>
-            <input type="text" id="tarif3nom" name="tarif3nom" placeholder= "Nom du tarif">
-            <input type="number" name="tarif3" min="0" placeholder="prix"><span>€</span>
-            <br>
-            <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "Nom du tarif">
-            <input type="number" name="tarif4" min="0" placeholder="prix"><span>€</span>
-            <br>
-            <label for="grilleT">Grille tarifaire complète</label>
-            <input type="file" id="grilleT" name="grilleT">
             <br>
 
 
