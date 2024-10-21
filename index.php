@@ -1,15 +1,15 @@
 <?php
-// on se connecte à MySQL
-mysql_connect(
-    string $server = ini_get("mysql.default_host"),
-    string $username = ini_get("mysql.default_user"),
-    string $password = ini_get("mysql.default_password"),
-    bool $new_link = false,
-    int $client_flags = 0
-)
 
-// on sélectionne la base
-mysql_select_db('nom_de_la_base',$db)
+// Connexion à la BDD
+$conn = new mysqli('localhost', 'username', 'password', 'database_name');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT ville, titre, typeOffre, nombreAvis, prix FROM Offre";
+$result = $conn->query($sql); 
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -127,16 +127,17 @@ mysql_select_db('nom_de_la_base',$db)
             </div>
         </article>
         <section class="lesOffres">
-            <?php 
-            $req = mysql_query('SELECT * FROM offre');
+            <?php
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
             ?>
             <article>
                 <div>
-                    <div class="lieu-offre">Sarzeau</div>
-                    <div class="ouverture-offre">Ouvert</div>
+                    <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
+                    <div class="ouverture-offre"><?php  ?></div>
                     <img src="images/universel/photos/coteplage_facade.jpg">
-                    <p>Côté-Plage</p>
-                    <p>Restaurant</p>
+                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <p><?php echo htmlentities() ?></p>
                     <img src="images/backOffice/icones/payante.png" alt="">
                     <div class="etoiles">
                         <img src="images/universel/icones/etoile-pleine.png">
@@ -144,24 +145,29 @@ mysql_select_db('nom_de_la_base',$db)
                         <img src="images/universel/icones/etoile-pleine.png">
                         <img src="images/universel/icones/etoile-pleine.png">
                         <img src="images/universel/icones/etoile-pleine.png">
-                        <p>(49)</p>
+                        <p><?php echo htmlentities() ?></p>
                     </div>
                     <div>
                         <p>Avis non lues : <span><b>4</b></span></p>
                         <p>Avis non répondues : <span><b>1</b></span></p>
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
-                    <p>A partir de <span>80€</span></p>
+                    <p>A partir de <span><?php echo htmlentities() ?></span></p>
                 </div>
             </article>
-            <?php 
+            <?php
+                    }
+                }
                 if ($pageNumber > 1) { ?>
-                    <a href="http://localhost:8888/exo3.php?page=<?php echo $pageNumber - 1?>">Page précédente</a>
+                    <a href="http://localhost:8888/index.php?page=<?php echo $pageNumber - 1?>">Page précédente</a>
                 <?php } ?>
                 <?php
                 if ($pageNumber < ceil(count($regions)/LIG)) { ?>
-                    <a href="http://localhost:8888/exo3.php?page=<?php echo $pageNumber + 1?>">Page suivante</a>
-                <?php } ?>
+                    <a href="http://localhost:8888/index.php?page=<?php echo $pageNumber + 1?>">Page suivante</a>
+                <?php 
+                }
+                $conn->close();
+                ?>
         </section>
     </main>
 </body>
