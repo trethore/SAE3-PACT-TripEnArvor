@@ -6,6 +6,8 @@ SET SCHEMA 'pact';
 
 COMMIT;
 
+-- ROLLBACK;
+
 
 START TRANSACTION;
 
@@ -325,7 +327,7 @@ CREATE TABLE _offre_activite_propose_prestation (
     nom_prestation      VARCHAR(128),
     id_offre_activite   INTEGER,
     CONSTRAINT _offre_activite_propose_prestation_pk PRIMARY KEY (nom_prestation, id_offre_activite),
-    CONSTRAINT _offre_activite_propose_prestation_fk_offre_activite FOREIGN KEY (id_offre_activite) REFERENCES offre_activite(id_offre),
+    CONSTRAINT _offre_activite_propose_prestation_fk_offre_activite FOREIGN KEY (id_offre_activite) REFERENCES _offre_activite(id_offre),
     CONSTRAINT _offre_activite_propose_prestation_fk_prestation FOREIGN KEY (nom_prestation) REFERENCES _prestation(nom_prestation)
 );
 
@@ -1195,7 +1197,7 @@ CREATE FUNCTION offre_pas_plus_de_7_jours() RETURNS TRIGGER AS $$
 DECLARE
     nb_jours INTEGER;
 BEGIN
-    nb_jours = SELECT COUNT(*) FROM _horaires_du_jour WHERE id_offre = NEW.id_offre;
+    nb_jours = (SELECT COUNT(*) FROM _horaires_du_jour WHERE id_offre = NEW.id_offre);
     IF (nb_jours > 7) THEN
         RAISE EXCEPTION 'Il ne peut pas y avoir plus de 7 jours.';
     END IF;
@@ -1205,7 +1207,7 @@ $$ LANGUAGE 'plpgsql';
 
 CREATE TRIGGER offre_pas_plus_de_7_jours_tg
 AFTER INSERT
-ON horaires_du_jour
+ON _horaires_du_jour
 FOR EACH ROW
 EXECUTE PROCEDURE offre_pas_plus_de_7_jours();
 
