@@ -89,6 +89,14 @@ a {
             IMAGES PRÉSENTATION                
     **********************************/
 
+    .image-avis {
+        display: flex;
+    }
+
+    .image-avis > p {
+        margin: 0 0 0 15px;
+    }
+
     .galerie-images-presentation {
         display: grid;
         grid-template-areas: "image1 image2 image3" "image1 image4 image5";
@@ -242,6 +250,16 @@ a {
         list-style: none;
     }
 
+/**************************
+        BLOCS CARTE                                                   
+**************************/
+
+.carte {
+    width: 1000px; 
+    height: 750px;
+    margin: auto; 
+}
+
 /*************************
         BLOCS AVIS                                                   
 *************************/
@@ -257,6 +275,12 @@ a {
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
+
+.galerie-images-avis {
+    margin: 0 0 0 75px;
+}
+
+.fond-blocs-avis
 
 .reponse {
     margin: 0 0 0 75px;
