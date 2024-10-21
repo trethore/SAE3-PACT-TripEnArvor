@@ -83,7 +83,6 @@ body.connecter {
     font-size: 16px;
 
     color: var(--noir);
-    opacity: ;
 
     margin: 0 0 5px 0;
 
@@ -91,7 +90,7 @@ body.connecter {
     width: 50%;
 }
 
-.connecter input {
+.connecter main > input {
     box-sizing: border-box;
 
     width: 715px;
@@ -134,19 +133,51 @@ body.connecter {
     justify-content: center;
 
     color: var(--blanc-leger);
+
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 section {
     display: flex;
     flex-direction: row;
     width: 50%;
-    text-align: left;
+    align-items: center;
+    justify-content: space-between;
 }
 
-section label:last-child {
+article {
     text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-/*section input {
+article label {
+    margin-left: 5px !important;
+}
 
-}*/
+section input {
+    display: flex;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background-image: url(images/frontOffice/icones/oeil-ferme.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    margin: 0;
+}
+
+section input:checked {
+    width: 28px;
+    height: 28px;
+    background-image: url(images/frontOffice/icones/oeil.png);
+    margin-top: 1px;
+}
+
+main button:hover {
+    background: var(--blanc-leger);
+    color: var(--vert-principale);
+}
