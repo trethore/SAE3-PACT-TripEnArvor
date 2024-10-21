@@ -50,7 +50,7 @@ a {
     margin: 30px 30px 0 30px;
 }
 
-.bouton-modifier > div > a {
+.bouton-modifier > div > button {
     background: var(--blanc-leger);
     color: var(--orange-principale);
     border: 1px solid var(--noir);
@@ -60,7 +60,7 @@ a {
     border-radius: 15px;
 }
 
-.bouton-modifier > div > a:hover {
+.bouton-modifier > div > button:hover {
     color: var(--blanc-leger);
     background: var(--orange-principale);
     border: 1px solid var(--noir);
@@ -90,16 +90,17 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > a {
+.display-ligne-espace > button {
     color: var(--orange-principale);
     text-decoration: none;
     font-size: 40px;
     background-color: var(--blanc-leger);
     padding: 10px 80px;
     border-radius: 15px;
+    border: 0;
 }
 
-.display-ligne-espace > a:hover {
+.display-ligne-espace > button:hover {
     color: var(--blanc-leger);
     background: var(--orange-secondaire-2);
     border: 1px solid var(--blanc-leger);
@@ -202,16 +203,17 @@ a {
             BLOC TARIFS                             
     ***************************/
 
-    .bloc-tarif > a {
+    .bloc-tarif > button {
         color: var(--orange-principale);
         text-decoration: none;
         font-size: 20px;
         background-color: var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
+        border: 0;
     }
 
-    .bloc-tarif > a:hover {
+    .bloc-tarif > button:hover {
         color: var(--blanc-leger);
         background: var(--orange-secondaire-1);
         border: 1px solid var(--blanc-leger);
@@ -325,16 +327,17 @@ a {
     margin: 30px;
 }
 
-.navigation > a {
+.navigation > button {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
     background: var(--gradient-orange);
     padding: 10px auto;
     border-radius: 15px;
+    border: 0;
 }
 
-.navigation > a:hover {
+.navigation > button:hover {
     color: var(--orange-principale);
     background: var(--blanc-leger);
     border: 1px solid var(--orange-principale);
@@ -346,4 +349,51 @@ a {
 
 footer > div > a {
     text-decoration: none;
+}
+
+#confirm {
+    background: var(--blanc-leger);
+    color: var(--noir);
+    font-size: 20px;
+    display: none;
+    border: 1px solid var(--noir);
+    border-radius: 15px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+}
+
+.close {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.close button:first-child {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin-bottom: 12px;
+    background: var(--noir);
+    color: var(--blanc-leger);
+    font-size: 32px;
+    width: fit-content;
+}
+
+.close button:last-child {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 60px;
+    margin-bottom: 12px;
+    background: var(--gris);
+    color: var(--blanc-leger);
+    font-size: 20px;
+    width: fit-content;
 }

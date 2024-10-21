@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style/styleguide.css"/>
     <link rel="stylesheet" href="style/styleHFB.css"/>
-    <link rel="stylesheet" href="style/style.css"/>
+    <link rel="stylesheet" href="style/style-details-offre-pro.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -34,8 +34,15 @@
         <div class="display-ligne-espace bouton-modifier">
             <p class="transparent">.</p> 
             <div>
-                <a href="#">Mettre hors ligne</a>
-                <a href="#">Modifier l'offre</a>
+                <div id="confirm">
+                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
+                    <div class="close">
+                        <button onclick="closeConfirmConfirmer()">Mettre hors ligne</button>
+                        <button onclick="closeConfirmAnnuler()">Annuler</button>
+                    </div>
+                </div>
+                <button onclick="showConfirm()">Mettre hors ligne</button>
+                <button>Modifier l'offre</button>
             </div>
         </div>
 
@@ -67,7 +74,7 @@
 
             <div class="display-ligne-espace">
                 <p>Proposée par : David Guillet</p>
-                <a href="#">Voir les tarifs</a>
+                <button>Voir les tarifs</button>
             </div>
 
         </section>
@@ -76,7 +83,7 @@
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <li><img src="images/universel/icones/cuisine.png"><h2>Cuisine traditionnelle<h2></li>
+                    <li><img src="images/universel/icones/cuisine.png"><h2>Cuisine traditionnelle</h2></li>
                     <li><img src="images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
                     <li><img src="images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
                 </ul>
@@ -117,7 +124,7 @@
                     </table>
                 </div>
 
-                <a href="#">Accéder à la carte complète</a>
+                <button>Accéder à la carte complète</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
@@ -188,8 +195,8 @@
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <a href="#">Retour à la liste des offres</a>
-            <a href="#"><img src="images/universel/icones/fleche-haut.png"></a>
+            <button>Retour à la liste des offres</button>
+            <button><img src="images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
@@ -241,6 +248,24 @@
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
+
+    </script>
+
+    <script>
+
+        var confirmDiv = document.getElementById("confirm");
+        function showConfirm() {
+            confirmDiv.style.display = "block";
+        }
+
+        function closeConfirmAnnuler() {
+            confirmDiv.style.display = "none";
+        }
+
+        function closeConfirmConfirmer() {
+            confirmDiv.style.display = "none";
+            alert("Offre hors ligne");
+        }
 
     </script>
 
