@@ -19,6 +19,7 @@ START TRANSACTION;
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
 CREATE TYPE type_repas_t AS ENUM ('Petit=déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
+CREATE TYPE type_offre_t AS ENUM('gratuite', 'standard', 'premium');
 
 
 
@@ -119,6 +120,8 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
+    prix_offre              INTEGER NOT NULL,
+    type_offre              type_offre_t NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte)
 );
@@ -249,12 +252,12 @@ CREATE TABLE _image (
 );
 
 
-CREATE TABLE _tarif (
-    id_tarif    SERIAL,
+CREATE TABLE _tarif_publique (
+    id_tarif_publique    SERIAL,
     prix        INTEGER NOT NULL,
     id_offre    INTEGER NOT NULL,
-    CONSTRAINT _tarif_pk PRIMARY KEY (id_tarif),
-    CONSTRAINT _tarif_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _tarif_publique_pk PRIMARY KEY (id_tarif_publique),
+    CONSTRAINT _tarif_publique_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
 
@@ -736,8 +739,8 @@ CREATE FUNCTION create_offre_activite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_activite(id_offre, duree, age_min)
         VALUES (id_offre_temp, NEW.duree, NEW.age_min);
@@ -775,7 +778,9 @@ BEGIN
         ville = NEW.ville,
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse
+        id_adresse = NEW.id_adresse,
+        prix_offre = NEW.prix_offre,
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_activite
@@ -823,8 +828,8 @@ CREATE FUNCTION create_offre_visite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_visite(id_offre, duree)
         VALUES (id_offre_temp, NEW.duree);
@@ -862,7 +867,9 @@ BEGIN
         ville = NEW.ville,
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse
+        id_adresse = NEW.id_adresse,
+        prix_offre = NEW.prix_offre,
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_visite
@@ -909,8 +916,8 @@ CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_spectacle(id_offre, duree, capacite)
         VALUES (id_offre_temp, NEW.duree, NEW.capacite);
@@ -948,7 +955,9 @@ BEGIN
         ville = NEW.ville,
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse
+        id_adresse = NEW.id_adresse,
+        prix_offre = prix_offre,
+        type_offre = type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_spectacle
@@ -996,8 +1005,8 @@ CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min)
         VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min);
@@ -1035,7 +1044,9 @@ BEGIN
         ville = NEW.ville,
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse
+        id_adresse = NEW.id_adresse,
+        prix_offre = NEW.prix_offre,
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_parc_attraction
@@ -1083,8 +1094,8 @@ CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_restauration(id_offre, gamme_prix)
         VALUES (id_offre_temp, NEW.gamme_prix);
@@ -1122,7 +1133,9 @@ BEGIN
         ville = NEW.ville,
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse
+        id_adresse = NEW.id_adresse,
+        prix_offre = NEW.prix_offre,
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_restauration
