@@ -1174,5 +1174,30 @@ FOR EACH ROW
 EXECUTE PROCEDURE delete_offre_restauration();
 
 
+
+/* ##################################################################### */
+/*                         TRIGGERS ASSOCIATIONS                         */
+/* ##################################################################### */
+
+
+CREATE FUNCTION offre_pas_plus_de_7_jours() RETURNS TRIGGER AS $$
+DECLARE
+    nb_jours INTEGER;
+BEGIN
+    nb_jours = SELECT COUNT(*) FROM _horaires_du_jour WHERE id_offre = NEW.id_offre;
+    IF (nb_jours > 7) THEN
+        RAISE EXCEPTION 'Il ne peut pas y avoir plus de 7 jours.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER offre_pas_plus_de_7_jours_tg
+AFTER INSERT
+ON horaires_du_jour
+FOR EACH ROW
+EXECUTE PROCEDURE offre_pas_plus_de_7_jours();
+
+
 COMMIT;
 
