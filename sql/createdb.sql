@@ -354,7 +354,8 @@ CREATE TABLE _offre_restauration_propose_repas (
 CREATE TABLE _offre_possede_tag (
     id_offre    INTEGER,
     nom_tag     VARCHAR(64),
-    CONSTRAINT
+    CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre),
+    CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
 
