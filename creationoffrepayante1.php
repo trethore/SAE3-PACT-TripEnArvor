@@ -1,8 +1,11 @@
 <?php
-if (isset($_POST['titre']))
+if (isset($_POST['titre'])){
     $submitted = false;
-else
+}
+else{
     $submitted = true;
+}
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +54,7 @@ if (!$submitted) {
                         </select>
                     </div></td>
                 </tr>
+                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix"></td>
                 <tr>
                     <label for=""></label>
                 </tr>
@@ -98,6 +102,7 @@ if (!$submitted) {
                     </div></td></tr>
             </table>
             <div id="options">
+                    <label>Options</label>
                     <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
                     <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
             </div>
@@ -201,26 +206,19 @@ if (!$submitted) {
             <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
     </table>
-
-        <input class="valider"type="submit" value="Créer l'offre">
-    </form>
+    <input class="valider"type="submit" value="Créer l'offre">
+        </form>
+        
 
 
     </main>
     <div>
+        
 
         <a href="#" id="back-to-top">
             <img src="images/fleche-vers-le-haut.png" alt="Retour en haut" width="50" height="50">
         </a>
     </div>
-
-<?php
-}
-else {
-    
-}
-?>    
-
     <footer>
         <!-- Section supérieure avec le gradient -->
     <div class="footer-top">
@@ -246,6 +244,21 @@ else {
         Politique de confidentialité - Politique RGPD - Mentions légales - Plan du site - Conditions générales - © Redden’s, Inc.
       </div>
     </footer>
+
+<?php
+}
+else {
+    $titre = $_POST['titre'];
+    $ville = $_POST['ville'];
+    $resume = $_POST['descriptionC'];
+    $prix = $_POST['prix'];
+
+}
+?>    
+
+
+
+    
     <script>
         let element = document.getElementById('type');
         element.addEventListener('change', function() {
@@ -259,7 +272,7 @@ else {
                 document.getElementById('options').style.display = 'none';
             }
         })
-        </script>
+    </script>
 
 </body>
 </html>
