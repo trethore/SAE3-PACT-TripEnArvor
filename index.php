@@ -17,23 +17,25 @@
         <br>
         <br>
         <br>
-        <!-- Labels et inputs -->
-        <label>Quelle est votre adresse mail ?</label>
-        <input type="email" id="email" name="email" required/>
-        <br>
-        <section>
-            <label>Quel est votre mot de passe ?</label>
-            <article>
-                <input type="checkbox" id="toggle" onclick="myFunction()">
-                <label for="toggle">Afficher</label>
-            </article>
-        </section>
-        <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
+        <!-- Formulaire -->
+        <!--<form action="crea.php" method="POST" enctype="multipart/form-data">-->
+            <label for="email">Quelle est votre adresse mail ?</label>
+            <input type="email" id="email" name="email" required/>
+            <br>
+            <section>
+                <label for="mdp">Quel est votre mot de passe ?</label>
+                <article>
+                    <input type="checkbox" id="toggle" onclick="myFunction()">
+                    <label for="toggle">Afficher</label>
+                </article>
+            </section>
+            <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
+        <!--</form>-->
         <br>
         <br>
         <br>
         <!-- Boutons -->
-        <button>Connexion</button>
+        <input type="submit" value="Connexion">
     </main>
     <!-- Script pour afficher ou non le mot de passe -->
     <script>

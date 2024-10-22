@@ -24,7 +24,7 @@
     --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
   }
 
-body.connecter {
+body {
     font-family: "Poppins", sans-serif;
     display: flex;
     justify-content: center;
@@ -93,7 +93,8 @@ body.connecter {
 }
 
 /* Input */
-.connecter main > input {
+.connecter input[type="email"],
+.connecter input[type="password"] {
     box-sizing: border-box;
 
     width: 715px;
@@ -118,7 +119,8 @@ body.connecter {
 }
 
 /* Bouton */
-.connecter button {
+.connecter button,
+.connecter input[type="submit"] {
     width: 50%;
     height: 73px;
     
@@ -183,7 +185,8 @@ section input:checked {
 }
 
 /* Transition bouton */
-main button:hover {
+.connecter button:hover,
+.connecter input[type="submit"]:hover {
     background: var(--blanc-leger);
     color: var(--vert-principale);
 }
