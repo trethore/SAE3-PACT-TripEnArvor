@@ -1,9 +1,9 @@
 <?php
 if (isset($_POST['titre'])){
-    $submitted = false;
+    $submitted = true;
 }
 else{
-    $submitted = true;
+    $submitted = false;
 }
     
 ?>
