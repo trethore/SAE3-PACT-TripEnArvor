@@ -26,7 +26,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style_backListe.css">
+    <link rel="stylesheet" href="/style/style_backListe.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -148,7 +148,7 @@ $result = $conn->query($sql);
                     <img src="images/universel/photos/coteplage_facade.jpg">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <p><?php echo htmlentities() ?></p>
-                    <img src="images/backOffice/icones/payante.png" alt="">
+                    <img src="/images/backOffice/icones/payante.png" alt="">
                     <div class="etoiles">
                         <img src="images/universel/icones/etoile-pleine.png">
                         <img src="images/universel/icones/etoile-pleine.png">
