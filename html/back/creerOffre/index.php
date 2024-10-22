@@ -252,6 +252,24 @@ else {
     $ville = $_POST['ville'];
     $resume = $_POST['descriptionC'];
     $prix = $_POST['prix'];
+    $type = $_POST['type'];
+
+
+include('connect_params.php');
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+
+    $stmt = $dbh->prepare(
+    "INSERT INTO Offre(id_offre,titre, resume, ville) VALUES('$titre','$resume', '$ville)");
+    $stmt->execute();
+    
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
 
 }
 ?>    
