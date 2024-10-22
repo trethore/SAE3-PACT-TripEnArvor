@@ -37,14 +37,13 @@ table{
 
 
 main {
-    width: 1338px;
     background-color: var(--blanc);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-bottom: 20px;
+    width: 95%;
     margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 30px;
     border-radius: 15px;
-    padding: 50px;
-
 }
 
 
