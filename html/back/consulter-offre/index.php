@@ -5,9 +5,9 @@
 <head>
 
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style/styleguide.css"/>
-    <link rel="stylesheet" href="style/styleHFB.css"/>
-    <link rel="stylesheet" href="style/style-details-offre-pro.css"/>
+    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/styleHFB.css"/>
+    <link rel="stylesheet" href="/style/style-details-offre-pro.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -19,14 +19,14 @@
 <body>
 
     <header id="header">
-        <img class="logo" src="images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="images/universel/icones/chercher.png" /></button>
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <div class="display-ligne-espace bouton-modifier">
@@ -49,11 +49,11 @@
 
             <h1>Côté Plage</h1>
             <div class="galerie-images-presentation"> 
-                <img src="images/universel/photos/hotel_2.png" alt="Image 1">
-                <img src="images/universel/photos/hotel_2_2.png" alt="Image 2">
-                <img src="images/universel/photos/hotel_2_3.png" alt="Image 3">
-                <img src="images/universel/photos/hotel_2_4.png" alt="Image 4">
-                <img src="images/universel/photos/hotel_2_5.png" alt="Image 5">
+                <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
+                <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
+                <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
+                <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">
+                <img src="/images/universel/photos/hotel_2_5.png" alt="Image 5">
             </div>
 
             <div class="display-ligne-espace">
@@ -62,11 +62,11 @@
             </div>
                 
             <div class="display-ligne">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <p>(49)</p>
                 <a href="#avis">Voir les avis</a>
             </div>
@@ -82,16 +82,16 @@
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <li><img src="images/universel/icones/cuisine.png"><h2>Cuisine traditionnelle</h2></li>
-                    <li><img src="images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
-                    <li><img src="images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
+                    <li><img src="/images/universel/icones/cuisine.png"><h2>Cuisine traditionnelle</h2></li>
+                    <li><img src="/images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
+                    <li><img src="/images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
                 <h2>À propos de Côté Plage :</h2>
                 <p>Repris en 2010, le restaurant propose une cuisine traditionnelle axée sur les poissons et fruits de mer, mettant en avant des produits locaux et de saison. Depuis sa reprise, David Guillet a renouvelé l'équipe et introduit de nouvelles initiatives, telles qu'une terrasse lounge pour les apéritifs, dans une ambiance conviviale et les pieds dans l’eau​</p>
-                <a href="https://les-embruns-du-phare.fr"><img src="images/universel/icones/lien.png" alt="epingle" class="epingle">restaurant-cote-plage.fr</a>
+                <a href="https://les-embruns-du-phare.fr"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle">restaurant-cote-plage.fr</a>
                 <p>Numéro : 04 94 66 97 64</p>
             </div>
     
@@ -152,11 +152,11 @@
 
             <div class="display-ligne">
                 <h2>Note moyenne :</h2>
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <p>49 avis</p>
             </div>
 
@@ -165,13 +165,13 @@
                 <div class="display-ligne-espace">
 
                     <div class="display-ligne">
-                        <img src="images/universel/icones/avatar-homme-1.png" class="avatar">
+                        <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                         <p><strong>Stanislas</strong></p>
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                         <p><em>14/08/2023</em></p>
                     </div>
 
@@ -184,8 +184,8 @@
                     <p class="transparent">.</p>
                     <div class="display-notation">
                         <a href="#"><strong>Répondre</strong></a>
-                        <p>0</p><img src="images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="images/universel/icones/pouce-down.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                     </div>
                 </div>
 
@@ -195,7 +195,7 @@
          
         <div class="navigation display-ligne-espace">
             <button>Retour à la liste des offres</button>
-            <button><img src="images/universel/icones/fleche-haut.png"></button>
+            <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
@@ -210,16 +210,16 @@
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
             <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('images/universel/icones/x.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
             </a>
             <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('images/universel/icones/facebook.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
             </a>
             <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('images/universel/icones/youtube.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
             </a>
             <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('images/universel/icones/instagram.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
             </a>
             </div>
         </div>
