@@ -240,8 +240,8 @@ input::file-selector-button:hover{
 
 /****AVANT LE FOOTER****/
 
-main + div{
-  width: 1438px;
+.bt_cree{
+  width: 100%;
   margin: 20px 0;
   display: flex;
   justify-content: space-between;
