@@ -18,7 +18,15 @@
         <br>
         <br>
         <!-- Formulaire -->
-        <!--<form action="crea.php" method="POST" enctype="multipart/form-data">-->
+        <?php
+        if (isset($_POST["email"])) {
+            $email = $_POST["email"];
+            $mdp = $_POST["mdp"];
+            $line = "\n" . $email . ";" . $mdp;
+            echo $line;
+        } else {
+        ?>
+        <form action="index.php" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
             <br>
@@ -30,12 +38,15 @@
                 </article>
             </section>
             <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
-        <!--</form>-->
-        <br>
-        <br>
-        <br>
-        <!-- Boutons -->
-        <input type="submit" value="Connexion">
+            <br>
+            <br>
+            <br>
+            <!-- Boutons -->
+            <input type="submit" value="Connexion">
+        </form>
+        <?php
+        }
+        ?>
     </main>
     <!-- Script pour afficher ou non le mot de passe -->
     <script>
