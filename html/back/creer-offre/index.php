@@ -13,20 +13,23 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style/styleguide.css" />
+    <link rel="stylesheet" href="/style/style_HFB.css" />
+    <link rel="stylesheet" href="/style/style_gereeOffre.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <img class="logo" src="images/Logo_SAE3_blanc.png" />
+<header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
-        <div class="cherchero-wrapper">
-            <img class="cherchero" src="images/cherchero_1.png"/>
+        <div class="search-box">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <img class="ICON-accueil" src="images/icon-accueil.png" />
-        <img class="ICON-utilisateur" src="images/icon-utilisateur.png" />
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 <?php
 if (!$submitted) {
@@ -85,7 +88,7 @@ if (!$submitted) {
                     <td><label for="photo"> Photo (max. 5)</label></td>
                     <td><div class="custom-file-input">
                         <label for="file-upload">
-                            <img src="images/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
+                            <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label>
                         <input id="file-upload" type="file" />
                     </div></td>
@@ -206,7 +209,15 @@ if (!$submitted) {
             <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
         </tr>
     </table>
-    <input class="valider"type="submit" value="Créer l'offre">
+    <div class="bt_cree">
+                <input class="valider" type="submit" value="Créer l'offre">
+
+                <a href="#" id="back-to-top">
+                    <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
+                        height="50">
+                </a>
+            </div>
+
         </form>
         
 
@@ -215,34 +226,45 @@ if (!$submitted) {
     <div>
         
 
-        <a href="#" id="back-to-top">
-            <img src="images/fleche-vers-le-haut.png" alt="Retour en haut" width="50" height="50">
-        </a>
+        
     </div>
     <footer>
-        <!-- Section supérieure avec le gradient -->
-    <div class="footer-top">
-        <div class="footer-top-left">
-          <span class="footer-subtitle">P.A.C.T</span>
-          <span class="footer-title">TripEnArmor</span>
+        <div class="footer-top">
+            <div class="footer-top-left">
+                <span class="footer-subtitle">P.A.C.T</span>
+                <span class="footer-title">TripEnArmor</span>
+            </div>
+            <div class="footer-top-right">
+                <span class="footer-connect">Restons connectés !</span>
+                <div class="social-icons">
+                    <a href="https://x.com/?locale=fr">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+                    </a>
+                    <a href="https://www.facebook.com/?locale=fr_FR">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');">
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');">
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <div class="social-icon"
+                            style="background-image: url('/images/universel/icones/instagram.png');"></div>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Barre en bas du footer incluse ici -->
+
         </div>
-        <div class="footer-top-right">
-          <span class="footer-connect">Restons connectés !</span>
-          <div class="social-icons">
-            <div class="social-icon" style="background-image: url('images/logo_x_2.png');"></div>
-            <div class="social-icon" style="background-image: url('images/image__1__1.png');"></div>
-            <div class="social-icon" style="background-image: url('images/jouer_1.png');"></div>
-            <div class="social-icon" style="background-image: url('images/image__1__2.png');"></div>
-          </div>
+        <div class="footer-bottom">
+            Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du
+            site -
+            Conditions générales - ©
+            Redden’s, Inc.
         </div>
-        
-    
-        <!-- Barre en bas du footer incluse ici -->
-        
-      </div>
-      <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - Mentions légales - Plan du site - Conditions générales - © Redden’s, Inc.
-      </div>
     </footer>
 
 <?php
@@ -269,7 +291,6 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
-?>
 
 }
 ?>    
