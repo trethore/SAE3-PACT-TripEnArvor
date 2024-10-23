@@ -210,6 +210,11 @@ input[type="url"], input[type="tel"]{
   width: 65%;
 }
 
+/****Tarif****/
+
+#tarifs{
+  display:none;
+}
 
 
 
