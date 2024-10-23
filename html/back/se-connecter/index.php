@@ -24,11 +24,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Se connecter</title>
-    <link rel="stylesheet" href="/html/style/style-se-connecter.css">
+    <link rel="stylesheet" href="/style/style-se-connecter.css">
 </head>
 <body class="connecter">
     <!-- Logo -->
-    <img src="../../images/universel/logo/Logo_couleurs.png">
+    <img src="/images/universel/logo/Logo_couleurs.png">
     <!-- Main -->
     <main>
         <!-- Titres -->

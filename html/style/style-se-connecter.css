@@ -185,7 +185,7 @@ section input {
     appearance: none;
     width: 30px;
     height: 30px;
-    background-image: url(/html/images/frontOffice/icones/oeil-ferme.png);
+    background-image: url(/images/frontOffice/icones/oeil-ferme.png);
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -196,7 +196,7 @@ section input {
 section input:checked {
     width: 28px;
     height: 28px;
-    background-image: url(/html/images/frontOffice/icones/oeil.png);
+    background-image: url(/images/frontOffice/icones/oeil.png);
     margin-top: 1px;
 }
 
