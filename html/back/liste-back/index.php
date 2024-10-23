@@ -211,7 +211,7 @@ $result = $conn->query($reqOffre);
             while($row = $result->fetch_assoc()) {
             ?>
             <article>
-                <div>
+                <div onclick="location.href='consulter-offre/?id=<?php echo urlencode($row["id_offre"]);?'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
