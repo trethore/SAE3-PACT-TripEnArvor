@@ -1,6 +1,6 @@
 <?php
 /*include('php/connect_params.php');*/
-try {
+/*try {*/
     /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -10,12 +10,205 @@ try {
     echo "<pre>";
     print_r($result);
     echo "</pre>";*/
-    $offres = [["0", "Titre Bob", "Resume Bob", "Ville Bob", "Desc détaillé Bobobobobobobobobobobobobobobobobobob", "site_bob", ""]];
+    $offres = [
+        [
+            "titre" => "Titre BOB",
+            "ville" => "Ville BOB",
+            "categorie" => "Categorie BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro BOB",
+        ],
+        [
+            "titre" => "Titre 2 BOB",
+            "ville" => "Ville 2 BOB",
+            "categorie" => "Categorie 2 BOb",
+            "ouvert" => "Ouvert",
+            "desc" => "Desc 2 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 2 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre 3 BOB",
+            "ville" => "Ville 3 BOB",
+            "categorie" => "Categorie 3 BOb",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
+            "nom_pro" => "Nom pro 3 BOB",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+        [
+            "titre" => "Titre page suivante",
+            "ville" => "Ville page suivante",
+            "categorie" => "Categorie page suivante",
+            "ouvert" => "Fermé",
+            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
+            "nom_pro" => "Nom pro page suivante",
+        ],
+    ]
     /*$dbh = null;*/
-} catch (PDOException $e) {
+/*} catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -151,15 +344,29 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <div class="offre">
+            <?php
+            $offers_per_page = 9;
+
+            $total_offers = count($offres);
+            $total_pages = ceil($total_offers / $offers_per_page);
+
+            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+            $offset = ($current_page - 1) * $offers_per_page;
+
+            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
+
+            foreach ($offres_for_page as $tab) {
+            ?>
+                <div class="offre">
                 <div class="sous-offre">
-                    <div class="lieu-offre">Saint-Malo</div>
-                    <div class="ouverture-offre">Ouvert</div>
+                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                    <div class="ouverture-offre"><?php echo $tab["ouvert"] ?></div>
                     <img class="carte-offre">
-                    <p class="titre-offre">Les Embruns du Phare</p>
-                    <p class="categorie-offre">Hôtel</p>
-                    <p class="description-offre">Hôtel charmant près des remparts, avec vue sur mer. Idéal pour couples et familles, avec service attentionné et petit-déjeuner maison. <span>En savoir plus</span></p>
-                    <p class="nom-offre">Dupont Eric</p>
+                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                    <p class="categorie-offre"><?php echo $tab["categorie"] ?></p>
+                    <p class="description-offre"><?php echo $tab["desc"] . " " ?><span>En savoir plus</span></p>
+                    <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
                             <img class="etoile" src="images/frontOffice/etoile-pleine.png">
@@ -173,7 +380,19 @@ try {
                     </div>
                 </div>
             </div>
+            <?php
+            }
+            ?>
         </section>
+        <div class="pagination">
+            <?php if ($current_page > 1) { ?>
+                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
+            <?php } ?>
+            
+            <?php if ($current_page < $total_pages) { ?>
+                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
+            <?php } ?>
+        </div>
     </div>
     <footer>
         <div class="footer-top">
