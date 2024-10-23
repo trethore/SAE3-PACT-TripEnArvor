@@ -1,37 +1,49 @@
 <?php
-/*include('php/connect_params.php');*/
-/*try {*/
-    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+// Démarrer la session
+session_start(); 
 
-    $stmt = $dbh->prepare('SELECT email from compte');
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";*/
-    $offre = [
-        "id" => "0",
-        "titre" => "Titre BOB",
-        "ville" => "BOB Land",
-        "adresse" => "20 rue des Bobs",
-        "categorie" => "Categorie BOb",
-        "ouvert" => "Fermé",
-        "desc" => "L'offre Bob est Bob pour ceux qui Bob un Bob de Bob et de Bob. Situé en Bob de Bob, cet Bob Bob offre une Bob sur Bob et les Bob. Les Bob, décorées avec Bob, sont Bob de tout le Bob nécessaire pour un Bob Bob : Bob de Bob, Bob Bob, et Bob à une Bob Wi-Fi Bob.",
-        "desc2" => "En Bob de l'hébergement, cette Bob inclut des Bob Bob préparés par notre Bob Bob. Vous pourrez Bob des Bob Bob et Bob, Bob de Bob. L'hôtel Bob également un Bob avec des Bob de Bob, une Bob Bob et un Bob pour vous Bob après une Bob de Bob.",
-        "nom_pro" => "Nom pro BOB",
-        "nombre_avis" => "12",
-        "a_propos" => "Bob en 2010, Bob est une Bob familiale dédiée à Bob et au Bob en Bob. Notre Bob est de Bob des Bob pour nos Bob en leur Bob des Bob dans des Bob enchanteurs.",
-        "tarifs" => ["80€" => "Bob simple", "140€" => "Bob lit double", "160€" => "Bob deux lits", "300€" => "Bob premium"],
-        "horaires" => ["Lundi" => "09h - 23h", "Mardi" => "09h - 23h", "Mercredi" => "09h - 23h", "Jeudi" => "09h - 23h", "Vendredi" => "09h - 23h", "Samedi" => "09h - 23h", "Dimanche" => "09h - 20h"],
-        "site" => "les-bobs-du-bob.fr",
-        "tel" => "02 02 02 02 02",
-    ]
-    /*$dbh = null;*/
-/*} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+include('/connect_params.php');
+
+// Connexion à la base de données
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    
+    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
+
+    // Requête SQL pour récupérer le titre de l'offre
+    $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, desc, desc2, horaires, tarifs 
+                FROM _offre WHERE id_offre = ?";
+    $stmt = $dbh->prepare($reqOffre);
+    $stmt->execute([$id_offre_cible]);
+    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Stocker certaines données dans la session
+    $_SESSION['offre_titre'] = $offre['titre'];
+    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+
+    // Requête SQL pour le type d'offre
+    $reqTypeOffre = "SELECT 
+                        CASE
+                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
+                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            ELSE 'Inconnu'
+                        END AS type_offre
+                    FROM _offre o
+                    WHERE o.id_offre = ?";
+    $stmt2 = $dbh->prepare($reqTypeOffre);
+    $stmt2->execute([$id_offre_cible]);
+    $offreSpe = 'Inconnu';
+    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $offreSpe = $row_type['type_offre'];
+    }
+
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
     die();
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,9 +79,9 @@
 
     <main>
 
-        <section class="fond-blocs"><!---->
+        <section class="fond-blocs">  
 
-            <h1><?php echo $offre["titre"] ?></h1>
+            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -79,8 +91,10 @@
             </div>
 
             <div class="display-ligne-espace">
-                <p><em><?php echo $offre["categorie"] . ", " . $offre["ouvert"] ?></em></p>
-                <p><?php echo $offre["adresse"] . ", " . $offre["ville"] ?></p>
+                <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
+                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <!-- Afficher l'adresse de l'offre et sa ville -->
+                <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -89,20 +103,22 @@
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <p>(<?php echo $offre["nombre_avis"] ?>)</p>
+                <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
                 <a href="#avis">Voir les avis</a>
             </div>
 
             <div class="display-ligne-espace">
-                <p>Proposée par : <?php echo $offre["nom_pro"] ?></p>
-                <button>À partir de 80€ la nuit</button>
+                <!-- Afficher le nom du propriétaire de l'offre -->
+                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
+                <!-- Afficher le prix de l'offre -->
+                <button><?php echo htmlentities($offre['prix_offre']); ?></button> 
             </div>
 
         </section>
 
-        <section class="double-blocs"><!---->
+        <section class="double-blocs">
 
-            <div class="fond-blocs bloc-caracteristique">
+            <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <li><img src="/images/universel/icones/hotel.png"><h2>Hôtel charmant</h2></li>
                     <li><img src="/images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
@@ -112,72 +128,63 @@
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo $offre["titre"] ?></h2>
-                <p><?php echo $offre["a_propos"] ?>​</p>
-                <a href="<?php echo $offre["site"] ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo $offre["site"] ?></a>
-                <p>Numéro : <?php echo $offre["tel"] ?></p>
+                <h2>À propos de : <?php echo htmlentities($offreSpe); ?></h2> 
+                <!-- Afficher le bloc résumant l'offre -->
+                <p><?php echo nl2br(htmlentities($offre['a_propos'])); ?></p>
+                <!-- Afficher le lien du site internet de l'entreprise -->
+                <a href="<?php echo htmlentities($offre['site']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
+                <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
+                <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
             </div>
     
         </section>
 
-        <section class="fond-blocs"><!---->
+        <section class="fond-blocs">
 
             <h2>Description détaillée de l'offre :</h2>
-            <p><?php echo $offre["desc"] ?></p>
-            <p><?php echo $offre["desc2"] ?></p>
+            <!-- Afficher la description détaillée de l'offre -->
+            <p><?php echo nl2br(htmlentities($offre['desc'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['desc2'])); ?></p>
 
         </section>
 
-        <section class="double-blocs"><!---->
+        <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
             <div>
                 <h2>Tarifs :</h2>
-                <table>
-                    <?php
-                    $counter = 0;
-                    echo "<tr>";
-                    foreach ($offre["tarifs"] as $price => $description) {
-                        echo "<td>$price $description</td>";
-                        $counter++;
-
-                        if ($counter % 2 == 0) {
-                            echo "</tr><tr>";
-                        }
-                    }
-                    if ($counter % 2 != 0) {
-                        echo "</tr>";
-                    }
-                    ?>
+                <div>
+                    <h2>Tarifs :</h2>
+                    <?php if (!empty($offre['tarifs'])): ?>
+                    <table>
+                        <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
+                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
+                        } ?>
+                    </table>
+                <?php else: ?>
+                    <p>Tarifs non disponibles.</p>
+                <?php endif; ?>
+                </div>
                 </table>
-            </div>
-
                 <button>Télécharger la grille des tarifs</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <ul>
-                    <li><em>Lundi : <?php echo $offre["horaires"]["Lundi"] ?></em></li>
-                    <li><em>Mardi : <?php echo $offre["horaires"]["Mardi"] ?></em></li>
-                    <li><em>Mercredi : <?php echo $offre["horaires"]["Mercredi"] ?></em></li>
-                    <li><em>Jeudi : <?php echo $offre["horaires"]["Jeudi"] ?></em></li>
-                    <li><em>Vendredi : <?php echo $offre["horaires"]["Vendredi"] ?></em></li>
-                    <li><em>Samedi : <?php echo $offre["horaires"]["Samedi"] ?></em></li>
-                    <li><em>Dimanche : <?php echo $offre["horaires"]["Dimanche"] ?></em></li>
-                </ul>
+                <!-- Afficher les horaires de l'offre -->
+                <p><?php echo nl2br(htmlentities($offre['horaires'])); ?></p>
             </div> 
     
         </section>
 
-        <section class="fond-blocs">
+        <section id="carte" class="fond-blocs">
 
             <h1>Localisation</h1>
             <div id="map" style="width: 1000px; height: 750px;" class="carte"></div>
 
         </section>
 
-        <section class="fond-blocs avis">
+        <section id="avis" class="fond-blocs avis">
 
             <div class="display-ligne">
                 <h2>Note moyenne :</h2>
@@ -241,8 +248,6 @@
                 </div>             
 
             </div>     
-            
-            
 
             <div class="fond-blocs-avis">
 
@@ -285,7 +290,7 @@
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button>Retour à la liste des offres</button>
+            <button onclick="location.href='consulter-offres'">Retour à la liste des offres</button>
             <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
