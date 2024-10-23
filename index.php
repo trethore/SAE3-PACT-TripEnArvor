@@ -11,20 +11,21 @@
     print_r($result);
     echo "</pre>";*/
     $offre = [
-        [
-            "id" => "0",
-            "titre" => "Titre BOB",
-            "ville" => "BOB Land",
-            "adresse" => "20 rue des Bobs",
-            "categorie" => "Categorie BOb",
-            "ouvert" => "Fermé",
-            "desc" => "L'offre Bob est Bob pour ceux qui Bob un Bob de Bob et de Bob. Situé en Bob de Bob, cet Bob Bob offre une Bob sur Bob et les Bob. Les Bob, décorées avec Bob, sont Bob de tout le Bob nécessaire pour un Bob Bob : Bob de Bob, Bob Bob, et Bob à une Bob Wi-Fi Bob. \nEn Bob de l'hébergement, cette Bob inclut des Bob Bob préparés par notre Bob Bob. Vous pourrez Bob des Bob Bob et Bob, Bob de Bob. L'hôtel Bob également un Bob avec des Bob de Bob, une Bob Bob et un Bob pour vous Bob après une Bob de Bob.",
-            "nom_pro" => "Nom pro BOB",
-            "nombre_avis" => "12",
-            "a_propos" => "Bob en 2010, Bob est une Bob familiale dédiée à Bob et au Bob en Bob. Notre Bob est de Bob des Bob pour nos Bob en leur Bob des Bob dans des Bob enchanteurs.",
-            "tarifs" => ["80€" => "Bob simple", "140€" => "Bob lit double", "160€" => "Bob deux lits", "300€" => "Bob premium"],
-            "horaires" => ["Lundi" => "09h - 23h", "Mardi" => "09h - 23h", "Mercredi" => "09h - 23h", "Jeudi" => "09h - 23h", "Vendredi" => "09h - 23h", "Samedi" => "09h - 23h", "Dimanche" => "09h - 20h"],
-        ],
+        "id" => "0",
+        "titre" => "Titre BOB",
+        "ville" => "BOB Land",
+        "adresse" => "20 rue des Bobs",
+        "categorie" => "Categorie BOb",
+        "ouvert" => "Fermé",
+        "desc" => "L'offre Bob est Bob pour ceux qui Bob un Bob de Bob et de Bob. Situé en Bob de Bob, cet Bob Bob offre une Bob sur Bob et les Bob. Les Bob, décorées avec Bob, sont Bob de tout le Bob nécessaire pour un Bob Bob : Bob de Bob, Bob Bob, et Bob à une Bob Wi-Fi Bob.",
+        "desc2" => "En Bob de l'hébergement, cette Bob inclut des Bob Bob préparés par notre Bob Bob. Vous pourrez Bob des Bob Bob et Bob, Bob de Bob. L'hôtel Bob également un Bob avec des Bob de Bob, une Bob Bob et un Bob pour vous Bob après une Bob de Bob.",
+        "nom_pro" => "Nom pro BOB",
+        "nombre_avis" => "12",
+        "a_propos" => "Bob en 2010, Bob est une Bob familiale dédiée à Bob et au Bob en Bob. Notre Bob est de Bob des Bob pour nos Bob en leur Bob des Bob dans des Bob enchanteurs.",
+        "tarifs" => ["80€" => "Bob simple", "140€" => "Bob lit double", "160€" => "Bob deux lits", "300€" => "Bob premium"],
+        "horaires" => ["Lundi" => "09h - 23h", "Mardi" => "09h - 23h", "Mercredi" => "09h - 23h", "Jeudi" => "09h - 23h", "Vendredi" => "09h - 23h", "Samedi" => "09h - 23h", "Dimanche" => "09h - 20h"],
+        "site" => "les-bobs-du-bob.fr",
+        "tel" => "02 02 02 02 02",
     ]
     /*$dbh = null;*/
 /*} catch (PDOException $e) {
@@ -79,7 +80,7 @@
 
             <div class="display-ligne-espace">
                 <p><em><?php echo $offre["categorie"] . ", " . $offre["ouvert"] ?></em></p>
-                <p>25 rue Romain Poupon, Saint-Malo</p>
+                <p><?php echo $offre["adresse"] . ", " . $offre["ville"] ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -88,12 +89,12 @@
                 <img src="images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="images/universel/icones/etoile-grise.png" class="etoile">
                 <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                <p>(120)</p>
+                <p>(<?php echo $offre["nombre_avis"] ?>)</p>
                 <a href="#avis">Voir les avis</a>
             </div>
 
             <div class="display-ligne-espace">
-                <p>Proposée par : Éric Dupont</p>
+                <p>Proposée par : <?php echo $offre["nom_pro"] ?></p>
                 <button>À partir de 80€ la nuit</button>
             </div>
 
@@ -111,10 +112,10 @@
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos des Embruns du Phare :</h2>
-                <p>Fondée en 2010, Hôtels de Charme Bretons est une entreprise familiale dédiée à l'hôtellerie de luxe et au tourisme de qualité en Bretagne. Notre mission est de créer des expériences mémorables pour nos clients en leur offrant des séjours uniques dans des cadres enchanteurs.​</p>
-                <a href="https://les-embruns-du-phare.fr"><img src="images/universel/icones/lien.png" alt="epingle" class="epingle">les-embruns-du-phare.fr</a>
-                <p>Numéro : 02 05 87 65 12</p>
+                <h2>À propos de : <?php echo $offre["titre"] ?></h2>
+                <p><?php echo $offre["a_propos"] ?>​</p>
+                <a href="<?php echo $offre["site"] ?>"><img src="images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo $offre["site"] ?></a>
+                <p>Numéro : <?php echo $offre["tel"] ?></p>
             </div>
     
         </section>
@@ -122,27 +123,34 @@
         <section class="fond-blocs"><!---->
 
             <h2>Description détaillée de l'offre :</h2>
-            <p>L'offre "Les Embruns du Phare" est conçue pour ceux qui recherchent un moment de détente et de bien-être. Situé en bord de mer, cet hôtel charmant offre une vue imprenable sur l'océan et les paysages côtiers. Les chambres, décorées avec goût, sont équipées de tout le confort nécessaire pour un séjour agréable : literie de qualité, salle de bain privative, et accès à une connexion Wi-Fi gratuite.</p>
-            <p>En plus de l'hébergement, cette offre inclut des repas gastronomiques préparés par notre chef renommé. Vous pourrez déguster des plats locaux frais et savoureux, accompagnés de vins fins. L'hôtel propose également un spa avec des soins de bien-être, une piscine intérieure chauffée et un jacuzzi pour vous détendre après une journée de découverte.</p>
+            <p><?php echo $offre["desc"] ?></p>
+            <p><?php echo $offre["desc2"] ?></p>
 
         </section>
 
         <section class="double-blocs"><!---->
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs :</h2>
-                    <table>
-                        <tr>
-                            <td>80 € Chambre simple</td>
-                            <td>140 € Chambre lit double</td>
-                        </tr>
-                        <tr>
-                            <td>160 € Chambre deux lits</td>
-                            <td>300 € Suite Premium</td>
-                        </tr>
-                    </table>
-                </div>
+            <div>
+                <h2>Tarifs :</h2>
+                <table>
+                    <?php
+                    $counter = 0;
+                    echo "<tr>";
+                    foreach ($offre["tarifs"] as $price => $description) {
+                        echo "<td>$price $description</td>";
+                        $counter++;
+
+                        if ($counter % 2 == 0) {
+                            echo "</tr><tr>";
+                        }
+                    }
+                    if ($counter % 2 != 0) {
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+            </div>
 
                 <button>Télécharger la grille des tarifs</button>
             </div>
@@ -150,13 +158,13 @@
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <ul>
-                    <li><em>Lundi : 09h - 23h</em></li>
-                    <li><em>Mardi : 09h - 23h</em></li>
-                    <li><em>Mercredi : 09h - 23h</em></li>
-                    <li><em>Jeudi : 09h - 23h</em></li>
-                    <li><em>Vendredi : 09h - 23h</em></li>
-                    <li><em>Samedi : 09h - 23h</em></li>
-                    <li><em>Dimanche : 09h - 20h</em></li>
+                    <li><em>Lundi : <?php echo $offre["horaires"]["Lundi"] ?></em></li>
+                    <li><em>Mardi : <?php echo $offre["horaires"]["Mardi"] ?></em></li>
+                    <li><em>Mercredi : <?php echo $offre["horaires"]["Mercredi"] ?></em></li>
+                    <li><em>Jeudi : <?php echo $offre["horaires"]["Jeudi"] ?></em></li>
+                    <li><em>Vendredi : <?php echo $offre["horaires"]["Vendredi"] ?></em></li>
+                    <li><em>Samedi : <?php echo $offre["horaires"]["Samedi"] ?></em></li>
+                    <li><em>Dimanche : <?php echo $offre["horaires"]["Dimanche"] ?></em></li>
                 </ul>
             </div> 
     
