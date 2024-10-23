@@ -19,11 +19,6 @@ try {
 
 session_start(); // Démarrer la session
 function checkCompteProfessionnel($conn, $id_compte) {
-    // Vérifier si l'id_compte est un entier
-    if (!is_int($id_compte)) {
-        return false; // ou lever une exception selon votre logique d'erreur
-    }
-
     // Préparer la requête pour éviter les injections SQL
     $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
     $stmt = $conn->prepare($sql);
