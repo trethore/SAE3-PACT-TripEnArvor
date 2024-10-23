@@ -216,6 +216,10 @@ input[type="url"], input[type="tel"]{
   display:none;
 }
 
+#options{
+  display: none;
+}
+
 
 
 
