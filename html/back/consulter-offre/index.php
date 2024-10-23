@@ -1,32 +1,21 @@
 <?php
 include('/connect_params.php');
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
-            $user, $pass);
-    foreach($dbh->query('SELECT * from forum1._user', 
-                        PDO::FETCH_ASSOC) 
-                as $row) {
-        echo "<pre>";
-        print_r($row);
-        echo "</pre>";
-    }
-    $dbh = null;
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
 
-/*******************
-Requete SQL préfaite
-********************/
-$reqOffre = "SELECT * FROM _offre";
-$reqIMG = "SELECT img.lien_fichier 
-            FROM _image img
-            JOIN _offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = $id_offre_cible
-            LIMIT 1;";
-$reqTypeOffre = $sql = "SELECT 
+// Connexion à la base de données
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    
+    $id_offre_cible = 1; // Exemple d'ID d'offre
+
+    // Requête SQL pour récupérer le titre de l'offre
+    $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, desc, desc2, horaires, tarifs 
+                FROM _offre WHERE id_offre = ?";
+    $stmt = $dbh->prepare($reqOffre);
+    $stmt->execute([$id_offre_cible]);
+    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Requête SQL pour le type d'offre
+    $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
                             WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
@@ -34,10 +23,20 @@ $reqTypeOffre = $sql = "SELECT
                             WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
                             WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
-                        END AS offreSpe
-                        FROM _offre o
-                        WHERE o.id_offre = ?";
-$result = $conn->query($reqOffre); 
+                        END AS type_offre
+                    FROM _offre o
+                    WHERE o.id_offre = ?";
+    $stmt2 = $dbh->prepare($reqTypeOffre);
+    $stmt2->execute([$id_offre_cible]);
+    $offreSpe = 'Inconnu';
+    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $offreSpe = $row_type['type_offre'];
+    }
+
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+    die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +92,22 @@ $result = $conn->query($reqOffre);
     <main id="body">
         <section class="fond-blocs"><!---->
 
-            <h1><?php echo $offre["titre"] ?></h1>
+            <h1>
+                <?php 
+                    // Préparation et exécution de la requête
+                    $stmt2 = $con->prepare($sql);
+                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2->execute();
+                    $res2 = $stmt2->get_result();
+
+                    // Vérification et récupération du résultat
+                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
+                    if ($row_type = $res2->fetch_assoc()) {
+                        $offreSpe = $row_type['type_offre'];
+                    }
+                    echo htmlentities($type_offre); 
+                ?>
+            </h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -119,7 +133,7 @@ $result = $conn->query($reqOffre);
 
             <div class="display-ligne-espace">
                 <p>Proposée par : <?php echo $offre["nom_pro"] ?></p>
-                <button>Voir les tarifs</button>
+                <button><?php echo htmlentities($row["prix_offre"]) ?></button>
             </div>
 
         </section>
