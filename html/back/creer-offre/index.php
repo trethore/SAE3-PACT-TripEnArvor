@@ -270,120 +270,118 @@ if (!$submitted) {
 <?php
 }
 else {
-// Afficher un message pour confirmer la création de l'offre
-print("offre creee");
+    // Afficher un message pour confirmer la création de l'offre
+    print("offre creee");
 
-// Récupération des données du formulaire avec $_POST
-$titre = isset($_POST['titre']) ? $_POST['titre'] : '';
-$ville = isset($_POST['ville']) ? $_POST['ville'] : '';
-$resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
-$prix = isset($_POST['prix']) ? $_POST['prix'] : '';
-$type = isset($_POST['type']) ? $_POST['type'] : '';
-$photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-$categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
+    // Récupération des données du formulaire avec $_POST
+    $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
+    $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
+    $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
+    $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
+    $type = isset($_POST['type']) ? $_POST['type'] : '';
+    $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
+    $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
-// Inclusion des paramètres de connexion
-include('connect_params.php');
+    // Inclusion des paramètres de connexion
+    include('connect_params.php');
 
-try {
-    // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    try {
+        // Connexion à la base de données
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-    // Début de la requête SQL
-    $requete = "INSERT INTO offre_";
-    
-    // Déterminer la table cible selon la catégorie
-    switch ($categorie) {
-        case 'activite':
-            $requete .= 'activite';
-            break;
-        case 'parc':
-            $requete .= 'parc';
-            break;
-        case 'spectacle':
-            $requete .= 'spectacle';
-            break;
-        case 'visite':
-            $requete .= 'visite';
-            break;
-        default:
-            print "Erreur de categorie!";
-            die();
+        // Début de la requête SQL
+        $requete = "INSERT INTO offre_";
+        
+        // Déterminer la table cible selon la catégorie
+        switch ($categorie) {
+            case 'activite':
+                $requete .= 'activite';
+                break;
+            case 'parc':
+                $requete .= 'parc';
+                break;
+            case 'spectacle':
+                $requete .= 'spectacle';
+                break;
+            case 'visite':
+                $requete .= 'visite';
+                break;
+            default:
+                print "Erreur de categorie!";
+                die();
+        }
+
+        // Construction de la requête SQL avec les champs et les valeurs
+        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
+
+        // Préparation de la requête
+        $stmt = $dbh->prepare($requete);
+
+        // Liaison des valeurs aux paramètres SQL
+        $stmt->bindParam(':titre', $titre);
+        $stmt->bindParam(':resume', $resume);
+        $stmt->bindParam(':ville', $ville);
+
+        // Exécution de la requête
+        $stmt->execute();
+
+
+        // Récupérer l'ID retourné par la requête
+        $offre_id = $stmt->fetchColumn();
+
+        // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
+        $requete_tarif = "INSERT INTO tarif (offre_id, prix) VALUES (:offre_id, :prix)";
+
+        // Préparation de la requête pour la vue tarif
+        $stmt_tarif = $dbh->prepare($requete_tarif);
+
+        // Liaison des valeurs pour la vue tarif
+        $stmt_tarif->bindParam(':offre_id', $offre_id);
+        $stmt_tarif->bindParam(':prix', $prix);
+
+        // Exécution de la requête pour insérer dans la vue tarif
+        $stmt_tarif->execute();
+
+        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
+
+        // Préparation de la requête
+        $stmt = $dbh->prepare($requete);
+
+        // Liaison des valeurs aux paramètres SQL
+        $stmt->bindParam(':titre', $titre);
+        $stmt->bindParam(':resume', $resume);
+        $stmt->bindParam(':ville', $ville);
+
+        // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+        $stmt->execute();
+
+        // Récupérer l'ID retourné par la requête
+        $offre_id = $stmt->fetchColumn();
+
+        // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
+        $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
+
+        // Préparation de la requête pour la table image
+        $stmt_image = $dbh->prepare($requete_image);
+
+        // Liaison des valeurs pour la table image
+        $stmt_image->bindParam(':id_offre', $offre_id);
+        $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
+
+        // Exécution de la requête pour insérer dans la table image
+        $stmt_image->execute();
+
+        // Fermeture de la connexion
+        $dbh = null;
+        
+        print "Offre et tarif créés avec succès!";
+    } catch (PDOException $e) {
+        // Affichage de l'erreur en cas d'échec
+        print "Erreur !: " . $e->getMessage() . "<br/>";
+        die();
     }
 
-    // Construction de la requête SQL avec les champs et les valeurs
-    $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
-
-    // Préparation de la requête
-    $stmt = $dbh->prepare($requete);
-
-    // Liaison des valeurs aux paramètres SQL
-    $stmt->bindParam(':titre', $titre);
-    $stmt->bindParam(':resume', $resume);
-    $stmt->bindParam(':ville', $ville);
-
-    // Exécution de la requête
-    $stmt->execute();
-
-    // Fermeture de la connexion
-    $dbh = null;
-} catch (PDOException $e) {
-    // Affichage de l'erreur en cas d'échec
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
-
-    $stmt->execute();
-
-    // Récupérer l'ID retourné par la requête
-    $offre_id = $stmt->fetchColumn();
-
-    // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-    $requete_tarif = "INSERT INTO tarif (offre_id, prix) VALUES (:offre_id, :prix)";
-
-    // Préparation de la requête pour la vue tarif
-    $stmt_tarif = $dbh->prepare($requete_tarif);
-
-    // Liaison des valeurs pour la vue tarif
-    $stmt_tarif->bindParam(':offre_id', $offre_id);
-    $stmt_tarif->bindParam(':prix', $prix);
-
-    // Exécution de la requête pour insérer dans la vue tarif
-    $stmt_tarif->execute();
-
-    $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
-
-    // Préparation de la requête
-    $stmt = $dbh->prepare($requete);
-
-    // Liaison des valeurs aux paramètres SQL
-    $stmt->bindParam(':titre', $titre);
-    $stmt->bindParam(':resume', $resume);
-    $stmt->bindParam(':ville', $ville);
-
-    // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-    $stmt->execute();
-
-    // Récupérer l'ID retourné par la requête
-    $offre_id = $stmt->fetchColumn();
-
-    // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
-    $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
-
-    // Préparation de la requête pour la table image
-    $stmt_image = $dbh->prepare($requete_image);
-
-    // Liaison des valeurs pour la table image
-    $stmt_image->bindParam(':id_offre', $offre_id);
-    $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
-
-    // Exécution de la requête pour insérer dans la table image
-    $stmt_image->execute();
-
-    // Fermeture de la connexion
-    $dbh = null;
-    
-    print "Offre et tarif créés avec succès!";
+   
 }
 ?>    
 
