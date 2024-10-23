@@ -17,7 +17,7 @@ try {
     die();
 }
 
-$sql = "SELECT ville, titre, typeOffre, nombreAvis, prix FROM Offre";
+$sql = "SELECT ville, titre, typeOffre, nombreAvis, prix FROM _offre";
 $result = $conn->query($sql); 
 
 ?>
