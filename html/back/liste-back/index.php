@@ -1,6 +1,6 @@
 <?php
 
-include('connect_params.php');
+include('/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
@@ -15,6 +15,43 @@ try {
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
+}
+
+session_start(); // Démarrer la session
+function checkCompteProfessionnel($conn, $id_compte) {
+    // Préparer la requête pour éviter les injections SQL
+    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Lier le paramètre
+    $stmt->bind_param('i', $id_compte);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Obtenir le résultat
+    $result = $stmt->get_result();
+
+    // Vérifier si une ligne a été trouvée
+    if ($result->num_rows > 0) {
+        return true; // L'id_compte est présent dans _compte_professionnel
+    } else {
+        return false; // L'id_compte n'est pas présent
+    }
+}
+
+// Exemple d'utilisation
+session_start();
+if (isset($_SESSION['id_compte'])) {
+    $id_compte = $_SESSION['id_compte'];
+    
+    if (checkCompteProfessionnel($conn, $id_compte)) {
+        echo "L'id_compte $id_compte est un compte professionnel.";
+    } else {
+        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
+    }
+} else {
+    echo "Aucun id_compte trouvé dans la session.";
 }
 
 /*******************
@@ -38,6 +75,7 @@ $reqTypeOffre = $sql = "SELECT
                         END AS offreSpe
                         FROM _offre o
                         WHERE o.id_offre = ?";
+
 $result = $conn->query($reqOffre); 
 
 ?>
@@ -173,7 +211,7 @@ $result = $conn->query($reqOffre);
             while($row = $result->fetch_assoc()) {
             ?>
             <article>
-                <div>
+                <div onclick="location.href='consulter-offre/?id=<?php echo urlencode($row["id_offre"]);?'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
