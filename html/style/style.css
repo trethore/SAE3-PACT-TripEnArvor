@@ -477,7 +477,7 @@ h3 {
     margin-top: 16px;
 }
 
-#confirm {
+#offre #modif #annuler #quitter {
     background-color: var(--blanc);
     display: none;
     border: 1px solid;
