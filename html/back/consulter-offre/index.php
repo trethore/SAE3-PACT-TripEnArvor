@@ -1,11 +1,14 @@
 <?php
+// Démarrer la session
+session_start(); 
+
 include('/connect_params.php');
 
 // Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
-    $id_offre_cible = 1; // Exemple d'ID d'offre
+    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
     $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, desc, desc2, horaires, tarifs 
@@ -13,6 +16,10 @@ try {
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Stocker certaines données dans la session
+    $_SESSION['offre_titre'] = $offre['titre'];
+    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
@@ -92,7 +99,7 @@ try {
     <main id="body">
         <section class="fond-blocs">
 
-            <h1><?php echo htmlentities($offreSpe); ?></h1>
+            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -103,7 +110,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($offre['categorie'] . ' - ' . ($offre['ouvert'] ? 'Ouvert' : 'Fermé')); ?></em></p>
+                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
                 <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
             </div>
@@ -164,14 +171,16 @@ try {
             <div class="fond-blocs bloc-tarif">
                 <div>
                     <h2>Tarifs :</h2>
-                    <!-- Boucle pour afficher les tarifs -->
+                    <?php if (!empty($offre['tarifs'])): ?>
                     <table>
                         <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
-                            echo '<tr><td>' . htmlentities($tarif) . '</td></tr>';
+                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
                         } ?>
                     </table>
+                <?php else: ?>
+                    <p>Tarifs non disponibles.</p>
+                <?php endif; ?>
                 </div>
-
                 <button>Accéder à la carte complète</button>
             </div>
 
@@ -236,7 +245,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button>Retour à la liste des offres</button>
+            <button onclick="location.href='list-back'">Retour à la liste des offres</button>
             <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
