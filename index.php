@@ -1,23 +1,43 @@
+<?php
+/*include('php/connect_params.php');*/
+try {
+    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";*/
+    $offres = [["0", "Titre Bob", "Resume Bob", "Ville Bob", "Desc détaillé Bobobobobobobobobobobobobobobobobobob", "site_bob", ""]];
+    /*$dbh = null;*/
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
-        <img class="logo" src="images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="../../images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT</div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="../../images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="../../images/universel/icones/icon_accueil.png" /></a>
+        <a href="index.html"><img class="ICON-utilisateur" src="../../images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
