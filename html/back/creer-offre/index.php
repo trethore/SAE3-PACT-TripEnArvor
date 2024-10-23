@@ -34,6 +34,38 @@ else{
 <?php
 if (!$submitted) {
 ?>
+    <div id="offre">
+        <h1>Valider les modifications</h1>
+        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+        <div class="close">
+            <button class="bouton1" onclick="closeOffreAnnuler()"> Annuler </button>
+            <button class="bouton2" onclick="closeOffreValider()"> Valider </button>
+        </div>
+    </div>
+    <div id="modif">
+        <h1>Valider les modifications</h1>
+        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+        <div class="close">
+            <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
+            <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+        </div>
+    </div>
+    <div id="annuler">
+        <h1>Valider les modifications</h1>
+        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+        <div class="close">
+            <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
+            <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+        </div>
+    </div>
+    <div id="quitter">
+        <h1>Valider les modifications</h1>
+        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+        <div class="close">
+            <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
+            <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+        </div>
+    </div>
     <main>
         <h2> Création d'une offre</h2>
         <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
@@ -401,6 +433,55 @@ else {
                 document.getElementById('tarifs').style.display = 'none';
             }
         })
+        
+
+        var offreDiv = document.getElementById("offre");
+        function showOffre() {
+            offreDiv.style.display = "block";
+        }
+        function closeOffreAnnuler() {
+            offreDiv.style.display = "none";
+        }
+        function closeOffreValider() {
+            offreDiv.style.display = "none";
+            alert("Modification valider avec succès");
+        }
+
+        var modifDiv = document.getElementById("modif");
+        function showModif() {
+            modifDiv.style.display = "block";
+        }
+        function closeModifAnnuler() {
+            modifDiv.style.display = "none";
+        }
+        function closeModifValider() {
+            modifDiv.style.display = "none";
+            alert("Modification valider avec succès");
+        }
+
+        var annulerDiv = document.getElementById("annuler");
+        function showAnnuler() {
+            annulerDiv.style.display = "block";
+        }
+        function closeAnnulerAnnuler() {
+            annulerDiv.style.display = "none";
+        }
+        function closeAnnulerValider() {
+            annulerDiv.style.display = "none";
+            alert("Modification valider avec succès");
+        }
+
+        var quitterDiv = document.getElementById("quitter");
+        function showQuitter() {
+            quitterDiv.style.display = "block";
+        }
+        function closeQuitterAnnuler() {
+            quitterDiv.style.display = "none";
+        }
+        function closeQuitterValider() {
+            quitterDiv.style.display = "none";
+            alert("Modification valider avec succès");
+        }
     </script>
 
 </body>
