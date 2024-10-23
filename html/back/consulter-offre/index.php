@@ -1,11 +1,14 @@
 <?php
+// Démarrer la session
+session_start(); 
+
 include('/connect_params.php');
 
 // Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
-    $id_offre_cible = 1; // Exemple d'ID d'offre
+    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
     $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, desc, desc2, horaires, tarifs 
@@ -13,6 +16,10 @@ try {
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Stocker certaines données dans la session
+    $_SESSION['offre_titre'] = $offre['titre'];
+    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
@@ -90,24 +97,9 @@ try {
     </div>
 
     <main id="body">
-        <section class="fond-blocs"><!---->
+        <section class="fond-blocs">
 
-            <h1>
-                <?php 
-                    // Préparation et exécution de la requête
-                    $stmt2 = $con->prepare($sql);
-                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
-                    $stmt2->execute();
-                    $res2 = $stmt2->get_result();
-
-                    // Vérification et récupération du résultat
-                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch_assoc()) {
-                        $offreSpe = $row_type['type_offre'];
-                    }
-                    echo htmlentities($type_offre); 
-                ?>
-            </h1>
+            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -117,8 +109,10 @@ try {
             </div>
 
             <div class="display-ligne-espace">
-                <p><em><?php echo $offre["categorie"] . ", " . $offre["ouvert"] ?></em></p>
-                <p><?php echo $offre["adresse"] . ", " . $offre["ville"] ?></p>
+                <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
+                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <!-- Afficher l'adresse de l'offre et sa ville -->
+                <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -127,18 +121,21 @@ try {
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <p>(<?php echo $offre["nombre_avis"] ?>)</p>
+                <!-- Afficher le nombre d'avis de l'offre -->
+                <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
                 <a href="#avis">Voir les avis</a>
             </div>
 
             <div class="display-ligne-espace">
-                <p>Proposée par : <?php echo $offre["nom_pro"] ?></p>
-                <button><?php echo htmlentities($row["prix_offre"]) ?></button>
+                <!-- Afficher le nom du propriétaire de l'offre -->
+                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
+                <!-- Afficher le prix de l'offre -->
+                <button><?php echo htmlentities($offre['prix_offre']); ?></button> 
             </div>
 
         </section>
 
-        <section class="double-blocs"><!---->
+        <section class="double-blocs">
 
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
@@ -149,60 +146,48 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo $offre["titre"] ?></h2>
-                <p><?php echo $offre["a_propos"] ?>​</p>
-                <a href="<?php echo $offre["site"] ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo $offre["site"] ?></a>
-                <p>Numéro : <?php echo $offre["tel"] ?></p>
+                <h2>À propos de : <?php echo htmlentities($offreSpe); ?></h2> 
+                <!-- Afficher le bloc résumant l'offre -->
+                <p><?php echo nl2br(htmlentities($offre['a_propos'])); ?></p>
+                <!-- Afficher le lien du site internet de l'entreprise -->
+                <a href="<?php echo htmlentities($offre['site']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
+                <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
+                <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
             </div>
     
         </section>
 
-        <section class="fond-blocs"><!---->
+        <section class="fond-blocs">
 
             <h2>Description détaillée de l'offre :</h2>
-            <p><?php echo $offre["desc"] ?></p>
-            <p><?php echo $offre["desc2"] ?></p>
+            <!-- Afficher la description détaillée de l'offre -->
+            <p><?php echo nl2br(htmlentities($offre['desc'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['desc2'])); ?></p>
 
         </section>
 
-        <section class="double-blocs"><!---->
+        <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
                 <div>
                     <h2>Tarifs :</h2>
+                    <?php if (!empty($offre['tarifs'])): ?>
                     <table>
-                        <?php
-                        $counter = 0;
-                        echo "<tr>";
-                        foreach ($offre["tarifs"] as $price => $description) {
-                            echo "<td>$price $description</td>";
-                            $counter++;
-
-                            if ($counter % 2 == 0) {
-                                echo "</tr><tr>";
-                            }
-                        }
-                        if ($counter % 2 != 0) {
-                            echo "</tr>";
-                        }
-                        ?>
+                        <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
+                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
+                        } ?>
                     </table>
+                <?php else: ?>
+                    <p>Tarifs non disponibles.</p>
+                <?php endif; ?>
                 </div>
-
                 <button>Accéder à la carte complète</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <ul>
-                    <li><em>Lundi : <?php echo $offre["horaires"]["Lundi"] ?></em></li>
-                    <li><em>Mardi : <?php echo $offre["horaires"]["Mardi"] ?></em></li>
-                    <li><em>Mercredi : <?php echo $offre["horaires"]["Mercredi"] ?></em></li>
-                    <li><em>Jeudi : <?php echo $offre["horaires"]["Jeudi"] ?></em></li>
-                    <li><em>Vendredi : <?php echo $offre["horaires"]["Vendredi"] ?></em></li>
-                    <li><em>Samedi : <?php echo $offre["horaires"]["Samedi"] ?></em></li>
-                    <li><em>Dimanche : <?php echo $offre["horaires"]["Dimanche"] ?></em></li>
-                </ul>
+                <!-- Afficher les horaires de l'offre -->
+                <p><?php echo nl2br(htmlentities($offre['horaires'])); ?></p>
             </div> 
     
         </section>
@@ -260,7 +245,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button>Retour à la liste des offres</button>
+            <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
             <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
