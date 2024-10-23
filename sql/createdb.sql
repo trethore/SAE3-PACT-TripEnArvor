@@ -371,8 +371,9 @@ CREATE TABLE _offre_restauration_propose_repas (
 CREATE TABLE _offre_possede_tag (
     id_offre    INTEGER,
     nom_tag     VARCHAR(64),
-    CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre, nom_tag),
+    CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_possede_tag_fk_tag FOREIGN KEY (nom_tag) REFERENCES _tag(nom_tag)
 );
 
 
@@ -1245,6 +1246,23 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE offre_activite_propose_au_moins_une_prestation();
 
+
+CREATE FUNCTION offre_contient_au_moins_une_image() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_contient_image WHERE id_offre = NEW.id_offre;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Une offre doit avoir au moins une image.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER offre_contient_au_moins_une_image_tg
+AFTER INSERT
+ON _offre
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
 COMMIT;
 

@@ -97,7 +97,7 @@ VALUES
 ('Dîner gastronomique', 'Découvrez la cuisine étoilée de Paris', 'Paris', 'Un dîner dans un restaurant étoilé à Paris', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€'),
 ('Restaurant traditionnel', 'Cuisine locale et authentique', 'Lyon', 'Un repas dans un restaurant typique de Lyon', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€');
 
-INSERT INTO tags (nom_tag) 
+INSERT INTO _tag (nom_tag) 
 VALUES 
 ('Sport'),
 ('Gastronomie'),
@@ -123,6 +123,7 @@ VALUES
 INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
 VALUES 
 (1,'Sport'),
+(1,'Montagne'),
 (2,'Bien-être'),
 (3,'Découverte'),
 (4,'Groupe'),
