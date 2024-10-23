@@ -175,6 +175,7 @@ $result = $conn->query($sql);
                     <p>A partir de <span><?php echo htmlentities() ?></span></p>
                 </div>
             </article>
+            <?php }} ?>
             <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
