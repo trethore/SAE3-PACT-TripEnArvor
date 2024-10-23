@@ -1,6 +1,6 @@
 <?php
 
-include('connect_params_perso.php');
+include('connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
@@ -138,6 +138,16 @@ $result = $conn->query($sql);
         </article>
         <section class="lesOffres">
             <?php
+            $offers_per_page = 9;
+
+            $total_offers = count($offres);
+            $total_pages = ceil($total_offers / $offers_per_page);
+
+            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+            $offset = ($current_page - 1) * $offers_per_page;
+
+            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
             ?>
@@ -165,19 +175,15 @@ $result = $conn->query($sql);
                     <p>A partir de <span><?php echo htmlentities() ?></span></p>
                 </div>
             </article>
-            <?php
-                    }
-                }
-                if ($pageNumber > 1) { ?>
-                    <a href="http://localhost:8888/index.php?page=<?php echo $pageNumber - 1?>">Page précédente</a>
-                <?php } ?>
-                <?php
-                if ($pageNumber < ceil(count($regions)/LIG)) { ?>
-                    <a href="http://localhost:8888/index.php?page=<?php echo $pageNumber + 1?>">Page suivante</a>
-                <?php 
-                }
-                $conn->close();
-                ?>
+            <div class="pagination">
+            <?php if ($current_page > 1) { ?>
+                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
+            <?php } ?>
+            
+            <?php if ($current_page < $total_pages) { ?>
+                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
+            <?php } ?>
+        </div>
         </section>
     </main>
 </body>
