@@ -36,7 +36,7 @@ if (!$submitted) {
 ?>
     <main>
         <h2> Création d'une offre</h2>
-        <form action="creationoffrepayante1.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+        <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
             <h3>Informations importante</h3>
             <div class="important">
             <table border="0">
@@ -57,7 +57,7 @@ if (!$submitted) {
                         </select>
                     </div></td>
                 </tr>
-                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix"></td>
+                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix">€</td>
                 <tr>
                     <label for=""></label>
                 </tr>
@@ -270,48 +270,115 @@ if (!$submitted) {
 <?php
 }
 else {
-    $titre = $_POST['titre'];
-    $ville = $_POST['ville'];
-    $resume = $_POST['descriptionC'];
-    $prix = $_POST['prix'];
-    $type = $_POST['type'];
-    $photo1 = $_POST['photo1'];
-    $categorie = $_POST['categorie'];
+// Afficher un message pour confirmer la création de l'offre
+print("offre creee");
 
+// Récupération des données du formulaire avec $_POST
+$titre = isset($_POST['titre']) ? $_POST['titre'] : '';
+$ville = isset($_POST['ville']) ? $_POST['ville'] : '';
+$resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
+$prix = isset($_POST['prix']) ? $_POST['prix'] : '';
+$type = isset($_POST['type']) ? $_POST['type'] : '';
+$photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
+$categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
+// Inclusion des paramètres de connexion
 include('connect_params.php');
+
 try {
+    // Connexion à la base de données
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
+    // Début de la requête SQL
     $requete = "INSERT INTO offre_";
+    
+    // Déterminer la table cible selon la catégorie
     switch ($categorie) {
         case 'activite':
-            $requete .= 'activite'
+            $requete .= 'activite';
             break;
         case 'parc':
-            $requete .= 'parc'
+            $requete .= 'parc';
             break;
         case 'spectacle':
-            $requete .= 'spectacle'
+            $requete .= 'spectacle';
             break;
         case 'visite':
-            $requete .= 'visite'
+            $requete .= 'visite';
             break;
         default:
             print "Erreur de categorie!";
             die();
     }
-    $requete .= '(titre, resume, ville) VALUES('$titre','$resume', '$ville');';
 
-    $stmt = $dbh->prepare(
-    $requete;
-    $stmt->execute();)
-    
+    // Construction de la requête SQL avec les champs et les valeurs
+    $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville)";
+
+    // Préparation de la requête
+    $stmt = $dbh->prepare($requete);
+
+    // Liaison des valeurs aux paramètres SQL
+    $stmt->bindParam(':titre', $titre);
+    $stmt->bindParam(':resume', $resume);
+    $stmt->bindParam(':ville', $ville);
+
+    // Exécution de la requête
+    $stmt->execute();
+
+    // Fermeture de la connexion
     $dbh = null;
 } catch (PDOException $e) {
+    // Affichage de l'erreur en cas d'échec
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
+
+
+
+//     print("offre creee");
+//     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';;
+//     $ville = $_POST['ville'];
+//     $resume = $_POST['descriptionC'];
+//     $prix = $_POST['prix'];
+//     $type = $_POST['type'];
+//     $photo1 = $_POST['photo1'];
+//     $categorie = $_POST['categorie'];
+
+
+// include('connect_params.php');
+// try {
+//     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+//     $requete = "INSERT INTO offre_";
+//     switch ($categorie) {
+//         case 'activite':
+//             $requete .= 'activite';
+//             break;
+//         case 'parc':
+//             $requete .= 'parc';
+//             break;
+//         case 'spectacle':
+//             $requete .= 'spectacle';
+//             break;
+//         case 'visite':
+//             $requete .= 'visite';
+//             break;
+//         default:
+//             print "Erreur de categorie!";
+//             die();
+//     }
+
+//     $requete .="(titre, resume, ville) VALUES('$titre','$resume', '$ville')";
+
+//     $stmt = $dbh->prepare($requete);
+    
+//     $stmt->execute();
+    
+//     $dbh = null;
+// } catch (PDOException $e) {
+//     print "Erreur !: " . $e->getMessage() . "<br/>";
+//     die();
+// }
 
 }
 ?>    
