@@ -1,3 +1,38 @@
+<?php
+/*include('php/connect_params.php');*/
+/*try {*/
+    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";*/
+    $offre = [
+        [
+            "id" => "0",
+            "titre" => "Titre BOB",
+            "ville" => "BOB Land",
+            "adresse" => "20 rue des Bobs",
+            "categorie" => "Categorie BOb",
+            "ouvert" => "Fermé",
+            "desc" => "L'offre Bob est Bob pour ceux qui Bob un Bob de Bob et de Bob. Situé en Bob de Bob, cet Bob Bob offre une Bob sur Bob et les Bob. Les Bob, décorées avec Bob, sont Bob de tout le Bob nécessaire pour un Bob Bob : Bob de Bob, Bob Bob, et Bob à une Bob Wi-Fi Bob. \nEn Bob de l'hébergement, cette Bob inclut des Bob Bob préparés par notre Bob Bob. Vous pourrez Bob des Bob Bob et Bob, Bob de Bob. L'hôtel Bob également un Bob avec des Bob de Bob, une Bob Bob et un Bob pour vous Bob après une Bob de Bob.",
+            "nom_pro" => "Nom pro BOB",
+            "nombre_avis" => "12",
+            "a_propos" => "Bob en 2010, Bob est une Bob familiale dédiée à Bob et au Bob en Bob. Notre Bob est de Bob des Bob pour nos Bob en leur Bob des Bob dans des Bob enchanteurs.",
+            "tarifs" => ["80€" => "Bob simple", "140€" => "Bob lit double", "160€" => "Bob deux lits", "300€" => "Bob premium"],
+            "horaires" => ["Lundi" => "09h - 23h", "Mardi" => "09h - 23h", "Mercredi" => "09h - 23h", "Jeudi" => "09h - 23h", "Vendredi" => "09h - 23h", "Samedi" => "09h - 23h", "Dimanche" => "09h - 20h"],
+        ],
+    ]
+    /*$dbh = null;*/
+/*} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}*/
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -20,7 +55,7 @@
 
     <header>
         <img class="logo" src="images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="text-wrapper-17">PACT</div>
         <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -33,7 +68,7 @@
 
         <section class="fond-blocs"><!---->
 
-            <h1>Les Embruns du Phare</h1>
+            <h1><?php echo $offre["titre"] ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -43,7 +78,7 @@
             </div>
 
             <div class="display-ligne-espace">
-                <p><em>Hôtel, Ouvert</em></p>
+                <p><em><?php echo $offre["categorie"] . ", " . $offre["ouvert"] ?></em></p>
                 <p>25 rue Romain Poupon, Saint-Malo</p>
             </div>
                 
