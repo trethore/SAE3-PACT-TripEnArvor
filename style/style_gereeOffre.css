@@ -51,7 +51,7 @@ main {
 
 /***Inputs Textuels (avec url,...)***/
 
-input[type="text"], input[type="url"], input[type="number"], input[type="tel"], textarea{
+main input[type="text"], input[type="url"], input[type="number"], input[type="tel"], textarea{
     background-color: var(--blanc-leger);
     color: black;
     border: 0;
@@ -196,7 +196,7 @@ input[placeholder = "00"]{
 }
 
 .apropos td + td{
-    padding: 5px 0 5px 5%;
+    padding: 5px 0 5px 0;
     width: 75%;
 }
 

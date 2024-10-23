@@ -332,7 +332,7 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
-
+// insert into tarif et recuperer id offre avec returning id_offre
 
 
 //     print("offre creee");
