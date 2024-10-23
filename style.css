@@ -1,0 +1,222 @@
+body {
+  background-color: #ececec;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+body header {
+  background-color: var(--variable-collection-blanc);
+  width: 1440px;
+  height: 2085px;
+  position: relative;
+}
+
+body .compoback-header {
+  position: absolute;
+  width: 1440px;
+  height: 120px;
+  top: 0;
+  left: 0;
+  box-shadow: 0px 10px 30px #000000bf;
+  background: var(--gradient-orange);
+}
+
+body .logo-nom {
+  position: absolute;
+  width: 263px;
+  height: 105px;
+  top: 8px;
+  left: 29px;
+}
+
+body .logo {
+  position: absolute;
+  width: 72px;
+  height: 105px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+body .text-wrapper-17 {
+  position: absolute;
+  top: 28px;
+  left: 83px;
+  font-family: "Inter", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+body .cherchero-wrapper {
+  position: absolute;
+  width: 540px;
+  height: 50px;
+  top: 35px;
+  left: 620px;
+  background-image: url(https://c.animaapp.com/KXCkBuNy/img/recherche-1.png);
+  background-size: 100% 100%;
+}
+
+body .cherchero {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  left: 490px;
+  object-fit: cover;
+}
+
+body .ICON-utilisateur {
+  position: absolute;
+  width: 53px;
+  height: 60px;
+  top: 25px;
+  left: 1353px;
+  object-fit: cover;
+}
+
+body .ICON-accueil {
+  position: absolute;
+  width: 65px;
+  height: 60px;
+  top: 25px;
+  left: 1257px;
+  object-fit: cover;
+}
+
+.ei1177_19784_110_3780 { 
+	background-image:linear-gradient(0deg, rgba(217.0000022649765, 111.00000098347664, 50.000000819563866, 1) 0%,rgba(217.0000022649765, 102.00000151991844, 54.00000058114529, 1) 23.100006580352783%,rgba(242.00000077486038, 139.0000069141388, 48.000000938773155, 1) 100%) ;
+	width:1440px;
+	height:215px;
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+.ei1177_19784_141_2912 { 
+	color:rgba(255, 255, 255, 1);
+	width:335px;
+	height:41px;
+	position:absolute;
+	left:1075px;
+	top:23.00006103515625px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:32px;
+	letter-spacing:0;
+}
+.ei1177_19784_154_2955 { 
+	width:404px;
+	height:88px;
+	position:absolute;
+	left:133px;
+	top:42.00006103515625px;
+}
+.ei1177_19784_154_2994 { 
+	transform: rotate(-90.00000000000003deg);
+	width:126.00396728515625px;
+	height:0px;
+	position:absolute;
+	left:525px;
+	top:149.00396728515625px;
+}
+.i1177_19784_154_2994 { 
+	border:5px solid rgba(255, 255, 255, 1);
+}
+.ei1177_19784_154_3251 { 
+	width:73px;
+	height:73px;
+	position:absolute;
+	left:1159px;
+	top:76.00006103515625px;
+	background-image:url(images/image__1__1.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.ei1177_19784_154_3803 { 
+	width:73px;
+	height:73px;
+	position:absolute;
+	left:1327px;
+	top:76px;
+	background-image:url(images/image__1__2.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.ei1177_19784_154_3830 { 
+	width:73px;
+	height:73px;
+	position:absolute;
+	left:1243px;
+	top:76.00006103515625px;
+	background-image:url(images/jouer_1.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.ei1177_19784_154_4515 { 
+	background-color:rgba(255, 255, 255, 1);
+	width:1380px;
+	height:27px;
+	position:absolute;
+	left:30px;
+	top:175.00006103515625px;
+	border-top-left-radius:15px;
+	border-top-right-radius:15px;
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+}
+.i1177_19784_154_4515 { 
+	border:1px solid rgba(0, 0, 0, 1);
+}
+.ei1177_19784_154_4507 { 
+	color:rgba(217.0000022649765, 102.00000151991844, 54.00000058114529, 1);
+	width:1359px;
+	height:22px;
+	position:absolute;
+	left:51px;
+	top:173.00006103515625px;
+	font-family:Poppins;
+	text-align:left;
+	font-size:20px;
+	letter-spacing:0;
+}
+.ei1177_19784_198_2068 { 
+	color:rgba(255, 255, 255, 1);
+	width:459px;
+	height:49px;
+	position:absolute;
+	left:30px;
+	top:88.00006103515625px;
+	font-family:Seymour One;
+	text-align:left;
+	font-size:48px;
+	letter-spacing:0;
+}
+.ei1177_19784_198_2069 { 
+	color:rgba(255, 255, 255, 1);
+	width:396px;
+	height:49px;
+	position:absolute;
+	left:335px;
+	top:42.00006103515625px;
+	font-family:SeoulNamsan;
+	text-align:left;
+	font-size:48px;
+	letter-spacing:0;
+}
+.ei1177_19784_250_2444 { 
+	width:75px;
+	height:77px;
+	position:absolute;
+	left:1073px;
+	top:76px;
+	background-image:url(images/logo_x_2.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+}
