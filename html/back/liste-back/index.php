@@ -1,6 +1,6 @@
 <?php
 
-include('connect_params.php');
+include('/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
@@ -38,6 +38,7 @@ $reqTypeOffre = $sql = "SELECT
                         END AS offreSpe
                         FROM _offre o
                         WHERE o.id_offre = ?";
+                        
 $result = $conn->query($reqOffre); 
 
 ?>
