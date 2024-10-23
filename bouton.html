@@ -1,45 +1,58 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/style/styleguide.css"/>
     <style>
         #confirm {
-            background-color: rgba(234, 226, 218, 1);
+            background-color: var(--blanc-leger);
             display: none;
             border: 3px solid;
             position: fixed;
             left: 50%;
-            margin-left: -100px;
+            transform: translateX(-50%);
             padding: 6px 8px 8px;
             box-sizing: border-box;
             text-align: center;
+            border-radius: 5px;
         }
 
-        .close > button {
+        .close>button {
             border-radius: 5px;
-            border: 1px solid;
             text-align: center;
+            font-size: 25px;
             width: 100px;
             cursor: pointer;
             margin: 5px;
+            border: none;
         }
 
         .close {
             display: flex;
-            justify-content: end;
+            justify-content: space-around;
             right: 20px;
             bottom: 0px;
+            border: none;
         }
+
+        .bouton1{
+            color: var(--orange-principale);
+        }
+
+        .bouton2{
+            background-color: var(--orange-principale);
+            color: var(--blanc);
+        }
+        
     </style>
 </head>
 
 <body>
     <div id="confirm">
-        <p> Infomation de la page ... </p>
-        <p>Voulez vous publier l'offre ?</p>
+        <h1>Valider les modifications</h1>
+        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
         <div class="close">
-            <button onclick="closeConfirmAnnuler()"> Annuler </button>
-            <button onclick="closeConfirmTard()"> Plus tard </button>
-            <button onclick="closeConfirmOui()"> Oui </button>
+            <button class="bouton1" onclick="closeConfirmAnnuler()"> Annuler </button>
+            <button class="bouton2" onclick="closeConfirmOui()"> Valider </button>
 
         </div>
     </div>
@@ -52,13 +65,9 @@
         function closeConfirmAnnuler() {
             confirmDiv.style.display = "none";
         }
-        function closeConfirmTard() {
-            confirmDiv.style.display = "none";
-            alert("Offre crée non publié");
-        }
         function closeConfirmOui() {
             confirmDiv.style.display = "none";
-            alert("Offre crée et publié avec succès");
+            alert("Modification valider avec succès");
         }
     </script>
 </body>
