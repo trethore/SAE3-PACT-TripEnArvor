@@ -17,6 +17,48 @@ try {
     die();
 }
 
+session_start(); // Démarrer la session
+function checkCompteProfessionnel($conn, $id_compte) {
+    // Vérifier si l'id_compte est un entier
+    if (!is_int($id_compte)) {
+        return false; // ou lever une exception selon votre logique d'erreur
+    }
+
+    // Préparer la requête pour éviter les injections SQL
+    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Lier le paramètre
+    $stmt->bind_param('i', $id_compte);
+
+    // Exécuter la requête
+    $stmt->execute();
+
+    // Obtenir le résultat
+    $result = $stmt->get_result();
+
+    // Vérifier si une ligne a été trouvée
+    if ($result->num_rows > 0) {
+        return true; // L'id_compte est présent dans _compte_professionnel
+    } else {
+        return false; // L'id_compte n'est pas présent
+    }
+}
+
+// Exemple d'utilisation
+session_start();
+if (isset($_SESSION['id_compte'])) {
+    $id_compte = $_SESSION['id_compte'];
+    
+    if (checkCompteProfessionnel($conn, $id_compte)) {
+        echo "L'id_compte $id_compte est un compte professionnel.";
+    } else {
+        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
+    }
+} else {
+    echo "Aucun id_compte trouvé dans la session.";
+}
+
 /*******************
 Requete SQL préfaite
 ********************/
@@ -38,7 +80,7 @@ $reqTypeOffre = $sql = "SELECT
                         END AS offreSpe
                         FROM _offre o
                         WHERE o.id_offre = ?";
-                        
+
 $result = $conn->query($reqOffre); 
 
 ?>
