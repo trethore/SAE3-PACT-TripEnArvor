@@ -157,7 +157,7 @@ input[placeholder = "00"]{
 
 /***Importer une image***/
 
-.custom-file-input {
+/* .custom-file-input {
   position: relative;
   display: inline-block;
   border: 2px solid black;
@@ -176,15 +176,15 @@ input[placeholder = "00"]{
 }
 
 /* Masquer le vrai input file */
-#file-upload {
+/*#file-upload {
   position: absolute;
-  opacity: 0;
+  opacity: 100%;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   cursor: pointer;
-}
+} */
 
 
 

@@ -86,10 +86,10 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td><label for="photo"> Photo (max. 5)</label></td>
-                    <td><div class="custom-file-input">
-                        <label for="file-upload">
+                    <td><div>
+                        <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
-                        </label>
+                        </label> -->
                         <input id="file-upload" type="file" />
                     </div></td>
                     
