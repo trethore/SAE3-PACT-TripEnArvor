@@ -1,4 +1,22 @@
+<?php
+/*include('../../php/connect_params.php');
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
+    $result = ["pierre.lechat8@gmail.com", "bob.bob@gmail.com", "pikdev.gopi@gmail.com"];
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}*/
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,11 +24,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Se connecter</title>
-    <link rel="stylesheet" href="/style/style-se-connecter.css">
+    <link rel="stylesheet" href="/html/style/style-se-connecter.css">
 </head>
 <body class="connecter">
     <!-- Logo -->
-    <img src="/images/universel/logo/Logo_couleurs.png">
+    <img src="../../images/universel/logo/Logo_couleurs.png">
     <!-- Main -->
     <main>
         <!-- Titres -->
