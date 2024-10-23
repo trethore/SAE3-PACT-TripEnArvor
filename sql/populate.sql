@@ -4,6 +4,32 @@ SET SCHEMA 'pact';
 
 START TRANSACTION;
 
+INSERT INTO _image (lien_fichier) VALUES
+('image1.webp'),
+('image2.webp'),
+('image3.webp'),
+('image4.webp'),
+('image5.webp'),
+('image6.webp'),
+('image7.webp'),
+('image8.webp'),
+('image9.webp'),
+('image10.webp'),
+('image11.webp'),
+('image12.webp'),
+('image13.webp'),
+('image14.webp'),
+('image15.webp'),
+('image16.webp'),
+('image17.webp'),
+('image18.webp'),
+('image19.webp'),
+('image20.webp'),
+('image21.webp'),
+('image22.webp'),
+('image23.webp');
+
+
 -- ####################################################################
 -- INSERTION D'ADRESSES
 -- ####################################################################
@@ -82,20 +108,60 @@ VALUES
 -- ####################################################################
 
 -- Insertion dans offre_parc_attraction
-INSERT INTO offre_parc_attraction(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, nb_attractions, age_min)
+INSERT INTO offre_parc_attraction
+(
+    titre,
+    resume, 
+    ville, 
+    description_detaille, 
+    site_web, 
+    id_compte_professionnel, 
+    id_adresse, 
+    prix_offre, 
+    type_offre, 
+    nb_attractions, 
+    age_min, 
+    plan
+)
 VALUES 
-('Parc Astérix', 'Découvrez les mondes d''Astérix et Obélix', 'Paris', 'Une journée entière dans le parc d''attraction Astérix', 'www.parcasterix.com', 1, 1, 50, 'premium', 20, 5),
-('Disneyland Paris', 'La magie de Disney à portée de main', 'Paris', 'Une journée au parc Disneyland Paris', 'www.disneylandparis.com', 2, 1, 70, 'premium', 30, 3);
+(
+    'Parc Astérix', 
+    'Découvrez les mondes d''Astérix et Obélix', 
+    'Paris', 
+    'Une journée entière dans le parc d''attraction Astérix', 
+    'www.parcasterix.com', 
+    1, 
+    1, 
+    50, 
+    'premium', 
+    20, 
+    5, 
+    'image17.webp'
+),
+(
+    'Disneyland Paris',
+    'La magie de Disney à portée de main',
+    'Paris',
+    'Une journée au parc Disneyland Paris',
+    'www.disneylandparis.com',
+    2,
+    1,
+    70,
+    'premium',
+    30,
+    3,
+    'image18.webp'
+);
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE RESTAURATION
 -- ####################################################################
 
 -- Insertion dans offre_restauration
-INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, gamme_prix)
+INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, gamme_prix, carte)
 VALUES 
-('Dîner gastronomique', 'Découvrez la cuisine étoilée de Paris', 'Paris', 'Un dîner dans un restaurant étoilé à Paris', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€'),
-('Restaurant traditionnel', 'Cuisine locale et authentique', 'Lyon', 'Un repas dans un restaurant typique de Lyon', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€');
+('Dîner gastronomique', 'Découvrez la cuisine étoilée de Paris', 'Paris', 'Un dîner dans un restaurant étoilé à Paris', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€', 'image19.webp'),
+('Restaurant traditionnel', 'Cuisine locale et authentique', 'Lyon', 'Un repas dans un restaurant typique de Lyon', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
 
 INSERT INTO _tag (nom_tag) 
 VALUES 
@@ -133,6 +199,25 @@ VALUES
 (8,'Découverte'),
 (9,'Gastronomie'),
 (10,'Tradition');
+
+INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
+(1, 'image1.webp'),
+(1, 'image2.webp'),
+(2, 'image3.webp'),
+(3, 'image4.webp'),
+(4, 'image5.webp'),
+(6, 'image6.webp'),
+(7, 'image7.webp'),
+(8, 'image8.webp'),
+(9, 'image9.webp'),
+(10, 'image10.webp'),
+(1, 'image11.webp'),
+(2, 'image12.webp'),
+(3, 'image13.webp'),
+(4, 'image14.webp'),
+(5, 'image15.webp'),
+(6, 'image16.webp');
+
 
 
 COMMIT;

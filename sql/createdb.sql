@@ -1017,11 +1017,11 @@ CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, plan)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.plan)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min)
-        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min);
+    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
+        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -1058,13 +1058,13 @@ BEGIN
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
         prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
-        plan = NEW.plan
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_parc_attraction
     SET nb_attractions = NEW.nb_attractions,
-        age_min = NEW.age_min
+        age_min = NEW.age_min,
+        plan = NEW.plan
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
@@ -1107,11 +1107,11 @@ CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, carte)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.carte)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_restauration(id_offre, gamme_prix)
-        VALUES (id_offre_temp, NEW.gamme_prix);
+    INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
+        VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -1148,12 +1148,12 @@ BEGIN
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
         prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
-        carte = NEW.carte
+        type_offre = NEW.type_offre
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_restauration
-    SET gamme_prix = NEW.gamme_prix
+    SET gamme_prix = NEW.gamme_prix,
+        carte = NEW.carte
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
