@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST['titre'])){
     $submitted = true;
 }
@@ -282,6 +283,13 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
+    $id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : null;
+
+    // Vérifier si l'id_compte est défini (s'il est connecté)
+    if (!$id_compte) {
+        die("Erreur : utilisateur non connecté.");
+    }
+
     // Inclusion des paramètres de connexion
     include('connect_params.php');
 
@@ -321,6 +329,7 @@ else {
         $stmt->bindParam(':titre', $titre);
         $stmt->bindParam(':resume', $resume);
         $stmt->bindParam(':ville', $ville);
+        $stmt->bindParam(':id_compte', $id_compte);
 
         // Exécution de la requête
         $stmt->execute();
