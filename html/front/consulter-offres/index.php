@@ -217,7 +217,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
@@ -369,11 +369,11 @@
                     <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
                         <p class="prix">A partir de <span>80€</span></p>
@@ -403,10 +403,10 @@
           <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('images/universel/icones/instagram.png');"></div></a>
+              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div></a>
+              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div></a>
+              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div></a>
+              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div></a>
             </div>
           </div>
     
