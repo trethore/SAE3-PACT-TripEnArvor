@@ -41,9 +41,9 @@
 <head>
 
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style/styleguide.css"/>
-    <link rel="stylesheet" href="style/styleHFF.css"/>
-    <link rel="stylesheet" href="style/style-details-offre-visiteur.css"/>
+    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/styleHFF.css"/>
+    <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -55,14 +55,14 @@
 <body>
 
     <header>
-        <img class="logo" src="images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT</div>
         <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="images/universel/icones/chercher.png" /></button>
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <main>
@@ -71,11 +71,11 @@
 
             <h1><?php echo $offre["titre"] ?></h1>
             <div class="galerie-images-presentation"> 
-                <img src="images/universel/photos/hotel_2.png" alt="Image 1">
-                <img src="images/universel/photos/hotel_2_2.png" alt="Image 2">
-                <img src="images/universel/photos/hotel_2_3.png" alt="Image 3">
-                <img src="images/universel/photos/hotel_2_4.png" alt="Image 4">
-                <img src="images/universel/photos/hotel_2_5.png" alt="Image 5">
+                <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
+                <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
+                <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
+                <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">
+                <img src="/images/universel/photos/hotel_2_5.png" alt="Image 5">
             </div>
 
             <div class="display-ligne-espace">
@@ -84,11 +84,11 @@
             </div>
                 
             <div class="display-ligne">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                <img src="images/universel/icones/etoile-grise.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                 <p>(<?php echo $offre["nombre_avis"] ?>)</p>
                 <a href="#avis">Voir les avis</a>
             </div>
@@ -104,17 +104,17 @@
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <li><img src="images/universel/icones/hotel.png"><h2>Hôtel charmant</h2></li>
-                    <li><img src="images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
-                    <li><img src="images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
-                    <li><img src="images/universel/icones/dej.png"><h2>Petit déjeuner maison</h2></li>
+                    <li><img src="/images/universel/icones/hotel.png"><h2>Hôtel charmant</h2></li>
+                    <li><img src="/images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
+                    <li><img src="/images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
+                    <li><img src="/images/universel/icones/dej.png"><h2>Petit déjeuner maison</h2></li>
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
                 <h2>À propos de : <?php echo $offre["titre"] ?></h2>
                 <p><?php echo $offre["a_propos"] ?>​</p>
-                <a href="<?php echo $offre["site"] ?>"><img src="images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo $offre["site"] ?></a>
+                <a href="<?php echo $offre["site"] ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo $offre["site"] ?></a>
                 <p>Numéro : <?php echo $offre["tel"] ?></p>
             </div>
     
@@ -181,11 +181,11 @@
 
             <div class="display-ligne">
                 <h2>Note moyenne :</h2>
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                <img src="images/universel/icones/etoile-grise.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                 <p>49 avis</p>
             </div>
 
@@ -194,13 +194,13 @@
                 <div class="display-ligne-espace">
 
                     <div class="display-ligne">
-                        <img src="images/universel/icones/avatar-femme-1.png" class="avatar">
+                        <img src="/images/universel/icones/avatar-femme-1.png" class="avatar">
                         <p><strong>Titouan</strong></p>
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="images/universel/icones/etoile-grise.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                         <p><em>24/11/2023</em></p>
                     </div>
 
@@ -212,8 +212,8 @@
                 <div class="display-ligne-espace">
                     <p class="transparent">.</p>
                     <div class="display-notation">
-                        <p>0</p><img src="images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="images/universel/icones/pouce-down.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                     </div>
                 </div>
 
@@ -221,7 +221,7 @@
                     <div class="display-ligne-espace">
 
                         <div class="display-ligne">
-                            <img src="images/universel/icones/avatar-homme-1.png" class="avatar">
+                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                             <p><strong>Éric Dupont</strong></p>
                             <p><em>24/11/2023</em></p>
                         </div>
@@ -234,8 +234,8 @@
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p>0</p><img src="images/universel/icones/pouce-up.png" class="pouce">
-                            <p>0</p><img src="images/universel/icones/pouce-down.png" class="pouce">
+                            <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>             
@@ -249,13 +249,13 @@
                 <div class="display-ligne-espace">
 
                     <div class="display-ligne">
-                        <img src="images/universel/icones/avatar-homme-2.png" class="avatar">
+                        <img src="/images/universel/icones/avatar-homme-2.png" class="avatar">
                         <p><strong>Mathéo</strong></p>
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                         <p><em>15/12/2022</em></p>
                     </div>
 
@@ -264,10 +264,10 @@
 
                 <div class="image-avis"style="display: flex;">
                     <div class="galerie-images-avis">
-                        <img src="images/universel/photos/hotel_2.png" alt="Image 1">
-                        <img src="images/universel/photos/hotel_2_2.png" alt="Image 2">
-                        <img src="images/universel/photos/hotel_2_3.png" alt="Image 3">
-                        <img src="images/universel/photos/hotel_2_4.png" alt="Image 4">                    
+                        <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
+                        <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
+                        <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
+                        <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">                    
                     </div>
                     <p>Nous avons passé un séjour absolument merveilleux aux Embruns du Phare. Dès notre arrivée, nous avons été accueillis chaleureusement par le personnel, qui s'est montré attentif et disponible tout au long de notre séjour. La vue depuis notre chambre était à couper le souffle, avec l'océan s'étendant à perte de vue.</p>
                 </div>
@@ -275,8 +275,8 @@
                 <div class="display-ligne-espace">
                     <p class="transparent">.</p>
                     <div class="display-notation">
-                        <p>0</p><img src="images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="images/universel/icones/pouce-down.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
          
         <div class="navigation display-ligne-espace">
             <button>Retour à la liste des offres</button>
-            <button><img src="images/universel/icones/fleche-haut.png"></button>
+            <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
@@ -301,16 +301,16 @@
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
             <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('images/universel/icones/x.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
             </a>
             <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('images/universel/icones/facebook.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
             </a>
             <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('images/universel/icones/youtube.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
             </a>
             <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('images/universel/icones/instagram.png');"></div>
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
             </a>
             </div>
         </div>
