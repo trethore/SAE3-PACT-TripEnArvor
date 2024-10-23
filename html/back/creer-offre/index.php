@@ -384,7 +384,6 @@ try {
     $dbh = null;
     
     print "Offre et tarif créés avec succès!";
-
 }
 ?>    
 
