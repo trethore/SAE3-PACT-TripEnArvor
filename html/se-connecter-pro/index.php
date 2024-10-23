@@ -1,7 +1,7 @@
 <?php
-/*include('php/connect_params.php');*/
+include('../../php/connect_params.php');
 try {
-    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     $stmt = $dbh->prepare('SELECT email from compte');
@@ -9,9 +9,9 @@ try {
     $result = $stmt->fetchAll();
     echo "<pre>";
     print_r($result);
-    echo "</pre>";*/
-    $result = ["pierre.lechat8@gmail.com", "bob.bob@gmail.com", "pikdev.gopi@gmail.com"];
-    /*$dbh = null;*/
+    echo "</pre>";
+    /*$result = ["pierre.lechat8@gmail.com", "bob.bob@gmail.com", "pikdev.gopi@gmail.com"];*/
+    $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
