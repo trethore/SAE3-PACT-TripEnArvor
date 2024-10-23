@@ -187,7 +187,6 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
-        margin-left: 0;
     }
 
     .epingle {
@@ -371,7 +370,7 @@ footer > div > a {
 #final {
     background: var(--blanc-leger);
     color: var(--noir);
-    font-size: 20px;
+    font-size: 32px;
     display: none;
     border: 1px solid var(--noir);
     border-radius: 15px;
@@ -391,7 +390,21 @@ footer > div > a {
     flex-direction: column;
     align-items: center;
 }
+
 .close button:first-child {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin-bottom: 12px;
+    background: var(--noir);
+    color: var(--blanc-leger);
+    font-size: 32px;
+    width: fit-content;
+}
+
+#final button {
     border: 1px solid;
     border-radius: 30px;
     text-align: center;
@@ -415,4 +428,17 @@ footer > div > a {
     color: var(--blanc-leger);
     font-size: 20px;
     width: fit-content;
+}
+
+
+#avis {
+    display: none;
+}
+
+#carte {
+    display: none;
+}
+
+#caracteristiques {
+    display: none;
 }
