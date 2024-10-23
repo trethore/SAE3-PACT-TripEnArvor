@@ -23,7 +23,7 @@ label, input, p{
 }
 
 p{
-    color: var(--gris-toile);
+    color: var(--gris-etoile);
     text-align: center;
 }
 
@@ -86,7 +86,7 @@ input[placeholder = "00"]{
 ::placeholder{   /*guidage*/
   font-style: italic;
   text-align: center;
-  color: var(--gris-toile);
+  color: var(--gris-etoile);
 }
 
 /***Tableaux**/
@@ -131,7 +131,7 @@ input[placeholder = "00"]{
   font-size: 24px;
   width: 100%; 
   border-radius: 5px;
-  color: var(--gris-toile);
+  color: var(--gris-etoile);
   cursor: pointer;
   
 }
@@ -145,7 +145,7 @@ input[placeholder = "00"]{
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--gris-toile); /* Arrow color */
+  color: var(--gris-etoile); /* Arrow color */
 }
 
 /* Optional: Hover effect for the dropdown */
