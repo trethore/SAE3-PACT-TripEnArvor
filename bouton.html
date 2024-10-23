@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <style>
         #confirm {
-            background-color: var(--blanc-leger);
+            background-color: var(--blanc);
             display: none;
-            border: 3px solid;
+            border: 1px solid;
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
@@ -17,30 +17,35 @@
         }
 
         .close>button {
-            border-radius: 5px;
+            border-radius: 50px;
             text-align: center;
             font-size: 25px;
-            width: 100px;
             cursor: pointer;
-            margin: 5px;
             border: none;
+            padding: 5px 35px 5px 35px;
         }
 
         .close {
             display: flex;
             justify-content: space-around;
-            right: 20px;
-            bottom: 0px;
             border: none;
         }
 
-        .bouton1{
+        .bouton1 {
             color: var(--orange-principale);
+            background-color: var(--blanc);
         }
 
-        .bouton2{
+        .bouton2 {
             background-color: var(--orange-principale);
             color: var(--blanc);
+            box-shadow: 1px 1px 1px var(--gr    is-etoile);
+            transition: box-shadow 0.3s ease; /* Ajout de la transition */
+        }
+
+        /* Animation lors du survol */
+        .bouton2:hover {
+            box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
         }
         
     </style>
@@ -53,7 +58,6 @@
         <div class="close">
             <button class="bouton1" onclick="closeConfirmAnnuler()"> Annuler </button>
             <button class="bouton2" onclick="closeConfirmOui()"> Valider </button>
-
         </div>
     </div>
     <button onclick='showConfirm()'> Crée offre </button>
