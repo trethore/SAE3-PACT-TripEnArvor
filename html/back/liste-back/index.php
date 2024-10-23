@@ -17,6 +17,9 @@ try {
     die();
 }
 
+/*******************
+Requete SQL préfaite
+********************/
 $reqOffre = "SELECT * FROM _offre";
 $reqIMG = "SELECT img.lien_fichier 
             FROM _image img
@@ -49,6 +52,9 @@ $result = $conn->query($reqOffre);
 <body>
     <main>
         <h1>Liste de vos offre</h1>
+        <!--------------- 
+        Filtrer et trier
+        ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
             <div>
@@ -155,16 +161,14 @@ $result = $conn->query($reqOffre);
         </article>
         <section class="lesOffres">
             <?php
+            /* -----------------Gestion de la pagination -----------------------*/
             $offers_per_page = 9;
-
             $total_offers = count($offres);
             $total_pages = ceil($total_offers / $offers_per_page);
-
             $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
             $offset = ($current_page - 1) * $offers_per_page;
-
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
+            /*------------------------------------------------------------------ */
             
             while($row = $result->fetch_assoc()) {
             ?>
@@ -245,10 +249,13 @@ $result = $conn->query($reqOffre);
                         <p>Avis non répondues : <span><b>1</b></span></p>
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
-                    <p>A partir de <span><?php echo htmlentities() ?></span></p>
+                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?></span></p>
                 </div>
             </article>
             <?php } ?>
+            <!-------------------------------------- 
+            Pagination
+            ---------------------------------------->
             <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
