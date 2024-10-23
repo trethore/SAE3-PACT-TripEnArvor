@@ -19,7 +19,6 @@ try {
 
 session_start(); // Démarrer la session
 function checkCompteProfessionnel($conn, $id_compte) {
-    // Préparer la requête pour éviter les injections SQL
     $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
     $stmt = $conn->prepare($sql);
 
@@ -211,7 +210,7 @@ $result = $conn->query($reqOffre);
             while($row = $result->fetch_assoc()) {
             ?>
             <article>
-                <div onclick="location.href='consulter-offre/?id=<?php echo urlencode($row["id_offre"]);?'">
+            <div onclick="location.href='page_detail.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
