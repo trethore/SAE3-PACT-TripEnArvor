@@ -174,7 +174,6 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
-        margin-left: 0;
     }
 
     .epingle {
@@ -385,4 +384,16 @@ a {
 
 footer > div > a {
     text-decoration: none;
+}
+
+#avis {
+    display: none;
+}
+
+#carte {
+    display: none;
+}
+
+#caracteristiques {
+    display: none;
 }
