@@ -362,8 +362,9 @@ footer > div > a {
     width: fit-content;
     padding: 10px;
     position: fixed;
-    top: 200px;
-    left: 40%;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
     z-index: 1;
 }
 

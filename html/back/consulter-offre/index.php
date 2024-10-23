@@ -252,21 +252,26 @@
 
     <script>
 
-        var confirmDiv = document.getElementById("confirm");
+        let confirmDiv = document.getElementById("confirm");
+
         function showConfirm() {
             confirmDiv.style.display = "block";
             let header = document.getElementById('header');
-            header.style.filter = "blur(4px)";
+            header.style.filter = "blur(10px)";
             let body = document.getElementById('body');
-            body.style.filter = "blur(4px)";
+            body.style.filter = "blur(10px)";
             let footer = document.getElementById('footer');
-            footer.style.filter = "blur(4px)";
+            footer.style.filter = "blur(10px)";
             let bouton1 = document.getElementById('bouton1');
-            bouton1.style.filter = "blur(4px)";
+            bouton1.style.filter = "blur(10px)";
             let bouton2 = document.getElementById('bouton2');
-            bouton2.style.filter = "blur(4px)";
+            bouton2.style.filter = "blur(10px)";
             let popup = document.getElementById('confirm');
             popup.style.filter = "none";
+        }
+
+        function showFinal() {
+            confirmDiv.style.display = "block";
         }
 
         function closeConfirmAnnuler() {
@@ -297,6 +302,8 @@
             bouton2.style.filter = "blur(0px)";
             alert("Offre hors ligne");
         }
+
+        function 
 
     </script>
 
