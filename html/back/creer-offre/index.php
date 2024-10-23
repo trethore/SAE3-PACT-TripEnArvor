@@ -90,7 +90,7 @@ if (!$submitted) {
                         <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                        <input id="file-upload" type="file" />
+                        <input id="photo" type="file" />
                     </div></td>
                     
                 </tr>
@@ -275,16 +275,37 @@ else {
     $resume = $_POST['descriptionC'];
     $prix = $_POST['prix'];
     $type = $_POST['type'];
+    $photo1 = $_POST['photo1'];
+    $categorie = $_POST['categorie'];
 
 
 include('connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
+    $requete = "INSERT INTO offre_";
+    switch ($categorie) {
+        case 'activite':
+            $requete .= 'activite'
+            break;
+        case 'parc':
+            $requete .= 'parc'
+            break;
+        case 'spectacle':
+            $requete .= 'spectacle'
+            break;
+        case 'visite':
+            $requete .= 'visite'
+            break;
+        default:
+            print "Erreur de categorie!";
+            die();
+    }
+    $requete .= '(titre, resume, ville) VALUES('$titre','$resume', '$ville');';
 
     $stmt = $dbh->prepare(
-    "INSERT INTO Offre(id_offre,titre, resume, ville) VALUES('$titre','$resume', '$ville)");
-    $stmt->execute();
+    $requete;
+    $stmt->execute();)
     
     $dbh = null;
 } catch (PDOException $e) {
