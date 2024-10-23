@@ -245,7 +245,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='list-back'">Retour à la liste des offres</button>
+            <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
             <button><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
