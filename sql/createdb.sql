@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS pact CASCADE;
-CREATE SCHEMA pact;
-SET SCHEMA 'pact';
+DROP SCHEMA IF EXISTS sae CASCADE;
+CREATE SCHEMA sae;
+SET SCHEMA 'sae';
 
 
 /* ##################################################################### */
@@ -175,6 +175,7 @@ CREATE TABLE _offre_parc_attraction (
     id_offre         INTEGER,
     nb_attractions   INTEGER NOT NULL,
     age_min          INTEGER NOT NULL,
+    plan            VARCHAR(255) NOT NULL,
     CONSTRAINT _offre_parc_attraction_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_parc_attraction_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
@@ -191,6 +192,7 @@ CREATE VIEW offre_parc_attraction AS
 CREATE TABLE _offre_restauration (
     id_offre    INTEGER,
     gamme_prix  gamme_prix_t NOT NULL,
+    carte       VARCHAR(255) NOT NULL,
     CONSTRAINT _offre_restauration_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_restauration_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
@@ -333,28 +335,6 @@ CREATE TABLE _offre_visite_dans_langue (
 );
 
 
-/* ================ OFFRE PARC ATTRACTION POSSÈDE PLAN ================= */
-
-CREATE TABLE _offre_parc_attraction_possede_plan (
-    id_offre    INTEGER,
-    id_image    VARCHAR(255),
-    CONSTRAINT _offre_parc_attraction_possede_plan_pk PRIMARY KEY (id_offre, id_image),
-    CONSTRAINT _offre_parc_attraction_possede_plan_fk_offre_parc_attraction FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
-    CONSTRAINT _offre_parc_attraction_possede_plan_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
-);
-
-
-/* ================= OFFRE RESTAURATION POSSÈDE CARTE ================== */
-
-CREATE TABLE _offre_restauration_possede_carte (
-    id_offre    INTEGER,
-    id_image    VARCHAR(255),
-    CONSTRAINT _offre_restauration_possede_carte_pk PRIMARY KEY (id_offre, id_image),
-    CONSTRAINT _offre_restauration_possede_carte_fk_offre_restauration FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
-    CONSTRAINT _offre_restauration_possede_carte_fk_image FOREIGN KEY (id_image) REFERENCES _image(lien_fichier)
-);
-
-
 /* ================= OFFRE RESTAURATION PROPOSE REPAS ================== */
 
 CREATE TABLE _offre_restauration_propose_repas (
@@ -371,8 +351,9 @@ CREATE TABLE _offre_restauration_propose_repas (
 CREATE TABLE _offre_possede_tag (
     id_offre    INTEGER,
     nom_tag     VARCHAR(64),
-    CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre, nom_tag),
+    CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_possede_tag_fk_tag FOREIGN KEY (nom_tag) REFERENCES _tag(nom_tag)
 );
 
 
@@ -1039,8 +1020,8 @@ BEGIN
     INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
         VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min)
-        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min);
+    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
+        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -1082,7 +1063,8 @@ BEGIN
 
     UPDATE _offre_parc_attraction
     SET nb_attractions = NEW.nb_attractions,
-        age_min = NEW.age_min
+        age_min = NEW.age_min,
+        plan = NEW.plan
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
@@ -1128,8 +1110,8 @@ BEGIN
     INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
         VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_restauration(id_offre, gamme_prix)
-        VALUES (id_offre_temp, NEW.gamme_prix);
+    INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
+        VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -1170,7 +1152,8 @@ BEGIN
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_restauration
-    SET gamme_prix = NEW.gamme_prix
+    SET gamme_prix = NEW.gamme_prix,
+        carte = NEW.carte
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
@@ -1245,6 +1228,23 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE offre_activite_propose_au_moins_une_prestation();
 
+
+CREATE FUNCTION offre_contient_au_moins_une_image() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_contient_image WHERE id_offre = NEW.id_offre;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Une offre doit avoir au moins une image.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER offre_contient_au_moins_une_image_tg
+AFTER INSERT
+ON _offre
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
 COMMIT;
 
