@@ -5,6 +5,17 @@ if (isset($_POST['titre'])){
 else{
     $submitted = false;
 }
+
+include('connect_params.php');
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
+            $user, $pass);
+    
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
     
 ?>
 <!DOCTYPE html>
@@ -51,7 +62,7 @@ if (!$submitted) {
         </div>
     </div>
     <main>
-        <h2> Création d'une offre</h2>
+        <h2> Modifier $$$</h2>
         <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
             <h3>Informations importante</h3>
             <div class="important">
