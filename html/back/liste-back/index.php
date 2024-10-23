@@ -281,7 +281,7 @@ $result = $conn->query($reqOffre);
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
                     }
-                    ?>" alt="">
+                    ?>">
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
