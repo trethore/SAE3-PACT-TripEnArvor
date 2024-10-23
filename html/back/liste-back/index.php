@@ -17,8 +17,11 @@ try {
     die();
 }
 
-$sql = "SELECT ville, titre, typeOffre, nombreAvis, prix FROM _offre";
-$result = $conn->query($sql); 
+$reqOffre = "SELECT * FROM _offre";
+$reqIMG = "SELECT img.lien_fichier, oci.id_offre FROM _image img
+            JOIN _offre_contient_image oci 
+            ON img.lien_fichier = oci.id_image;"
+$result = $conn->query($reqOffre); 
 
 ?>
 <!DOCTYPE html>
@@ -148,17 +151,24 @@ $result = $conn->query($sql);
             $offset = ($current_page - 1) * $offers_per_page;
 
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
+            
+            while($row = $result->fetch_assoc()) {
             ?>
             <article>
                 <div>
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  ?></div>
-                    <img src="images/universel/photos/coteplage_facade.jpg">
+                    <img src="
+                    <?php
+                        $resIMG = $conn->query($reqIMG);
+                        while($images = $resIMG->fetch_assoc()) {
+
+                        }
+                    ?>
+                    ">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <p><?php echo htmlentities() ?></p>
-                    <img src="/images/backOffice/icones/payante.png" alt="">
+                    <img src="<?php?>" alt="">
                     <div class="etoiles">
                         <img src="images/universel/icones/etoile-pleine.png">
                         <img src="images/universel/icones/etoile-pleine.png">
@@ -175,7 +185,7 @@ $result = $conn->query($sql);
                     <p>A partir de <span><?php echo htmlentities() ?></span></p>
                 </div>
             </article>
-            <?php }} ?>
+            <?php } ?>
             <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
