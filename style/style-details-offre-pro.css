@@ -368,6 +368,23 @@ footer > div > a {
     z-index: 1;
 }
 
+#final {
+    background: var(--blanc-leger);
+    color: var(--noir);
+    font-size: 20px;
+    display: none;
+    border: 1px solid var(--noir);
+    border-radius: 15px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
 .close {
     margin: auto;
     display: flex;
