@@ -1,6 +1,4 @@
-ROLLBACK;
-
-SET SCHEMA 'pact';
+SET SCHEMA 'sae';
 
 START TRANSACTION;
 

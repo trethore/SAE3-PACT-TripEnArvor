@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS pact CASCADE;
-CREATE SCHEMA pact;
-SET SCHEMA 'pact';
+DROP SCHEMA IF EXISTS sae CASCADE;
+CREATE SCHEMA sae;
+SET SCHEMA 'sae';
 
 
 /* ##################################################################### */
