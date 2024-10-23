@@ -308,7 +308,7 @@ try {
                 document.getElementById('tarifs').style.display = 'block';
             } else{
                 document.getElementById('options').style.display = 'none';
-                document.getElementById('options').style.display = 'none';
+                document.getElementById('tarifs').style.display = 'none';
             }
         })
     </script>
