@@ -1,4 +1,5 @@
 <?php
+
 include('../../connect_params.php');
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -9,13 +10,14 @@ try {
 /*******************
 Requete SQL préfaite
 ********************/
-$reqOffre = "SELECT * FROM _offre";
+$reqOffre = "SELECT * FROM _offre where id_compte_professionnel = $_SESSION['id']";
+/*
 $reqIMG = "SELECT img.lien_fichier 
             FROM _image img
             JOIN _offre_contient_image oci 
             ON img.lien_fichier = oci.id_image
             WHERE oci.id_offre = $id_offre_cible
-            LIMIT 1;";
+            LIMIT 1;";*/
 $reqTypeOffre = $sql = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
@@ -49,24 +51,22 @@ if (isset($_SESSION['id'])) {
 } else {
     checkCompteProfessionnel($conn, 1);
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style_backListe.css">
     <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
-    <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <title>Liste de vos offres</title>
 </head>
 <body>
-<header>
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/back/liste-back"><div class="text-wrapper-17">PACT Pro</div></a>
+        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -74,15 +74,14 @@ if (isset($_SESSION['id'])) {
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-
-    <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
-
-    <!-- Conteneur principal -->
-    <div class="conteneur">
-        <!-- Conteneur des filtres -->
+    <main>
+        <h1>Liste de vos offre</h1>
+        <!--------------- 
+        Filtrer et trier
+        ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
-            <div class="fond-filtres">
+            <div>
                 <div>
                     <!-- Catégorie -->
                     <div class="categorie">
@@ -158,7 +157,13 @@ if (isset($_SESSION['id'])) {
                     </div>
 
                     <!-- Type d'offre -->
-                    <div class="typeOffre"></div>
+                    <div class="typeOffre">
+                        <h3>Type d'offre</h3>
+                        <div>
+                            <label><input type="radio" name="typeOffre"> Payante</label>
+                            <label><input type="radio" name="typeOffre"> Premium</label>
+                        </div>
+                    </div>
         
                     <!-- Date -->
                     <div class="date">
@@ -178,16 +183,8 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </article>
-
-        <!-- Carte -->
-         <a href="/front/consulter-offre">
-        <div class="conteneur-carte">
-            <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div></a>
-
-        <!-- Offres -->
-        <section class="section-offres">
-        <?php
+        <section class="lesOffres">
+            <?php
             /* -----------------Gestion de la pagination -----------------------
             $offers_per_page = 9;
             $total_offers = count($offres);
@@ -195,38 +192,95 @@ if (isset($_SESSION['id'])) {
             $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $offset = ($current_page - 1) * $offers_per_page;
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            ?id=<?php echo urlencode($row['id_offre']); ?> 
             ------------------------------------------------------------------ */
             
             while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                <div onclick="location.href='/front/consulter-offre/index.php' class="offre">
-                <div class="sous-offre">
-                    <div class="lieu-offre"><?php echo $row["ville"] ?></div>
-                    <div class="ouverture-offre">Ouvert</div>
-                    <img class="carte-offre">
-                    <p class="titre-offre"><?php echo $row["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $row["type_offre"] ?></p>
-                    <p class="description-offre"><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $row["nom_pro"] ?></p>
-                    <div class="bas-offre">
-                        <div class="etoiles">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <p class="nombre-notes">(120)</p>
-                        </div>
-                        <p class="prix">A partir de <span>80€</span></p>
+            <article>
+            <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                    <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
+                    <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
+                    <!--------------------------------------- 
+                    Récuperer la premère image liée à l'offre 
+                    ----------------------------------------->
+                    <img src="
+                    <?php
+                        // ID de l'offre pour récupérer la première image
+                        $id_offre_cible = $row["id_offre"];
+
+                        // Exécuter la requête
+                        $resIMG = $conn->query($reqIMG);
+
+                        // Récupérer la première image et l'afficher
+                        if ($resIMG->num_rows > 0) {
+                            $image = $resIMG->fetch(PDO::FETCH_ASSOC);
+                            echo htmlentities($image['lien_fichier']);
+                        } else {
+                            echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
+                        }
+                    ?>
+                    ">
+                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <!---------------------------------------------------------------------------- 
+                    Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
+                    ------------------------------------------------------------------------------>
+                    <p><?php 
+                    // Préparation et exécution de la requête
+                    $stmt2 = $con->prepare($sql);
+                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2->execute();
+                    $res2 = $stmt2->get_result();
+
+                    // Vérification et récupération du résultat
+                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
+                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
+                        $offreSpe = $row_type['type_offre'];
+                    }
+                    echo htmlentities($type_offre); ?></p>
+
+                    <!---------------------------------------------------------------------- 
+                    Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
+                    ------------------------------------------------------------------------>
+                    <img src="
+                    <?php
+                    switch ($row["type_offre"]) {
+                        case 'gratuit':
+                            echo htmlentities("/images/backOffice/icones/gratuit.png");
+                            break;
+                        
+                        case 'payant':
+                            echo htmlentities("/images/backffice/icones/payant.png");
+                            break;
+                            
+                        case 'premium':
+                            echo htmlentities("/images/backOffice/icones/premium.png");
+                            break;
+                    }
+                    ?>">
+                    <!-------------------------------------- 
+                    Affichage de la note globale de l'offre 
+                    ---------------------------------------->
+                    <div class="etoiles">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <p>49</p>
                     </div>
+                    <div>
+                        <p>Avis non lues : <span><b>4</b></span></p>
+                        <p>Avis non répondues : <span><b>1</b></span></p>
+                        <p>Avis blacklistés : <span><b>0</b></span></p>
+                    </div>
+                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?></span></p>
                 </div>
-            </div>
-            <?php
-            }
-            ?>
-        </section>
-        <div class="pagination">
+            </article>
+            <?php } ?>
+            <!-------------------------------------- 
+            Pagination
+            ---------------------------------------->
+            <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
             <?php } ?>
@@ -235,43 +289,41 @@ if (isset($_SESSION['id'])) {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </div>
+        </section>
+    </main>
     <footer>
         <div class="footer-top">
-          <div class="footer-top-left">
+        <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
             <span class="footer-title">TripEnArmor</span>
-          </div>
-          <div class="footer-top-right">
+        </div>
+        <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div></a>
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
             </div>
-          </div>
-    
-    
-          <!-- Barre en bas du footer incluse ici -->
-    
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
         </div>
         <div class="footer-bottom">
-          Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site - Conditions générales - ©
-          Redden’s, Inc.
+        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        Conditions générales - ©
+        Redden's, Inc.
         </div>
-      </footer>
-
-      <script>
-        const map = L.map('map').setView([48.6493, -2.0257], 13); // Coordonnées pour Saint-Malo, France
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    
-        L.marker([48.6493, -2.0257]).addTo(map)
-            .bindPopup('Les Embruns du Phare<br>Saint-Malo')
-            .openPopup();
-    </script>
+    </footer>
 </body>
 </html>
