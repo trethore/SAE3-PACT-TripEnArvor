@@ -33,10 +33,13 @@ try {
             WHERE o.id_offre = ?
         ";
 
-
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$offre) {
+        die("Offre non trouvée");
+    }
 
     // Stocker certaines données dans la session
     $_SESSION['offre_titre'] = $offre['titre'];
