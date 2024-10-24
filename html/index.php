@@ -73,7 +73,7 @@ try {
             <br>
             <br>
             <!-- Boutons -->
-            <input type="submit" value="Connexion">
+            <a href="/back/liste/back"><input type="submit" value="Connexion"></a>
         </form>
         <?php
         }
