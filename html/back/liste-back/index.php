@@ -38,6 +38,10 @@ function checkCompteProfessionnel($conn, $id_compte) {
     return $stmt->fetch() ? true : false;
 }
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['id_compte'])) {
     $id_compte = $_SESSION['id_compte'];
     
