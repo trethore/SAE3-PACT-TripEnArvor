@@ -193,7 +193,7 @@ if (isset($_SESSION['id_compte'])) {
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
             ------------------------------------------------------------------ */
             
-            while($row = $result->fetch_assoc(PDO::FETCH_ASSOC)) {
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             ?>
             <article>
             <div onclick="location.href='page_detail.php?id=<?php echo urlencode($row['id_offre']); ?>'">
@@ -212,7 +212,7 @@ if (isset($_SESSION['id_compte'])) {
 
                         // Récupérer la première image et l'afficher
                         if ($resIMG->num_rows > 0) {
-                            $image = $resIMG->fetch_assoc(PDO::FETCH_ASSOC);
+                            $image = $resIMG->fetch(PDO::FETCH_ASSOC);
                             echo htmlentities($image['lien_fichier']);
                         } else {
                             echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
@@ -232,7 +232,7 @@ if (isset($_SESSION['id_compte'])) {
 
                     // Vérification et récupération du résultat
                     $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch_assoc(PDO::FETCH_ASSOC)) {
+                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
                         $offreSpe = $row_type['type_offre'];
                     }
                     echo htmlentities($type_offre); ?></p>
