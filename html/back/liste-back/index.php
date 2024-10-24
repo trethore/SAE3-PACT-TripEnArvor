@@ -48,9 +48,7 @@ if (isset($_SESSION['id'])) {
         echo "L'id_compte $id_compte n'est pas un compte professionnel.";
     }
 } else {
-    /*checkCompteProfessionnel($conn, 1);*/
-    header('Location: /back/se-connecter/');
-    exit();
+    checkCompteProfessionnel($conn, 1);
 }
 
 ?>
