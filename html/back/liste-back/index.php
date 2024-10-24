@@ -51,7 +51,7 @@ if (isset($_SESSION['id_compte'])) {
         echo "L'id_compte $id_compte n'est pas un compte professionnel.";
     }
 } else {
-    echo "Aucun id_compte trouvé dans la session.";
+    checkCompteProfessionnel($conn, 1);
 }
 
 ?>
