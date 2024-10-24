@@ -10,7 +10,7 @@ try {
 /*******************
 Requete SQL préfaite
 ********************/
-$reqOffre = "SELECT * FROM _offre";
+$reqOffre = "SELECT * FROM _offre where id_compte_professionnel = $_SESSION['id']";
 $reqIMG = "SELECT img.lien_fichier 
             FROM _image img
             JOIN _offre_contient_image oci 
