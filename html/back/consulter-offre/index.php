@@ -11,8 +11,11 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, \"desc\", desc2, horaires, tarifs 
-                FROM _offre WHERE id_offre = ?";
+    $reqOffre = "SELECT o.titre, a.adresse, o.ville, o.categorie, o.ouvert, o.nombre_avis, o.nom_pro, o.prix_offre, o.a_propos, o.site, o.tel, o.desc, o.desc2, o.horaires, o.tarifs 
+                FROM _offre o
+                JOIN _adresse a ON o.id_adresse = a.id_adresse
+                WHERE o.id_offre = ?";
+
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
