@@ -10,9 +10,6 @@ try {
     $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte');
     $stmt->execute();
     $result = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
