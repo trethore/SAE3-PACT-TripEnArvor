@@ -8,6 +8,7 @@ include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
+    // Assurez-vous que l'ID de l'offre cible est bien défini et converti en entier
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
@@ -29,15 +30,17 @@ try {
         o.horaires, 
         o.tarifs 
     FROM _offre o
-    JOIN \"adresse\" a ON o.id_adresse = a.id_adresse
+    JOIN public.adresse a ON o.id_adresse = a.id_adresse
     WHERE o.id_offre = ?
     ";
 
+    // Utilisation du schéma public pour l'adresse
 
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Vérifiez si l'offre a été trouvée
     if (!$offre) {
         die("Offre non trouvée");
     }
