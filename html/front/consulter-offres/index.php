@@ -338,9 +338,10 @@
         </article>
 
         <!-- Carte -->
+         <a href="/front/consulter-offre">
         <div class="conteneur-carte">
             <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div>
+        </div></a>
 
         <!-- Offres -->
         <section class="section-offres">
