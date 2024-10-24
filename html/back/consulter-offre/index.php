@@ -11,7 +11,7 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "SELECT titre, adresse, ville, categorie, ouvert, nombre_avis, nom_pro, prix_offre, a_propos, site, tel, desc, desc2, horaires, tarifs 
+    $reqOffre = "SELECT *
                 FROM _offre WHERE id_offre = ?";
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
