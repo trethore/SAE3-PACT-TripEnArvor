@@ -2,7 +2,7 @@
 // Démarrer la session
 session_start(); 
 
-include('../..//connect_params.php');
+include('../../connect_params.php');
 
 // Connexion à la base de données
 try {
