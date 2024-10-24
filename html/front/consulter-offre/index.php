@@ -8,52 +8,24 @@ include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
-    // Assurez-vous que l'ID de l'offre cible est bien défini et converti en entier
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "
-    SELECT 
-        o.titre, 
-        a.adresse, 
-        a.ville, 
-        o.categorie, 
-        o.ouvert, 
-        o.nombre_avis, 
-        o.nom_pro, 
-        o.prix_offre, 
-        o.a_propos, 
-        o.site, 
-        o.tel, 
-        o.\"desc\", 
-        o.desc2, 
-        o.horaires, 
-        o.tarifs 
-    FROM _offre o
-    JOIN public.adresse a ON o.id_adresse = a.id_adresse
-    WHERE o.id_offre = ?
-    ";
-
-    // Utilisation du schéma public pour l'adresse
-
+    $reqOffre = "SELECT *
+                FROM _offre WHERE id_offre = ?";
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Vérifiez si l'offre a été trouvée
-    if (!$offre) {
-        die("Offre non trouvée");
-    }
-
     // Stocker certaines données dans la session
-    $_SESSION['offre_titre'] = $offre['titre'];
-    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    // $_SESSION['offre_titre'] = $offre['titre'];
+    // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
+                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
                             WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
                             WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
                             WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
