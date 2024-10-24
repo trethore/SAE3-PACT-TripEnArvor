@@ -69,7 +69,7 @@ try {
             }
         } else {
         ?>
-        <form action="back/se-connecter/" method="POST" enctype="multipart/form-data">
+        <form action="index.php" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
             <br>
