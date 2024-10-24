@@ -11,12 +11,13 @@ try {
 Requete SQL préfaite
 ********************/
 $reqOffre = "SELECT * FROM _offre where id_compte_professionnel = $_SESSION['id']";
+/*
 $reqIMG = "SELECT img.lien_fichier 
             FROM _image img
             JOIN _offre_contient_image oci 
             ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = ?
-            LIMIT 1;";
+            WHERE oci.id_offre = $id_offre_cible
+            LIMIT 1;";*/
 $reqTypeOffre = $sql = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
