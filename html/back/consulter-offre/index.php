@@ -18,8 +18,8 @@ try {
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Stocker certaines données dans la session
-    $_SESSION['offre_titre'] = $offre['titre'];
-    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    // $_SESSION['offre_titre'] = $offre['titre'];
+    // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
