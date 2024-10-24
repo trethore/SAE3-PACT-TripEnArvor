@@ -39,8 +39,8 @@ function checkCompteProfessionnel($conn, $id_compte) {
 }
 
 
-if (isset($_SESSION['id_compte'])) {
-    $id_compte = $_SESSION['id_compte'];
+if (isset($_SESSION['id'])) {
+    $id_compte = $_SESSION['id'];
     
     if (checkCompteProfessionnel($conn, $id_compte)) {
         echo "L'id_compte $id_compte est un compte professionnel.";
