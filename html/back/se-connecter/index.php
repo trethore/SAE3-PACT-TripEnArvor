@@ -1,7 +1,7 @@
 <?php
-session_unset();
-session_destroy();
-session_start();
+if (session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
