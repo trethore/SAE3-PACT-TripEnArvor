@@ -1,10 +1,13 @@
 <?php
+session_unset();
+session_destroy();
+session_start();
 include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT email, mot_de_passe from _compte');
+    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte');
     $stmt->execute();
     $result = $stmt->fetchAll();
     echo "<pre>";
@@ -42,10 +45,12 @@ try {
             $trouve = false;
             $emailUtilisateur = $_POST["email"];
             $mdpUtilisateur = $_POST["mdp"];
-
+            $id = -1;
             foreach ($result as $entry) {
                 if ($emailUtilisateur == $entry['email'] && $mdpUtilisateur == $entry['mot_de_passe']) {
+                    $id = $entry['id_compte'];
                     $trouve = true;
+                    $_SESSION['id'] = $id;
                 }
             }
 
