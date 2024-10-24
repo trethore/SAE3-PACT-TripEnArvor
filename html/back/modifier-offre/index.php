@@ -6,7 +6,7 @@ else{
     $submitted = false;
 }
 
-include('../../connect_params.php');
+include('connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
@@ -18,6 +18,7 @@ try {
 }
     
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,13 +35,13 @@ try {
 <body>
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
+        <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 <?php
 if (!$submitted) {
@@ -310,7 +311,7 @@ else {
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
     // Inclusion des paramètres de connexion
-    include('../../connect_params.php');
+    include('connect_params.php');
 
     try {
         // Connexion à la base de données
