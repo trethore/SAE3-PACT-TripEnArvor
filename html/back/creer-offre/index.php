@@ -108,7 +108,7 @@ if (!$submitted) {
                 
                 <tr>
                     <td><label for= "adresse">Adresse</label></td>
-                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)" required></td>
+                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)"></td>
                 </tr>
                 <tr>
                     <td><label for= "cp">Code Postal </label></td>
@@ -123,7 +123,7 @@ if (!$submitted) {
                         <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                        <input id="photo" type="file" />
+                        <input id="photo" type="file" required/>
                     </div></td>
                     
                 </tr>
@@ -177,7 +177,7 @@ if (!$submitted) {
             
             <div id = "tarifs">
                 <h3>Tarifs</h3>
-                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
+                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif">
                 <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
                 <br>
                 <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif">
@@ -304,7 +304,7 @@ if (!$submitted) {
 }
 else {
     // Afficher un message pour confirmer la création de l'offre
-    print("offre creee");
+    echo "offre creee";
 
     // Récupération des données du formulaire avec $_POST
     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
@@ -371,7 +371,7 @@ else {
         $offre_id = $stmt->fetchColumn();
 
         // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-        $requete_tarif = "INSERT INTO tarif (offre_id, prix) VALUES (:offre_id, :prix)";
+        $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (:offre_id, :prix)";
 
         // Préparation de la requête pour la vue tarif
         $stmt_tarif = $dbh->prepare($requete_tarif);
