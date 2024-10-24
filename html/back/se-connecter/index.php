@@ -39,21 +39,34 @@ try {
         <!-- Formulaire -->
         <?php
         if (isset($_POST["email"])) {
-            /*$trouve = false;
+            $trouve = false;
             $emailUtilisateur = $_POST["email"];
-            $mdp = $_POST["mdp"];
+            $mdpUtilisateur = $_POST["mdp"];
 
-            foreach ($result as $email => $motdepasse) {
-                if ($emailUtilisateur == $email) {
+            foreach ($result as $entry) {
+                if ($emailUtilisateur == $entry['email'] && $mdpUtilisateur == $entry['mot_de_passe']) {
                     $trouve = true;
                 }
             }
 
             if ($trouve) {
                 echo "Utilisateur trouvé";
+                ?>
+                    <script>
+                        setTimeout(() => {
+                            window.location.href = "/back/liste-back/";
+                        }, 100);
+                    </script>
+                <?php
             } else {
-                echo "Utilisateur non trouvé";
-            }*/
+                ?>
+                    <script>
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 100);
+                    </script>
+                <?php
+            }
         } else {
         ?>
         <form action="back/se-connecter/" method="POST" enctype="multipart/form-data">
