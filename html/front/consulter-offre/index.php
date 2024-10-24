@@ -12,26 +12,27 @@ try {
 
     // Requête SQL pour récupérer le titre de l'offre
     $reqOffre = "
-            SELECT 
-                o.titre, 
-                a.adresse, 
-                a.ville, 
-                o.categorie, 
-                o.ouvert, 
-                o.nombre_avis, 
-                o.nom_pro, 
-                o.prix_offre, 
-                o.a_propos, 
-                o.site, 
-                o.tel, 
-                o.\"desc\", 
-                o.desc2, 
-                o.horaires, 
-                o.tarifs 
-            FROM _offre o
-            JOIN adresse a ON o.id_adresse = a.id_adresse
-            WHERE o.id_offre = ?
-        ";
+    SELECT 
+        o.titre, 
+        a.adresse, 
+        a.ville, 
+        o.categorie, 
+        o.ouvert, 
+        o.nombre_avis, 
+        o.nom_pro, 
+        o.prix_offre, 
+        o.a_propos, 
+        o.site, 
+        o.tel, 
+        o.\"desc\", 
+        o.desc2, 
+        o.horaires, 
+        o.tarifs 
+    FROM _offre o
+    JOIN \"adresse\" a ON o.id_adresse = a.id_adresse
+    WHERE o.id_offre = ?
+    ";
+
 
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
