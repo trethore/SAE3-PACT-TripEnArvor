@@ -1,21 +1,20 @@
 <?php
-/*include('../../php/connect_params.php');
+include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt = $dbh->prepare('SELECT email, mot_de_passe from _compte');
     $stmt->execute();
     $result = $stmt->fetchAll();
     echo "<pre>";
     print_r($result);
     echo "</pre>";
-    $result = ["pierre.lechat8@gmail.com", "bob.bob@gmail.com", "pikdev.gopi@gmail.com"];
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,11 +39,11 @@ try {
         <!-- Formulaire -->
         <?php
         if (isset($_POST["email"])) {
-            $trouve = false;
+            /*$trouve = false;
             $emailUtilisateur = $_POST["email"];
             $mdp = $_POST["mdp"];
 
-            foreach ($result as $email) {
+            foreach ($result as $email => $motdepasse) {
                 if ($emailUtilisateur == $email) {
                     $trouve = true;
                 }
@@ -54,7 +53,7 @@ try {
                 echo "Utilisateur trouvé";
             } else {
                 echo "Utilisateur non trouvé";
-            }
+            }*/
         } else {
         ?>
         <form action="index.php" method="POST" enctype="multipart/form-data">
