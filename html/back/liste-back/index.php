@@ -196,7 +196,7 @@ if (isset($_SESSION['id_compte'])) {
             while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             ?>
             <article>
-            <div onclick="location.href='consulter-offre.php?id=<?php echo urlencode($row['id_offre']); ?>/'">
+            <div onclick="location.href='consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
