@@ -15,7 +15,7 @@ $reqIMG = "SELECT img.lien_fichier
             FROM _image img
             JOIN _offre_contient_image oci 
             ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = $id_offre_cible
+            WHERE oci.id_offre = ?
             LIMIT 1;";
 $reqTypeOffre = $sql = "SELECT 
                         CASE
