@@ -323,7 +323,7 @@ else {
     }
 
     // Inclusion des paramètres de connexion
-    include('connect_params.php');
+    include('../../connect_params.php');
 
     try {
         // Connexion à la base de données
