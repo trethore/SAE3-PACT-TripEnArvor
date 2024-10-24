@@ -339,7 +339,7 @@ else {
         $offre_id = $stmt->fetchColumn();
 
         // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-        $requete_tarif = "INSERT INTO tarif (offre_id, prix) VALUES (:offre_id, :prix)";
+        $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (:offre_id, :prix)";
 
         // Préparation de la requête pour la vue tarif
         $stmt_tarif = $dbh->prepare($requete_tarif);
