@@ -76,6 +76,8 @@ body {
 /* Lien */
 .connecter a {
     color: var(--vert-principale);
+    width: 100%;
+    transform: translateX(25%);
 }
 
 .connecter form {
