@@ -1,4 +1,23 @@
+<?php
+if (isset($_POST['titre'])){
+    $submitted = true;
+}
+else{
+    $submitted = false;
+}
 
+include('connect_params.php');
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
+            $user, $pass);
+    
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
+    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
