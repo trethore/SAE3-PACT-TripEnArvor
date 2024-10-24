@@ -2,48 +2,9 @@
 
 include('../../connect_params.php');
 try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
-            $user, $pass);
-    $dbh = null;
+    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
-
-session_start(); // Démarrer la session
-function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
-    $stmt = $conn->prepare($sql);
-
-    // Lier le paramètre
-    $stmt->bind_param('i', $id_compte);
-
-    // Exécuter la requête
-    $stmt->execute();
-
-    // Obtenir le résultat
-    $result = $stmt->get_result();
-
-    // Vérifier si une ligne a été trouvée
-    if ($result->num_rows > 0) {
-        return true; // L'id_compte est présent dans _compte_professionnel
-    } else {
-        return false; // L'id_compte n'est pas présent
-    }
-}
-
-// Exemple d'utilisation
-session_start();
-if (isset($_SESSION['id_compte'])) {
-    $id_compte = $_SESSION['id_compte'];
-    
-    if (checkCompteProfessionnel($conn, $id_compte)) {
-        echo "L'id_compte $id_compte est un compte professionnel.";
-    } else {
-        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
-    }
-} else {
-    echo "Aucun id_compte trouvé dans la session.";
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
 /*******************
@@ -69,6 +30,25 @@ $reqTypeOffre = $sql = "SELECT
                         WHERE o.id_offre = ?";
 
 $result = $conn->query($reqOffre); 
+
+function checkCompteProfessionnel($conn, $id_compte) {
+    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id_compte]);
+    return $stmt->fetch() ? true : false;
+}
+
+if (isset($_SESSION['id_compte'])) {
+    $id_compte = $_SESSION['id_compte'];
+    
+    if (checkCompteProfessionnel($conn, $id_compte)) {
+        echo "L'id_compte $id_compte est un compte professionnel.";
+    } else {
+        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
+    }
+} else {
+    echo "Aucun id_compte trouvé dans la session.";
+}
 
 ?>
 <!DOCTYPE html>
@@ -343,6 +323,5 @@ $result = $conn->query($reqOffre);
         Redden's, Inc.
         </div>
     </footer>
-    <?php session_destroy();?>
 </body>
 </html>
