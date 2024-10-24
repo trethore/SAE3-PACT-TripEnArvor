@@ -199,14 +199,14 @@ $result = $conn->query($reqOffre);
         </article>
         <section class="lesOffres">
             <?php
-            /* -----------------Gestion de la pagination -----------------------*/
+            /* -----------------Gestion de la pagination -----------------------
             $offers_per_page = 9;
             $total_offers = count($offres);
             $total_pages = ceil($total_offers / $offers_per_page);
             $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $offset = ($current_page - 1) * $offers_per_page;
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            /*------------------------------------------------------------------ */
+            ------------------------------------------------------------------ */
             
             while($row = $result->fetch_assoc()) {
             ?>
