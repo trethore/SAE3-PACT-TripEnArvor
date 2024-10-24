@@ -33,8 +33,8 @@ try {
 </head>
 <body>
 <header>
-        <a href="/front/consulter-offres"></a><img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -310,7 +310,7 @@ else {
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
     // Inclusion des paramètres de connexion
-    include('connect_params.php');
+    include('../../connect_params.php');
 
     try {
         // Connexion à la base de données
