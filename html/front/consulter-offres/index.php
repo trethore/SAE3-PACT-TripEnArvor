@@ -1,221 +1,63 @@
 <?php
-/*include('php/connect_params.php');*/
-/*try {*/
-    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+include('../../connect_params.php');
+try {
+    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
 
-    $stmt = $dbh->prepare('SELECT email from compte');
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";*/
-    $offres = [
-        [
-            "titre" => "Titre BOB",
-            "ville" => "Ville BOB",
-            "categorie" => "Categorie BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro BOB",
-        ],
-        [
-            "titre" => "Titre 2 BOB",
-            "ville" => "Ville 2 BOB",
-            "categorie" => "Categorie 2 BOb",
-            "ouvert" => "Ouvert",
-            "desc" => "Desc 2 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 2 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-    ]
-    /*$dbh = null;*/
-/*} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}*/
+/*******************
+Requete SQL préfaite
+********************/
+$reqOffre = "SELECT * FROM _offre";
+$reqIMG = "SELECT img.lien_fichier 
+            FROM _image img
+            JOIN _offre_contient_image oci 
+            ON img.lien_fichier = oci.id_image
+            WHERE oci.id_offre = $id_offre_cible
+            LIMIT 1;";
+$reqTypeOffre = $sql = "SELECT 
+                        CASE
+                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
+                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            ELSE 'Inconnu'
+                        END AS offreSpe
+                        FROM _offre o
+                        WHERE o.id_offre = ?";
+
+$result = $conn->query($reqOffre); 
+
+function checkCompteProfessionnel($conn, $id_compte) {
+    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id_compte]);
+    return $stmt->fetch() ? true : false;
+}
+
+
+if (isset($_SESSION['id'])) {
+    $id_compte = $_SESSION['id'];
+    
+    if (checkCompteProfessionnel($conn, $id_compte)) {
+        echo "L'id_compte $id_compte est un compte professionnel.";
+    } else {
+        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
+    }
+} else {
+    checkCompteProfessionnel($conn, 1);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/styles.css">
+    <link rel="stylesheet" href="/style/style_HFB.css">
     <title>Consulter vos offres</title>
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -345,29 +187,28 @@
 
         <!-- Offres -->
         <section class="section-offres">
-            <?php
+        <?php
+            /* -----------------Gestion de la pagination -----------------------
             $offers_per_page = 9;
-
             $total_offers = count($offres);
             $total_pages = ceil($total_offers / $offers_per_page);
-
             $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
             $offset = ($current_page - 1) * $offers_per_page;
-
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-
-            foreach ($offres_for_page as $tab) {
+            ?id=<?php echo urlencode($row['id_offre']); ?> 
+            ------------------------------------------------------------------ */
+            
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                <div class="offre">
+                <div onclick="location.href='/front/consulter-offre/index.php' class="offre">
                 <div class="sous-offre">
-                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                    <div class="ouverture-offre"><?php echo $tab["ouvert"] ?></div>
+                    <div class="lieu-offre"><?php echo $row["ville"] ?></div>
+                    <div class="ouverture-offre">Ouvert</div>
                     <img class="carte-offre">
-                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["categorie"] ?></p>
-                    <p class="description-offre"><?php echo $tab["desc"] . " " ?><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
+                    <p class="titre-offre"><?php echo $row["titre"] ?></p>
+                    <p class="categorie-offre"><?php echo $row["type_offre"] ?></p>
+                    <p class="description-offre"><span>En savoir plus</span></p>
+                    <p class="nom-offre"><?php echo $row["nom_pro"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
                             <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
