@@ -37,7 +37,7 @@ if (!$submitted) {
 ?>
     <main>
         <h2> Création d'une offre</h2>
-        <form action="creationoffrepayante1.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+        <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
             <h3>Informations importante</h3>
             <div class="important">
             <table border="0">
@@ -49,7 +49,7 @@ if (!$submitted) {
                 <td><label for="categorie">Catégorie <span class="required">*</span></label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "categorie" name = "lacat"> 
-                            <option value="">Choisir une categorie</option>
+                            <option value="">Choisir une catégorie </option>
                             <option value = "restaurant"> Restaurant</option>
                             <option value = "parc"> Parc d'attraction</option>
                             <option value = "spectacle"> Spectacle</option>
@@ -58,7 +58,7 @@ if (!$submitted) {
                         </select>
                     </div></td>
                 </tr>
-                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix"></td>
+                <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix">€</td>
                 <tr>
                     <label for=""></label>
                 </tr>
@@ -298,29 +298,29 @@ else {
 
     try {
         // Connexion à la base de données
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
         // Début de la requête SQL
-    $requete = "INSERT INTO offre_";
+        $requete = "INSERT INTO offre_";
         
         // Déterminer la table cible selon la catégorie
-    switch ($categorie) {
-        case 'activite':
+        switch ($categorie) {
+            case 'activite':
                 $requete .= 'activite';
-            break;
-        case 'parc':
+                break;
+            case 'parc':
                 $requete .= 'parc';
-            break;
-        case 'spectacle':
+                break;
+            case 'spectacle':
                 $requete .= 'spectacle';
-            break;
-        case 'visite':
+                break;
+            case 'visite':
                 $requete .= 'visite';
-            break;
-        default:
-            print "Erreur de categorie!";
-            die();
-    }
+                break;
+            default:
+                print "Erreur de categorie!";
+                die();
+        }
 
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
@@ -384,18 +384,18 @@ else {
         $stmt_image->execute();
 
         // Fermeture de la connexion
-    $dbh = null;
+        $dbh = null;
         
         print "Offre et tarif créés avec succès!";
-} catch (PDOException $e) {
+    } catch (PDOException $e) {
         // Affichage de l'erreur en cas d'échec
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+        print "Erreur !: " . $e->getMessage() . "<br/>";
+        die();
+    }
 
     // Afficher un message pour confirmer la création de l'offre
     echo "offre creee";
-
+   
 }
 ?>    
 
