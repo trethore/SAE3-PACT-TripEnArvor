@@ -105,7 +105,7 @@ try {
     <main id="body">
         <section class="fond-blocs">
 
-            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($titre ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -152,7 +152,7 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($offreSpe); ?></h2> 
+                <h2>À propos de : <?php echo htmlentities($titre); ?></h2> 
                 <!-- Afficher le bloc résumant l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
