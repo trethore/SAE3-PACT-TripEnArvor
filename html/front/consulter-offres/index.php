@@ -337,10 +337,10 @@
             </div>
         </article>
 
-        <!-- Carte -->
+        <!-- Carte 
         <div class="conteneur-carte">
             <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div>
+        </div> -->
 
         <!-- Offres -->
         <section class="section-offres">
@@ -369,11 +369,11 @@
                     <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
                         <p class="prix">A partir de <span>80€</span></p>
@@ -403,10 +403,10 @@
           <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('images/universel/icones/instagram.png');"></div></a>
+              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/html/images/universel/icones/x.png');"></div></a>
+              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/html/images/universel/icones/facebook.png');"></div></a>
+              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/youtube.png');"></div></a>
+              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/instagram.png');"></div></a>
             </div>
           </div>
     
@@ -419,17 +419,5 @@
           Redden’s, Inc.
         </div>
       </footer>
-
-      <script>
-        const map = L.map('map').setView([48.6493, -2.0257], 13); // Coordonnées pour Saint-Malo, France
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    
-        L.marker([48.6493, -2.0257]).addTo(map)
-            .bindPopup('Les Embruns du Phare<br>Saint-Malo')
-            .openPopup();
-    </script>
 </body>
 </html>
