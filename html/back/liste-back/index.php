@@ -9,10 +9,10 @@ try {
 /*******************
 Requete SQL préfaite
 ********************/
-$reqOffre = "SELECT * FROM _offre";
+$reqOffre = "SELECT * FROM sae._offre";
 $reqIMG = "SELECT img.lien_fichier 
-            FROM _image img
-            JOIN _offre_contient_image oci 
+            FROM sae._image img
+            JOIN sae._offre_contient_image oci 
             ON img.lien_fichier = oci.id_image
             WHERE oci.id_offre = ?
             LIMIT 1;";
@@ -200,8 +200,9 @@ if (isset($_SESSION['id'])) {
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
-                    ----------------------------------------->
+                    ----------------------------------------
                     <img src="<?php
+                    /*
                         // ID de l'offre pour récupérer la première image
                         $id_offre_cible = $row["id_offre"];
 
@@ -214,8 +215,9 @@ if (isset($_SESSION['id'])) {
                             echo htmlentities($image['lien_fichier']);
                         } else {
                             echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
-                        }
+                        }**/
                     ?>" alt="image offre">
+                    -->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
