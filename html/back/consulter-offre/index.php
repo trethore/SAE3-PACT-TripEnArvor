@@ -117,7 +117,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($reqTypeOffre['type_offre'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
                 <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
             </div>
