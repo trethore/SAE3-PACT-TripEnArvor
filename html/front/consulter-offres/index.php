@@ -1,5 +1,5 @@
 <?php
-/*include('/var/www/php/connect_params.php');
+include('../../../php/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -14,7 +14,7 @@ try {
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="/html/style/style-consulter-offres-front.css">
+    <link rel="stylesheet" href="../../style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
