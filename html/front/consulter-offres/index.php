@@ -12,11 +12,35 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from offres');
+    $stmt = $dbh->prepare('SELECT * from offre_activite');
     $stmt->execute();
-    $result = $stmt->fetchAll();
+    $result1 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result;
+    echo $result1;
+    echo "</pre>";
+    $stmt = $dbh->prepare('SELECT * from offre_parc_attraction');
+    $stmt->execute();
+    $result2 = $stmt->fetchAll();
+    echo "<pre>";
+    echo $result2;
+    echo "</pre>";
+    $stmt = $dbh->prepare('SELECT * from offre_restauration');
+    $stmt->execute();
+    $result3 = $stmt->fetchAll();
+    echo "<pre>";
+    echo $result3;
+    echo "</pre>";
+    $stmt = $dbh->prepare('SELECT * from offre_spectacle');
+    $stmt->execute();
+    $result4 = $stmt->fetchAll();
+    echo "<pre>";
+    echo $result4;
+    echo "</pre>";
+    $stmt = $dbh->prepare('SELECT * from offre_visite');
+    $stmt->execute();
+    $result5 = $stmt->fetchAll();
+    echo "<pre>";
+    echo $result5;
     echo "</pre>";
     $dbh = null;
 } catch (PDOException $e) {
