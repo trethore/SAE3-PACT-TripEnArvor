@@ -1,214 +1,20 @@
 <?php
-/*include('php/connect_params.php');*/
-/*try {*/
-    /*$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+include('php/connect_params.php');
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt = $dbh->prepare('SELECT * from offres');
     $stmt->execute();
     $result = $stmt->fetchAll();
     echo "<pre>";
-    print_r($result);
-    echo "</pre>";*/
-    $offres = [
-        [
-            "titre" => "Titre BOB",
-            "ville" => "Ville BOB",
-            "categorie" => "Categorie BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro BOB",
-        ],
-        [
-            "titre" => "Titre 2 BOB",
-            "ville" => "Ville 2 BOB",
-            "categorie" => "Categorie 2 BOb",
-            "ouvert" => "Ouvert",
-            "desc" => "Desc 2 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 2 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre 3 BOB",
-            "ville" => "Ville 3 BOB",
-            "categorie" => "Categorie 3 BOb",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 BBO BOB OBOO BOB OBO O BO B O B O BO B OBOOB OBO B O B OB  OOBO  BO B O BOB OB",
-            "nom_pro" => "Nom pro 3 BOB",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-        [
-            "titre" => "Titre page suivante",
-            "ville" => "Ville page suivante",
-            "categorie" => "Categorie page suivante",
-            "ouvert" => "Fermé",
-            "desc" => "Desc 3 page suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivantepage suivante",
-            "nom_pro" => "Nom pro page suivante",
-        ],
-    ]
-    /*$dbh = null;*/
-/*} catch (PDOException $e) {
+    echo $result;
+    echo "</pre>";
+    $dbh = null;
+} catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -217,7 +23,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="/html/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
@@ -337,10 +143,10 @@
             </div>
         </article>
 
-        <!-- Carte -->
+        <!-- Carte 
         <div class="conteneur-carte">
             <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div>
+        </div> -->
 
         <!-- Offres -->
         <section class="section-offres">
@@ -369,11 +175,11 @@
                     <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
                         <p class="prix">A partir de <span>80€</span></p>
@@ -403,10 +209,10 @@
           <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('images/universel/icones/instagram.png');"></div></a>
+              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/html/images/universel/icones/x.png');"></div></a>
+              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/html/images/universel/icones/facebook.png');"></div></a>
+              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/youtube.png');"></div></a>
+              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/instagram.png');"></div></a>
             </div>
           </div>
     
@@ -419,17 +225,5 @@
           Redden’s, Inc.
         </div>
       </footer>
-
-      <script>
-        const map = L.map('map').setView([48.6493, -2.0257], 13); // Coordonnées pour Saint-Malo, France
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    
-        L.marker([48.6493, -2.0257]).addTo(map)
-            .bindPopup('Les Embruns du Phare<br>Saint-Malo')
-            .openPopup();
-    </script>
 </body>
 </html>
