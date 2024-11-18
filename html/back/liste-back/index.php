@@ -1,11 +1,4 @@
 <?php
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass= 'naviguer-vag1n-eNTendes';
-
-
 include('../../php/connect_params.php');
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -208,8 +201,7 @@ if (isset($_SESSION['id'])) {
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ----------------------------------------->
-                    <img src="
-                    <?php
+                    <img src="<?php
                         // ID de l'offre pour récupérer la première image
                         $id_offre_cible = $row["id_offre"];
 
@@ -223,8 +215,7 @@ if (isset($_SESSION['id'])) {
                         } else {
                             echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
                         }
-                    ?>
-                    ">
+                    ?>" alt="image offre">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
