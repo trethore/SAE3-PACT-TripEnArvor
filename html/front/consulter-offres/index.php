@@ -1,6 +1,6 @@
 <?php
 print_r(__FILE__);
-include(__FILE__ . '../../../php/connect_params.php');
+include(__FILE__ . '/../../../php/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
