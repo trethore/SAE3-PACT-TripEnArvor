@@ -167,7 +167,7 @@ try {
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Afficher la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['description'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
 
         </section>
 
