@@ -130,7 +130,7 @@ try {
                 <!-- Afficher le nom du propriétaire de l'offre -->
                 <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
                 <!-- Afficher le prix de l'offre -->
-                <button><?php echo htmlentities($offre['prix_offre']); ?></button> 
+                <button>À partir de<?php echo htmlentities($offre['prix_offre']); ?>€</button> 
             </div>
 
         </section>
