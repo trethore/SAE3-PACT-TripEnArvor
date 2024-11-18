@@ -2,13 +2,14 @@
 // Démarrer la session
 session_start(); 
 
-// include('../../../php/connect_params.php');
+include('../../php/connect_params.php');
 
+/*
 $server = 'postgresdb';
 $driver = 'pgsql';
 $dbname = 'sae';
 $user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';
+$pass	= 'naviguer-vag1n-eNTendes';*/
 
 // Connexion à la base de données
 try {
