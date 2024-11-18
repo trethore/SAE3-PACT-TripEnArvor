@@ -6,7 +6,7 @@ $user   = 'sae';
 $pass= 'naviguer-vag1n-eNTendes';
 
 
-include('../../../php/connect_params.php');
+include('../../php/connect_params.php');
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
