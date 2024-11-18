@@ -1,6 +1,13 @@
 <?php
-print_r(__FILE__);
-include(__FILE__ . '/../../../php/connect_params.php');
+/*print_r(__FILE__);
+include(__FILE__ . '/../../../php/connect_params.php');*/
+
+$server = 'postgresdb';
+$driver = 'pgsql';
+$dbname = 'sae';
+$user   = 'sae';
+$pass	= 'naviguer-vag1n-eNTendes';
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
