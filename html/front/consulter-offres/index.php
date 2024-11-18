@@ -1,6 +1,5 @@
 <?php
-/*print_r(__FILE__);
-include(__FILE__ . '/../../../php/connect_params.php');*/
+/*include('../../php/connect_params.php');*/
 
 $server = 'postgresdb';
 $driver = 'pgsql';
@@ -16,31 +15,31 @@ try {
     $stmt->execute();
     $result1 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result1;
+    print_($result1);
     echo "</pre>";
     $stmt = $dbh->prepare('SELECT * from offre_parc_attraction');
     $stmt->execute();
     $result2 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result2;
+    print_($result2);
     echo "</pre>";
     $stmt = $dbh->prepare('SELECT * from offre_restauration');
     $stmt->execute();
     $result3 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result3;
+    print_(echo $result3);
     echo "</pre>";
     $stmt = $dbh->prepare('SELECT * from offre_spectacle');
     $stmt->execute();
     $result4 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result4;
+    print_($result4);
     echo "</pre>";
     $stmt = $dbh->prepare('SELECT * from offre_visite');
     $stmt->execute();
     $result5 = $stmt->fetchAll();
     echo "<pre>";
-    echo $result5;
+    print_($result5);
     echo "</pre>";
     $dbh = null;
 } catch (PDOException $e) {
