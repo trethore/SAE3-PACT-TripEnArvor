@@ -302,6 +302,7 @@ try {
             die();
     }
     $requete .= '(titre, resume, ville) VALUES('$titre','$resume', '$ville');';
+     
 
     $stmt = $dbh->prepare(
     $requete;
