@@ -204,6 +204,21 @@ CREATE VIEW offre_restauration AS
 ;
 
 
+/* ##################################################################### */
+/*                                 AVIS                                  */
+/* ##################################################################### */
+
+
+CREATE TABLE _avis (
+    id_avis         SERIAL,
+    note            INTEGER NOT NULL,
+    titre           VARCHAR(128) NOT NULL,
+    commentaire     VARCHAR(1024) NOT NULL,
+    nb_pouce_haut   INTEGER NOT NULL,
+    nb_pouce_bas    INTEGER NOT NULL,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_avis)
+);
+
 
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
