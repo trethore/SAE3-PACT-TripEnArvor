@@ -126,7 +126,7 @@ try {
         }
 
         function redirect(lien) {
-            window.location.replace(lien);
+            window.location.href = lien;
         }
     </script>
 </body>
