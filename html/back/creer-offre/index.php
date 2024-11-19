@@ -319,6 +319,9 @@ else {
     if (isset($_POST['titre'])){
         $titre = $_POST['titre'];
     }
+    if (isset($_POST['categorie'])){
+        $titre = $_POST['categorie'];
+    }
 
     // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
     // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
