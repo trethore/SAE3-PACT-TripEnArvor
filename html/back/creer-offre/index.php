@@ -303,7 +303,7 @@ if (!$submitted) {
 }
 else {
     // Inclusion des paramètres de connexion
-    include('connect_params.php');
+    include('../../php/connect_params.php');
 
     // Récupération des données du formulaire avec $_POST
     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
@@ -426,8 +426,7 @@ else {
         die();
     }
 
-    // Afficher un message pour confirmer la création de l'offre
-    echo "offre creee";
+    
    
 }
 ?>    
