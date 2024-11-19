@@ -314,15 +314,20 @@ else {
     // include('../../php/connect_params.php');
 
     // Récupération des données du formulaire avec $_POST
-    $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
-    $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
-    $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
-    $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
-    $type = isset($_POST['type']) ? $_POST['type'] : '';
-    $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-    $categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
+    // $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
 
-    print($categorie);
+    if (isset($_POST['titre'])){
+        $titre = $_POST['titre'];
+    }
+
+    // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
+    // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
+    // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
+    // $type = isset($_POST['type']) ? $_POST['type'] : '';
+    // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
+    //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
+
+    //print($categorie);
     print($titre);
 
     $id_compte = 'test';
@@ -333,9 +338,7 @@ else {
         die("Erreur : utilisateur non connecté.");
     }
 
-    $requete .= '(titre, resume, ville) VALUES('.$titre.','.$resume.', '.$ville.');';
-    
-    print($requete);
+   
 
     try {
         // Connexion à la base de données
@@ -343,6 +346,8 @@ else {
 
         // Début de la requête SQL
         $requete = "INSERT INTO offre_";
+
+        print($requete);
         
         // Déterminer la table cible selon la catégorie
         switch ($categorie) {
