@@ -30,9 +30,9 @@ try {
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour les informations du professionnel
-    $reqProfessionnel = "SELECT * FROM _offre NATURAL JOIN _compte_professionnel WHERE _offre.id_offre = ?";
+    $reqProfessionnel = "SELECT * FROM _offre NATURAL JOIN _compte_professionnel";
     $stmtProfessionnel = $dbh->prepare($reqProfessionnel);
-    $stmtProfessionnel->execute([$id_offre_cible]);
+    $stmtProfessionnel->execute();
     $professionnel = $stmtProfessionnel->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour le type d'offre
@@ -126,7 +126,7 @@ try {
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
                 <p><em><?php echo htmlentities($reqTypeOffre['type_offre'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . $adresse['code_postal'] . ', ' . $offre['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
