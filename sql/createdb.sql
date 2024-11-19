@@ -248,7 +248,7 @@ CREATE TABLE _avis (
 
 CREATE TABLE _reponse (
     id_avis     INTEGER,
-    texte       VARCHAR NOT NULL,
+    texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
     CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
     CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
@@ -445,23 +445,6 @@ CREATE TABLE _offre_possede_tag (
     CONSTRAINT _offre_possede_tag_pk PRIMARY KEY (id_offre, nom_tag),
     CONSTRAINT _offre_possede_tag_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _offre_possede_tag_fk_tag FOREIGN KEY (nom_tag) REFERENCES _tag(nom_tag)
-);
-
-
-/* ==================== OFFRE EN LIGNE / HORS LIGNE ==================== */
-
-CREATE TABLE _dates_mise_en_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_en_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_en_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
-);
-
-CREATE TABLE _dates_mise_hors_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_hors_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_hors_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
 );
 
 
