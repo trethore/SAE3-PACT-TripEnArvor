@@ -198,7 +198,7 @@ a {
     .display-ligne-espace > a {
         color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 40px;
+        font-size: 24px;
         background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
