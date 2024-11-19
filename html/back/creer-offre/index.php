@@ -321,7 +321,7 @@ else {
         die("Erreur : utilisateur non connecté.");
     }
 
-    $requete .= '(titre, resume, ville) VALUES('$titre','$resume', '$ville');';
+    $requete .= '(titre, resume, ville) VALUES('.$titre.','.$resume.', '.$ville.');';
     
 
 
