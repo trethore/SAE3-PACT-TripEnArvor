@@ -13,6 +13,7 @@ CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dî
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
 CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
+CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
 
 CREATE TABLE _date (
@@ -211,6 +212,16 @@ CREATE VIEW offre_restauration AS
 ;
 
 
+/* ============================== OPTIONS ============================== */
+
+CREATE TABLE _option (
+    nom_option  nom_option_t,
+    prix_option INTEGER NOT NULL,
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
+);
+
+
+
 /* ##################################################################### */
 /*                                 AVIS                                  */
 /* ##################################################################### */
@@ -352,6 +363,24 @@ CREATE TABLE _offre_dates_mise_hors_ligne (
     CONSTRAINT _offre_dates_mise_hors_ligne_pk PRIMARY KEY (id_offre, id_date),
     CONSTRAINT _offre_dates_mise_hors_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _offre_dates_mise_hors_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ======================= OFFRE SOUSCRIT OPTION ======================= */
+
+CREATE TABLE _offre_souscrit_option (
+    id_offre    INTEGER,
+    nom_option  nom_option_t,
+    nb_semaine  INTEGER NOT NULL,
+    id_date     INTEGER NOT NULL,
+    CONSTRAINT _offre_souscrit_option_pk
+        PRIMARY KEY (id_offre, nom_offre),
+    CONSTRAINT _offre_souscrit_option_fk_offre
+        FOREIGN KEY (id_offre)
+        REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_souscrit_option_fk_option
+        FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option)
 );
 
 
@@ -1308,4 +1337,21 @@ FOR EACH ROW
 EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
 COMMIT;
+
+
+CREATE FUNCTION offre_souscrit_une_seule_option() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_souscrit_option WHERE id_offre = NEW.id_offre;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Une offre ne peut avoir qu''une seule option';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER offre_souscrit_une_seule_option_tg
+BEFORE INSERT
+ON _offre_souscrit_option
+FOR EACH ROW
+EXECUTE PROCEDURE offre_souscrit_une_seule_option();
 
