@@ -18,14 +18,10 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    //$reqOffre = "SELECT * FROM _offre WHERE id_offre = ?";
-    //$stmt = $dbh->prepare($reqOffre);
-    //$stmt->execute([$id_offre_cible]);
-    //$offre = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Stocker certaines données dans la session
-    // $_SESSION['offre_titre'] = $offre['titre'];
-    // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    $reqOffre = "SELECT * FROM _offre";
+    $stmt = $dbh->prepare($reqOffre);
+    $stmt->execute();
+    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour l'adresse
     $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
