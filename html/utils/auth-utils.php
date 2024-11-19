@@ -1,6 +1,6 @@
 <?php 
     // Quelques fonctions pour savoir le compte d'un utilisateur
-    include('../php/connect_params.php');
+    include('/var/www/html/php/connect_params.php');
 
     function isIdMember($id) {
         try {
