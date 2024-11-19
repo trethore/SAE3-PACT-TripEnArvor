@@ -28,7 +28,7 @@ try {
     // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour l'adresse
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre = ?";
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = ?";
     $stmtAdresse = $dbh->prepare($reqAdresse);
     $stmtAdresse->execute([$id_offre_cible]);
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
@@ -146,7 +146,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher le nom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
+                <p>Proposée par : <?php echo htmlentities($professionnel['denomination']); ?></p> 
                 <!-- Afficher le prix de l'offre -->
                 <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
