@@ -22,11 +22,16 @@ try {
     $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour les informations du professionnel
+    // Requête SQL pour les informations du compte du professionnel
     $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
     $stmtCompte = $dbh->prepare($reqCompte);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+
+    $reqComptePro = "SELECT * FROM _offre NATURAL JOIN _compte NATURAL JOIN _compte_professionnel";
+    $stmtComptePro = $dbh->prepare($reqComptePro);
+    $stmtComptePro->execute();
+    $comptePro = $stmtComptePro->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
@@ -155,9 +160,9 @@ try {
                 <!-- Afficher le bloc résumant l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
-                <a href="<?php echo htmlentities($compte['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($compte['email']); ?></a>
+                <a href="<?php echo htmlentities($comptePro['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($comptePro['site_web']); ?></a>
                 <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
+                <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
             </div>
     
         </section>
