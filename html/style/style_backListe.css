@@ -84,7 +84,6 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute; 
-    left: 50%; 
     transform: translateX(-50%); 
     transform: translateY(-3.3em);
     width: auto; 
