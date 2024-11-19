@@ -3,6 +3,7 @@
     include('/var/www/html/php/connect_params.php');
 
     function isIdMember($id) {
+        global $driver, $server, $dbname, $user, $pass;
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -23,6 +24,7 @@
     }
 
     function isIdProPrivee($id) {
+        global $driver, $server, $dbname, $user, $pass;
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -43,6 +45,7 @@
     }
     
     function isIdProPublique($id) {
+        global $driver, $server, $dbname, $user, $pass;
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
