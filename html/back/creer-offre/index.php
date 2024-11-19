@@ -322,6 +322,9 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
+    print($categorie);
+    print($titre);
+
     $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
