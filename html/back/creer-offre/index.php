@@ -362,6 +362,8 @@ else {
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
 
+        print($requete);
+
         // Préparation de la requête
         $stmt = $dbh->prepare($requete);
 
@@ -374,7 +376,7 @@ else {
         // Exécution de la requête
         //$stmt->execute();
 
-        print_r($requete);
+        
 
         // // Récupérer l'ID retourné par la requête
         // $offre_id = $stmt->fetchColumn();
