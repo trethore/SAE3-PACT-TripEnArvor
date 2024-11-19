@@ -218,14 +218,14 @@ if (isset($_SESSION['id'])) {
                     $stmt2 = $conn->prepare($reqTypeOffre);
                     $stmt2->bindParam(':id_offre', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
-                    $res2 = $stmt2->fetch();
+                    $row_type = $stmt2->fetch(PDO::FETCH_ASSOC);
 
                     // Vérification et récupération du résultat
                     $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
+                    if ($row_type && isset($row_type['type_offre'])) {
                         $offreSpe = $row_type['type_offre'];
                     }
-                    echo htmlentities($type_offre); ?></p>
+                    echo htmlentities($offreSpe); ?></p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
