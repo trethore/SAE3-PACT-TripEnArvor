@@ -319,8 +319,8 @@ else {
     if (isset($_POST['titre'])){
         $titre = $_POST['titre'];
     }
-    if (isset($_POST['categorie'])){
-        $titre = $_POST['categorie'];
+    if (isset($_POST['lacat'])){
+        $categorie = $_POST['lacat'];
     }
 
     // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
@@ -330,7 +330,7 @@ else {
     // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
-    //print($categorie);
+    print($categorie);
     print($titre);
 
     $id_compte = 'test';
