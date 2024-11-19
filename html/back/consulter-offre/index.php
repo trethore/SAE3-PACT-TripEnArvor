@@ -4,13 +4,6 @@ session_start();
 
 include('../../php/connect_params.php');
 
-/*
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';*/
-
 // Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
