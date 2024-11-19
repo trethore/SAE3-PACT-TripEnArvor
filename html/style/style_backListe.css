@@ -83,9 +83,10 @@ h3 {
     background-color: var(--orange-principale);
     border-radius: 15px;
     padding: 0.3em;
-    position: absolute; 
+    position: absolute;
+    left: 50%;
     transform: translateX(-50%); 
-    transform: translateY(-3.3em);
+    transform: translateY(-3.5em);
     width: auto; 
     z-index: 1; 
 }
