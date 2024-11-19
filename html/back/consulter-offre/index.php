@@ -111,7 +111,7 @@ try {
     </div>
 
     <main id="body">
-        <section class="fond-blocs">
+        <section class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
@@ -171,7 +171,7 @@ try {
     
         </section>
 
-        <section class="fond-blocs">
+        <section class="fond-blocs bordure">
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
@@ -179,7 +179,7 @@ try {
 
         </section>
 
-        <section class="double-blocs">
+        <section class="double-blocs bordure">
 
             <div class="fond-blocs bloc-tarif">
                 <div>
@@ -205,7 +205,7 @@ try {
     
         </section>
 
-        <section id="carte" class="fond-blocs">
+        <section id="carte" class="fond-blocs bordure">
 
             <h1>Localisation</h1>
             <div id="map" class="carte"></div>
