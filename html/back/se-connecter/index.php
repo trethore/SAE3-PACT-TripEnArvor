@@ -56,9 +56,17 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                    header("Location: /front/consulter-offres/");
+                ?>
+                    <script>
+                        redirect('/front/consulter-offres/');
+                    </script>
+                <?php
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                    header("Location: /back/liste-back/");
+                ?>
+                    <script>
+                        redirect('/back/liste-back/');
+                    </script>
+                <?php
                 } else {
                     ?>
                     <script>
@@ -112,6 +120,10 @@ try {
             } else {
                 x.type = "password";
             }
+        }
+
+        function redirect(lien) {
+            location.replace(lien);
         }
     </script>
 </body>
