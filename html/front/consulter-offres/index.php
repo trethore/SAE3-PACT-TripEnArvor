@@ -184,7 +184,7 @@ try {
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                     <p class="categorie-offre"><?php 
                     // Préparation et exécution de la requête
-                    $stmt2 = $conn->prepare($reqTypeOffre);
+                    $stmt2 = $dbh->prepare($reqTypeOffre);
                     $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
                     $res2 = $stmt2->get_result();
