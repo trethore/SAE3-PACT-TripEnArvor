@@ -202,6 +202,7 @@ if (isset($_SESSION['id'])) {
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
                     <img src="<?php
+
                         // ID de l'offre pour récupérer la première image
                         $id_offre_cible = $row["id_offre"];
 

@@ -2,7 +2,14 @@
 // Démarrer la session
 session_start(); 
 
-include('../../connect_params.php');
+include('../../php/connect_params.php');
+
+/*
+$server = 'postgresdb';
+$driver = 'pgsql';
+$dbname = 'sae';
+$user   = 'sae';
+$pass	= 'naviguer-vag1n-eNTendes';*/
 
 // Connexion à la base de données
 try {
@@ -99,7 +106,7 @@ try {
     <main id="body">
         <section class="fond-blocs">
 
-            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($titre ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -130,7 +137,7 @@ try {
                 <!-- Afficher le nom du propriétaire de l'offre -->
                 <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
                 <!-- Afficher le prix de l'offre -->
-                <button><?php echo htmlentities($offre['prix_offre']); ?></button> 
+                <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
 
         </section>
@@ -146,11 +153,11 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($offreSpe); ?></h2> 
+                <h2>À propos de : <?php echo htmlentities($titre); ?></h2> 
                 <!-- Afficher le bloc résumant l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['a_propos'])); ?></p>
+                <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
-                <a href="<?php echo htmlentities($offre['site']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
+                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
                 <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
                 <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
             </div>
@@ -161,8 +168,7 @@ try {
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Afficher la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['desc'])); ?></p>
-            <p><?php echo nl2br(htmlentities($offre['desc2'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
 
         </section>
 
