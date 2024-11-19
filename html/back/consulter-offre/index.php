@@ -200,7 +200,7 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <p><?php echo nl2br(htmlentities($jour . " : " . $horaires['ouverture'] . "-" . $horaires['fermeture'])); ?></p>
+                <p><?php echo nl2br(htmlentities($jour['nom_jour'] . " : " . $horaires['ouverture'] . "-" . $horaires['fermeture'])); ?></p>
             </div> 
     
         </section>
