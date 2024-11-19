@@ -40,12 +40,10 @@ try {
                         END AS type_offre
                     FROM _offre o
                     WHERE o.id_offre = ?";
-    $stmt2 = $dbh->prepare($reqTypeOffre);
-    $stmt2->execute([$id_offre_cible]);
-    $offreSpe = 'Inconnu';
-    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $offreSpe = $row_type['type_offre'];
-    }
+    $stmtCategory = $dbh->prepare($reqTypeOffre);
+    $stmtCategory->execute([$id_offre_cible]);
+    $categoryResult = $stmtCategory->fetch();
+    $categorie = $categoryResult['offrespe'] ?? 'Inconnu';
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -106,7 +104,7 @@ try {
     <main id="body">
         <section class="fond-blocs">
 
-            <h1><?php echo htmlentities($titre ?? 'Type d\'offre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($offre['titre'] ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -117,7 +115,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($reqTypeOffre['type_offre'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
                 <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
             </div>
