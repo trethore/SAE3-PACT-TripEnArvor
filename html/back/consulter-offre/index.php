@@ -30,7 +30,7 @@ try {
     // Requête SQL pour l'adresse
     $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
     $stmtAdresse = $dbh->prepare($reqAdresse);
-    $stmtAdresse->execute([$id_offre_cible]);
+    $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour les informations du professionnel
