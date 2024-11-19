@@ -185,7 +185,7 @@ try {
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(../../images/universel/photos/hotel_2.png) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
+                    <img class="carte-offre" style="background: url(../../images/universel/photos/default-image.png) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
@@ -226,10 +226,10 @@ try {
           <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/html/images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/html/images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/instagram.png');"></div></a>
+              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('../../images/universel/icones/x.png');"></div></a>
+              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('../..images/universel/icones/facebook.png');"></div></a>
+              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('../..images/universel/icones/youtube.png');"></div></a>
+              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('../..images/universel/icones/instagram.png');"></div></a>
             </div>
           </div>
     
