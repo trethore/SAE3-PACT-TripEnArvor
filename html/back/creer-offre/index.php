@@ -14,9 +14,9 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
-    <link rel="stylesheet" href="/style/styleguide.css" />
+    <link rel="stylesheet" href="../../style/styleguide.css" />
     <link rel="stylesheet" href="/style/style_HFB.css" />
-    <link rel="stylesheet" href="/style/style_gereeOffre.css" />
+    <link rel="stylesheet" href="../../style/style_gereeOffre.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -78,10 +78,10 @@ if (!$submitted) {
                     <td colspan="3"><input type="text" id="titre" name ="titre" placeholder="Insérer un titre" required></td>
                 </tr>
                 <tr>
-                <td><label for="categorie">Catégorie </label></td>
+                <td><label for="categorie">Catégorie <span class="required">*</span></label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "categorie" name = "lacat"> 
-                            <option value="">Choisir une categorie</option>
+                            <option value="">Choisir une catégorie </option>
                             <option value = "restaurant"> Restaurant</option>
                             <option value = "parc"> Parc d'attraction</option>
                             <option value = "spectacle"> Spectacle</option>
@@ -90,7 +90,7 @@ if (!$submitted) {
                         </select>
                     </div></td>
                 </tr>
-                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix">€</td>
+                <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix">€</td>
                 <tr>
                     <label for=""></label>
                 </tr>
@@ -112,13 +112,13 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td><label for= "cp">Code Postal </label></td>
-                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5"></td>
+                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="local5"></td>
                     <td><label for= "ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name ="ville" placeholder="Nom de ville" required></td>
                 
                 </tr>
                 <tr>
-                    <td><label for="photo"> Photo (max. 5)</label></td>
+                    <td><label for="photo"> Photo <span class="required">*</span> (max. 5)</label></td>
                     <td><div>
                         <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
@@ -131,9 +131,8 @@ if (!$submitted) {
                     <td><label for="type">Type de l'offre <span class="required">*</span></label></td>
                     <td><div class="custom-select-container">
                         <select class="custom-select" id = "type" name = "letype">
-                            <option value="">Choisir le type d'offre</option>
-                            <option value = "payante"> Offre Payante </option>
-                            <option value = "gratuite"> Offre Gratuite </option>
+                            <option value = "standard"> Offre Standard </option>
+                            <option value = "premium"> Offre Premium </option>
                         </select>
                     </div></td></tr>
             </table>
@@ -303,8 +302,8 @@ if (!$submitted) {
 <?php
 }
 else {
-    // Afficher un message pour confirmer la création de l'offre
-    echo "offre creee";
+    // Inclusion des paramètres de connexion
+    include('connect_params.php');
 
     // Récupération des données du formulaire avec $_POST
     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
@@ -315,15 +314,20 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
-    $id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : null;
+    $id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
     // Vérifier si l'id_compte est défini (s'il est connecté)
     if (!$id_compte) {
         die("Erreur : utilisateur non connecté.");
     }
 
+    $requete .= '(titre, resume, ville) VALUES('$titre','$resume', '$ville');';
+    
+
+
     // Inclusion des paramètres de connexion
     include('../../connect_params.php');
+
 
     try {
         // Connexion à la base de données
@@ -422,6 +426,8 @@ else {
         die();
     }
 
+    // Afficher un message pour confirmer la création de l'offre
+    echo "offre creee";
    
 }
 ?>    
@@ -430,11 +436,11 @@ else {
 
     
     <script>
-        let element = document.getElementById('type');
-        element.addEventListener('change', function() {
+        let type = document.getElementById('type');
+        type.addEventListener('change', function() {
             const type = this.value;
             console.log(type);
-            if (type == "payante") {
+            if (type == "premium") {
                 document.getElementById('options').style.display = 'block';
                 document.getElementById('tarifs').style.display = 'block';
             } else{
@@ -442,6 +448,15 @@ else {
                 document.getElementById('tarifs').style.display = 'none';
             }
         })
+
+
+        let categorie = document.getElementById('categorie');
+        categorie.addEventListener('change', function() {
+            if (categorie == "restaurant"){
+                document.getElementById("labelprix").replace("Prix minimal", 'Gamme de prix')
+            }
+        })
+
         
 
         var offreDiv = document.getElementById("offre");
@@ -491,6 +506,7 @@ else {
             quitterDiv.style.display = "none";
             alert("Modification valider avec succès");
         }
+
     </script>
 
 </body>
