@@ -28,6 +28,8 @@ try {
     // $_SESSION['offre_titre'] = $offre['titre'];
     // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
+    $adresse = "SELECT * FROM _offre NATURAL JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse";
+
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
                         CASE
@@ -119,7 +121,7 @@ try {
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
                 <p><em><?php echo htmlentities($reqTypeOffre['type_offre'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
-                <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . $adresse['code_postal'] . ', ' . $offre['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
