@@ -214,44 +214,7 @@ if (isset($_SESSION['id'])) {
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
-                    <?php 
-                    try {
-                        // Préparer la requête SQL
-                        $reqTypeOffre = "
-                            SELECT 
-                                CASE
-                                    WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                                    WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc attraction'
-                                    WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                                    WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                                    WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                                    ELSE 'Inconnu'
-                                END AS offreSpe
-                            FROM sae._offre o
-                            WHERE o.id_offre = :id_offre;
-                        ";
-                    
-                        // Préparation et exécution
-                        $stmt2 = $conn->prepare($reqTypeOffre);
-                        $stmt2->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lier l'ID de l'offre
-                        $stmt2->execute();
-                    
-                        // Récupérer le résultat
-                        $row = $stmt2->fetch(PDO::FETCH_ASSOC);
-                    
-                        // Vérifier et afficher
-                        if ($row && isset($row['offreSpe'])) {
-                            echo htmlentities($row['offreSpe']); // Afficher le type d'offre
-                        } else {
-                            echo htmlentities('Inconnu'); // Valeur par défaut si aucun résultat
-                        }
-                    } catch (Exception $e) {
-                        // Gestion des erreurs
-                        error_log("Erreur lors de la récupération du type d'offre : " . $e->getMessage());
-                        echo htmlentities('Erreur lors de la récupération du type d\'offre');
-                    }
-                    ?><!--
-                    <p> <?php /*
+                    <p> <?php
                     // Préparation et exécution de la requête
                     $stmt2 = $conn->prepare($reqTypeOffre);
                     $stmt2->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
@@ -263,7 +226,7 @@ if (isset($_SESSION['id'])) {
                     if ($row_type && isset($row_type['type_offre'])) {
                         $offreSpe = $row_type['type_offre'];
                     }
-                    echo htmlentities($offreSpe); */?> </p>-->
+                    echo htmlentities($offreSpe);?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
