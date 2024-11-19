@@ -59,14 +59,18 @@ try {
                     echo "membre";
                 ?>
                     <script>
-                        redirect('https://redden.ventsdouest.dev/front/consulter-offres/');
+                        window.onload = function() {
+                            window.location.href = 'https://redden.ventsdouest.dev/front/consulter-offres/';
+                        };
                     </script>
                 <?php
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
                     echo "proprivé ou public";
                 ?>
                     <script>
-                        redirect('https://redden.ventsdouest.dev/back/liste-back/');
+                        window.onload = function() {
+                            window.location.href = 'https://redden.ventsdouest.dev/back/liste-back/';
+                        };
                     </script>
                 <?php
                 } else {
