@@ -351,11 +351,10 @@ footer > div > a {
 }
 
 #confirm {
-    background: var(--blanc-leger);
-    color: var(--noir);
+    background: var(--orange-principale);
+    color: var(--blanc);
     font-size: 20px;
     display: none;
-    border: 1px solid var(--noir);
     border-radius: 15px;
     text-align: center;
     width: fit-content;
@@ -368,11 +367,10 @@ footer > div > a {
 }
 
 #final {
-    background: var(--blanc-leger);
-    color: var(--noir);
+    background: var(--orange-principale);
+    color: var(--blanc);
     font-size: 32px;
     display: none;
-    border: 1px solid var(--noir);
     border-radius: 15px;
     text-align: center;
     width: fit-content;

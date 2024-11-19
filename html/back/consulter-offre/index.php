@@ -91,8 +91,7 @@ try {
     </header>
 
     <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
-    <div class="display-ligne-espace bouton-modifier">
-        <p class="transparent">.</p> 
+    <div class="display-ligne-espace bouton-modifier"> 
         <div>
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
@@ -108,6 +107,7 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
+        <p class="transparent">.</p>
     </div>
 
     <main id="body">
