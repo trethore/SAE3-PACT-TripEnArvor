@@ -11,7 +11,18 @@ try {
     echo "<pre>";
     print_r($offres);
     echo "</pre>";
-    $dbh = null;
+
+    $reqTypeOffre = "SELECT 
+                        CASE
+                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
+                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            ELSE 'Inconnu'
+                        END AS offreSpe
+                        FROM _offre o
+                        WHERE o.id_offre = ?";
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -164,26 +175,30 @@ try {
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
 
             foreach ($offres_for_page as $tab) {
+                $stmt2 = $dbh->prepare($reqTypeOffre);
+                $stmt2->execute([$tab["id_offre"]]);
+                
+                $categorie = $stmt2->fetchAll();
             ?>
                 <div class="offre">
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(/html/images/universel/photos/hotel_2.png) center;">
+                    <img class="carte-offre" style="background: url(../images/universel/photos/hotel_2.png) center;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["type_offre"] ?></p>
+                    <p class="categorie-offre"><?php echo $categorie ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $tab["nom_compte"] . $tab["prenom"] ?></p>
+                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="../images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
-                        <p class="prix">A partir de <span>80€</span></p>
+                        <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                     </div>
                 </div>
             </div>
@@ -228,3 +243,5 @@ try {
       </footer>
 </body>
 </html>
+
+<?php $dbh = null; ?>
