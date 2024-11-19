@@ -18,7 +18,8 @@ CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
 CREATE TABLE _date (
     id_date     SERIAL,
-    date        TIMESTAMP NOT NULL
+    date        TIMESTAMP NOT NULL,
+    CONSTRAINT _date_pk PRIMARY KEY (id_date)
 );
 
 
@@ -239,9 +240,9 @@ CREATE TABLE _avis (
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
     CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES compte_membre(id_compte),
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
-    CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date),
+    CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date)
 );
 
 
@@ -374,7 +375,7 @@ CREATE TABLE _offre_souscrit_option (
     nb_semaine  INTEGER NOT NULL,
     id_date     INTEGER NOT NULL,
     CONSTRAINT _offre_souscrit_option_pk
-        PRIMARY KEY (id_offre, nom_offre),
+        PRIMARY KEY (id_offre, nom_option),
     CONSTRAINT _offre_souscrit_option_fk_offre
         FOREIGN KEY (id_offre)
         REFERENCES _offre(id_offre),
@@ -461,6 +462,22 @@ CREATE TABLE _dates_mise_hors_ligne_offre (
     date_heure  TIMESTAMP,
     CONSTRAINT _dates_mise_hors_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
     CONSTRAINT _dates_mise_hors_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+);
+
+
+/* ======================== AVIS CONTIENT IMAGE ======================== */
+
+CREATE TABLE _avis_contient_image (
+    id_avis         INTEGER,
+    lien_fichier    VARCHAR(255),
+    CONSTRAINT _avis_contient_image_pk
+        PRIMARY KEY (id_avis, lien_fichier),
+    CONSTRAINT _avis_contient_image_fk_avis
+        FOREIGN KEY (id_avis)
+        REFERENCES _avis(id_avis),
+    CONSTRAINT _avis_contient_image_fk_image
+        FOREIGN KEY (lien_fichier)
+        REFERENCES _image(lien_fichier)
 );
 
 
