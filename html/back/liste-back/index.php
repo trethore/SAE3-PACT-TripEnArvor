@@ -200,9 +200,8 @@ if (isset($_SESSION['id'])) {
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
-                    ----------------------------------------
+                    ---------------------------------------->
                     <img src="<?php
-                    /*
                         // ID de l'offre pour récupérer la première image
                         $id_offre_cible = $row["id_offre"];
 
@@ -215,16 +214,15 @@ if (isset($_SESSION['id'])) {
                             echo htmlentities($image['lien_fichier']);
                         } else {
                             echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
-                        }**/
+                        }
                     ?>" alt="image offre">
-                    -->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
                     <p><?php 
                     // Préparation et exécution de la requête
-                    $stmt2 = $con->prepare($sql);
+                    $stmt2 = $conn->prepare($sql);
                     $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
                     $res2 = $stmt2->get_result();
