@@ -1,21 +1,20 @@
 <?php
-/*include('../../php/connect_params.php');
+if (session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+include('../../connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT email from compte');
+    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte');
     $stmt->execute();
     $result = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";
-    $result = ["pierre.lechat8@gmail.com", "bob.bob@gmail.com", "pikdev.gopi@gmail.com"];
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,22 +41,37 @@ try {
         if (isset($_POST["email"])) {
             $trouve = false;
             $emailUtilisateur = $_POST["email"];
-            $mdp = $_POST["mdp"];
-
-            foreach ($result as $email) {
-                if ($emailUtilisateur == $email) {
+            $mdpUtilisateur = $_POST["mdp"];
+            $id = -1;
+            foreach ($result as $entry) {
+                if ($emailUtilisateur == $entry['email'] && $mdpUtilisateur == $entry['mot_de_passe']) {
+                    $id = $entry['id_compte'];
                     $trouve = true;
+                    $_SESSION['id'] = $id;
                 }
             }
 
             if ($trouve) {
                 echo "Utilisateur trouvé";
+                ?>
+                    <script>
+                        setTimeout(() => {
+                            window.location.href = "/back/liste-back/";
+                        }, 100);
+                    </script>
+                <?php
             } else {
-                echo "Utilisateur non trouvé";
+                ?>
+                    <script>
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 100);
+                    </script>
+                <?php
             }
         } else {
         ?>
-        <form action="index.php" method="POST" enctype="multipart/form-data">
+        <form action="/back/se-connecter/" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
             <br>

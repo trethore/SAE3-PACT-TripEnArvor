@@ -38,23 +38,27 @@ body {
 
 h1 {
     font-family: "Poppins", sans-serif;
-    font-weight: 700;
-    color: var(--blanc-leger);
-    background: var(--gradient-orange);
+    font-weight: 600;
+    color: var(--orange-principale);
+    background: var(--blanc-leger);
     border-radius: 15px;
-    margin: 0.5em;
+    border: 3px solid var(--orange-principale);
+    margin: 0.5em 0.2em;
     text-align: center;
+    font-size: 64pt;
 }
 
 h2 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
+    font-size: 23pt;
     color: var(--noir);
 }
 
 h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
+    font-size: 20pt;
     color: var(--noir);
 }
 
@@ -66,18 +70,24 @@ h3 {
 .filtre-tri {
     position: relative;
     margin: 1em;
-    padding: 0.5em 2em 1em;
-
-    background: var(--gradient-orange);
+    padding: 3em 2em 1em;
+    
+    background: var(--blanc-leger);
     border-radius: 15px;
+    border:3px solid var(--orange-principale);
 }
 
 .filtre-tri > h2 {
-    color: var(--orange-principale);
+    color: var(--blanc-leger);
+    position: absolute;
     text-align: center;
-    background-color: var(--blanc-leger);
+    background-color: var(--orange-principale);
     border-radius: 15px;
-    margin: 0.5em 0 1em;
+    padding: 0.1em;
+    left: 16%;
+    top: -12%;
+    height: 48px;
+    width: 790px;
 }
 
 .filtre-tri h2 + div{
@@ -177,7 +187,7 @@ h3 {
 }
 
 .filtre-tri h3 {
-    margin: 0 0 0.5em;
+    margin: 0 0 0.1em;
     color: var(--orange-principale);
 }
 
@@ -319,7 +329,6 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background: var(--gradient-orange);
     padding: 1em;
     margin: 1em;
     border-radius: 15px;
@@ -330,8 +339,6 @@ h3 {
     max-width: 379px;
     min-width: 379px;
     height: 506px;
-
-    background: var(--blanc-leger);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -346,6 +353,10 @@ h3 {
 
     background: var(--beige);
     border-radius: 15px 15px 10px 10px;
+}
+
+.lesOffres article > div {
+    border: 3px solid var(--orange-principale);
 }
 
 .lieu-offre {
@@ -486,7 +497,7 @@ h3 {
 
     position: absolute;
     left: 70%;
-    bottom: -2em;
+    bottom: -3em;
 
     font-size: 10px;
     font-weight: 600;
