@@ -58,13 +58,13 @@ try {
                 if (isIdMember($id)) {
                 ?>
                     <script>
-                        redirect('/front/consulter-offres/');
+                        redirect('https://redden.ventsdouest.dev/front/consulter-offres/');
                     </script>
                 <?php
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
                 ?>
                     <script>
-                        redirect('/back/liste-back/');
+                        redirect('https://redden.ventsdouest.dev/back/liste-back/');
                     </script>
                 <?php
                 } else {
@@ -123,7 +123,7 @@ try {
         }
 
         function redirect(lien) {
-            location.replace(lien);
+            window.location.replace(lien);
         }
     </script>
 </body>
