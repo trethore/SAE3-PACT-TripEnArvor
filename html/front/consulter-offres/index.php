@@ -23,6 +23,14 @@ try {
                         END AS offreSpe
                         FROM _offre o
                         WHERE o.id_offre = ?";
+
+    $stmtCategory = $dbh->prepare($reqTypeOffre);
+
+    foreach ($offres as &$offre) {
+        $stmtCategory->execute([$offre['id_offre']]);
+        $categoryResult = $stmtCategory->fetch();
+        $offre['categorie'] = $categoryResult['offreSpe'] ?? 'Inconnu';
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -182,19 +190,7 @@ try {
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                     <img class="carte-offre" style="background: url(../images/universel/photos/hotel_2.png) center;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php 
-                    // Préparation et exécution de la requête
-                    $stmt2 = $dbh->prepare($reqTypeOffre);
-                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
-                    $stmt2->execute();
-                    $res2 = $stmt2->get_result();
-
-                    // Vérification et récupération du résultat
-                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
-                        $offreSpe = $row_type['type_offre'];
-                    }
-                    echo htmlentities($type_offre); ?></p>
+                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                     <div class="bas-offre">
