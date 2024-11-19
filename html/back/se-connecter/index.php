@@ -36,9 +36,7 @@ try {
         <!-- Titres -->
         <h1>Se connecter</h1>
         <h2>Vous n'avez pas de compte ? <a href="#">Créez votre compte</a></h2>
-        <br>
-        <br>
-        <br>
+
         <!-- Formulaire -->
         <?php
         if (isset($_POST["email"]) && isset($_POST["mdp"])) {
@@ -56,7 +54,6 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                    echo "membre";
                 ?>
                     <script>
                         window.onload = function() {
@@ -65,7 +62,6 @@ try {
                     </script>
                 <?php
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                    echo "proprivé ou public";
                 ?>
                     <script>
                         window.onload = function() {
@@ -74,7 +70,6 @@ try {
                     </script>
                 <?php
                 } else {
-                    echo "rien";
                     ?>
                     <script>
                         setTimeout(() => {
@@ -94,33 +89,29 @@ try {
                     </script>
                 <?php
             }
-        } else {
+        }
         ?>
         <form action="/back/se-connecter/" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
-            <br>
+
             <section>
                 <label for="mdp">Quel est votre mot de passe ?</label>
                 <article>
-                    <input type="checkbox" id="toggle" onclick="myFunction()">
+                    <input type="checkbox" id="toggle" onclick="hidePassword()">
                     <label for="toggle">Afficher</label>
                 </article>
             </section>
             <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
-            <br>
-            <br>
-            <br>
+
             <!-- Boutons -->
             <input type="submit" value="Connexion">
         </form>
-        <?php
-        }
-        ?>
+      
     </main>
     <!-- Script pour afficher ou non le mot de passe -->
     <script>
-        function myFunction() {
+        function hidePassword() {
             var x = document.getElementById("mdp");
             if (x.type === "password") {
                 x.type = "text";
