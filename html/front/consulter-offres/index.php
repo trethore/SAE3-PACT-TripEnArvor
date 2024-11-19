@@ -26,10 +26,7 @@ try {
     foreach ($offres as &$offre) {
         $stmtCategory->execute([$offre['id_offre']]);
         $categoryResult = $stmtCategory->fetch();
-        echo "<pre>";
-        print_r($categoryResult);
-        echo "</pre>";
-        $offre['categorie'] = $categoryResult['offreSpe'] ?? 'Inconnu';
+        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
     }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -188,7 +185,7 @@ try {
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(../../images/universel/photos/hotel_2.png) center;">
+                    <img class="carte-offre" style="background: url(../../images/universel/photos/hotel_2.png) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
