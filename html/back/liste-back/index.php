@@ -9,29 +9,31 @@ try {
 /*******************
 Requete SQL préfaite
 ********************/
-$reqOffre = "SELECT * FROM sae._offre";
+$reqOffre = "SELECT * from sae._offre;";
 $reqIMG = "SELECT img.lien_fichier 
             FROM sae._image img
             JOIN sae._offre_contient_image oci 
             ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = ?
+            WHERE oci.id_offre = :id_offre
             LIMIT 1;";
-$reqTypeOffre = $sql = "SELECT 
+$reqTypeOffre = "SELECT 
                         CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc attraction'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
                         END AS offreSpe
-                        FROM _offre o
-                        WHERE o.id_offre = ?";
+                        FROM sae._offre o
+                        WHERE o.id_offre = :id_offre;";
+
+$reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 $result = $conn->query($reqOffre); 
 
 function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
+    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = :id_offre";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$id_compte]);
     return $stmt->fetch() ? true : false;
@@ -73,7 +75,7 @@ if (isset($_SESSION['id'])) {
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <h1>Liste de vos offre</h1>
+        <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
         ----------------->
@@ -182,38 +184,29 @@ if (isset($_SESSION['id'])) {
             </div>
         </article>
         <section class="lesOffres">
-            <?php
-            /* -----------------Gestion de la pagination -----------------------
-            $offers_per_page = 9;
-            $total_offers = count($offres);
-            $total_pages = ceil($total_offers / $offers_per_page);
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $offset = ($current_page - 1) * $offers_per_page;
-            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            ------------------------------------------------------------------ */
-            
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+            <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
-            <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
                     <img src="<?php
-                        // ID de l'offre pour récupérer la première image
-                        $id_offre_cible = $row["id_offre"];
+                        // Préparer et exécuter la requête
+                        $stmtIMG = $conn->prepare($reqIMG);
+                        $stmtIMG->bindParam(':id_offre', $id_row['id_offre'], PDO::PARAM_INT);
+                        $stmtIMG->execute();
 
-                        // Exécuter la requête
-                        $resIMG = $conn->query($reqIMG);
+                        // Récupérer la première image
+                        $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
 
-                        // Récupérer la première image et l'afficher
-                        if ($resIMG->num_rows > 0) {
-                            $image = $resIMG->fetch(PDO::FETCH_ASSOC);
+                        if ($image && !empty($image['lien_fichier'])) {
+                            // Afficher l'image si elle existe
                             echo htmlentities($image['lien_fichier']);
                         } else {
-                            echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
+                            // Afficher une image par défaut
+                            echo htmlentities('/images/universel/photos/default-image.jpg');
                         }
                     ?>" alt="image offre">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
@@ -223,7 +216,7 @@ if (isset($_SESSION['id'])) {
                     <p><?php 
                     // Préparation et exécution de la requête
                     $stmt2 = $conn->prepare($sql);
-                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2->bind_param(':id_offre', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
                     $res2 = $stmt2->get_result();
 
