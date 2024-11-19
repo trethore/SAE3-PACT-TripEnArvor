@@ -56,18 +56,21 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
+                    echo "membre";
                 ?>
                     <script>
                         redirect('https://redden.ventsdouest.dev/front/consulter-offres/');
                     </script>
                 <?php
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+                    echo "proprivé ou public";
                 ?>
                     <script>
                         redirect('https://redden.ventsdouest.dev/back/liste-back/');
                     </script>
                 <?php
                 } else {
+                    echo "rien";
                     ?>
                     <script>
                         setTimeout(() => {
