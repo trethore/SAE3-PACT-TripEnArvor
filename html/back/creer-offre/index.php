@@ -314,7 +314,6 @@ else {
     // include('../../php/connect_params.php');
 
     // Récupération des données du formulaire avec $_POST
-    print("hello0");
     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
     $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
     $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
@@ -323,8 +322,7 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
-    print_r($_POST);
-
+    $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
     // Vérifier si l'id_compte est défini (s'il est connecté)
@@ -334,7 +332,7 @@ else {
 
     $requete .= '(titre, resume, ville) VALUES('.$titre.','.$resume.', '.$ville.');';
     
-
+    print($requete);
 
     try {
         // Connexion à la base de données
@@ -361,6 +359,7 @@ else {
                 print "Erreur de categorie!";
                 die();
         }
+        print("categorie ".$categorie);
 
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
