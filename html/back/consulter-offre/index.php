@@ -29,7 +29,7 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT nom_jour FROM _offre NATURAL JOIN _horaires_du_jour";
+    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
