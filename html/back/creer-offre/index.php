@@ -319,9 +319,7 @@ else {
     if (isset($_POST['titre'])){
         $titre = $_POST['titre'];
     }
-    if (isset($_POST['lacat'])){
-        $categorie = $_POST['lacat'];
-    }
+    
 
     // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
     // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
@@ -330,7 +328,7 @@ else {
     // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
-    print($categorie);
+    
     print($titre);
 
     $id_compte = 'test';
@@ -344,6 +342,12 @@ else {
    
 
     try {
+
+        if (isset($_POST['lacat'])){
+            $categorie = $_POST['lacat'];
+        }
+
+        print($categorie);
         // Connexion à la base de données
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
