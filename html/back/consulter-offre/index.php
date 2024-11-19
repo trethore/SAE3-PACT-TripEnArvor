@@ -23,10 +23,10 @@ try {
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour les informations du professionnel
-    $reqProfessionnel = "SELECT * FROM _offre NATURAL JOIN _compte_professionnel";
-    $stmtProfessionnel = $dbh->prepare($reqProfessionnel);
-    $stmtProfessionnel->execute();
-    $professionnel = $stmtProfessionnel->fetch(PDO::FETCH_ASSOC);
+    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    $stmtCompte = $dbh->prepare($reqCompte);
+    $stmtCompte->execute();
+    $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
@@ -133,7 +133,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher le nom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($professionnel['denomination']); ?></p> 
+                <p>Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
                 <!-- Afficher le prix de l'offre -->
                 <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
@@ -155,7 +155,7 @@ try {
                 <!-- Afficher le bloc résumant l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
-                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
+                <a href="<?php echo htmlentities($compte['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($compte['email']); ?></a>
                 <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
                 <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
             </div>
