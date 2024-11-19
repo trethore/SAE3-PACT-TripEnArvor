@@ -1,45 +1,15 @@
 <?php
-/*include('../../php/connect_params.php');*/
-
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';
+include('../../php/connect_params.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from offre_activite');
+    $stmt = $dbh->prepare('SELECT * from _offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
     $stmt->execute();
-    $result1 = $stmt->fetchAll();
+    $offres = $stmt->fetchAll();
     echo "<pre>";
-    print_r($result1);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_parc_attraction');
-    $stmt->execute();
-    $result2 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result2);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_restauration');
-    $stmt->execute();
-    $result3 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result3);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_spectacle');
-    $stmt->execute();
-    $result4 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result4);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_visite');
-    $stmt->execute();
-    $result5 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result5);
+    print_r($offres);
     echo "</pre>";
     $dbh = null;
 } catch (PDOException $e) {
@@ -198,12 +168,12 @@ try {
                 <div class="offre">
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                    <div class="ouverture-offre"><?php echo $tab["ouvert"] ?></div>
-                    <img class="carte-offre">
+                    <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                    <img class="carte-offre" style="background: url(/html/images/universel/photos/hotel_2.png) center;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["categorie"] ?></p>
-                    <p class="description-offre"><?php echo $tab["desc"] . " " ?><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
+                    <p class="categorie-offre"><?php echo $tab["type_offre"] ?></p>
+                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                    <p class="nom-offre"><?php echo $tab["nom_compte"] . $tab["prenom"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
                             <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
