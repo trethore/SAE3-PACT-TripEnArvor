@@ -200,7 +200,7 @@ try {
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php echo $tab["ouvert"] ?></div>
-                    <img class="carte-offre" style="background: url(/html/images/universel/photos/default-image.png) center; background-size: cover;">
+                    <img class="carte-offre">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                     <p class="categorie-offre"><?php echo $tab["categorie"] ?></p>
                     <p class="description-offre"><?php echo $tab["desc"] . " " ?><span>En savoir plus</span></p>
