@@ -86,7 +86,7 @@ h3 {
     position: absolute; 
     left: 50%; 
     transform: translateX(-50%); 
-    transform: translateY(-3em);
+    transform: translateY(-3.3em);
     width: auto; 
     z-index: 1; 
 }
