@@ -18,8 +18,7 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "SELECT *
-                FROM _offre WHERE id_offre = ?";
+    $reqOffre = "SELECT * FROM _offre WHERE id_offre = ?";
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute([$id_offre_cible]);
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,10 +27,17 @@ try {
     // $_SESSION['offre_titre'] = $offre['titre'];
     // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = ?";
+    // Requête SQL pour l'adresse
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre = ?";
     $stmtAdresse = $dbh->prepare($reqAdresse);
     $stmtAdresse->execute([$id_offre_cible]);
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
+
+    // Requête SQL pour les informations du professionnel
+    $reqProfessionnel = "SELECT * FROM _offre NATURAL JOIN _compte_professionnel WHERE _offre.id_offre = ?";
+    $stmtProfessionnel = $dbh->prepare($reqProfessionnel);
+    $stmtProfessionnel->execute([$id_offre_cible]);
+    $professionnel = $stmtProfessionnel->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
