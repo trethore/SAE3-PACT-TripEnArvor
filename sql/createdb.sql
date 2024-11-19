@@ -11,7 +11,8 @@ SET SCHEMA 'sae';
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
 CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
-CREATE TYPE type_offre_t AS ENUM('gratuite', 'standard', 'premium');
+CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
+CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
 
 
 
@@ -211,12 +212,23 @@ CREATE VIEW offre_restauration AS
 
 CREATE TABLE _avis (
     id_avis         SERIAL,
+    id_membre       INTEGER NOT NULL,
     note            INTEGER NOT NULL,
     titre           VARCHAR(128) NOT NULL,
     commentaire     VARCHAR(1024) NOT NULL,
     nb_pouce_haut   INTEGER NOT NULL,
     nb_pouce_bas    INTEGER NOT NULL,
-    CONSTRAINT _avis_pk PRIMARY KEY (id_avis)
+    contexte_visite contexte_visite_t NOT NULL,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES compte_membre(id_compte)
+);
+
+
+CREATE TABLE _reponse (
+    id_avis INTEGER,
+    texte   VARCHAR NOT NULL,
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _reponse_fk_avis PRIMARY KEY (id_avis) REFERENCES _avis(id_avis)
 );
 
 
