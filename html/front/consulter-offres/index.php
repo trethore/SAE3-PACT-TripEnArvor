@@ -175,10 +175,6 @@ try {
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
 
             foreach ($offres_for_page as $tab) {
-                $stmt2 = $dbh->prepare($reqTypeOffre);
-                $stmt2->execute([$tab["id_offre"]]);
-                
-                $categorie = $stmt2->fetchAll();
             ?>
                 <div class="offre">
                 <div class="sous-offre">
@@ -186,7 +182,19 @@ try {
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                     <img class="carte-offre" style="background: url(../images/universel/photos/hotel_2.png) center;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $categorie ?></p>
+                    <p class="categorie-offre"><?php 
+                    // Préparation et exécution de la requête
+                    $stmt2 = $conn->prepare($reqTypeOffre);
+                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2->execute();
+                    $res2 = $stmt2->get_result();
+
+                    // Vérification et récupération du résultat
+                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
+                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
+                        $offreSpe = $row_type['type_offre'];
+                    }
+                    echo htmlentities($type_offre); ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                     <div class="bas-offre">
