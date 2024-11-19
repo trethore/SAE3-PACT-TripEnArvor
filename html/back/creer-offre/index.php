@@ -320,7 +320,7 @@ else {
     $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
     $type = isset($_POST['type']) ? $_POST['type'] : '';
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-    $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
+    $categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
     $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
