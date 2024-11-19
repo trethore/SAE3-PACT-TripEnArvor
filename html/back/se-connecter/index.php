@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE){
     session_start();
 }
-include('../../connect_params.php');
+include('../../php/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
