@@ -29,9 +29,9 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE _offre.id-offre = ?";
+    $reqJour = "SELECT nom_jour FROM _offre NATURAL JOIN _horaires_du_jour";
     $stmtJour = $dbh->prepare($reqJour);
-    $stmtJour->execute([$id_offre_cible]);
+    $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
@@ -200,7 +200,7 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <p><?php echo nl2br(htmlentities($jour['nom_jour'] . " : " . $horaires['ouverture'] . "-" . $horaires['fermeture'])); ?></p>
+                <p><?php echo nl2br(htmlentities($jour . " : " . $horaires['ouverture'] . "-" . $horaires['fermeture'])); ?></p>
             </div> 
     
         </section>
