@@ -164,7 +164,7 @@ try {
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Affichage du lien du site du propriétaire de l'offre -->
-                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($comptePro['site_web']); ?></a>
+                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site_web']); ?></a>
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
                 <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
             </div>
