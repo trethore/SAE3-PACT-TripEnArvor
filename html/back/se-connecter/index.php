@@ -1,5 +1,5 @@
 <?php
-echo realpath('../php/connect_params.php');
+echo realpath('../../php/connect_params.php');
 include('../../php/connect_params.php');
 include('../../utils/auth-utils.php');
 
