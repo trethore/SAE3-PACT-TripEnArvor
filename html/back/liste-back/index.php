@@ -16,6 +16,7 @@ $reqIMG = "SELECT img.lien_fichier
             ON img.lien_fichier = oci.id_image
             WHERE oci.id_offre = :id_offre
             LIMIT 1;";
+
 $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
@@ -221,7 +222,6 @@ if (isset($_SESSION['id'])) {
                     $row_type = $stmt2->fetch(PDO::FETCH_ASSOC);
 
                     // Vérification et récupération du résultat
-                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
                     if ($row_type && isset($row_type['type_offre'])) {
                         $offreSpe = $row_type['type_offre'];
                     }
@@ -262,7 +262,7 @@ if (isset($_SESSION['id'])) {
                         <p>Avis non répondues : <span><b>1</b></span></p>
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?></span></p>
+                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
                 </div>
             </article>
             <?php } ?>
