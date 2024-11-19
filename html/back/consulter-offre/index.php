@@ -160,7 +160,7 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($titre); ?></h2> 
+                <h2>À propos de : <?php echo htmlentities($professionnel['denomination']); ?></h2> 
                 <!-- Afficher le bloc résumant l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
