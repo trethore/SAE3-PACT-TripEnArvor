@@ -322,6 +322,8 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
+    print_r($_POST);
+
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
     // Vérifier si l'id_compte est défini (s'il est connecté)
@@ -362,6 +364,8 @@ else {
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
 
+        print($requete);
+
         // Préparation de la requête
         $stmt = $dbh->prepare($requete);
 
@@ -374,7 +378,7 @@ else {
         // Exécution de la requête
         //$stmt->execute();
 
-        print_r($requete);
+        
 
         // // Récupérer l'ID retourné par la requête
         // $offre_id = $stmt->fetchColumn();
