@@ -1,8 +1,11 @@
 <?php
+include('../../php/connect_params.php');
+include('../../utils/auth-utils.php');
+
 if (session_status() == PHP_SESSION_NONE){
     session_start();
 }
-include('../../php/connect_params.php');
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -38,7 +41,7 @@ try {
         <br>
         <!-- Formulaire -->
         <?php
-        if (isset($_POST["email"])) {
+        if (isset($_POST["email"]) && isset($_POST["mdp"])) {
             $trouve = false;
             $emailUtilisateur = $_POST["email"];
             $mdpUtilisateur = $_POST["mdp"];
@@ -52,13 +55,20 @@ try {
             }
 
             if ($trouve) {
-                echo "Utilisateur trouvé";
-                ?>
+                if (isIdMember($id)) {
+                    header("Location: /front/consulter-offres/");
+                } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+                    header("Location: /back/liste-back/");
+                } else {
+                    ?>
                     <script>
                         setTimeout(() => {
-                            window.location.href = "/back/liste-back/";
+                            window.location.reload();
                         }, 100);
                     </script>
+                <?php
+                }
+                ?>
                 <?php
             } else {
                 ?>
