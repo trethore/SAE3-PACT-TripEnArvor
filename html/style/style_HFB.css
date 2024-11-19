@@ -56,6 +56,19 @@ header {
 	margin-right: auto;
 }
 
+.text-wrapper-17 > a {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+	margin-right: auto;
+}
+
 
 .ICON-utilisateur {
 	margin-left: 15px;

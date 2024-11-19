@@ -430,18 +430,6 @@ body {
     border-radius: 20px !important;
 }
 
-.carte-offre {
-    position: absolute;
-    width: 339px;
-    height: 208px;
-    left: auto;
-    top: auto;
-
-    background: url(/html/images/universel/photos/hotel_2.png) center;
-    background-size: cover;
-    border-radius: 5px 5px 0px 0px;
-}
-
 .titre-offre {
     position: absolute;
     left: 2%;

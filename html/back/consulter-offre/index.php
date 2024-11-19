@@ -4,13 +4,6 @@ session_start();
 
 include('../../php/connect_params.php');
 
-/*
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';*/
-
 // Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -18,17 +11,22 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "SELECT *
-                FROM _offre WHERE id_offre = ?";
+    $reqOffre = "SELECT * FROM _offre";
     $stmt = $dbh->prepare($reqOffre);
-    $stmt->execute([$id_offre_cible]);
+    $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Stocker certaines données dans la session
-    // $_SESSION['offre_titre'] = $offre['titre'];
-    // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    // Requête SQL pour l'adresse
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->execute();
+    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
-    $adresse = "SELECT * FROM _offre NATURAL JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse";
+    // Requête SQL pour les informations du professionnel
+    $reqProfessionnel = "SELECT * FROM _offre NATURAL JOIN _compte_professionnel";
+    $stmtProfessionnel = $dbh->prepare($reqProfessionnel);
+    $stmtProfessionnel->execute();
+    $professionnel = $stmtProfessionnel->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour le type d'offre
     $reqTypeOffre = "SELECT 
@@ -42,12 +40,10 @@ try {
                         END AS type_offre
                     FROM _offre o
                     WHERE o.id_offre = ?";
-    $stmt2 = $dbh->prepare($reqTypeOffre);
-    $stmt2->execute([$id_offre_cible]);
-    $offreSpe = 'Inconnu';
-    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $offreSpe = $row_type['type_offre'];
-    }
+    $stmtCategory = $dbh->prepare($reqTypeOffre);
+    $stmtCategory->execute([$id_offre_cible]);
+    $categoryResult = $stmtCategory->fetch();
+    $categorie = $categoryResult['offrespe'] ?? 'Inconnu';
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -108,7 +104,7 @@ try {
     <main id="body">
         <section class="fond-blocs">
 
-            <h1><?php echo htmlentities($titre ?? 'Type d\'offre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($offre['titre'] ?? 'Type d\'offre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -119,9 +115,9 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($reqTypeOffre['type_offre'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Afficher l'adresse de l'offre et sa ville -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . $adresse['code_postal'] . ', ' . $offre['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -137,7 +133,7 @@ try {
 
             <div class="display-ligne-espace">
                 <!-- Afficher le nom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
+                <p>Proposée par : <?php echo htmlentities($professionnel['denomination']); ?></p> 
                 <!-- Afficher le prix de l'offre -->
                 <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
@@ -155,7 +151,7 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($titre); ?></h2> 
+                <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Afficher le bloc résumant l'offre -->
                 <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
                 <!-- Afficher le lien du site internet de l'entreprise -->
