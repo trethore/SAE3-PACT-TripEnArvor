@@ -162,11 +162,13 @@ try {
             <div class="fond-blocs bloc-a-propos">
                 <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Affichage du résumé de l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
-                <!-- Affichage du lien du site du propriétaire de l'offre -->
-                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site_web']); ?></a>
-                <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
+                <p><?php echo htmlentities($offre['resume']); ?></p>
+                <div class="display-ligne-espace">
+                    <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                    <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
+                    <!-- Affichage du lien du site du propriétaire de l'offre -->
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                </div>
             </div>
     
         </section>
@@ -194,7 +196,7 @@ try {
                     <p>Tarifs non disponibles.</p>
                 <?php endif; ?>
                 </div>
-                <button>Accéder à la carte complète</button>
+                <button>Voir les tarifs supplémentaires</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
