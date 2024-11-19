@@ -322,7 +322,7 @@ else {
     $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
 
-    $id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
+    //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
     // Vérifier si l'id_compte est défini (s'il est connecté)
     if (!$id_compte) {
@@ -372,53 +372,54 @@ else {
         $stmt->bindParam(':id_compte', $id_compte);
 
         // Exécution de la requête
-        $stmt->execute();
+        //$stmt->execute();
 
+        print_r($requete);
 
-        // Récupérer l'ID retourné par la requête
-        $offre_id = $stmt->fetchColumn();
+        // // Récupérer l'ID retourné par la requête
+        // $offre_id = $stmt->fetchColumn();
 
-        // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-        $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (:offre_id, :prix)";
+        // // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
+        // $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (:offre_id, :prix)";
 
-        // Préparation de la requête pour la vue tarif
-        $stmt_tarif = $dbh->prepare($requete_tarif);
+        // // Préparation de la requête pour la vue tarif
+        // $stmt_tarif = $dbh->prepare($requete_tarif);
 
-        // Liaison des valeurs pour la vue tarif
-        $stmt_tarif->bindParam(':offre_id', $offre_id);
-        $stmt_tarif->bindParam(':prix', $prix);
+        // // Liaison des valeurs pour la vue tarif
+        // $stmt_tarif->bindParam(':offre_id', $offre_id);
+        // $stmt_tarif->bindParam(':prix', $prix);
 
-        // Exécution de la requête pour insérer dans la vue tarif
-        $stmt_tarif->execute();
+        // // Exécution de la requête pour insérer dans la vue tarif
+        // $stmt_tarif->execute();
 
-        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
+        // $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
 
-        // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
+        // // Préparation de la requête
+        // $stmt = $dbh->prepare($requete);
 
-        // Liaison des valeurs aux paramètres SQL
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':resume', $resume);
-        $stmt->bindParam(':ville', $ville);
+        // // Liaison des valeurs aux paramètres SQL
+        // $stmt->bindParam(':titre', $titre);
+        // $stmt->bindParam(':resume', $resume);
+        // $stmt->bindParam(':ville', $ville);
 
-        // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-        $stmt->execute();
+        // // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+        // $stmt->execute();
 
-        // Récupérer l'ID retourné par la requête
-        $offre_id = $stmt->fetchColumn();
+        // // Récupérer l'ID retourné par la requête
+        // $offre_id = $stmt->fetchColumn();
 
-        // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
-        $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
+        // // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
+        // $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
 
-        // Préparation de la requête pour la table image
-        $stmt_image = $dbh->prepare($requete_image);
+        // // Préparation de la requête pour la table image
+        // $stmt_image = $dbh->prepare($requete_image);
 
-        // Liaison des valeurs pour la table image
-        $stmt_image->bindParam(':id_offre', $offre_id);
-        $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
+        // // Liaison des valeurs pour la table image
+        // $stmt_image->bindParam(':id_offre', $offre_id);
+        // $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
 
-        // Exécution de la requête pour insérer dans la table image
-        $stmt_image->execute();
+        // // Exécution de la requête pour insérer dans la table image
+        // $stmt_image->execute();
 
         // Fermeture de la connexion
         $dbh = null;
