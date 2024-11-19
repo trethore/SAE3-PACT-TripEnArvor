@@ -217,7 +217,7 @@ if (isset($_SESSION['id'])) {
                     <p><?php 
                     // Préparation et exécution de la requête
                     $stmt2 = $conn->prepare($reqTypeOffre);
-                    $stmt2->bindParam(':id_offre', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt2->execute();
                     $row_type = $stmt2->fetch(PDO::FETCH_ASSOC);
 
