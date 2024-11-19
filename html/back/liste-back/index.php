@@ -218,6 +218,7 @@ if (isset($_SESSION['id'])) {
                     $stmt2 = $conn->prepare($reqTypeOffre);
                     $stmt2->bindParam(':id_offre', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
+                    $res2 = $stmt2->fetch();
 
                     // Vérification et récupération du résultat
                     $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
