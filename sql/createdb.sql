@@ -15,6 +15,12 @@ CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
 CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
 
 
+CREATE TABLE _date (
+    id_date     SERIAL,
+    date        TIMESTAMP NOT NULL
+);
+
+
 
 /* ##################################################################### */
 /*                                COMPTES                                */
@@ -219,16 +225,22 @@ CREATE TABLE _avis (
     nb_pouce_haut   INTEGER NOT NULL,
     nb_pouce_bas    INTEGER NOT NULL,
     contexte_visite contexte_visite_t NOT NULL,
+    publie_le       INTEGER NOT NULL,
+    visite_le       INTEGER NOT NULL,
     CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES compte_membre(id_compte)
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES compte_membre(id_compte),
+    CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
+    CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date),
 );
 
 
 CREATE TABLE _reponse (
-    id_avis INTEGER,
-    texte   VARCHAR NOT NULL,
+    id_avis     INTEGER,
+    texte       VARCHAR NOT NULL,
+    publie_le   INTEGER NOT NULL,
     CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _reponse_fk_avis PRIMARY KEY (id_avis) REFERENCES _avis(id_avis)
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
 
 
@@ -319,6 +331,28 @@ ALTER TABLE _compte
     ADD CONSTRAINT _compte_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
+
+
+/* ===================== OFFRE DATES MISE EN LIGNE ===================== */
+
+CREATE TABLE _offre_dates_mise_en_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_en_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ==================== OFFRE DATES MISE HORS LIGNE ==================== */
+
+CREATE TABLE _offre_dates_mise_hors_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_hors_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
 
 
 /* ====================== OFFRE SE SITUE ADRESSE ======================= */
