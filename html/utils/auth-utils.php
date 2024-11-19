@@ -2,7 +2,7 @@
     // Quelques fonctions pour savoir le compte d'un utilisateur
     include('../php/connect_params.php');
 
-    function isIdMemver($id) {
+    function isIdMember($id) {
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
