@@ -314,6 +314,7 @@ else {
     // include('../../php/connect_params.php');
 
     // Récupération des données du formulaire avec $_POST
+    print("hello0");
     $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
     $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
     $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
