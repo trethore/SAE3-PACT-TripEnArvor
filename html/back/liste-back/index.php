@@ -211,14 +211,13 @@ if (isset($_SESSION['id'])) {
                     ?>" alt="image offre">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
-                    Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
+                    Choix du type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
                     <p><?php 
                     // Préparation et exécution de la requête
-                    $stmt2 = $conn->prepare($sql);
-                    $stmt2->bind_param(':id_offre', $id_offre); // Lié à l'ID de l'offre
+                    $stmt2 = $conn->prepare($reqTypeOffre);
+                    $stmt2->bindParam(':id_offre', $id_offre); // Lié à l'ID de l'offre
                     $stmt2->execute();
-                    $res2 = $stmt2->get_result();
 
                     // Vérification et récupération du résultat
                     $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
