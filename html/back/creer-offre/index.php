@@ -347,7 +347,7 @@ else {
             $categorie = $_POST['lacat'];
         }
 
-        print($categorie);
+       // print($categorie);
         // Connexion à la base de données
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
