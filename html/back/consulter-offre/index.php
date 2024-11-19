@@ -28,7 +28,7 @@ try {
     // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
 
     // Requête SQL pour l'adresse
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = ?";
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
     $stmtAdresse = $dbh->prepare($reqAdresse);
     $stmtAdresse->execute([$id_offre_cible]);
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
