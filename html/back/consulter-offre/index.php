@@ -45,10 +45,12 @@ try {
                         END AS type_offre
                     FROM _offre o
                     WHERE o.id_offre = ?";
-    $stmtCategory = $dbh->prepare($reqTypeOffre);
-    $stmtCategory->execute([$id_offre_cible]);
-    $categoryResult = $stmtCategory->fetch();
-    $categorie = $categoryResult['offrespe'] ?? 'Inconnu';
+    $stmt2 = $dbh->prepare($reqTypeOffre);
+    $stmt2->execute([$id_offre_cible]);
+    $categorie = 'Inconnu';
+    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $categorie = $row_type['type_offre'];
+    }
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
