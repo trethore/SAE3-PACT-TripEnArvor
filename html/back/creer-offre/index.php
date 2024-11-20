@@ -388,7 +388,7 @@ else {
                 print "Erreur de categorie!";
                 die();
         }
-        print("categorie ".$categorie);
+        //print("categorie ".$categorie);
 
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
@@ -396,13 +396,13 @@ else {
         print($requete);
 
         // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
+        //$stmt = $dbh->prepare($requete);
 
         // Liaison des valeurs aux paramètres SQL
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':resume', $resume);
-        $stmt->bindParam(':ville', $ville);
-        $stmt->bindParam(':id_compte', $id_compte);
+        // $stmt->bindParam(':titre', $titre);
+        // $stmt->bindParam(':resume', $resume);
+        // $stmt->bindParam(':ville', $ville);
+        // $stmt->bindParam(':id_compte', $id_compte);
 
         // Exécution de la requête
         //$stmt->execute();
