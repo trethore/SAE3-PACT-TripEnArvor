@@ -10,7 +10,7 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte');
+    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from sae._compte');
     $stmt->execute();
     $result = $stmt->fetchAll();
     $dbh = null;

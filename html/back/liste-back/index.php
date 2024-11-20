@@ -34,7 +34,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 $result = $conn->query($reqOffre); 
 
 function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = :id_offre";
+    $sql = "SELECT 1 FROM sae._compte_professionnel WHERE id_compte = :id_offre";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$id_compte]);
     return $stmt->fetch() ? true : false;

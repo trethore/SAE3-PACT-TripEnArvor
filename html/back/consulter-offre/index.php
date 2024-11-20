@@ -11,25 +11,25 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer les informations de l'offre
-    $reqOffre = "SELECT * FROM _offre";
+    $reqOffre = "SELECT * FROM sae._offre";
     $stmt = $dbh->prepare($reqOffre);
     $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $reqAdresse = "SELECT * FROM sae._offre NATURAL JOIN sae._adresse";
     $stmtAdresse = $dbh->prepare($reqAdresse);
     $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    $reqCompte = "SELECT * FROM sae._offre NATURAL JOIN sae._compte";
     $stmtCompte = $dbh->prepare($reqCompte);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
+    $reqJour = "SELECT * FROM sae._offre NATURAL JOIN sae._horaires_du_jour";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
@@ -37,14 +37,14 @@ try {
     // Requête SQL pour récupérer le type de l'offre
     $reqTypeOffre = "SELECT 
                         CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
                         END AS type_offre
-                    FROM _offre o
+                    FROM sae._offre o
                     WHERE o.id_offre = ?";
     $stmt2 = $dbh->prepare($reqTypeOffre);
     $stmt2->execute([$id_offre_cible]);
