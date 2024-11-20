@@ -203,7 +203,7 @@ try {
                         <p>49</p>
                     </div>
                     
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                    <p>A partir de <span><?php echo htmlentities($tab["prix_offre"]) ?>€</span></p>
                 </a>
             </article>
             <?php } ?>
