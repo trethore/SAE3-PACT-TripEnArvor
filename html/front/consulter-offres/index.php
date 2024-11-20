@@ -41,6 +41,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style_HFF.css">
+    <link rel="stylesheet" href="/style/styleguide.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -176,28 +177,30 @@ try {
 
             foreach ($offres_for_page as $tab) {
             ?>
-            <div class="offre" onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
-                <div class="sous-offre">
-                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                    <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(/images/universel/photos/default-image.jpg) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
-                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                    <div class="bas-offre">
-                        <div class="etoiles">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <p class="nombre-notes">(120)</p>
+            <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>'">
+                <div class="offre">
+                    <div class="sous-offre">
+                        <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                        <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                        <img class="carte-offre" style="background: url(/images/universel/photos/default-image.jpg) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
+                        <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                        <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                        <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                        <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                        <div class="bas-offre">
+                            <div class="etoiles">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <p class="nombre-notes">(120)</p>
+                            </div>
+                            <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                         </div>
-                        <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                     </div>
                 </div>
-            </div>
+            </a>
             <?php
             }
             ?>
