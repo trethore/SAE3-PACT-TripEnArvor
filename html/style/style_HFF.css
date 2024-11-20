@@ -25,7 +25,7 @@ body {
 }
 
 header {
-	background: var(--gradient-vert);
+	background: var(--violet-principal);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -75,7 +75,7 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background: var(--gradient-vert);
+	background: var(--violet-principal);
 	width: 100%;
 	/* Chaque élément prend toute la largeur disponible */
 	min-height: auto;
@@ -163,12 +163,12 @@ footer {
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	font-size: 20px;
-	color: var(--vert-principale);
+	color: var(--violet-principal);
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .footer-bottom>a {
-	color: var(--vert-principale);
+	color: var(--violet-principal);
 }
 
 /* search component in header*/
