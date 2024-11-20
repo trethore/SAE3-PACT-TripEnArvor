@@ -13,8 +13,7 @@ try {
 
 startSession();
 if (isset($_SESSION["id"])) {
-    echo $_SESSION["id"];
-    //redirectToListOffreIfNecessary($_SESSION["id"]);
+    redirectToListOffreIfNecessary($_SESSION["id"]);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
