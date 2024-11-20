@@ -343,7 +343,7 @@ else {
     //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
     
-    //print($titre);
+    print($titre);
 
     $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
@@ -386,7 +386,7 @@ else {
                 $requete .= 'visite';
                 break;
             default:
-                print "Erreur de categorie!";
+                //print "Erreur de categorie!";
                 die();
         }
         //print("categorie ".$categorie);
