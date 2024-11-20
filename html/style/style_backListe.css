@@ -391,12 +391,12 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    left: 75% !important;
+    left: 68% !important;
 
     color: var(--noir);
 
     height: 37px;
-    width: 67.8px;
+    width: 90px;
 
     opacity: 73%;
 
