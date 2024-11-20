@@ -185,14 +185,11 @@ try {
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
                     <img src="/images/universel/photos/default-image.jpg" alt="image offre">
-                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <p><?php echo htmlentities($tab["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
                     <p> <?php echo htmlentities($tab['categorie']);?> </p>
-
-                    <!-- <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p> -->
-                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
 
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
@@ -205,12 +202,8 @@ try {
                         <img src="/images/universel/icones/etoile-pleine.png">
                         <p>49</p>
                     </div>
-                    <div>
-                        <p>Avis non lues : <span><b>4</b></span></p>
-                        <p>Avis non répondues : <span><b>1</b></span></p>
-                        <p>Avis blacklistés : <span><b>0</b></span></p>
-                    </div>
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                    
+                    <p>A partir de <span><?php echo htmlentities($tab["prix_offre"]) ?>€</span></p>
                 </a>
             </article>
             <?php } ?>

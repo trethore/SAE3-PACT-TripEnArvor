@@ -98,14 +98,13 @@ try {
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
-                <button class="carousel-btn prev">◀</button>
-                <div class="carousel-container">
-                    <img class="carousel-item" src="/images/universel/hotel_2.png" alt="Image 1">
+                <div class="carousel-images">
+                    <img src="image1.jpg" alt="Image 1">
+                    <img src="image2.jpg" alt="Image 2">
+                    <img src="image3.jpg" alt="Image 3">
                 </div>
-                <div class="carousel-container">
-                    <img class="carousel-item" src="/images/universel/hotel_2.png" alt="Image 2">
-                </div>
-                <button class="carousel-btn next">▶</button>
+                <button class="prev">⟨</button>
+                <button class="next">⟩</button>
             </div>
 
 
@@ -341,33 +340,35 @@ try {
             bouton2.style.filter = "blur(0px)";
         }
 
-        const carousel = document.querySelector(".carousel-container");
-        const items = document.querySelectorAll(".carousel-item");
-        const prevBtn = document.querySelector(".carousel-btn.prev");
-        const nextBtn = document.querySelector(".carousel-btn.next");
+        const images = document.querySelector('.carousel-images');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
 
         let currentIndex = 0;
 
-        function updateCarousel() {
-            const offset = -currentIndex * 100; // Calcule le décalage
-            carousel.style.transform = `translateX(${offset}%)`;
-            items.forEach((item, index) => {
-                item.classList.toggle("active", index === currentIndex);
-            });
+        // Gestion du clic sur le bouton "Suivant"
+        nextButton.addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex >= images.children.length) {
+            currentIndex = 0; // Revenir au début
         }
-
-        prevBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length; // Navigation circulaire
-            updateCarousel();
+        updateCarousel();
         });
 
-        nextBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % items.length; // Navigation circulaire
-            updateCarousel();
+        // Gestion du clic sur le bouton "Précédent"
+        prevButton.addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = images.children.length - 1; // Revenir à la fin
+        }
+        updateCarousel();
         });
 
-        updateCarousel(); // Initialisation
-
+        // Met à jour l'affichage du carrousel
+        function updateCarousel() {
+        const width = images.clientWidth;
+        images.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
 
     </script>
 
