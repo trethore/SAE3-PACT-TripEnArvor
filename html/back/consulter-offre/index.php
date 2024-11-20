@@ -100,9 +100,10 @@ try {
             <div class="carousel">
                 <button class="carousel-btn prev">◀</button>
                 <div class="carousel-container">
-                    <div class="carousel-item active">Slide 1</div>
-                    <div class="carousel-item">Slide 2</div>
-                    <div class="carousel-item">Slide 3</div>
+                    <img class="carousel-item active" src="/images/universel/hotel_2.png">
+                </div>
+                <div class="carousel-container">
+                    <img class="carousel-item active" src="/images/universel/hotel_2-1.png">
                 </div>
                 <button class="carousel-btn next">▶</button>
             </div>
