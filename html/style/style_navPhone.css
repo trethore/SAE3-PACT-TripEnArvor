@@ -1,5 +1,5 @@
 .telephone-nav{
-    position: sticky  ;
+    position: fixed  ;
     bottom: 0;
     background-color: black;
     width: 100%;
