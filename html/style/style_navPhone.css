@@ -1,5 +1,5 @@
 .telephone-nav {
-    background-color: var(----violet-principal);
+    background-color: var(--violet-principal);
     overflow: hidden;
     position: fixed;
     bottom: 0;
@@ -10,10 +10,12 @@
 .nav-content {
     display: flex;
     justify-content: space-around;
-    width: 100%;
+    width: 80%;
+    padding: 10px;
 }
 
 .nav-content > img {
-    width: 10px;
-    height: 10px;
+    width: 100px;
+    height: 100px;
+
 }
