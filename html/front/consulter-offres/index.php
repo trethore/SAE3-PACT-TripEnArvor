@@ -18,7 +18,7 @@ try {
                             WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
                         END AS offreSpe
-                        FROM _offre o
+                        FROM sae._offre o
                         WHERE o.id_offre = ?";
 
     $stmtCategory = $dbh->prepare($reqTypeOffre);
@@ -161,8 +161,8 @@ try {
         </article>
 
         <!-- Offres -->
-        <section class="section-offres">
-            <?php
+        <section class="lesOffres">
+        <?php
             $offers_per_page = 9;
 
             $total_offers = count($offres);
@@ -176,29 +176,49 @@ try {
 
             foreach ($offres_for_page as $tab) {
             ?>
-                <div class="sous-offre" onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
-                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                    <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(/images/universel/photos/default-image.jpg) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
-                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+
+            <article>
+                <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>'">
+                    <div class="lieu-offre"><?php echo htmlentities($tab["ville"]) ?></div>
+                    <div class="ouverture-offre">Ouvert</div>
+                    <!--------------------------------------- 
+                    Récuperer la premère image liée à l'offre 
+                    ---------------------------------------->
+                    <img src="/images/universel/photos/default-image.jpg" alt="image offre">
+                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <!---------------------------------------------------------------------------- 
+                    Choix du type de l'activité (Restaurant, parc, etc...)
+                    ------------------------------------------------------------------------------>
+                    <p> <?php echo htmlentities($tab['categorie']);?> </p>
+
+                    <!-- <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p> -->
                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                    <div class="bas-offre">
-                        <div class="etoiles">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                            <p class="nombre-notes">(120)</p>
-                        </div>
-                        <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
+
+                    <!-------------------------------------- 
+                    Affichage de la note globale de l'offre 
+                    ---------------------------------------->
+                    <div class="etoiles">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <p>49</p>
                     </div>
-                </div>
-            <?php
-            }
-            ?>
+                    <div>
+                        <p>Avis non lues : <span><b>4</b></span></p>
+                        <p>Avis non répondues : <span><b>1</b></span></p>
+                        <p>Avis blacklistés : <span><b>0</b></span></p>
+                    </div>
+                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                </a>
+            </article>
+            <?php } ?>
+            <!-------------------------------------- 
+            Pagination
+            ---------------------------------------->
+            <div class="pagination">
+            </div>
         </section>
 
         <!-- Pagination -->
