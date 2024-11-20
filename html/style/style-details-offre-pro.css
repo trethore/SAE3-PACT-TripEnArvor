@@ -14,11 +14,13 @@ body {
 
 h1 {
     font-size: 64px;
+    font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
 }
 
 h2 {
+    font-size: 36px;
     font-weight: bold;
     color: var(--orange-principale);
 }
@@ -69,6 +71,11 @@ a {
 
 .bloc-presentation > div > p {
     font-size: 32px;
+}
+
+.information-offre {
+    font-size: 32px;
+    font-weight: bold;
 }
 
 .display-ligne-espace {
@@ -327,7 +334,7 @@ a {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background: var(--gradient-orange);
+    background: var(--orange-principale);
     padding: 10px auto;
     border-radius: 15px;
     border: 0;
