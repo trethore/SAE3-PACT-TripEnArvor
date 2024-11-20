@@ -85,8 +85,7 @@ h3 {
     padding: 0.3em;
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    transform: translateY(-3.5em);
+    transform: translate(-50% , -3.5em);
     width: auto; 
     z-index: 1; 
 }
@@ -328,7 +327,7 @@ h3 {
     justify-content: space-between;
 }
 
-.offre {
+.sous-offre {
     position: relative;
     max-width: 379px;
     min-width: 379px;
@@ -345,7 +344,7 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
-.offre div {
+.sous-offre div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
