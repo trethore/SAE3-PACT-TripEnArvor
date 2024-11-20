@@ -368,7 +368,7 @@ else {
         // Début de la requête SQL
         $requete = "INSERT INTO offre_";
 
-        print($requete);
+        
         
         // Déterminer la table cible selon la catégorie
         switch ($categorie) {
@@ -393,7 +393,7 @@ else {
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
 
-        //print($requete);
+        print($requete);
 
         // Préparation de la requête
         $stmt = $dbh->prepare($requete);
