@@ -168,7 +168,7 @@ $result = $conn->query($reqOffre);
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row[])) ?>" alt="image offre">
+                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
                     <!--------------------------------------- 
                     Récuperer le titre liée à l'offre 
                     ---------------------------------------->
