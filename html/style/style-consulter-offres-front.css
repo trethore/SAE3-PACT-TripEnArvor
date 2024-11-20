@@ -393,7 +393,7 @@ h3 {
     position: absolute;
     left: 2%;
     right: 36%;
-    top: 42%;
+    top: 44%;
 
     margin-top: 1em;
 
@@ -427,7 +427,7 @@ h3 {
 .description-offre {
     position: absolute;
     left: 2%;
-    top: 60%;
+    top: 62%;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -441,7 +441,7 @@ h3 {
 .nom-offre {
     position: absolute;
     left: 73%;
-    top: 43%;
+    top: 45%;
 
     margin-top: 1em;
     margin-right: 1em;
