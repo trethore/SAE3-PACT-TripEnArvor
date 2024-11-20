@@ -157,13 +157,13 @@ $result = $conn->query($reqOffre);
         <section class="lesOffres">
             <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
-                <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
-                    <img src="<?php
+                    <img src="/images/universel/photos/<?php
                         // Préparer et exécuter la requête
                         $stmtIMG = $conn->prepare($reqIMG);
                         $stmtIMG->bindParam(':id_offre', $row['id_offre'], PDO::PARAM_INT);
@@ -177,7 +177,7 @@ $result = $conn->query($reqOffre);
                             echo htmlentities($image['lien_fichier']);
                         } else {
                             // Afficher une image par défaut
-                            echo htmlentities('/images/universel/photos/default-image.jpg');
+                            echo htmlentities('default-image.jpg');
                         }
                     ?>" alt="image offre">
                     <p><?php echo htmlentities($row["titre"]) ?></p>
@@ -222,7 +222,7 @@ $result = $conn->query($reqOffre);
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
                     <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
-                </div>
+                </a>
             </article>
             <?php } ?>
             <!-------------------------------------- 
