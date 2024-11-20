@@ -165,14 +165,17 @@ $result = $conn->query($reqOffre);
                 <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
+
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+
                     <!--------------------------------------- 
                     Récuperer le titre liée à l'offre 
                     ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
+
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
@@ -195,6 +198,7 @@ $result = $conn->query($reqOffre);
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
                     } ?>">
+
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
@@ -207,10 +211,25 @@ $result = $conn->query($reqOffre);
                         <p>49</p>
                     </div>
                     <div>
+                        <!-------------------------------------- 
+                        Affichage des avis non lues
+                        ---------------------------------------->
                         <p>Avis non lues : <span><b>4</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis non répondues
+                        ---------------------------------------->
                         <p>Avis non répondues : <span><b>1</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis blacklistés 
+                        ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
+
+                    <!-------------------------------------- 
+                    Affichage du prix 
+                    ---------------------------------------->  
                     <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
                 </a>
             </article>

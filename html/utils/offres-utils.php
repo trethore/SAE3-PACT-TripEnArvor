@@ -68,7 +68,37 @@
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
+    }
 
+    function getIMGbyId($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqIMG = "SELECT img.lien_fichier 
+            FROM sae._image img
+            JOIN sae._offre_contient_image oci 
+            ON img.lien_fichier = oci.id_image
+            WHERE oci.id_offre = :id_offre;";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
+            // Préparer et exécuter la requête
+            $stmtIMG = $conn->prepare($reqIMG);
+            $stmtIMG->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtIMG->execute();
+
+            // Récupérer toutes les images sous forme de tableau
+            $images = $stmtIMG->fetchAll(PDO::FETCH_COLUMN);
+
+            // Si aucune image trouvée, retourner une image par défaut
+            if (empty($images)) {
+                $images[] = 'default-image.jpg';
+            }
+
+            $conn = null;
+            return $images;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
     }
 ?>
