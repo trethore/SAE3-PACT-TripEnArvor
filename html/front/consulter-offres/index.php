@@ -260,11 +260,15 @@ try {
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const h2 = document.querySelector(".filtre-tri h2");
+            const filtreTri = document.querySelector(".filtre-tri");
             const fondFiltres = document.querySelector(".fond-filtres");
 
             h2.addEventListener("click", () => {
                 // Ajoute ou supprime la classe qui contrôle l'affichage
                 fondFiltres.classList.toggle("hidden");
+
+                // Toggle la classe pour cacher la bordure de .filtre-tri
+                filtreTri.classList.toggle("no-border");
             });
         });
     </script>
