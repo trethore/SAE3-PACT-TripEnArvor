@@ -68,7 +68,7 @@ try {
         ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
-            <div class="fond-filtres">
+            <div class="fond-filtres hidden">
                 <div>
                     <!-- Catégorie -->
                     <div class="categorie">
