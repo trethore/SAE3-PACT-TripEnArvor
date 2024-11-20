@@ -54,32 +54,10 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                ?>
-                    <script>
-                        window.onload = function() {
-                            window.location.href = 'https://redden.ventsdouest.dev/front/consulter-offres/';
-                        };
-                    </script>
-                <?php
+                    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                ?>
-                    <script>
-                        window.onload = function() {
-                            window.location.href = 'https://redden.ventsdouest.dev/back/liste-back/';
-                        };
-                    </script>
-                <?php
-                } else {
-                    ?>
-                    <script>
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    </script>
-                <?php
+                    redirectTo('https://redden.ventsdouest.dev/back/liste-back/');
                 }
-                ?>
-                <?php
             } else {
                 ?>
                     <script>
