@@ -369,12 +369,10 @@ h3 {
     align-items: center;
     justify-content: center;
 
-    right: 0;
-
     color: var(--noir);
 
     height: 37px;
-    width: auto;
+    width: 120px;
     padding: 0.2em;
 
     opacity: 73%;
