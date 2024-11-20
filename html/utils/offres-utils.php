@@ -22,8 +22,8 @@
                 $stmt = $conn->prepare($reqTypeOffre);
                 $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
                 $stmt->execute();
-                $type_offre = $stmt->fetch(PDO::FETCH_ASSOC);
-
+                $type_offre = $stmt->fetch(PDO::FETCH_COLUMN);
+                print_r($type_offre);
                 $conn = null;
                 return $type_offre;
             } catch(Exception $e) {
