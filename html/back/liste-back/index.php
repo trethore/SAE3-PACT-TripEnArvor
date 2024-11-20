@@ -1,5 +1,7 @@
 <?php
 include('../../php/connect_params.php');
+include('../../utils/offres-utils.php');
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
@@ -17,41 +19,9 @@ $reqIMG = "SELECT img.lien_fichier
             WHERE oci.id_offre = :id_offre
             LIMIT 1;";
 
-$reqTypeOffre = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc attraction'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS offreSpe
-                        FROM sae._offre o
-                        WHERE o.id_offre = :id_offre;";
-
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 $result = $conn->query($reqOffre); 
-
-function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = :id_offre";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$id_compte]);
-    return $stmt->fetch() ? true : false;
-}
-
-
-if (isset($_SESSION['id'])) {
-    $id_compte = $_SESSION['id'];
-    
-    if (checkCompteProfessionnel($conn, $id_compte)) {
-        echo "L'id_compte $id_compte est un compte professionnel.";
-    } else {
-        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
-    }
-} else {
-    checkCompteProfessionnel($conn, 1);
-}
 
 ?>
 <!DOCTYPE html>
@@ -214,19 +184,7 @@ if (isset($_SESSION['id'])) {
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
                     ------------------------------------------------------------------------------>
-                    <p> <?php
-                    // Préparation et exécution de la requête
-                    $stmt2 = $conn->prepare($reqTypeOffre);
-                    $stmt2->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
-                    $stmt2->execute();
-                    $row_type = $stmt2->fetch(PDO::FETCH_ASSOC);
-
-                    // Vérification et récupération du résultat
-                    $offreSpe = "Inconnu"; // Valeur par défault
-                    if ($row_type && isset($row_type['type_offre'])) {
-                        $offreSpe = $row_type['type_offre'];
-                    }
-                    echo htmlentities($offreSpe);?> </p>
+                    <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
