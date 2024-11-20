@@ -33,7 +33,7 @@ h2 {
 }
 
 a {
-    color: var(--blanc-leger);
+    color: var(--noir);
     text-decoration: underline;
 }
 
@@ -181,6 +181,10 @@ a {
         height: 20px;
     }
 
+    .display-ligne-espace > button {
+        font-size: 24px;
+    }
+
     .display-ligne-espace > a {
         color: var(--blanc-leger);
         text-decoration: none;
@@ -208,7 +212,7 @@ a {
     .bloc-tarif > button {
         color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 20px;
+        font-size: 24px;
         background-color: var(--orange-principale);
         padding: 10px 20px;
         border-radius: 15px;
