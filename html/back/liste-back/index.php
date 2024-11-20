@@ -1,6 +1,7 @@
 <?php
 include('../../php/connect_params.php');
 include('../../utils/offres-utils.php');
+include('../../utils/auth-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
