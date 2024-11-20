@@ -330,7 +330,7 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.5em;
     margin: 1em;
     border-radius: 15px;
 }
