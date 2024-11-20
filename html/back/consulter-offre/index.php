@@ -100,7 +100,7 @@ try {
             <div class="carousel">
                 <div class="carousel-images">
                     <img src="/images/hotel_2.png" alt="Image 1">
-                    <img src="/images/hotel_2-1.png" alt="Image 2">
+                    <img src="/images/hotel-2-1.png" alt="Image 2">
                     <img src="/images/hotel_2-3.png" alt="Image 3">
                 </div>
                 <button class="prev"><img src="/images/fleche-navigation-6-1.png" alt="Flèche navigation"></button>

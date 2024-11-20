@@ -113,7 +113,6 @@ a {
 
     .carousel {
         position: relative;
-        width: 80%;
         overflow: hidden;
         border-radius: 8px;
       }
@@ -132,10 +131,6 @@ a {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        border-radius: 50%;
         width: 40px;
         height: 40px;
         cursor: pointer;
@@ -150,7 +145,7 @@ a {
       }
       
       .caroussel > button:hover {
-        background: rgba(0, 0, 0, 0.7);
+        background: var(--orange-principale);
       }
     
 
