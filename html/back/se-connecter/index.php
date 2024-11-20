@@ -49,6 +49,7 @@ try {
                     $id = $entry['id_compte'];
                     $trouve = true;
                     $_SESSION['id'] = $id;
+                    break;
                 }
             }
 
@@ -61,13 +62,8 @@ try {
             } else {
                 unset($_POST["email"]);
                 unset($_POST["mdp"]);
-                ?>
-                    <script>
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    </script>
-                <?php
+                $loginFailed = true;
+
             }
         }
         ?>
@@ -104,5 +100,12 @@ try {
             window.location.href = lien;
         }
     </script>
+    <?php if (isset($loginFailed) && $loginFailed): ?>
+    <script>
+        alert("Invalid email or password.");
+        document.getElementById('email').value = "";
+        document.getElementById('mdp').value = "";
+    </script>
+    <?php endif; ?>
 </body>
 </html>
