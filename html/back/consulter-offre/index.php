@@ -99,13 +99,13 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
-                    <img src="/images/hotel_2.png" alt="Image 1">
-                    <img src="/images/hotel_2.png" alt="Image 1">
-                    <img src="/images/hotel_2.png" alt="Image 1">
-                    <img src="/images/hotel_2.png" alt="Image 1">
+                    <img src="/images/universel/photos/hotel_2_2.png" alt="Image 1">
+                    <img src="/images/universel/photos/hotel_2_3.png" alt="Image 1">
+                    <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
+                    <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
                 </div>
-                <button class="prev"><img src="/images/fleche-navigation-6-1.png" alt="Flèche navigation"></button>
-                <button class="next"><img src="/images/fleche-navigation-5-1.png" alt="Flèche navigation"></button>
+                <button class="prev"><img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation"></button>
+                <button class="next"><img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation"></button>
             </div>
 
 
