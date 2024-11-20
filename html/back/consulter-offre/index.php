@@ -128,7 +128,7 @@ try {
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <!-- Affichage du nombre d'avis de l'offre -->
-                <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
+                <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
                 <a href="#avis">Voir les avis</a>
             </div>
 
