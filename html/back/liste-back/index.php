@@ -197,7 +197,7 @@ $result = $conn->query($reqOffre);
                             break;
                         
                         case 'standard':
-                            echo htmlentities("/images/backffice/icones/payant.png");
+                            echo htmlentities("/images/backOffice/icones/payant.png");
                             break;
                             
                         case 'premium':
