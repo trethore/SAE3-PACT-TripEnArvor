@@ -116,6 +116,11 @@ a {
         transition: transform 0.5s ease-in-out;
         overflow: hidden; /* Empêche de voir les éléments hors de la zone visible */
     }
+
+    .carousel-container > img {
+        width: 50em;
+        height: 50em;
+    }
     
     .carousel-item {
         flex: 0 0 100%; /* Assure qu'un seul élément prend toute la largeur */
