@@ -15,7 +15,7 @@ body {
 	color: var(--noir);
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
+	align-items: center;
 	justify-content: space-between;
 	min-height: 100vh;
 	width: 100%;
@@ -34,7 +34,7 @@ header {
 	/* Chaque élément prend toute la largeur disponible */
 	min-height: auto;
 	/* La hauteur minimale dépend du contenu */
-	box-shadow: 0px 10px 30px #000000bf;
+	box-shadow: 0px 5px 10px #000000bf;
 	padding: 0 30px;
 }
 
@@ -44,6 +44,19 @@ header {
 }
 
 .text-wrapper-17 {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+	margin-right: auto;
+}
+
+.text-wrapper-17 > a {
 	font-family: "Inter", Helvetica;
 	font-weight: 400;
 	color: #ffffff;
@@ -236,4 +249,50 @@ footer {
 .cherchero {
 	height: 60px;
 	width: 60px;
+}
+
+
+#offre, #modif, #annuler, #quitter {
+    background-color: var(--blanc);
+    display: none;
+    border: 1px solid;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.close>button {
+    border-radius: 50px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+    border: none;
+    padding: 5px 35px 5px 35px;
+}
+
+.close {
+    display: flex;
+    justify-content: space-around;
+    border: none;
+}
+
+.bouton1 {
+    color: var(--violet-principal);
+    background-color: var(--blanc);
+}
+
+.bouton2 {
+    background-color: var(--violet-principal);
+    color: var(--blanc);
+    box-shadow: 1px 1px 1px var(--gris-etoile);
+    transition: box-shadow 0.3s ease; /* Ajout de la transition */
+}
+
+/* Animation lors du survol */
+.bouton2:hover {
+    box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
 }
