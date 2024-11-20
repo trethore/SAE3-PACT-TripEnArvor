@@ -153,9 +153,11 @@ if (!$submitted) {
             <br>
             <!-- spectacle -->
             <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"> personnes
+            <br>
             <!-- parc -->
             <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attraction">
             <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan">
+            <br>
             <!-- restaurant -->
              <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte">
 
