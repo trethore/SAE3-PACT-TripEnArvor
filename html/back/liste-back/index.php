@@ -192,11 +192,11 @@ $result = $conn->query($reqOffre);
                     <img src="
                     <?php
                     switch ($row["type_offre"]) {
-                        case 'gratuit':
+                        case 'gratuite':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
                         
-                        case 'payant':
+                        case 'standard':
                             echo htmlentities("/images/backffice/icones/payant.png");
                             break;
                             
