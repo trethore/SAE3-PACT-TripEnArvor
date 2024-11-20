@@ -67,8 +67,8 @@
 
 
     function redirectToListOffreIfNecessary($id) {
-        if (!isIdProPublique($id) && !isIdProPrivee($id)) {
+        if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
             redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
-        }
+        }        
     }
 ?>

@@ -92,7 +92,7 @@ if (!$submitted) {
                 </tr>
                 <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix">€</td>
                 <tr>
-                    <label for=""></label>
+                    <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td><td><input type="text" id="gammeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$"></td>
                 </tr>
                 <tr>
                     <td><label for="dispo">Disponibilité </label></td>
@@ -146,7 +146,21 @@ if (!$submitted) {
             </table>
         
             </div>
-            
+            <!-- activite, visite, spectacle -->
+            <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*">minutes
+            <!-- activité, parc -->
+            <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age"> an(s)
+            <br>
+            <!-- spectacle -->
+            <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"> personnes
+            <br>
+            <!-- parc -->
+            <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attraction">
+            <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan">
+            <br>
+            <!-- restaurant -->
+             <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte">
+
             <br>
             
             <h3>Tags de l'offre</h3>
@@ -329,7 +343,7 @@ else {
     //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
     
-    //print($titre);
+    print($titre);
 
     $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
@@ -354,7 +368,8 @@ else {
         // Début de la requête SQL
         $requete = "INSERT INTO offre_";
 
-        print($requete);
+        print($categorie); 
+        
         
         // Déterminer la table cible selon la catégorie
         switch ($categorie) {
@@ -371,24 +386,24 @@ else {
                 $requete .= 'visite';
                 break;
             default:
-                print "Erreur de categorie!";
+                //print "Erreur de categorie!";
                 die();
         }
-        print("categorie ".$categorie);
+        //print("categorie ".$categorie);
 
         // Construction de la requête SQL avec les champs et les valeurs
         $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
 
-        //print($requete);
+        print($requete);
 
         // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
+        //$stmt = $dbh->prepare($requete);
 
         // Liaison des valeurs aux paramètres SQL
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':resume', $resume);
-        $stmt->bindParam(':ville', $ville);
-        $stmt->bindParam(':id_compte', $id_compte);
+        // $stmt->bindParam(':titre', $titre);
+        // $stmt->bindParam(':resume', $resume);
+        // $stmt->bindParam(':ville', $ville);
+        // $stmt->bindParam(':id_compte', $id_compte);
 
         // Exécution de la requête
         //$stmt->execute();
@@ -461,8 +476,6 @@ else {
     <script>
         let type = document.getElementById('type');
         type.addEventListener('change', function() {
-            const type = this.value;
-            console.log(type);
             if (type == "premium") {
                 document.getElementById('options').style.display = 'block';
                 document.getElementById('tarifs').style.display = 'block';
@@ -475,7 +488,7 @@ else {
 
 
 
-        let categorie = document.getElementById('categorie');
+        let categorie = document.getElementByName('lacat');
         categorie.addEventListener('change', function() {
             if (categorie == "restaurant"){
                 document.getElementById("labelprix").innertext = 'Gamme de prix';

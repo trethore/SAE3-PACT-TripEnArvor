@@ -52,6 +52,7 @@ try {
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <link rel="stylesheet" href="/style/styleHFB.css"/>
     <link rel="stylesheet" href="/style/style-details-offre-pro.css"/>
+    <link rel="stylesheet" href="/style/style-navPhone.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -98,14 +99,16 @@ try {
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
-                <div class="carousel-container">
-                    <div class="carousel-item active"><img src="/images/universel/hotel_2.png"></div>
-                    <div class="carousel-item">Slide 2</div>
-                    <div class="carousel-item">Slide 3</div>
+                <div class="carousel-images">
+                    <img src="/images/hotel_2.png" alt="Image 1">
+                    <img src="/images/hotel_2.png" alt="Image 1">
+                    <img src="/images/hotel_2.png" alt="Image 1">
+                    <img src="/images/hotel_2.png" alt="Image 1">
                 </div>
-                <button class="carousel-btn prev">❮</button>
-                <button class="carousel-btn next">❯</button>
+                <button class="prev"><img src="/images/fleche-navigation-6-1.png" alt="Flèche navigation"></button>
+                <button class="next"><img src="/images/fleche-navigation-5-1.png" alt="Flèche navigation"></button>
             </div>
+
 
             <div class="display-ligne-espace">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
@@ -287,6 +290,9 @@ try {
         
     </footer>
 
+    <div class="telephone-nav">
+    </div>
+
     <script>
 
         let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
@@ -339,37 +345,35 @@ try {
             bouton2.style.filter = "blur(0px)";
         }
 
-        const carouselContainer = document.querySelector('.carousel-container');
-        const items = document.querySelectorAll('.carousel-item');
-        const prevButton = document.querySelector('.carousel-btn.prev');
-        const nextButton = document.querySelector('.carousel-btn.next');
+        const images = document.querySelector('.carousel-images');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
 
         let currentIndex = 0;
 
-        // Function to update the active slide
-        function updateCarousel(index) {
-            carouselContainer.style.transform = `translateX(-${index * 100}%)`;
-            items.forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
-        }
-
-        // Event listeners for buttons
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            updateCarousel(currentIndex);
-        });
-
+        // Gestion du clic sur le bouton "Suivant"
         nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel(currentIndex);
+        currentIndex++;
+        if (currentIndex >= images.children.length) {
+            currentIndex = 0; // Revenir au début
+        }
+        updateCarousel();
         });
 
-        // Semi-automatic: Move to the next slide every 5 seconds
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel(currentIndex);
-        }, 5000);
+        // Gestion du clic sur le bouton "Précédent"
+        prevButton.addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = images.children.length - 1; // Revenir à la fin
+        }
+        updateCarousel();
+        });
+
+        // Met à jour l'affichage du carrousel
+        function updateCarousel() {
+        const width = images.clientWidth;
+        images.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
 
     </script>
 

@@ -1,6 +1,9 @@
 <?php
-include('../../php/connect_params.php');
-include('../../utils/offres-utils.php');
+require_once('../../php/connect_params.php');
+require_once('../../utils/offres-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -8,16 +11,18 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+startSession();
+if (isset($_SESSION["id"])) {
+    redirectToListOffreIfNecessary($_SESSION["id"]);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
+
+
 /*******************
 Requete SQL préfaite
 ********************/
 $reqOffre = "SELECT * from sae._offre;";
-$reqIMG = "SELECT img.lien_fichier 
-            FROM sae._image img
-            JOIN sae._offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = :id_offre
-            LIMIT 1;";
 
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
@@ -163,23 +168,10 @@ $result = $conn->query($reqOffre);
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
-                    <img src="/images/universel/photos/<?php
-                        // Préparer et exécuter la requête
-                        $stmtIMG = $conn->prepare($reqIMG);
-                        $stmtIMG->bindParam(':id_offre', $row['id_offre'], PDO::PARAM_INT);
-                        $stmtIMG->execute();
-
-                        // Récupérer la première image
-                        $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
-
-                        if ($image && !empty($image['lien_fichier'])) {
-                            // Afficher l'image si elle existe
-                            echo htmlentities($image['lien_fichier']);
-                        } else {
-                            // Afficher une image par défaut
-                            echo htmlentities('default-image.jpg');
-                        }
-                    ?>" alt="image offre">
+                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+                    <!--------------------------------------- 
+                    Récuperer le titre liée à l'offre 
+                    ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
@@ -189,8 +181,7 @@ $result = $conn->query($reqOffre);
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src="
-                    <?php
+                    <img src=" <?php
                     switch ($row["type_offre"]) {
                         case 'gratuite':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
@@ -203,8 +194,7 @@ $result = $conn->query($reqOffre);
                         case 'premium':
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
-                    }
-                    ?>">
+                    } ?>">
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->

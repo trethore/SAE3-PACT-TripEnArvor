@@ -49,45 +49,21 @@ try {
                     $id = $entry['id_compte'];
                     $trouve = true;
                     $_SESSION['id'] = $id;
+                    break;
                 }
             }
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                ?>
-                    <script>
-                        window.onload = function() {
-                            window.location.href = 'https://redden.ventsdouest.dev/front/consulter-offres/';
-                        };
-                    </script>
-                <?php
+                    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                ?>
-                    <script>
-                        window.onload = function() {
-                            window.location.href = 'https://redden.ventsdouest.dev/back/liste-back/';
-                        };
-                    </script>
-                <?php
-                } else {
-                    ?>
-                    <script>
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    </script>
-                <?php
+                    redirectTo('https://redden.ventsdouest.dev/back/liste-back/');
                 }
-                ?>
-                <?php
             } else {
-                ?>
-                    <script>
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    </script>
-                <?php
+                unset($_POST["email"]);
+                unset($_POST["mdp"]);
+                $loginFailed = true;
+
             }
         }
         ?>
@@ -124,5 +100,12 @@ try {
             window.location.href = lien;
         }
     </script>
+    <?php if (isset($loginFailed) && $loginFailed): ?>
+    <script>
+        alert("Invalid email or password.");
+        document.getElementById('email').value = "";
+        document.getElementById('mdp').value = "";
+    </script>
+    <?php endif; ?>
 </body>
 </html>
