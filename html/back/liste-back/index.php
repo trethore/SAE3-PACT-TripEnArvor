@@ -10,8 +10,8 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-if (isset($_SESSION[$id])) {
-    redirectToListOffreIfNecessary($_SESSION[$id]);
+if (isset($_SESSION['id'])) {
+    redirectToListOffreIfNecessary($_SESSION['id']);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
