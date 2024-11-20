@@ -124,8 +124,8 @@ a {
       }
       
       .carousel-images img {
-        width: 100%;
-        height: 80%;
+        width: 1290px;
+        height: 400px;
         flex-shrink: 0;
       }
       
