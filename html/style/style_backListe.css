@@ -5,13 +5,12 @@
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
-    --bleu: rgba(47, 89, 82, 1);
-    --vert-principale: rgba(98, 107, 32, 1);
-    --vert-secondaire: rgba(152, 166, 50, 1);
+
     --marron: rgba(191, 140, 44, 1);
     --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
+
     --fond-bouton: rgba(217, 217, 217, 0.73);
   
     --mobile-star-size: 30px;
@@ -21,7 +20,6 @@
     --gris-etoile: rgba(128, 128, 128, 1);
     --gris: rgba(193, 192, 192, 1);
 
-    --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
     --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
   }
   
@@ -376,7 +374,8 @@ h3 {
     color: var(--noir);
 
     height: 37px;
-    width: 125px;
+    width: auto;
+    padding: 0.2em;
 
     opacity: 73%;
 
