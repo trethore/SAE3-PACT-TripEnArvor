@@ -239,6 +239,14 @@ $result = $conn->query($reqOffre);
             Pagination
             ---------------------------------------->
             <div class="pagination">
+            <?php if ($current_page > 1) { ?>
+                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
+            <?php } ?>
+            
+            <?php if ($current_page < $total_pages) { ?>
+                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
+            <?php } ?>
+            <div class="pagination">
             </div>
         </section>
     </main>

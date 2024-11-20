@@ -101,4 +101,34 @@
             die();
         }
     }
+
+    function isOpen() {
+        global $driver, $server, $dbname, $user, $pass;
+        // une offre est ouverte si sa date de fermeture est sup à la date d'ouverture
+        $reqDateOuv = "SELECT date_heure from sae._dates_mise_hors_ligne_offre where id_offre = :id_offre;";
+        $reqDateFer = "SELECT date_heure from sae._dates_mise_en_ligne_offre where id_offre = :id_offre;";
+
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+            // Préparer et exécuter les requêtes des dates d'ouverture
+            $stmtDateOuv = $conn->prepare($reqDateOuv);
+            $stmtDateOuv->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateOuv->execute();
+
+            // Préparer et exécuter les requêtes des dates de fermeture
+            $stmtDateFer = $conn->prepare($reqDateFer);
+            $stmtDateFer->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateFer->execute();
+
+            // Récupérer les dates d'ouvertures
+            $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
+            // Récupérer les dates de fermetures
+            $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
+            
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+    }
 ?>
