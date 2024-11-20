@@ -39,27 +39,27 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="../../style/style-consulter-offres-front.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
+    <link rel="stylesheet" href="/style/styles.css">
+    <link rel="stylesheet" href="/style/style_HFB.css">
+    <title>Liste de vos offres</title>
 </head>
 <body>
     <header>
-        <img class="logo" src="../../images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT</div>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="../../images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="../../images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="../../images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-
-    <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
 
     <!-- Conteneur principal -->
     <div class="conteneur">
+        <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
+
         <!-- Conteneur des filtres -->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
@@ -181,7 +181,7 @@ try {
 
             foreach ($offres_for_page as $tab) {
             ?>
-                <div class="offre">
+            <div class="offre" onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
@@ -217,31 +217,41 @@ try {
             <?php } ?>
         </div>
     </div>
+    
     <footer>
         <div class="footer-top">
-          <div class="footer-top-left">
+        <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
             <span class="footer-title">TripEnArmor</span>
-          </div>
-          <div class="footer-top-right">
+        </div>
+        <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('../../images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('../../images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/instagram.png');"></div></a>
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
             </div>
-          </div>
-    
-    
-          <!-- Barre en bas du footer incluse ici -->
-    
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
         </div>
         <div class="footer-bottom">
-          Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site - Conditions générales - ©
-          Redden’s, Inc.
+        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        Conditions générales - ©
+        Redden's, Inc.
         </div>
-      </footer>
+    </footer>
 </body>
 </html>
 
