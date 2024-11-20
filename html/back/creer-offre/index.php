@@ -343,7 +343,7 @@ else {
     //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
     
-    //print($titre);
+    print($titre);
 
     $id_compte = 'test';
     //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
@@ -368,6 +368,7 @@ else {
         // Début de la requête SQL
         $requete = "INSERT INTO offre_";
 
+        print($categorie); 
         
         
         // Déterminer la table cible selon la catégorie
@@ -385,7 +386,7 @@ else {
                 $requete .= 'visite';
                 break;
             default:
-                print "Erreur de categorie!";
+                //print "Erreur de categorie!";
                 die();
         }
         //print("categorie ".$categorie);

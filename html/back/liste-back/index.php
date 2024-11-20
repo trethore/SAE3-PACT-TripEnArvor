@@ -168,7 +168,7 @@ $result = $conn->query($reqOffre);
                     <!--------------------------------------- 
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
-                    <img src="/images/universel/photos/<?php getFirstIMG($row[]) ?>" alt="image offre">
+                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
                     <!--------------------------------------- 
                     Récuperer le titre liée à l'offre 
                     ---------------------------------------->
@@ -181,8 +181,7 @@ $result = $conn->query($reqOffre);
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src="
-                    <?php
+                    <img src=" <?php
                     switch ($row["type_offre"]) {
                         case 'gratuite':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
@@ -195,8 +194,7 @@ $result = $conn->query($reqOffre);
                         case 'premium':
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
-                    }
-                    ?>">
+                    } ?>">
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
