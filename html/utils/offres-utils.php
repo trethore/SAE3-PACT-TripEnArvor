@@ -59,7 +59,7 @@
                 $lienIMG = $image['lien_fichier'];
             } else {
                 // Afficher une image par défaut
-                echo htmlentities('default-image.jpg');
+                $lienIMG = 'default-image.jpg';
             }
 
             $conn = null;
