@@ -1,8 +1,8 @@
 <?php
-include('../../php/connect_params.php');
-include('../../utils/offres-utils.php');
-include('../../utils/auth-utils.php');
-include('../../utils/site-utils.php');
+require_once('../../php/connect_params.php');
+require_once('../../utils/offres-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
