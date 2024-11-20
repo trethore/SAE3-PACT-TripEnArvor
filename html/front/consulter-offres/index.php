@@ -1,5 +1,9 @@
 <?php
 include('../../php/connect_params.php');
+require_once('../../utils/offres-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -182,7 +186,7 @@ try {
                     <div class="sous-offre">
                         <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                         <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                        <img class="carte-offre" style="background: url(/images/universel/photos/default-image.jpg) center;">
+                        <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>) center;">
                         <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                         <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                         <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
