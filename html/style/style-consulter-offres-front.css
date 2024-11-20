@@ -556,4 +556,5 @@ h3 {
 
 .fond-filtres.hidden {
     max-height: 0; /* Rétractation */
+    border: none;
 }
