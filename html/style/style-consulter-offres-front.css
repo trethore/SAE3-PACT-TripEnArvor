@@ -328,7 +328,7 @@ h3 {
     justify-content: space-between;
 }
 
-.offre {
+.sous-offre {
     position: relative;
     max-width: 379px;
     min-width: 379px;
@@ -345,7 +345,7 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
-.offre div {
+.sous-offre div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
