@@ -10,6 +10,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+startSession();
 if (isset($_SESSION["id"])) {
     redirectToListOffreIfNecessary($_SESSION["id"]);
 } else {
@@ -167,6 +168,9 @@ $result = $conn->query($reqOffre);
                     Récuperer la premère image liée à l'offre 
                     ---------------------------------------->
                     <img src="/images/universel/photos/<?php getFirstIMG($row[]) ?>" alt="image offre">
+                    <!--------------------------------------- 
+                    Récuperer le titre liée à l'offre 
+                    ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
                     <!---------------------------------------------------------------------------- 
                     Choix du type de l'activité (Restaurant, parc, etc...)
