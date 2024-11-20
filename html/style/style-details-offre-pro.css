@@ -116,10 +116,6 @@ a {
         overflow: hidden;
         border-radius: 8px;
       }
-      
-    .carousel > img {
-        filter: sepia(100%) saturate(500%) hue-rotate(30deg);
-    }
 
     .carousel-images {
         display: flex;
@@ -133,7 +129,7 @@ a {
         flex-shrink: 0;
     }
       
-    .caroussel > a {
+    .caroussel > img {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -141,6 +137,7 @@ a {
         height: 40px;
         cursor: pointer;
         z-index: 100;
+        fill: var(--orange-principale);
     }
     
 
