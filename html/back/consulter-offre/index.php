@@ -290,12 +290,6 @@ try {
         
     </footer>
 
-    <div class="telephone-nav">
-    <img src="/images/frontOffice/icones/acceuil.png">
-    <img src="/images/frontOffice/icones/chercher.png">
-    <img src="/images/frontOffice/icones/utilisateur.png">
-    </div>
-
     <script>
 
         let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
