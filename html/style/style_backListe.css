@@ -345,7 +345,7 @@ h3 {
     margin-right: 4em;
 }
 
-.lesOffres article div {
+.lesOffres article a {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
@@ -356,7 +356,7 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
-.lesOffres article > div {
+.lesOffres article > a {
     border: 3px solid var(--orange-principale);
 }
 
@@ -407,7 +407,7 @@ h3 {
     border-radius: 20px !important;
 }
 
-.lesOffres article > div div + img {
+.lesOffres article > a div + img {
     position: absolute;
     width: 321px;
     height: 208px;
@@ -477,7 +477,7 @@ h3 {
     top: 40%!important;
 }
 
-.lesOffres article > div p + img {
+.lesOffres article > a p + img {
     width: 35px;
     height: 35px;
 }
