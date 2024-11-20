@@ -52,6 +52,7 @@ try {
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <link rel="stylesheet" href="/style/styleHFB.css"/>
     <link rel="stylesheet" href="/style/style-details-offre-pro.css"/>
+    <link rel="stylesheet" href="/style/style-navPhone.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -287,6 +288,9 @@ try {
         </div>
         
     </footer>
+
+    <div class="telephone-nav">
+    </div>
 
     <script>
 
