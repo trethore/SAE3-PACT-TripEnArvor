@@ -356,7 +356,7 @@ h3 {
 }
 
 .lesOffres article > a {
-    border: 3px solid var(--orange-principale);
+    border: 3px solid var(--violet-principal);
 }
 
 .lieu-offre {
@@ -492,7 +492,7 @@ h3 {
 }
 
 .lesOffres .etoiles + div + p {
-    background: var(--orange-principale);
+    background: var(--violet-principal);
     color: var(--blanc);
 
     position: absolute;
