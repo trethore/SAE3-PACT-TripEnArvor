@@ -1,5 +1,6 @@
 .telephone-nav{
     position: absolute;
     bottom: 0;
-    background-color: var(--noir);
+    background-color: black;
+    margin: 20px;
 }
