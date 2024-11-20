@@ -129,13 +129,14 @@ a {
         flex-shrink: 0;
       }
       
-      .caroussel > button {
+      .caroussel > a {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         width: 40px;
         height: 40px;
         cursor: pointer;
+        z-index: 100;
       }
       
 

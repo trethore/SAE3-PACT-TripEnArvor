@@ -104,8 +104,8 @@ try {
                     <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
                     <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
                 </div>
-                <button class="prev"><img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation"></button>
-                <button class="next"><img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation"></button>
+                <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
             </div>
 
 
