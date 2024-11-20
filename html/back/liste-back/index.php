@@ -166,7 +166,7 @@ $result = $conn->query($reqOffre);
                     <img src="<?php
                         // Préparer et exécuter la requête
                         $stmtIMG = $conn->prepare($reqIMG);
-                        $stmtIMG->bindParam(':id_offre', $id_row['id_offre'], PDO::PARAM_INT);
+                        $stmtIMG->bindParam(':id_offre', $row['id_offre'], PDO::PARAM_INT);
                         $stmtIMG->execute();
 
                         // Récupérer la première image
