@@ -1,8 +1,7 @@
 <?php
-// Démarrer la session
-session_start(); 
 
 include('../../php/connect_params.php');
+include('../../utils/offres-utils.php');
 
 // Connexion à la base de données
 try {
@@ -35,23 +34,7 @@ try {
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
-    $reqTypeOffre = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS type_offre
-                    FROM _offre o
-                    WHERE o.id_offre = ?";
-    $stmt2 = $dbh->prepare($reqTypeOffre);
-    $stmt2->execute([$id_offre_cible]);
-    $categorie = 'Inconnu';
-    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $categorie = $row_type['type_offre'];
-    }
+    $categorie = getTypeOffre($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -114,12 +97,14 @@ try {
         <section class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
-            <div class="galerie-images-presentation"> 
-                <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
-                <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
-                <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
-                <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">
-                <img src="/images/universel/photos/hotel_2_5.png" alt="Image 5">
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-item active">Slide 1</div>
+                    <div class="carousel-item">Slide 2</div>
+                    <div class="carousel-item">Slide 3</div>
+                </div>
+                <button class="carousel-btn prev">❮</button>
+                <button class="carousel-btn next">❯</button>
             </div>
 
             <div class="display-ligne-espace">
@@ -314,10 +299,6 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-    </script>
-
-    <script>
-
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
 
@@ -357,6 +338,38 @@ try {
             let bouton2 = document.getElementById('bouton2');
             bouton2.style.filter = "blur(0px)";
         }
+
+        const carouselContainer = document.querySelector('.carousel-container');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevButton = document.querySelector('.carousel-btn.prev');
+        const nextButton = document.querySelector('.carousel-btn.next');
+
+        let currentIndex = 0;
+
+        // Function to update the active slide
+        function updateCarousel(index) {
+            carouselContainer.style.transform = `translateX(-${index * 100}%)`;
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+
+        // Event listeners for buttons
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateCarousel(currentIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel(currentIndex);
+        });
+
+        // Semi-automatic: Move to the next slide every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel(currentIndex);
+        }, 5000);
 
     </script>
 
