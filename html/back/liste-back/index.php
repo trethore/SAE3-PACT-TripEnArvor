@@ -37,7 +37,7 @@ $result = $conn->query($reqOffre);
     <link rel="stylesheet" href="/style/style_backListe.css">
     <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/style-navPhone.css"/>
+    <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -278,9 +278,9 @@ $result = $conn->query($reqOffre);
     </footer>
 
     <div class="telephone-nav">
-    <img src="/images/frontOffice/icones/acceuil.png">
-    <img src="/images/frontOffice/icones/chercher.png">
-    <img src="/images/frontOffice/icones/utilisateur.png">
+        <img src="/images/frontOffice/icones/acceuil.png">
+        <img src="/images/frontOffice/icones/chercher.png">
+        <img src="/images/frontOffice/icones/utilisateur.png">
     </div>
 
 </body>
