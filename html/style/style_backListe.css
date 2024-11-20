@@ -345,7 +345,8 @@ h3 {
     margin-right: 4em;
 }
 
-.lesOffres article a {
+.lesOffres article a,
+.lesOffres article div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
