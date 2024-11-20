@@ -99,7 +99,7 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
                 <div class="carousel-container">
-                    <div class="carousel-item active">Slide 1</div>
+                    <div class="carousel-item active"><img src="/images/universel/hotel_2.png"></div>
                     <div class="carousel-item">Slide 2</div>
                     <div class="carousel-item">Slide 3</div>
                 </div>
