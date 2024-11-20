@@ -265,13 +265,6 @@ try {
             h2.addEventListener("click", () => {
                 // Ajoute ou supprime la classe qui contrôle l'affichage
                 fondFiltres.classList.toggle("hidden");
-
-                // Change le texte ou style si besoin
-                if (fondFiltres.classList.contains("hidden")) {
-                    h2.textContent = "Afficher les Filtres";
-                } else {
-                    h2.textContent = "Une Recherche en Particulier ? Filtrez !";
-                }
             });
         });
     </script>
