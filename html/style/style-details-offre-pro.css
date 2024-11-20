@@ -122,10 +122,7 @@ a {
         transition: transform 0.5s ease-in-out;
       }
       
-      .carousel-images img {
-        width: 100%;
-        flex-shrink: 0;
-      }
+
       
       .caroussel > button {
         position: absolute;
@@ -135,19 +132,7 @@ a {
         height: 40px;
         cursor: pointer;
       }
-      
-      .caroussel > button.prev {
-        left: 10px;
-      }
-      
-      .caroussel > button.next {
-        right: 10px;
-      }
-      
-      .caroussel > button:hover {
-        background: var(--orange-principale);
-      }
-    
+          
 
 /**********************************
         PREMIER DOUBLE BLOC                               
