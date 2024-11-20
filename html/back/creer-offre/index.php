@@ -368,6 +368,7 @@ else {
         // Début de la requête SQL
         $requete = "INSERT INTO offre_";
 
+        print($categorie); 
         
         
         // Déterminer la table cible selon la catégorie
