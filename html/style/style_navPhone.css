@@ -1,6 +1,6 @@
 .telephone-nav{
-    position: absolute  ;
+    position: sticky  ;
     bottom: 0;
     background-color: black;
-    width: max-content;
+    width: 100%;
 }

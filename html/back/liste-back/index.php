@@ -278,7 +278,7 @@ $result = $conn->query($reqOffre);
     </footer>
 
     <div class="telephone-nav">
-        <img src="/images/frontOffice/icones/acceuil.png">
+        <img src="/images/frontOffice/icones/accueil.png">
         <img src="/images/frontOffice/icones/chercher.png">
         <img src="/images/frontOffice/icones/utilisateur.png">
     </div>
