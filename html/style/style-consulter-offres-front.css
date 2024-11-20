@@ -381,14 +381,12 @@ h3 {
 
 .carte-offre {
     position: absolute;
-    width: 339px;
+    width: 321px;
     height: 208px;
+    margin: 0.5em;
     left: auto;
     top: auto;
-
-    margin: 0.5em;
-
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .titre-offre {
