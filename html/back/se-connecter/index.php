@@ -59,6 +59,8 @@ try {
                     redirectTo('https://redden.ventsdouest.dev/back/liste-back/');
                 }
             } else {
+                unset($_POST["email"]);
+                unset($_POST["mdp"]);
                 ?>
                     <script>
                         setTimeout(() => {
