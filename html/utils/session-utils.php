@@ -8,6 +8,7 @@
     }
     function endSession() {
         session_destroy();
+        redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
     }
 
     function checkAuth() {
