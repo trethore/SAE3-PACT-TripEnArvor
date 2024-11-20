@@ -8,24 +8,26 @@
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
-    color: var(--blanc-leger);
+    color: var(--noir);
     background: var(--blanc-leger);
 }
 
 h1 {
     font-size: 64px;
     text-align: center;
+    color: var(--orange-principale);
 }
 
 h2 {
     font-weight: bold;
+    color: var(--orange-principale);
 }
 
 .fond-blocs {
-    background: var(--gradient-orange);    
+    background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
     padding: 30px;
-    border-radius: 15px;
+    
 }
 
 a {
@@ -51,9 +53,8 @@ a {
 }
 
 .bouton-modifier > div > button {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
-    border: 1px solid var(--noir);
+    background: var(--orange-principale);
+    color: var(--blanc);
     text-decoration: none;
     font-size: 40px;
     padding: 10px 80px;
@@ -61,9 +62,9 @@ a {
 }
 
 .bouton-modifier > div > button:hover {
-    color: var(--blanc-leger);
-    background: var(--orange-principale);
-    border: 1px solid var(--noir);
+    color: var(--orange-principale);
+    background: var(--blanc);
+    border: 3px solid var(--orange-principale);
 }
 
 .bloc-presentation > div > p {
@@ -91,19 +92,19 @@ a {
 }
 
 .display-ligne-espace > button {
-    color: var(--orange-principale);
+    color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background-color: var(--blanc-leger);
+    background-color: var(--orange-principale);
     padding: 10px 80px;
     border-radius: 15px;
     border: 0;
 }
 
 .display-ligne-espace > button:hover {
-    color: var(--blanc-leger);
-    background: var(--orange-secondaire-2);
-    border: 1px solid var(--blanc-leger);
+    color: var(--orange-principale);
+    background: var(--blanc-leger);
+    border: 3px solid var(--orange-principale);
 }
 
     /**********************************
@@ -194,6 +195,22 @@ a {
         height: 20px;
     }
 
+    .display-ligne-espace > a {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 40px;
+        background-color: var(--orange-principale);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+    
+    .display-ligne-espace > a:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+    }
+
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
 ***********************************/
@@ -203,19 +220,19 @@ a {
     ***************************/
 
     .bloc-tarif > button {
-        color: var(--orange-principale);
+        color: var(--blanc-leger);
         text-decoration: none;
         font-size: 20px;
-        background-color: var(--blanc-leger);
+        background-color: var(--orange-principale);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
     }
 
     .bloc-tarif > button:hover {
-        color: var(--blanc-leger);
-        background: var(--orange-secondaire-1);
-        border: 1px solid var(--blanc-leger);
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
     }
 
     .bloc-tarif {
@@ -351,11 +368,10 @@ footer > div > a {
 }
 
 #confirm {
-    background: var(--blanc-leger);
-    color: var(--noir);
+    background: var(--orange-principale);
+    color: var(--blanc);
     font-size: 20px;
     display: none;
-    border: 1px solid var(--noir);
     border-radius: 15px;
     text-align: center;
     width: fit-content;
@@ -368,11 +384,10 @@ footer > div > a {
 }
 
 #final {
-    background: var(--blanc-leger);
-    color: var(--noir);
+    background: var(--orange-principale);
+    color: var(--blanc);
     font-size: 32px;
     display: none;
-    border: 1px solid var(--noir);
     border-radius: 15px;
     text-align: center;
     width: fit-content;
@@ -441,4 +456,8 @@ footer > div > a {
 
 #caracteristiques {
     display: none;
+}
+
+.bordure {
+    border-bottom: 3px solid var(--orange-principale);
 }

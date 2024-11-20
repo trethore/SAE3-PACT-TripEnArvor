@@ -1,47 +1,33 @@
 <?php
-/*include('../../php/connect_params.php');*/
-
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';
+include('../../php/connect_params.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from offre_activite');
+    $stmt = $dbh->prepare('SELECT * from _offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
     $stmt->execute();
-    $result1 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result1);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_parc_attraction');
-    $stmt->execute();
-    $result2 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result2);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_restauration');
-    $stmt->execute();
-    $result3 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result3);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_spectacle');
-    $stmt->execute();
-    $result4 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result4);
-    echo "</pre>";
-    $stmt = $dbh->prepare('SELECT * from offre_visite');
-    $stmt->execute();
-    $result5 = $stmt->fetchAll();
-    echo "<pre>";
-    print_r($result5);
-    echo "</pre>";
-    $dbh = null;
+    $offres = $stmt->fetchAll();
+
+    $reqTypeOffre = "SELECT 
+                        CASE
+                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
+                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            ELSE 'Inconnu'
+                        END AS offreSpe
+                        FROM _offre o
+                        WHERE o.id_offre = ?";
+
+    $stmtCategory = $dbh->prepare($reqTypeOffre);
+
+    foreach ($offres as &$offre) {
+        $stmtCategory->execute([$offre['id_offre']]);
+        $categoryResult = $stmtCategory->fetch();
+        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -198,22 +184,22 @@ try {
                 <div class="offre">
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                    <div class="ouverture-offre"><?php echo $tab["ouvert"] ?></div>
-                    <img class="carte-offre">
+                    <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                    <img class="carte-offre" style="background: url(../../images/universel/photos/default-image.png) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                    <p class="categorie-offre"><?php echo $tab["categorie"] ?></p>
-                    <p class="description-offre"><?php echo $tab["desc"] . " " ?><span>En savoir plus</span></p>
-                    <p class="nom-offre"><?php echo $tab["nom_pro"] ?></p>
+                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="/html/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="../../images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="../../images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
-                        <p class="prix">A partir de <span>80€</span></p>
+                        <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                     </div>
                 </div>
             </div>
@@ -240,10 +226,10 @@ try {
           <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('/html/images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('/html/images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('/html/images/universel/icones/instagram.png');"></div></a>
+              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('../../images/universel/icones/x.png');"></div></a>
+              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('../../images/universel/icones/facebook.png');"></div></a>
+              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/youtube.png');"></div></a>
+              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/instagram.png');"></div></a>
             </div>
           </div>
     
@@ -258,3 +244,5 @@ try {
       </footer>
 </body>
 </html>
+
+<?php $dbh = null; ?>

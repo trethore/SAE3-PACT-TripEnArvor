@@ -4,31 +4,37 @@ session_start();
 
 include('../../php/connect_params.php');
 
-/*
-$server = 'postgresdb';
-$driver = 'pgsql';
-$dbname = 'sae';
-$user   = 'sae';
-$pass	= 'naviguer-vag1n-eNTendes';*/
-
 // Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
-    // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "SELECT *
-                FROM _offre WHERE id_offre = ?";
+    // Requête SQL pour récupérer les informations de l'offre
+    $reqOffre = "SELECT * FROM _offre";
     $stmt = $dbh->prepare($reqOffre);
-    $stmt->execute([$id_offre_cible]);
+    $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Stocker certaines données dans la session
-    // $_SESSION['offre_titre'] = $offre['titre'];
-    // $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    // Requête SQL pour récupérer les informations de l'adresse de l'offre
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->execute();
+    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour le type d'offre
+    // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
+    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    $stmtCompte = $dbh->prepare($reqCompte);
+    $stmtCompte->execute();
+    $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+
+    // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
+    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
+    $stmtJour = $dbh->prepare($reqJour);
+    $stmtJour->execute();
+    $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
+
+    // Requête SQL pour récupérer le type de l'offre
     $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
@@ -42,9 +48,9 @@ try {
                     WHERE o.id_offre = ?";
     $stmt2 = $dbh->prepare($reqTypeOffre);
     $stmt2->execute([$id_offre_cible]);
-    $offreSpe = 'Inconnu';
+    $categorie = 'Inconnu';
     if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $offreSpe = $row_type['type_offre'];
+        $categorie = $row_type['type_offre'];
     }
 
 } catch (PDOException $e) {
@@ -84,8 +90,8 @@ try {
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="display-ligne-espace bouton-modifier">
-        <p class="transparent">.</p> 
+    <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
+    <div class="display-ligne-espace bouton-modifier"> 
         <div>
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
@@ -101,12 +107,13 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
+        <p class="transparent">.</p>
     </div>
 
     <main id="body">
-        <section class="fond-blocs">
-
-            <h1><?php echo htmlentities($titre ?? 'Type d\'offre inconnu'); ?></h1>
+        <section class="fond-blocs bordure">
+            <!-- Affichage du titre de l'offre -->
+            <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="galerie-images-presentation"> 
                 <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
                 <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
@@ -116,10 +123,10 @@ try {
             </div>
 
             <div class="display-ligne-espace">
-                <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
-                <!-- Afficher l'adresse de l'offre et sa ville -->
-                <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
+                <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
+                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <!-- Affichage de l'adresse de l'offre -->
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -128,15 +135,15 @@ try {
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <!-- Afficher le nombre d'avis de l'offre -->
+                <!-- Affichage du nombre d'avis de l'offre -->
                 <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
                 <a href="#avis">Voir les avis</a>
             </div>
 
             <div class="display-ligne-espace">
-                <!-- Afficher le nom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
-                <!-- Afficher le prix de l'offre -->
+                <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
+                <p>Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
+                <!-- Affichage du prix de l'offre -->
                 <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
 
@@ -153,26 +160,28 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($titre); ?></h2> 
-                <!-- Afficher le bloc résumant l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['resume'])); ?></p>
-                <!-- Afficher le lien du site internet de l'entreprise -->
-                <a href="<?php echo htmlentities($offre['site_web']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
-                <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
+                <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                <!-- Affichage du résumé de l'offre -->
+                <p><?php echo htmlentities($offre['resume']); ?></p>
+                <div class="display-ligne-espace">
+                    <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                    <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
+                    <!-- Affichage du lien du site du propriétaire de l'offre -->
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                </div>
             </div>
     
         </section>
 
-        <section class="fond-blocs">
+        <section class="fond-blocs bordure">
 
             <h2>Description détaillée de l'offre :</h2>
-            <!-- Afficher la description détaillée de l'offre -->
+            <!-- Affichage de la description détaillée de l'offre -->
             <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
 
         </section>
 
-        <section class="double-blocs">
+        <section class="double-blocs bordure">
 
             <div class="fond-blocs bloc-tarif">
                 <div>
@@ -187,18 +196,18 @@ try {
                     <p>Tarifs non disponibles.</p>
                 <?php endif; ?>
                 </div>
-                <button>Accéder à la carte complète</button>
+                <button>Voir les tarifs supplémentaires</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <!-- Afficher les horaires de l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['horaires'])); ?></p>
+                <!-- Affichage des horaires d'ouverture de l'offre -->
+                <p><?php echo nl2br(htmlentities($jour['nom_jour'] . " : ")); ?></p>
             </div> 
     
         </section>
 
-        <section id="carte" class="fond-blocs">
+        <section id="carte" class="fond-blocs bordure">
 
             <h1>Localisation</h1>
             <div id="map" class="carte"></div>

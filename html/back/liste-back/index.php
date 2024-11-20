@@ -67,7 +67,7 @@ if (isset($_SESSION['id'])) {
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
