@@ -5,17 +5,17 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from _offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
+    $stmt = $dbh->prepare('SELECT * from sae._offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
     $reqTypeOffre = "SELECT 
                         CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
                         END AS offreSpe
                         FROM _offre o
@@ -39,28 +39,28 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulter vos offres</title>
-    <link rel="stylesheet" href="../../style/style-consulter-offres-front.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
+    <title>Liste de vos offres</title>
 </head>
 <body>
     <header>
-        <img class="logo" src="../../images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT</div>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="../../images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="../../images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="../../images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
-
     <!-- Conteneur principal -->
-    <div class="conteneur">
-        <!-- Conteneur des filtres -->
+    <main>
+        <h1>Liste des Offres Disponibles</h1>
+        <!--------------- 
+        Filtrer et trier
+        ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
             <div class="fond-filtres">
@@ -160,11 +160,6 @@ try {
             </div>
         </article>
 
-        <!-- Carte 
-        <div class="conteneur-carte">
-            <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div> -->
-
         <!-- Offres -->
         <section class="section-offres">
             <?php
@@ -181,22 +176,22 @@ try {
 
             foreach ($offres_for_page as $tab) {
             ?>
-                <div class="offre">
+            <div class="offre" onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
                 <div class="sous-offre">
                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                     <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                    <img class="carte-offre" style="background: url(../../images/universel/photos/default-image.png) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
+                    <img class="carte-offre" style="background: url(/images/universel/photos/default-image.jpg) center; position: absolute; width: 339px; height: 208px; left: auto; top: auto; background-size: cover; border-radius: 5px 5px 0px 0px;">
                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                     <div class="bas-offre">
                         <div class="etoiles">
-                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="../../images/frontOffice/etoile-pleine.png">
-                            <img class="etoile" src="../../images/frontOffice/etoile-vide.png">
-                            <img class="etoile" src="../../images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                             <p class="nombre-notes">(120)</p>
                         </div>
                         <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
@@ -207,6 +202,8 @@ try {
             }
             ?>
         </section>
+
+        <!-- Pagination -->
         <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
@@ -216,32 +213,42 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </div>
+    </main>
+
     <footer>
         <div class="footer-top">
-          <div class="footer-top-left">
+        <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
             <span class="footer-title">TripEnArmor</span>
-          </div>
-          <div class="footer-top-right">
+        </div>
+        <div class="footer-top-right">
             <span class="footer-connect">Restons connectés !</span>
             <div class="social-icons">
-              <a href="https://x.com/?locale=fr"><div class="social-icon" style="background-image: url('../../images/universel/icones/x.png');"></div></a>
-              <a href="https://www.facebook.com/?locale=fr_FR"><div class="social-icon" style="background-image: url('../../images/universel/icones/facebook.png');"></div></a>
-              <a href="https://www.youtube.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/youtube.png');"></div></a>
-              <a href="https://www.instagram.com/"><div class="social-icon" style="background-image: url('../../images/universel/icones/instagram.png');"></div></a>
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
             </div>
-          </div>
-    
-    
-          <!-- Barre en bas du footer incluse ici -->
-    
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
         </div>
         <div class="footer-bottom">
-          Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site - Conditions générales - ©
-          Redden’s, Inc.
+        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        Conditions générales - ©
+        Redden's, Inc.
         </div>
-      </footer>
+    </footer>
 </body>
 </html>
 

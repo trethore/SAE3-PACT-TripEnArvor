@@ -473,10 +473,12 @@ else {
         })
 
 
+
+
         let categorie = document.getElementById('categorie');
         categorie.addEventListener('change', function() {
             if (categorie == "restaurant"){
-                document.getElementById("labelprix").replace("Prix minimal", 'Gamme de prix')
+                document.getElementById("labelprix").innertext = 'Gamme de prix';
             }
         })
 

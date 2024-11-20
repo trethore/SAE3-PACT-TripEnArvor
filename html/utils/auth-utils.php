@@ -1,7 +1,7 @@
 <?php 
     // Quelques fonctions pour savoir le compte d'un utilisateur
     include('/var/www/html/php/connect_params.php');
-
+    include('/var/www/html/utils/site-utils.php');
     function isIdMember($id) {
         global $driver, $server, $dbname, $user, $pass;
         try {
@@ -62,6 +62,13 @@
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
+        }
+    }
+
+
+    function redirectToListOffreIfNecessary($id) {
+        if (!isIdProPublique($id) && !isIdProPrivee($id)) {
+            redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
         }
     }
 ?>
