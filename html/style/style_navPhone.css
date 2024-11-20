@@ -1,5 +1,5 @@
 .telephone-nav {
-    background-color: var(--violet-principal);
+    background: var(--violet-principal);
     overflow: hidden;
     position: fixed;
     bottom: 0;
