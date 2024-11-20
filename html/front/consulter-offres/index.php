@@ -5,17 +5,17 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from _offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
+    $stmt = $dbh->prepare('SELECT * from sae._offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
     $reqTypeOffre = "SELECT 
                         CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''attraction'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
                             ELSE 'Inconnu'
                         END AS offreSpe
                         FROM _offre o
@@ -41,7 +41,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/styles.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -57,10 +57,11 @@ try {
     </header>
 
     <!-- Conteneur principal -->
-    <div class="conteneur">
-        <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
-
-        <!-- Conteneur des filtres -->
+    <main>
+        <h1>Liste des Offres Disponibles</h1>
+        <!--------------- 
+        Filtrer et trier
+        ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
             <div class="fond-filtres">
@@ -160,11 +161,6 @@ try {
             </div>
         </article>
 
-        <!-- Carte 
-        <div class="conteneur-carte">
-            <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div> -->
-
         <!-- Offres -->
         <section class="section-offres">
             <?php
@@ -207,6 +203,8 @@ try {
             }
             ?>
         </section>
+
+        <!-- Pagination -->
         <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
@@ -216,8 +214,8 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </div>
-    
+    </main>
+
     <footer>
         <div class="footer-top">
         <div class="footer-top-left">

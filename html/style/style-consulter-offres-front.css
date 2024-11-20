@@ -6,10 +6,10 @@
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
     --bleu: rgba(47, 89, 82, 1);
-    --vert-principale: rgba(98, 107, 32, 1);
-    --vert-secondaire: rgba(152, 166, 50, 1);
+    --violet-principal: rgba(74, 23, 116, 1);
+    --violet-secondaire: rgba(145, 115, 225, 1);
     --marron: rgba(191, 140, 44, 1);
-    --orange-principale: rgba(217, 102, 54, 1);
+    --violet-principal: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
     --fond-bouton: rgba(217, 217, 217, 0.73);
@@ -39,10 +39,10 @@ body {
 h1 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     background: var(--blanc-leger);
     border-radius: 15px;
-    border: 3px solid var(--orange-principale);
+    border: 3px solid var(--violet-principal);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -74,13 +74,13 @@ h3 {
     
     background: var(--blanc-leger);
     border-radius: 15px;
-    border:3px solid var(--orange-principale);
+    border:3px solid var(--violet-principal);
 }
 
 .filtre-tri > h2 {
     color: var(--blanc-leger);
     text-align: center;
-    background-color: var(--orange-principale);
+    background-color: var(--violet-principal);
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
@@ -189,7 +189,7 @@ h3 {
 
 .filtre-tri h3 {
     margin: 0 0 0.1em;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
 }
 
 .filtre-tri label {
@@ -224,7 +224,7 @@ h3 {
     padding: 0 0 0 2em;
     font-size: 20px;
     font-weight: 500;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
 }
 
 .filtre-tri .trier > div  div div div {
