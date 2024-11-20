@@ -41,7 +41,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/styles.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -57,10 +57,11 @@ try {
     </header>
 
     <!-- Conteneur principal -->
-    <div class="conteneur">
-        <h1 class="titre-liste-offres">Liste des Offres Disponibles</h1>
-
-        <!-- Conteneur des filtres -->
+    <main>
+        <h1>Liste des Offres Disponibles</h1>
+        <!--------------- 
+        Filtrer et trier
+        ----------------->
         <article class="filtre-tri">
             <h2>Une Recherche en Particulier ? Filtrez !</h2>
             <div class="fond-filtres">
@@ -160,11 +161,6 @@ try {
             </div>
         </article>
 
-        <!-- Carte 
-        <div class="conteneur-carte">
-            <div class="carte" style="width: 100%; height: 400px;"></div>
-        </div> -->
-
         <!-- Offres -->
         <section class="section-offres">
             <?php
@@ -207,6 +203,8 @@ try {
             }
             ?>
         </section>
+
+        <!-- Pagination -->
         <div class="pagination">
             <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
@@ -216,8 +214,8 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </div>
-    
+    </main>
+
     <footer>
         <div class="footer-top">
         <div class="footer-top-left">
