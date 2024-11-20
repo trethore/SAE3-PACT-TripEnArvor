@@ -111,53 +111,50 @@ a {
             IMAGES PRÉSENTATION                
     **********************************/
 
-    .carousel-container {
+    .carousel {
+        position: relative;
+        width: 80%;
+        max-width: 600px;
+        overflow: hidden;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+      }
+      
+      .carousel-images {
         display: flex;
         transition: transform 0.5s ease-in-out;
-        overflow: hidden; /* Empêche de voir les éléments hors de la zone visible */
-    }
-
-    .carousel-container > img {
-        width: 50em;
-        height: 50em;
-    }
-    
-    .carousel-item {
-        flex: 0 0 100%; /* Assure qu'un seul élément prend toute la largeur */
-        text-align: center;
-        font-size: 2rem;
-        background-color: #ddd;
-        padding: 20px;
-        box-sizing: border-box;
-        opacity: 1;
-        transition: opacity 0.5s ease-in-out;
-    }
-    
-    .carousel-item:not(.active) {
-        opacity: 0.5; /* Rendre les éléments non actifs plus discrets */
-        pointer-events: none; /* Empêche les interactions avec les éléments non actifs */
-    }
-    
-    .carousel-btn {
+      }
+      
+      .carousel-images img {
+        width: 100%;
+        flex-shrink: 0;
+      }
+      
+      .caroussel > button {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
         color: white;
         border: none;
-        padding: 10px;
-        cursor: pointer;
         border-radius: 50%;
-        z-index: 10; /* Assure que les boutons sont au-dessus des items */
-    }
-    
-    .carousel-btn.prev {
-        left: 20px; /* Ajuste la position à gauche */
-    }
-    
-    .carousel-btn.next {
-        right: 20px; /* Ajuste la position à droite */
-    }
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+      
+      .caroussel > button.prev {
+        left: 10px;
+      }
+      
+      .caroussel > button.next {
+        right: 10px;
+      }
+      
+      .caroussel > button:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
     
 
 /**********************************
