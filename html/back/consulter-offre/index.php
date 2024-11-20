@@ -98,14 +98,15 @@ try {
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
+                <button class="carousel-btn prev">◀</button>
                 <div class="carousel-container">
-                    <div class="carousel-item active"><img src="/images/universel/hotel_2.png"></div>
+                    <div class="carousel-item active">Slide 1</div>
                     <div class="carousel-item">Slide 2</div>
                     <div class="carousel-item">Slide 3</div>
                 </div>
-                <button class="carousel-btn prev">❮</button>
-                <button class="carousel-btn next">❯</button>
+                <button class="carousel-btn next">▶</button>
             </div>
+
 
             <div class="display-ligne-espace">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
@@ -339,37 +340,33 @@ try {
             bouton2.style.filter = "blur(0px)";
         }
 
-        const carouselContainer = document.querySelector('.carousel-container');
-        const items = document.querySelectorAll('.carousel-item');
-        const prevButton = document.querySelector('.carousel-btn.prev');
-        const nextButton = document.querySelector('.carousel-btn.next');
+        const carousel = document.querySelector(".carousel-container");
+        const items = document.querySelectorAll(".carousel-item");
+        const prevBtn = document.querySelector(".carousel-btn.prev");
+        const nextBtn = document.querySelector(".carousel-btn.next");
 
         let currentIndex = 0;
 
-        // Function to update the active slide
-        function updateCarousel(index) {
-            carouselContainer.style.transform = `translateX(-${index * 100}%)`;
-            items.forEach((item, i) => {
-                item.classList.toggle('active', i === index);
+        function updateCarousel() {
+            const offset = -currentIndex * 100; // Calcule le décalage
+            carousel.style.transform = `translateX(${offset}%)`;
+            items.forEach((item, index) => {
+                item.classList.toggle("active", index === currentIndex);
             });
         }
 
-        // Event listeners for buttons
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            updateCarousel(currentIndex);
+        prevBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + items.length) % items.length; // Navigation circulaire
+            updateCarousel();
         });
 
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel(currentIndex);
+        nextBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % items.length; // Navigation circulaire
+            updateCarousel();
         });
 
-        // Semi-automatic: Move to the next slide every 5 seconds
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel(currentIndex);
-        }, 5000);
+        updateCarousel(); // Initialisation
+
 
     </script>
 

@@ -114,19 +114,23 @@ a {
     .carousel-container {
         display: flex;
         transition: transform 0.5s ease-in-out;
+        overflow: hidden; /* Empêche de voir les éléments hors de la zone visible */
     }
     
     .carousel-item {
-        min-width: 100%;
+        flex: 0 0 100%; /* Assure qu'un seul élément prend toute la largeur */
         text-align: center;
         font-size: 2rem;
         background-color: #ddd;
         padding: 20px;
         box-sizing: border-box;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
     }
     
     .carousel-item:not(.active) {
-        opacity: 0.5;
+        opacity: 0.5; /* Rendre les éléments non actifs plus discrets */
+        pointer-events: none; /* Empêche les interactions avec les éléments non actifs */
     }
     
     .carousel-btn {
@@ -139,15 +143,17 @@ a {
         padding: 10px;
         cursor: pointer;
         border-radius: 50%;
+        z-index: 10; /* Assure que les boutons sont au-dessus des items */
     }
     
     .carousel-btn.prev {
-        left: 10px;
+        left: 20px; /* Ajuste la position à gauche */
     }
     
     .carousel-btn.next {
-        right: 10px;
+        right: 20px; /* Ajuste la position à droite */
     }
+    
 
 /**********************************
         PREMIER DOUBLE BLOC                               
