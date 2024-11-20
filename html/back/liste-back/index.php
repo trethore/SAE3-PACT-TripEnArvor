@@ -2,6 +2,7 @@
 include('../../php/connect_params.php');
 include('../../utils/offres-utils.php');
 include('../../utils/auth-utils.php');
+include('../../utils/site-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -9,7 +10,12 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-redirectToListOffreIfNecessary($_SESSION[$id]);
+if (isset($_SESSION[$id])) {
+    redirectToListOffreIfNecessary($_SESSION[$id]);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
+
 
 /*******************
 Requete SQL préfaite
