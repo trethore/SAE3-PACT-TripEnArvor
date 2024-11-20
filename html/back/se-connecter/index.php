@@ -1,8 +1,11 @@
 <?php
+include('../../php/connect_params.php');
+include('../../utils/auth-utils.php');
+
 if (session_status() == PHP_SESSION_NONE){
     session_start();
 }
-include('../../connect_params.php');
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -33,12 +36,10 @@ try {
         <!-- Titres -->
         <h1>Se connecter</h1>
         <h2>Vous n'avez pas de compte ? <a href="#">Créez votre compte</a></h2>
-        <br>
-        <br>
-        <br>
+
         <!-- Formulaire -->
         <?php
-        if (isset($_POST["email"])) {
+        if (isset($_POST["email"]) && isset($_POST["mdp"])) {
             $trouve = false;
             $emailUtilisateur = $_POST["email"];
             $mdpUtilisateur = $_POST["mdp"];
@@ -52,13 +53,32 @@ try {
             }
 
             if ($trouve) {
-                echo "Utilisateur trouvé";
+                if (isIdMember($id)) {
                 ?>
                     <script>
+                        window.onload = function() {
+                            window.location.href = 'https://redden.ventsdouest.dev/front/consulter-offres/';
+                        };
+                    </script>
+                <?php
+                } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+                ?>
+                    <script>
+                        window.onload = function() {
+                            window.location.href = 'https://redden.ventsdouest.dev/back/liste-back/';
+                        };
+                    </script>
+                <?php
+                } else {
+                    ?>
+                    <script>
                         setTimeout(() => {
-                            window.location.href = "/back/liste-back/";
+                            window.location.reload();
                         }, 100);
                     </script>
+                <?php
+                }
+                ?>
                 <?php
             } else {
                 ?>
@@ -69,39 +89,39 @@ try {
                     </script>
                 <?php
             }
-        } else {
+        }
         ?>
         <form action="/back/se-connecter/" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
-            <br>
+
             <section>
                 <label for="mdp">Quel est votre mot de passe ?</label>
                 <article>
-                    <input type="checkbox" id="toggle" onclick="myFunction()">
+                    <input type="checkbox" id="toggle" onclick="hidePassword()">
                     <label for="toggle">Afficher</label>
                 </article>
             </section>
             <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required/>
-            <br>
-            <br>
-            <br>
+
             <!-- Boutons -->
             <input type="submit" value="Connexion">
         </form>
-        <?php
-        }
-        ?>
+      
     </main>
     <!-- Script pour afficher ou non le mot de passe -->
     <script>
-        function myFunction() {
+        function hidePassword() {
             var x = document.getElementById("mdp");
             if (x.type === "password") {
                 x.type = "text";
             } else {
                 x.type = "password";
             }
+        }
+
+        function redirect(lien) {
+            window.location.href = lien;
         }
     </script>
 </body>
