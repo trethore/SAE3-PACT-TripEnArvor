@@ -353,7 +353,7 @@ h3 {
     background: #EAE2DA;
     border-radius: 15px 15px 10px 10px;
 
-    border: 3px solid var(--violet-principale);
+    border: 3px solid var(--violet-principal);
 }
 
 .lieu-offre {
@@ -478,7 +478,7 @@ h3 {
 }
 
 .offre span {
-    color: var(--violet-principale);
+    color: var(--violet-principal);
     text-decoration: underline;
 }
 
@@ -512,7 +512,7 @@ h3 {
 }
 
 .prix {
-    background: var(--violet-principale);
+    background: var(--violet-principal);
     color: var(--blanc);
 
     position: absolute;
@@ -547,7 +547,7 @@ h3 {
 
 .pagination-btn {
     background-color: var(--blanc-leger);
-    color: var(--violet-principale);
+    color: var(--violet-principal);
     padding: 5px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -563,6 +563,6 @@ h3 {
 }
 
 .pagination-btn:hover {
-    background-color: var(--violet-principale);
+    background-color: var(--violet-principal);
     color: var(--blanc-leger);
 }
