@@ -104,8 +104,10 @@ try {
                     <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
                     <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
                 </div>
-                <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                <div class="display-ligne-espace">
+                    <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
+                    <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                </div>
             </div>
 
 

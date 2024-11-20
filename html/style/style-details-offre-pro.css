@@ -129,16 +129,7 @@ a {
         flex-shrink: 0;
     }
       
-    .caroussel > img {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        z-index: 100;
-        fill: var(--orange-principale);
-    }
+
     
 
 /**********************************
