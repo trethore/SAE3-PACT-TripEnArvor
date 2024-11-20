@@ -1,5 +1,5 @@
 .telephone-nav{
-    display: block;
+    position: absolute;
     bottom: 0;
     background-color: var(--noir);
 }
