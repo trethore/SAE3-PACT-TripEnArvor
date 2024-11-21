@@ -151,6 +151,10 @@ a {
     }
 
     .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 3px solid var(--orange-principale);
+        border-bottom: 3px solid var(--orange-principale);
+        font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
@@ -166,6 +170,7 @@ a {
 
     .bloc-caracteristique {
         flex: 1.75; 
+        border-right: 3px solid var(--orange-principale);
     }
 
     /****************************
