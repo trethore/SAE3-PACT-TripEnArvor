@@ -6,6 +6,7 @@
     left: 0;
     width: 100%;
     border-top: 10px red;
+    border-right: 20px red;
 }
 
 .nav-content {
@@ -18,4 +19,10 @@
 .nav-content > img {
     width: 10%;
     height: 10%;
+}
+
+@media only screen and (min-width: 900px) {
+	.telephone-nav {
+        display: none;
+    }
 }
