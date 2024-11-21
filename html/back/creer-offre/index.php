@@ -376,8 +376,8 @@ else {
     if (isset($_POST['prix'])) {
         $prixmin = $_POST['prix'];
     }
-    if (isset($_POST['photo1'])) {
-        $photo1 = $_FILE['photo1'];
+    if (isset($_POST['photo'])) {
+        $photo1 = $_FILE['photo'];
     }
     if (isset($_POST['duree'])) {
         $duree = $_POST['duree'];
@@ -393,7 +393,7 @@ else {
         $capacite = $_POST['capacite'];
     }
     
-    print $_FILE['photo1'];
+    print $_FILE['photo'];
 
     // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
     // $type = isset($_POST['type']) ? $_POST['type'] : '';

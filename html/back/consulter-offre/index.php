@@ -151,7 +151,7 @@ try {
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
-                        <li><?php echo htmlentities($tag); ?></li>
+                        <li><?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } ?>
                 </ul>
             </div> 
