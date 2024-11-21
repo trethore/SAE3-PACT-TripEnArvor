@@ -1,26 +1,4 @@
-<?php
-require_once('../../php/connect_params.php');
-require_once('../../utils/offres-utils.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
 
-try {
-    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
-
-startSession();
-if (isset($_SESSION["id"])) {
-    redirectToListOffreIfNecessary($_SESSION["id"]);
-} else {
-    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
-}
-
-$reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
