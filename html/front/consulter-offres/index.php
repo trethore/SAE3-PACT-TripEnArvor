@@ -168,22 +168,17 @@ try {
         <!-- Offres -->
         <section class="section-offres">
             <?php
-                $offers_per_page = 9;
+            $offers_per_page = 9;
 
-                $total_offers = count($offres);
-                $total_pages = ceil($total_offers / $offers_per_page);
-    
-                $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    
-                $offset = ($current_page - 1) * $offers_per_page;
-    
-                $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-                
-                if (empty($offres_for_page)) {
-            ?>
-                <p class="message-vide">Aucune offre ne convient à ces filtres</p>
-            <?php } else { ?>
-            <?php
+            $total_offers = count($offres);
+            $total_pages = ceil($total_offers / $offers_per_page);
+
+            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+            $offset = ($current_page - 1) * $offers_per_page;
+
+            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
+
             foreach ($offres_for_page as $tab) {
             ?>
             <div class="offre">
@@ -210,8 +205,9 @@ try {
                     </a>
                 </div>
             </div>
-            <?php } ?>
-        <?php } ?>
+            <?php
+            }
+            ?>
         </section>
 
         <!-- Pagination -->
@@ -305,7 +301,7 @@ try {
                     }
 
                     // Filtre par prix
-                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice)) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice) || (price < filters.minPrice && price > filters.maxPrice)) {
                         matches = false;
                     }
 
