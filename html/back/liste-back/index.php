@@ -49,7 +49,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Une Recherche en Particulier ? Filtrez !</h2>
+            <h2>Filtres</h2>
             <div>
                 <div>
                     <!-- Catégorie -->
