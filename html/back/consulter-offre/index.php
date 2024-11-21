@@ -10,14 +10,16 @@ try {
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer les informations de l'offre
-    $reqOffre = "SELECT * FROM _offre";
+    $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
     $stmt = $dbh->prepare($reqOffre);
+    $stmtOffre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE id_offre = :id_offre";
     $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
