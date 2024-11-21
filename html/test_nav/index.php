@@ -61,14 +61,14 @@
     
 
 </body>
-<div class="trinagle" >
-    <img src="/images/frontOffice/icones/transparent.png">
-</div>
-<div class="telephone-nav">
+
+    <div class="telephone-nav">
+        <div class="bg">
+        </div>
         <div class="nav-content">
-        <img src="/images/frontOffice/icones/accueil.png">
-        <img src="/images/frontOffice/icones/chercher.png">
-        <img src="/images/frontOffice/icones/utilisateur.png">
+            <img src="/images/frontOffice/icones/accueil.png">
+            <img src="/images/frontOffice/icones/chercher.png">
+            <img src="/images/frontOffice/icones/utilisateur.png">
         </div>
     </div>
 </html>

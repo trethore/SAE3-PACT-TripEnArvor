@@ -1,16 +1,10 @@
 .telephone-nav {
-    background: rgba(74, 23, 116, 1);
     overflow: hidden;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
 }
-
-.trinagle {
-    background-color: rgba(74, 23, 116, 1);
-   }
-
 .nav-content {
     display: flex;
     justify-content: space-around;
@@ -23,11 +17,14 @@
     height: 10%;
 }
 
+.bg {
+    position: absolute;
+    background: rgba(74, 23, 116, 1);
+    transform: rotate(-4deg),scale(200%);
+}
+
 @media only screen and (min-width: 900px) {
 	.telephone-nav {
-        display: none;
-    }
-    .trinagle {
         display: none;
     }
 }
