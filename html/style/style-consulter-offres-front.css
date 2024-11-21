@@ -21,7 +21,6 @@ h1 {
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
-    width: 1234px;
 }
 
 h2 {
@@ -38,8 +37,6 @@ h3 {
     color: var(--noir);
 }
 
-
-
 /***************************
     LES FILTRES ET TRIS
 ****************************/
@@ -47,8 +44,6 @@ h3 {
     position: relative;
     margin: 1em;
     padding: 3em 2em 1em;
-
-    width: 1234px;
     
     background: var(--blanc-leger);
     border-radius: 15px;
@@ -563,9 +558,9 @@ h3 {
     transition: max-height 0.5s ease-out;
 }
 
-.no-offers {
+.no-offers-message {
     text-align: center;
-    font-size: 1.5rem;
-    color: var(--noir-noir);
-    margin: 2rem 0;
+    color: #555;
+    font-size: 1.2em;
+    margin: 20px 0;
 }
