@@ -105,6 +105,7 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
+        <p class="transparent">.</p>
     </div>
 
     <main id="body">
