@@ -167,21 +167,23 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <?php if (empty($offres_for_page)) { ?>
+            <?php
+                $offers_per_page = 9;
+
+                $total_offers = count($offres);
+                $total_pages = ceil($total_offers / $offers_per_page);
+    
+                $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    
+                $offset = ($current_page - 1) * $offers_per_page;
+    
+                $offres_for_page = array_slice($offres, $offset, $offers_per_page);
+                
+                if (empty($offres_for_page)) {
+            ?>
                 <p class="message-vide">Aucune offre ne convient à ces filtres</p>
             <?php } else { ?>
             <?php
-            $offers_per_page = 9;
-
-            $total_offers = count($offres);
-            $total_pages = ceil($total_offers / $offers_per_page);
-
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-            $offset = ($current_page - 1) * $offers_per_page;
-
-            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-
             foreach ($offres_for_page as $tab) {
             ?>
             <div class="offre">
