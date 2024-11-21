@@ -36,7 +36,7 @@ try {
     $reqTags = "SELECT nom_tag FROM _offre NATURAL JOIN _offre_possede_tag";
     $stmtTags = $dbh->prepare($reqTags);
     $stmtTags->execute();
-    $tags = $stmtTags->fetch(PDO::FETCH_ASSOC);
+    $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
     $categorie = getTypeOffre($id_offre_cible);
