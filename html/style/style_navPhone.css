@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 5% 10% 5% 10%;
+    padding: 10px 15% 10px 15%;
 }
 
 .nav-content > img {
