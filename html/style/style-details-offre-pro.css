@@ -378,6 +378,7 @@ footer > div > a {
 
 #confirm {
     background: var(--blanc-leger);
+    border: 3px solid var(--noir);
     color: var(--noir);
     font-size: 20px;
     display: none;
@@ -394,6 +395,7 @@ footer > div > a {
 
 #final {
     background: var(--blanc-leger);
+    border: 3px solid var(--noir);
     color: var(--noir);
     font-size: 32px;
     display: none;

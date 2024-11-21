@@ -22,8 +22,9 @@ try {
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
     $stmtCompte = $dbh->prepare($reqCompte);
+    $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
