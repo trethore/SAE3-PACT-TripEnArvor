@@ -24,11 +24,6 @@ body {
 	margin: 0;
 }
 
-@media only screen and (max-width: 900px) {
-	header {
-	  display: none;
-	}
-  }
 header {
 	background: var(--gradient-orange);
 	display: flex;
@@ -300,4 +295,13 @@ footer {
 /* Animation lors du survol */
 .bouton2:hover {
     box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
+}
+
+@media only screen and (max-width: 900px) {
+	header {
+	  display: none;
+	}
+	footer {
+		display: none;
+	}
 }
