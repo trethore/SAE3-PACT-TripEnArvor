@@ -13,6 +13,14 @@ try {
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
+    $stmt3 = $dbh->prepare('SELECT * from sae._offre');
+    $stmt3->execute();
+    $test = $stmt3->fetchAll();
+    echo '<pre>';
+    echo $test;
+    echo $offres;
+    echo '</pre>';
+
     $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
