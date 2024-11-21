@@ -28,7 +28,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Liste de vos offres</title>
