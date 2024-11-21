@@ -90,8 +90,8 @@ try {
     </header>
 
     <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
-    <div class="display-ligne-espace bouton-modifier"> 
-        <div>
+    <div class="display-ligne-espace">
+        <div class="bouton-modifier"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
