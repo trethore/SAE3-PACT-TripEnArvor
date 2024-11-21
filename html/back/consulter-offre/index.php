@@ -33,10 +33,10 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
-    $reqTag = "SELECT * FROM _offre NATURAL JOIN _offre_possede_tag";
-    $stmtTag = $dbh->prepare($reqTag);
-    $stmtTag->execute();
-    $tag = $stmtTag->fetch(PDO::FETCH_ASSOC);
+    $reqTags = "SELECT * FROM _offre NATURAL JOIN _offre_possede_tag";
+    $stmtTags = $dbh->prepare($reqTags);
+    $stmtTags->execute();
+    $tags = $stmtTags->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
     $categorie = getTypeOffre($id_offre_cible);
@@ -150,9 +150,9 @@ try {
 
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <h2><?php echo(htmlentities($tag['nom_tag'])); ?></h2>
-                    <h2>Vue sur mer</h2>
-                    <h2>Service attentionné</h2>
+                    <?php foreach ($tags as $tag) { ?>
+                        <li><h2><?php echo(htmlentities($tag['nom_tag'])); ?></h2></li>
+                    <?php } ?>
                 </ul>
             </div> 
 
