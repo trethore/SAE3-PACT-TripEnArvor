@@ -559,3 +559,10 @@ h3 {
     max-height: 0; /* Rétractation */
     transition: max-height 0.5s ease-out;
 }
+
+.message-vide {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--noir);
+    margin: 20px 0;
+}

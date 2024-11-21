@@ -167,6 +167,9 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
+            <?php if (empty($offres_for_page)) { ?>
+                <p class="message-vide">Aucune offre ne convient à ces filtres</p>
+            <?php } else { ?>
             <?php
             $offers_per_page = 9;
 
@@ -205,9 +208,8 @@ try {
                     </a>
                 </div>
             </div>
-            <?php
-            }
-            ?>
+            <?php } ?>
+        <?php } ?>
         </section>
 
         <!-- Pagination -->
