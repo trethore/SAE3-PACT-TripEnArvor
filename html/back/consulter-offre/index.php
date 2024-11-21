@@ -33,7 +33,7 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
-    $reqTags = "SELECT * FROM _offre NATURAL JOIN _offre_possede_tag";
+    $reqTags = "SELECT nom_tag FROM _offre NATURAL JOIN _offre_possede_tag";
     $stmtTags = $dbh->prepare($reqTags);
     $stmtTags->execute();
     $tags = $stmtTags->fetch(PDO::FETCH_ASSOC);
@@ -151,7 +151,7 @@ try {
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
-                        <li><h2><?php echo htmlentities($tag['nom_tag']); ?></h2></li>
+                        <li><h2><?php echo htmlentities($tag); ?></h2></li>
                     <?php } ?>
                 </ul>
             </div> 
