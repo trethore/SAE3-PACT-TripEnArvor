@@ -114,6 +114,7 @@ try {
                     <?php foreach ($images as $image) { ?>
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
                     <?php } ?>
+                    <img src="images/universel/photos/hotel_2_2.png">
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
