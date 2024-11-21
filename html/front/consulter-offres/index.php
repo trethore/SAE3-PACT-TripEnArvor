@@ -180,7 +180,9 @@ try {
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
 
             if (empty($offres_for_page)) {
-                echo '<p class="no-offers">Aucune offre ne convient à ces filtres.</p>';
+            ?>
+                <p class="no-offers">Aucune offre ne convient à ces filtres.</p>
+            <?php
             } else {
 
                 foreach ($offres_for_page as $tab) {

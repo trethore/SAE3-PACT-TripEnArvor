@@ -59,7 +59,7 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 10%;
+    left: 5%;
     transform: translate(0, -3.5em);
     min-width: auto;
     z-index: 1;
@@ -563,6 +563,6 @@ h3 {
 .no-offers {
     text-align: center;
     font-size: 1.5rem;
-    color: #666;
+    color: var(--noir-noir);
     margin: 2rem 0;
 }
