@@ -18,15 +18,7 @@ if (isset($_SESSION["id"])) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-
-/*******************
-Requete SQL préfaite
-********************/
-$reqOffre = "SELECT * from sae._offre;";
-
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
-
-$result = $conn->query($reqOffre); 
 
 ?>
 <!DOCTYPE html>
@@ -160,25 +152,29 @@ $result = $conn->query($reqOffre);
             </div>
         </article>
         <section class="lesOffres">
-            <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
+            <?php 
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre->bindParam(':id_compte', $_SESSION["id"], PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
+                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
 
-                    <!--------------------------------------- 
-                    Récuperer la premère image liée à l'offre 
+                    <!---------------------------------------
+                    Récuperer la premère image liée à l'offre
                     ---------------------------------------->
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
-                    <!--------------------------------------- 
-                    Récuperer le titre liée à l'offre 
+                    <!---------------------------------------
+                    Récuperer le titre liée à l'offre
                     ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
 
-                    <!---------------------------------------------------------------------------- 
-                    Choix du type de l'activité (Restaurant, parc, etc...)
-                    ------------------------------------------------------------------------------>
+                    <!--------------------------------------------------------
+                    Choix du type de l'activité (Restaurant, parc, etc...
+                    --------------------------------------------------------->
                     <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 

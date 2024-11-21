@@ -1,6 +1,11 @@
 <?php 
     include('/var/www/html/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
+
+    function getCompteId() {
+        
+    }
+
     function getTypeOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqTypeOffre = "SELECT 
