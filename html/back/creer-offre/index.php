@@ -457,7 +457,7 @@ else {
         switch ($categorie) {
             case 'activite':
                 $requete .= "(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
-                print($requete),
+                print($requete);
                 $stmt = $dbh->prepare($requete);
                 //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
