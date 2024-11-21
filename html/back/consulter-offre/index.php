@@ -33,9 +33,21 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
-    $reqTags = "SELECT nom_tag FROM _offre NATURAL JOIN _offre_possede_tag";
+    // Updated SQL query to get tags for the specific offer
+    $reqTags = "SELECT nom_tag FROM _offre_possede_tag 
+                NATURAL JOIN _tag 
+                WHERE id_offre = :id_offre";
+
+    // Prepare the query
     $stmtTags = $dbh->prepare($reqTags);
+
+    // Bind the offer ID
+    $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+
+    // Execute the query
     $stmtTags->execute();
+
+    // Fetch all the tags for the specific offer
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
