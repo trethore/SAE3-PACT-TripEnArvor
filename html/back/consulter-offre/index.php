@@ -44,7 +44,7 @@ try {
     $categorie = getTypeOffre($id_offre_cible);
 
     //Requête SQL pour récuéprer les images de l'offre
-    $reqImages = "SELECT img.lien_fichier FROM sae._image imgJOIN sae._offre_contient_image oci ON img.lien_fichier = oci.id_image WHERE oci.id_offre = :id_offre;";
+    $reqImages = "SELECT img.lien_fichier FROM sae._image img JOIN sae._offre_contient_image oci ON img.lien_fichier = oci.id_image WHERE oci.id_offre = :id_offre;";
     $stmtImages = $dbh->prepare($reqImages);
     $stmtImages->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
     $stmtImages->execute();
