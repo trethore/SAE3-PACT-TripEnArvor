@@ -30,6 +30,7 @@ header {
 	align-items: center;
 	justify-content: end;
 	width: 100%;
+	width: max-content;
 	/* Chaque élément prend toute la largeur disponible */
 	min-height: auto;
 	/* La hauteur minimale dépend du contenu */
