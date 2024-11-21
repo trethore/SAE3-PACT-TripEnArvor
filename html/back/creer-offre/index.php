@@ -453,7 +453,7 @@ else {
 
         switch ($categorie) {
             case 'activite':
-                $requete .= "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre"
+                $requete .= "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
@@ -468,20 +468,20 @@ else {
                 $fichier_img = 'plan_'.$time.$file_extension;
                 }
                 
-                $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre"
+                $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                 break;
             
             case 'spectacle'
-                $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre"
+                $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                 break;
 
             case 'visite'
-                $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre"
+                $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree]);
                 break;
