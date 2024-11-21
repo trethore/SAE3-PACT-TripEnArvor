@@ -1,54 +1,25 @@
 <?php
-include('../../php/connect_params.php');
+require_once('../../php/connect_params.php');
+require_once('../../utils/offres-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-/*******************
-Requete SQL préfaite
-********************/
-$reqOffre = "SELECT * FROM sae._offre";
-$reqIMG = "SELECT img.lien_fichier 
-            FROM sae._image img
-            JOIN sae._offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = ?
-            LIMIT 1;";
-$reqTypeOffre = $sql = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS offreSpe
-                        FROM _offre o
-                        WHERE o.id_offre = ?";
-
-$result = $conn->query($reqOffre); 
-
-function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$id_compte]);
-    return $stmt->fetch() ? true : false;
-}
-
-
-if (isset($_SESSION['id'])) {
-    $id_compte = $_SESSION['id'];
-    
-    if (checkCompteProfessionnel($conn, $id_compte)) {
-        echo "L'id_compte $id_compte est un compte professionnel.";
-    } else {
-        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
-    }
+startSession();
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToListOffreIfNecessary($id_compte);
 } else {
-    checkCompteProfessionnel($conn, 1);
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
+
+$reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 ?>
 <!DOCTYPE html>
@@ -57,14 +28,13 @@ if (isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <title>Liste de vos offres</title>
 </head>
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -73,12 +43,12 @@ if (isset($_SESSION['id'])) {
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <h1>Liste de vos offre</h1>
+        <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Une Recherche en Particulier ? Filtrez !</h2>
+            <h2>Filtres</h2>
             <div>
                 <div>
                     <!-- Catégorie -->
@@ -181,80 +151,50 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </article>
-        <section class="lesOffres">
-            <?php
-            /* -----------------Gestion de la pagination -----------------------
-            $offers_per_page = 9;
-            $total_offers = count($offres);
-            $total_pages = ceil($total_offers / $offers_per_page);
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $offset = ($current_page - 1) * $offers_per_page;
-            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            ------------------------------------------------------------------ */
-            
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+        <section class="lesOffres"><?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
-            <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
-                    <!--------------------------------------- 
-                    Récuperer la premère image liée à l'offre 
-                    ----------------------------------------
-                    <img src="<?php
-                    /*
-                        // ID de l'offre pour récupérer la première image
-                        $id_offre_cible = $row["id_offre"];
+                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
 
-                        // Exécuter la requête
-                        $resIMG = $conn->query($reqIMG);
+                    <!---------------------------------------
+                    Récuperer la premère image liée à l'offre
+                    ---------------------------------------->
+                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
-                        // Récupérer la première image et l'afficher
-                        if ($resIMG->num_rows > 0) {
-                            $image = $resIMG->fetch(PDO::FETCH_ASSOC);
-                            echo htmlentities($image['lien_fichier']);
-                        } else {
-                            echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
-                        }**/
-                    ?>" alt="image offre">
-                    -->
+                    <!---------------------------------------
+                    Récuperer le titre liée à l'offre
+                    ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
-                    <!---------------------------------------------------------------------------- 
-                    Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
-                    ------------------------------------------------------------------------------>
-                    <p><?php 
-                    // Préparation et exécution de la requête
-                    $stmt2 = $con->prepare($sql);
-                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
-                    $stmt2->execute();
-                    $res2 = $stmt2->get_result();
 
-                    // Vérification et récupération du résultat
-                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
-                        $offreSpe = $row_type['type_offre'];
-                    }
-                    echo htmlentities($type_offre); ?></p>
+                    <!--------------------------------------------------------
+                    Choix du type de l'activité (Restaurant, parc, etc...
+                    --------------------------------------------------------->
+                    <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src="
-                    <?php
+                    <img src=" <?php
                     switch ($row["type_offre"]) {
-                        case 'gratuit':
+                        case 'gratuite':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
                         
-                        case 'payant':
-                            echo htmlentities("/images/backffice/icones/payant.png");
+                        case 'standard':
+                            echo htmlentities("/images/backOffice/icones/payant.png");
                             break;
                             
                         case 'premium':
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
-                    }
-                    ?>">
+                    } ?>">
+
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
@@ -267,26 +207,32 @@ if (isset($_SESSION['id'])) {
                         <p>49</p>
                     </div>
                     <div>
+                        <!-------------------------------------- 
+                        Affichage des avis non lues
+                        ---------------------------------------->
                         <p>Avis non lues : <span><b>4</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis non répondues
+                        ---------------------------------------->
                         <p>Avis non répondues : <span><b>1</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis blacklistés 
+                        ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?></span></p>
-                </div>
+
+                    <!-------------------------------------- 
+                    Affichage du prix 
+                    ---------------------------------------->  
+                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                </a>
             </article>
             <?php } ?>
             <!-------------------------------------- 
             Pagination
             ---------------------------------------->
-            <div class="pagination">
-            <?php if ($current_page > 1) { ?>
-                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
-                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
-        </div>
         </section>
     </main>
     <footer>
