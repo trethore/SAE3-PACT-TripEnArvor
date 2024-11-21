@@ -450,32 +450,6 @@ else {
         //print("categorie ".$categorie);
 
         
-        if($categorie !== "restautant") {
-
-            // Construction de la requête SQL avec les champs et les valeurs
-        $requete .= "(titre, resume, ville) VALUES (?, ?, ?) returning id_offre";
-
-        print($requete);
-
-        // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
-
-        // Exécution de la requête
-        $stmt->execute([$titre, $resume, $ville]);
-
-             // Récupérer l'ID retourné par la requête
-         $offre_id = $stmt->fetchColumn();
-
-         // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-          $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?)";
- 
-         // Préparation de la requête pour la vue tarif
-         $stmt_tarif = $dbh->prepare($requete_tarif);
- 
-         // Exécution de la requête pour insérer dans la vue tarif
-         $stmt_tarif->execute([$offre_id, $prix]);
-
-        }
 
         switch ($categorie) {
             case 'activite':
@@ -529,6 +503,21 @@ else {
                 die('erreur switch requete')
                 break;
         }
+
+        if($categorie !== "restautant") {
+
+            $offre_id = $stmt->fetchColumn();
+   
+            // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
+             $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?)";
+    
+            // Préparation de la requête pour la vue tarif
+            //$stmt_tarif = $dbh->prepare($requete_tarif);
+    
+            // Exécution de la requête pour insérer dans la vue tarif
+            //$stmt_tarif->execute([$offre_id, $prix]);
+   
+           }
 
         
         
