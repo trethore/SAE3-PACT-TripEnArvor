@@ -2,8 +2,24 @@
     include('/var/www/html/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
 
-    function getCompteId() {
-        
+    function getOffrebyIdCompte($id_compte) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            $lesOffres = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+
+            $conn = null;
+            return $lesOffres;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+
     }
 
     function getTypeOffre($id_offre) {

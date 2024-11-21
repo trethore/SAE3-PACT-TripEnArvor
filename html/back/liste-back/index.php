@@ -12,8 +12,9 @@ try {
 }
 
 startSession();
-if (isset($_SESSION["id"])) {
-    redirectToListOffreIfNecessary($_SESSION["id"]);
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToListOffreIfNecessary($id_compte);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
@@ -152,11 +153,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             </div>
         </article>
         <section class="lesOffres">
-            <?php 
-            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-            $stmtOffre->bindParam(':id_compte', $_SESSION["id"], PDO::PARAM_INT);
-            $stmtOffre->execute();
-            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
+            <?php while(getOffrebyIdCompte($id_compte)) { ?>
             <article>
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
@@ -241,8 +238,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             <?php if ($current_page < $total_pages) { ?>
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
-            <div class="pagination">
-            </div>
         </section>
     </main>
     <footer>
