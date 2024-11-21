@@ -162,7 +162,7 @@ $result = $conn->query($reqOffre);
         <section class="lesOffres">
             <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
-                <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
 
