@@ -377,7 +377,7 @@ else {
         $prixmin = $_POST['prix'];
     }
     if (isset($_POST['photo1'])) {
-        $photo1 = $_POST['photo1'];
+        $photo1 = $_FILE['photo1'];
     }
     if (isset($_POST['duree'])) {
         $duree = $_POST['duree'];
@@ -393,7 +393,7 @@ else {
         $capacite = $_POST['capacite'];
     }
     
-    print $_FILE['1'];
+    print $_FILE['photo1'];
 
     // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
     // $type = isset($_POST['type']) ? $_POST['type'] : '';
@@ -460,7 +460,7 @@ else {
                 break;
 
             case 'parc':
-                $file = $_POST['plan'];
+                $file = $_FILE['plan'];
                 $file_extension = get_file_extension($file['type']);
 
                 if ($file_extension !== ''){
@@ -487,7 +487,7 @@ else {
                 break;
 
             case 'restaurant':
-                $file = $_POST['carte'];
+                $file = $_FILE['carte'];
                 $file_extension = get_file_extension($file['type']);
 
                 if ($file_extension !== ''){
