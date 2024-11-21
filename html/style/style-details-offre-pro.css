@@ -141,6 +141,14 @@ a {
         transform: translateY(-50%);
         z-index: 1;
     }
+
+    .arrow-left {
+        left: 20px;
+    }
+      
+    .arrow-right {
+        right: 20px;
+    }
       
 
 /**********************************
