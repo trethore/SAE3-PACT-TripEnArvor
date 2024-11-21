@@ -21,6 +21,7 @@ h1 {
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
+    width: 1234px;
 }
 
 h2 {
@@ -46,6 +47,8 @@ h3 {
     position: relative;
     margin: 1em;
     padding: 3em 2em 1em;
+
+    width: 1234px;
     
     background: var(--blanc-leger);
     border-radius: 15px;

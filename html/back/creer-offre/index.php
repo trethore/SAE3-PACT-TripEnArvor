@@ -456,14 +456,15 @@ else {
 
         switch ($categorie) {
             case 'activite':
-                $requete .= "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                $requete .= "(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
+                print($requete),
                 $stmt = $dbh->prepare($requete);
                 //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
                 break;
 
             case 'parc':
-                $file = $_FILE['plan'];
+                $file = $_FILES['plan'];
                 $file_extension = get_file_extension($file['type']);
 
                 if ($file_extension !== ''){

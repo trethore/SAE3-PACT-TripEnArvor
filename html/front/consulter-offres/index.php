@@ -167,6 +167,7 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
+            <p class="no-offers">Aucune offre ne convient à ces filtres.</p>
             <?php
             $offers_per_page = 9;
 
@@ -179,13 +180,7 @@ try {
 
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
 
-            if (empty($offres_for_page)) {
-            ?>
-                <p class="no-offers">Aucune offre ne convient à ces filtres.</p>
-            <?php
-            } else {
-
-                foreach ($offres_for_page as $tab) {
+            foreach ($offres_for_page as $tab) {
                 ?>
                 <div class="offre">
                     <div class="sous-offre">
@@ -213,7 +208,6 @@ try {
                 </div>
             <?php
                 }
-            }
         ?>
         </section>
 
@@ -271,6 +265,7 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
+            
             const allOffers = Array.from(offersContainer.children);
 
             h2.addEventListener("click", () => {
@@ -321,10 +316,27 @@ try {
                 });
             };
 
+            function checkVisibleOffers() {
+                const offers = document.querySelectorAll('.offre');
+                const noOffersMessage = document.querySelector('.no-offers');
+
+                // Vérifie si au moins une offre est visible
+                const hasVisibleOffers = Array.from(offers).some(offer => offer.style.display !== 'none' && !offer.classList.contains('hidden'));
+
+                // Affiche ou masque le message selon les résultats
+                if (hasVisibleOffers) {
+                    noOffersMessage.style.display = 'none';
+                } else {
+                    noOffersMessage.style.display = 'block';
+                }
+            }
+
             // Ajoute un événement sur chaque élément de filtre
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
+
+            checkVisibleOffers();
         });
     </script>
 </body>
