@@ -500,7 +500,7 @@ else {
 
             
             default:
-                die('erreur switch requete')
+                die('erreur switch requete');
                 break;
         }
 
