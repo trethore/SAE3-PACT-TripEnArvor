@@ -59,7 +59,7 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 0;
+    left: -10%;
     transform: translate(0, -3.5em);
     min-width: auto;
     z-index: 1;
