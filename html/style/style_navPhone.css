@@ -21,8 +21,8 @@
     position: absolute;
     width: 100%;
     height: 50px;
-    background: rgba(74, 23, 116, 1);
-    transform: rotate(-4deg),scale(200%);
+    background-color: rgba(74, 23, 116, 1);
+    transform: rotate(-4deg) scale(200%);
 }
 
 @media only screen and (min-width: 900px) {
