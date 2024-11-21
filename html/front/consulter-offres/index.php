@@ -262,9 +262,61 @@ try {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
+            const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
+            const offersContainer = document.querySelector(".section-offres");
+            const allOffers = Array.from(offersContainer.children);
+
             h2.addEventListener("click", () => {
                 // Ajoute ou supprime la classe qui contrôle l'affichage
                 fondFiltres.classList.toggle("hidden");
+            });
+
+            const applyFilters = () => {
+                const filters = {
+                    categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
+                    availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
+                    minRating: document.querySelector(".trier select")?.value || null,
+                    minPrice: parseFloat(document.querySelector(".trier input:nth-of-type(1)")?.value) || null,
+                    maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
+                };
+
+                allOffers.forEach(offer => {
+                    const category = offer.querySelector(".categorie-offre")?.textContent.trim();
+                    const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
+                    const price = parseFloat(priceText) || 0;
+                    const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
+
+                    let matches = true;
+
+                    // Filtre par catégorie
+                    if (filters.categories.length > 0 && !filters.categories.includes(category)) {
+                        matches = false;
+                    }
+
+                    // Filtre par disponibilité
+                    if (filters.availability === "Ouvert" && !isAvailable) {
+                        matches = false;
+                    } else if (filters.availability === "Fermé" && isAvailable) {
+                        matches = false;
+                    }
+
+                    // Filtre par prix
+                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice)) {
+                        matches = false;
+                    }
+
+                    // Affiche ou masque les offres selon les filtres
+                    if (matches) {
+                        offer.style.display = "block";
+                    } else {
+                        offer.style.display = "none";
+                    }
+                });
+            };
+
+            // Ajoute un événement sur chaque élément de filtre
+            filterInputs.forEach(input => {
+                input.addEventListener("change", applyFilters);
             });
         });
     </script>
