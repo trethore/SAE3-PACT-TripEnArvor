@@ -14,11 +14,13 @@ body {
 
 h1 {
     font-size: 64px;
+    font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
 }
 
 h2 {
+    font-size: 36px;
     font-weight: bold;
     color: var(--orange-principale);
 }
@@ -31,7 +33,7 @@ h2 {
 }
 
 a {
-    color: var(--blanc-leger);
+    color: var(--noir);
     text-decoration: underline;
 }
 
@@ -68,6 +70,10 @@ a {
 }
 
 .bloc-presentation > div > p {
+    font-size: 32px;
+}
+
+.information-offre {
     font-size: 32px;
 }
 
@@ -129,16 +135,7 @@ a {
         flex-shrink: 0;
     }
       
-    .caroussel > img {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        z-index: 100;
-        fill: var(--orange-principale);
-    }
+
     
 
 /**********************************
@@ -154,6 +151,10 @@ a {
     }
 
     .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 3px solid var(--orange-principale);
+        border-bottom: 3px solid var(--orange-principale);
+        font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
@@ -169,6 +170,7 @@ a {
 
     .bloc-caracteristique {
         flex: 1.75; 
+        border-right: 3px solid var(--orange-principale);
     }
 
     /****************************
@@ -182,6 +184,10 @@ a {
     .epingle {
         width: 20px;
         height: 20px;
+    }
+
+    .display-ligne-espace > button {
+        font-size: 24px;
     }
 
     .display-ligne-espace > a {
@@ -211,7 +217,7 @@ a {
     .bloc-tarif > button {
         color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 20px;
+        font-size: 24px;
         background-color: var(--orange-principale);
         padding: 10px 20px;
         border-radius: 15px;
@@ -336,7 +342,7 @@ a {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background: var(--gradient-orange);
+    background: var(--orange-principale);
     padding: 10px auto;
     border-radius: 15px;
     border: 0;
@@ -442,10 +448,10 @@ footer > div > a {
 #carte {
     display: none;
 }
-
+/*
 #caracteristiques {
     display: none;
-}
+}*/
 
 .bordure {
     border-bottom: 3px solid var(--orange-principale);

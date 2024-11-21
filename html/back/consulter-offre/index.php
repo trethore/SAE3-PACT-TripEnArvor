@@ -33,6 +33,11 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
+    $reqTags = "SELECT nom_tag FROM _offre NATURAL JOIN _offre_possede_tag";
+    $stmtTags = $dbh->prepare($reqTags);
+    $stmtTags->execute();
+    $tags = $stmtTags->fetch(PDO::FETCH_ASSOC);
+
     // Requête SQL pour récupérer le type de l'offre
     $categorie = getTypeOffre($id_offre_cible);
 
@@ -63,6 +68,7 @@ try {
 <body>
 
     <header id="header">
+
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
@@ -71,6 +77,7 @@ try {
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+
     </header>
 
     <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
@@ -94,6 +101,7 @@ try {
     </div>
 
     <main id="body">
+
         <section class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
@@ -104,12 +112,14 @@ try {
                     <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
                     <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
                 </div>
-                <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                <div class="display-ligne-espace">
+                    <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
+                    <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                </div>
             </div>
 
 
-            <div class="display-ligne-espace">
+            <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
@@ -123,13 +133,13 @@ try {
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                 <!-- Affichage du nombre d'avis de l'offre -->
-                <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
+                <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
                 <a href="#avis">Voir les avis</a>
             </div>
 
             <div class="display-ligne-espace">
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
+                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
                 <!-- Affichage du prix de l'offre -->
                 <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
             </div>
@@ -140,9 +150,9 @@ try {
 
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <li><img src="/images/universel/icones/cuisine.png"><h2>Cuisine traditionnelle</h2></li>
-                    <li><img src="/images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
-                    <li><img src="/images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
+                    <?php foreach ($tags as $tag) { ?>
+                        <li><h2><?php echo htmlentities($tag); ?></h2></li>
+                    <?php } ?>
                 </ul>
             </div> 
 
@@ -254,6 +264,7 @@ try {
     </main>
 
     <footer id="footer">
+
         <div class="footer-top">
         <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
@@ -276,7 +287,6 @@ try {
             </a>
             </div>
         </div>
-
 
         <!-- Barre en bas du footer incluse ici -->
 

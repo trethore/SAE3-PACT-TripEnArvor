@@ -6,6 +6,24 @@ if (isset($_POST['titre'])){
 else{
     $submitted = false;
 }
+
+function get_file_extension($type){
+    $extension = '';
+    switch ($type) {
+        case 'image/png':
+            $extension = '.png';
+            break;
+        case 'image/jpeg':
+            $extension = '.jpg';
+            break;
+        case 'image/webp':
+            $extension = '.webp';
+            break;
+        default:
+            break;
+    }
+    return $extension;
+}
     
 ?>
 <!DOCTYPE html>
@@ -20,6 +38,12 @@ else{
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
+  <style>
+    .disabled-label {
+        opacity: 0.5; /* Grise le label */
+        pointer-events: none; /* Rendre le label non cliquable */
+    }
+</style>
 </head>
 <body>
 <header>
@@ -92,7 +116,7 @@ if (!$submitted) {
                 </tr>
                 <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix">€</td>
                 <tr>
-                    <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td><td><input type="text" id="gammeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$"></td>
+                    <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td><td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$"></td>
                 </tr>
                 <tr>
                     <td><label for="dispo">Disponibilité </label></td>
@@ -145,22 +169,23 @@ if (!$submitted) {
                </tr>
             </table>
         
+            <!-- </div> -->
+            <div>
+                <!-- activite, visite, spectacle -->
+                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*">minutes
+                <!-- activité, parc -->
+                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age"> an(s)
+                <br>
+                <!-- spectacle -->
+                <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"> personnes
+                <br>
+                <!-- parc -->
+                <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions">
+                <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan">
+                <br>
+                <!-- restaurant -->
+                <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte">
             </div>
-            <!-- activite, visite, spectacle -->
-            <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*">minutes
-            <!-- activité, parc -->
-            <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age"> an(s)
-            <br>
-            <!-- spectacle -->
-            <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"> personnes
-            <br>
-            <!-- parc -->
-            <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attraction">
-            <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan">
-            <br>
-            <!-- restaurant -->
-             <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte">
-
             <br>
             
             <h3>Tags de l'offre</h3>
@@ -337,6 +362,39 @@ else {
 
     // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
     // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
+    if (isset($_POST['decriptionC'])){
+        $resume = $_POST['descriptionC'];
+    }
+
+    if (isset($_POST['ville'])){
+        $ville = $_POST['ville'];
+    }
+
+    if (isset($_POST['gammedeprix'])) {
+        $gammedeprix = $_POST['gammedeprix'];
+    }
+    if (isset($_POST['prix'])) {
+        $prixmin = $_POST['prix'];
+    }
+    if (isset($_POST['photo1'])) {
+        $photo1 = $_POST['photo1'];
+    }
+    if (isset($_POST['duree'])) {
+        $duree = $_POST['duree'];
+    }
+    if (isset($_POST['attractions'])) {
+        $nbattraction = $_POST['attractions'];
+    }
+    if (isset($_POST['age'])) {
+        $age = $_POST['age'];
+    }
+
+    if(isset($_POST['capacite'])){
+        $capacite = $_POST['capacite'];
+    }
+    
+    print $_POST['photo1'];
+
     // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
     // $type = isset($_POST['type']) ? $_POST['type'] : '';
     // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
@@ -356,6 +414,7 @@ else {
    
 
     try {
+        
 
         if (isset($_POST['lacat'])){
             $categorie = $_POST['lacat'];
@@ -366,7 +425,7 @@ else {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
         // Début de la requête SQL
-        $requete = "INSERT INTO offre_";
+        $requete = "INSERT INTO sae.offre_";
 
         print($categorie); 
         
@@ -377,7 +436,7 @@ else {
                 $requete .= 'activite';
                 break;
             case 'parc':
-                $requete .= 'parc';
+                $requete .= 'parc_attraction';
                 break;
             case 'spectacle':
                 $requete .= 'spectacle';
@@ -386,45 +445,104 @@ else {
                 $requete .= 'visite';
                 break;
             default:
-                //print "Erreur de categorie!";
-                die();
+                die("Erreur de categorie!");
         }
         //print("categorie ".$categorie);
 
-        // Construction de la requête SQL avec les champs et les valeurs
-        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
-
-        print($requete);
-
-        // Préparation de la requête
-        //$stmt = $dbh->prepare($requete);
-
-        // Liaison des valeurs aux paramètres SQL
-        // $stmt->bindParam(':titre', $titre);
-        // $stmt->bindParam(':resume', $resume);
-        // $stmt->bindParam(':ville', $ville);
-        // $stmt->bindParam(':id_compte', $id_compte);
-
-        // Exécution de la requête
-        //$stmt->execute();
-
         
 
-        // // Récupérer l'ID retourné par la requête
-        // $offre_id = $stmt->fetchColumn();
+        switch ($categorie) {
+            case 'activite':
+                $requete .= "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre"
+                $stmt_tarif = $dbh->prepare($requete);
+                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $age]);
 
-        // // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-        // $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (:offre_id, :prix)";
+                break;
 
-        // // Préparation de la requête pour la vue tarif
-        // $stmt_tarif = $dbh->prepare($requete_tarif);
+            case 'parc'
+                $file = $_POST['plan'];
+                $file_extension = get_file_extension($file['type']);
 
-        // // Liaison des valeurs pour la vue tarif
-        // $stmt_tarif->bindParam(':offre_id', $offre_id);
-        // $stmt_tarif->bindParam(':prix', $prix);
+                if ($file_extension !== ''){
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' .'plan_'. $time . $file_extension);
+                $fichier_img = 'plan_'.$time.$file_extension;
+                }
+                
+                $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre"
+                $stmt_tarif = $dbh->prepare($requete);
+                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
-        // // Exécution de la requête pour insérer dans la vue tarif
-        // $stmt_tarif->execute();
+                break;
+            
+            case 'spectacle'
+                $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre"
+                $stmt_tarif = $dbh->prepare($requete);
+                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $capacite]);
+                break;
+
+            case 'visite'
+                $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre"
+                $stmt_tarif = $dbh->prepare($requete);
+                $stmt_tarif->execute([$titre, $resume, $ville, $duree]);
+                break;
+
+            case 'restaurant'
+                $file = $_POST['carte'];
+                $file_extension = get_file_extension($file['type']);
+
+                if ($file_extension !== ''){
+                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' .'carte_'. $time . $file_extension);
+                    $fichier_img = 'plan_'.$time.$file_extension;
+                }
+                $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                $stmt = $dbh->prepare($requete);
+                $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+
+            
+            default:
+                die('erreur switch requete')
+                break;
+        }
+
+        if($categorie !== "restautant") {
+
+            $offre_id = $stmt->fetchColumn();
+   
+            // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
+             $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?)";
+    
+            // Préparation de la requête pour la vue tarif
+            //$stmt_tarif = $dbh->prepare($requete_tarif);
+    
+            // Exécution de la requête pour insérer dans la vue tarif
+            //$stmt_tarif->execute([$offre_id, $prix]);
+   
+           }
+
+        
+        
+
+
+        //INSERTION IMAGE
+        $time = 'p' . strval(time());
+        $file = $_FILES[''];
+        $file_extension = get_file_extension($file['type']);
+
+        if ($file_extension !== ''){
+        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . $time . $file_extension);
+        $fichier_img = $time.$file_extension;
+
+        $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image;'
+
+        //preparation requete
+        $stmt = $dbh->prepare($requete_image);
+
+        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+        $stmt->execute([$fichier_img]);
+
+        // Récupérer l'ID retourné par la requête
+        $id_image = $stmt->fetchColumn();
+        }
 
         // $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
 
@@ -476,7 +594,7 @@ else {
     <script>
         let type = document.getElementById('type');
         type.addEventListener('change', function() {
-            if (type == "premium") {
+            if (type === "premium") {
                 document.getElementById('options').style.display = 'block';
                 document.getElementById('tarifs').style.display = 'block';
             } else{
@@ -488,12 +606,17 @@ else {
 
 
 
-        let categorie = document.getElementByName('lacat');
+        let categorie = document.getElementById('categorie');
         categorie.addEventListener('change', function() {
-            if (categorie == "restaurant"){
+            if (categorie.value === "restaurant"){
                 document.getElementById("labelprix").innertext = 'Gamme de prix';
             }
-        })
+            else{
+                document.getElementById("labelprix").innertext = 'Prix minimal';
+            }
+            
+    });
+
 
         
 
