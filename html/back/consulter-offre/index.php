@@ -46,7 +46,7 @@ try {
     //Requête SQL pour récuéprer les images de l'offre
     $reqImages = "SELECT img.lien_fichier FROM sae._image imgJOIN sae._offre_contient_image oci ON img.lien_fichier = oci.id_image WHERE oci.id_offre = :id_offre;";
     $stmtImages = $dbh->prepare($reqImages);
-    $stmtIMG->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+    $stmtImages->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
     $stmtImages->execute();
     $images = $stmtImages->fetch(PDO::FETCH_ASSOC);
 
