@@ -134,9 +134,14 @@ a {
         height: 700px;
         flex-shrink: 0;
     }
-      
 
-    
+    .arrow-left, .arrow-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+      
 
 /**********************************
         PREMIER DOUBLE BLOC                               
