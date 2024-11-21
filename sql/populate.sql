@@ -159,7 +159,7 @@ VALUES
 INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, gamme_prix, carte)
 VALUES 
 ('Dîner gastronomique', 'Découvrez la cuisine étoilée de Paris', 'Paris', 'Un dîner dans un restaurant étoilé à Paris', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€', 'image19.webp'),
-('Restaurant traditionnel', 'Cuisine locale et authentique', 'Lyon', 'Un repas dans un restaurant typique de Lyon', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
+('Restaurant traditionnel', 'Découvrez notre restaurant traditionnel offrant une cuisine authentique, préparée avec des ingrédients frais et locaux, dans une ambiance chaleureuse et conviviale. Une expérience gourmande unique !', 'Lyon', 'Plongez dans l’univers culinaire de notre restaurant traditionnel, où authenticité et saveurs se rencontrent. Chaque plat est soigneusement préparé avec des ingrédients frais et de saison, sélectionnés auprès de producteurs locaux pour garantir une qualité exceptionnelle. Profitez d’une ambiance chaleureuse et conviviale, idéale pour partager un repas en famille, entre amis ou pour célébrer une occasion spéciale. Notre carte variée met à l’honneur des recettes classiques revisitées, des spécialités régionales et des desserts maison savoureux. Laissez-vous séduire par une expérience gastronomique unique, où chaque détail compte.', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
 
 INSERT INTO _tag (nom_tag) 
 VALUES 

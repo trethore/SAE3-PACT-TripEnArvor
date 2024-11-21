@@ -6,7 +6,7 @@ require_once('../../utils/offres-utils.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $id_offre_cible = isset($_GET['id']) ? intval($_GET['id_offre']);
+    $id_offre_cible = intval($_GET['id']);
 
     // Requête SQL pour récupérer les informations de l'offre
     $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
@@ -37,7 +37,6 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
     
-
     // Requête SQL pour récupérer les tags de l'offre
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
@@ -90,7 +89,6 @@ try {
 
     </header>
 
-    <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
     <div class="display-ligne-espace bouton-modifier"> 
         <div>
             <div id="confirm">
@@ -107,6 +105,9 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
+        <div>
+            <p class="transparent">.</p>
+        </div>
     </div>
 
     <main id="body">
@@ -119,7 +120,6 @@ try {
                     <?php foreach ($images as $image) { ?>
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
                     <?php } ?>
-                    <img src="images/universel/photos/hotel_2_2.png">
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
@@ -136,7 +136,7 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
