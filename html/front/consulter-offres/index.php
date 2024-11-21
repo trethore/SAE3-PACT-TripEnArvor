@@ -167,7 +167,9 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <p class="no-offers">Aucune offre ne convient à ces filtres.</p>
+        <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
+            Aucun résultat ne correspond à vos critères.
+        </p>
             <?php
             $offers_per_page = 9;
 
@@ -265,11 +267,17 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-            
+
             const allOffers = Array.from(offersContainer.children);
 
+            const noOffersMessage = document.createElement("p");
+            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            noOffersMessage.classList.add("no-offers-message");
+            noOffersMessage.style.display = "none";
+            offersContainer.appendChild(noOffersMessage);
+
             h2.addEventListener("click", () => {
-                // Ajoute ou supprime la classe qui contrôle l'affichage
+                // Toggle filter visibility
                 fondFiltres.classList.toggle("hidden");
             });
 
@@ -282,6 +290,8 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
+                let visibleOffers = 0;
+
                 allOffers.forEach(offer => {
                     const category = offer.querySelector(".categorie-offre")?.textContent.trim();
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
@@ -290,53 +300,47 @@ try {
 
                     let matches = true;
 
-                    // Filtre par catégorie
+                    // Filter by category
                     if (filters.categories.length > 0 && !filters.categories.includes(category)) {
                         matches = false;
                     }
 
-                    // Filtre par disponibilité
+                    // Filter by availability
                     if (filters.availability === "Ouvert" && !isAvailable) {
                         matches = false;
                     } else if (filters.availability === "Fermé" && isAvailable) {
                         matches = false;
                     }
 
-                    // Filtre par prix
-                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice) || (price < filters.minPrice && price > filters.maxPrice)) {
+                    // Filter by price
+                    if (
+                        (filters.minPrice !== null && price < filters.minPrice) ||
+                        (filters.maxPrice !== null && price > filters.maxPrice)
+                    ) {
                         matches = false;
                     }
 
-                    // Affiche ou masque les offres selon les filtres
+                    // Show or hide offer
                     if (matches) {
                         offer.style.display = "block";
+                        visibleOffers++;
                     } else {
                         offer.style.display = "none";
                     }
                 });
+
+                // Show or hide the no-offers message
+                if (visibleOffers === 0) {
+                    noOffersMessage.style.display = "block";
+                } else {
+                    noOffersMessage.style.display = "none";
+                }
             };
 
-            function checkVisibleOffers() {
-                const offers = document.querySelectorAll('.offre');
-                const noOffersMessage = document.querySelector('.no-offers');
-
-                // Vérifie si au moins une offre est visible
-                const hasVisibleOffers = Array.from(offers).some(offer => offer.style.display !== 'none' && !offer.classList.contains('hidden'));
-
-                // Affiche ou masque le message selon les résultats
-                if (hasVisibleOffers) {
-                    noOffersMessage.style.display = 'none';
-                } else {
-                    noOffersMessage.style.display = 'block';
-                }
-            }
-
-            // Ajoute un événement sur chaque élément de filtre
+            // Add an event listener to each filter element
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
-
-            checkVisibleOffers();
         });
     </script>
 </body>
