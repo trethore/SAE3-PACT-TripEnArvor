@@ -153,11 +153,12 @@ a {
     .liste-caracteristique > li {
         color: var(--noir);
         border-left: 5px solid var(--orange-principale);
-        border-bottom: 5px solid var(--orange-principale);
         font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
+        margin-bottom: 2em;
+        padding-left: 10px ;
     }
 
     .liste-caracteristique > li > img {
