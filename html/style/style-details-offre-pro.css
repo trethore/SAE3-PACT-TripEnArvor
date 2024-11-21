@@ -178,6 +178,7 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
+        border-left: 3px solid var(--orange-principalex);
     }
 
     .epingle {
