@@ -17,8 +17,8 @@ try {
     $stmt3->execute();
     $test = $stmt3->fetchAll();
     echo '<pre>';
-    echo $test;
-    echo $offres;
+    print_r($test);
+    print_r($offres);
     echo '</pre>';
 
     $reqTypeOffre = "SELECT 
