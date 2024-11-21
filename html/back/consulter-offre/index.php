@@ -16,9 +16,8 @@ try {
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE id_offre = :id_offre";
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
     $stmtAdresse = $dbh->prepare($reqAdresse);
-    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
 
