@@ -393,7 +393,7 @@ else {
         $capacite = $_POST['capacite'];
     }
     
-    print $_POST['photo1'];
+    print $_FILE['1'];
 
     // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
     // $type = isset($_POST['type']) ? $_POST['type'] : '';
