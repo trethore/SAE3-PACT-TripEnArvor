@@ -153,8 +153,12 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 </div>
             </div>
         </article>
-        <section class="lesOffres">
-            <?php while(getOffrebyIdCompte($id_compte)) { ?>
+        <section class="lesOffres"><?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
