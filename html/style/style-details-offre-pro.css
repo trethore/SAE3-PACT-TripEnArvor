@@ -152,8 +152,8 @@ a {
 
     .liste-caracteristique > li {
         color: var(--noir);
-        border-left: 3px solid var(--orange-principale);
-        border-bottom: 3px solid var(--orange-principale);
+        border-left: 5px solid var(--orange-principale);
+        border-bottom: 5px solid var(--orange-principale);
         font-size: 40px;
         list-style: none;
         display: flex;
@@ -170,7 +170,6 @@ a {
 
     .bloc-caracteristique {
         flex: 1.75; 
-        border-right: 3px solid var(--orange-principale);
     }
 
     /****************************
