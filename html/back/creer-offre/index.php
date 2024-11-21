@@ -371,26 +371,26 @@ else {
     }
 
     if (isset($_POST['gammedeprix'])) {
-        $gammedeprix = $_POST['gammedeprix']
+        $gammedeprix = $_POST['gammedeprix'];
     }
     if (isset($_POST['prix'])) {
-        $prixmin = $_POST['prix']
+        $prixmin = $_POST['prix'];
     }
     if (isset($_POST['photo1'])) {
-        $photo1 = $_POST['photo1']
+        $photo1 = $_POST['photo1'];
     }
     if (isset($_POST['duree'])) {
-        $duree = $_POST['duree']
+        $duree = $_POST['duree'];
     }
     if (isset($_POST['attractions'])) {
-        $nbattraction = $_POST['attractions']
+        $nbattraction = $_POST['attractions'];
     }
     if (isset($_POST['age'])) {
-        $age = $_POST['age']
+        $age = $_POST['age'];
     }
 
     if(isset($_POST['capacite'])){
-        $capacite = $_POST['capacite']
+        $capacite = $_POST['capacite'];
     }
     
     print $_POST['photo1'];
