@@ -532,7 +532,7 @@ else {
         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . $time . $file_extension);
         $fichier_img = $time.$file_extension;
 
-        $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image;'
+        $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
 
         //preparation requete
         $stmt = $dbh->prepare($requete_image);
