@@ -116,8 +116,12 @@ try {
                     <?php } ?>
                 </div>
                 <div class="display-ligne-espace">
-                    <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
-                    <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                    </div>
                 </div>
             </div>
 
