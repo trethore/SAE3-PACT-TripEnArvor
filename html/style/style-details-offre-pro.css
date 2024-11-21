@@ -140,7 +140,11 @@ a {
         top: 50%;
         transform: translateY(-50%);
         z-index: 1;
+    }
+
+    .arrow-left > img, .arrow-right > img {
         background-color: var(--orange-principale);
+        border-radius: 90px;
     }
 
     .arrow-left {
