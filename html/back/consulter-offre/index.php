@@ -117,10 +117,10 @@ try {
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
                     </div>
                     <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
             </div>
