@@ -51,7 +51,7 @@ function get_file_extension($type){
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" class="input-search" placeholder="Taper votre recherche..."/>
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
@@ -99,7 +99,7 @@ if (!$submitted) {
             <table border="0">
                 <tr>
                     <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                    <td colspan="3"><input type="text" id="titre" name ="titre" placeholder="Insérer un titre" required></td>
+                    <td colspan="3"><input type="text" id="titre" name ="titre" placeholder="Insérer un titre" required/></td>
                 </tr>
                 <tr>
                 <td><label for="categorie">Catégorie <span class="required">*</span></label></td>
@@ -114,9 +114,9 @@ if (!$submitted) {
                         </select>
                     </div></td>
                 </tr>
-                <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix">€</td>
+                <td><label id ="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td><td><input type="number" id="prix"/>€</td>
                 <tr>
-                    <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td><td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$"></td>
+                    <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td><td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$"/></td>
                 </tr>
                 <tr>
                     <td><label for="dispo">Disponibilité </label></td>
@@ -132,13 +132,13 @@ if (!$submitted) {
                 
                 <tr>
                     <td><label for= "adresse">Adresse</label></td>
-                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)"></td>
+                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)"/></td>
                 </tr>
                 <tr>
                     <td><label for= "cp">Code Postal </label></td>
-                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="local5"></td>
+                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="local5"/></td>
                     <td><label for= "ville">Ville <span class="required">*</span></label></td>
-                    <td><input type="text" id="ville" name ="ville" placeholder="Nom de ville" required></td>
+                    <td><input type="text" id="ville" name ="ville" placeholder="Nom de ville" required/></td>
                 
                 </tr>
                 <tr>
@@ -162,8 +162,8 @@ if (!$submitted) {
             </table>
             <div id="options">
                     <label>Options</label>
-                    <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
-                    <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
+                    <input type="checkbox" id="enRelief" name="enRelief"/><label for="enRelief">En relief</label>
+                    <input type="checkbox" id="alaune" name="alaune"/><label for="alaune">A la une</label>
             </div>
                 </td>
                </tr>
@@ -172,19 +172,19 @@ if (!$submitted) {
             <!-- </div> -->
             <div>
                 <!-- activite, visite, spectacle -->
-                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*">minutes
+                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*"/>minutes
                 <!-- activité, parc -->
-                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age"> an(s)
+                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age"/> an(s)
                 <br>
                 <!-- spectacle -->
-                <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"> personnes
+                <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité"/> personnes
                 <br>
                 <!-- parc -->
-                <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions">
-                <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan">
+                <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions"/>
+                <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan"/>
                 <br>
                 <!-- restaurant -->
-                <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte">
+                <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte"/>
             </div>
             <br>
             
@@ -201,11 +201,11 @@ if (!$submitted) {
                     </tr>
                     <tr>
                         <td><label for="lien">Lien externe</label></td>
-                        <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet"></td>
+                        <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet"/></td>
                     </tr>
                     <tr>
                         <td><label for="tel">Numéro de téléphone</label></td>
-                        <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)"></td>
+                        <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)"/></td>
                     </tr>
                 </table>
             </div>
@@ -215,20 +215,20 @@ if (!$submitted) {
             
             <div id = "tarifs">
                 <h3>Tarifs</h3>
-                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
+                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif"/>
+                <input type="number" name="tarif1" min="0" placeholder="prix"/><span>€</span>
                 <br>
-                <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif2" min="0" placeholder="prix"><span>€</span>
+                <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif"/>
+                <input type="number" name="tarif2" min="0" placeholder="prix"/><span>€</span>
                 <br>
-                <input type="text" id="tarif3nom" name="tarif3nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif3" min="0" placeholder="prix"><span>€</span>
+                <input type="text" id="tarif3nom" name="tarif3nom" placeholder= "Nom du tarif"/>
+                <input type="number" name="tarif3" min="0" placeholder="prix"/><span>€</span>
                 <br>
-                <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif4" min="0" placeholder="prix"><span>€</span>
+                <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "Nom du tarif"/>
+                <input type="number" name="tarif4" min="0" placeholder="prix"/><span>€</span>
                 <br>
                 <label for="grilleT">Grille tarifaire complète</label>
-                <input type="file" id="grilleT" name="grilleT">
+                <input type="file" id="grilleT" name="grilleT"/>
 
             
             </div>
@@ -239,33 +239,33 @@ if (!$submitted) {
     <table border="0">
         <tr>
             <td>Lundi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
         <tr>
             <td>Mardi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
         <tr>
             <td>Mercredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
         <tr>
             <td>Jeudi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
         <tr>
             <td>Vendredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
         <tr>
             <td>Samedi</td>
@@ -275,13 +275,13 @@ if (!$submitted) {
         </tr>
         <tr>
             <td>Dimanche</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
             <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"/></td>
         </tr>
     </table>
     <div class="bt_cree">
-                <input class="valider" type="submit" value="Créer l'offre">
+                <input class="valider" type="submit" value="Créer l'offre"/>
 
                 <a href="#" id="back-to-top">
                     <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
