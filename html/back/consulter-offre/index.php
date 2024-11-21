@@ -6,7 +6,7 @@ require_once('../../utils/offres-utils.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']);
+    $id_offre_cible = isset($_GET['id']) ? intval($_GET['id_offre']);
 
     // Requête SQL pour récupérer les informations de l'offre
     $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
