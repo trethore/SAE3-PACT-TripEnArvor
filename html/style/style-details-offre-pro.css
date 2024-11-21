@@ -97,7 +97,7 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
+.bouton-modifier > button {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
@@ -107,7 +107,7 @@ a {
     border: 0;
 }
 
-.display-ligne-espace > button:hover {
+.bouton-modifier > button:hover {
     color: var(--orange-principale);
     background: var(--blanc-leger);
     border: 3px solid var(--orange-principale);
