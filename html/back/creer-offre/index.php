@@ -147,7 +147,7 @@ if (!$submitted) {
                         <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                        <input id="photo" type="file" required/>
+                        <input id="photo" type="file" name="photo" required/>
                     </div></td>
                     
                 </tr>
