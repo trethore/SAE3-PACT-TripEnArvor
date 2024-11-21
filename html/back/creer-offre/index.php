@@ -454,8 +454,8 @@ else {
         switch ($categorie) {
             case 'activite':
                 $requete .= "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre"
-                $stmt_tarif = $dbh->prepare($requete);
-                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $age]);
+                $stmt = $dbh->prepare($requete);
+                $stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
                 break;
 
@@ -469,21 +469,21 @@ else {
                 }
                 
                 $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre"
-                $stmt_tarif = $dbh->prepare($requete);
-                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
+                $stmt = $dbh->prepare($requete);
+                $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                 break;
             
             case 'spectacle'
                 $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre"
-                $stmt_tarif = $dbh->prepare($requete);
-                $stmt_tarif->execute([$titre, $resume, $ville, $duree, $capacite]);
+                $stmt = $dbh->prepare($requete);
+                $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                 break;
 
             case 'visite'
                 $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre"
-                $stmt_tarif = $dbh->prepare($requete);
-                $stmt_tarif->execute([$titre, $resume, $ville, $duree]);
+                $stmt = $dbh->prepare($requete);
+                $stmt->execute([$titre, $resume, $ville, $duree]);
                 break;
 
             case 'restaurant'
