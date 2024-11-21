@@ -291,7 +291,7 @@ footer {
 }
 
 main{
-	height: 100%;
+	width: 100%;
 }
 
 @media only screen and (max-width: 900px) {
