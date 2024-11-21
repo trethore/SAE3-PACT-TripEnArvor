@@ -141,7 +141,7 @@ try {
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
                 <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
                 <!-- Affichage du prix de l'offre -->
-                <button>À partir de <?php echo htmlentities($offre['prix_offre']); ?> €</button> 
+                <button>Voir les tarifs</button> 
             </div>
 
         </section>
@@ -151,7 +151,7 @@ try {
             <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
-                        <li><h2><?php echo htmlentities($tag); ?></h2></li>
+                        <li><?php echo htmlentities($tag); ?></li>
                     <?php } ?>
                 </ul>
             </div> 
