@@ -142,11 +142,6 @@ a {
         z-index: 1;
     }
 
-    .arrow-left > img, .arrow-right > img {
-        background-color: var(--orange-principale);
-        border-radius: 90px;
-    }
-
     .arrow-left {
         left: 20px;
     }
