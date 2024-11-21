@@ -60,7 +60,7 @@ h3 {
     padding: 0.3em;
     position: absolute;
     left: 50%;
-    transform: translate(-50% , -3.5em);
+    transform: translate(-30%, -3.5em);
     min-width: 610px;
     max-width: 610px;
     z-index: 1;
