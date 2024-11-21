@@ -11,7 +11,7 @@
     display : inline-block;
     height : 0;
     width : 0;
-    border-bottom : 72px solid red;
+    border-bottom : 100% solid red;
     border-left : 72px solid transparent;
    }
 
