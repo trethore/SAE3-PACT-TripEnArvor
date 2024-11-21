@@ -19,10 +19,16 @@ body {
 	justify-content: space-between;
 	min-height: 100vh;
 	width: 100%;
+	min-width: 900px;
 	padding: 0;
 	margin: 0;
 }
 
+@media screen and (max-width: 900px){
+    header{
+        display: none;
+    }
+}
 header {
 	background: var(--gradient-orange);
 	display: flex;
@@ -30,7 +36,6 @@ header {
 	align-items: center;
 	justify-content: end;
 	width: 100%;
-	width: max-content;
 	/* Chaque élément prend toute la largeur disponible */
 	min-height: auto;
 	/* La hauteur minimale dépend du contenu */
