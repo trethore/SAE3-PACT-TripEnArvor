@@ -63,12 +63,12 @@
 </body>
 
     <div class="telephone-nav">
-        <div class="bg">
-        </div>
+        
         <div class="nav-content">
             <img src="/images/frontOffice/icones/accueil.png">
             <img src="/images/frontOffice/icones/chercher.png">
             <img src="/images/frontOffice/icones/utilisateur.png">
         </div>
+        <div class="bg"></div>
     </div>
 </html>
