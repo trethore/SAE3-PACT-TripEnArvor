@@ -211,12 +211,12 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
-                        <p>Avis non lues : <span><b>4</b></span></p>
+                        <p>Avis non lus : <span><b>4</b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis non répondues
                         ---------------------------------------->
-                        <p>Avis non répondues : <span><b>1</b></span></p>
+                        <p>Avis non répondus : <span><b>1</b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
