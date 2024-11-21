@@ -33,25 +33,18 @@ try {
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
 
-    // Updated SQL query to get tags for the specific offer
-    $reqTags = "SELECT nom_tag FROM _offre_possede_tag 
-                NATURAL JOIN _tag 
-                WHERE id_offre = :id_offre";
-
-    // Prepare the query
+    // Requête SQL pour récupérer les tags de l'offre
+    $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
-
-    // Bind the offer ID
     $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-
-    // Execute the query
     $stmtTags->execute();
-
-    // Fetch all the tags for the specific offer
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer le type de l'offre
     $categorie = getTypeOffre($id_offre_cible);
+
+    //Requête SQL pour récuéprer les images de l'offre
+    $images = getIMGbyId($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -119,10 +112,9 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
-                    <img src="/images/universel/photos/hotel_2_2.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_3.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
+                    <?php foreach ($images as $image) { ?>
+                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                    <?php } ?>
                 </div>
                 <div class="display-ligne-espace">
                     <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
