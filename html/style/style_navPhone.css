@@ -12,7 +12,7 @@
     height : 0;
     width : 0;
     border-bottom : 90px solid red;
-    border-left : 900px solid transparent;
+    border-left : 100vh solid transparent;
    }
 
 .nav-content {
