@@ -284,4 +284,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     
 
 </body>
+<div class="telephone-nav">
+        <div class="nav-content">
+        <img src="/images/frontOffice/icones/accueil.png">
+        <img src="/images/frontOffice/icones/chercher.png">
+        <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
+    </div>
 </html>
