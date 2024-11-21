@@ -443,10 +443,10 @@ footer > div > a {
 #carte {
     display: none;
 }
-
+/*
 #caracteristiques {
     display: none;
-}
+}*/
 
 .bordure {
     border-bottom: 3px solid var(--orange-principale);
