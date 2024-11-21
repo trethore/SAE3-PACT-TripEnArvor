@@ -1,25 +1,27 @@
 <?php
 
 include('../../php/connect_params.php');
-include('../../utils/offres-utils.php');
+require_once('../../utils/offres-utils.php');
 
-// Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
 
     // Requête SQL pour récupérer les informations de l'offre
-    $reqOffre = "SELECT * FROM _offre";
+    $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
     $stmt = $dbh->prepare($reqOffre);
+    $stmt->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+    
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $reqAdresse = "SELECT * FROM _adresse WHERE id_offre = :id_offre";
     $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
-    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
+    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);    
 
     // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
     $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
@@ -29,10 +31,12 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
+    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
+    $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
+    
 
     // Requête SQL pour récupérer les tags de l'offre
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
