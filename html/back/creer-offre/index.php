@@ -459,7 +459,7 @@ else {
 
                 break;
 
-            case 'parc'
+            case 'parc':
                 $file = $_POST['plan'];
                 $file_extension = get_file_extension($file['type']);
 
@@ -474,19 +474,19 @@ else {
 
                 break;
             
-            case 'spectacle'
+            case 'spectacle':
                 $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                 break;
 
-            case 'visite'
+            case 'visite':
                 $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                 $stmt = $dbh->prepare($requete);
                 $stmt->execute([$titre, $resume, $ville, $duree]);
                 break;
 
-            case 'restaurant'
+            case 'restaurant':
                 $file = $_POST['carte'];
                 $file_extension = get_file_extension($file['type']);
 
@@ -500,7 +500,7 @@ else {
 
             
             default:
-                die('erreur switch requete')
+                die('erreur switch requete');
                 break;
         }
 
