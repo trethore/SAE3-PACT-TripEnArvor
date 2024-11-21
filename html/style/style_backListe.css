@@ -58,6 +58,9 @@ h3 {
     color: var(--noir);
 }
 
+a {
+    text-decoration: none;
+}
 
 
 /***************************
