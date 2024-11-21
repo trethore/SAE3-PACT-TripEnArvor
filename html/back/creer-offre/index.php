@@ -387,7 +387,7 @@ else {
     }
     if (isset($_POST['age'])) {
         $age = $_POST['age']
-    }duree age capacite plan carte
+    }
 
     if(isset($_POST['capacite'])){
         $capacite = $_POST['capacite']
@@ -414,7 +414,7 @@ else {
    
 
     try {
-        inserer dans la table _image
+        
 
         if (isset($_POST['lacat'])){
             $categorie = $_POST['lacat'];
@@ -531,8 +531,7 @@ else {
         }
 
         
-        inserer id_offre et id_image dans _offre_contient_image
-        si restaurant pas dinsertion dans tarif mais gamme prix dans offre_restau
+        
 
 
         //INSERTION IMAGE
