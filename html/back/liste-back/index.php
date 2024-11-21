@@ -234,14 +234,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             <!-------------------------------------- 
             Pagination
             ---------------------------------------->
-            <div class="pagination">
-            <?php if ($current_page > 1) { ?>
-                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
-                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
         </section>
     </main>
     <footer>
