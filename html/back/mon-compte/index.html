@@ -1,29 +1,9 @@
-<?php
-require_once('../../php/connect_params.php');
-require_once('../../utils/offres-utils.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
-
-try {
-    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
-
-startSession();
-$id_compte = $_SESSION["id"];
-if (isset($id_compte)) {
-    redirectToListOffreIfNecessary($id_compte);
-} else {
-    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
-} ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backListe.css">
+    <link rel="stylesheet" href="/style/style_backCompte.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Mon compte</title>
@@ -47,7 +27,7 @@ if (isset($id_compte)) {
     <main>
         <h1>Détails du compte</h1>
         <img src="/images/universel/icones/avatar-homme-1" alt="Avatar du profil">
-        <button type="button">Importer une photo de profil</button>
+        <h3>Importer une photo de profil</h3>
         <h2>Informations personnelles</h2>
         <table>
             <tr>
@@ -75,6 +55,22 @@ if (isset($id_compte)) {
                 <td>FR54864651896416548644654654</td>
             </tr>
         </table>
+        <h2>Mon adresse</h2>
+        <table>
+            <tr>
+                <td>Adresse postale</td>
+                <td>22 rue de poulpatré</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>Lannion</td>
+            </tr>
+            <tr>
+                <td>Code postal</td>
+                <td>22300</td>
+            </tr>
+        </table>
+        <h3>Modifier les informations</h3>
     </main>
 </body>
 </html>

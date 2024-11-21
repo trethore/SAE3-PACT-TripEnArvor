@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --noir: rgba(0, 0, 0, 1);
+    --blanc: rgba(255, 255, 255, 1);
+    --blanc-leger: rgba(236, 236, 236, 1);
+    --beige: rgba(234, 226, 218, 1);
+
+    --marron: rgba(191, 140, 44, 1);
+    --orange-principale: rgba(217, 102, 54, 1);
+    --orange-secondaire-1: rgba(217, 111, 50, 1);
+    --orange-secondaire-2: rgba(242, 139, 48, 1);
+
+    --fond-bouton: rgba(217, 217, 217, 0.73);
+  
+    --mobile-star-size: 30px;
+    --like-size: 35px;
+  
+    --jaune-etoile: rgba(254, 194, 1, 1);
+    --gris-etoile: rgba(128, 128, 128, 1);
+    --gris: rgba(193, 192, 192, 1);
+
+    --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
+  }
+  
+/************************
+       GENERALISATION
+*************************/
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: var(--noir);
+    background: var(--blanc-leger);
+}
+
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--orange-principale);
+    background: var(--blanc-leger);
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 64pt;
+}
+
+h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 23pt;
+    color: var(--noir);
+}
+
+h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20pt;
+    color: var(--noir);
+}
+
+a {
+    text-decoration: none;
+    color: var(--noir);
+}
