@@ -11,8 +11,8 @@
     display : inline-block;
     height : 0;
     width : 0;
-    border-bottom : 900px solid red;
-    border-left : 72px solid transparent;
+    border-bottom : 90px solid red;
+    border-left : 900px solid transparent;
    }
 
 .nav-content {
