@@ -131,95 +131,13 @@
             </div>
         </article>
         <section class="lesOffres">
-            <?php 
-            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-            $stmtOffre->bindParam(':id_compte', $_SESSION["id"], PDO::PARAM_INT);
-            $stmtOffre->execute();
-            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article>
-                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
-                    <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
-
-                    <!---------------------------------------
-                    Récuperer la premère image liée à l'offre
-                    ---------------------------------------->
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
-
-                    <!---------------------------------------
-                    Récuperer le titre liée à l'offre
-                    ---------------------------------------->
-                    <p><?php echo htmlentities($row["titre"]) ?></p>
-
-                    <!--------------------------------------------------------
-                    Choix du type de l'activité (Restaurant, parc, etc...
-                    --------------------------------------------------------->
-                    <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
-
-                    <!---------------------------------------------------------------------- 
-                    Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
-                    ------------------------------------------------------------------------>
-                    <img src=" <?php
-                    switch ($row["type_offre"]) {
-                        case 'gratuite':
-                            echo htmlentities("/images/backOffice/icones/gratuit.png");
-                            break;
-                        
-                        case 'standard':
-                            echo htmlentities("/images/backOffice/icones/payant.png");
-                            break;
-                            
-                        case 'premium':
-                            echo htmlentities("/images/backOffice/icones/premium.png");
-                            break;
-                    } ?>">
-
-                    <!-------------------------------------- 
-                    Affichage de la note globale de l'offre 
-                    ---------------------------------------->
-                    <div class="etoiles">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <p>49</p>
-                    </div>
-                    <div>
-                        <!-------------------------------------- 
-                        Affichage des avis non lues
-                        ---------------------------------------->
-                        <p>Avis non lues : <span><b>4</b></span></p>
-
-                        <!-------------------------------------- 
-                        Affichage des avis non répondues
-                        ---------------------------------------->
-                        <p>Avis non répondues : <span><b>1</b></span></p>
-
-                        <!-------------------------------------- 
-                        Affichage des avis blacklistés 
-                        ---------------------------------------->
-                        <p>Avis blacklistés : <span><b>0</b></span></p>
-                    </div>
-
-                    <!-------------------------------------- 
-                    Affichage du prix 
-                    ---------------------------------------->  
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
-                </a>
-            </article>
-            <?php } ?>
+            
             <!-------------------------------------- 
             Pagination
             ---------------------------------------->
             <div class="pagination">
-            <?php if ($current_page > 1) { ?>
                 <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
             <div class="pagination">
             </div>
         </section>
