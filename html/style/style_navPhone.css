@@ -8,18 +8,13 @@
 }
 
 .trinagle {
-    display : inline-block;
-    height : 0;
-    width : 0;
-    border-bottom : 90px solid red;
-    border-left : 100vh solid transparent;
    }
 
 .nav-content {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 10px 15% 10px 15%;
+    padding: 0 15% 10px 15%;
 }
 
 .nav-content > img {
@@ -29,6 +24,9 @@
 
 @media only screen and (min-width: 900px) {
 	.telephone-nav {
+        display: none;
+    }
+    .trinagle {
         display: none;
     }
 }

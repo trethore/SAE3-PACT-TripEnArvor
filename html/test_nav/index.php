@@ -61,7 +61,9 @@
     
 
 </body>
-<div class="trinagle" ></div>
+<div class="trinagle" >
+    <img src="/images/frontOffice/icones/transparent.png">
+</div>
 <div class="telephone-nav">
         <div class="nav-content">
         <img src="/images/frontOffice/icones/accueil.png">
