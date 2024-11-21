@@ -61,8 +61,8 @@ h3 {
     position: absolute;
     left: 50%;
     transform: translate(-50% , -3.5em);
-    min-width: 606.2px;
-    max-width: 606.2px;
+    min-width: 610px;
+    max-width: 610px;
     z-index: 1;
     cursor: pointer;
 }
