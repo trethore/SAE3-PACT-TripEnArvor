@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un compte</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 50vw;
+            margin: 0 auto;
+            padding: 1rem;
+            border: 1px solid black;
+        }
+
+        form div {
+            margin: 0.5rem 0;
+            display: flex;
+            flex-direction: column;
+            width: 75%;
+        }
+
+        select,
+        input {
+            padding: 0.5rem;
+        }
+
+        form > div {
+            display: none;
+        }
+
+        #div-type-compte {
+            display: flex;
+        }
+
+        label span {
+            display: none;
+            color: red;
+        }
+
+        #div-type-compte label span {
+            display: inline;
+        }
+    </style>
+    <script src="/scripts/creer-compte.js"></script>
+</head>
+
+<body>
+    <form action="/creer-compte/" method="post">
+        <h1>Creer un compte</h1>
+        <span>* Champs obligatoires</span>
+        <div id="div-type-compte">
+            <label for="type-compte">Type de compte<span> *</span></label>
+            <select name="type-compte" id="type-compte">
+                <option value="">-- Sélectionner un type de compte --</option>
+                <option value="membre">Compte membre</option>
+                <option value="pro-publique">Compte professionnel publique</option>
+                <option value="pro-privée">Compte professionnel privée</option>
+            </select>
+        </div>
+        <div id="div-email">
+            <label for="email">Votre adresse email<span> *</span></label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div id="div-password">
+            <label for="password">Mot de passe<span> *</span></label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div id="div-confirm-password">
+            <label for="confirm-password">Confirmer le mot de passe<span> *</span></label>
+            <input type="password" id="confirm-password" name="confirm-password">
+        </div>
+        <div id="div-pseudo">
+            <label for="pseudo">Pseudo<span> *</span></label>
+            <input type="text" name="pseudo" id="pseudo">
+        </div>
+        <div id="div-name">
+            <label for="name">Nom<span> *</span></label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div id="div-first-name">
+            <label for="first-name">Prénom<span> *</span></label>
+            <input type="text" name="first-name" id="first-name">
+        </div>
+        <div id="div-tel">
+            <label for="tel">Téléphone<span> *</span></label>
+            <input type="tel" name="tel" id="tel">
+        </div>
+        <div id="div-denomination">
+            <label for="denomination">Dénomination<span> *</span></label>
+            <input type="text" name="denomination" id="denomination">
+        </div>
+        <div id="div-a-propos">
+            <label for="a-propos">À propos<span> *</span></label>
+            <textarea name="a-propos" id="a-propos"></textarea>
+        </div>
+        <div id="div-site-web">
+            <label for="site-web">Site web<span> *</span></label>
+            <input type="text" name="site-web" id="site-web">
+        </div>
+        <div id="div-siren">
+            <label for="siren">Numéro de SIREN<span> *</span></label>
+            <input type="text" name="siren" id="siren">
+        </div>
+        <div id="div-adresse">
+            <div id="div-street">
+                <label for="street">Numéro et nom de voie<span> *</span></label>
+                <input type="text" name="street" id="street">
+            </div>
+            <div id="div-address-complement">
+                <label for="address-complement">Complément d'adresse<span> *</span></label>
+                <input type="text" name="address-complement" id="address-complement">
+            </div>
+            <div id="div-code-postal">
+                <label for="code-postal">Code postal<span> *</span></label>
+                <input type="number" name="code-postal" id="code-postal">
+            </div>
+            <div id="div-city">
+                <label for="city">Ville<span> *</span></label>
+                <input type="text" name="city" id="city">
+            </div>
+            <div id="div-country">
+                <label for="country">Pays<span> *</span></label>
+                <input type="text" name="country" id="country">
+            </div>
+        </div>
+        <input type="submit" value="Créer un compte" disabled>
+    </form>
+</body>
+
+</html>

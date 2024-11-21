@@ -35,7 +35,7 @@ try {
     <main>
         <!-- Titres -->
         <h1>Se connecter</h1>
-        <h2>Vous n'avez pas de compte ? <a href="#">Créez votre compte</a></h2>
+        <h2>Vous n'avez pas de compte ? <a href="/creer-compte/">Créez votre compte</a></h2>
 
         <!-- Formulaire -->
         <?php
