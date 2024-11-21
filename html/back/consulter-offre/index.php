@@ -117,7 +117,7 @@ try {
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($images as $image) { ?>
-                    <img src="/images/universel/photos/<?php echo htmlentities($image['id_image']) ?>" alt="Image">
+                        <img src="/images/universel/photos/<?php echo htmlentities($image['id_image']) ?>" alt="Image">
                     <?php } ?>
                 </div>
                 <div class="display-ligne-espace">
