@@ -21,7 +21,8 @@
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-    
+    <main>
+    </main>
     <footer>
         <div class="footer-top">
         <div class="footer-top-left">
