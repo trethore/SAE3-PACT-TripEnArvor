@@ -89,22 +89,20 @@ try {
 
     </header>
 
-    <div class="display-ligne-espace bouton-modifier"> 
-        <div>
-            <div id="confirm">
-                <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                <div class="close">
-                    <button onclick="showFinal()">Mettre hors ligne</button>
-                    <button onclick="btnAnnuler()">Annuler</button>
-                </div>
+    <div class="bouton-modifier"> 
+        <div id="confirm">
+            <p>Voulez-vous mettre votre offre hors ligne ?</p>
+            <div class="close">
+                <button onclick="showFinal()">Mettre hors ligne</button>
+                <button onclick="btnAnnuler()">Annuler</button>
             </div>
-            <div id="final">
-                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-                <button onclick="btnAnnuler()">Fermer</button>
-            </div> 
-            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <button id="bouton2">Modifier l'offre</button>
         </div>
+        <div id="final">
+            <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+            <button onclick="btnAnnuler()">Fermer</button>
+        </div> 
+        <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+        <button id="bouton2">Modifier l'offre</button>
     </div>
 
     <main id="body">
@@ -117,7 +115,6 @@ try {
                     <?php foreach ($images as $image) { ?>
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
                     <?php } ?>
-                    <img src="images/universel/photos/hotel_2_2.png">
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
