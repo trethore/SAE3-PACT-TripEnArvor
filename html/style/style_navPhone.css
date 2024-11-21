@@ -5,8 +5,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    border-right : 300px solid transparent;
-    border-bottom : 260px solid red;
+    border-top: 10px red;
 }
 
 .nav-content {
