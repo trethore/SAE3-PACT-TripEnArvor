@@ -12,8 +12,8 @@ body {
 
 h1 {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    color: var(--orange-principale);
+    font-weight: var(--bold);
+    color: var(--noir);
     background: var(--blanc-leger);
     margin: 0.5em 0.2em;
     text-align: center;
@@ -22,16 +22,16 @@ h1 {
 
 h2 {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
+    font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
 }
 
 h3 {
     font-family: "Poppins", sans-serif;
-    font-weight: 500;
+    font-weight: var(--medium);
     font-size: 20pt;
-    color: var(--noir);
+    color: var(--orange-principale);
 }
 
 a {
@@ -51,7 +51,8 @@ main {
 
 main > article {
     background-color: var(--orange-principale);
-    flex-grow: 0;
+    flex-grow: 1;
+    border-radius: 15px;
 }
 
 main > article h2 {
@@ -73,9 +74,14 @@ main > article:first-child {
 *********************/
 section {
     background-color: var(--blanc);
-    
+    flex-grow: 3;
+    border-radius: 15px;
 }
 
 section h3 {
     font-weight: var(--medium);
+}
+
+table td + td {
+    color: var(--orange-principale);
 }
