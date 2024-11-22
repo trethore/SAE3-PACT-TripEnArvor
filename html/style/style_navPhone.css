@@ -32,12 +32,11 @@
 .btOn{background-color: var(--violet-principal);
     width: 8%;
     height: 8%;
-    transform: rotate(-3deg) scale(150%);}
+    transform: rotate(-3deg) ;}
 
 .btOff{background-color: var(--violet-principal);
         width: 8%;
-        height: 8%;
-        transform: rotate(-3deg) scale(150%);}
+        height: 8%;}
 
 @media only screen and (max-width: 600px) {
     .nav-content > img {
