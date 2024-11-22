@@ -483,7 +483,7 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'plan_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
@@ -510,7 +510,7 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
                     $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
@@ -525,16 +525,16 @@ function get_file_extension($type)
 
             if ($categorie !== "restautant") {
 
-                $offre_id = $stmt->fetchColumn();
+                $id_offre = $stmt->fetchColumn();
 
                 // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?)";
+                $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?);";
 
                 // Préparation de la requête pour la vue tarif
-                //$stmt_tarif = $dbh->prepare($requete_tarif);
+                $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                //$stmt_tarif->execute([$offre_id, $prix]);
+                $stmt_tarif->execute([$offre_id, $prix]);
 
             }
 
@@ -548,22 +548,26 @@ function get_file_extension($type)
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . $time . $file_extension);
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . $time . $file_extension);
                 $fichier_img = $time . $file_extension;
 
-                $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES ($fichier_img) returning id_image';
+                $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
 
                 print $requete_image;
 
                 //preparation requete
-                //$stmt = $dbh->prepare($requete_image);
-                
+                $stmt_image = $dbh->prepare($requete_image);
 
                 //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                //$stmt->execute([$fichier_img]);
+                $stmt_image->execute([$fichier_img]);
 
                 // Récupérer l'ID retourné par la requête
                 $id_image = $stmt->fetchColumn();
+
+                $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                //$stmt_image_offre = $dbh->prepare($requete_image);
+                //$stmt_image_offre->execute([$id_image, $id_offre]);
+
             }
 
             // $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
