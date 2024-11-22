@@ -199,7 +199,6 @@ try {
                 <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
-                <p>Durée de l'activité : <?php echo htmlentities($activite['duree']) ?></p>
                 <!-- -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
