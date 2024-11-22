@@ -69,6 +69,8 @@ a {
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
+        display: flex;
+        align-items: flex-start;
     }
 
     .bouton-modifier > div > button:hover {
