@@ -301,7 +301,7 @@ a {
         font-size: 60px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
@@ -311,7 +311,7 @@ a {
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);

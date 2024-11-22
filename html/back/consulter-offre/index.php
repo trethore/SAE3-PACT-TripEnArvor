@@ -199,7 +199,7 @@ try {
                 <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
-                <!-- -->
+                <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
                         <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
