@@ -14,6 +14,7 @@
     height: 80px;
     background-color: var(--violet-secondaire);
     transform: rotate(-3deg) scale(200%);
+    z-index: 2;
 }
 
 .nav-content {
