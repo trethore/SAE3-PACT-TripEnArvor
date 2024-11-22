@@ -32,7 +32,7 @@
 }
 
 .btOn{
-    background-color: var(--gradient-violet);
+    background-color: var(--violet-principal);
     transform: rotate(-15deg);
     padding: 10px 20px;
     border: 3px solid var(--gradient-violet);
