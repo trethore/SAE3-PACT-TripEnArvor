@@ -559,8 +559,8 @@ h3 {
 }
 
 .no-offers-message {
-    text-align: center;
-    color: #555;
-    font-size: 1.2em;
-    margin: 20px 0;
+    text-align: center; 
+    color: var(--violet-principal);
+    font-size: 20pt;
+    margin: 20px 430px;
 }
