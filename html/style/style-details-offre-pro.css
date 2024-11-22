@@ -46,28 +46,115 @@ a {
     display: flex;
 }
 
+.bordure {
+    border-bottom: 3px solid var(--orange-principale);
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
 
-.bouton-modifier {
-    margin: 30px 30px 0 30px;
-}
+    /******************************
+            BOUTONS POP-UP                
+    ******************************/
+    .bouton-modifier {
+        margin: 30px 30px 0 30px;
+    }
 
-.bouton-modifier > div > button {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    text-decoration: none;
-    font-size: 40px;
-    padding: 10px 80px;
-    border-radius: 15px;
-}
+    .bouton-modifier > div > button {
+        background: var(--orange-principale);
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 40px;
+        padding: 10px 80px;
+        border-radius: 15px;
+    }
 
-.bouton-modifier > div > button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border: 3px solid var(--orange-principale);
-}
+    .bouton-modifier > div > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc);
+        border: 3px solid var(--orange-principale);
+    }
+
+    #confirm {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 20px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    #final {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 32px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .close {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .close button:first-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    #final button {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .close button:last-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 60px;
+        margin-bottom: 12px;
+        background: var(--gris);
+        color: var(--blanc-leger);
+        font-size: 20px;
+        width: fit-content;
+    }
 
 .bloc-presentation > div > p {
     font-size: 32px;
@@ -97,21 +184,25 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
-    color: var(--blanc-leger);
-    text-decoration: none;
-    font-size: 40px;
-    background-color: var(--orange-principale);
-    padding: 10px 80px;
-    border-radius: 15px;
-    border: 0;
-}
+    /*****************************
+            BOUTONS TARIFS                
+    *****************************/
 
-.display-ligne-espace > button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc-leger);
-    border: 3px solid var(--orange-principale);
-}
+    .display-ligne-espace > button {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 40px;
+        background-color: var(--orange-principale);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+
+    .display-ligne-espace > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+    }
 
     /**********************************
             IMAGES PRÉSENTATION                
@@ -141,7 +232,7 @@ a {
         transform: translateY(-50%);
         z-index: 1;
         background-color: var(--orange-principale);
-        border-radius: 5px;
+        border-radius: 45px;
     }
 
     .arrow-left {
@@ -378,83 +469,6 @@ footer > div > a {
     text-decoration: none;
 }
 
-#confirm {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    font-size: 20px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-#final {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    font-size: 32px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.close {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.close button:first-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-#final button {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-.close button:last-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 60px;
-    margin-bottom: 12px;
-    background: var(--gris);
-    color: var(--blanc-leger);
-    font-size: 20px;
-    width: fit-content;
-}
 
 
 #avis {
@@ -463,12 +477,4 @@ footer > div > a {
 
 #carte {
     display: none;
-}
-/*
-#caracteristiques {
-    display: none;
-}*/
-
-.bordure {
-    border-bottom: 3px solid var(--orange-principale);
 }

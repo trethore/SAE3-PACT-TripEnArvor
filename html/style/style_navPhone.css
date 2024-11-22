@@ -1,21 +1,58 @@
 .telephone-nav {
-    background: rgba(74, 23, 116, 1);
     overflow: hidden;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    border-top: 10px red;
+}
+
+.bg {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(74, 23, 116, 1);
+    transform: rotate(-3deg) scale(200%);
 }
 
 .nav-content {
+    position: relative;
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 10px 10% 10px 10%;
+    padding: 0 15% 30px 15%;
+    z-index: 3;
 }
 
 .nav-content > img {
-    width: 150px;
-    height: 150px;
+    width: 8%;
+    height: 8%;
 }
+
+@media only screen and (max-width: 600px) {
+    .nav-content > img {
+        width: 15%;
+        height: 15%;
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .nav-content > img {
+        width: 10%;
+        height: 10%;
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 900px) {
+    .telephone-nav {
+        display: none;
+    }
+  } 

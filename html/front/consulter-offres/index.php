@@ -13,6 +13,14 @@ try {
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
+    $stmt3 = $dbh->prepare('SELECT * from sae._offre');
+    $stmt3->execute();
+    $test = $stmt3->fetchAll();
+    echo '<pre>';
+    print_r($test);
+    print_r($offres);
+    echo '</pre>';
+
     $reqTypeOffre = "SELECT 
                         CASE
                             WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
@@ -167,6 +175,9 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
+        <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
+            Aucun résultat ne correspond à vos critères.
+        </p>
             <?php
             $offers_per_page = 9;
 
@@ -179,11 +190,7 @@ try {
 
             $offres_for_page = array_slice($offres, $offset, $offers_per_page);
 
-            if (empty($offres_for_page)) {
-                echo '<p class="no-offers">Aucune offre ne convient à ces filtres.</p>';
-            } else {
-
-                foreach ($offres_for_page as $tab) {
+            foreach ($offres_for_page as $tab) {
                 ?>
                 <div class="offre">
                     <div class="sous-offre">
@@ -211,7 +218,6 @@ try {
                 </div>
             <?php
                 }
-            }
         ?>
         </section>
 
@@ -269,10 +275,17 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
+
             const allOffers = Array.from(offersContainer.children);
 
+            const noOffersMessage = document.createElement("p");
+            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            noOffersMessage.classList.add("no-offers-message");
+            noOffersMessage.style.display = "none";
+            offersContainer.appendChild(noOffersMessage);
+
             h2.addEventListener("click", () => {
-                // Ajoute ou supprime la classe qui contrôle l'affichage
+                // Toggle filter visibility
                 fondFiltres.classList.toggle("hidden");
             });
 
@@ -285,6 +298,8 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
+                let visibleOffers = 0;
+
                 allOffers.forEach(offer => {
                     const category = offer.querySelector(".categorie-offre")?.textContent.trim();
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
@@ -293,33 +308,44 @@ try {
 
                     let matches = true;
 
-                    // Filtre par catégorie
+                    // Filter by category
                     if (filters.categories.length > 0 && !filters.categories.includes(category)) {
                         matches = false;
                     }
 
-                    // Filtre par disponibilité
+                    // Filter by availability
                     if (filters.availability === "Ouvert" && !isAvailable) {
                         matches = false;
                     } else if (filters.availability === "Fermé" && isAvailable) {
                         matches = false;
                     }
 
-                    // Filtre par prix
-                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice) || (price < filters.minPrice && price > filters.maxPrice)) {
+                    // Filter by price
+                    if (
+                        (filters.minPrice !== null && price < filters.minPrice) ||
+                        (filters.maxPrice !== null && price > filters.maxPrice)
+                    ) {
                         matches = false;
                     }
 
-                    // Affiche ou masque les offres selon les filtres
+                    // Show or hide offer
                     if (matches) {
                         offer.style.display = "block";
+                        visibleOffers++;
                     } else {
                         offer.style.display = "none";
                     }
                 });
+
+                // Show or hide the no-offers message
+                if (visibleOffers === 0) {
+                    noOffersMessage.style.display = "block";
+                } else {
+                    noOffersMessage.style.display = "none";
+                }
             };
 
-            // Ajoute un événement sur chaque élément de filtre
+            // Add an event listener to each filter element
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
