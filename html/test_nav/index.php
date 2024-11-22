@@ -66,9 +66,15 @@
     <div class="telephone-nav">
         <div class="bg"></div>
         <div class="nav-content">
+            <div class = "btOff">
             <img src="/images/frontOffice/icones/accueil.png">
+            </div>
+            <div class = "btOn">
             <img src="/images/frontOffice/icones/chercher.png">
+            </div>
+            <div class = "btOff">
             <img src="/images/frontOffice/icones/utilisateur.png">
+            </div>
         </div>
     </div>
 </html>
