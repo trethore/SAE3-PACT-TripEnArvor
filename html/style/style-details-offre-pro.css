@@ -62,17 +62,18 @@ a {
     }
 
     .bouton-modifier > div > button {
-        background: var(--orange-principale);
-        color: var(--blanc);
+        color: var(--blanc-leger);
         text-decoration: none;
         font-size: 40px;
+        background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
+        border: 0;
     }
 
     .bouton-modifier > div > button:hover {
         color: var(--orange-principale);
-        background: var(--blanc);
+        background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
     }
 
@@ -231,6 +232,8 @@ a {
         top: 50%;
         transform: translateY(-50%);
         z-index: 1;
+        background-color: var(--orange-principale);
+        border-radius: 45px;
     }
 
     .arrow-left > img, .arrow-right > img {
@@ -471,8 +474,6 @@ a {
 footer > div > a {
     text-decoration: none;
 }
-
-
 
 #avis {
     display: none;
