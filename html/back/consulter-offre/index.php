@@ -205,19 +205,24 @@ try {
                     case "Activité": ?>
                         <p>Durée de l'activité : <?php echo htmlentities($activite['duree']) ?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?></p>
+                        <?php break; ?>
                     <?php case "Visite": ?>
                         <p>Durée de la visite : <?php echo htmlentities($visite['duree']) ?></p>
+                        <?php break; ?>
                     <?php case "Spectacle": ?>
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']) ?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?></p>
+                        <?php break; ?>
                     <?php case "Parc d'Attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?></p>
                         <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        <?php break; ?>
                     <?php case "Restaurant": ?>
                         <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
                         <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
-                <?php } ?>
+                        <?php break;
+                } ?>
                 
                 <div class="display-ligne-espace">
                     <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
