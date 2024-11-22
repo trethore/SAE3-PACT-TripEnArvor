@@ -120,10 +120,9 @@ try {
                                 </div>
                                 <div>
                                     <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
+                                        <option value="default">Trier par :</option>
+                                        <option value="price-asc">Prix croissant</option>
+                                        <option value="price-desc">Prix décroissant</option>
                                     </select>
                                 </div>
                             </div>
@@ -319,7 +318,7 @@ try {
                     // Filter by price
                     if ((filters.minPrice !== null && price < filters.minPrice) ||
                         (filters.maxPrice !== null && price > filters.maxPrice) ||
-                        (filters.minPrice !== null && filters.maxPrice !== null && (price < filters.minPrice || price > filters.maxPrice))) {
+                        (price < filters.minPrice && price > filters.maxPrice)) {
                         matches = false;
                     }
 
@@ -334,6 +333,30 @@ try {
 
                 // Show or hide the "no offers" message
                 noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
+            };
+
+            const applySorting = (sortingOption) => {
+                if (!sortingOption || sortingOption === "default") return;
+
+                // Clone and sort offers based on the sorting option
+                const sortedOffers = [...allOffers].filter(offer => offer.style.display !== "none");
+                if (sortingOption === "price-asc") {
+                    sortedOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
+                        const priceB = parseFloat(b.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
+                        return priceA - priceB;
+                    });
+                } else if (sortingOption === "price-desc") {
+                    sortedOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
+                        const priceB = parseFloat(b.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
+                        return priceB - priceA;
+                    });
+                }
+
+                // Clear and re-insert sorted offers into the container
+                offersContainer.innerHTML = "";
+                sortedOffers.forEach(offer => offersContainer.appendChild(offer));
             };
 
             // Add change event listeners to filter inputs
