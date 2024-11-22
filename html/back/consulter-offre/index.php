@@ -225,7 +225,7 @@ try {
                 
                 <div class="display-ligne-espace">
                     <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                    <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
+                    <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
