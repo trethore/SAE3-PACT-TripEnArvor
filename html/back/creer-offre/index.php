@@ -546,7 +546,7 @@ function get_file_extension($type)
 
             //INSERTION IMAGE
             $time = 'p' . strval(time());
-            $file = $_FILES[''];
+            $file = $_FILES['photo1'];
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
