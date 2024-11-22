@@ -25,7 +25,9 @@
     z-index: 3;
 }
 
-.nav-content > img {
+.nav-content > div > img {
+    width: 8%;
+        height: 8%;
    
 }
 
@@ -34,7 +36,7 @@
     height: 8%;
     transform: rotate(-3deg) ;}
 
-.btOff{background-color: var(--violet-principal);
+.btOff{
         width: 8%;
         height: 8%;}
 
