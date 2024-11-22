@@ -121,10 +121,10 @@ function get_file_extension($type)
                             </td>
                         </tr>
                         <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" />€</td>
+                        <td><input type="number" id="prix" name="prix" />€</td>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
-                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" /></td>
+                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
                         </tr>
                         <tr>
                             <td><label for="dispo">Disponibilité </label></td>
@@ -187,20 +187,20 @@ function get_file_extension($type)
                     <!-- </div> -->
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" />minutes
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
                         <!-- activité, parc -->
                         <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> an(s)
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" /> personnes
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/> personnes
                         <br>
                         <!-- parc -->
-                        <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions" />
-                        <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" />
+                        <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions" name="attractions" />
+                        <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan"/>
                         <br>
                         <!-- restaurant -->
-                        <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" />
+                        <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte"/>
                     </div>
                     <br>
 
