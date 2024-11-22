@@ -232,8 +232,6 @@ a {
         top: 50%;
         transform: translateY(-50%);
         z-index: 1;
-        background-color: var(--orange-principale);
-        border-radius: 45px;
     }
 
     .arrow-left > img, .arrow-right > img {
