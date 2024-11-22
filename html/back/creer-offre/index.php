@@ -364,7 +364,7 @@ function get_file_extension($type)
         $user   = 'sae';
         $pass    = 'naviguer-vag1n-eNTendes';
 
-        print $_POST['descriptionC'];
+        $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
         // include('../../php/connect_params.php');
 
