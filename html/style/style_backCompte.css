@@ -14,7 +14,6 @@ h1 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--bold);
     color: var(--noir);
-    background: var(--blanc-leger);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -31,12 +30,22 @@ h3 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--medium);
     font-size: 20pt;
-    color: var(--orange-principale);
+    color: var(--noir);
 }
+
 
 a {
     text-decoration: none;
-    color: var(--noir);
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: none;
+    border-radius: 15px;
+}
+
+a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
 }
 
 main {
