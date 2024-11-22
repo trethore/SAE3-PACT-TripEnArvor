@@ -32,6 +32,7 @@ body {
     font-weight: 400;
     color: var(--noir);
     background: var(--blanc-leger);
+
 }
 
 h1 {
@@ -61,4 +62,45 @@ h3 {
 a {
     text-decoration: none;
     color: var(--noir);
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+/********************
+        NAV
+*********************/
+
+main > article {
+    background-color: var(--orange-principale);
+    flex-grow: 0;
+}
+
+main > article h2 {
+    background-color: var(--blanc-leger);
+    color: var(--orange-principale);  
+    margin: 0.5em;
+}
+
+main > article:first-child {
+    margin-top: 1em;
+}
+
+.ici {
+    font-weight: bold;
+}
+
+/********************
+    DETAILS COMPTE
+*********************/
+section {
+    background-color: var(--blanc);
+    
+}
+
+section h3 {
+    font-weight: ;
 }
