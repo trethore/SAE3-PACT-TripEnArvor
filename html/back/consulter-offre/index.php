@@ -7,45 +7,80 @@ try {
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $id_offre_cible = intval($_GET['id']);
 
-    // Requête SQL pour récupérer les informations de l'offre
+    // ===== Requête SQL pour récupérer les informations de l'offre ===== //
     $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
-    $stmt = $dbh->prepare($reqOffre);
-    $stmt->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmt->execute();
-    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmtOffre = $dbh->prepare($reqOffre);
+    $stmtOffre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtOffre->execute();
+    $offre = $stmtOffre->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer les informations de l'adresse de l'offre
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une activité ===== //
+    $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
+    $stmtActivite = $dbh->prepare($reqActivite);
+    $stmtActivite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtActivite->execute();
+    $activite = $stmtActivite->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une visite ===== //
+    $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+    $stmtVisite = $dbh->prepare($reqVisite);
+    $stmtVisite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtVisite->execute();
+    $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un spectacle ===== //
+    $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+    $stmtSpectacle = $dbh->prepare($reqSpectacle);
+    $stmtSpectacle->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtSpectacle->execute();
+    $spectacle = $stmtSpectacle->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un parc d'attractions ===== //
+    $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
+    $stmtAttraction = $dbh->prepare($reqAttraction);
+    $stmtAttraction->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtAttraction->execute();
+    $attraction = $stmtAttraction->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un restaurant ===== //
+    $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+    $stmtRestaurant = $dbh->prepare($reqRestaurant);
+    $stmtRestaurant->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtRestaurant->execute();
+    $restaurant = $stmtRestaurant->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
     $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
     $stmtAdresse = $dbh->prepare($reqAdresse);
     $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
     $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);    
 
-    // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
     $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
     $stmtCompte = $dbh->prepare($reqCompte);
     $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
+    // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
     $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
     
-    // Requête SQL pour récupérer les tags de l'offre
+    // ===== Requête SQL pour récupérer les tags de l'offre ===== //
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
     $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtTags->execute();
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer le type de l'offre
+    // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
-    //Requête SQL pour récuéprer les images de l'offre
+    // ===== Requête SQL pour récuéprer les images de l'offre ===== //
     $images = getIMGbyId($id_offre_cible);
 
 } catch (PDOException $e) {
@@ -171,13 +206,16 @@ try {
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?></p>
                     <?php case "Visite": ?>
                         <p>Durée de la visite : <?php echo htmlentities($visite['duree']) ?></p>
-                    <?php case "Restaurant": ?>
-                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                        <p>Télécharger la carte : <?php echo htmlentities($restaurant['carte']) ?></p>
                     <?php case "Spectacle": ?>
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']) ?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?></p>
                     <?php case "Parc d'Attraction": ?>
+                        <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
+                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?></p>
+                        <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                    <?php case "Restaurant": ?>
+                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                        <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
                 <?php } ?>
                 
                 <div class="display-ligne-espace">
