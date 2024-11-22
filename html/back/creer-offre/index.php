@@ -158,7 +158,7 @@ function get_file_extension($type)
                                     <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                                    <input id="photo" type="file" name="photo" multiple required />
+                                    <input id="photo" type="file" name="photo" required />
                                 </div>
                             </td>
 
@@ -184,7 +184,7 @@ function get_file_extension($type)
                     </tr>
                     </table>
 
-                    <!-- </div> -->
+                    
                     <div>
                         <!-- activite, visite, spectacle -->
                         <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
@@ -203,6 +203,7 @@ function get_file_extension($type)
                         <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte"/>
                     </div>
                     <br>
+                </div>
 
                     <h3>Tags de l'offre</h3>
 
