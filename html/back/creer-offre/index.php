@@ -486,20 +486,20 @@ function get_file_extension($type)
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
-                    $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
-                    $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
@@ -512,7 +512,7 @@ function get_file_extension($type)
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
