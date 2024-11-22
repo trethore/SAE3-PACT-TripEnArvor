@@ -28,6 +28,8 @@
 .nav-content > img {
     width: 8%;
     height: 8%;
+    margin: 10px;
+    background-color: var(--violet-principal);
 }
 
 @media only screen and (max-width: 600px) {
@@ -42,8 +44,7 @@
     .nav-content > img {
         width: 10%;
         height: 10%;
-        margin: 10px;
-        background-color: var(--violet-principal);
+        
     }
   }
   
