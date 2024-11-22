@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
+    <link rel="stylesheet" href="/style/styleguide.css" />
     <title>Liste de vos offres</title>
 </head>
 <body>
