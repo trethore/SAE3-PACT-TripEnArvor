@@ -203,21 +203,26 @@ if (!$submitted) {
     $name = $_POST['name'];
     $first_name = $_POST['first-name'];
     $tel = $_POST['tel'];
+    $password_hash;
+
+    if ($password === $confirm_password) {
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    }
 
     if ($ok) {
         require_once('../php/connect_params.php');
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
         switch ($_POST['type-compte']) {
             case 'membre':
                 $pseudo = $_POST['pseudo'];
                 if ($name === '') $name = 'NULL';
                 if ($first_name === '') $first_name = 'NULL';
                 if ($tel === '') $tel = 'NULL';
-                echo("$name, $first_name, $email, $tel, $password, $pseudo");
                 $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?);";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password, $pseudo]);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
                 break;
             case 'pro-publique':
                 $denomination = $_POST['denomination'];
