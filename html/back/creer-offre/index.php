@@ -483,7 +483,7 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
@@ -510,7 +510,7 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
                     $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
@@ -548,8 +548,8 @@ function get_file_extension($type)
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . $time . $file_extension);
-                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . $time . $file_extension)){
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension)){
                     print("image bougée");
                 }
                
