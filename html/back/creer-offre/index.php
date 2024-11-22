@@ -452,16 +452,16 @@ function get_file_extension($type)
             // Déterminer la table cible selon la catégorie
             switch ($categorie) {
                 case 'activite':
-                    $requeteCategorie .= 'activite';
+                    $requeteCategorie = 'activite';
                     break;
                 case 'parc':
-                    $requeteCategorie .= 'parc_attraction';
+                    $requeteCategorie = 'parc_attraction';
                     break;
                 case 'spectacle':
-                    $requeteCategorie .= 'spectacle';
+                    $requeteCategorie = 'spectacle';
                     break;
                 case 'visite':
-                    $requeteCategorie .= 'visite';
+                    $requeteCategorie = 'visite';
                     break;
                 default:
                     die("Erreur de categorie!");
