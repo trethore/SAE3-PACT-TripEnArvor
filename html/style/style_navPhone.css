@@ -30,7 +30,6 @@
     height: 8%;
     padding: 50px;
     background-color: var(--violet-principal);
-    border-radius: 150px;
 }
 
 @media only screen and (max-width: 600px) {
