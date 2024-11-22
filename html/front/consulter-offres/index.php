@@ -306,6 +306,7 @@ try {
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
                     const etoiles = offer.querySelector(".etoiles");
+                    console.log(etoiles);
                     const note = etoiles.children.length;
 
                     console.log(note);
