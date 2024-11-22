@@ -290,6 +290,8 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
+                const noCategorySelected = filters.categories.length === 0;
+
                 let visibleOffers = 0;
 
                 allOffers.forEach(offer => {
@@ -330,7 +332,7 @@ try {
                 });
 
                 // Show or hide the no-offers message
-                if (visibleOffers === 0) {
+                if (visibleOffers === 0 && !noCategorySelected) {
                     noOffersMessage.style.display = "block";
                 } else {
                     noOffersMessage.style.display = "none";
