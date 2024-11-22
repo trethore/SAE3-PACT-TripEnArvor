@@ -1,3 +1,10 @@
+<?php
+require_once('../utils/session-utils.php');
+
+startSession();
+
+$submitted = isset($_POST['type-compte']);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -47,14 +54,21 @@
         #div-type-compte label span {
             display: inline;
         }
+
+        form span span {
+            color: red;
+        }
     </style>
     <script src="/scripts/creer-compte.js"></script>
 </head>
 
 <body>
+<?php
+if (!$submitted) {
+?>
     <form action="/creer-compte/" method="post">
         <h1>Creer un compte</h1>
-        <span>* Champs obligatoires</span>
+        <span><span>*</span> Champs obligatoires</span>
         <div id="div-type-compte">
             <label for="type-compte">Type de compte<span> *</span></label>
             <select name="type-compte" id="type-compte">
@@ -132,6 +146,119 @@
         </div>
         <input type="submit" value="Créer un compte" disabled>
     </form>
+<?php
+} else {
+    $ok = true;
+    switch ($_POST['type-compte']) {
+        case 'membre':
+            $ok = $ok && isset($_POST['email']);
+            $ok = $ok && isset($_POST['password']);
+            $ok = $ok && isset($_POST['confirm-password']);
+            $ok = $ok && isset($_POST['pseudo']);
+            break;
+        case 'pro-publique':
+            $ok = $ok && isset($_POST['email']);
+            $ok = $ok && isset($_POST['password']);
+            $ok = $ok && isset($_POST['confirm-password']);
+            $ok = $ok && isset($_POST['name']);
+            $ok = $ok && isset($_POST['first-name']);
+            $ok = $ok && isset($_POST['tel']);
+            $ok = $ok && isset($_POST['denomination']);
+            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['site-web']);
+            $ok = $ok && isset($_POST['street']);
+            $ok = $ok && isset($_POST['code-postal']);
+            $ok = $ok && isset($_POST['city']);
+            $ok = $ok && isset($_POST['country']);
+            break;
+        case 'pro-privée':
+            $ok = $ok && isset($_POST['email']);
+            $ok = $ok && isset($_POST['password']);
+            $ok = $ok && isset($_POST['confirm-password']);
+            $ok = $ok && isset($_POST['name']);
+            $ok = $ok && isset($_POST['first-name']);
+            $ok = $ok && isset($_POST['tel']);
+            $ok = $ok && isset($_POST['denomination']);
+            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['site-web']);
+            $ok = $ok && isset($_POST['siren']);
+            $ok = $ok && isset($_POST['street']);
+            $ok = $ok && isset($_POST['code-postal']);
+            $ok = $ok && isset($_POST['city']);
+            $ok = $ok && isset($_POST['country']);
+            break;
+        default:
+            $ok = false;
+            break;
+    }
+    if ($_POST['password'] !== $_POST['confirm-password'])
+    {
+        $ok = false;
+    }
+
+    $type_compte = $_POST['type-compte'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm-password'];
+    $name = $_POST['name'];
+    $first_name = $_POST['first-name'];
+    $tel = $_POST['tel'];
+
+    if ($ok) {
+        require_once('../php/connect_params.php');
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        switch ($_POST['type-compte']) {
+            case 'membre':
+                $pseudo = $_POST['pseudo'];
+                if ($name === '') $name = 'NULL';
+                if ($first_name === '') $first_name = 'NULL';
+                if ($tel === '') $tel = 'NULL';
+                echo("$name, $first_name, $email, $tel, $password, $pseudo");
+                $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?);";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$name, $first_name, $email, $tel, $password, $pseudo]);
+                break;
+            case 'pro-publique':
+                $denomination = $_POST['denomination'];
+                $a_propos = $_POST['a-propos'];
+                $site_web = $_POST['site-web'];
+                $street = $_POST['street'];
+                $address_complement = $_POST['address-complement'];
+                $code_postal = $_POST['code-postal'];
+                $city = $_POST['city'];
+                $country = $_POST['country'];
+                break;
+            case 'pro-privée':
+                $denomination = $_POST['denomination'];
+                $a_propos = $_POST['a-propos'];
+                $site_web = $_POST['site-web'];
+                $siren = $_POST['siren'];
+                $street = $_POST['street'];
+                $address_complement = $_POST['address-complement'];
+                $code_postal = $_POST['code-postal'];
+                $city = $_POST['city'];
+                $country = $_POST['country'];
+                break;
+            default:
+                break;
+        }
+
+    
+?>
+    <h1>OK</h1>
+    <a href=".">ok</a>
+<?php
+    } else {
+?>
+        <h1>Pas OK</h1>
+        <a href=".">ok</a>
+<?php
+    }
+}
+?>
 </body>
 
 </html>
+<?php
+$dbh = null;
