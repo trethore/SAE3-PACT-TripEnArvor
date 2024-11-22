@@ -305,7 +305,7 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const note = offer.$(".etoiles").find('img').length;
+                    const note = offer.querySelectorAll(".etoile").length;
 
                     let matches = true;
 
@@ -331,7 +331,7 @@ try {
                     }
 
                     // Filter by note
-                    if (filters.minRating > note) {
+                    if (numberOfStarsWanted > note) {
                         matches = false;
                     }
 
