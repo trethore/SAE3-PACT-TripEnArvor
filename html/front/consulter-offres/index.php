@@ -303,7 +303,7 @@ try {
 
                     let matches = true;
 
-                    console.log(minRating);
+                    console.log(filters.minRating);
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
