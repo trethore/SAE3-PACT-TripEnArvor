@@ -410,18 +410,18 @@ function get_file_extension($type)
             $capacite = $_POST['capacite'];
         }
 
-        print_r($_POST);
+        
         print_r($_FILES);
 
-        //print  $_FILE['photo']['name'];
+        echo "<br>";
+
+        print  $_FILE['photo']['name'];
 
         // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
         // $type = isset($_POST['type']) ? $_POST['type'] : '';
         // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
         //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
-
-        print($titre);
 
         $id_compte = 'test';
         //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
@@ -440,14 +440,13 @@ function get_file_extension($type)
                 $categorie = $_POST['lacat'];
             }
 
-            // print($categorie);
+            
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
             // Début de la requête SQL
             $requete = "INSERT INTO sae.offre_";
 
-            print($categorie);
 
 
             // Déterminer la table cible selon la catégorie
@@ -467,14 +466,13 @@ function get_file_extension($type)
                 default:
                     die("Erreur de categorie!");
             }
-            //print("categorie ".$categorie);
 
 
 
             switch ($categorie) {
                 case 'activite':
                     $requete .= "(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
-                    print($requete);
+                    
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
@@ -600,7 +598,7 @@ function get_file_extension($type)
             // Fermeture de la connexion
             $dbh = null;
 
-            print "Offre et tarif créés avec succès!";
+            print "Offre créée avec succès!";
         } catch (PDOException $e) {
             // Affichage de l'erreur en cas d'échec
             print "Erreur !: " . $e->getMessage() . "<br/>";
