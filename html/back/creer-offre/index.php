@@ -534,7 +534,7 @@ function get_file_extension($type)
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$offre_id, $prix]);
+                //$stmt_tarif->execute([$offre_id, $prix]);
 
             }
 
@@ -549,6 +549,10 @@ function get_file_extension($type)
 
             if ($file_extension !== '') {
                 move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . $time . $file_extension);
+                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . $time . $file_extension)){
+                    print("image bougée");
+                }
+               
                 $fichier_img = $time . $file_extension;
 
                 $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
