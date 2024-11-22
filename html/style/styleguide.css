@@ -26,7 +26,7 @@
 
   --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
   --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
-  --gradient-violet: linear-gradient(0.45turn,rgba(121, 66, 167, 1) 10%, rgba(186, 140, 224, 1) 23%);
+  --gradient-violet: linear-gradient(90deg, rgba(186,140,224,1) 0%, rgba(132,79,177,1) 16%, rgba(127,73,172,1) 38%, rgba(121,66,167,1) 63%);
 
   /*******************
       FONT WEIGHT
