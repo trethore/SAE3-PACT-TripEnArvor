@@ -553,13 +553,16 @@ function get_file_extension($type)
                 move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . $time . $file_extension);
                 $fichier_img = $time . $file_extension;
 
-                $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+                $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES ($fichier_img) returning id_image';
+
+                print $requete_image;
 
                 //preparation requete
-                $stmt = $dbh->prepare($requete_image);
+                //$stmt = $dbh->prepare($requete_image);
+                
 
                 //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                $stmt->execute([$fichier_img]);
+                //$stmt->execute([$fichier_img]);
 
                 // Récupérer l'ID retourné par la requête
                 $id_image = $stmt->fetchColumn();
