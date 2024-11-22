@@ -1,5 +1,4 @@
 <?php
-
 include('../../php/connect_params.php');
 require_once('../../utils/offres-utils.php');
 
@@ -14,7 +13,6 @@ try {
     $stmt->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
-    
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
     $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
@@ -61,7 +59,6 @@ try {
 <html>
 
 <head>
-
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <link rel="stylesheet" href="/style/styleHFB.css"/>
@@ -71,13 +68,11 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 </head>
 
 <body>
-
+    
     <header id="header">
-
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
@@ -86,7 +81,6 @@ try {
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-
     </header>
 
     <div class="display-ligne-espace bouton-modifier"> 
@@ -104,9 +98,6 @@ try {
             </div> 
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
-        </div>
-        <div>
-            <p class="transparent">.</p>
         </div>
     </div>
 
@@ -161,7 +152,7 @@ try {
 
         <section class="double-blocs">
 
-            <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
+            <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
                         <li><?php echo htmlentities($tag['nom_tag']); ?></li>

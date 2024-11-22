@@ -9,17 +9,9 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from sae._offre NATURAL JOIN _compte WHERE id_compte_professionnel = id_compte');
+    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
     $stmt->execute();
     $offres = $stmt->fetchAll();
-
-    $stmt3 = $dbh->prepare('SELECT * from sae._offre');
-    $stmt3->execute();
-    $test = $stmt3->fetchAll();
-    echo '<pre>';
-    print_r($test);
-    print_r($offres);
-    echo '</pre>';
 
     $reqTypeOffre = "SELECT 
                         CASE
@@ -40,6 +32,11 @@ try {
         $categoryResult = $stmtCategory->fetch();
         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
     }
+
+    foreach ($offres as &$offre) {
+        $offre['note'] = 3;
+    }
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -128,10 +125,9 @@ try {
                                 </div>
                                 <div>
                                     <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
+                                        <option value="default">Trier par :</option>
+                                        <option value="price-asc">Prix croissant</option>
+                                        <option value="price-desc">Prix décroissant</option>
                                     </select>
                                 </div>
                             </div>
@@ -275,17 +271,16 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-
             const allOffers = Array.from(offersContainer.children);
 
-            const noOffersMessage = document.createElement("p");
-            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            // Create the "no offers" message element
+            const noOffersMessage = document.createElement("div");
             noOffersMessage.classList.add("no-offers-message");
+            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            offersContainer.parentNode.insertBefore(noOffersMessage, offersContainer);
             noOffersMessage.style.display = "none";
-            offersContainer.appendChild(noOffersMessage);
 
             h2.addEventListener("click", () => {
-                // Toggle filter visibility
                 fondFiltres.classList.toggle("hidden");
             });
 
@@ -298,6 +293,11 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
+                // Treat no categories checked as all categories selected
+                if (filters.categories.length === 0) {
+                    filters.categories = Array.from(document.querySelectorAll(".categorie label")).map(label => label.textContent.trim());
+                }
+
                 let visibleOffers = 0;
 
                 allOffers.forEach(offer => {
@@ -305,11 +305,18 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
+                    const etoiles = offer.querySelector(".etoiles");
+                    console.log(etoiles);
+                    const note = etoiles.children.length;
+
+                    console.log(note);
 
                     let matches = true;
 
+                    // let numberOfStarsWanted = filters.minRating.length;
+
                     // Filter by category
-                    if (filters.categories.length > 0 && !filters.categories.includes(category)) {
+                    if (!filters.categories.includes(category)) {
                         matches = false;
                     }
 
@@ -321,14 +328,18 @@ try {
                     }
 
                     // Filter by price
-                    if (
-                        (filters.minPrice !== null && price < filters.minPrice) ||
-                        (filters.maxPrice !== null && price > filters.maxPrice)
-                    ) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) ||
+                        (filters.maxPrice !== null && price > filters.maxPrice) ||
+                        (price < filters.minPrice && price > filters.maxPrice)) {
                         matches = false;
                     }
 
-                    // Show or hide offer
+                    // Filter by note
+                    if (numberOfStarsWanted > note) {
+                        matches = false;
+                    }
+
+                    // Show or hide the offer
                     if (matches) {
                         offer.style.display = "block";
                         visibleOffers++;
@@ -337,18 +348,17 @@ try {
                     }
                 });
 
-                // Show or hide the no-offers message
-                if (visibleOffers === 0) {
-                    noOffersMessage.style.display = "block";
-                } else {
-                    noOffersMessage.style.display = "none";
-                }
+                // Show or hide the "no offers" message
+                noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
             };
 
-            // Add an event listener to each filter element
+            // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
+
+            // Initial filter application to handle default state
+            applyFilters();
         });
     </script>
 </body>

@@ -1,28 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-:root {
-    --noir: rgba(0, 0, 0, 1);
-    --blanc: rgba(255, 255, 255, 1);
-    --blanc-leger: rgba(236, 236, 236, 1);
-    --beige: rgba(234, 226, 218, 1);
-
-    --marron: rgba(191, 140, 44, 1);
-    --orange-principale: rgba(217, 102, 54, 1);
-    --orange-secondaire-1: rgba(217, 111, 50, 1);
-    --orange-secondaire-2: rgba(242, 139, 48, 1);
-
-    --fond-bouton: rgba(217, 217, 217, 0.73);
-  
-    --mobile-star-size: 30px;
-    --like-size: 35px;
-  
-    --jaune-etoile: rgba(254, 194, 1, 1);
-    --gris-etoile: rgba(128, 128, 128, 1);
-    --gris: rgba(193, 192, 192, 1);
-
-    --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
-  }
-  
 /************************
        GENERALISATION
 *************************/
@@ -32,13 +7,13 @@ body {
     font-weight: 400;
     color: var(--noir);
     background: var(--blanc-leger);
+
 }
 
 h1 {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    color: var(--orange-principale);
-    background: var(--blanc-leger);
+    font-weight: var(--bold);
+    color: var(--noir);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -46,19 +21,90 @@ h1 {
 
 h2 {
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
+    font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
 }
 
 h3 {
     font-family: "Poppins", sans-serif;
-    font-weight: 500;
+    font-weight: var(--medium);
     font-size: 20pt;
     color: var(--noir);
 }
 
-a {
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+/********************
+        NAV
+*********************/
+
+main > article {
+    background-color: var(--orange-principale);
+    flex-grow: 1;
+    border-radius: 15px;
+}
+
+main > article h2 {
+    background-color: var(--blanc-leger);
+    color: var(--orange-principale);  
+    margin: 0.5em;
+}
+
+main > article:first-child {
+    margin-top: 1em;
+}
+
+main > article a {
     text-decoration: none;
-    color: var(--noir);
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: none;
+    border-radius: 15px;
+}
+
+main > article a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
+}
+
+.ici {
+    font-weight: bold;
+}
+
+/********************
+    DETAILS COMPTE
+*********************/
+section {
+    background-color: var(--blanc);
+    flex-grow: 3;
+    border-radius: 15px;
+}
+
+section h3 {
+    font-weight: var(--medium);
+}
+
+table td + td {
+    color: var(--orange-principale);
+}
+
+main > section a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: none;
+    border-radius: 15px;
+}
+
+main > section a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backListe.css">
+    <link rel="stylesheet" href="/style/styleguide.css" />
     <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
@@ -66,7 +66,9 @@
         <div class="bg"></div>
         <div class="nav-content">
             <img src="/images/frontOffice/icones/accueil.png">
+            <div class = "btOn">
             <img src="/images/frontOffice/icones/chercher.png">
+            </div>
             <img src="/images/frontOffice/icones/utilisateur.png">
         </div>
     </div>

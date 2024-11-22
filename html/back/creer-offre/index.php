@@ -121,10 +121,10 @@ function get_file_extension($type)
                             </td>
                         </tr>
                         <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" />€</td>
+                        <td><input type="number" id="prix" name="prix" />€</td>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
-                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" /></td>
+                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
                         </tr>
                         <tr>
                             <td><label for="dispo">Disponibilité </label></td>
@@ -158,7 +158,7 @@ function get_file_extension($type)
                                     <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                                    <input id="photo" type="file" name="photo" multiple required />
+                                    <input id="photo" type="file" name="photo" required />
                                 </div>
                             </td>
 
@@ -184,25 +184,26 @@ function get_file_extension($type)
                     </tr>
                     </table>
 
-                    <!-- </div> -->
+                    
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" />minutes
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
                         <!-- activité, parc -->
                         <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> an(s)
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" /> personnes
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/> personnes
                         <br>
                         <!-- parc -->
-                        <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions" />
-                        <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" />
+                        <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions" name="attractions" />
+                        <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan"/>
                         <br>
                         <!-- restaurant -->
-                        <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" />
+                        <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte"/>
                     </div>
                     <br>
+                </div>
 
                     <h3>Tags de l'offre</h3>
 
@@ -364,6 +365,7 @@ function get_file_extension($type)
         $user   = 'sae';
         $pass    = 'naviguer-vag1n-eNTendes';
 
+        $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
         // include('../../php/connect_params.php');
 
@@ -379,6 +381,7 @@ function get_file_extension($type)
         // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
         if (isset($_POST['decriptionC'])) {
             $resume = $_POST['descriptionC'];
+            print $_POST['descriptionC'];
         }
 
         if (isset($_POST['ville'])) {
@@ -408,18 +411,18 @@ function get_file_extension($type)
             $capacite = $_POST['capacite'];
         }
 
-        print_r($_POST);
+        
         print_r($_FILES);
 
-        //print  $_FILE['photo']['name'];
+        echo "<br>";
+
+        print  $_FILES['photo']['name'];
 
         // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
         // $type = isset($_POST['type']) ? $_POST['type'] : '';
         // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
         //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
-
-        print($titre);
 
         $id_compte = 'test';
         //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
@@ -438,41 +441,38 @@ function get_file_extension($type)
                 $categorie = $_POST['lacat'];
             }
 
-            // print($categorie);
+            
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
             // Début de la requête SQL
-            $requete = "INSERT INTO sae.offre_";
-
-            print($categorie);
+    
 
 
             // Déterminer la table cible selon la catégorie
             switch ($categorie) {
                 case 'activite':
-                    $requete .= 'activite';
+                    $requeteCategorie = 'activite';
                     break;
                 case 'parc':
-                    $requete .= 'parc_attraction';
+                    $requeteCategorie = 'parc_attraction';
                     break;
                 case 'spectacle':
-                    $requete .= 'spectacle';
+                    $requeteCategorie = 'spectacle';
                     break;
                 case 'visite':
-                    $requete .= 'visite';
+                    $requeteCategorie = 'visite';
                     break;
                 default:
                     die("Erreur de categorie!");
             }
-            //print("categorie ".$categorie);
 
 
 
             switch ($categorie) {
                 case 'activite':
-                    $requete .= "(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
-                    print($requete);
+                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
+                    
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
@@ -483,24 +483,24 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
-                    $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
-                    $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
@@ -510,10 +510,10 @@ function get_file_extension($type)
                     $file_extension = get_file_extension($file['type']);
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
@@ -525,16 +525,16 @@ function get_file_extension($type)
 
             if ($categorie !== "restautant") {
 
-                $offre_id = $stmt->fetchColumn();
+                $id_offre = $stmt->fetchColumn();
 
                 // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?)";
+                $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
 
                 // Préparation de la requête pour la vue tarif
-                //$stmt_tarif = $dbh->prepare($requete_tarif);
+                $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                //$stmt_tarif->execute([$offre_id, $prix]);
+                //$stmt_tarif->execute([$id_offre, id, $prix]);
 
             }
 
@@ -544,58 +544,41 @@ function get_file_extension($type)
 
             //INSERTION IMAGE
             $time = 'p' . strval(time());
-            $file = $_FILES[''];
+            $file = $_FILES['photo'];
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/' . $time . $file_extension);
+                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension)){
+                    print("image bougée");
+                }
+               
                 $fichier_img = $time . $file_extension;
 
-                $requetes_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+                $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+
+                print $requete_image;
 
                 //preparation requete
-                $stmt = $dbh->prepare($requete_image);
+                $stmt_image = $dbh->prepare($requete_image);
 
                 //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                $stmt->execute([$fichier_img]);
+                $stmt_image->execute([$fichier_img]);
 
                 // Récupérer l'ID retourné par la requête
                 $id_image = $stmt->fetchColumn();
+
+                $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                //$stmt_image_offre = $dbh->prepare($requete_image);
+                //$stmt_image_offre->execute([$id_image, $id_offre]);
+
             }
 
-            // $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
-
-            // // Préparation de la requête
-            // $stmt = $dbh->prepare($requete);
-
-            // // Liaison des valeurs aux paramètres SQL
-            // $stmt->bindParam(':titre', $titre);
-            // $stmt->bindParam(':resume', $resume);
-            // $stmt->bindParam(':ville', $ville);
-
-            // // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-            // $stmt->execute();
-
-            // // Récupérer l'ID retourné par la requête
-            // $offre_id = $stmt->fetchColumn();
-
-            // // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
-            // $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
-
-            // // Préparation de la requête pour la table image
-            // $stmt_image = $dbh->prepare($requete_image);
-
-            // // Liaison des valeurs pour la table image
-            // $stmt_image->bindParam(':id_offre', $offre_id);
-            // $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
-
-            // // Exécution de la requête pour insérer dans la table image
-            // $stmt_image->execute();
+            
 
             // Fermeture de la connexion
             $dbh = null;
 
-            print "Offre et tarif créés avec succès!";
+            print "Offre créée avec succès!";
         } catch (PDOException $e) {
             // Affichage de l'erreur en cas d'échec
             print "Erreur !: " . $e->getMessage() . "<br/>";
