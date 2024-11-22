@@ -1,4 +1,7 @@
 :root {
+  /****************
+      COULEURS
+  *****************/
   --noir: rgba(0, 0, 0, 1);
   --blanc: rgba(255, 255, 255, 1);
   --blanc-leger: rgba(236, 236, 236, 1);
@@ -16,10 +19,6 @@
   --transparent: rgba(255, 255, 255, 0);
   --semi-trans: rgba(255, 255, 255, 0.5);
 
-
-  --mobile-star-size: 30px;
-  --like-size: 35px;
-
   --jaune-etoile: rgba(254, 194, 1, 1);
   --gris-etoile: rgba(128, 128, 128, 1);
   --gris: rgba(193, 192, 192, 1);
@@ -27,6 +26,26 @@
   --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
   --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
 
+  /*******************
+      FONT WEIGHT
+  ********************/
+  /* Regular */
+  --regular : 400;
+  
+  /* Medium */
+  --medium: 500;
+
+  /* Semi-Bold */
+  --semi-bold: 600;
+
+  /* Bold */
+  --bold: 700;
+
+  /****************
+        SIZE
+  *****************/
+  --mobile-star-size: 30px;
+  --like-size: 35px;
 }
 
 /*
