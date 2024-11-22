@@ -32,6 +32,11 @@ try {
         $categoryResult = $stmtCategory->fetch();
         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
     }
+
+    foreach ($offres as &$offre) {
+        $offre['note'] = 3;
+    }
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -300,10 +305,11 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
+                    const note = offer.$(".etoiles").find('img').length;
 
                     let matches = true;
 
-                    console.log(filters.minRating);
+                    let numberOfStarsWanted = filters.minRating.length;
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
@@ -321,6 +327,11 @@ try {
                     if ((filters.minPrice !== null && price < filters.minPrice) ||
                         (filters.maxPrice !== null && price > filters.maxPrice) ||
                         (price < filters.minPrice && price > filters.maxPrice)) {
+                        matches = false;
+                    }
+
+                    // Filter by note
+                    if (filters.minRating > note) {
                         matches = false;
                     }
 
