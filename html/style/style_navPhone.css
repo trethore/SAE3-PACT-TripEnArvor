@@ -21,7 +21,7 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 0 10% 30px 10%;
+    padding: 0 10% 20px 10%;
     z-index: 3;
 }
 
@@ -36,7 +36,7 @@
     transform: rotate(-15deg);
     padding: 10px 20px;
     border: 3px solid white;
-    border-radius: 5px;
+    border-radius: 100px 37px 100px 37px;
 }
 
 .btOff{}
