@@ -267,17 +267,16 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-
             const allOffers = Array.from(offersContainer.children);
 
-            const noOffersMessage = document.createElement("p");
-            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            // Create the "no offers" message element
+            const noOffersMessage = document.createElement("div");
             noOffersMessage.classList.add("no-offers-message");
+            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            offersContainer.parentNode.insertBefore(noOffersMessage, offersContainer);
             noOffersMessage.style.display = "none";
-            offersContainer.appendChild(noOffersMessage);
 
             h2.addEventListener("click", () => {
-                // Toggle filter visibility
                 fondFiltres.classList.toggle("hidden");
             });
 
@@ -290,7 +289,10 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
-                const noCategorySelected = filters.categories.length === 0;
+                // Treat no categories checked as all categories selected
+                if (filters.categories.length === 0) {
+                    filters.categories = Array.from(document.querySelectorAll(".categorie label")).map(label => label.textContent.trim());
+                }
 
                 let visibleOffers = 0;
 
@@ -303,7 +305,7 @@ try {
                     let matches = true;
 
                     // Filter by category
-                    if (filters.categories.length > 0 && !filters.categories.includes(category)) {
+                    if (!filters.categories.includes(category)) {
                         matches = false;
                     }
 
@@ -315,14 +317,11 @@ try {
                     }
 
                     // Filter by price
-                    if (
-                        (filters.minPrice !== null && price < filters.minPrice) ||
-                        (filters.maxPrice !== null && price > filters.maxPrice)
-                    ) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
 
-                    // Show or hide offer
+                    // Show or hide the offer
                     if (matches) {
                         offer.style.display = "block";
                         visibleOffers++;
@@ -331,18 +330,17 @@ try {
                     }
                 });
 
-                // Show or hide the no-offers message
-                if (visibleOffers === 0 && !noCategorySelected) {
-                    noOffersMessage.style.display = "block";
-                } else {
-                    noOffersMessage.style.display = "none";
-                }
+                // Show or hide the "no offers" message
+                noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
             };
 
-            // Add an event listener to each filter element
+            // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
+
+            // Initial filter application to handle default state
+            applyFilters();
         });
     </script>
 </body>
