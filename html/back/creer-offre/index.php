@@ -379,7 +379,7 @@ function get_file_extension($type)
         // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
         if (isset($_POST['decriptionC'])) {
             $resume = $_POST['descriptionC'];
-            print($resume);
+            print $_POST['descriptionC'];
         }
 
         if (isset($_POST['ville'])) {
