@@ -28,8 +28,17 @@
 .nav-content > img {
     width: 8%;
     height: 8%;
-    margin: 10px;
+    padding: 10px;
     background-color: var(--violet-principal);
+    -webkit-border-radius: 150px;
+    -webkit-border-top-right-radius: 50px;
+    -webkit-border-bottom-left-radius: 50px;
+    -moz-border-radius: 150px;
+    -moz-border-radius-topright: 50px;
+    -moz-border-radius-bottomleft: 50px;
+    border-radius: 150px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
 }
 
 @media only screen and (max-width: 600px) {
