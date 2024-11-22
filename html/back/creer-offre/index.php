@@ -158,7 +158,7 @@ function get_file_extension($type)
                                     <!-- <label for="file-upload">
                             <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                         </label> -->
-                                    <input id="photo" type="file" name="photo" multiple required />
+                                    <input id="photo" type="file" name="photo" required />
                                 </div>
                             </td>
 
@@ -184,7 +184,7 @@ function get_file_extension($type)
                     </tr>
                     </table>
 
-                    <!-- </div> -->
+                    
                     <div>
                         <!-- activite, visite, spectacle -->
                         <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
@@ -203,6 +203,7 @@ function get_file_extension($type)
                         <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte"/>
                     </div>
                     <br>
+                </div>
 
                     <h3>Tags de l'offre</h3>
 
@@ -486,20 +487,20 @@ function get_file_extension($type)
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete .= "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
-                    $requete .= "(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
-                    $requete .= "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
@@ -512,7 +513,7 @@ function get_file_extension($type)
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete .= "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
@@ -527,13 +528,13 @@ function get_file_extension($type)
                 $id_offre = $stmt->fetchColumn();
 
                 // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (offre_id, prix) VALUES (?, ?);";
+                $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
 
                 // Préparation de la requête pour la vue tarif
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                //$stmt_tarif->execute([$offre_id, $prix]);
+                //$stmt_tarif->execute([$id_offre, id, $prix]);
 
             }
 
