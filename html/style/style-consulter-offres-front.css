@@ -349,7 +349,7 @@ h3 {
     height: 37px;
     width: 117px;
 
-    opacity: 73%;
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -372,7 +372,9 @@ h3 {
     height: 37px;
     width: 67.8px;
 
-    opacity: 73%;
+    text-decoration: none;
+
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;

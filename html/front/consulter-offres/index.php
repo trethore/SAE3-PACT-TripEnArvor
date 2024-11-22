@@ -317,7 +317,9 @@ try {
                     }
 
                     // Filter by price
-                    if ((filters.minPrice !== null && price < filters.minPrice) || (filters.maxPrice !== null && price > filters.maxPrice)) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) ||
+                        (filters.maxPrice !== null && price > filters.maxPrice) ||
+                        (filters.minPrice !== null && filters.maxPrice !== null && (price < filters.minPrice || price > filters.maxPrice))) {
                         matches = false;
                     }
 
