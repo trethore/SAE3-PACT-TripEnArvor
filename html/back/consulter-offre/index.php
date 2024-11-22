@@ -173,7 +173,7 @@ try {
                         <p>Durée de la visite : <?php echo htmlentities($visite['duree']) ?></p>
                     <?php case "Restaurant": ?>
                         <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                        <p>Télécharger la carte : <?php echo htmlentities($restaurant['age_min']) ?></p>
+                        <p>Télécharger la carte : <?php echo htmlentities($restaurant['carte']) ?></p>
                     <?php case "Spectacle": ?>
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']) ?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?></p>
