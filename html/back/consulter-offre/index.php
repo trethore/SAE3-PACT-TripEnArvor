@@ -212,12 +212,12 @@ try {
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
                         <?php break; ?>
-                    <?php case "Parc d'Attraction": ?>
+                    <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
                         <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         <?php break; ?>
-                    <?php case "Restaurant": ?>
+                    <?php case "Restauration": ?>
                         <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
                         <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
                         <?php break;
