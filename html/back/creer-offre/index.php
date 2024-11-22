@@ -415,7 +415,7 @@ function get_file_extension($type)
 
         echo "<br>";
 
-        print  $_FILE['photo']['name'];
+        print  $_FILES['photo']['name'];
 
         // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
         // $type = isset($_POST['type']) ? $_POST['type'] : '';
@@ -544,7 +544,7 @@ function get_file_extension($type)
 
             //INSERTION IMAGE
             $time = 'p' . strval(time());
-            $file = $_FILES['photo1'];
+            $file = $_FILES['photo'];
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
