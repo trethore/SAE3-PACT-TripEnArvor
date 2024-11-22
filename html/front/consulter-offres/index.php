@@ -305,7 +305,7 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const etoiles = document.getElementById(".etoiles");
+                    const etoiles = offer.getElementsByClassName("etoiles");
                     const note = etoiles.children.length;
 
                     console.log(note);
