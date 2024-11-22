@@ -17,10 +17,10 @@ h1 {
     color: var(--violet-principal);
     background: var(--blanc-leger);
     border-radius: 15px;
-    border: 3px solid var(--violet-principal);
+    /*border: 3px solid var(--violet-principal);*/
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 64pt;
+    font-size: 55pt;
 }
 
 h2 {
@@ -57,7 +57,7 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 5%;
+    left: 2%;
     transform: translate(0, -3.5em);
     min-width: auto;
     z-index: 1;
@@ -536,7 +536,7 @@ h3 {
     border-radius: 15px;
     font-weight: 600;
     font-size: 20px;
-    border-color: var(--blanc-leger);
+    border-color: var(--violet-principal);
     border-width: 1em;
     padding-left: 10px;
     padding-right: 10px;
@@ -559,8 +559,8 @@ h3 {
 }
 
 .no-offers-message {
-    text-align: center;
-    color: #555;
-    font-size: 1.2em;
-    margin: 20px 0;
+    text-align: center; 
+    color: var(--violet-principal);
+    font-size: 20pt;
+    margin: 20px 430px;
 }

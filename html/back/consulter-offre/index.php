@@ -1,38 +1,40 @@
 <?php
-
 include('../../php/connect_params.php');
-include('../../utils/offres-utils.php');
+require_once('../../utils/offres-utils.php');
 
-// Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    
-    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $id_offre_cible = intval($_GET['id']);
 
     // Requête SQL pour récupérer les informations de l'offre
-    $reqOffre = "SELECT * FROM _offre";
+    $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
     $stmt = $dbh->prepare($reqOffre);
+    $stmt->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmt->execute();
     $offre = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
     $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
-    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
+    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);    
 
     // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
     $stmtCompte = $dbh->prepare($reqCompte);
+    $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
+    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
+    $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
-
+    
     // Requête SQL pour récupérer les tags de l'offre
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
@@ -57,7 +59,6 @@ try {
 <html>
 
 <head>
-
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <link rel="stylesheet" href="/style/styleHFB.css"/>
@@ -67,13 +68,11 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 </head>
 
 <body>
-
+    
     <header id="header">
-
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
@@ -82,10 +81,8 @@ try {
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-
     </header>
 
-    <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
     <div class="display-ligne-espace bouton-modifier"> 
         <div>
             <div id="confirm">
@@ -114,7 +111,6 @@ try {
                     <?php foreach ($images as $image) { ?>
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
                     <?php } ?>
-                    <img src="images/universel/photos/hotel_2_2.png">
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
@@ -131,7 +127,7 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -156,7 +152,7 @@ try {
 
         <section class="double-blocs">
 
-            <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
+            <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
                         <li><?php echo htmlentities($tag['nom_tag']); ?></li>
