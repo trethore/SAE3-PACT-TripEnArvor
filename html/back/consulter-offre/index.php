@@ -164,6 +164,22 @@ try {
                 <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
+                <!-- -->
+                <?php switch ($categorie) {
+                    case "Activité": ?>
+                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']) ?></p>
+                        <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?></p>
+                    <?php case "Visite": ?>
+                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']) ?></p>
+                    <?php case "Restaurant": ?>
+                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                        <p>Télécharger la carte : <?php echo htmlentities($restaurant['age_min']) ?></p>
+                    <?php case "Spectacle": ?>
+                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']) ?></p>
+                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?></p>
+                    <?php case "Parc d'Attraction": ?>
+                <?php } ?>
+                
                 <div class="display-ligne-espace">
                     <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
                     <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
