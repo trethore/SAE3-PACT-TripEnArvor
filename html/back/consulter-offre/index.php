@@ -29,7 +29,7 @@ try {
     $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un spectacle ===== //
-    $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+    $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
     $stmtSpectacle = $dbh->prepare($reqSpectacle);
     $stmtSpectacle->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtSpectacle->execute();
@@ -202,19 +202,19 @@ try {
                 <!-- -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
-                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']) ?></p>
-                        <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?></p>
+                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
                     <?php case "Visite": ?>
-                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']) ?></p>
+                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
                         <?php break; ?>
                     <?php case "Spectacle": ?>
-                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']) ?></p>
-                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?></p>
+                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
                         <?php break; ?>
                     <?php case "Parc d'Attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
-                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?></p>
+                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
                         <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         <?php break; ?>
                     <?php case "Restaurant": ?>
