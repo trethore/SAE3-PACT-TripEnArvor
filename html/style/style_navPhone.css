@@ -26,13 +26,18 @@
 }
 
 .nav-content > img {
-    width: 8%;
-    height: 8%;
-    
+   
 }
 
 .btOn{background-color: var(--violet-principal);
+    width: 8%;
+    height: 8%;
     transform: rotate(-3deg) scale(150%);}
+
+.btOff{background-color: var(--violet-principal);
+        width: 8%;
+        height: 8%;
+        transform: rotate(-3deg) scale(150%);}
 
 @media only screen and (max-width: 600px) {
     .nav-content > img {
