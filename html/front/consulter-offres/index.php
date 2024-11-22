@@ -9,7 +9,7 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _compte.id_compte_professionnel = _offre.id_compte');
+    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
