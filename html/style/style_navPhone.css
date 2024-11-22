@@ -28,7 +28,7 @@
 .nav-content > img {
     width: 8%;
     height: 8%;
-    padding: 10px;
+    padding: 10px 50px;
     background-color: var(--violet-principal);
     border-radius: 150px;
     border-top-right-radius: 50px;
