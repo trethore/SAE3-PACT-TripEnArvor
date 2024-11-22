@@ -312,7 +312,7 @@ try {
 
                     let matches = true;
 
-                    let numberOfStarsWanted = filters.minRating.length;
+                    // let numberOfStarsWanted = filters.minRating.length;
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
