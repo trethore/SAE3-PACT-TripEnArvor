@@ -303,6 +303,8 @@ try {
 
                     let matches = true;
 
+                    console.log(minRating);
+
                     // Filter by category
                     if (!filters.categories.includes(category)) {
                         matches = false;
@@ -333,30 +335,6 @@ try {
 
                 // Show or hide the "no offers" message
                 noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
-            };
-
-            const applySorting = (sortingOption) => {
-                if (!sortingOption || sortingOption === "default") return;
-
-                // Clone and sort offers based on the sorting option
-                const sortedOffers = [...allOffers].filter(offer => offer.style.display !== "none");
-                if (sortingOption === "price-asc") {
-                    sortedOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
-                        const priceB = parseFloat(b.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
-                        return priceA - priceB;
-                    });
-                } else if (sortingOption === "price-desc") {
-                    sortedOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
-                        const priceB = parseFloat(b.querySelector(".prix span")?.textContent.replace("€", "").trim()) || 0;
-                        return priceB - priceA;
-                    });
-                }
-
-                // Clear and re-insert sorted offers into the container
-                offersContainer.innerHTML = "";
-                sortedOffers.forEach(offer => offersContainer.appendChild(offer));
             };
 
             // Add change event listeners to filter inputs
