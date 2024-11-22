@@ -34,7 +34,8 @@
 .btOn{background-color: var(--violet-principal);
     transform: rotate(-15deg);
     padding: 10px 20px;
-    border-color: var(--gradient-violet);
+    border: 3px solid var(--gradient-violet);
+    border-radius: 5px;
 }
 
 .btOff{}
