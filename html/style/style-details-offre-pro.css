@@ -188,26 +188,6 @@ a {
     margin: 0 10px;
 }
 
-    /*****************************
-            BOUTONS TARIFS                
-    *****************************/
-
-    .display-ligne-espace > button {
-        color: var(--blanc-leger);
-        text-decoration: none;
-        font-size: 40px;
-        background-color: var(--orange-principale);
-        padding: 10px 80px;
-        border-radius: 15px;
-        border: 0;
-    }
-
-    .display-ligne-espace > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
-    }
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
@@ -216,6 +196,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
+        margin-bottom: 30px;
       }
 
     .carousel-images {
