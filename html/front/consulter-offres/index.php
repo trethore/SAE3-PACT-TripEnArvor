@@ -287,9 +287,9 @@ try {
 
             const selectElement = document.querySelector('.tris');
 
-            // Ajout d'un écouteur d'événement pour détecter les changements
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+                
                 if (selectedValue == "price-asc") {
                     console.log("asc");
                     allOffers.sort((a, b) => {
@@ -307,7 +307,7 @@ try {
                 }
 
                 const container = document.getElementsByClassName('section-offres'); // ID du conteneur des offres
-                offersArray.forEach(offer => container.appendChild(offer));
+                allOffers.forEach(offer => container.appendChild(offer));
             });
 
             const applyFilters = () => {
