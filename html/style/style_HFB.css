@@ -290,10 +290,6 @@ footer {
     box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
 }
 
-main{
-	width: 100vh;
-}
-
 @media only screen and (max-width: 900px) {
 	header {
 	  display: none;
