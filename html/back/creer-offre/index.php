@@ -439,7 +439,8 @@ require_once("../../utils/auth-utils.php");
             die("Erreur : utilisateur non connecté.");
         }
 
-        if(isIdProPrivee($id_compte)){ ?>
+        if(!$id_compte){
+            //isIdProPrivee($id_compte)){ ?>
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
