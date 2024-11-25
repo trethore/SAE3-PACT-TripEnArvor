@@ -212,12 +212,16 @@ try {
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
-                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                        <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        <div class="display-ligne-espace">
+                            <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        </div>
                         <?php break; ?>
                     <?php case "Restauration": ?>
-                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                        <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        <div class="display-ligne-espace">
+                            <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        </div>
                         <?php break;
                 } ?>
                 
