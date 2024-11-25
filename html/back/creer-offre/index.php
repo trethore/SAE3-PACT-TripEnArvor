@@ -157,11 +157,11 @@ if (isset($_POST['titre'])) {
                         <td>
                             <div id="options">
                                 <tr><label>Options</label>
-                                <tr><input type="radio" id="enRelief" name="enRelief" /><label for="enRelief">En relief</label>
+                                <tr><input type="radio" id="enRelief" name="enRelief"/><label for="enRelief">En relief</label>
                                 <input type="radio" id="alaune" name="alaune" /><label for="alaune">A la une</label></tr>
-                    </div>
-                    </td>
-                    </tr>
+                            </div>
+                        </td>
+                        
                     </table>
 
                     
@@ -635,7 +635,7 @@ if (isset($_POST['titre'])) {
             document.getElementById(element).style.display = 'none';
         });
         typechoisi.forEach(element => {
-            document.getElementById(element).style.display = 'block';
+            document.getElementById(element).style.display = 'flex';
         });
         if(typechoisi !== "restaurant"){
             prix.forEach(element => {
