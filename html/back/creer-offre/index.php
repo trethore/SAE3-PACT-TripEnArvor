@@ -187,13 +187,13 @@ function get_file_extension($type)
                     
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/><label id="labelduree2">minutes</label> 
                         <!-- activité, parc -->
-                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> an(s)
+                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> <label id="labelage2">an(s)</label>
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/> personnes
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/><label id="labelcapacite2" for="capacite">personnes</label>
                         <br>
                         <!-- parc -->
                         <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
@@ -605,25 +605,25 @@ function get_file_extension($type)
         let categorie = document.getElementById('categorie');
 
         document.getElementById("labelgammedeprix").style.display = 'none';
-    document.getElementById("gammedeprix").style.display = 'none';
-    document.getElementById("carte").style.display = 'none';
-    document.getElementById("labelcarte").style.display = 'none';
-    document.getElementById("labelage").style.display = 'none';
-    document.getElementById("age").style.display = 'none';
-    document.getElementById("labelage2").style.display = 'none';
-    document.getElementById("labelduree").style.display = 'none';
-    document.getElementById("labelduree2").style.display = 'none';
-    document.getElementById("duree").style.display = 'none';
-    document.getElementById("labelcapacite").style.display = 'none';
-    document.getElementById("capacite").style.display = 'none';
-    document.getElementById("labelcapacite2").style.display = 'none';
-    document.getElementById("labelnbattractions").style.display = 'none';
-    document.getElementById("nbattraction").style.display = 'none';
-    document.getElementById("labelplan").style.display = 'none';
-    document.getElementById("plan").style.display = 'none';
+        document.getElementById("gammedeprix").style.display = 'none';
+        document.getElementById("carte").style.display = 'none';
+        document.getElementById("labelcarte").style.display = 'none';
+        document.getElementById("labelage").style.display = 'none';
+        document.getElementById("age").style.display = 'none';
+        document.getElementById("labelage2").style.display = 'none';
+        document.getElementById("labelduree").style.display = 'none';
+        document.getElementById("labelduree2").style.display = 'none';
+        document.getElementById("duree").style.display = 'none';
+        document.getElementById("labelcapacite").style.display = 'none';
+        document.getElementById("capacite").style.display = 'none';
+        document.getElementById("labelcapacite2").style.display = 'none';
+        document.getElementById("labelnbattractions").style.display = 'none';
+        document.getElementById("nbattraction").style.display = 'none';
+        document.getElementById("labelplan").style.display = 'none';
+        document.getElementById("plan").style.display = 'none';
 
-categorie.addEventListener('change', function () {
-    let selectedCategory = categorie.value;
+    categorie.addEventListener('change', function () {
+        let selectedCategory = categorie.value;
 
 
     // Afficher les champs selon la catégorie sélectionnée
