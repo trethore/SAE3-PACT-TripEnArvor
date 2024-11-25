@@ -121,7 +121,7 @@ function get_file_extension($type)
                             </td>
                         </tr>
                         <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" name="prix" />€</td>
+                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
@@ -631,8 +631,11 @@ function get_file_extension($type)
         case "restaurant":
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
+            document.getElementById("labelprix2").style.display = 'none';
             document.getElementById("carte").style.display = 'block';
             document.getElementById("labelcarte").style.display = 'block';
+            document.getElementById("labelgammedeprix").style.display = 'block';
+            document.getElementById("gammedeprix").style.display = 'block';
             break;
 
         case "activite":
