@@ -99,11 +99,11 @@ section > h1 + article {
     align-items: center;
 }
 
-h2 table td {
-    margin: 0.5em;
+table tr {
+    margin: 0.5em 0;
 }
 
-h2 table td + td {
+table td + td {
     text-align: right;
     color: var(--orange-principale);
 }
