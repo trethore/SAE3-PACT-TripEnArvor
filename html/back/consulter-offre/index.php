@@ -194,7 +194,12 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                <div class="display-ligne-espace">
+                    <!-- Affichage le titre de l'offre -->
+                    <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                    <!-- Affichage du lien du site du propriétaire de l'offre -->
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                </div>
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
                 <!-- Affichage des informations spécifiques à un type d'offre -->
@@ -225,12 +230,8 @@ try {
                         <?php break;
                 } ?>
                 
-                <div class="display-ligne-espace">
-                    <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                    <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
-                    <!-- Affichage du lien du site du propriétaire de l'offre -->
-                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
-                </div>
+                <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
             </div>
     
         </section>
