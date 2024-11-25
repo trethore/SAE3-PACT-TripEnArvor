@@ -118,21 +118,24 @@ try {
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="bouton-modifier"> 
-        <div id="confirm">
-            <p>Voulez-vous mettre votre offre hors ligne ?</p>
-            <div class="close">
-                <button onclick="showFinal()">Mettre hors ligne</button>
-                <button onclick="btnAnnuler()">Annuler</button>
+    <div class="display-ligne-espace">
+        <div class="bouton-modifier"> 
+            <div id="confirm">
+                <p>Voulez-vous mettre votre offre hors ligne ?</p>
+                <div class="close">
+                    <button onclick="showFinal()">Mettre hors ligne</button>
+                    <button onclick="btnAnnuler()">Annuler</button>
+                </div>
             </div>
+            <div id="final">
+                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+                <button onclick="btnAnnuler()">Fermer</button>
+            </div> 
+            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <button id="bouton2">Modifier l'offre</button>
         </div>
-        <div id="final">
-            <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-            <button onclick="btnAnnuler()">Fermer</button>
-        </div> 
-        <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-        <button id="bouton2">Modifier l'offre</button>
-    </div>
+        <p class="transparent">.</p>
+    </div>  
 
     <main id="body">
 
