@@ -620,6 +620,13 @@ if (isset($_POST['titre'])) {
         });
 
         let categorie = document.getElementById('categorie');
+        let restaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let visite = ["labelduree", "duree"];
+        let activite = ["labelage", "age", "labelduree", "duree"];
+        let spectacle = ["labelduree", "duree", "labelcapacite", "capacite"];
+        let parc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+        let prix = ["labelprix", "prix", "labelprix2"];
+        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan"];
 
         obligatoireselontype.forEach(element => {
             document.getElementById(element).style.display = 'none';
