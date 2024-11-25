@@ -17,23 +17,19 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	min-height: 100vh;
 	width: 100%;
-	min-width: 900px;
+	min-height: 100vh;
 	padding: 0;
 	margin: 0;
 }
 
 header {
-	background: var(--violet-principal);
+	background: var(--violet-principale);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: end;
 	width: 100%;
-	/* Chaque élément prend toute la largeur disponible */
-	min-height: auto;
-	/* La hauteur minimale dépend du contenu */
 	box-shadow: 0px 5px 10px #000000bf;
 	padding: 0 30px;
 }
@@ -88,11 +84,8 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background: var(--violet-principal);
+	background: var(--violet-principale);
 	width: 100%;
-	/* Chaque élément prend toute la largeur disponible */
-	min-height: auto;
-	/* La hauteur minimale dépend du contenu */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -176,12 +169,12 @@ footer {
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	font-size: 20px;
-	color: var(--violet-principal);
+	color: var(--violet-principale);
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .footer-bottom>a {
-	color: var(--violet-principal);
+	color: var(--violet-principale);
 }
 
 /* search component in header*/
@@ -281,12 +274,12 @@ footer {
 }
 
 .bouton1 {
-    color: var(--violet-principal);
+    color: var(--violet-principale);
     background-color: var(--blanc);
 }
 
 .bouton2 {
-    background-color: var(--violet-principal);
+    background-color: var(--violet-principale);
     color: var(--blanc);
     box-shadow: 1px 1px 1px var(--gris-etoile);
     transition: box-shadow 0.3s ease; /* Ajout de la transition */
@@ -295,4 +288,13 @@ footer {
 /* Animation lors du survol */
 .bouton2:hover {
     box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
+}
+
+@media only screen and (max-width: 900px) {
+	header {
+	  display: none;
+	}
+	footer {
+		display: none;
+	}
 }
