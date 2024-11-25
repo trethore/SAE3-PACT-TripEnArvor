@@ -44,24 +44,25 @@ main {
         NAV
 *********************/
 main > article {
+    display: flex;
+    align-items: center;
     background-color: var(--orange-principale);
     border-radius: 15px;
-    flex-grow: 1;
-    flex-shrink: 1;
     min-width: 15em;
     margin-right: 1em;
 }
 
 main > article a {
     display: flex;
-    flex-wrap: nowrap;
-    text-align: center;
+    flex-grow: 0;
+    flex-shrink: 0;
     background-color: var(--blanc-leger);
     color: var(--orange-principale);  
     margin: 1em 0.5em 1em;
     padding: 0.5em 1em;
     border: 2px solid var(--orange-principale);
     border-radius: 15px;
+    height: 3em;
 }
 
 main > article a:hover {
