@@ -269,12 +269,12 @@ try {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
-            const sorts = document.querySelector('.tris')?.value || null;
+            /*const sorts = document.querySelector('.tris')?.value || null;
             console.log(sorts);
 
             if (sorts == "price-asc") {
                 <?php
-                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix');
+                    /*$stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix');
                     $stmt->execute();
                     $offres = $stmt->fetchAll();
                     
@@ -296,11 +296,11 @@ try {
                         $stmtCategory->execute([$offre['id_offre']]);
                         $categoryResult = $stmtCategory->fetch();
                         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
-                    }
+                    }*/
                 ?>
             } else if (sorts == "price-desc") {
                 <?php
-                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix DESC');
+                    /*$stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix DESC');
                     $stmt->execute();
                     $offres = $stmt->fetchAll();
                 
@@ -322,9 +322,9 @@ try {
                         $stmtCategory->execute([$offre['id_offre']]);
                         $categoryResult = $stmtCategory->fetch();
                         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
-                    }
+                    }*/
                 ?>
-            }
+            }*/
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
