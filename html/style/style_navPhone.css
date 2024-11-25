@@ -19,9 +19,6 @@
 }
 
 .nav-content {
-    position: 10%;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
