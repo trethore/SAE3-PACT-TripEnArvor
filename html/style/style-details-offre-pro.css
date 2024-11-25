@@ -76,7 +76,7 @@ a {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
-        transform: translateY(-50%);
+        transition: 0.3s ease-in-out;
     }
 
     #confirm {
@@ -298,7 +298,7 @@ a {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
-        transform: translateY(-50%);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -323,7 +323,7 @@ a {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
-        transform: translateY(-50%);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -448,7 +448,7 @@ a {
     color: var(--orange-principale);
     background: var(--blanc-leger);
     border: 1px solid var(--orange-principale);
-    transform: translateY(-50%);
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
