@@ -38,8 +38,13 @@
 }
 
 .btOn{
+    width: 4em;
+    height: 4em;
     background-color: var(--violet-principal);
     border: 3px solid white;
+    border-radius: 1em;
+    margin: -0.2em;
+    padding: ;
 }
 
 
@@ -48,15 +53,19 @@
 
 @media only screen and (max-width: 600px) {
   .nav-content > div > img {
-    width: 3em;
-    height: 3em;
-}
+        width: 3em;
+        height: 3em;
+    }
 
-.nav-content > img {
+    .nav-content > img {
+        width: 3em;
+        height: 3em;
+   }
+    .btOn{
     width: 3em;
     height: 3em;
-   
-}}
+    }
+}
   
   /* Small devices (portrait tablets and large phones, 600px and up) */
   @media only screen and (min-width: 600px) {
