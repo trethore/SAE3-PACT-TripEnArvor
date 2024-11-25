@@ -50,10 +50,15 @@ main > article {
     border-radius: 15px;
 }
 
-main > article h2 {
+main > article a {
     background-color: var(--blanc-leger);
     color: var(--orange-principale);  
     margin: 0.5em;
+    padding: 0.5em 1em;
+}
+
+main > article h2 a {
+    margin-top: 1em;
 }
 
 main > article:first-child {
