@@ -165,13 +165,13 @@
                     
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/><label id="labelduree2">minutes <br></label> 
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/><label id="labelduree2">minutes</label> 
                         <!-- activité, parc -->
-                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> <label id="labelage2">an(s)<br></label>
+                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> <label id="labelage2">an(s)</label>
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite"/><label id="labelcapacite2" for="capacite">personnes<br></label>
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite"/><label id="labelcapacite2" for="capacite">personnes</label>
                         <br>
                         <!-- parc -->
                         <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
@@ -638,7 +638,6 @@
         });
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
-            echo
         });
         if(typechoisi !== "restaurant"){
             prix.forEach(element => {
