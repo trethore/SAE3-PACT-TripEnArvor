@@ -157,10 +157,10 @@ if (isset($_POST['titre'])) {
                         <tr>
                             <div id="options">
                                 <td><label>Options</label></td>
-                                <td><input type="radio" id="enRelief" name="enRelief"/><label for="enRelief">En relief</label>
-                                <input type="radio" id="alaune" name="alaune" /><label for="alaune">A la une</label></td>
+                                <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
+                                <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
                             </div>
-                        </tr>
+                        </t>
                         
                     </table>
 
