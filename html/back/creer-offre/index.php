@@ -24,10 +24,10 @@ if (isset($_POST['titre'])) {
 //     }
 //     return $extension;
 // }
-require_once("../../../utils/offres-utils.php");
-require_once("../../../utils/site-utils.php");
-require_once("../../../utils/session-utils.php");
-require_once("../../../utils/auth-utils.php");
+require_once("../../utils/offres-utils.php");
+require_once("../../utils/site-utils.php");
+require_once("../../utils/session-utils.php");
+require_once("../../utils/auth-utils.php");
 
 ?>
 <!DOCTYPE html>
@@ -439,7 +439,8 @@ require_once("../../../utils/auth-utils.php");
             die("Erreur : utilisateur non connecté.");
         }
 
-        if(isIdProPrivee($id_compte)){ ?>
+        if(!$id_compte){
+            //isIdProPrivee($id_compte)){ ?>
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
