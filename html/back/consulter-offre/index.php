@@ -177,14 +177,6 @@ try {
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
                 <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
             </div>
-
-
-            <div class="display-ligne-espace">
-                <p class="transparent">.</p>
-                <!-- Affichage du prix de l'offre -->
-                <button>Voir les tarifs</button> 
-            </div>
-
         </section>
 
         <section class="double-blocs">
