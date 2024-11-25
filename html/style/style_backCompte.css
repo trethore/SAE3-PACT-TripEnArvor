@@ -105,6 +105,7 @@ table tr {
 
 table td + td {
     text-align: right;
+    right: 0;
     color: var(--orange-principale);
 }
 
@@ -118,10 +119,15 @@ main > section a {
     background-color: var(--orange-principale);
     border: none;
     border-radius: 15px;
+    margin: 1em;
 }
 
 main > section a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
+}
+
+table + a {
+    text-align: right;
 }
