@@ -230,7 +230,7 @@ try {
                 } ?>
                 
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro de téléphone : <?php preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
             </div>
     
         </section>
