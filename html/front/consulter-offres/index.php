@@ -304,6 +304,9 @@ try {
                         return priceB - priceA;
                     });
                 }
+
+                const container = document.getElementsByClassName('section-offres'); // ID du conteneur des offres
+                offersArray.forEach(offer => container.appendChild(offer));
             });
 
             const applyFilters = () => {
