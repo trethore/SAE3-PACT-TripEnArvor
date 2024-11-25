@@ -270,8 +270,9 @@ try {
             const fondFiltres = document.querySelector(".fond-filtres");
 
             const sorts = document.querySelector('.tris')?.value || null;
+            console.log(sorts);
 
-            if (filters.sorts == "price-asc") {
+            if (sorts == "price-asc") {
                 <?php
                     $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix');
                     $stmt->execute();
@@ -297,7 +298,7 @@ try {
                         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
                     }
                 ?>
-            } else if (filters.sorts == "price-desc") {
+            } else if (sorts == "price-desc") {
                 <?php
                     $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix DESC');
                     $stmt->execute();
