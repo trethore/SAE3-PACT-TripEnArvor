@@ -175,10 +175,10 @@ try {
             </div>
 
             <div class="display-ligne-espace">
-                <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
                 <!-- Affichage du prix de l'offre -->
                 <button>Voir les tarifs</button> 
+                <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
+                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
             </div>
 
         </section>
