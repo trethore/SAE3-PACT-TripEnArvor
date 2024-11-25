@@ -46,18 +46,14 @@ main {
 main > article {
     background-color: var(--orange-principale);
     border-radius: 15px;
-    width: 20em;
+    flex-grow: 1;
     margin-right: 1em;
-}
-
-main > article:first-child {
-    margin-top: 2em;
 }
 
 main > article a {
     background-color: var(--blanc-leger);
     color: var(--orange-principale);  
-    margin: 0.5em;
+    margin: 1em 0.5em 1em;
     padding: 0.5em 1em;
     border: 2px solid var(--orange-principale);
     border-radius: 15px;
@@ -79,6 +75,7 @@ main > article a:hover {
 section {
     background-color: var(--blanc);
     border-radius: 15px;
+    flex-grow: 3;
 }
 
 section h3 {
