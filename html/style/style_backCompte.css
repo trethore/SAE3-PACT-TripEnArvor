@@ -47,6 +47,8 @@ main > article {
     background-color: var(--orange-principale);
     border-radius: 15px;
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 15em;
     margin-right: 1em;
 }
 
@@ -75,7 +77,6 @@ main > article a:hover {
 section {
     background-color: var(--blanc);
     border-radius: 15px;
-    flex-grow: 3;
 }
 
 section h3 {
