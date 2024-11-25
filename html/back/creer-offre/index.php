@@ -619,65 +619,36 @@ require_once("../../utils/auth-utils.php");
 
         let categorie = document.getElementById('categorie');
 
-        document.getElementById("labelgammedeprix").style.display = 'none';
-        document.getElementById("gammedeprix").style.display = 'none';
-        document.getElementById("carte").style.display = 'none';
-        document.getElementById("labelcarte").style.display = 'none';
-        document.getElementById("labelage").style.display = 'none';
-        document.getElementById("age").style.display = 'none';
-        document.getElementById("labelage2").style.display = 'none';
-        document.getElementById("labelduree").style.display = 'none';
-        document.getElementById("labelduree2").style.display = 'none';
-        document.getElementById("duree").style.display = 'none';
-        document.getElementById("labelcapacite").style.display = 'none';
-        document.getElementById("capacite").style.display = 'none';
-        document.getElementById("labelcapacite2").style.display = 'none';
-        document.getElementById("labelnbattractions").style.display = 'none';
-        document.getElementById("nbattraction").style.display = 'none';
-        document.getElementById("labelplan").style.display = 'none';
-        document.getElementById("plan").style.display = 'none';
+        obligatoireselontype.forEach(element => {
+            document.getElementById(element).style.display = 'none';
+        });
 
     categorie.addEventListener('change', function () {
         let selectedCategory = categorie.value;
 
-
-
     // Afficher les champs selon la catégorie sélectionnée
-    switch (selectedCategory) {
+    switch (typeselectionné) {
         case "restaurant":
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
             document.getElementById("labelprix2").style.display = 'none';
-            document.getElementById("carte").style.display = 'block';
-            document.getElementById("labelcarte").style.display = 'block';
-            document.getElementById("labelgammedeprix").style.display = 'block';
-            document.getElementById("gammedeprix").style.display = 'block';
+            afficheSelonType(restaurant);
             break;
 
         case "activite":
-            document.getElementById("labelage").style.display = 'block';
-            document.getElementById("age").style.display = 'block';
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
+            afficheSelonType(activite);
             break;
 
         case "visite":
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
+            afficheSelonType(visite);
             break;
 
         case "spectacle":
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
-            document.getElementById("labelcapacite").style.display = 'block';
-            document.getElementById("capacite").style.display = 'block';
+            afficheSelonType(spectacle);
             break;
 
         case "parc":
-            document.getElementById("labelnbattractions").style.display = 'block';
-            document.getElementById("nbattraction").style.display = 'block';
-            document.getElementById("labelplan").style.display = 'block';
-            document.getElementById("plan").style.display = 'block';
+            afficheSelonType(parc);
             break;
 
         default:
@@ -685,7 +656,28 @@ require_once("../../utils/auth-utils.php");
         }
     });
 
-    let restaurant = ["carte", "labelcarte"];
+    let restaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+    let visite = ["labelduree", "duree"];
+    let activite = ["labelage", "age", "labelduree", "duree"];
+    let spectacle = ["labelduree", "duree", "labelcapacite", "capacite"];
+    let parc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+    let prix = ["labelprix", "prix", "labelprix2"];
+    let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan"];
+
+    
+    function afficheSelonType(typechoisi){
+        obligatoireselontype.forEach(element => {
+            document.getElementById(element).style.display = 'none';
+        });
+        typechoisi.forEach(element => {
+            document.getElementById(element).style.display = 'block';
+        });
+        if(typechoisi !== "restaurant"){
+            prix.forEach(element => {
+                document.getElementById(element).style.display = 'block';
+            });
+        }
+    }
 
 
 
