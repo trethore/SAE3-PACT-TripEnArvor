@@ -33,45 +33,40 @@ h3 {
     color: var(--noir);
 }
 
-
 main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+    margin: 1em;
 }
 
 /********************
         NAV
 *********************/
-
 main > article {
     background-color: var(--orange-principale);
-    flex-grow: 1;
     border-radius: 15px;
-}
-
-main > article h2 {
-    background-color: var(--blanc-leger);
-    color: var(--orange-principale);  
-    margin: 0.5em;
+    width: 20em;
+    margin-right: 1em;
 }
 
 main > article:first-child {
-    margin-top: 1em;
+    margin-top: 2em;
 }
 
 main > article a {
-    text-decoration: none;
-    color: var(--blanc-leger);
-    background-color: var(--orange-principale);
-    border: none;
+    background-color: var(--blanc-leger);
+    color: var(--orange-principale);  
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    border: 2px solid var(--orange-principale);
     border-radius: 15px;
 }
 
 main > article a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: 2px solid var(--blanc-leger);
 }
 
 .ici {
@@ -83,7 +78,6 @@ main > article a:hover {
 *********************/
 section {
     background-color: var(--blanc);
-    flex-grow: 3;
     border-radius: 15px;
 }
 

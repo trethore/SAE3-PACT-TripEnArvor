@@ -119,21 +119,19 @@ try {
     </header>
 
     <div class="display-ligne-espace bouton-modifier"> 
-        <div>
-            <div id="confirm">
-                <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                <div class="close">
-                    <button onclick="showFinal()">Mettre hors ligne</button>
-                    <button onclick="btnAnnuler()">Annuler</button>
-                </div>
+        <div id="confirm">
+            <p>Voulez-vous mettre votre offre hors ligne ?</p>
+            <div class="close">
+                <button onclick="showFinal()">Mettre hors ligne</button>
+                <button onclick="btnAnnuler()">Annuler</button>
             </div>
-            <div id="final">
-                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-                <button onclick="btnAnnuler()">Fermer</button>
-            </div> 
-            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <button id="bouton2">Modifier l'offre</button>
         </div>
+        <div id="final">
+            <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+            <button onclick="btnAnnuler()">Fermer</button>
+        </div> 
+        <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+        <button id="bouton2">Modifier l'offre</button>
     </div>
 
     <main id="body">
@@ -214,12 +212,16 @@ try {
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
-                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                        <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        <div class="display-ligne-espace">
+                            <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        </div>
                         <?php break; ?>
                     <?php case "Restauration": ?>
-                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                        <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        <div class="display-ligne-espace">
+                            <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        </div>
                         <?php break;
                 } ?>
                 
