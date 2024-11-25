@@ -45,7 +45,8 @@ main {
 *********************/
 main > article {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+
     background-color: var(--orange-principale);
     border-radius: 15px;
     min-width: 15em;
@@ -56,6 +57,9 @@ main > article a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
+    align-self: stretch;
+
+    text-align: center;
     background-color: var(--blanc-leger);
     color: var(--orange-principale);  
     margin: 1em 0.5em 1em;
