@@ -217,9 +217,9 @@ if (!$submitted) {
         switch ($_POST['type-compte']) {
             case 'membre':
                 $pseudo = $_POST['pseudo'];
-                if ($name === '') $name = 'NULL';
-                if ($first_name === '') $first_name = 'NULL';
-                if ($tel === '') $tel = 'NULL';
+                if ($name === '') $name = null;
+                if ($first_name === '') $first_name = null;
+                if ($tel === '') $tel = null;
                 $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?);";
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
@@ -233,6 +233,14 @@ if (!$submitted) {
                 $code_postal = $_POST['code-postal'];
                 $city = $_POST['city'];
                 $country = $_POST['country'];
+                if ($address_complement === '') $address_complement = null;
+                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $id_adresse = $stmt->fetch()['id_adresse'];
+                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
                 break;
             case 'pro-privée':
                 $denomination = $_POST['denomination'];
@@ -244,8 +252,17 @@ if (!$submitted) {
                 $code_postal = $_POST['code-postal'];
                 $city = $_POST['city'];
                 $country = $_POST['country'];
+                if ($address_complement === '') $address_complement = null;
+                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $id_adresse = $stmt->fetch()['id_adresse'];
+                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
                 break;
             default:
+                
                 break;
         }
 
