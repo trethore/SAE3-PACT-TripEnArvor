@@ -169,12 +169,12 @@ footer {
 	text-align: center;
 	font-family: 'Poppins', sans-serif;
 	font-size: 20px;
-	color: var(--orange-principale);
+	color: var(--orange-principal);
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .footer-bottom>a {
-	color: var(--orange-principale);
+	color: var(--orange-principal);
 }
 
 /* search component in header*/
@@ -274,12 +274,12 @@ footer {
 }
 
 .bouton1 {
-    color: var(--orange-principale);
+    color: var(--orange-principal);
     background-color: var(--blanc);
 }
 
 .bouton2 {
-    background-color: var(--orange-principale);
+    background-color: var(--orange-principal);
     color: var(--blanc);
     box-shadow: 1px 1px 1px var(--gris-etoile);
     transition: box-shadow 0.3s ease; /* Ajout de la transition */
