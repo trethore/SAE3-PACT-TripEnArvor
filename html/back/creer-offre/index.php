@@ -24,10 +24,10 @@ if (isset($_POST['titre'])) {
 //     }
 //     return $extension;
 // }
-require_once("../../../utils/offres-utils.php");
-require_once("../../../utils/site-utils.php");
-require_once("../../../utils/session-utils.php");
-require_once("../../../utils/auth-utils.php");
+require_once("../../utils/offres-utils.php");
+require_once("../../utils/site-utils.php");
+require_once("../../utils/session-utils.php");
+require_once("../../utils/auth-utils.php");
 
 ?>
 <!DOCTYPE html>
