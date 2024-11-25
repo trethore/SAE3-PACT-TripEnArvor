@@ -119,7 +119,7 @@ try {
     </header>
 
     <div class="display-ligne-espace">
-        <div class="bouton-modifier"> 
+        <div class="bouton-modifier display-ligne-espace"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
@@ -134,7 +134,6 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
-        <p class="transparent">.</p>
     </div>  
 
     <main id="body">
