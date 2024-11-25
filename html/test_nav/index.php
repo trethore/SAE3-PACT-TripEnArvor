@@ -63,13 +63,14 @@
 </body>
 
     <div class="telephone-nav">
-        <div class="bg"></div>
+        <div class="bg">
         <div class="nav-content">
             <img src="/images/frontOffice/icones/accueil.png">
             <div class = "btOn">
             <img src="/images/frontOffice/icones/chercher.png">
             </div>
             <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
         </div>
     </div>
 </html>
