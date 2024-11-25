@@ -196,10 +196,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-    }
-
-    .display-ligne-espace:nth-child(2) {
-        margin-bottom: 30px;
+        background-color: red;
     }
 
     .carousel-images {
