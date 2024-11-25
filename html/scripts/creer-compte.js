@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const divCodePostal = document.getElementById("div-code-postal");
     const divCity = document.getElementById("div-city");
     const divCountry = document.getElementById("div-country");
-    const subitInput = document.querySelector("input[type=\"submit\"]");
+    const submitInput = document.querySelector("input[type=\"submit\"]");
 
     function setObligatoire(element, obligatoire) {
         element.querySelector("label span").style.display = obligatoire ? "inline" : "none";
@@ -57,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divCodePostal, false);
                 setObligatoire(divCity, false);
                 setObligatoire(divCountry, false);
-                subitInput.disabled = false;
+                submitInput.disabled = false;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--violet);"
                 break;
             case "pro-publique":
                 divEmail.style.display = "flex";
@@ -89,7 +90,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divCodePostal, true);
                 setObligatoire(divCity, true);
                 setObligatoire(divCountry, true);
-                subitInput.disabled = false;
+                submitInput.disabled = false;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
                 break;
             case "pro-privée":
                 divEmail.style.display = "flex";
@@ -121,7 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divCodePostal, true);
                 setObligatoire(divCity, true);
                 setObligatoire(divCountry, true);
-                subitInput.disabled = false;
+                submitInput.disabled = false;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
                 break;
             case "":
             default:
@@ -137,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 divSiteWeb.style.display = "none";
                 divSiren.style.display = "none";
                 divAddress.style.display = "none";
-                subitInput.disabled = true;
+                submitInput.disabled = true;
                 break;
         }
     });

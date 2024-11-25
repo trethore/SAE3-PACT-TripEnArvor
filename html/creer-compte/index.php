@@ -1,5 +1,5 @@
 <?php
-require_once('../utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 
@@ -11,54 +11,7 @@ $submitted = isset($_POST['type-compte']);
 <head>
     <meta charset="UTF-8">
     <title>Créer un compte</title>
-    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 50vw;
-            margin: 0 auto;
-            padding: 1rem;
-            border: 1px solid black;
-        }
-
-        form div {
-            margin: 0.5rem 0;
-            display: flex;
-            flex-direction: column;
-            width: 75%;
-        }
-
-        select,
-        input {
-            padding: 0.5rem;
-        }
-
-        form > div {
-            display: none;
-        }
-
-        #div-type-compte {
-            display: flex;
-        }
-
-        label span {
-            display: none;
-            color: red;
-        }
-
-        #div-type-compte label span {
-            display: inline;
-        }
-
-        form span span {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="/style/style-creer-compte.css">
     <script src="/scripts/creer-compte.js"></script>
 </head>
 
@@ -68,6 +21,7 @@ if (!$submitted) {
 ?>
     <form action="/creer-compte/" method="post">
         <h1>Creer un compte</h1>
+        <span>Vous avez déjà un compte ? <a href="/back/se-connecter/">Connexion</a></span>
         <span><span>*</span> Champs obligatoires</span>
         <div id="div-type-compte">
             <label for="type-compte">Type de compte<span> *</span></label>
@@ -262,11 +216,9 @@ if (!$submitted) {
                 $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
                 break;
             default:
-                
+                $ok = false;
                 break;
         }
-
-    
 ?>
     <h1>OK</h1>
     <a href=".">ok</a>
