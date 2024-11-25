@@ -4,6 +4,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    z-index: 2;
 }
 
 .bg {
@@ -14,6 +15,7 @@
     height: 80px;
     background-color: var(--violet-secondaire);
     transform: rotate(-3deg) scale(200%);
+    z-index: 3;
 }
 
 .nav-content {
@@ -22,6 +24,7 @@
     justify-content: space-around;
     width: 100%;
     padding: 0 10% 20px 10%;
+    z-index: 4;
 }
 
 .nav-content > div > img {
