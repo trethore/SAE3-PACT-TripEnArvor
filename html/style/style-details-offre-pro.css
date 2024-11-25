@@ -166,7 +166,6 @@ a {
 
 .information-offre {
     font-size: 32px;
-    padding-top: 30px;
 }
 
 .display-ligne-espace {
@@ -197,7 +196,11 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-      }
+    }
+
+    .carousel:last-child {
+        margin-bottom: 30px;
+    }
 
     .carousel-images {
         display: flex;
