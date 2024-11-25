@@ -46,7 +46,6 @@ main {
 
 main > article {
     background-color: var(--orange-principale);
-    flex-grow: 1;
     border-radius: 15px;
 }
 
@@ -55,6 +54,8 @@ main > article a {
     color: var(--orange-principale);  
     margin: 0.5em;
     padding: 0.5em 1em;
+    border: none;
+    border-radius: 15px;
 }
 
 main > article h2 a {
@@ -65,18 +66,10 @@ main > article:first-child {
     margin-top: 1em;
 }
 
-main > article a {
-    text-decoration: none;
+main > article a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
-    border: none;
-    border-radius: 15px;
-}
-
-main > article a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    border: 2px solid var(--blanc-leger);
 }
 
 .ici {
@@ -88,7 +81,6 @@ main > article a:hover {
 *********************/
 section {
     background-color: var(--blanc);
-    flex-grow: 3;
     border-radius: 15px;
 }
 
