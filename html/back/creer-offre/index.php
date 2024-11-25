@@ -187,16 +187,16 @@ function get_file_extension($type)
                     
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/><label id="labelduree2">minutes</label> 
                         <!-- activité, parc -->
-                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> an(s)
+                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> <label id="labelage2">an(s)</label>
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/> personnes
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/><label id="labelcapacite2" for="capacite">personnes</label>
                         <br>
                         <!-- parc -->
-                        <label id="nbattractions" for="attractions">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="attractions" name="attractions" />
+                        <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
                         <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan"/>
                         <br>
                         <!-- restaurant -->
@@ -471,7 +471,7 @@ function get_file_extension($type)
 
             switch ($categorie) {
                 case 'activite':
-                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
@@ -487,20 +487,20 @@ function get_file_extension($type)
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
-                    $requete .= "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
-                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
@@ -513,7 +513,7 @@ function get_file_extension($type)
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete .= "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
@@ -600,25 +600,89 @@ function get_file_extension($type)
                 document.getElementById('options').style.display = 'none';
                 document.getElementById('tarifs').style.display = 'none';
             }
-        })
-
-
-
-
-        let categorie = document.getElementById('categorie');
-        categorie.addEventListener('change', function() {
-            if (categorie.value === "restaurant") {
-                document.getElementById("labelprix").innertext = 'Gamme de prix';
-            } else {
-                document.getElementById("labelprix").innertext = 'Prix minimal';
-            }
-
         });
 
+        let categorie = document.getElementById('categorie');
+
+        document.getElementById("labelgammedeprix").style.display = 'none';
+        document.getElementById("gammedeprix").style.display = 'none';
+        document.getElementById("carte").style.display = 'none';
+        document.getElementById("labelcarte").style.display = 'none';
+        document.getElementById("labelage").style.display = 'none';
+        document.getElementById("age").style.display = 'none';
+        document.getElementById("labelage2").style.display = 'none';
+        document.getElementById("labelduree").style.display = 'none';
+        document.getElementById("labelduree2").style.display = 'none';
+        document.getElementById("duree").style.display = 'none';
+        document.getElementById("labelcapacite").style.display = 'none';
+        document.getElementById("capacite").style.display = 'none';
+        document.getElementById("labelcapacite2").style.display = 'none';
+        document.getElementById("labelnbattractions").style.display = 'none';
+        document.getElementById("nbattraction").style.display = 'none';
+        document.getElementById("labelplan").style.display = 'none';
+        document.getElementById("plan").style.display = 'none';
+
+    categorie.addEventListener('change', function () {
+        let selectedCategory = categorie.value;
+
+
+    // Afficher les champs selon la catégorie sélectionnée
+    switch (selectedCategory) {
+        case "restaurant":
+            document.getElementById("labelprix").style.display = 'none';
+            document.getElementById("prix").style.display = 'none';
+            document.getElementById("carte").style.display = 'block';
+            document.getElementById("labelcarte").style.display = 'block';
+            break;
+
+        case "activite":
+            document.getElementById("labelage").style.display = 'block';
+            document.getElementById("age").style.display = 'block';
+            document.getElementById("labelduree").style.display = 'block';
+            document.getElementById("duree").style.display = 'block';
+            break;
+
+        case "visite":
+            document.getElementById("labelduree").style.display = 'block';
+            document.getElementById("duree").style.display = 'block';
+            break;
+
+        case "spectacle":
+            document.getElementById("labelduree").style.display = 'block';
+            document.getElementById("duree").style.display = 'block';
+            document.getElementById("labelcapacite").style.display = 'block';
+            document.getElementById("capacite").style.display = 'block';
+            break;
+
+        case "parc":
+            document.getElementById("labelnbattractions").style.display = 'block';
+            document.getElementById("nbattraction").style.display = 'block';
+            document.getElementById("labelplan").style.display = 'block';
+            document.getElementById("plan").style.display = 'block';
+            break;
+
+        default:
+            console.log("Aucune catégorie sélectionnée.");
+        }
+    });
 
 
 
-        var offreDiv = document.getElementById("offre");
+
+        // let categorie = document.getElementById('categorie');
+        // categorie.addEventListener('change', function() {
+        //     if (categorie.value === "restaurant") {
+        //         document.getElementById("labelprix").innertext = 'Gamme de prix';
+        //     } else {
+        //         document.getElementById("labelprix").innertext = 'Prix minimal';
+        //     }
+
+        // });
+
+
+
+
+        let offreDiv = document.getElementById("offre");
 
         function showOffre() {
             offreDiv.style.display = "block";
