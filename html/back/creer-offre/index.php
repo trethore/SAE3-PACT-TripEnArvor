@@ -1,4 +1,9 @@
 <?php
+require_once("../../utils/offres-utils.php");
+require_once("../../utils/site-utils.php");
+require_once("../../utils/session-utils.php");
+require_once("../../utils/auth-utils.php");
+
 session_start();
 if (isset($_POST['titre'])) {
     $submitted = true;
@@ -24,10 +29,7 @@ if (isset($_POST['titre'])) {
 //     }
 //     return $extension;
 // }
-require_once("../../utils/offres-utils.php");
-require_once("../../utils/site-utils.php");
-require_once("../../utils/session-utils.php");
-require_once("../../utils/auth-utils.php");
+
 
 ?>
 <!DOCTYPE html>
