@@ -78,7 +78,7 @@ if (isset($_POST['titre'])) {
         <main>
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
-                <h3>Informations importante</h3>
+                <h3>Informations importantes</h3>
                 <div class="important">
                     <table border="0">
                         <tr>
@@ -154,13 +154,13 @@ if (isset($_POST['titre'])) {
                                 </div>
                             </td>
                         </tr>
-                        <td>
+                        <tr>
                             <div id="options">
-                                <tr><label>Options</label>
-                                <tr><input type="radio" id="enRelief" name="enRelief"/><label for="enRelief">En relief</label>
-                                <input type="radio" id="alaune" name="alaune" /><label for="alaune">A la une</label></tr>
+                                <td><label>Options</label></td>
+                                <td><input type="radio" id="enRelief" name="enRelief"/><label for="enRelief">En relief</label>
+                                <input type="radio" id="alaune" name="alaune" /><label for="alaune">A la une</label></td>
                             </div>
-                        </td>
+                        </tr>
                         
                     </table>
 
@@ -395,7 +395,7 @@ if (isset($_POST['titre'])) {
         }
 
         
-        print_r($_FILES);
+        //print_r($_FILES);
 
         echo "<br>";
 
