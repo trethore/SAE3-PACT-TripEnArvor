@@ -6,28 +6,28 @@ if (isset($_POST['titre'])) {
     $submitted = false;
 }
 
-function get_file_extension($type)
-{
-    $extension = '';
-    switch ($type) {
-        case 'image/png':
-            $extension = '.png';
-            break;
-        case 'image/jpeg':
-            $extension = '.jpg';
-            break;
-        case 'image/webp':
-            $extension = '.webp';
-            break;
-        default:
-            break;
-    }
-    return $extension;
-}
-require_once("../../utils/offres-utils.php");
-require_once("../../utils/site-utils.php");
-require_once("../../utils/session-utils.php");
-require_once("../../utils/auth-utils.php");
+// function get_file_extension($type)
+// {
+//     $extension = '';
+//     switch ($type) {
+//         case 'image/png':
+//             $extension = '.png';
+//             break;
+//         case 'image/jpeg':
+//             $extension = '.jpg';
+//             break;
+//         case 'image/webp':
+//             $extension = '.webp';
+//             break;
+//         default:
+//             break;
+//     }
+//     return $extension;
+// }
+require_once("../../../utils/offres-utils.php");
+require_once("../../../utils/site-utils.php");
+require_once("../../../utils/session-utils.php");
+require_once("../../../utils/auth-utils.php");
 
 ?>
 <!DOCTYPE html>
@@ -640,6 +640,7 @@ require_once("../../utils/auth-utils.php");
         let selectedCategory = categorie.value;
 
 
+
     // Afficher les champs selon la catégorie sélectionnée
     switch (selectedCategory) {
         case "restaurant":
@@ -682,6 +683,8 @@ require_once("../../utils/auth-utils.php");
             console.log("Aucune catégorie sélectionnée.");
         }
     });
+
+    let restaurant = ["carte", "labelcarte"];
 
 
 
