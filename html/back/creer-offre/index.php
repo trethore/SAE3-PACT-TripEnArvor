@@ -24,6 +24,10 @@ function get_file_extension($type)
     }
     return $extension;
 }
+require_once("../../utils/offres-utils.php");
+require_once("../../utils/site-utils.php");
+require_once("../../utils/session-utils.php");
+require_once("../../utils/auth-utils.php");
 
 ?>
 <!DOCTYPE html>
@@ -164,7 +168,7 @@ function get_file_extension($type)
 
                         </tr>
                         <tr>
-                            <td><label for="type">Type de l'offre <span class="required">*</span></label></td>
+                            <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
                             <td>
                                 <div class="custom-select-container">
                                     <select class="custom-select" id="type" name="letype">
@@ -410,6 +414,9 @@ function get_file_extension($type)
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
         }
+        if(isset($_SESSION['id_compte'])){
+            $id_compte =  $_SESSION['id_compte'];
+        }
 
         
         print_r($_FILES);
@@ -424,16 +431,23 @@ function get_file_extension($type)
         //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
 
 
-        $id_compte = 'test';
-        //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
+        
+        $id_compte = isset($_SESSION['id_compte']);
 
         // Vérifier si l'id_compte est défini (s'il est connecté)
         if (!$id_compte) {
             die("Erreur : utilisateur non connecté.");
         }
 
+        if(isIdProPrivee($id_compte)){ ?>
+            <script>
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
+            </script>
+        <?php } ?>
 
 
+    <?php
         try {
 
 
@@ -670,17 +684,6 @@ function get_file_extension($type)
     });
 
 
-
-
-        // let categorie = document.getElementById('categorie');
-        // categorie.addEventListener('change', function() {
-        //     if (categorie.value === "restaurant") {
-        //         document.getElementById("labelprix").innertext = 'Gamme de prix';
-        //     } else {
-        //         document.getElementById("labelprix").innertext = 'Prix minimal';
-        //     }
-
-        // });
 
 
 
