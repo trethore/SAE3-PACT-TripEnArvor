@@ -1,17 +1,15 @@
 <?php
-require_once("../../utils/offres-utils.php");
-require_once("../../utils/site-utils.php");
-require_once("../../utils/session-utils.php");
-require_once("../../utils/auth-utils.php");
+    require_once("../../utils/offres-utils.php");
+    require_once("../../utils/site-utils.php");
+    require_once("../../utils/session-utils.php");
+    require_once("../../utils/auth-utils.php");
 
-session_start();
-if (isset($_POST['titre'])) {
-    $submitted = true;
-} else {
-    $submitted = false;
-}
-
-
+    session_start();
+    if (isset($_POST['titre'])) {
+        $submitted = true;
+    } else {
+        $submitted = false;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,8 +134,8 @@ if (isset($_POST['titre'])) {
                             <td>
                                 <div>
                                     <!-- <label for="file-upload">
-                            <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
-                        </label> -->
+                                <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
+                            </label> -->
                                     <input id="photo" type="file" name="photo" required />
                                 </div>
                             </td>
@@ -455,7 +453,7 @@ if (isset($_POST['titre'])) {
                     $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
                     break;
 
@@ -470,20 +468,20 @@ if (isset($_POST['titre'])) {
 
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree]);
+                    $stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
 
                 case 'restaurant':
@@ -496,7 +494,7 @@ if (isset($_POST['titre'])) {
                     }
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
 
                 default:
@@ -639,11 +637,11 @@ if (isset($_POST['titre'])) {
             document.getElementById(element).style.display = 'none';
         });
         typechoisi.forEach(element => {
-            document.getElementById(element).style.display = 'flex';
+            document.getElementById(element).style.display = 'inline';
         });
         if(typechoisi !== "restaurant"){
             prix.forEach(element => {
-                document.getElementById(element).style.display = 'block';
+                document.getElementById(element).style.display = 'inline';
             });
         }
     }
