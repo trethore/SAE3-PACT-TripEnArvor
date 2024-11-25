@@ -162,7 +162,6 @@ try {
                                 <label>Date de fin &emsp;&emsp;:</label>
                                 <input type="date">
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -292,15 +291,15 @@ try {
                 if (selectedValue == "price-asc") {
                     console.log("asc");
                     allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
                         return priceA - priceB;
                     });
                 } else if (selectedValue == "price-desc") {
                     console.log("desc");
                     allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
                         return priceB - priceA;
                     });
                 }
