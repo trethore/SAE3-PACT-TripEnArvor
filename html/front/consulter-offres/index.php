@@ -305,15 +305,15 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const etoiles = offer.querySelector(".etoiles");
+                    const etoiles = offer.querySelector(".etoiles")?.textContent.trim();
                     console.log(etoiles);
-                    const note = etoiles.children.length;
-
-                    console.log(note);
+                    const note = etoiles.length;
+                    console.log('note' + note);
 
                     let matches = true;
 
-                    // let numberOfStarsWanted = filters.minRating.length;
+                    let numberOfStarsWanted = filters.minRating.length;
+                    console.log('note voulue' + numberOfStarsWanted);
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
