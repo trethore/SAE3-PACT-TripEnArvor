@@ -1,7 +1,7 @@
 <?php 
     // Quelques fonctions pour savoir le compte d'un utilisateur
-    include('/var/www/html/php/connect_params.php');
-    include('/var/www/html/utils/site-utils.php');
+    require_once('/var/www/html/php/connect_params.php');
+    require_once('/var/www/html/utils/site-utils.php');
     function isIdMember($id) {
         global $driver, $server, $dbname, $user, $pass;
         try {
