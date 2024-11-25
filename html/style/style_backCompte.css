@@ -33,20 +33,25 @@ h3 {
     color: var(--noir);
 }
 
-
 main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+    margin: 1em;
 }
 
 /********************
         NAV
 *********************/
-
 main > article {
     background-color: var(--orange-principale);
     border-radius: 15px;
+    width: 20em;
+    margin-right: 1em;
+}
+
+main > article:first-child {
+    margin-top: 2em;
 }
 
 main > article a {
@@ -54,16 +59,8 @@ main > article a {
     color: var(--orange-principale);  
     margin: 0.5em;
     padding: 0.5em 1em;
-    border: none;
+    border: 2px solid var(--orange-principale);
     border-radius: 15px;
-}
-
-main > article h2 a {
-    margin-top: 1em;
-}
-
-main > article:first-child {
-    margin-top: 1em;
 }
 
 main > article a:hover {
