@@ -291,8 +291,18 @@ try {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
                 if (selectedValue == "price-asc") {
                     console.log("asc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        return priceA - priceB;
+                    });
                 } else if (selectedValue == "price-desc") {
                     console.log("desc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        return priceB - priceA;
+                    });
                 }
             });
 
@@ -347,9 +357,9 @@ try {
                     }
 
                     // Filter by note
-                    if (numberOfStarsWanted > note) {
+                    /*if (numberOfStarsWanted > note) {
                         matches = false;
-                    }
+                    }*/
 
                     // Show or hide the offer
                     if (matches) {
