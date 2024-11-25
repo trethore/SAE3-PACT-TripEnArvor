@@ -608,35 +608,35 @@ if (isset($_POST['titre'])) {
 
 
     <script>
-        let type = document.getElementById('type');
-        type.addEventListener('change', function() {
-            if (type === "premium") {
-                document.getElementById('options').style.display = 'block';
-                document.getElementById('tarifs').style.display = 'block';
-            } else {
-                document.getElementById('options').style.display = 'none';
-                document.getElementById('tarifs').style.display = 'none';
-            }
-        });
+        // let type = document.getElementById('type');
+        // type.addEventListener('change', function() {
+        //     if (type === "premium") {
+        //         document.getElementById('options').style.display = 'block';
+        //         document.getElementById('tarifs').style.display = 'block';
+        //     } else {
+        //         document.getElementById('options').style.display = 'none';
+        //         document.getElementById('tarifs').style.display = 'none';
+        //     }
+        // });
 
         let typecategorie = document.getElementById('categorie');
         let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
         let typevisite = ["labelduree", "duree"];
-        let typeactivite = ["labelage", "age", "labelduree", "duree"];
-        let typespectacle = ["labelduree", "duree", "labelcapacite", "capacite"];
+        let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree"];
+        let typespectacle = ["labelduree", "duree", "labelcapacite", "capacite", "labelcapacite2"];
         let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
         let typeprix = ["labelprix", "prix", "labelprix2"];
-        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan"];
+        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
         obligatoireselontype.forEach(element => {
             document.getElementById(element).style.display = 'none';
         });
 
     categorie.addEventListener('change', function () {
-        let selectedCategory = categorie.value;
+        let typeselectionne = categorie.value;
 
     // Afficher les champs selon la catégorie sélectionnée
-    switch (typeselectionné) {
+    switch (typeselectionne) {
         case "restaurant":
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
