@@ -1,5 +1,5 @@
 <?php 
-    include('/var/www/html/php/connect_params.php');
+    require_once('/var/www/html/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
 
     function getTypeOffre($id_offre) {
