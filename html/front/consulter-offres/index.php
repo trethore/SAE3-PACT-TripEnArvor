@@ -124,7 +124,7 @@ try {
                                     </div>
                                 </div>
                                 <div>
-                                    <select>
+                                    <select class="tris">
                                         <option value="default">Trier par :</option>
                                         <option value="price-asc">Prix croissant</option>
                                         <option value="price-desc">Prix décroissant</option>
@@ -227,7 +227,7 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </main>
+    </main> =
 
     <footer>
         <div class="footer-top">
@@ -269,6 +269,62 @@ try {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
+            const sorts = document.querySelector('.tris')?.value || null;
+
+            if (filters.sorts == "price-asc") {
+                <?php
+                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix');
+                    $stmt->execute();
+                    $offres = $stmt->fetchAll();
+                    
+                    $reqTypeOffre = "SELECT 
+                                        CASE
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''Attraction'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                                            ELSE 'Inconnu'
+                                        END AS offreSpe
+                                        FROM _offre o
+                                        WHERE o.id_offre = ?";
+                
+                    $stmtCategory = $dbh->prepare($reqTypeOffre);
+                
+                    foreach ($offres as &$offre) {
+                        $stmtCategory->execute([$offre['id_offre']]);
+                        $categoryResult = $stmtCategory->fetch();
+                        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
+                    }
+                ?>
+            } else if (filters.sorts == "price-desc") {
+                <?php
+                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix DESC');
+                    $stmt->execute();
+                    $offres = $stmt->fetchAll();
+                
+                    $reqTypeOffre = "SELECT 
+                                        CASE
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''Attraction'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
+                                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
+                                            ELSE 'Inconnu'
+                                        END AS offreSpe
+                                        FROM _offre o
+                                    WHERE o.id_offre = ?";
+                
+                    $stmtCategory = $dbh->prepare($reqTypeOffre);
+                
+                    foreach ($offres as &$offre) {
+                        $stmtCategory->execute([$offre['id_offre']]);
+                        $categoryResult = $stmtCategory->fetch();
+                        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
+                    }
+                ?>
+            }
+
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const allOffers = Array.from(offersContainer.children);
@@ -305,15 +361,15 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const etoiles = offer.querySelector(".etoiles")?.textContent.trim();
+                    /*const etoiles = offer.querySelector(".etoile");
                     console.log(etoiles);
                     const note = etoiles.length;
                     console.log('note' + note);
 
-                    let matches = true;
-
                     let numberOfStarsWanted = filters.minRating.length;
-                    console.log('note voulue' + numberOfStarsWanted);
+                    console.log('note voulue' + numberOfStarsWanted);*/
+
+                    let matches = true;
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
