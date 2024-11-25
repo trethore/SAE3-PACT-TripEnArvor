@@ -619,13 +619,13 @@ if (isset($_POST['titre'])) {
             }
         });
 
-        let categorie = document.getElementById('categorie');
-        let restaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
-        let visite = ["labelduree", "duree"];
-        let activite = ["labelage", "age", "labelduree", "duree"];
-        let spectacle = ["labelduree", "duree", "labelcapacite", "capacite"];
-        let parc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-        let prix = ["labelprix", "prix", "labelprix2"];
+        let typecategorie = document.getElementById('categorie');
+        let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let typevisite = ["labelduree", "duree"];
+        let typeactivite = ["labelage", "age", "labelduree", "duree"];
+        let typespectacle = ["labelduree", "duree", "labelcapacite", "capacite"];
+        let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+        let typeprix = ["labelprix", "prix", "labelprix2"];
         let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan"];
 
         obligatoireselontype.forEach(element => {
@@ -641,23 +641,23 @@ if (isset($_POST['titre'])) {
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
             document.getElementById("labelprix2").style.display = 'none';
-            afficheSelonType(restaurant);
+            afficheSelonType(typerestaurant);
             break;
 
         case "activite":
-            afficheSelonType(activite);
+            afficheSelonType(typeactivite);
             break;
 
         case "visite":
-            afficheSelonType(visite);
+            afficheSelonType(typevisite);
             break;
 
         case "spectacle":
-            afficheSelonType(spectacle);
+            afficheSelonType(typespectacle);
             break;
 
         case "parc":
-            afficheSelonType(parc);
+            afficheSelonType(typeparc);
             break;
 
         default:
