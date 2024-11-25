@@ -61,6 +61,10 @@ a {
         margin: 30px 30px 0 30px;
     }
 
+    #bouton1, #bouton2 {
+        font-size: 60px;
+    }
+
     .bouton-modifier > div > button {
         color: var(--blanc-leger);
         text-decoration: none;
@@ -69,6 +73,8 @@ a {
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
+        display: flex;
+        align-items: flex-start;
     }
 
     .bouton-modifier > div > button:hover {
@@ -301,7 +307,7 @@ a {
         font-size: 60px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
@@ -311,7 +317,7 @@ a {
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);

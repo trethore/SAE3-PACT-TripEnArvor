@@ -14,7 +14,6 @@ h1 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--bold);
     color: var(--noir);
-    background: var(--blanc-leger);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -31,13 +30,9 @@ h3 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--medium);
     font-size: 20pt;
-    color: var(--orange-principale);
-}
-
-a {
-    text-decoration: none;
     color: var(--noir);
 }
+
 
 main {
     display: flex;
@@ -65,6 +60,20 @@ main > article:first-child {
     margin-top: 1em;
 }
 
+main > article a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: none;
+    border-radius: 15px;
+}
+
+main > article a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
+}
+
 .ici {
     font-weight: bold;
 }
@@ -84,4 +93,18 @@ section h3 {
 
 table td + td {
     color: var(--orange-principale);
+}
+
+main > section a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: none;
+    border-radius: 15px;
+}
+
+main > section a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
 }
