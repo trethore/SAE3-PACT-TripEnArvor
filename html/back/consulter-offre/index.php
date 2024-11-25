@@ -163,24 +163,20 @@ try {
                 <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
-            <div class="display-ligne">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <!-- Affichage du nombre d'avis de l'offre -->
-                <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
-                <a href="#avis">Voir les avis</a>
-            </div>
-
             <div class="display-ligne-espace">
+                <div class="display-ligne">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <!-- Affichage du nombre d'avis de l'offre -->
+                    <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
+                    <a href="#avis">Voir les avis</a>
+                </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
                 <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
-                <!-- Affichage du prix de l'offre -->
-                <button>Voir les tarifs</button> 
             </div>
-
         </section>
 
         <section class="double-blocs">

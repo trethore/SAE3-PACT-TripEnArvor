@@ -6,24 +6,24 @@ if (isset($_POST['titre'])) {
     $submitted = false;
 }
 
-function get_file_extension($type)
-{
-    $extension = '';
-    switch ($type) {
-        case 'image/png':
-            $extension = '.png';
-            break;
-        case 'image/jpeg':
-            $extension = '.jpg';
-            break;
-        case 'image/webp':
-            $extension = '.webp';
-            break;
-        default:
-            break;
-    }
-    return $extension;
-}
+// function get_file_extension($type)
+// {
+//     $extension = '';
+//     switch ($type) {
+//         case 'image/png':
+//             $extension = '.png';
+//             break;
+//         case 'image/jpeg':
+//             $extension = '.jpg';
+//             break;
+//         case 'image/webp':
+//             $extension = '.webp';
+//             break;
+//         default:
+//             break;
+//     }
+//     return $extension;
+// }
 require_once("../../utils/offres-utils.php");
 require_once("../../utils/site-utils.php");
 require_once("../../utils/session-utils.php");
@@ -439,7 +439,8 @@ require_once("../../utils/auth-utils.php");
             die("Erreur : utilisateur non connecté.");
         }
 
-        if(isIdProPrivee($id_compte)){ ?>
+        if(!$id_compte){
+            //isIdProPrivee($id_compte)){ ?>
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
@@ -640,6 +641,7 @@ require_once("../../utils/auth-utils.php");
         let selectedCategory = categorie.value;
 
 
+
     // Afficher les champs selon la catégorie sélectionnée
     switch (selectedCategory) {
         case "restaurant":
@@ -682,6 +684,8 @@ require_once("../../utils/auth-utils.php");
             console.log("Aucune catégorie sélectionnée.");
         }
     });
+
+    let restaurant = ["carte", "labelcarte"];
 
 
 

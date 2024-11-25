@@ -269,63 +269,6 @@ try {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
-            const sorts = document.querySelector('.tris')?.value || null;
-            console.log(sorts);
-
-            if (sorts == "price-asc") {
-                <?php
-                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix');
-                    $stmt->execute();
-                    $offres = $stmt->fetchAll();
-                    
-                    $reqTypeOffre = "SELECT 
-                                        CASE
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''Attraction'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                                            ELSE 'Inconnu'
-                                        END AS offreSpe
-                                        FROM _offre o
-                                        WHERE o.id_offre = ?";
-                
-                    $stmtCategory = $dbh->prepare($reqTypeOffre);
-                
-                    foreach ($offres as &$offre) {
-                        $stmtCategory->execute([$offre['id_offre']]);
-                        $categoryResult = $stmtCategory->fetch();
-                        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
-                    }
-                ?>
-            } else if (sorts == "price-desc") {
-                <?php
-                    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte ORDER BY prix DESC');
-                    $stmt->execute();
-                    $offres = $stmt->fetchAll();
-                
-                    $reqTypeOffre = "SELECT 
-                                        CASE
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''Attraction'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                                            ELSE 'Inconnu'
-                                        END AS offreSpe
-                                        FROM _offre o
-                                    WHERE o.id_offre = ?";
-                
-                    $stmtCategory = $dbh->prepare($reqTypeOffre);
-                
-                    foreach ($offres as &$offre) {
-                        $stmtCategory->execute([$offre['id_offre']]);
-                        $categoryResult = $stmtCategory->fetch();
-                        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
-                    }
-                ?>
-            }
-
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const allOffers = Array.from(offersContainer.children);
@@ -339,6 +282,28 @@ try {
 
             h2.addEventListener("click", () => {
                 fondFiltres.classList.toggle("hidden");
+            });
+
+            const selectElement = document.querySelector('.tris');
+
+            // Ajout d'un écouteur d'événement pour détecter les changements
+            selectElement.addEventListener('change', () => {
+                const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+                if (selectedValue == "price-asc") {
+                    console.log("asc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        return priceA - priceB;
+                    });
+                } else if (selectedValue == "price-desc") {
+                    console.log("desc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.price').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.price').textContent.replace('€', '').trim());
+                        return priceB - priceA;
+                    });
+                }
             });
 
             const applyFilters = () => {
@@ -392,9 +357,9 @@ try {
                     }
 
                     // Filter by note
-                    if (numberOfStarsWanted > note) {
+                    /*if (numberOfStarsWanted > note) {
                         matches = false;
-                    }
+                    }*/
 
                     // Show or hide the offer
                     if (matches) {

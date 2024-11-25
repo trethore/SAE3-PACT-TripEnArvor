@@ -16,7 +16,7 @@ h1 {
     color: var(--noir);
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 64pt;
+    font-size: 40pt;
 }
 
 h2 {
@@ -47,10 +47,15 @@ main > article {
     background-color: var(--orange-principale);
     border-radius: 15px;
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 15em;
     margin-right: 1em;
 }
 
 main > article a {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
     background-color: var(--blanc-leger);
     color: var(--orange-principale);  
     margin: 1em 0.5em 1em;
@@ -75,7 +80,6 @@ main > article a:hover {
 section {
     background-color: var(--blanc);
     border-radius: 15px;
-    flex-grow: 3;
 }
 
 section h3 {
