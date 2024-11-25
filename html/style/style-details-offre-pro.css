@@ -61,14 +61,11 @@ a {
         margin: 30px 30px 0 30px;
     }
 
-    #bouton1, #bouton2 {
-        font-size: 60px;
-    }
 
-    .bouton-modifier > div > button {
+    .bouton-modifier > button {
         color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 40px;
+        font-size: 60px;
         background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
@@ -77,7 +74,7 @@ a {
         align-items: flex-start;
     }
 
-    .bouton-modifier > div > button:hover {
+    .bouton-modifier > button:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
