@@ -118,7 +118,7 @@ try {
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="display-ligne-espace bouton-modifier"> 
+    <div class="bouton-modifier"> 
         <div id="confirm">
             <p>Voulez-vous mettre votre offre hors ligne ?</p>
             <div class="close">
