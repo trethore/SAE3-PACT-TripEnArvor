@@ -12,43 +12,51 @@
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: var(--violet-secondaire);
     transform: rotate(-3deg) scale(200%);
+    background-color: var(--violet-secondaire);
+    z-index: -1;
 }
 
 .nav-content {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    height: 4em;
     padding: 0 10% 20px 10%;
-    margin: 50px;
+    margin: 5% auto;
 }
 
 .nav-content > div > img {
-    width: 50px;
-    height: 50px;
-   
+    width: 4em;
+    height: 4em;
 }
 
 .nav-content > img {
-    width: 50px;
-    height: 50px;
+    width: 4em;
+    height: 4em;
    
 }
 
 .btOn{
     background-color: var(--violet-principal);
-    transform: rotate(-8deg) scale(200%);
-    padding: 5px 20px;
     border: 3px solid white;
-    border-radius: 40px 10px 40px 10px;}
+}
+
+
 
 .btOff{}
 
 @media only screen and (max-width: 600px) {
-    .nav-content > img {
-    }
-  }
+  .nav-content > div > img {
+    width: 3em;
+    height: 3em;
+}
+
+.nav-content > img {
+    width: 3em;
+    height: 3em;
+   
+}}
   
   /* Small devices (portrait tablets and large phones, 600px and up) */
   @media only screen and (min-width: 600px) {
