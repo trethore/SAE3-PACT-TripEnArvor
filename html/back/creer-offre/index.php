@@ -11,25 +11,6 @@ if (isset($_POST['titre'])) {
     $submitted = false;
 }
 
-// function get_file_extension($type)
-// {
-//     $extension = '';
-//     switch ($type) {
-//         case 'image/png':
-//             $extension = '.png';
-//             break;
-//         case 'image/jpeg':
-//             $extension = '.jpg';
-//             break;
-//         case 'image/webp':
-//             $extension = '.webp';
-//             break;
-//         default:
-//             break;
-//     }
-//     return $extension;
-// }
-
 
 ?>
 <!DOCTYPE html>
@@ -45,14 +26,7 @@ if (isset($_POST['titre'])) {
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
-    <style>
-        .disabled-label {
-            opacity: 0.5;
-            /* Grise le label */
-            pointer-events: none;
-            /* Rendre le label non cliquable */
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -180,11 +154,11 @@ if (isset($_POST['titre'])) {
                                 </div>
                             </td>
                         </tr>
-                    </table>
-                    <div id="options">
-                        <label>Options</label>
-                        <input type="checkbox" id="enRelief" name="enRelief" /><label for="enRelief">En relief</label>
-                        <input type="checkbox" id="alaune" name="alaune" /><label for="alaune">A la une</label>
+                        <td>
+                            <div id="options">
+                                <tr><label>Options</label>
+                                <tr><input type="radio" id="enRelief" name="enRelief" /><label for="enRelief">En relief</label>
+                                <input type="radio" id="alaune" name="alaune" /><label for="alaune">A la une</label></tr>
                     </div>
                     </td>
                     </tr>
@@ -425,16 +399,6 @@ if (isset($_POST['titre'])) {
 
         echo "<br>";
 
-        print  $_FILES['photo']['name'];
-
-        // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
-        // $type = isset($_POST['type']) ? $_POST['type'] : '';
-        // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-        //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
-
-
-        
-        $id_compte = isset($_SESSION['id_compte']);
 
         // Vérifier si l'id_compte est défini (s'il est connecté)
         if (!$id_compte) {
@@ -551,7 +515,7 @@ if (isset($_POST['titre'])) {
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                //$stmt_tarif->execute([$id_offre, id, $prix]);
+                $stmt_tarif->execute([$id_offre, id, $prix]);
 
             }
 
@@ -565,9 +529,8 @@ if (isset($_POST['titre'])) {
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension)){
-                    print("image bougée");
-                }
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+        
                
                 $fichier_img = $time . $file_extension;
 
@@ -585,8 +548,8 @@ if (isset($_POST['titre'])) {
                 $id_image = $stmt->fetchColumn();
 
                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                //$stmt_image_offre = $dbh->prepare($requete_image);
-                //$stmt_image_offre->execute([$id_image, $id_offre]);
+                $stmt_image_offre = $dbh->prepare($requete_image);
+                $stmt_image_offre->execute([$id_image, $id_offre]);
 
             }
 
@@ -621,12 +584,12 @@ if (isset($_POST['titre'])) {
 
         let typecategorie = document.getElementById('categorie');
         let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
-        let typevisite = ["labelduree", "duree"];
-        let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree"];
-        let typespectacle = ["labelduree", "duree", "labelcapacite", "capacite", "labelcapacite2"];
+        let typevisite = ["labelduree", "duree", "labelduree2"];
+        let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
+        let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
         let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
         let typeprix = ["labelprix", "prix", "labelprix2"];
-        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
+        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2","labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
         obligatoireselontype.forEach(element => {
             document.getElementById(element).style.display = 'none';
