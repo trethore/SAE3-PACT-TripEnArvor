@@ -585,15 +585,6 @@ if (isset($_POST['titre'])) {
         // Sélectionner tous les boutons radio
         let radioButtons = document.querySelectorAll('input[type="radio"][name="option"]');
 
-        // Ajouter un événement sur chaque bouton radio
-        radioButtons.forEach((radio) => {
-            radio.addEventListener('click', function() {
-                // Si le bouton est déjà coché, désélectionnez-le
-                if (this.checked) {
-                    this.checked = false;
-                }
-            });
-        });
 
         let typecategorie = document.getElementById('categorie');
         let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
