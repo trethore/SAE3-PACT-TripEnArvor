@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/styleguide.css" />
     <link rel="stylesheet" href="/style/styles.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Liste de vos offres</title>
 </head>
