@@ -198,7 +198,7 @@ a {
         border-radius: 8px;
     }
 
-    .carousel:last-child {
+    .display-ligne-espace:nth-child(2) {
         margin-bottom: 30px;
     }
 
