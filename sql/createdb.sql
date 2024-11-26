@@ -299,6 +299,7 @@ CREATE TABLE _image (
 
 CREATE TABLE _tarif_publique (
     id_tarif_publique    SERIAL,
+    nom_tarif VARCHAR(64),
     prix        INTEGER NOT NULL,
     id_offre    INTEGER NOT NULL,
     CONSTRAINT _tarif_publique_pk PRIMARY KEY (id_tarif_publique),
