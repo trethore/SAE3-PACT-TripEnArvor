@@ -349,7 +349,7 @@ h3 {
     height: 37px;
     width: 117px;
 
-    opacity: 73%;
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -372,7 +372,9 @@ h3 {
     height: 37px;
     width: 67.8px;
 
-    opacity: 73%;
+    text-decoration: none;
+
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -559,8 +561,8 @@ h3 {
 }
 
 .no-offers-message {
-    text-align: center;
-    color: #555;
-    font-size: 1.2em;
-    margin: 20px 0;
+    text-align: center; 
+    color: var(--violet-principal);
+    font-size: 20pt;
+    margin: 20px 430px;
 }

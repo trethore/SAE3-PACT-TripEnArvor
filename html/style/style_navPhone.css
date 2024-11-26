@@ -1,21 +1,73 @@
 .telephone-nav {
-    background: rgba(74, 23, 116, 1);
     overflow: hidden;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    border-top: 10px red;
+    z-index: 2;
+}
+
+.bg {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: var(--violet-secondaire);
+    transform: rotate(-3deg) scale(200%);
+    z-index: 3;
 }
 
 .nav-content {
+    position: relative;
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 10px 10% 10px 10%;
+    padding: 0 10% 20px 10%;
+    z-index: 4;
+}
+
+.nav-content > div > img {
+    width: 50px;
+    height: 50px;
+   
 }
 
 .nav-content > img {
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
+   
 }
+
+.btOn{
+    background-color: var(--violet-principal);
+    transform: rotate(-8deg) scale(200%);
+    padding: 5px 20px;
+    border: 3px solid white;
+    border-radius: 40px 10px 40px 10px;}
+
+.btOff{}
+
+@media only screen and (max-width: 600px) {
+    .nav-content > img {
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .nav-content > img {
+        
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 900px) {
+    .telephone-nav {
+        display: none;
+    }
+  } 

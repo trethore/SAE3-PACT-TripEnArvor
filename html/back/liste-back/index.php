@@ -28,7 +28,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Liste de vos offres</title>
@@ -50,7 +49,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Une Recherche en Particulier ? Filtrez !</h2>
+            <h2>Filtres</h2>
             <div>
                 <div>
                     <!-- Catégorie -->
@@ -153,8 +152,12 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 </div>
             </div>
         </article>
-        <section class="lesOffres">
-            <?php while(getOffrebyIdCompte($id_compte)) { ?>
+        <section class="lesOffres"><?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
@@ -208,12 +211,12 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
-                        <p>Avis non lues : <span><b>4</b></span></p>
+                        <p>Avis non lus : <span><b>4</b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis non répondues
                         ---------------------------------------->
-                        <p>Avis non répondues : <span><b>1</b></span></p>
+                        <p>Avis non répondus : <span><b>1</b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
@@ -231,14 +234,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             <!-------------------------------------- 
             Pagination
             ---------------------------------------->
-            <div class="pagination">
-            <?php if ($current_page > 1) { ?>
-                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
-                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
         </section>
     </main>
     <footer>

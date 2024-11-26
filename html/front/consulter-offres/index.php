@@ -32,6 +32,11 @@ try {
         $categoryResult = $stmtCategory->fetch();
         $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
     }
+
+    foreach ($offres as &$offre) {
+        $offre['note'] = 3;
+    }
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -119,11 +124,10 @@ try {
                                     </div>
                                 </div>
                                 <div>
-                                    <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
+                                    <select class="tris">
+                                        <option value="default">Trier par :</option>
+                                        <option value="price-asc">Prix croissant</option>
+                                        <option value="price-desc">Prix décroissant</option>
                                     </select>
                                 </div>
                             </div>
@@ -158,7 +162,6 @@ try {
                                 <label>Date de fin &emsp;&emsp;:</label>
                                 <input type="date">
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -223,7 +226,7 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </main>
+    </main> =
 
     <footer>
         <div class="footer-top">
@@ -267,18 +270,44 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-
             const allOffers = Array.from(offersContainer.children);
+            allOffers.shift();
+            console.log(allOffers);
 
-            const noOffersMessage = document.createElement("p");
-            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            // Create the "no offers" message element
+            const noOffersMessage = document.createElement("div");
             noOffersMessage.classList.add("no-offers-message");
+            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
+            offersContainer.parentNode.insertBefore(noOffersMessage, offersContainer);
             noOffersMessage.style.display = "none";
-            offersContainer.appendChild(noOffersMessage);
 
             h2.addEventListener("click", () => {
-                // Toggle filter visibility
                 fondFiltres.classList.toggle("hidden");
+            });
+
+            const selectElement = document.querySelector('.tris');
+
+            selectElement.addEventListener('change', () => {
+                const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+                
+                if (selectedValue == "price-asc") {
+                    console.log("asc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
+                        return priceA - priceB;
+                    });
+                } else if (selectedValue == "price-desc") {
+                    console.log("desc");
+                    allOffers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
+                        return priceB - priceA;
+                    });
+                }
+
+                const container = document.getElementsByClassName('section-offres'); // ID du conteneur des offres
+                allOffers.forEach(offer => container.appendChild(offer));
             });
 
             const applyFilters = () => {
@@ -290,7 +319,10 @@ try {
                     maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
-                const noCategorySelected = filters.categories.length === 0;
+                // Treat no categories checked as all categories selected
+                if (filters.categories.length === 0) {
+                    filters.categories = Array.from(document.querySelectorAll(".categorie label")).map(label => label.textContent.trim());
+                }
 
                 let visibleOffers = 0;
 
@@ -299,11 +331,18 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
+                    /*const etoiles = offer.querySelector(".etoile");
+                    console.log(etoiles);
+                    const note = etoiles.length;
+                    console.log('note' + note);
+
+                    let numberOfStarsWanted = filters.minRating.length;
+                    console.log('note voulue' + numberOfStarsWanted);*/
 
                     let matches = true;
 
                     // Filter by category
-                    if (filters.categories.length > 0 && !filters.categories.includes(category)) {
+                    if (!filters.categories.includes(category)) {
                         matches = false;
                     }
 
@@ -315,14 +354,18 @@ try {
                     }
 
                     // Filter by price
-                    if (
-                        (filters.minPrice !== null && price < filters.minPrice) ||
-                        (filters.maxPrice !== null && price > filters.maxPrice)
-                    ) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) ||
+                        (filters.maxPrice !== null && price > filters.maxPrice) ||
+                        (price < filters.minPrice && price > filters.maxPrice)) {
                         matches = false;
                     }
 
-                    // Show or hide offer
+                    // Filter by note
+                    /*if (numberOfStarsWanted > note) {
+                        matches = false;
+                    }*/
+
+                    // Show or hide the offer
                     if (matches) {
                         offer.style.display = "block";
                         visibleOffers++;
@@ -331,15 +374,11 @@ try {
                     }
                 });
 
-                // Show or hide the no-offers message
-                if (visibleOffers === 0 && !noCategorySelected) {
-                    noOffersMessage.style.display = "block";
-                } else {
-                    noOffersMessage.style.display = "none";
-                }
+                // Show or hide the "no offers" message
+                noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
             };
 
-            // Add an event listener to each filter element
+            // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });

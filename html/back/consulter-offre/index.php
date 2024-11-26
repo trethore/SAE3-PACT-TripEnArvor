@@ -1,57 +1,87 @@
 <?php
-
 include('../../php/connect_params.php');
-include('../../utils/offres-utils.php');
+require_once('../../utils/offres-utils.php');
 
-// Connexion à la base de données
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    
-    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $id_offre_cible = intval($_GET['id']);
 
-    // Requête SQL pour récupérer les informations de l'offre
-    $reqOffre = "SELECT * FROM _offre";
-    $stmt = $dbh->prepare($reqOffre);
-    $stmt->execute();
-    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations de l'offre ===== //
+    $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+    $stmtOffre = $dbh->prepare($reqOffre);
+    $stmtOffre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtOffre->execute();
+    $offre = $stmtOffre->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer les informations de l'adresse de l'offre
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse";
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une activité ===== //
+    $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
+    $stmtActivite = $dbh->prepare($reqActivite);
+    $stmtActivite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtActivite->execute();
+    $activite = $stmtActivite->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une visite ===== //
+    $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+    $stmtVisite = $dbh->prepare($reqVisite);
+    $stmtVisite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtVisite->execute();
+    $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un spectacle ===== //
+    $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
+    $stmtSpectacle = $dbh->prepare($reqSpectacle);
+    $stmtSpectacle->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtSpectacle->execute();
+    $spectacle = $stmtSpectacle->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un parc d'attractions ===== //
+    $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
+    $stmtAttraction = $dbh->prepare($reqAttraction);
+    $stmtAttraction->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtAttraction->execute();
+    $attraction = $stmtAttraction->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un restaurant ===== //
+    $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+    $stmtRestaurant = $dbh->prepare($reqRestaurant);
+    $stmtRestaurant->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtRestaurant->execute();
+    $restaurant = $stmtRestaurant->fetch(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
+    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
     $stmtAdresse = $dbh->prepare($reqAdresse);
+    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAdresse->execute();
-    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);
+    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);    
 
-    // Requête SQL pour récupérer les informations du compte du propriétaire de l'offre
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte";
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
+    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
     $stmtCompte = $dbh->prepare($reqCompte);
+    $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour";
+    // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
+    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
+    $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
     $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
-
-    // Updated SQL query to get tags for the specific offer
-    $reqTags = "SELECT nom_tag FROM _offre_possede_tag 
-                NATURAL JOIN _tag 
-                WHERE id_offre = :id_offre";
-
-    // Prepare the query
+    
+    // ===== Requête SQL pour récupérer les tags de l'offre ===== //
+    $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
-
-    // Bind the offer ID
     $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-
-    // Execute the query
     $stmtTags->execute();
-
-    // Fetch all the tags for the specific offer
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
-    // Requête SQL pour récupérer le type de l'offre
+    // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
+
+    // ===== Requête SQL pour récuéprer les images de l'offre ===== //
+    $images = getIMGbyId($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -64,7 +94,6 @@ try {
 <html>
 
 <head>
-
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <link rel="stylesheet" href="/style/styleHFB.css"/>
@@ -74,13 +103,11 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 </head>
 
 <body>
-
+    
     <header id="header">
-
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
@@ -89,10 +116,8 @@ try {
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-
     </header>
 
-    <!-- Pop-up pour la mise hors ligne ou la modification de l'offre -->
     <div class="display-ligne-espace bouton-modifier"> 
         <div>
             <div id="confirm">
@@ -109,7 +134,6 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
-        <p class="transparent">.</p>
     </div>
 
     <main id="body">
@@ -119,14 +143,17 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
-                    <img src="/images/universel/photos/hotel_2_2.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_3.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_4.png" alt="Image 1">
-                    <img src="/images/universel/photos/hotel_2_5.png" alt="Image 1">
+                    <?php foreach ($images as $image) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                    <?php } ?>
                 </div>
                 <div class="display-ligne-espace">
-                    <img src="/images/universel/icones/fleche-gauche-orange.png" alt="Flèche navigation" class="prev">
-                    <img src="/images/universel/icones/fleche-droite-orange.png" alt="Flèche navigation" class="next">
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
                 </div>
             </div>
 
@@ -135,7 +162,7 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . $adresse['ville']); ?></p>
+                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
             <div class="display-ligne">
@@ -160,7 +187,7 @@ try {
 
         <section class="double-blocs">
 
-            <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
+            <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
                         <li><?php echo htmlentities($tag['nom_tag']); ?></li>
@@ -172,9 +199,33 @@ try {
                 <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
+                <!-- Affichage des informations spécifiques à un type d'offre -->
+                <?php switch ($categorie) {
+                    case "Activité": ?>
+                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
+                        <?php break; ?>
+                    <?php case "Visite": ?>
+                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
+                        <?php break; ?>
+                    <?php case "Spectacle": ?>
+                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                        <?php break; ?>
+                    <?php case "Parc attraction": ?>
+                        <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
+                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                        <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        <?php break; ?>
+                    <?php case "Restauration": ?>
+                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                        <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        <?php break;
+                } ?>
+                
                 <div class="display-ligne-espace">
                     <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                    <p>Numéro : <?php echo htmlentities($compte['tel']); ?></p>
+                    <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
