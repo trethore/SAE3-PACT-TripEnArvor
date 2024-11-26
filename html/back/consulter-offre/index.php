@@ -64,18 +64,18 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
+    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
-    $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
-
-    // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqHoraire = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour NATURAL JOIN _horaire WHERE id_offre = :id_offre";
+    $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
+    
+    $reqHoraire = "SELECT * FROM _horaire WHERE id_offre = :id_offre";
     $stmtHoraire = $dbh->prepare($reqHoraire);
     $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtHoraire->execute();
-    $horaire = $stmtHoraire->fetch(PDO::FETCH_ASSOC);
+    $horaires = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+    
     
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
@@ -270,11 +270,14 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php if (!empty($jour)) : ?>
-                    <p><?php echo htmlentities($jour['nom_jour'] . " : " . $horaire['ouverture'] . " - " . $horaire['fermeture']); ?></p>
-                <?php else : ?>
-                    <p>Horaires non disponibles pour aujourd'hui.</p>
-                <?php endif; ?>
+                <?php foreach ($jours as $jour) : ?>
+                <p>
+                    <?php echo htmlentities($jour['nom_jour']); ?> : 
+                    <?php foreach ($horaires as $horaire) {
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture']);
+                    } ?>
+                </p>
+            <?php endforeach; ?>
             </div> 
     
         </section>
