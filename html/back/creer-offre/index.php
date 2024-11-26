@@ -675,7 +675,7 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (isIdProPrive($id_compte))){
+        if((typechoisi !== "restaurant")&& (isIdProPrivee($id_compte))){
             typeprix.forEach(element => {
                 document.getElementById(element).style.display = 'inline';
             });
