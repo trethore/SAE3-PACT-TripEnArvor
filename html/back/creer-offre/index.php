@@ -140,12 +140,12 @@
 
 
                         <tr>
-                            <td><label id="labeladresse" for="adresse">Adresse</label></td>
+                            <!-- <td><label id="labeladresse" for="adresse">Adresse</label></td> -->
                             <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                         </tr>
                         <tr>
-                            <td><label for="cp">Code Postal </label></td>
-                            <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td>
+                             <td><!--<label for="cp" id="labelcp">Code Postal </label>--></td>
+                            <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td> 
                             <td><label for="ville">Ville <span class="required">*</span></label></td>
                             <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
 
@@ -163,14 +163,14 @@
 
                         </tr>
                         <tr>
-                            <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
+                            <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="type" name="letype">
                                         <option value="standard"> Offre Standard </option>
                                         <option value="premium"> Offre Premium </option>
                                     </select>
-                                </div>
+                                </div> -->
                             </td>
                         </tr>
                         <tr>
@@ -251,7 +251,7 @@
                     <br>
 
 
-                    <h3>Ouverture</h3>
+                    <!-- <h3>Ouverture</h3>
                     <table border="0">
                         <tr>
                             <td>Lundi</td>
@@ -295,7 +295,7 @@
                             <td>-></td>
                             <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
                         </tr>
-                    </table>
+                    </table> -->
                     <div class="bt_cree">
                         <input class="valider" type="submit" value="Créer l'offre" />
 

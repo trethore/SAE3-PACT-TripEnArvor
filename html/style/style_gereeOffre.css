@@ -1,4 +1,4 @@
-#labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"]{
+#labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"], #labelcp{
   display: none;
 }
 
