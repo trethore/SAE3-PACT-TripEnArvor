@@ -628,7 +628,7 @@
 
 
         let typecategorie = document.getElementById('categorie');
-        let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let typerestaurant = ["carte", "labelcarte"];
         let typevisite = ["labelduree", "duree", "labelduree2"];
         let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
         let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
@@ -650,9 +650,9 @@
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            if (isIdProPublique($id_compte)) {
-                document.getElementById("labelgammedeprix").style.display = 'none';
-                document.getElementById("gammedeprix").style.display = 'none';
+            if (isIdProPrivee($id_compte)) {
+                document.getElementById("labelgammedeprix").style.display = 'inline';
+                document.getElementById("gammedeprix").style.display = 'inline';
             }
             document.getElementById("tarifs").style.display = 'none';
             console.log(<?php $id_compte ?>);
