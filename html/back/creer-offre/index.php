@@ -636,6 +636,10 @@
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
             document.getElementById("labelprix2").style.display = 'none';
+            if (isIdProPublique($id_compte)) {
+                document.getElementById("labelgammedeprix").style.display = 'none';
+                document.getElementById("gammedeprix").style.display = 'none';
+            }
             
             break;
 
@@ -669,7 +673,7 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if(typechoisi !== "restaurant"){
+        if((typechoisi !== "restaurant")&& (isIdProPublique($id_compte))){
             typeprix.forEach(element => {
                 document.getElementById(element).style.display = 'inline';
             });
