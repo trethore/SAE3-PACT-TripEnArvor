@@ -274,7 +274,7 @@ try {
                 <p>
                     <?php echo htmlentities($jour['nom_jour']); ?> :
                     <?php foreach ($horaires as $horaire) {
-                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "-----");
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "     ");
                     } ?> 
                 </p>
             <?php endforeach; ?>
