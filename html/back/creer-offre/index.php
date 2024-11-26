@@ -357,16 +357,10 @@
     <?php
     } else {
 
-
-        $server = 'postgresdb';
-        $driver = 'pgsql';
-        $dbname = 'sae';
-        $user   = 'sae';
-        $pass    = 'naviguer-vag1n-eNTendes';
-
+        
         $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
-        // include('../../php/connect_params.php');
+        include('../../php/connect_params.php');
 
         // Récupération des données du formulaire avec $_POST
         // $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
