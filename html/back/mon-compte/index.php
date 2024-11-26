@@ -1,3 +1,30 @@
+<?php
+require_once('../../php/connect_params.php');
+require_once('../../utils/compte-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
+
+try {
+    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+
+startSession();
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToListOffreIfNecessary($id_compte);
+}
+
+$typeCompte = getTypeCompte($id_compte);
+
+$reqCompte = "SELECT * from sae._compte_professionnel cp 
+                join sae._compte c on c.id_compte = cp.id_compte 
+                join sae._adresse a on c.id_adresse = a.id_adresse 
+                where cp.id_compte = :id_compte;";
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,9 +48,16 @@
     </header>
     <main>
         <article>
-            <a class="ici">Mes infos</a>
+            <a class="ici" href="/back/mon-compte">Mes infos</a>
         </article>
         <section>
+            <?php 
+                // Préparation et exécution de la requête
+                $stmt = $conn->prepare($reqCompte);
+                $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+                $stmt->execute();
+                while($row = $stmt->fetch(PDO::FETCH_COLUMN)) {
+            ?>
             <h1>Détails du compte</h1>
             <article>
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
@@ -33,74 +67,79 @@
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td>APELLA</td>
+                    <td><?php echo htmlentities($row["denomination"]);?></td>
                 </tr>
                 <tr>
                     <td>A propos</td>
                     <td>
-                        <div>
-                            Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Rerum error labore 
-                            blanditiis, sequi molestias quod ratione 
-                            magni consequuntur deserunt veniam vel eum, 
-                            accusamus rem 
-                        </div>
+                        <div><?php echo htmlentities($row["a_propos"]);?></div>
                     </td>
                 </tr>
                 <tr>
                     <td>Site web</td>
-                    <td>monsiteweb.fr</td>
+                    <td><?php echo htmlentities($row["site_web"]);?></td>
                 </tr>
             </table>
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
                     <td>Nom</td>
-                    <td>Guillet</td>
+                    <td><?php echo htmlentities($row["nom_compte"]);?></td>
                 </tr>
                 <tr>
                     <td>Prenom</td>
-                    <td>David</td>
+                    <td><?php echo htmlentities($row["prenom"]);?></td>
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td>david.guillet@gmail.com</td>
+                    <td><?php echo htmlentities($row["email"]);?></td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
-                    <td>+33 7 65 47 15 56</td>
+                    <td><?php echo htmlentities($row["tel"]);?></td>
                 </tr>
+                <?php if ($typeCompte == 'proPrive') {?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td>123 465 789</td>
+                    <td><?php echo htmlentities($row["siren"]);?></td>
                 </tr>
+                <?php } ?>
                 <tr>
                     <td>N° IBAN</td>
-                    <td>FR54864651896416548644654654</td>
+                    <td><?php echo htmlentities("à implémenter");?></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td>**************</td>
+                    <td><?php echo htmlentities($row["mot_de_passe"]);?></td>
                 </tr>
             </table>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td>22 rue de poulpatré</td>
+                    <td><?php echo htmlentities($row["num_et_nom_de_voie"]);?></td>
                 </tr>
                 <tr>
-                    <td>Ville</td>
-                    <td>Lannion</td>
+                    <td>Complément d'adresse</td>
+                    <td><?php echo htmlentities($row["complement_adresse"]);?></td>
                 </tr>
                 <tr>
                     <td>Code postal</td>
-                    <td>22300</td>
+                    <td><?php echo htmlentities($row["code_postal"]);?></td>
+                </tr>
+                <tr>
+                    <td>Ville</td>
+                    <td><?php echo htmlentities($row["ville"]);?></td>
+                </tr>
+                <tr>
+                    <td>Pays</td>
+                    <td><?php echo htmlentities($row["pays"]);?></td>
                 </tr>
             </table>
             <div>
                 <a>Modifier les informations</a>
             </div>
+            <?php } ?>
         </section>
     </main>
 </body>
