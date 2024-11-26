@@ -62,7 +62,7 @@
     <?php
     if (!$submitted) {
     ?>
-        <div id="offre">
+        <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
             <div class="close">
@@ -93,7 +93,7 @@
                 <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
                 <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
             </div>
-        </div>
+        </div> -->
         <main>
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
