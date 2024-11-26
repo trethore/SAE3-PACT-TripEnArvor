@@ -425,14 +425,6 @@
             </script>
         <?php } 
 
-        if(isIdProPublique($id_compte)){ ?> 
-            <script>
-            document.getElementById("tarifs").style.display = 'none';
-            document.getElementById("gammedeprix").style.display = 'none';
-            document.getElementById("labelgammedeprix").style.display = 'none';
-            </script>
-        <?php } 
-
 
     
         try {
