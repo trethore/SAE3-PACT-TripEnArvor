@@ -270,28 +270,34 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php foreach ($jours as $jour) { ?>
+                <?php 
+                // On suppose que $jours contient les jours de la semaine et que $horaires contient les horaires de chaque jour
+                foreach ($jours as $jour) { ?>
                     <p>
                         <?php 
                         echo htmlentities($jour['nom_jour'] . " : ");
-                        $validHours = false; // Flag to check if there are valid hours for this day
-                        
-                        foreach ($horaires as $horaire) {
-                            if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
-                                // Only display valid opening and closing hours
-                                echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
-                                $validHours = true; // Set flag to true if valid hours are found
+
+                        // Filtrer les horaires associés à ce jour
+                        $horaires_du_jour = array_filter($horaires, function($horaire) use ($jour) {
+                            return $horaire['jour'] == $jour['nom_jour']; // Assurez-vous que 'jour' correspond à la clé du jour dans $horaires
+                        });
+
+                        // Vérifier s'il y a des horaires pour ce jour
+                        if (!empty($horaires_du_jour)) {
+                            // Afficher les horaires associés à ce jour
+                            foreach ($horaires_du_jour as $horaire) {
+                                // Affichage des horaires d'ouverture et de fermeture
+                                echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . " ");
                             }
-                        }
-                        
-                        if (!$validHours) {
-                            echo "Fermé"; // Print "Fermé" if no valid hours were found
+                        } else {
+                            // Si pas d'horaires pour ce jour, afficher "Fermé"
+                            echo "Fermé";
                         }
                         ?>
                     </p>
                 <?php } ?>
             </div> 
-            
+
         </section>
 
         <section id="carte" class="fond-blocs bordure">
