@@ -5,7 +5,7 @@
     require_once("../../utils/auth-utils.php");
 
     session_start();
-    if (isset($_POST['titre'])) { // les autres svp
+    if (isset($_POST['titre'])) { // les autres svp²
         $submitted = true;
     } else {
         $submitted = false;
@@ -642,7 +642,7 @@
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            if (isIdProPrivee($id_compte)) {
+            if (<?php isIdProPrivee($id_compte)?>) {
                 document.getElementById("labelgammedeprix").style.display = 'inline';
                 document.getElementById("gammedeprix").style.display = 'inline';
             }
@@ -682,7 +682,7 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (isIdProPrivee($id_compte))){
+        if((typechoisi !== "restaurant")&& (<?php isIdProPrivee($id_compte)?>)){
             document.getElementById("tarifs").style.display = 'inline';
         }
     }
