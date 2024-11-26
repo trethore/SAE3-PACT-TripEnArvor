@@ -272,10 +272,10 @@ try {
                 <!-- Affichage des horaires d'ouverture de l'offre -->
                 <?php foreach ($jours as $jour) : ?>
                 <p>
-                    <?php echo htmlentities($jour['nom_jour']); ?> : <em>
+                    <?php echo htmlentities($jour['nom_jour']); ?> :
                     <?php foreach ($horaires as $horaire) {
-                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "    ");
-                    } ?> </em>
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "-----");
+                    } ?> 
                 </p>
             <?php endforeach; ?>
             </div> 
