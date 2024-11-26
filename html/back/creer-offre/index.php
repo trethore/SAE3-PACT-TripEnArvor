@@ -62,7 +62,7 @@
     <?php
     if (!$submitted) {
     ?>
-        <div id="offre">
+        <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
             <div class="close">
@@ -93,7 +93,7 @@
                 <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
                 <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
             </div>
-        </div>
+        </div> -->
         <main>
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
@@ -425,15 +425,24 @@
         }
 
         //champ type masqué si le pro est publique
-        if(isIdProPrivee($id_compte)){ ?> 
+        if(isIdProPublique($id_compte)){ ?> 
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
             </script>
-        <?php } ?>
+        <?php } 
+
+        if(isIdProPublique($id_compte)){ ?> 
+            <script>
+            document.getElementById("labelprix").style.display = 'none';
+            document.getElementById("prix").style.display = 'none';
+            document.getElementById("gammedeprix").style.display = 'none';
+            document.getElementById("labelgammedeprix").style.display = 'none';
+            </script>
+        <?php } 
 
 
-    <?php
+    
         try {
 
 
@@ -620,14 +629,16 @@
 
     categorie.addEventListener('change', function () {
         let typeselectionne = categorie.value;
+        
 
     // Afficher les champs selon la catégorie sélectionnée
     switch (typeselectionne) {
         case "restaurant":
+            afficheSelonType(typerestaurant);
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
             document.getElementById("labelprix2").style.display = 'none';
-            afficheSelonType(typerestaurant);
+            
             break;
 
         case "activite":
@@ -661,7 +672,7 @@
             document.getElementById(element).style.display = 'inline';
         });
         if(typechoisi !== "restaurant"){
-            prix.forEach(element => {
+            typeprix.forEach(element => {
                 document.getElementById(element).style.display = 'inline';
             });
         }
