@@ -271,7 +271,7 @@ try {
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const offers = document.querySelectorAll('.offer');
-            console.logg(offers);
+            console.log(offers);
             const allOffers = Array.from(offers);
             console.log(allOffers);
 
