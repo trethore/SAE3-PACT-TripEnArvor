@@ -384,11 +384,6 @@ try {
                         matches = false;
                     }
 
-                    // Filter by note
-                    /*if (numberOfStarsWanted > note) {
-                        matches = false;
-                    }*/
-
                     // Show or hide the offer
                     if (matches) {
                         offer.style.display = "block";
