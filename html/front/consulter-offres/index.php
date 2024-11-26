@@ -379,6 +379,9 @@ try {
                         matches = false;
                     }
 
+                    console.log(filters.minPrice);
+                    console.log(filters.maxPrice);
+
                     // Filter by note
                     /*if (numberOfStarsWanted > note) {
                         matches = false;
