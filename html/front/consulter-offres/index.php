@@ -269,8 +269,9 @@ try {
             const fondFiltres = document.querySelector(".fond-filtres");
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
-            const offersContainer = document.querySelectorAll('.offer');
-            const allOffers = Array.from(offersContainer);
+            const offersContainer = document.querySelector(".section-offres");
+            const offers = document.querySelectorAll('.offer');
+            const allOffers = Array.from(offers);
             console.log(allOffers);
 
             // Create the "no offers" message element
