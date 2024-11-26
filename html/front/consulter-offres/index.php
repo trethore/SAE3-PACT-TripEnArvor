@@ -362,9 +362,9 @@ try {
                     let matches = true;
 
                     // Filter by stars
-                    /*if (filters.numberOfStarsWanted > note) {
+                    if (filters.numberOfStarsWanted > note) {
                         matches = false;
-                    }*/
+                    }
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
