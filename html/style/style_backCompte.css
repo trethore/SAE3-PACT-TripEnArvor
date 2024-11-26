@@ -133,7 +133,10 @@ main > section a:hover {
     border: 2px solid var(--orange-principale);
 }
 
-table + a {
+table + div {
     text-align: right;
-    justify-content: right;
+}
+
+table + div > a {
+    display: inline-block;
 }
