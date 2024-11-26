@@ -39,7 +39,6 @@ try {
 
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
 }
 ?>
 
@@ -59,7 +58,7 @@ try {
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" class="input-search" placeholder="Taper votre recherche..." minlength="3" maxlength="22">
         </div>
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
