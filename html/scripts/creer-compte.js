@@ -21,130 +21,95 @@ document.addEventListener("DOMContentLoaded", function() {
     const divCountry = document.getElementById("div-country");
     const submitInput = document.querySelector("input[type=\"submit\"]");
 
+    const tousLesElements = [
+        divEmail,            divPassword, divConfirmPassword,
+        divNameAndFirstName, divName,     divFirstName,
+        divTel,              divPseudo,   divDenomination,
+        divAPropos,          divSiteWeb,  divSiren,
+        divAddress,          divStreet,   divAddressComplement,
+        divCodePostal,       divCity,     divCountry
+    ];
+
+    const elementMembre = [
+        divEmail,  divPassword, divConfirmPassword,
+        divPseudo, divName,     divFirstName,
+        divTel
+    ];
+    const elementObligatoireMembre = [
+        divEmail, divPassword, divConfirmPassword,
+        divPseudo
+    ];
+
+    const elementProPublique = [
+        divEmail,        divPassword,  divConfirmPassword,
+        divName,         divFirstName, divTel,
+        divDenomination, divAPropos,   divSiteWeb,
+        divAddress,      divStreet,    divAddressComplement,
+        divCodePostal,   divCity,      divCountry
+    ];
+    const elementObligatoireProPublique = [
+        divEmail,        divPassword,   divConfirmPassword,
+        divName,         divFirstName,  divTel,
+        divDenomination, divAPropos,    divSiteWeb,
+        divStreet,       divCodePostal, divCity,
+        divCountry
+    ];
+
+    const elementProPrive = [
+        divEmail,             divPassword,   divConfirmPassword,
+        divName,              divFirstName,  divTel,
+        divDenomination,      divAPropos,    divSiteWeb,
+        divSiren,             divAddress,    divStreet,
+        divAddressComplement, divCodePostal, divCity,
+        divCountry
+    ];
+    const elementObligatoireProPrive = [
+        divEmail,           divPassword,    divConfirmPassword,
+        divName,            divFirstName,   divTel,
+        divDenomination,    divAPropos,     divSiteWeb,
+        divSiren,           divStreet,      divCodePostal,
+        divCity,            divCountry
+    ];
+
     function setObligatoire(element, obligatoire) {
         element.querySelector("label span").style.display = obligatoire ? "inline" : "none";
         element.querySelector("input, textarea").required = obligatoire;
     }
 
+    function showFieldsAndMakeItRequiredIfNecessary(listOfAllElements, listOfElementToShow, listOfRequiredElements) {
+        for (const element of listOfAllElements) {
+            if (listOfElementToShow.includes(element)) {
+                element.style.display = "flex";
+                if (listOfRequiredElements.includes(element)) {
+                    setObligatoire(element, true);
+                }
+            } else {
+                element.style.display = "none";
+                setObligatoire(element, false);
+            }
+        }
+    }
+
     selectTypeCompte.addEventListener("input", function() {
         switch (selectTypeCompte.value) {
             case "membre":
-                divEmail.style.display = "flex";
-                setObligatoire(divEmail, true);
-                divPassword.style.display = "flex";
-                setObligatoire(divPassword, true);
-                divConfirmPassword.style.display = "flex";
-                setObligatoire(divConfirmPassword, true);
-                divNameAndFirstName.style.display = "flex";
-                divName.style.display = "flex";
-                setObligatoire(divName, false);
-                divFirstName.style.display = "flex";
-                setObligatoire(divFirstName, false);
-                divTel.style.display = "flex";
-                setObligatoire(divTel, false);
-                divPseudo.style.display = "flex";
-                setObligatoire(divPseudo, true);
-                divDenomination.style.display = "none";
-                setObligatoire(divDenomination, false);
-                divAPropos.style.display = "none";
-                setObligatoire(divAPropos, false);
-                divSiteWeb.style.display = "none";
-                setObligatoire(divSiteWeb, false);
-                divSiren.style.display = "none";
-                setObligatoire(divSiren, false);
-                divAddress.style.display = "none";
-                setObligatoire(divAddress, false);
-                setObligatoire(divStreet, false);
-                setObligatoire(divAddressComplement, false);
-                setObligatoire(divCodePostal, false);
-                setObligatoire(divCity, false);
-                setObligatoire(divCountry, false);
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementMembre, elementObligatoireMembre);
                 submitInput.disabled = false;
                 submitInput.style = "--couleur-bouton-creer-compte: var(--violet);"
                 break;
             case "pro-publique":
-                divEmail.style.display = "flex";
-                setObligatoire(divEmail, true);
-                divPassword.style.display = "flex";
-                setObligatoire(divPassword, true);
-                divConfirmPassword.style.display = "flex";
-                setObligatoire(divConfirmPassword, true);
-                divNameAndFirstName.style.display = "flex";
-                divName.style.display = "flex";
-                setObligatoire(divName, true);
-                divFirstName.style.display = "flex";
-                setObligatoire(divFirstName, true);
-                divTel.style.display = "flex";
-                setObligatoire(divTel, true);
-                divPseudo.style.display = "none";
-                setObligatoire(divPseudo, false);
-                divDenomination.style.display = "flex";
-                setObligatoire(divDenomination, true);
-                divAPropos.style.display = "flex";
-                setObligatoire(divAPropos, true);
-                divSiteWeb.style.display = "flex";
-                setObligatoire(divSiteWeb, true);
-                divSiren.style.display = "none";
-                setObligatoire(divSiren, false);
-                divAddress.style.display = "flex";
-                setObligatoire(divAddress, true);
-                setObligatoire(divStreet, true);
-                setObligatoire(divAddressComplement, false);
-                setObligatoire(divCodePostal, true);
-                setObligatoire(divCity, true);
-                setObligatoire(divCountry, true);
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPublique, elementObligatoireProPublique);
                 submitInput.disabled = false;
                 submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
                 break;
-            case "pro-privée":
-                divEmail.style.display = "flex";
-                setObligatoire(divEmail, true);
-                divPassword.style.display = "flex";
-                setObligatoire(divPassword, true);
-                divConfirmPassword.style.display = "flex";
-                setObligatoire(divConfirmPassword, true);
-                divNameAndFirstName.style.display = "flex";
-                divName.style.display = "flex";
-                setObligatoire(divName, true);
-                divFirstName.style.display = "flex";
-                setObligatoire(divFirstName, true);
-                divTel.style.display = "flex";
-                setObligatoire(divTel, true);
-                divPseudo.style.display = "none";
-                setObligatoire(divPseudo, false);
-                divDenomination.style.display = "flex";
-                setObligatoire(divDenomination, true);
-                divAPropos.style.display = "flex";
-                setObligatoire(divAPropos, true);
-                divSiteWeb.style.display = "flex";
-                setObligatoire(divSiteWeb, true);
-                divSiren.style.display = "flex";
-                setObligatoire(divSiren, true);
-                divAddress.style.display = "flex";
-                setObligatoire(divAddress, true);
-                setObligatoire(divStreet, true);
-                setObligatoire(divAddressComplement, false);
-                setObligatoire(divCodePostal, true);
-                setObligatoire(divCity, true);
-                setObligatoire(divCountry, true);
+            case "pro-privé":
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPrive, elementObligatoireProPrive);
                 submitInput.disabled = false;
                 submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
                 break;
             case "":
             default:
-                divEmail.style.display = "none";
-                divPassword.style.display = "none";
-                divConfirmPassword.style.display = "none";
-                divNameAndFirstName.style.display = "none";
-                divName.style.display = "none";
-                divFirstName.style.display = "none";
-                divTel.style.display = "none";
-                divPseudo.style.display = "none";
-                divDenomination.style.display = "none";
-                divAPropos.style.display = "none";
-                divSiteWeb.style.display = "none";
-                divSiren.style.display = "none";
-                divAddress.style.display = "none";
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, [], []);
                 submitInput.disabled = true;
                 break;
         }
