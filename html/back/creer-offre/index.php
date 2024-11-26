@@ -640,6 +640,8 @@
                 document.getElementById("labelgammedeprix").style.display = 'none';
                 document.getElementById("gammedeprix").style.display = 'none';
             }
+            console.log(<?php $id_compte ?>);
+            
             
             break;
 
