@@ -11,7 +11,16 @@ SET SCHEMA 'sae';
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
 CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
-CREATE TYPE type_offre_t AS ENUM('gratuite', 'standard', 'premium');
+CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
+CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
+CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
+
+
+CREATE TABLE _date (
+    id_date     SERIAL,
+    date        TIMESTAMP NOT NULL,
+    CONSTRAINT _date_pk PRIMARY KEY (id_date)
+);
 
 
 
@@ -204,6 +213,48 @@ CREATE VIEW offre_restauration AS
 ;
 
 
+/* ============================== OPTIONS ============================== */
+
+CREATE TABLE _option (
+    nom_option  nom_option_t,
+    prix_option INTEGER NOT NULL,
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
+);
+
+
+
+/* ##################################################################### */
+/*                                 AVIS                                  */
+/* ##################################################################### */
+
+
+CREATE TABLE _avis (
+    id_avis         SERIAL,
+    id_membre       INTEGER NOT NULL,
+    note            INTEGER NOT NULL,
+    titre           VARCHAR(128) NOT NULL,
+    commentaire     VARCHAR(1024) NOT NULL,
+    nb_pouce_haut   INTEGER NOT NULL,
+    nb_pouce_bas    INTEGER NOT NULL,
+    contexte_visite contexte_visite_t NOT NULL,
+    publie_le       INTEGER NOT NULL,
+    visite_le       INTEGER NOT NULL,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
+    CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
+    CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date)
+);
+
+
+CREATE TABLE _reponse (
+    id_avis     INTEGER,
+    texte       VARCHAR(1024) NOT NULL,
+    publie_le   INTEGER NOT NULL,
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
+);
+
 
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
@@ -294,6 +345,46 @@ ALTER TABLE _compte
 ;
 
 
+/* ===================== OFFRE DATES MISE EN LIGNE ===================== */
+
+CREATE TABLE _offre_dates_mise_en_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_en_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ==================== OFFRE DATES MISE HORS LIGNE ==================== */
+
+CREATE TABLE _offre_dates_mise_hors_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_hors_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ======================= OFFRE SOUSCRIT OPTION ======================= */
+
+CREATE TABLE _offre_souscrit_option (
+    id_offre    INTEGER,
+    nom_option  nom_option_t,
+    nb_semaine  INTEGER NOT NULL,
+    id_date     INTEGER NOT NULL,
+    CONSTRAINT _offre_souscrit_option_pk
+        PRIMARY KEY (id_offre, nom_option),
+    CONSTRAINT _offre_souscrit_option_fk_offre
+        FOREIGN KEY (id_offre)
+        REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_souscrit_option_fk_option
+        FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option)
+);
+
+
 /* ====================== OFFRE SE SITUE ADRESSE ======================= */
 
 ALTER TABLE _offre
@@ -357,20 +448,19 @@ CREATE TABLE _offre_possede_tag (
 );
 
 
-/* ==================== OFFRE EN LIGNE / HORS LIGNE ==================== */
+/* ======================== AVIS CONTIENT IMAGE ======================== */
 
-CREATE TABLE _dates_mise_en_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_en_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_en_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
-);
-
-CREATE TABLE _dates_mise_hors_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_hors_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_hors_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+CREATE TABLE _avis_contient_image (
+    id_avis         INTEGER,
+    lien_fichier    VARCHAR(255),
+    CONSTRAINT _avis_contient_image_pk
+        PRIMARY KEY (id_avis, lien_fichier),
+    CONSTRAINT _avis_contient_image_fk_avis
+        FOREIGN KEY (id_avis)
+        REFERENCES _avis(id_avis),
+    CONSTRAINT _avis_contient_image_fk_image
+        FOREIGN KEY (lien_fichier)
+        REFERENCES _image(lien_fichier)
 );
 
 
@@ -1247,4 +1337,21 @@ FOR EACH ROW
 EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
 COMMIT;
+
+
+CREATE FUNCTION offre_souscrit_une_seule_option() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_souscrit_option WHERE id_offre = NEW.id_offre;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Une offre ne peut avoir qu''une seule option';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER offre_souscrit_une_seule_option_tg
+BEFORE INSERT
+ON _offre_souscrit_option
+FOR EACH ROW
+EXECUTE PROCEDURE offre_souscrit_une_seule_option();
 
