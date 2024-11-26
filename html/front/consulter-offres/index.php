@@ -116,11 +116,11 @@ try {
                                 <div>
                                     <div>
                                         <label>Prix minimum &nbsp;:</label>
-                                        <input type="number" min="0">
+                                        <input class="min" type="number" min="0">
                                     </div>
                                     <div>
                                         <label>Prix maximum :</label>
-                                        <input type="number" min="0">
+                                        <input class="max" type="number" min="0">
                                     </div>
                                 </div>
                                 <div>
@@ -170,39 +170,39 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-        <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
-            Aucun résultat ne correspond à vos critères.
-        </p>
-            <?php
-            foreach ($offres as $tab) {
-                ?>
-                <div class="offre">
-                    <div class="sous-offre">
-                        <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
-                            <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                            <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                            <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
-                            <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                            <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                            <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                            <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                            <div class="bas-offre">
-                                <div class="etoiles">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                    <p class="nombre-notes">(120)</p>
+            <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
+                Aucun résultat ne correspond à vos critères.
+            </p>
+                <?php
+                foreach ($offres as $tab) {
+                    ?>
+                    <div class="offre">
+                        <div class="sous-offre">
+                            <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                                <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                                <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                                <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
+                                <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                                <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                                <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                                <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                <div class="bas-offre">
+                                    <div class="etoiles">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <p class="nombre-notes">(120)</p>
+                                    </div>
+                                    <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
-                                <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php
-                }
-        ?>
+                <?php
+                    }
+            ?>
         </section>        
     </main>
 
@@ -335,8 +335,8 @@ try {
                     categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
                     availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
                     minRating: document.querySelector(".trier select")?.value || null,
-                    minPrice: parseFloat(document.querySelector(".trier input:nth-of-type(1)")?.value) || null,
-                    maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
+                    minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
+                    maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
                 };
 
                 // Treat no categories checked as all categories selected
