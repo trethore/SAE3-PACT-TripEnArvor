@@ -8,28 +8,31 @@
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
-    color: var(--blanc-leger);
+    color: var(--noir);
     background: var(--blanc-leger);
 }
 
 h1 {
     font-size: 64px;
+    font-weight: bold;
     text-align: center;
+    color: var(--orange-principale);
 }
 
 h2 {
+    font-size: 36px;
     font-weight: bold;
+    color: var(--orange-principale);
 }
 
 .fond-blocs {
-    background: var(--gradient-orange);    
+    background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
     padding: 30px;
-    border-radius: 15px;
 }
 
 a {
-    color: var(--blanc-leger);
+    color: var(--noir);
     text-decoration: underline;
 }
 
@@ -42,32 +45,126 @@ a {
     display: flex;
 }
 
+.bordure {
+    border-bottom: 3px solid var(--orange-principale);
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
 
-.bouton-modifier {
-    margin: 30px 30px 0 30px;
-}
+    /******************************
+            BOUTONS POP-UP                
+    ******************************/
+    .bouton-modifier {
+        margin: 30px 30px 0 30px;
+    }
 
-.bouton-modifier > div > button {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
-    border: 1px solid var(--noir);
-    text-decoration: none;
-    font-size: 40px;
-    padding: 10px 80px;
-    border-radius: 15px;
-}
 
-.bouton-modifier > div > button:hover {
-    color: var(--blanc-leger);
-    background: var(--orange-principale);
-    border: 1px solid var(--noir);
-}
+    .bouton-modifier > button {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 60px;
+        background-color: var(--orange-principale);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+
+    .bouton-modifier > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+    #confirm {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 20px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    #final {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 32px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .close {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .close button:first-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    #final button {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .close button:last-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 60px;
+        margin-bottom: 12px;
+        background: var(--gris);
+        color: var(--blanc-leger);
+        font-size: 20px;
+        width: fit-content;
+    }
 
 .bloc-presentation > div > p {
     font-size: 32px;
+}
+
+.information-offre {
+    font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -90,66 +187,48 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
-    color: var(--orange-principale);
-    text-decoration: none;
-    font-size: 40px;
-    background-color: var(--blanc-leger);
-    padding: 10px 80px;
-    border-radius: 15px;
-    border: 0;
-}
-
-.display-ligne-espace > button:hover {
-    color: var(--blanc-leger);
-    background: var(--orange-secondaire-2);
-    border: 1px solid var(--blanc-leger);
-}
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
 
-    .galerie-images-presentation {
-        display: grid;
-        grid-template-areas: "image1 image2 image3" "image1 image4 image5";
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 10px; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 0;
+    .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
     }
 
-    .galerie-images-presentation img:nth-child(1) {
-        grid-area: image1;
-        height: 100%;
+    .carousel-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+    }
+      
+    .carousel-images img {
         width: 100%;
+        height: 700px;
+        flex-shrink: 0;
     }
 
-    .galerie-images-presentation img:nth-child(2) {
-        grid-area: image2;
-        height: 100%;
-        width: 100%;
+    .arrow-left, .arrow-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
     }
 
-    .galerie-images-presentation img:nth-child(3) {
-        grid-area: image3;
-        height: 100%;
-        width: 100%;
-    }
+    .arrow-left > img, .arrow-right > img {
+        background-color: var(--orange-principale);
+        border-radius: 90px;
+    } 
 
-    .galerie-images-presentation img:nth-child(4) {
-        grid-area: image4;
-        height: 100%;
-        width: 100%;
+    .arrow-left {
+        left: 20px;
     }
-
-    .galerie-images-presentation img:nth-child(5) {
-        grid-area: image5;
-        height: 100%;
-        width: 100%;
+      
+    .arrow-right {
+        right: 20px;
     }
+      
 
 /**********************************
         PREMIER DOUBLE BLOC                               
@@ -164,9 +243,14 @@ a {
     }
 
     .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 5px solid var(--orange-principale);
+        font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
+        margin-bottom: 1em;
+        padding-left: 10px ;
     }
 
     .liste-caracteristique > li > img {
@@ -187,11 +271,33 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
+        border-left: 3px solid var(--orange-principale);
     }
 
     .epingle {
         width: 20px;
         height: 20px;
+    }
+
+    .display-ligne-espace > button {
+        font-size: 60px;
+    }
+
+    .display-ligne-espace > a, .fond-blocs > a {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--orange-principale);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+    
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -203,19 +309,20 @@ a {
     ***************************/
 
     .bloc-tarif > button {
-        color: var(--orange-principale);
+        color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 20px;
-        background-color: var(--blanc-leger);
+        font-size: 24px;
+        background-color: var(--orange-principale);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
     }
 
     .bloc-tarif > button:hover {
-        color: var(--blanc-leger);
-        background: var(--orange-secondaire-1);
-        border: 1px solid var(--blanc-leger);
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -330,7 +437,7 @@ a {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background: var(--gradient-orange);
+    background: var(--orange-principale);
     padding: 10px auto;
     border-radius: 15px;
     border: 0;
@@ -340,6 +447,7 @@ a {
     color: var(--orange-principale);
     background: var(--blanc-leger);
     border: 1px solid var(--orange-principale);
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
@@ -350,95 +458,10 @@ footer > div > a {
     text-decoration: none;
 }
 
-#confirm {
-    background: var(--blanc-leger);
-    color: var(--noir);
-    font-size: 20px;
-    display: none;
-    border: 1px solid var(--noir);
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-#final {
-    background: var(--blanc-leger);
-    color: var(--noir);
-    font-size: 32px;
-    display: none;
-    border: 1px solid var(--noir);
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.close {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.close button:first-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-#final button {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-.close button:last-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 60px;
-    margin-bottom: 12px;
-    background: var(--gris);
-    color: var(--blanc-leger);
-    font-size: 20px;
-    width: fit-content;
-}
-
-
 #avis {
     display: none;
 }
 
 #carte {
-    display: none;
-}
-
-#caracteristiques {
     display: none;
 }

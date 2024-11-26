@@ -5,13 +5,12 @@
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
-    --bleu: rgba(47, 89, 82, 1);
-    --vert-principale: rgba(98, 107, 32, 1);
-    --vert-secondaire: rgba(152, 166, 50, 1);
+
     --marron: rgba(191, 140, 44, 1);
     --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
+
     --fond-bouton: rgba(217, 217, 217, 0.73);
   
     --mobile-star-size: 30px;
@@ -21,7 +20,6 @@
     --gris-etoile: rgba(128, 128, 128, 1);
     --gris: rgba(193, 192, 192, 1);
 
-    --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
     --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
   }
   
@@ -41,8 +39,6 @@ h1 {
     font-weight: 600;
     color: var(--orange-principale);
     background: var(--blanc-leger);
-    border-radius: 15px;
-    border: 3px solid var(--orange-principale);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -62,6 +58,10 @@ h3 {
     color: var(--noir);
 }
 
+a {
+    text-decoration: none;
+    color: var(--noir);
+}
 
 
 /***************************
@@ -79,15 +79,15 @@ h3 {
 
 .filtre-tri > h2 {
     color: var(--blanc-leger);
-    position: absolute;
     text-align: center;
     background-color: var(--orange-principale);
     border-radius: 15px;
-    padding: 0.1em;
-    left: 16%;
-    top: -12%;
-    height: 48px;
-    width: 790px;
+    padding: 0.3em;
+    position: absolute;
+    left: 5%;
+    transform: translate(0 , -3.5em);
+    width: auto; 
+    z-index: 1; 
 }
 
 .filtre-tri h2 + div{
@@ -329,7 +329,7 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.5em;
     margin: 1em;
     border-radius: 15px;
 }
@@ -344,6 +344,7 @@ h3 {
     margin-right: 4em;
 }
 
+.lesOffres article a,
 .lesOffres article div {
     position: absolute;
     left: 5.28%;
@@ -355,7 +356,7 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
-.lesOffres article > div {
+.lesOffres article > a {
     border: 3px solid var(--orange-principale);
 }
 
@@ -370,12 +371,11 @@ h3 {
     align-items: center;
     justify-content: center;
 
-    right: 0;
-
     color: var(--noir);
 
     height: 37px;
-    width: 117px;
+    width: 120px;
+    padding: 0.2em;
 
     opacity: 73%;
 
@@ -393,12 +393,12 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    left: 75% !important;
+    left: 68% !important;
 
     color: var(--noir);
 
     height: 37px;
-    width: 67.8px;
+    width: 90px;
 
     opacity: 73%;
 
@@ -406,7 +406,7 @@ h3 {
     border-radius: 20px !important;
 }
 
-.lesOffres article > div div + img {
+.lesOffres article > a div + img {
     position: absolute;
     width: 321px;
     height: 208px;
@@ -420,7 +420,7 @@ h3 {
     position: absolute;
     left: 2%;
     right: 36%;
-    top: 43%;
+    top: 44%;
 
     font-weight: 700;
     font-size: 20px;
@@ -432,7 +432,7 @@ h3 {
 .lesOffres .ouverture-offre + img + p + p {
     position: absolute;
     left: 2%;
-    top: 54%;
+    top: 56%;
 
     font-style: italic;
     font-weight: 400;
@@ -476,7 +476,7 @@ h3 {
     top: 40%!important;
 }
 
-.lesOffres article > div p + img {
+.lesOffres article > a p + img {
     width: 35px;
     height: 35px;
 }

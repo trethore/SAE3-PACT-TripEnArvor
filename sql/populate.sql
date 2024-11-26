@@ -72,7 +72,7 @@ INSERT INTO _prestation (nom_prestation, description) VALUES
 -- Insertion dans offre_activite
 INSERT INTO offre_activite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree, age_min)
 VALUES 
-('Excursion Montagne', 'Une aventure en montagne', 'Grenoble', 'Une randonnée d''une journée dans les Alpes', 'www.rando.com', 1, 2, 100, 'premium', 480, 12),
+('Excursion Montagne', 'Une excursion dans les Alpes offre des paysages à couper le souffle : sentiers forestiers, prairies fleuries, et sommets enneigés.', 'Grenoble', 'Une excursion dans les Alpes est une expérience captivante, combinant aventure, découverte et communion avec la nature. Elle débute tôt le matin, souvent sous une lumière dorée, propice à des premières foulées énergiques sur des sentiers sinueux. La forêt dense qui entoure les premiers kilomètres dégage une odeur fraîche de pins et de terre humide, tandis que le chant des oiseaux et le murmure des ruisseaux rythment la progression. À mesure que l’on s’élève, les arbres s’éclaircissent pour laisser place à des prairies alpines parsemées de fleurs sauvages : edelweiss, gentianes et autres merveilles colorées.', 'www.rando.com', 1, 2, 100, 'premium', 480, 12),
 ('Atelier Créatif', 'Créez votre propre poterie', 'Paris', 'Un atelier de poterie guidé par des experts', 'www.poterie.com', 2, 1, 50, 'standard',180 , 8);
 
 INSERT INTO _offre_activite_propose_prestation (nom_prestation, id_offre_activite) VALUES
@@ -159,7 +159,7 @@ VALUES
 INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, gamme_prix, carte)
 VALUES 
 ('Dîner gastronomique', 'Découvrez la cuisine étoilée de Paris', 'Paris', 'Un dîner dans un restaurant étoilé à Paris', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€', 'image19.webp'),
-('Restaurant traditionnel', 'Cuisine locale et authentique', 'Lyon', 'Un repas dans un restaurant typique de Lyon', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
+('Restaurant traditionnel', 'Découvrez notre restaurant traditionnel offrant une cuisine authentique, préparée avec des ingrédients frais et locaux, dans une ambiance chaleureuse et conviviale. Une expérience gourmande unique !', 'Lyon', 'Plongez dans l’univers culinaire de notre restaurant traditionnel, où authenticité et saveurs se rencontrent. Chaque plat est soigneusement préparé avec des ingrédients frais et de saison, sélectionnés auprès de producteurs locaux pour garantir une qualité exceptionnelle. Profitez d’une ambiance chaleureuse et conviviale, idéale pour partager un repas en famille, entre amis ou pour célébrer une occasion spéciale. Notre carte variée met à l’honneur des recettes classiques revisitées, des spécialités régionales et des desserts maison savoureux. Laissez-vous séduire par une expérience gastronomique unique, où chaque détail compte.', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
 
 INSERT INTO _tag (nom_tag) 
 VALUES 
