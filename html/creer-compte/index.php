@@ -153,8 +153,7 @@ if (!$submitted) {
             $ok = false;
             break;
     }
-    if ($_POST['password'] !== $_POST['confirm-password'])
-    {
+    if ($_POST['password'] !== $_POST['confirm-password']) {
         $ok = false;
     }
 
