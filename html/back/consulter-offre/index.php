@@ -274,7 +274,11 @@ try {
                 <p>
                     <?php echo htmlentities($jour['nom_jour'] . " : "); 
                     foreach ($horaires as $horaire) {
-                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
+                        if ((!empty($horaire['ouverture'])) && (!empty($horaire['fermeture']))) {
+                            echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
+                        } else {
+                            echo "Fermé";
+                        }
                     } ?> 
                 </p>
             <?php } ?>
