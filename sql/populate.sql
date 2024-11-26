@@ -65,7 +65,7 @@ VALUES
 -- ####################################################################
 
 INSERT INTO _prestation (nom_prestation, description) VALUES
-('Dégustation', 'Dégustations de fromages de spécialité su pays.'),
+('Dégustation', 'Dégustations de fromages de spécialité du pays.'),
 ('Découverte historique', 'Écouté des histoires surprenante du guide.'),
 ('Poterie', 'Créez vos propres poteries.');
 
@@ -217,6 +217,27 @@ INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
 (6, 'image16.webp');
 
 
+INSERT INTO _horaires_du_jour (nom_jour, id_offre) VALUES
+('Lundi', 1),    
+('Mardi', 2),   
+('Mercredi', 3), 
+('Jeudi', 1),    
+('Vendredi', 2); 
 
+INSERT INTO _horaire (ouverture, fermeture, horaires_du_jour) VALUES
+('08:00', '12:00', 1),
+('13:00', '17:00', 1), 
+('09:00', '13:00', 2), 
+('14:00', '18:00', 3), 
+('08:00', '12:00', 4), 
+('13:00', '17:00', 5); 
+
+INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
+('Tarif Standard Matin', 15, 1), 
+('Tarif Réduit Matin', 10, 1),   
+('Tarif Standard Après-midi', 20, 2), 
+('Tarif Réduit Après-midi', 15, 2),   
+('Tarif Standard Soir', 25, 3), 
+('Tarif Réduit Soir', 18, 3);   
 COMMIT;
 
