@@ -271,6 +271,7 @@ try {
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const allOffers = Array.from(offersContainer.children);
+            allOffers.shift();
             console.log(allOffers);
 
             // Create the "no offers" message element
@@ -286,9 +287,9 @@ try {
 
             const selectElement = document.querySelector('.tris');
 
-            // Ajout d'un écouteur d'événement pour détecter les changements
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+                
                 if (selectedValue == "price-asc") {
                     console.log("asc");
                     allOffers.sort((a, b) => {
@@ -305,8 +306,9 @@ try {
                     });
                 }
 
-                const container = document.getElementsByClassName('section-offres'); // ID du conteneur des offres
-                offersArray.forEach(offer => container.appendChild(offer));
+                const container = document.querySelector(".section-offres");
+                console.log(container);
+                allOffers.forEach(offer => container.appendChild(offer));
             });
 
             const applyFilters = () => {
@@ -382,7 +384,6 @@ try {
                 input.addEventListener("change", applyFilters);
             });
 
-            // Initial filter application to handle default state
             applyFilters();
         });
     </script>

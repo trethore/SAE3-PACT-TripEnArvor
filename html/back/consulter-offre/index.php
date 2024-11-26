@@ -114,25 +114,27 @@ try {
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="display-ligne-espace bouton-modifier"> 
-        <div id="confirm">
-            <p>Voulez-vous mettre votre offre hors ligne ?</p>
-            <div class="close">
-                <button onclick="showFinal()">Mettre hors ligne</button>
-                <button onclick="btnAnnuler()">Annuler</button>
+    <div class="display-ligne-espace">
+        <div class="bouton-modifier display-ligne-espace"> 
+            <div id="confirm">
+                <p>Voulez-vous mettre votre offre hors ligne ?</p>
+                <div class="close">
+                    <button onclick="showFinal()">Mettre hors ligne</button>
+                    <button onclick="btnAnnuler()">Annuler</button>
+                </div>
             </div>
+            <div id="final">
+                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+                <button onclick="btnAnnuler()">Fermer</button>
+            </div> 
+            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <button id="bouton2">Modifier l'offre</button>
         </div>
-        <div id="final">
-            <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-            <button onclick="btnAnnuler()">Fermer</button>
-        </div> 
-        <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-        <button id="bouton2">Modifier l'offre</button>
-    </div>
+    </div>  
 
     <main id="body">
 
@@ -227,7 +229,7 @@ try {
                 } ?>
                 
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
             </div>
     
         </section>

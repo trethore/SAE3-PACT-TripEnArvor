@@ -1,3 +1,7 @@
+#labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"]{
+  display: none;
+}
+
 h2 {
   width: 55%;
   text-align: center;
