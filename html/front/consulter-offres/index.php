@@ -286,7 +286,6 @@ try {
             });
 
             const selectElement = document.querySelector('.tris');
-            const offersContainer = document.querySelector(".section-offres");
 
             const rebuildOfferHTML = (offerElement) => {
                 const title = offerElement.querySelector('.titre-offre').textContent.trim();
