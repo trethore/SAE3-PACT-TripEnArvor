@@ -258,7 +258,6 @@ try {
             const offersContainer = document.querySelector(".section-offres");
             const offers = document.querySelectorAll('.offre');
             const allOffers = Array.from(offers);
-            console.log(allOffers);
 
             // Create the "no offers" message element
             const noOffersMessage = document.createElement("div");
@@ -311,18 +310,14 @@ try {
 
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
-
-                console.log(allOffers);
                 
                 if (selectedValue == "price-asc") {
-                    console.log("asc");
                     allOffers.sort((a, b) => {
                         const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
                         return priceA - priceB;
                     });
                 } else if (selectedValue == "price-desc") {
-                    console.log("desc");
                     allOffers.sort((a, b) => {
                         const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
@@ -361,9 +356,9 @@ try {
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
                     const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
                     const numberOfStarsWanted = filters.minRating;
-                    console.log('note voulue : ' + numberOfStarsWanted);
+                    console.log('note voulue : ' + numberOfStarsWanted.length);
                     const note = etoilesPleinesOffre.length;
-
+                    console.log('note offre : ' + note);
                     let matches = true;
 
                     // Filter by stars
@@ -388,9 +383,6 @@ try {
                         (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
-
-                    console.log(filters.minPrice);
-                    console.log(filters.maxPrice);
 
                     // Filter by note
                     /*if (numberOfStarsWanted > note) {
