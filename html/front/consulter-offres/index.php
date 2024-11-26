@@ -356,13 +356,13 @@ try {
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
                     const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
                     const numberOfStarsWanted = filters.minRating;
-                    console.log('note voulue : ' + numberOfStarsWanted.length);
+                    const filtreNote =  numberOfStarsWanted.length;
                     const note = etoilesPleinesOffre.length;
-                    console.log('note offre : ' + note);
+
                     let matches = true;
 
                     // Filter by stars
-                    if (filters.numberOfStarsWanted > note) {
+                    if (fitreNote > note) {
                         matches = false;
                     }
 
