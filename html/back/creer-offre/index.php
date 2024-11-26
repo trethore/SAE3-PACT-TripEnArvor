@@ -629,14 +629,16 @@
 
     categorie.addEventListener('change', function () {
         let typeselectionne = categorie.value;
+        
 
     // Afficher les champs selon la catégorie sélectionnée
     switch (typeselectionne) {
         case "restaurant":
+            afficheSelonType(typerestaurant);
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
             document.getElementById("labelprix2").style.display = 'none';
-            afficheSelonType(typerestaurant);
+            
             break;
 
         case "activite":
