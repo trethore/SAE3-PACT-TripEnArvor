@@ -20,16 +20,17 @@ $submitted = isset($_POST['type-compte']);
 if (!$submitted) {
 ?>
     <form action="/creer-compte/" method="post">
-        <h1>Creer un compte</h1>
+        <h1>Créer un compte</h1>
         <span>Vous avez déjà un compte ? <a href="/back/se-connecter/">Connexion</a></span>
         <span><span>*</span> Champs obligatoires</span>
+        <hr>
         <div id="div-type-compte">
             <label for="type-compte">Type de compte<span> *</span></label>
             <select name="type-compte" id="type-compte">
-                <option value="">-- Sélectionner un type de compte --</option>
+                <option value="">-- Sélectionnez un type de compte --</option>
                 <option value="membre">Compte membre</option>
                 <option value="pro-publique">Compte professionnel publique</option>
-                <option value="pro-privée">Compte professionnel privée</option>
+                <option value="pro-privé">Compte professionnel privé</option>
             </select>
         </div>
         <hr>
@@ -133,7 +134,7 @@ if (!$submitted) {
             $ok = $ok && isset($_POST['city']);
             $ok = $ok && isset($_POST['country']);
             break;
-        case 'pro-privée':
+        case 'pro-privé':
             $ok = $ok && isset($_POST['email']);
             $ok = $ok && isset($_POST['password']);
             $ok = $ok && isset($_POST['confirm-password']);
@@ -203,7 +204,7 @@ if (!$submitted) {
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
                 break;
-            case 'pro-privée':
+            case 'pro-privé':
                 $denomination = $_POST['denomination'];
                 $a_propos = $_POST['a-propos'];
                 $site_web = $_POST['site-web'];
