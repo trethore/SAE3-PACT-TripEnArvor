@@ -128,12 +128,12 @@
                         <tr>
                             <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="dispo" name="ladispo">
                                         <option value="">Choisir une disponibilité</option>
                                         <option value="ouvert"> Ouvert </option>
                                         <option value="ferme"> Fermé </option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </td>
                         </tr>
@@ -174,11 +174,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <div id="options">
+                            <!-- <div id="options">
                                 <td><label>Options</label></td>
                                 <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
                                 <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
-                            </div>
+                            </div> -->
                         </t>
                         
                     </table>
