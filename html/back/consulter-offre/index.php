@@ -80,7 +80,7 @@ try {
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <div class="display-ligne-espace bouton-modifier"> 
