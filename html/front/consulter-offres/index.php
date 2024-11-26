@@ -193,11 +193,11 @@ try {
                                             $etoilesPleines = $note;
                                             $etoilesVides = 5 - $note;
 
-                                            for ($i = 0; $i < $fullStars; $i++) {
+                                            for ($i = 0; $i < $etoilesPleines; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
                                             }
 
-                                            for ($i = 0; $i < $emptyStars; $i++) {
+                                            for ($i = 0; $i < $etoilesVides; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
                                             }
                                         ?>
