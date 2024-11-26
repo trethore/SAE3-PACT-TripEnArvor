@@ -287,28 +287,69 @@ try {
 
             const selectElement = document.querySelector('.tris');
 
+            const rebuildOfferHTML = (offerElement) => {
+                const title = offerElement.querySelector('.titre-offre').textContent.trim();
+                const city = offerElement.querySelector('.lieu-offre').textContent.trim();
+                const price = offerElement.querySelector('.prix span').textContent.trim();
+                const category = offerElement.querySelector('.categorie-offre').textContent.trim();
+                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
+                const description = offerElement.querySelector('.description-offre').textContent.trim();
+                const profile = offerElement.querySelector('.nom-offre').textContent.trim();
+
+                return `
+                    <div class="offre">
+                        <div class="sous-offre">
+                            <a href="#">
+                                <div class="lieu-offre">${city}</div>
+                                <div class="ouverture-offre">Ouvert</div>
+                                <img class="image-offre" style="background: ${image} center;">
+                                <p class="titre-offre">${title}</p>
+                                <p class="categorie-offre">${category}</p>
+                                <p class="description-offre">${description}</p>
+                                <p class="nom-offre">${profile}</p>
+                                <div class="bas-offre">
+                                    <div class="etoiles">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <p class="nombre-notes">(120)</p>
+                                    </div>
+                                    <p class="prix">A partir de <span>${price}</span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>`;
+            };
+
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+
+                console.log(allOffers);
                 
                 if (selectedValue == "price-asc") {
                     console.log("asc");
                     allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
                         return priceA - priceB;
                     });
                 } else if (selectedValue == "price-desc") {
                     console.log("desc");
                     allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix').textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
                         return priceB - priceA;
                     });
                 }
 
-                const container = document.querySelector(".section-offres");
-                console.log(container);
-                allOffers.forEach(offer => container.appendChild(offer));
+                offersContainer.innerHTML = '';
+
+                allOffers.forEach(offerElement => {
+                    const offerHTML = rebuildOfferHTML(offerElement);
+                    offersContainer.insertAdjacentHTML('beforeend', offerHTML);
+                });
             });
 
             const applyFilters = () => {
