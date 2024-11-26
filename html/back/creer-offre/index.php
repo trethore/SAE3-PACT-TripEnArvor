@@ -245,8 +245,8 @@
                         <input type="text" id="tarif4nom" name="tarif4nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif4" min="0" placeholder="prix" /><span>€</span>
                         <br>
-                        <label for="grilleT">Grille tarifaire complète</label>
-                        <input type="file" id="grilleT" name="grilleT" />
+                        <!-- <label for="grilleT">Grille tarifaire complète</label>
+                        <input type="file" id="grilleT" name="grilleT" /> -->
 
 
                     </div>
@@ -630,11 +630,12 @@
     switch (typeselectionne) {
         case "restaurant":
             afficheSelonType(typerestaurant);
-            document.getElementById("tarifs").style.display = 'none';
+            
             if (isIdProPublique($id_compte)) {
                 document.getElementById("labelgammedeprix").style.display = 'none';
                 document.getElementById("gammedeprix").style.display = 'none';
             }
+            document.getElementById("tarifs").style.display = 'none';
             console.log(<?php $id_compte ?>);
             
             
