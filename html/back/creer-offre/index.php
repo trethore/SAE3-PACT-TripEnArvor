@@ -639,12 +639,13 @@
         obligatoireselontype.forEach(element => {
             document.getElementById(element).style.display = 'none';
         });
-
+    
+    document.getElementById("tarifs").style.display = 'none';
+ 
     categorie.addEventListener('change', function () {
         let typeselectionne = categorie.value;
-        
-
-    // Afficher les champs selon la catégorie sélectionnée
+    
+    // Afficher les champs selon la catégorie sélectionnée test
     switch (typeselectionne) {
         case "restaurant":
             afficheSelonType(typerestaurant);
@@ -680,7 +681,7 @@
         }
     });
 
-    document.getElementById("tarifs").style.display = 'none';
+    
     
     function afficheSelonType(typechoisi){
         obligatoireselontype.forEach(element => {
