@@ -367,9 +367,6 @@ try {
                     /*const note = etoiles.length;
                     console.log('note' + note);*/
 
-                    const numberOfStarsWanted = filters.minRating.length;
-                    console.log('note voulue : ' + numberOfStarsWanted);
-
                     let matches = true;
 
                     // Filter by stars
