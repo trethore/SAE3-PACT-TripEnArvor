@@ -32,72 +32,80 @@ if (!$submitted) {
                 <option value="pro-privée">Compte professionnel privée</option>
             </select>
         </div>
+        <hr>
         <div id="div-email">
             <label for="email">Votre adresse email<span> *</span></label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" placeholder="votre.adresse@email.fr">
         </div>
         <div id="div-password">
             <label for="password">Mot de passe<span> *</span></label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" placeholder="Votre mot de passe">
         </div>
         <div id="div-confirm-password">
             <label for="confirm-password">Confirmer le mot de passe<span> *</span></label>
-            <input type="password" id="confirm-password" name="confirm-password">
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Le même mot de passe">
         </div>
+        <hr>
         <div id="div-pseudo">
             <label for="pseudo">Pseudo<span> *</span></label>
-            <input type="text" name="pseudo" id="pseudo">
+            <input type="text" name="pseudo" id="pseudo" placeholder="MonSuperPseudo22">
         </div>
-        <div id="div-name">
-            <label for="name">Nom<span> *</span></label>
-            <input type="text" id="name" name="name">
-        </div>
-        <div id="div-first-name">
-            <label for="first-name">Prénom<span> *</span></label>
-            <input type="text" name="first-name" id="first-name">
+        <div id="div-name-and-first-name">
+            <div id="div-name">
+                <label for="name">Nom<span> *</span></label>
+                <input type="text" id="name" name="name" placeholder="Ex : DUPONT">
+            </div>
+            <div id="div-first-name">
+                <label for="first-name">Prénom<span> *</span></label>
+                <input type="text" name="first-name" id="first-name" placeholder="Ex : Jean">
+            </div>
         </div>
         <div id="div-tel">
             <label for="tel">Téléphone<span> *</span></label>
-            <input type="tel" name="tel" id="tel">
+            <input type="tel" name="tel" id="tel" placeholder="Ex : +33606060606">
         </div>
         <div id="div-denomination">
-            <label for="denomination">Dénomination<span> *</span></label>
-            <input type="text" name="denomination" id="denomination">
+            <label for="denomination">Dénomination sociale<span> *</span></label>
+            <input type="text" name="denomination" id="denomination" placeholder="Le nom de votre société/entreprise/association">
         </div>
         <div id="div-a-propos">
             <label for="a-propos">À propos<span> *</span></label>
-            <textarea name="a-propos" id="a-propos"></textarea>
+            <textarea name="a-propos" id="a-propos" placeholder="Description de vos activités"></textarea>
         </div>
         <div id="div-site-web">
             <label for="site-web">Site web<span> *</span></label>
-            <input type="text" name="site-web" id="site-web">
+            <input type="url" name="site-web" id="site-web" placeholder="votre.site-web.fr">
         </div>
         <div id="div-siren">
             <label for="siren">Numéro de SIREN<span> *</span></label>
-            <input type="text" name="siren" id="siren">
+            <input type="text" name="siren" id="siren" placeholder="Ex : 123456780">
         </div>
+        <hr>
         <div id="div-adresse">
             <div id="div-street">
                 <label for="street">Numéro et nom de voie<span> *</span></label>
-                <input type="text" name="street" id="street">
+                <input type="text" name="street" id="street" placeholder="Ex : 1 rue du poisson d'avril">
             </div>
             <div id="div-address-complement">
                 <label for="address-complement">Complément d'adresse<span> *</span></label>
-                <input type="text" name="address-complement" id="address-complement">
+                <input type="text" name="address-complement" id="address-complement" placeholder="Village, lieu-dit, bâtiment, etc...">
             </div>
-            <div id="div-code-postal">
-                <label for="code-postal">Code postal<span> *</span></label>
-                <input type="number" name="code-postal" id="code-postal">
-            </div>
-            <div id="div-city">
-                <label for="city">Ville<span> *</span></label>
-                <input type="text" name="city" id="city">
-            </div>
-            <div id="div-country">
-                <label for="country">Pays<span> *</span></label>
-                <input type="text" name="country" id="country">
+            <div class="row">
+                <div id="div-code-postal">
+                    <label for="code-postal">Code postal<span> *</span></label>
+                    <input type="text" name="code-postal" id="code-postal" placeholder="Ex : 22300">
+                </div>
+                <div id="div-city">
+                    <label for="city">Ville<span> *</span></label>
+                    <input type="text" name="city" id="city" placeholder="Ex : Lannion">
+                </div>
+                <div id="div-country">
+                    <label for="country">Pays<span> *</span></label>
+                    <input type="text" name="country" id="country" placeholder="Ex : France">
+                </div>
             </div>
         </div>
+        <hr>
         <input type="submit" value="Créer un compte" disabled>
     </form>
 <?php

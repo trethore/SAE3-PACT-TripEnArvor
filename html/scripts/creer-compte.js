@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const divEmail = document.getElementById("div-email");
     const divPassword = document.getElementById("div-password");
     const divConfirmPassword = document.getElementById("div-confirm-password");
+    const divNameAndFirstName = document.getElementById("div-name-and-first-name");
     const divName = document.getElementById("div-name");
     const divFirstName = document.getElementById("div-first-name");
     const divTel = document.getElementById("div-tel");
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divPassword, true);
                 divConfirmPassword.style.display = "flex";
                 setObligatoire(divConfirmPassword, true);
+                divNameAndFirstName.style.display = "flex";
                 divName.style.display = "flex";
                 setObligatoire(divName, false);
                 divFirstName.style.display = "flex";
@@ -67,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divPassword, true);
                 divConfirmPassword.style.display = "flex";
                 setObligatoire(divConfirmPassword, true);
+                divNameAndFirstName.style.display = "flex";
                 divName.style.display = "flex";
                 setObligatoire(divName, true);
                 divFirstName.style.display = "flex";
@@ -100,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 setObligatoire(divPassword, true);
                 divConfirmPassword.style.display = "flex";
                 setObligatoire(divConfirmPassword, true);
+                divNameAndFirstName.style.display = "flex";
                 divName.style.display = "flex";
                 setObligatoire(divName, true);
                 divFirstName.style.display = "flex";
@@ -131,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 divEmail.style.display = "none";
                 divPassword.style.display = "none";
                 divConfirmPassword.style.display = "none";
+                divNameAndFirstName.style.display = "none";
                 divName.style.display = "none";
                 divFirstName.style.display = "none";
                 divTel.style.display = "none";

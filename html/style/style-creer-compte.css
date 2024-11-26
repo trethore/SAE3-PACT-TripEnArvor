@@ -29,11 +29,21 @@
     --couleur-bouton-creer-compte: var(--violet);
 }
 
+/* debug */
+/* * {
+    border: 1px solid black;
+} */
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
+}
+
+hr {
+    background: transparent;
+    border: none;
 }
 
 h1 {
@@ -44,7 +54,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 50vw;
+    max-width: 75vw;
     margin: 0 auto;
     padding: 1rem;
 }
@@ -75,6 +85,10 @@ input {
     color: var(--noir);
 }
 
+select {
+    cursor: pointer;
+}
+
 input[type="submit"] {
     padding: 1rem 5rem;
 }
@@ -94,6 +108,7 @@ input[type="submit"]:enabled:hover {
 
 textarea {
     resize: vertical;
+    min-height: 4rem;
 }
 
 form > div {
@@ -102,6 +117,10 @@ form > div {
 
 #div-type-compte {
     display: flex;
+}
+
+label {
+    padding-left: 1rem;
 }
 
 label span {
@@ -121,4 +140,30 @@ input:disabled {
     background: none;
     background-color: lightgray;
     color: dimgray;
+}
+
+#div-name-and-first-name {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+}
+
+#div-name-and-first-name div {
+    width: 50%;
+}
+
+#div-adresse > div {
+    width: 100%;
+}
+
+#div-adresse .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#div-adresse .row div {
+    width: 33%;
 }
