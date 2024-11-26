@@ -105,7 +105,7 @@
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
                         </tr>
                         <tr>
-                            <td><label for="dispo">Disponibilité </label></td>
+                            <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
                             <td>
                                 <div class="custom-select-container">
                                     <select class="custom-select" id="dispo" name="ladispo">
@@ -119,7 +119,7 @@
 
 
                         <tr>
-                            <td><label for="adresse">Adresse</label></td>
+                            <td><label id="labeladresse" for="adresse">Adresse</label></td>
                             <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                         </tr>
                         <tr>
@@ -183,9 +183,9 @@
                     <br>
                 </div>
 
-                    <h3>Tags de l'offre</h3>
+                    <!-- <h3>Tags de l'offre</h3> -->
 
-                    <p> -- Choisir une catégorie -- </p>
+                    <!-- <p> -- Choisir une catégorie -- </p> -->
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0">
@@ -194,21 +194,21 @@
                                 <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required></textarea></td>
 
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td><label for="lien">Lien externe</label></td>
                                 <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" /></td>
                             </tr>
                             <tr>
                                 <td><label for="tel">Numéro de téléphone</label></td>
                                 <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)" /></td>
-                            </tr>
+                            </tr> -->
                         </table>
                     </div>
 
-                    <h3>Description détaillée de l'offre</h3>
-                    <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
+                    <!-- <h3>Description détaillée de l'offre</h3> -->
+                    <!-- <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea> -->
 
-                    <div id="tarifs">
+                    <!-- <div id="tarifs">
                         <h3>Tarifs</h3>
                         <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
@@ -226,7 +226,7 @@
                         <input type="file" id="grilleT" name="grilleT" />
 
 
-                    </div>
+                    </div> -->
                     <br>
 
 
@@ -513,7 +513,7 @@
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$id_offre, id, $prix]);
+                $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
 
             }
 
