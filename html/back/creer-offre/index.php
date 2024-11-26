@@ -153,7 +153,7 @@
 
                         </tr>
                         <tr>
-                            <td><label for="photo"> Photo <span class="required">*</span> (max. 5)</label></td>
+                            <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                             <td>
                                 <div>
                                     <!-- <label for="file-upload">
@@ -232,9 +232,9 @@
                     <!-- <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea> -->
 
                     <div id="tarifs">
-                        <h3>Tarifs</h3>
+                        <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
                         <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
-                        <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
+                        <input type="number" name="tarif1" min="0" placeholder="prix" required/><span>€</span>
                         <br>
                         <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif2" min="0" placeholder="prix" /><span>€</span>
@@ -531,15 +531,33 @@
                 else {
                     $tarif1 = 0;
                 }
-                $id_offre = $stmt->fetchColumn();
-                // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
-    
-                // Préparation de la requête pour la vue tarif
-                $stmt_tarif = $dbh->prepare($requete_tarif);
+                $tabtarifs = array(
+                    $_POST['nomtarif1nom'] => $tarif1
+                );
 
-                // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$id_offre, $id_offre, $tarif1]);
+                if (isset($_POST['tarif2'])) {
+                    $tarif2 = $_POST['tarif2'];
+                    $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
+                }
+                if (isset($_POST['tarif3'])) {
+                    $tarif3 = $_POST['tarif3'];
+                    $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
+                }
+                if (isset($_POST['tarif4'])) {
+                    $tarif4 = $_POST['tarif4'];
+                    $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
+                }
+
+                foreach ($tabtarifs as $key => $value) {
+                    $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
+    
+                    // Préparation de la requête pour la vue tarif
+                    $stmt_tarif = $dbh->prepare($requete_tarif);
+
+                    // Exécution de la requête pour insérer dans la vue tarif
+                    $stmt_tarif->execute([$id_offre, $value, $key]);
+                }
+
             }
 
 
@@ -572,7 +590,7 @@
 
                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                 $stmt_image_offre = $dbh->prepare($requete_image);
-                $stmt_image_offre->execute([$id_image, $id_offre]);
+                $stmt_image_offre->execute([$id_offre, $id_image]);
 
             }
 
@@ -662,7 +680,7 @@
         }
     });
 
-    
+    document.getElementById("tarifs").style.display = 'none';
     
     function afficheSelonType(typechoisi){
         obligatoireselontype.forEach(element => {
