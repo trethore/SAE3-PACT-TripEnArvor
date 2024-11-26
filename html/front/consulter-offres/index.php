@@ -362,7 +362,7 @@ try {
                     const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
                     const numberOfStarsWanted = filters.minRating.length;
                     console.log('note voulue : ' + numberOfStarsWanted);
-                    const note = etoilesPleinesOffre.length;
+                    const note = etoilesPleinesOffre;
                     console.log(note);
                     /*const note = etoiles.length;
                     console.log('note' + note);*/
