@@ -226,7 +226,7 @@ try {
                 <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
             <?php } ?>
         </div>
-    </main> =
+    </main>
 
     <footer>
         <div class="footer-top">
@@ -271,6 +271,7 @@ try {
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const offers = document.querySelectorAll('.offer');
+            console.logg(offers);
             const allOffers = Array.from(offers);
             console.log(allOffers);
 
