@@ -362,7 +362,7 @@ try {
                     let matches = true;
 
                     // Filter by stars
-                    if (fitreNote > note) {
+                    if (filtreNote > note) {
                         matches = false;
                     }
 
