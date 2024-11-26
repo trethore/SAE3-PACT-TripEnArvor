@@ -1,4 +1,6 @@
-/* #labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"], #lien, #tel, #decriptionL   */
+#labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"]{
+  display: none;
+}
 
 h2 {
   width: 55%;
