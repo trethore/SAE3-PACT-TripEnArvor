@@ -108,10 +108,20 @@ table tr {
     margin: 1em 0;
 }
 
+table > td {
+    vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
+}
+
 table td + td {
     text-align: right;
-    right: 0;
+    width: 28em;
     color: var(--orange-principale);
+}
+
+td > div {
+    text-align: justify; /* Justifie uniquement le contenu interne */
+    display: inline-block;
+    line-height: 1.6;
 }
 
 
@@ -124,7 +134,7 @@ main > section a {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     border-radius: 15px;
-    margin: 2em, 0 1em;
+    margin: 1em 0;
     padding: 0.2em 1em;
 }
 
