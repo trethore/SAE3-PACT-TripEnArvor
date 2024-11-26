@@ -99,6 +99,10 @@ section > h1 + article {
     align-items: center;
 }
 
+table {
+    width: 20em;
+}
+
 table tr {
     margin: 0.5em 0;
 }
@@ -120,6 +124,7 @@ main > section a {
     border: none;
     border-radius: 15px;
     margin: 1em;
+    padding: 0.2em 1em;
 }
 
 main > section a:hover {
@@ -130,4 +135,5 @@ main > section a:hover {
 
 table + a {
     text-align: right;
+    justify-content: right;
 }
