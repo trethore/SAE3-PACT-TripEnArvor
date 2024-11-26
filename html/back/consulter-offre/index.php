@@ -270,14 +270,14 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php foreach ($jours as $jour) : ?>
+                <?php foreach ($jours as $jour) { ?>
                 <p>
-                    <?php echo htmlentities($jour['nom_jour']); ?> :
-                    <?php foreach ($horaires as $horaire) {
-                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "     ");
+                    <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                    foreach ($horaires as $horaire) {
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
                     } ?> 
                 </p>
-            <?php endforeach; ?>
+            <?php } ?>
             </div> 
     
         </section>
