@@ -527,17 +527,20 @@
             }
 
             if ($categorie !== "restautant") {
+                if (isset($_POST['prix'])) {
+                    $id_offre = $stmt->fetchColumn();
 
-                $id_offre = $stmt->fetchColumn();
+                    // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
+                    $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
+    
+                    // Préparation de la requête pour la vue tarif
+                    $stmt_tarif = $dbh->prepare($requete_tarif);
+    
+                    // Exécution de la requête pour insérer dans la vue tarif
+                    $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
+                }
 
-                // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
-
-                // Préparation de la requête pour la vue tarif
-                $stmt_tarif = $dbh->prepare($requete_tarif);
-
-                // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
+                
 
             }
 
