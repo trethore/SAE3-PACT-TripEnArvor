@@ -46,6 +46,14 @@ hr {
     border: none;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 h1 {
     text-align: center;
 }
@@ -87,6 +95,7 @@ input {
 
 select {
     cursor: pointer;
+    width: fit-content;
 }
 
 input[type="submit"] {
@@ -117,6 +126,10 @@ form > div {
 
 #div-type-compte {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
 }
 
 label {
