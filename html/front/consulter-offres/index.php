@@ -188,11 +188,19 @@ try {
                                 <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                 <div class="bas-offre">
                                     <div class="etoiles">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                            $note = ceil($tab["note"]);
+                                            $etoilesPleines = $note;
+                                            $etoilesVides = 5 - $note;
+
+                                            for ($i = 0; $i < $fullStars; $i++) {
+                                                echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
+                                            }
+
+                                            for ($i = 0; $i < $emptyStars; $i++) {
+                                                echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                            }
+                                        ?>
                                         <p class="nombre-notes">(120)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
@@ -351,13 +359,13 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    /*const etoiles = offer.querySelector(".etoile");
-                    console.log(etoiles);
-                    const note = etoiles.length;
-                    console.log('note' + note);
+                    const note = offer.querySelectorAll(".etoile");
+                    console.log(note);
+                    /*const note = etoiles.length;
+                    console.log('note' + note);*/
 
                     let numberOfStarsWanted = filters.minRating.length;
-                    console.log('note voulue' + numberOfStarsWanted);*/
+                    console.log('note voulue : ' + numberOfStarsWanted);
 
                     let matches = true;
 
