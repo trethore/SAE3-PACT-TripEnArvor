@@ -270,7 +270,7 @@ try {
                 const city = offerElement.querySelector('.lieu-offre').textContent.trim();
                 const price = offerElement.querySelector('.prix span').textContent.trim();
                 const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
+                /*const image = offerElement.querySelector('.image-offre').style.backgroundImage;*/
                 const description = offerElement.querySelector('.description-offre').textContent.trim();
                 const profile = offerElement.querySelector('.nom-offre').textContent.trim();
 
@@ -280,9 +280,9 @@ try {
                             <a href="#">
                                 <div class="lieu-offre">${city}</div>
                                 <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style="background: ${image} center;">
+                                <img class="image-offre" style=background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
                                 <p class="titre-offre">${title}</p>
-                                <p class="categorie-offre">${category}</p>
+                                <p class="categorie-offre">${category}</p>s
                                 <p class="description-offre">${description}</p>
                                 <p class="nom-offre">${profile}</p>
                                 <div class="bas-offre">
@@ -375,8 +375,7 @@ try {
 
                     // Filter by price
                     if ((filters.minPrice !== null && price < filters.minPrice) ||
-                        (filters.maxPrice !== null && price > filters.maxPrice) ||
-                        (price < filters.minPrice && price > filters.maxPrice)) {
+                        (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
 
