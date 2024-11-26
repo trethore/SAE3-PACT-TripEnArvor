@@ -51,15 +51,15 @@
 </head>
 
 <body>
-    <header>
+    <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche..." />
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <?php
     if (!$submitted) {
@@ -121,8 +121,8 @@
                                 </div>
                             </td>
                         </tr>
-                        <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td>
+                        <!-- <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
+                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td> -->
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
@@ -231,7 +231,7 @@
                     <!-- <h3>Description détaillée de l'offre</h3> -->
                     <!-- <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea> -->
 
-                    <!-- <div id="tarifs">
+                    <div id="tarifs">
                         <h3>Tarifs</h3>
                         <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
@@ -249,7 +249,7 @@
                         <input type="file" id="grilleT" name="grilleT" />
 
 
-                    </div> -->
+                    </div>
                     <br>
 
 
@@ -376,7 +376,6 @@
         // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
         if (isset($_POST['decriptionC'])) {
             $resume = $_POST['descriptionC'];
-            print $_POST['descriptionC'];
         }
 
         if (isset($_POST['ville'])) {
@@ -428,8 +427,7 @@
 
         if(isIdProPublique($id_compte)){ ?> 
             <script>
-            document.getElementById("labelprix").style.display = 'none';
-            document.getElementById("prix").style.display = 'none';
+            document.getElementById("tarifs").style.display = 'none';
             document.getElementById("gammedeprix").style.display = 'none';
             document.getElementById("labelgammedeprix").style.display = 'none';
             </script>
@@ -527,11 +525,11 @@
             }
 
             if ($categorie !== "restautant") {
-                if (isset($_POST['prix'])) {
-                    $prixmin = $_POST['prix'];
+                if (isset($_POST['tarif1'])) {
+                    $tarif1 = $_POST['tarif1'];
                 }
                 else {
-                    $prix = 0;
+                    $tarif1 = 0;
                 }
                 $id_offre = $stmt->fetchColumn();
                 // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
@@ -541,10 +539,7 @@
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
-
-                
-
+                $stmt_tarif->execute([$id_offre, $id_offre, $tarif1]);
             }
 
 
@@ -564,7 +559,7 @@
 
                 $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
 
-                print $requete_image;
+                //print $requete_image;
 
                 //preparation requete
                 $stmt_image = $dbh->prepare($requete_image);
@@ -620,7 +615,7 @@
         let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
         let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
         let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-        let typeprix = ["labelprix", "prix", "labelprix2"];
+        //let typeprix = ["labelprix", "prix", "labelprix2"];
         let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2","labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
         obligatoireselontype.forEach(element => {
@@ -635,9 +630,7 @@
     switch (typeselectionne) {
         case "restaurant":
             afficheSelonType(typerestaurant);
-            document.getElementById("labelprix").style.display = 'none';
-            document.getElementById("prix").style.display = 'none';
-            document.getElementById("labelprix2").style.display = 'none';
+            document.getElementById("tarifs").style.display = 'none';
             if (isIdProPublique($id_compte)) {
                 document.getElementById("labelgammedeprix").style.display = 'none';
                 document.getElementById("gammedeprix").style.display = 'none';
@@ -678,9 +671,7 @@
             document.getElementById(element).style.display = 'inline';
         });
         if((typechoisi !== "restaurant")&& (isIdProPrivee($id_compte))){
-            typeprix.forEach(element => {
-                document.getElementById(element).style.display = 'inline';
-            });
+            document.getElementById("tarifs").style.display = 'inline';
         }
     }
 
