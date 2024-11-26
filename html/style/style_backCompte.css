@@ -108,7 +108,7 @@ table tr {
     margin: 1em 0;
 }
 
-table > td {
+td {
     vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
 }
 
@@ -121,7 +121,7 @@ table td + td {
 td > div {
     text-align: justify; /* Justifie uniquement le contenu interne */
     display: inline-block;
-    line-height: 1.6;
+    line-height: 1.3;
 }
 
 
