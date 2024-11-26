@@ -71,6 +71,5 @@
             <img src="/images/frontOffice/icones/chercher.png">
             <img src="/images/frontOffice/icones/utilisateur.png">
         </div>
-        
     </div>
 </html>
