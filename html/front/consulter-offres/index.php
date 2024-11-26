@@ -72,7 +72,7 @@ try {
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Filtres</h2>
+            <h2>Filtres et Tris</h2>
             <div class="fond-filtres hidden">
                 <div>
                     <!-- Catégorie -->
@@ -116,11 +116,11 @@ try {
                                 <div>
                                     <div>
                                         <label>Prix minimum &nbsp;:</label>
-                                        <input type="number" min="0">
+                                        <input class="min" type="number" min="0">
                                     </div>
                                     <div>
                                         <label>Prix maximum :</label>
-                                        <input type="number" min="0">
+                                        <input class="max" type="number" min="0">
                                     </div>
                                 </div>
                                 <div>
@@ -170,63 +170,41 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-        <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
-            Aucun résultat ne correspond à vos critères.
-        </p>
-            <?php
-            $offers_per_page = 9;
-
-            $total_offers = count($offres);
-            $total_pages = ceil($total_offers / $offers_per_page);
-
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-            $offset = ($current_page - 1) * $offers_per_page;
-
-            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-
-            foreach ($offres_for_page as $tab) {
-                ?>
-                <div class="offre">
-                    <div class="sous-offre">
-                        <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
-                            <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                            <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                            <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
-                            <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                            <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                            <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                            <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                            <div class="bas-offre">
-                                <div class="etoiles">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                    <p class="nombre-notes">(120)</p>
+            <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
+                Aucun résultat ne correspond à vos critères.
+            </p>
+                <?php
+                foreach ($offres as $tab) {
+                    ?>
+                    <div class="offre">
+                        <div class="sous-offre">
+                            <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                                <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                                <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                                <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
+                                <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                                <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                                <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                                <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                <div class="bas-offre">
+                                    <div class="etoiles">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <p class="nombre-notes">(120)</p>
+                                    </div>
+                                    <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
-                                <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php
-                }
-        ?>
-        </section>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <?php if ($current_page > 1) { ?>
-                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
-                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
-        </div>
-    </main> =
+                <?php
+                    }
+            ?>
+        </section>        
+    </main>
 
     <footer>
         <div class="footer-top">
@@ -269,8 +247,9 @@ try {
             const fondFiltres = document.querySelector(".fond-filtres");
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
-            const offersContainer = document.querySelectorAll('.offer');
-            const allOffers = Array.from(offersContainer);
+            const offersContainer = document.querySelector(".section-offres");
+            const offers = document.querySelectorAll('.offre');
+            const allOffers = Array.from(offers);
             console.log(allOffers);
 
             // Create the "no offers" message element
@@ -291,7 +270,7 @@ try {
                 const city = offerElement.querySelector('.lieu-offre').textContent.trim();
                 const price = offerElement.querySelector('.prix span').textContent.trim();
                 const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
+                /*const image = offerElement.querySelector('.image-offre').style.backgroundImage;*/
                 const description = offerElement.querySelector('.description-offre').textContent.trim();
                 const profile = offerElement.querySelector('.nom-offre').textContent.trim();
 
@@ -301,9 +280,9 @@ try {
                             <a href="#">
                                 <div class="lieu-offre">${city}</div>
                                 <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style="background: ${image} center;">
+                                <img class="image-offre" style=background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
                                 <p class="titre-offre">${title}</p>
-                                <p class="categorie-offre">${category}</p>
+                                <p class="categorie-offre">${category}</p>s
                                 <p class="description-offre">${description}</p>
                                 <p class="nom-offre">${profile}</p>
                                 <div class="bas-offre">
@@ -356,8 +335,8 @@ try {
                     categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
                     availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
                     minRating: document.querySelector(".trier select")?.value || null,
-                    minPrice: parseFloat(document.querySelector(".trier input:nth-of-type(1)")?.value) || null,
-                    maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
+                    minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
+                    maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
                 };
 
                 // Treat no categories checked as all categories selected
@@ -395,11 +374,13 @@ try {
                     }
 
                     // Filter by price
-                    if ((filters.minPrice !== null && price < filters.minPrice) ||
-                        (filters.maxPrice !== null && price > filters.maxPrice) ||
-                        (price < filters.minPrice && price > filters.maxPrice)) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) || 
+                        (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
+
+                    console.log(filters.minPrice);
+                    console.log(filters.maxPrice);
 
                     // Filter by note
                     /*if (numberOfStarsWanted > note) {
@@ -423,8 +404,6 @@ try {
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
-
-            applyFilters();
         });
     </script>
 </body>

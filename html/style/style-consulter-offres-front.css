@@ -30,6 +30,12 @@ h2 {
     color: var(--noir);
 }
 
+h2:hover {
+    background: var(--blanc-leger);
+    border-color: var(--violet-principal);
+    color: var(--violet-principal);
+}
+
 h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
@@ -518,35 +524,6 @@ h3 {
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
-}
-
-.pagination {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: end;
-}
-
-.pagination-btn {
-    background-color: var(--blanc-leger);
-    color: var(--violet-principal);
-    padding: 5px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    text-decoration: none;
-    border-radius: 15px;
-    font-weight: 600;
-    font-size: 20px;
-    border-color: var(--violet-principal);
-    border-width: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.pagination-btn:hover {
-    background-color: var(--violet-principal);
-    color: var(--blanc-leger);
 }
 
 .fond-filtres {

@@ -5,7 +5,7 @@
     require_once("../../utils/auth-utils.php");
 
     session_start();
-    if (isset($_POST['titre'])) {
+    if (isset($_POST['titre'])) { // les autres svp
         $submitted = true;
     } else {
         $submitted = false;

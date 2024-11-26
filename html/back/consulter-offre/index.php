@@ -64,11 +64,18 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
+    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
-    $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
+    $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
+    
+    $reqHoraire = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour NATURAL JOIN _horaire WHERE id_offre = :id_offre";
+    $stmtHoraire = $dbh->prepare($reqHoraire);
+    $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtHoraire->execute();
+    $horaires = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+    
     
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
@@ -263,7 +270,14 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <p><?php echo nl2br(htmlentities($jour['nom_jour'] . " : ")); ?></p>
+                <?php foreach ($jours as $jour) { ?>
+                <p>
+                    <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                    foreach ($horaires as $horaire) {
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
+                    } ?> 
+                </p>
+            <?php } ?>
             </div> 
     
         </section>
