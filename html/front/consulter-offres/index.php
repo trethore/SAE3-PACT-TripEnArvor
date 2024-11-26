@@ -359,15 +359,23 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const note = offer.querySelector(".etoile");
+                    const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
+                    const numberOfStarsWanted = filters.minRating.length;
+                    console.log('note voulue : ' + numberOfStarsWanted);
+                    const note = etoilesPleinesOffre.length;
                     console.log(note);
                     /*const note = etoiles.length;
                     console.log('note' + note);*/
 
-                    let numberOfStarsWanted = filters.minRating.length;
+                    const numberOfStarsWanted = filters.minRating.length;
                     console.log('note voulue : ' + numberOfStarsWanted);
 
                     let matches = true;
+
+                    // Filter by stars
+                    if (filters.numberOfStarsWanted > note) {
+                        matches = false;
+                    }
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
