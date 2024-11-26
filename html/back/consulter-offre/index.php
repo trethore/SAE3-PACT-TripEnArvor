@@ -64,13 +64,13 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
+    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
     $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
     
-    $reqHoraire = "SELECT * FROM _horaire WHERE id_offre = :id_offre";
+    $reqHoraire = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour NATURAL JOIN _horaire WHERE id_offre = :id_offre";
     $stmtHoraire = $dbh->prepare($reqHoraire);
     $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtHoraire->execute();
