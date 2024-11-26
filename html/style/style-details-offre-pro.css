@@ -29,7 +29,6 @@ h2 {
     background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
     padding: 30px;
-    
 }
 
 a {
@@ -61,19 +60,22 @@ a {
         margin: 30px 30px 0 30px;
     }
 
-    .bouton-modifier > div > button {
-        background: var(--orange-principale);
-        color: var(--blanc);
+
+    .bouton-modifier > button {
+        color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 40px;
+        font-size: 60px;
+        background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
+        border: 0;
     }
 
-    .bouton-modifier > div > button:hover {
+    .bouton-modifier > button:hover {
         color: var(--orange-principale);
-        background: var(--blanc);
+        background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
     #confirm {
@@ -162,6 +164,7 @@ a {
 
 .information-offre {
     font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -184,26 +187,6 @@ a {
     margin: 0 10px;
 }
 
-    /*****************************
-            BOUTONS TARIFS                
-    *****************************/
-
-    .display-ligne-espace > button {
-        color: var(--blanc-leger);
-        text-decoration: none;
-        font-size: 40px;
-        background-color: var(--orange-principale);
-        padding: 10px 80px;
-        border-radius: 15px;
-        border: 0;
-    }
-
-    .display-ligne-espace > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
-    }
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
@@ -212,7 +195,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-      }
+    }
 
     .carousel-images {
         display: flex;
@@ -300,7 +283,7 @@ a {
         font-size: 60px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
@@ -310,10 +293,11 @@ a {
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -338,6 +322,7 @@ a {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -462,6 +447,7 @@ a {
     color: var(--orange-principale);
     background: var(--blanc-leger);
     border: 1px solid var(--orange-principale);
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
@@ -471,8 +457,6 @@ a {
 footer > div > a {
     text-decoration: none;
 }
-
-
 
 #avis {
     display: none;
