@@ -425,15 +425,24 @@
         }
 
         //champ type masqué si le pro est publique
-        if(isIdProPrivee($id_compte)){ ?> 
+        if(isIdProPublique($id_compte)){ ?> 
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
             </script>
-        <?php } ?>
+        <?php } 
+
+        if(isIdProPublique($id_compte)){ ?> 
+            <script>
+            document.getElementById("labelprix").style.display = 'none';
+            document.getElementById("prix").style.display = 'none';
+            document.getElementById("gammedeprix").style.display = 'none';
+            document.getElementById("labelgammedeprix").style.display = 'none';
+            </script>
+        <?php } 
 
 
-    <?php
+    
         try {
 
 
