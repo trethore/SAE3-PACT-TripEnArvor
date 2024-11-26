@@ -661,7 +661,7 @@
             document.getElementById(element).style.display = 'inline';
         });
         if(typechoisi !== "restaurant"){
-            prix.forEach(element => {
+            typeprix.forEach(element => {
                 document.getElementById(element).style.display = 'inline';
             });
         }
