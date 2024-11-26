@@ -404,8 +404,6 @@ try {
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
             });
-
-            applyFilters();
         });
     </script>
 </body>
