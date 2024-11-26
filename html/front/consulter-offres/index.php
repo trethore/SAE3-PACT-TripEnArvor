@@ -270,8 +270,7 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-            const offers = document.querySelectorAll('.offer');
-            console.log(offers);
+            const offers = document.querySelectorAll('.offre');
             const allOffers = Array.from(offers);
             console.log(allOffers);
 
