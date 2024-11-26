@@ -306,7 +306,8 @@ try {
                     });
                 }
 
-                const container = document.getElementsByClassName('section-offres'); // ID du conteneur des offres
+                const container = document.querySelector(".section-offres");
+                console.log(container);
                 allOffers.forEach(offer => container.appendChild(offer));
             });
 
