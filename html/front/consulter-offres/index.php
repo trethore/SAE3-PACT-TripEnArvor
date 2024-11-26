@@ -360,7 +360,7 @@ try {
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
                     const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
-                    const numberOfStarsWanted = filters.minRating.length;
+                    const numberOfStarsWanted = filters.minRating;
                     console.log('note voulue : ' + numberOfStarsWanted);
                     const note = etoilesPleinesOffre;
                     console.log(note);
@@ -370,9 +370,9 @@ try {
                     let matches = true;
 
                     // Filter by stars
-                    if (filters.numberOfStarsWanted > note) {
+                    /*if (filters.numberOfStarsWanted > note) {
                         matches = false;
-                    }
+                    }*/
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
