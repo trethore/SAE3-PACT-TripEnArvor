@@ -335,8 +335,8 @@ try {
                     categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
                     availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
                     minRating: document.querySelector(".trier select")?.value || null,
-                    minPrice: parseFloat(document.querySelector(".trier input:nth-of-type(1)")?.value) || 0,
-                    maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || Infinity,
+                    minPrice: parseFloat(document.querySelector(".trier input:nth-of-type(1)")?.value) || null,
+                    maxPrice: parseFloat(document.querySelector(".trier input:nth-of-type(2)")?.value) || null,
                 };
 
                 // Treat no categories checked as all categories selected
@@ -374,7 +374,8 @@ try {
                     }
 
                     // Filter by price
-                    if ((filters.minPrice && price < filters.minPrice) || (filters.maxPrice && price > filters.maxPrice)) {
+                    if ((filters.minPrice !== null && price < filters.minPrice) || 
+                        (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
 
