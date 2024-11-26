@@ -10,6 +10,27 @@
     } else {
         $submitted = false;
     }
+
+    function get_file_extension($type){
+        $extension = '';
+        switch ($type) {
+            case 'image/png':
+                $extension = '.png';
+                break;
+            case 'image/jpeg':
+                $extension = '.jpg';
+                break;
+            case 'image/webp':
+                $extension = '.webp';
+                break;
+            case 'image/gif':
+                $extension = '.gif';
+                break;
+            default:
+                break;
+        }
+        return $extension;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -403,8 +424,8 @@
             die("Erreur : utilisateur non connecté.");
         }
 
-        if(!$id_compte){
-            //isIdProPrivee($id_compte)){ ?>
+        //champ type masqué si le pro est publique
+        if(isIdProPrivee($id_compte)){ ?> 
             <script>
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
