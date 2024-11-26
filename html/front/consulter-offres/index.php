@@ -34,7 +34,7 @@ try {
     }
 
     foreach ($offres as &$offre) {
-        $offre['note'] = 3;
+        $offre['note'] = 2;
     }
 
 } catch (PDOException $e) {
@@ -102,7 +102,7 @@ try {
                         <div>
                             <div>
                                 <label>Note minimum :</label>
-                                <select>
+                                <select class="note">
                                     <option></option>
                                     <option>★★★★★</option>
                                     <option>★★★★</option>
@@ -342,7 +342,7 @@ try {
                 const filters = {
                     categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
                     availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
-                    minRating: document.querySelector(".trier select")?.value || null,
+                    minRating: document.querySelector(".trier .note")?.value || null,
                     minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
                     maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
                 };
@@ -359,7 +359,7 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const note = offer.querySelectorAll(".etoile");
+                    const note = offer.querySelector(".etoile");
                     console.log(note);
                     /*const note = etoiles.length;
                     console.log('note' + note);*/
