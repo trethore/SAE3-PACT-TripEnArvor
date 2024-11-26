@@ -289,6 +289,8 @@ try {
 
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
+
+                console.log(allOffers);
                 
                 if (selectedValue == "price-asc") {
                     console.log("asc");
@@ -305,6 +307,8 @@ try {
                         return priceB - priceA;
                     });
                 }
+
+                console.log(allOffers);
 
                 const container = document.querySelector(".section-offres");
                 console.log(container);
