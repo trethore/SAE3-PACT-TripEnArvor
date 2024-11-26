@@ -64,11 +64,18 @@ try {
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _horaires_du_jour WHERE id_offre = :id_offre";
+    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
     $stmtJour = $dbh->prepare($reqJour);
     $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtJour->execute();
-    $jour = $stmtJour->fetch(PDO::FETCH_ASSOC);
+    $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
+    
+    $reqHoraire = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour NATURAL JOIN _horaire WHERE id_offre = :id_offre";
+    $stmtHoraire = $dbh->prepare($reqHoraire);
+    $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtHoraire->execute();
+    $horaires = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+    
     
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
@@ -114,12 +121,12 @@ try {
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="display-ligne-espace bouton-modifier"> 
-        <div>
+    <div class="fond-bloc">
+        <div class="bouton-modifier display-ligne-espace"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
@@ -134,7 +141,7 @@ try {
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2">Modifier l'offre</button>
         </div>
-    </div>
+    </div>  
 
     <main id="body">
 
@@ -165,24 +172,20 @@ try {
                 <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
-            <div class="display-ligne">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <!-- Affichage du nombre d'avis de l'offre -->
-                <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
-                <a href="#avis">Voir les avis</a>
-            </div>
-
             <div class="display-ligne-espace">
+                <div class="display-ligne">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <!-- Affichage du nombre d'avis de l'offre -->
+                    <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
+                    <a href="#avis">Voir les avis</a>
+                </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
                 <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
-                <!-- Affichage du prix de l'offre -->
-                <button>Voir les tarifs</button> 
             </div>
-
         </section>
 
         <section class="double-blocs">
@@ -196,7 +199,12 @@ try {
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                <div class="display-ligne-espace">
+                    <!-- Affichage le titre de l'offre -->
+                    <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                    <!-- Affichage du lien du site du propriétaire de l'offre -->
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                </div>
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']); ?></p>
                 <!-- Affichage des informations spécifiques à un type d'offre -->
@@ -214,21 +222,21 @@ try {
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
-                        <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                        <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        <div class="display-ligne-espace">
+                            <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        </div>
                         <?php break; ?>
                     <?php case "Restauration": ?>
-                        <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                        <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        <div class="display-ligne-espace">
+                            <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        </div>
                         <?php break;
                 } ?>
                 
-                <div class="display-ligne-espace">
-                    <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                    <p>Numéro de téléphone : <?php echo htmlentities($compte['tel']); ?></p>
-                    <!-- Affichage du lien du site du propriétaire de l'offre -->
-                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
-                </div>
+                <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
             </div>
     
         </section>
@@ -262,7 +270,14 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <p><?php echo nl2br(htmlentities($jour['nom_jour'] . " : ")); ?></p>
+                <?php foreach ($jours as $jour) { ?>
+                <p>
+                    <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                    foreach ($horaires as $horaire) {
+                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
+                    } ?> 
+                </p>
+            <?php } ?>
             </div> 
     
         </section>

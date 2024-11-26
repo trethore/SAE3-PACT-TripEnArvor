@@ -1,30 +1,38 @@
 <?php
-session_start();
-if (isset($_POST['titre'])) {
-    $submitted = true;
-} else {
-    $submitted = false;
-}
+    require_once("../../utils/offres-utils.php");
+    require_once("../../utils/site-utils.php");
+    require_once("../../utils/session-utils.php");
+    require_once("../../utils/auth-utils.php");
 
-function get_file_extension($type)
-{
-    $extension = '';
-    switch ($type) {
-        case 'image/png':
-            $extension = '.png';
-            break;
-        case 'image/jpeg':
-            $extension = '.jpg';
-            break;
-        case 'image/webp':
-            $extension = '.webp';
-            break;
-        default:
-            break;
+    session_start();
+    if (isset($_POST['titre'])) { // les autres svp
+        $submitted = true;
+    } else {
+        $submitted = false;
     }
-    return $extension;
-}
 
+    
+
+    function get_file_extension($type){
+        $extension = '';
+        switch ($type) {
+            case 'image/png':
+                $extension = '.png';
+                break;
+            case 'image/jpeg':
+                $extension = '.jpg';
+                break;
+            case 'image/webp':
+                $extension = '.webp';
+                break;
+            case 'image/gif':
+                $extension = '.gif';
+                break;
+            default:
+                break;
+        }
+        return $extension;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +47,7 @@ function get_file_extension($type)
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
-    <style>
-        .disabled-label {
-            opacity: 0.5;
-            /* Grise le label */
-            pointer-events: none;
-            /* Rendre le label non cliquable */
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -63,7 +64,7 @@ function get_file_extension($type)
     <?php
     if (!$submitted) {
     ?>
-        <div id="offre">
+        <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
             <div class="close">
@@ -94,11 +95,11 @@ function get_file_extension($type)
                 <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
                 <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
             </div>
-        </div>
+        </div> -->
         <main>
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
-                <h3>Informations importante</h3>
+                <h3>Informations importantes</h3>
                 <div class="important">
                     <table border="0">
                         <tr>
@@ -121,32 +122,32 @@ function get_file_extension($type)
                             </td>
                         </tr>
                         <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" name="prix" />€</td>
+                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
                         </tr>
                         <tr>
-                            <td><label for="dispo">Disponibilité </label></td>
+                            <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="dispo" name="ladispo">
                                         <option value="">Choisir une disponibilité</option>
                                         <option value="ouvert"> Ouvert </option>
                                         <option value="ferme"> Fermé </option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </td>
                         </tr>
 
 
                         <tr>
-                            <td><label for="adresse">Adresse</label></td>
+                            <!-- <td><label id="labeladresse" for="adresse">Adresse</label></td> -->
                             <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                         </tr>
                         <tr>
-                            <td><label for="cp">Code Postal </label></td>
-                            <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td>
+                             <td><!--<label for="cp" id="labelcp">Code Postal </label>--></td>
+                            <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td> 
                             <td><label for="ville">Ville <span class="required">*</span></label></td>
                             <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
 
@@ -156,44 +157,44 @@ function get_file_extension($type)
                             <td>
                                 <div>
                                     <!-- <label for="file-upload">
-                            <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
-                        </label> -->
+                                <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
+                            </label> -->
                                     <input id="photo" type="file" name="photo" required />
                                 </div>
                             </td>
 
                         </tr>
                         <tr>
-                            <td><label for="type">Type de l'offre <span class="required">*</span></label></td>
+                            <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="type" name="letype">
                                         <option value="standard"> Offre Standard </option>
                                         <option value="premium"> Offre Premium </option>
                                     </select>
-                                </div>
+                                </div> -->
                             </td>
                         </tr>
-                    </table>
-                    <div id="options">
-                        <label>Options</label>
-                        <input type="checkbox" id="enRelief" name="enRelief" /><label for="enRelief">En relief</label>
-                        <input type="checkbox" id="alaune" name="alaune" /><label for="alaune">A la une</label>
-                    </div>
-                    </td>
-                    </tr>
+                        <tr>
+                            <!-- <div id="options">
+                                <td><label>Options</label></td>
+                                <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
+                                <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
+                            </div> -->
+                        </t>
+                        
                     </table>
 
                     
                     <div>
                         <!-- activite, visite, spectacle -->
-                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/>minutes
+                        <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree"/><label id="labelduree2">minutes</label> 
                         <!-- activité, parc -->
-                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> an(s)
+                        <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name ="age" /> <label id="labelage2">an(s)</label>
                         
                         <br>
                         <!-- spectacle -->
-                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacité" name="capacite"/> personnes
+                        <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite"/><label id="labelcapacite2" for="capacite">personnes</label>
                         <br>
                         <!-- parc -->
                         <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
@@ -205,9 +206,9 @@ function get_file_extension($type)
                     <br>
                 </div>
 
-                    <h3>Tags de l'offre</h3>
+                    <!-- <h3>Tags de l'offre</h3> -->
 
-                    <p> -- Choisir une catégorie -- </p>
+                    <!-- <p> -- Choisir une catégorie -- </p> -->
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0">
@@ -216,21 +217,21 @@ function get_file_extension($type)
                                 <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required></textarea></td>
 
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td><label for="lien">Lien externe</label></td>
                                 <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" /></td>
                             </tr>
                             <tr>
                                 <td><label for="tel">Numéro de téléphone</label></td>
                                 <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)" /></td>
-                            </tr>
+                            </tr> -->
                         </table>
                     </div>
 
-                    <h3>Description détaillée de l'offre</h3>
-                    <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
+                    <!-- <h3>Description détaillée de l'offre</h3> -->
+                    <!-- <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea> -->
 
-                    <div id="tarifs">
+                    <!-- <div id="tarifs">
                         <h3>Tarifs</h3>
                         <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
@@ -248,11 +249,11 @@ function get_file_extension($type)
                         <input type="file" id="grilleT" name="grilleT" />
 
 
-                    </div>
+                    </div> -->
                     <br>
 
 
-                    <h3>Ouverture</h3>
+                    <!-- <h3>Ouverture</h3>
                     <table border="0">
                         <tr>
                             <td>Lundi</td>
@@ -296,7 +297,7 @@ function get_file_extension($type)
                             <td>-></td>
                             <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
                         </tr>
-                    </table>
+                    </table> -->
                     <div class="bt_cree">
                         <input class="valider" type="submit" value="Créer l'offre" />
 
@@ -358,16 +359,10 @@ function get_file_extension($type)
     <?php
     } else {
 
-
-        $server = 'postgresdb';
-        $driver = 'pgsql';
-        $dbname = 'sae';
-        $user   = 'sae';
-        $pass    = 'naviguer-vag1n-eNTendes';
-
+        
         $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
-        // include('../../php/connect_params.php');
+        include('../../php/connect_params.php');
 
         // Récupération des données du formulaire avec $_POST
         // $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
@@ -391,9 +386,7 @@ function get_file_extension($type)
         if (isset($_POST['gammedeprix'])) {
             $gammedeprix = $_POST['gammedeprix'];
         }
-        if (isset($_POST['prix'])) {
-            $prixmin = $_POST['prix'];
-        }
+        
         if (isset($_POST['photo'])) {
             $photo1 = $_FILE['photo'];
         }
@@ -410,30 +403,40 @@ function get_file_extension($type)
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
         }
+        if(isset($_SESSION['id_compte'])){
+            $id_compte =  $_SESSION['id_compte'];
+        }
 
         
-        print_r($_FILES);
+        //print_r($_FILES);
 
         echo "<br>";
 
-        print  $_FILES['photo']['name'];
-
-        // $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
-        // $type = isset($_POST['type']) ? $_POST['type'] : '';
-        // $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-        //$categorie = isset($_POST['lacat']) ? $_POST['lacat'] : '';
-
-
-        $id_compte = 'test';
-        //$id_compte = isset($_SESSION['id_compte']) ? $_SESSION['id_compte'] : '';
 
         // Vérifier si l'id_compte est défini (s'il est connecté)
         if (!$id_compte) {
             die("Erreur : utilisateur non connecté.");
         }
 
+        //champ type masqué si le pro est publique
+        if(isIdProPublique($id_compte)){ ?> 
+            <script>
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
+            </script>
+        <?php } 
+
+        if(isIdProPublique($id_compte)){ ?> 
+            <script>
+            document.getElementById("labelprix").style.display = 'none';
+            document.getElementById("prix").style.display = 'none';
+            document.getElementById("gammedeprix").style.display = 'none';
+            document.getElementById("labelgammedeprix").style.display = 'none';
+            </script>
+        <?php } 
 
 
+    
         try {
 
 
@@ -474,7 +477,7 @@ function get_file_extension($type)
                     $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $age]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age]);
 
                     break;
 
@@ -489,20 +492,20 @@ function get_file_extension($type)
 
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
 
                     break;
 
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
                     break;
 
                 case 'visite':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $duree]);
+                    $stmt->execute([$titre, $resume, $ville, $duree]);
                     break;
 
                 case 'restaurant':
@@ -515,7 +518,7 @@ function get_file_extension($type)
                     }
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    //$stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
 
 
                 default:
@@ -524,17 +527,23 @@ function get_file_extension($type)
             }
 
             if ($categorie !== "restautant") {
-
+                if (isset($_POST['prix'])) {
+                    $prixmin = $_POST['prix'];
+                }
+                else {
+                    $prix = 0;
+                }
                 $id_offre = $stmt->fetchColumn();
-
                 // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
                 $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
-
+    
                 // Préparation de la requête pour la vue tarif
                 $stmt_tarif = $dbh->prepare($requete_tarif);
 
                 // Exécution de la requête pour insérer dans la vue tarif
-                //$stmt_tarif->execute([$id_offre, id, $prix]);
+                $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
+
+                
 
             }
 
@@ -548,9 +557,8 @@ function get_file_extension($type)
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension)){
-                    print("image bougée");
-                }
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+        
                
                 $fichier_img = $time . $file_extension;
 
@@ -568,8 +576,8 @@ function get_file_extension($type)
                 $id_image = $stmt->fetchColumn();
 
                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                //$stmt_image_offre = $dbh->prepare($requete_image);
-                //$stmt_image_offre->execute([$id_image, $id_offre]);
+                $stmt_image_offre = $dbh->prepare($requete_image);
+                $stmt_image_offre->execute([$id_image, $id_offre]);
 
             }
 
@@ -591,74 +599,68 @@ function get_file_extension($type)
 
 
     <script>
-        let type = document.getElementById('type');
-        type.addEventListener('change', function() {
-            if (type === "premium") {
-                document.getElementById('options').style.display = 'block';
-                document.getElementById('tarifs').style.display = 'block';
-            } else {
-                document.getElementById('options').style.display = 'none';
-                document.getElementById('tarifs').style.display = 'none';
-            }
+        // let type = document.getElementById('type');
+        // type.addEventListener('change', function() {
+        //     if (type === "premium") {
+        //         document.getElementById('options').style.display = 'block';
+        //         document.getElementById('tarifs').style.display = 'block';
+        //     } else {
+        //         document.getElementById('options').style.display = 'none';
+        //         document.getElementById('tarifs').style.display = 'none';
+        //     }
+        // });
+
+        // Sélectionner tous les boutons radio
+        let radioButtons = document.querySelectorAll('input[type="radio"][name="option"]');
+
+
+        let typecategorie = document.getElementById('categorie');
+        let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let typevisite = ["labelduree", "duree", "labelduree2"];
+        let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
+        let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
+        let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+        let typeprix = ["labelprix", "prix", "labelprix2"];
+        let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2","labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
+
+        obligatoireselontype.forEach(element => {
+            document.getElementById(element).style.display = 'none';
         });
 
-        let categorie = document.getElementById('categorie');
-
-        document.getElementById("labelgammedeprix").style.display = 'none';
-    document.getElementById("gammedeprix").style.display = 'none';
-    document.getElementById("carte").style.display = 'none';
-    document.getElementById("labelcarte").style.display = 'none';
-    document.getElementById("labelage").style.display = 'none';
-    document.getElementById("age").style.display = 'none';
-    document.getElementById("labelage2").style.display = 'none';
-    document.getElementById("labelduree").style.display = 'none';
-    document.getElementById("labelduree2").style.display = 'none';
-    document.getElementById("duree").style.display = 'none';
-    document.getElementById("labelcapacite").style.display = 'none';
-    document.getElementById("capacite").style.display = 'none';
-    document.getElementById("labelcapacite2").style.display = 'none';
-    document.getElementById("labelnbattractions").style.display = 'none';
-    document.getElementById("nbattraction").style.display = 'none';
-    document.getElementById("labelplan").style.display = 'none';
-    document.getElementById("plan").style.display = 'none';
-
-categorie.addEventListener('change', function () {
-    let selectedCategory = categorie.value;
-
+    categorie.addEventListener('change', function () {
+        let typeselectionne = categorie.value;
+        
 
     // Afficher les champs selon la catégorie sélectionnée
-    switch (selectedCategory) {
+    switch (typeselectionne) {
         case "restaurant":
+            afficheSelonType(typerestaurant);
             document.getElementById("labelprix").style.display = 'none';
             document.getElementById("prix").style.display = 'none';
-            document.getElementById("carte").style.display = 'block';
-            document.getElementById("labelcarte").style.display = 'block';
+            document.getElementById("labelprix2").style.display = 'none';
+            if (isIdProPublique($id_compte)) {
+                document.getElementById("labelgammedeprix").style.display = 'none';
+                document.getElementById("gammedeprix").style.display = 'none';
+            }
+            console.log(<?php $id_compte ?>);
+            
+            
             break;
 
         case "activite":
-            document.getElementById("labelage").style.display = 'block';
-            document.getElementById("age").style.display = 'block';
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
+            afficheSelonType(typeactivite);
             break;
 
         case "visite":
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
+            afficheSelonType(typevisite);
             break;
 
         case "spectacle":
-            document.getElementById("labelduree").style.display = 'block';
-            document.getElementById("duree").style.display = 'block';
-            document.getElementById("labelcapacite").style.display = 'block';
-            document.getElementById("capacite").style.display = 'block';
+            afficheSelonType(typespectacle);
             break;
 
         case "parc":
-            document.getElementById("labelnbattractions").style.display = 'block';
-            document.getElementById("nbattraction").style.display = 'block';
-            document.getElementById("labelplan").style.display = 'block';
-            document.getElementById("plan").style.display = 'block';
+            afficheSelonType(typeparc);
             break;
 
         default:
@@ -666,18 +668,23 @@ categorie.addEventListener('change', function () {
         }
     });
 
+    
+    
+    function afficheSelonType(typechoisi){
+        obligatoireselontype.forEach(element => {
+            document.getElementById(element).style.display = 'none';
+        });
+        typechoisi.forEach(element => {
+            document.getElementById(element).style.display = 'inline';
+        });
+        if((typechoisi !== "restaurant")&& (isIdProPrivee($id_compte))){
+            typeprix.forEach(element => {
+                document.getElementById(element).style.display = 'inline';
+            });
+        }
+    }
 
 
-
-        // let categorie = document.getElementById('categorie');
-        // categorie.addEventListener('change', function() {
-        //     if (categorie.value === "restaurant") {
-        //         document.getElementById("labelprix").innertext = 'Gamme de prix';
-        //     } else {
-        //         document.getElementById("labelprix").innertext = 'Prix minimal';
-        //     }
-
-        // });
 
 
 

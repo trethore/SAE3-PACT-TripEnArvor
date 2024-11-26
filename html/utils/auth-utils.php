@@ -1,14 +1,14 @@
 <?php 
     // Quelques fonctions pour savoir le compte d'un utilisateur
-    include('/var/www/html/php/connect_params.php');
-    include('/var/www/html/utils/site-utils.php');
+    require_once('/var/www/html/php/connect_params.php');
+    require_once('/var/www/html/utils/site-utils.php');
     function isIdMember($id) {
         global $driver, $server, $dbname, $user, $pass;
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            
-            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_membre WHERE id_compte = :id';
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_membre WHERE id_compte = :id;';
             $stmt = $dbh->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -28,8 +28,8 @@
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            
-            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_professionnel_prive WHERE id_compte = :id';
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_professionnel_prive WHERE id_compte = :id;';
             $stmt = $dbh->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -49,8 +49,8 @@
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            
-            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_professionnel_publique WHERE id_compte = :id';
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            $sql = 'SELECT COUNT(*) AS count FROM sae.compte_professionnel_publique WHERE id_compte = :id;';
             $stmt = $dbh->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -69,6 +69,8 @@
     function redirectToListOffreIfNecessary($id) {
         if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
             redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
-        }        
+            return true;
+        }     
+        return false;   
     }
 ?>

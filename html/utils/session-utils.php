@@ -1,5 +1,5 @@
 <?php
-    include('/var/www/html/php/connect_params.php');
+    require_once('/var/www/html/php/connect_params.php');
 
     function startSession() {
         if (session_status() == PHP_SESSION_NONE) {
