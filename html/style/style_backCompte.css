@@ -100,11 +100,12 @@ section > h1 + article {
 }
 
 table {
-    width: 20em;
+    width: 40em;
+    border-spacing: 2em 0.5em;
 }
 
 table tr {
-    margin: 0.5em 0;
+    margin: 1em 0;
 }
 
 table td + td {
@@ -123,7 +124,7 @@ main > section a {
     background-color: var(--orange-principale);
     border: none;
     border-radius: 15px;
-    margin: 1em;
+    margin: 2em, 0 1em;
     padding: 0.2em 1em;
 }
 
