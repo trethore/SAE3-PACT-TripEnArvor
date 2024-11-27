@@ -1,4 +1,12 @@
-
+<?php
+try {
+    $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
+    $stmt->execute();
+    $titres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,7 +24,14 @@
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php 
+                foreach ($titres as $titre) { // Parcourt les titres récupérés
+                    echo "<option value=\"{$titre}\"></option>";
+                }
+                ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
