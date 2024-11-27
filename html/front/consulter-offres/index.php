@@ -406,8 +406,6 @@ try {
                 if (filteredOffers.length > 0) {
                     filteredOffers.forEach(offer => offersContainer.appendChild(offer));
                 } else {
-                    // Afficher un message si aucune offre ne correspond
-                    const noOffersMessage = document.getElementById("no-offers-message");
                     noOffersMessage.style.display = "block";
                 }
             });
