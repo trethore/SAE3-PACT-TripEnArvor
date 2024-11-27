@@ -358,7 +358,6 @@
 
     <?php
     } else {
-
         
         $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
@@ -405,6 +404,8 @@
         if(isset($_SESSION['id_compte'])){
             $id_compte =  $_SESSION['id_compte'];
         }
+
+        
 
         
         //print_r($_FILES);
@@ -616,7 +617,8 @@
         // });
 
         // Sélectionner tous les boutons radio
-        let radioButtons = document.querySelectorAll('input[type="radio"][name="option"]');
+        const isIdProPrivee = <?php echo json_encode(isIdProPrivee($id_compte)); ?>;
+        const isIdProPublique = <?php echo json_encode(isIdProPublique($id_compte)); ?>;
 
 
         let typecategorie = document.getElementById('categorie');
@@ -633,16 +635,16 @@
         });
     
     document.getElementById("tarifs").style.display = 'none';
+    
  
     categorie.addEventListener('change', function () {
         let typeselectionne = categorie.value;
-    
     // Afficher les champs selon la catégorie sélectionnée test
     switch (typeselectionne) {
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            if (<?php isIdProPrivee($id_compte)?>) {
+            if (isIdProPrivee) {
                 document.getElementById("labelgammedeprix").style.display = 'inline';
                 document.getElementById("gammedeprix").style.display = 'inline';
             }
@@ -682,7 +684,7 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (<?php isIdProPrivee($id_compte)?>)){
+        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
             document.getElementById("tarifs").style.display = 'inline';
         }
     }
