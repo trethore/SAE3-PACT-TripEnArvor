@@ -175,15 +175,15 @@ try {
                                         <?php
                                             $note = $tab["note"];
                                             $etoilesPleines = $note;
-                                            $etoilesVides = 5 - $note;
+                                            /*$etoilesVides = 5 - $note;*/
 
                                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
                                             }
 
-                                            for ($i = 0; $i < $etoilesVides; $i++) {
+                                            /*for ($i = 0; $i < $etoilesVides; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
-                                            }
+                                            }*/
                                         ?>
                                         <p class="nombre-notes">(120)</p>
                                     </div>
