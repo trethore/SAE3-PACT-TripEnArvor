@@ -61,9 +61,7 @@
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-    <?php
-    if (!$submitted) {
-    ?>
+    <?php if (!$submitted) { ?>
         <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
@@ -100,12 +98,14 @@
             <?php 
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
-                $isIdProPublique = isIdProPublique($id_compte); 
-                print "prive ". $isIdProPrivee. "  "; print_r($isIdProPublique);
+                
+                
                 if ($isIdProPublique !== 1){
-                    print "cé nul";
+                    $isIdProPublique = 0;
+                
+                    print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
                 }
-                ?>
+            ?>
 
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
@@ -525,7 +525,7 @@
 
             if ($categorie !== "restautant") {
                 if (isset($_POST['tarif1'])) {
-                    $tarif1 = $_POST['tarif1'];
+                            $tarif1 = $_POST['tarif1'];
                 }
                 else {
                     $tarif1 = 0;
@@ -625,18 +625,18 @@
 
         // Sélectionner tous les boutons radio
 
-       const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
-        //const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
-        //console.log(isIdProPublique);
+        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+        console.log(isIdProPublique);
 
 
         //champ type masqué si le pro est publique
-        //  if(isIdProPublique){  
+         if(isIdProPublique){  
             
-        //     document.getElementById("labeltype").style.display = 'none';
-        //     document.getElementById("type").style.display = 'none';
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
            
-        //  }
+         }
         
 
 
@@ -702,9 +702,9 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        // if((typechoisi !== "restaurant")&& (isIdProPrivee)){
-        //     document.getElementById("tarifs").style.display = 'inline';
-        // }
+        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
+            document.getElementById("tarifs").style.display = 'inline';
+        }
     }
 
 
@@ -771,6 +771,7 @@
             quitterDiv.style.display = "none";
             alert("Modification valider avec succès");
         }
+    
     </script>
 
 </body>
