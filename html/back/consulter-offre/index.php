@@ -92,7 +92,7 @@ try {
     $stmtAvis->execute();
     $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_offre = :id_offre";
+    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
@@ -260,7 +260,7 @@ try {
     
         </section>
 
-        <section class="fond-blocs">
+        <section class="fond-blocs bordure">
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
@@ -330,11 +330,13 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($a['titre']) ?></p>
-                        <p class="transparent">.</p>
+                        <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
-                            <p><strong>AntoineL</strong></p>
+                            <?php foreach ($membre as $m) { ?>
+                                <p><strong><?php echo htmlentities($m['pseudo']) ?></strong></p>
+                            <?php } ?>
                             <!-- <p><strong></p/?php echo htmlentities($membre['pseudo']) ?></strong></p> -->
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
@@ -344,7 +346,7 @@ try {
                             <?php } ?>
                             <p><em><strong>14/08/2023</strong></em></p>
                         </div>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent">.</p>
                     </div>
                     <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
