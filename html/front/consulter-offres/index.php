@@ -173,10 +173,7 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            echo "<pre>";
-                                            print_r($tab["note"]);
-                                            echo "</pre>";
-                                            $note = ceil($tab["note"]);
+                                            $note = $tab["note"];
                                             $etoilesPleines = $note;
                                             $etoilesVides = 5 - $note;
 
