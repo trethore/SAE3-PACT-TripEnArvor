@@ -438,6 +438,7 @@
             
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Début de la requête SQL
     

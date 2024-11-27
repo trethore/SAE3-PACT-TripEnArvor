@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');

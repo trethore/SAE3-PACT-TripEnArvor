@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $id_offre_cible = intval($_GET['id']);
 
     // Requête SQL pour récupérer les informations de l'offre

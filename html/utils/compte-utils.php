@@ -14,6 +14,7 @@
 
             try {
                 $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->prepare("SET SCHEMA 'sae';")->execute();
 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqTypeCompte);

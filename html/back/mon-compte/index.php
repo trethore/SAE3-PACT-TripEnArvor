@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }

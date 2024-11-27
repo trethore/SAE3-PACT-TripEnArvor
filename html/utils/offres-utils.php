@@ -18,6 +18,7 @@
 
             try {
                 $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->prepare("SET SCHEMA 'sae';")->execute();
 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqTypeOffre);
@@ -44,6 +45,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -79,6 +81,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -109,6 +112,7 @@
 
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter les requêtes des dates d'ouverture
             $stmtDateOuv = $conn->prepare($reqDateOuv);
