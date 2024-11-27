@@ -281,7 +281,6 @@ try {
                                 $validHours = true;
                             }
                         }
-                        
                         if (!$validHours) {
                             echo "Fermé"; 
                         }

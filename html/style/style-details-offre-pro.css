@@ -390,6 +390,7 @@ a {
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
+    border: 3px soldi var(--orange-principale);
 }
 
 .fond-blocs-avis > p {
@@ -456,10 +457,6 @@ a {
 
 footer > div > a {
     text-decoration: none;
-}
-
-#avis {
-    display: none;
 }
 
 #carte {
