@@ -401,6 +401,7 @@
 
         if (isset($_POST['gammedeprix'])) {
             $gammedeprix = $_POST['gammedeprix'];
+            $gammedeprix = intval($gammedeprix);
         }
         
         if (isset($_POST['photo'])) {
@@ -408,22 +409,27 @@
         }
         if (isset($_POST['duree'])) {
             $duree = $_POST['duree'];
+            $duree = intval($duree);
         }
         if (isset($_POST['attractions'])) {
             $nbattraction = $_POST['attractions'];
+            $nbattraction = intval($nbattraction);
         }
         if (isset($_POST['age'])) {
             $age = $_POST['age'];
+            $age = intval($age);
         }
 
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
+            $capacite = intval($capacite);
         }
         
         if ($categorie !== "restautant") {
                 
-            if (isset($_POST['tarif1'])) {
+            if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1nom']))) {
                         $tarif1 = $_POST['tarif1'];
+                        $tarif1 = intval($tarif1);
             }
             else {
                 $tarif1 = 0;
@@ -435,14 +441,17 @@
 
             if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2nom']))) {
                 $tarif2 = $_POST['tarif2'];
+                $tarif2 = intval($tarif2);
                 $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
             }
             if ((isset($_POST['tarif3']))&&(isset($_POST['nomtarif3nom']))) {
                 $tarif3 = $_POST['tarif3'];
+                $tarif3 = intval($tarif3);
                 $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
             }
             if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4nom']))) {
                 $tarif4 = $_POST['tarif4'];
+                $tarif4 = intval($tarif4);
                 $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
             }
 
@@ -511,10 +520,10 @@
 
             switch ($categorie) {
                 case 'activite':
-                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $duree, $age]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
 
                     break;
 
@@ -528,9 +537,9 @@
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
 
                     break;
 
@@ -553,9 +562,9 @@
                     break;
 
                 case 'visite':
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $duree]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $tarif_min, $type]);
                     break;
 
                 case 'restaurant':
@@ -567,9 +576,9 @@
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img, $id_compte, $tarif_min, $type]);
 
 
                 default:
