@@ -46,7 +46,7 @@ try {
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <!-- Conteneur principal -->
@@ -174,14 +174,17 @@ try {
                                     <div class="etoiles">
                                         <?php
                                             $note = $tab["note"];
-                                            $etoilesPleines = $note;
-                                            /*$etoilesVides = 5 - $note;*/
+                                            echo "<pre>";
+                                            print_r($note);
+                                            echo "</pre>";
+                                            /*$etoilesPleines = $note;
+                                            $etoilesVides = 5 - $note;
 
                                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
                                             }
 
-                                            /*for ($i = 0; $i < $etoilesVides; $i++) {
+                                            for ($i = 0; $i < $etoilesVides; $i++) {
                                                 echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
                                             }*/
                                         ?>
