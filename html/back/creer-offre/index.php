@@ -406,6 +406,7 @@
         }
 
         $id_compte =  $_SESSION['id_compte'];
+        $id_compte = 1;
         $isIdProPrivee = isIdProPrivee($id_compte);
         $isIdProPublique = isIdProPublique($id_compte);
         echo $id_compte;
