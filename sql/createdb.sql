@@ -849,7 +849,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_activite(id_offre, duree, age_min)
         VALUES (id_offre_temp, NEW.duree, NEW.age_min);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -938,7 +938,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_visite(id_offre, duree)
         VALUES (id_offre_temp, NEW.duree);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1026,7 +1026,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_spectacle(id_offre, duree, capacite)
         VALUES (id_offre_temp, NEW.duree, NEW.capacite);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1115,7 +1115,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
         VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1205,7 +1205,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
         VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
