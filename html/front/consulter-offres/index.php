@@ -388,9 +388,11 @@ try {
             });
 
             const locationInput = document.getElementById("search-location");
+            const searchInput = document.querySelector(".input-search");
 
             locationInput.addEventListener("input", () => {
                 const searchValue = locationInput.value.trim().toLowerCase();
+                const query = searchInput.value.toLowerCase().trim();
 
                 // Filtrer les offres en fonction de la localisation
                 const filteredOffers = allOffers.filter(offer => {
