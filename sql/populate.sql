@@ -38,6 +38,7 @@ VALUES
 ('12 Rue de Paris', 'Paris', '75000', 'France'),
 ('45 Boulevard de Lyon', 'Lyon', '69000', 'France'),
 ('8 Avenue de Bordeaux', 'Bordeaux', '33000', 'France'),
+('10 Avenue de Bordeaux', 'Bordeaux', '33000', 'France'),
 ('27 Rue de Lille', 'Lille', '59000', 'France');
 
 -- ####################################################################
@@ -245,9 +246,21 @@ INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
 
 
 INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren)
-VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 101, 
+VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 5, 
 'Société Informatique Durand', 'Spécialisée dans le développement de logiciels personnalisés.', 
 'www.durand-informatique.com', '123456789');
+
+INSERT INTO sae._date(date)
+	VALUES ('1732703304'),
+    VALUES ('1732603304'),
+    VALUES ('1732703306'),
+    VALUES ('1732602304');
+    
+INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
+VALUES 
+(1, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', '1', '0', 'famille', 1,2),
+(2, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',3, 4);
+
 
 
 
