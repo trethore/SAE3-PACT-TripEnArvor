@@ -7,7 +7,7 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $stmt = $dbh->prepare('SELECT id_offre, titre FROM sae._offre');
     $stmt->execute();
-    $offres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     print_r($offres);
     $dbh = null;
 } catch (PDOException $e) {
