@@ -86,7 +86,7 @@ try {
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les avis de l'offre ===== //
-    $reqAvis = "SELECT * FROM _offre NATURAL JOIN _avis WHERE id_offre = :id_offre";
+    $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
     $stmtAvis = $dbh->prepare($reqAvis);
     $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAvis->execute();

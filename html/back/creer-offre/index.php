@@ -102,7 +102,7 @@
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte); 
                 print "prive ". $isIdProPrivee. "  "; print_r($isIdProPublique);
-                if ($isIdProPublique === null){
+                if ($isIdProPublique !== 1){
                     print "cé nul";
                 }
                 ?>
@@ -625,8 +625,8 @@
 
         // Sélectionner tous les boutons radio
 
-       // const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
-        //const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+       const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        //const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
         //console.log(isIdProPublique);
 
 
