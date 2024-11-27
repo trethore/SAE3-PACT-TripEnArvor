@@ -98,11 +98,17 @@ try {
     $stmtMembre->execute();
     $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqDate = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
-    $stmtDate = $dbh->prepare($reqDate);
-    $stmtDate->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtDate->execute();
-    $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+    $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDateAvis = $dbh->prepare($reqDateAvis);
+    $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDateAvis->execute();
+    $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
+
+    $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDatePassage = $dbh->prepare($reqDatePassage);
+    $stmtDatePassage->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDatePassage->execute();
+    $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
 
 
     $nombreNote = getNombreNotes($id_offre_cible);
@@ -350,13 +356,15 @@ try {
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
-                            <?php foreach ($date as $d) { ?>
-                                <p><strong><?php echo htmlentities($d['date']) ?></strong></p>
+                            <?php foreach ($dateAvis as $da) { ?>
+                                <p><strong><?php echo htmlentities($da['date']) ?></strong></p>
                             <?php } ?>
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <?php foreach ($datePassage as $dp) { ?>
+                        <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?> Y était le : <?php echo htmlentities($dp['date']) ?></p>
+                    <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
