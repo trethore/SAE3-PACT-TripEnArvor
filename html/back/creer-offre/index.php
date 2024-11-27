@@ -100,7 +100,8 @@
             <?php 
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
-                $isIdProPublique = isIdProPublique($id_compte); ?>
+                $isIdProPublique = isIdProPublique($id_compte); 
+                print $isIdProPrivee. "  "; print $isIdProPublique?>
 
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
@@ -626,12 +627,12 @@
 
 
         //champ type masqué si le pro est publique
-         if(isIdProPublique){  
+        //  if(isIdProPublique){  
             
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
+        //     document.getElementById("labeltype").style.display = 'none';
+        //     document.getElementById("type").style.display = 'none';
            
-         }
+        //  }
         
 
 
@@ -658,10 +659,10 @@
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            if (isIdProPrivee) {
-                document.getElementById("labelgammedeprix").style.display = 'inline';
-                document.getElementById("gammedeprix").style.display = 'inline';
-            }
+            // if (isIdProPrivee) {
+            //     document.getElementById("labelgammedeprix").style.display = 'inline';
+            //     document.getElementById("gammedeprix").style.display = 'inline';
+            // }
             document.getElementById("tarifs").style.display = 'none';
             
             
@@ -697,9 +698,9 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
-            document.getElementById("tarifs").style.display = 'inline';
-        }
+        // if((typechoisi !== "restaurant")&& (isIdProPrivee)){
+        //     document.getElementById("tarifs").style.display = 'inline';
+        // }
     }
 
 
