@@ -393,13 +393,12 @@ a {
     border: 3px solid var(--orange-principale);
 }
 
-.fond-blocs-avis:first-child {
-    font-size: 50px;
-    padding-left: 0;
-}
-
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
+}
+
+.bordure-top {
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {

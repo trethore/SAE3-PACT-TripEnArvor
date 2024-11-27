@@ -313,7 +313,7 @@ try {
 
         </section>
 
-        <section id="avis" class="fond-blocs avis">
+        <section class="fond-blocs bordure-top">
 
             <div class="display-ligne">
                 <h2>Note moyenne : </h2>
@@ -328,6 +328,10 @@ try {
 
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
+                    <div class="display-ligne-espace">
+                        <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
+                        <p class="transparent">.</p>
+                    </div>
                     <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
