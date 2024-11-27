@@ -444,7 +444,7 @@ function get_file_extension($type)
             }
             $tarif_min = $tarif1;
             $tabtarifs = array(
-                $_POST[$nomtarif1] => $tarif1
+               $nomtarif1 => $tarif1
             );
 
 
