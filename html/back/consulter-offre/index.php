@@ -135,7 +135,7 @@ try {
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
@@ -321,23 +321,17 @@ try {
             </div>
 
             <?php foreach ($avis as $a) { ?>
-
                 <div class="fond-blocs-avis">
-
                     <div class="display-ligne-espace">
-
                         <div class="display-ligne">
                             <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                            <p><strong><?php echo htmlentities($membre['pseudo']); ?></strong></p>
-
+                            <p><strong>Bob</strong></p>
                             <p><em>14/08/2023</em></p>
                         </div>
-
                         <p><strong>⁝</strong></p>
                     </div>
                     <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
-
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
@@ -346,7 +340,6 @@ try {
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
-
                 </div>      
             <?php } ?>  
 
