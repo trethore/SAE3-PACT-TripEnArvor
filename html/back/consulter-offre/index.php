@@ -330,6 +330,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
+                            <p><strong><?php echo htmlentities($a['titre'] . " - ") ?></strong></p>
                             <p><strong><?php echo htmlentities($membre['pseudo']) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
