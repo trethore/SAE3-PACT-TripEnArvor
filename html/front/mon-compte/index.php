@@ -46,7 +46,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     </header>
     <main>
         <nav>
-            <a class="ici" href="/frontk/mon-compte">Mes infos</a>
+            <a class="ici" href="/front/mon-compte">Mes infos</a>
             <a href="/back/se-connecter">Se déconnecter</a>
         </nav>
         <section>
