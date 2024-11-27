@@ -16,7 +16,7 @@
             
             $dbh = null;
             
-            return $result['count'] > 0;
+            return isset($result['count']) && $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
@@ -37,7 +37,7 @@
             
             $dbh = null;
             
-            return $result['count'] > 0;
+            return isset($result['count']) && $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
@@ -58,7 +58,7 @@
             
             $dbh = null;
             
-            return $result['count'] > 0;
+            return isset($result['count']) && $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
