@@ -19,7 +19,6 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            print_r($result);
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
@@ -44,7 +43,6 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            print_r($result);
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
@@ -69,7 +67,6 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            print_r($result);
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
