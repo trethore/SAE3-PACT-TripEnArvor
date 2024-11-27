@@ -84,6 +84,19 @@ try {
     $stmtTags->execute();
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer les avis de l'offre ===== //
+    $reqAvis = "SELECT * FROM _offre NATURAL JOIN _avis WHERE id_offre = :id_offre";
+    $stmtAvis = $dbh->prepare($reqAvis);
+    $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtAvis->execute();
+    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+
+    $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis NATURAL JOIN compte_membre WHERE id_offre = :id_offre";
+    $stmtMembre = $dbh->prepare($reqMembre);
+    $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtMembre->execute();
+    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
@@ -312,26 +325,29 @@ try {
 
                     <div class="display-ligne">
                         <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                        <p><strong>Stanislas</strong></p>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <p><strong><?php echo htmlentities($membre['pseudo']); ?></strong></p>
+                        <?php for ($etoile_jaune = 1 ; $etoile_jaune != $avis['note'] ; $etoile_jaune + 1) { ?>
+                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                        <?php }
+                        if ($avis['note'] != 5) {
+                            for ($etoile_grise = 1 ; $etoile_grise != (5 - $avis['note']) ; $etoile_grise + 1) { ?>
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                            <?php }
+                        } ?>
                         <p><em>14/08/2023</em></p>
                     </div>
 
                     <p><strong>⁝</strong></p>
                 </div>
-
-                <p>Restaurant très bon avec des ingrédients de qualité</p>
+                <p>Contexte de la visite : <?php echo htmlentities($avis['contexte_visite']); ?></p>
+                <p><?php echo htmlentities($avis['commentaire']); ?></p>
 
                 <div class="display-ligne-espace">
                     <p class="transparent">.</p>
                     <div class="display-notation">
                         <a href="#"><strong>Répondre</strong></a>
-                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                        <p><?php echo htmlentities($avis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p><?php echo htmlentities($avis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                     </div>
                 </div>
 
