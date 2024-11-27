@@ -47,17 +47,20 @@ a {
 /********************
         NAV
 *********************/
-main > article {
+nav {
     display: flex;
     flex-direction: column;
 
+    position: sticky;
+    top: 1em;
     background-color: var(--orange-principale);
     border-radius: 15px;
-    min-width: 15em;
+    width: 15em;
+    height: 100vh;
     margin-right: 1em;
 }
 
-main > article a {
+nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -74,7 +77,7 @@ main > article a {
     height: 3em;
 }
 
-main > article a:hover {
+nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
