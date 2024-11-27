@@ -375,6 +375,7 @@
 
     <?php
     } else {
+        $id_compte =  $_SESSION['id'];
         
         $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
