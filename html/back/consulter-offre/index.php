@@ -319,7 +319,7 @@ try {
 
         </section>
 
-        <section class="fond-blocs bordure-top">
+        <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
                 <h2>Note moyenne : </h2>
