@@ -326,14 +326,7 @@ try {
                         <div class="display-ligne">
                             <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                             <p><strong>Bob</strong></p>
-                            <?php for ($etoileJaune = 1 ; $etoileJaune != $a['note'] ; $etoileJaune + 1) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                            <?php }
-                            if ($a['note'] != 5) {
-                                for ($etoileGrise = 1 ; $etoileGrise != (5 - ['note']) ; $etoileGrise + 1) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                                <?php } 
-                            } ?>
+                            <p><?php echo htmlentities($a['note']) ?></p>
                             <p><em>14/08/2023</em></p>
                         </div>
                         <p><strong>⁝</strong></p>
