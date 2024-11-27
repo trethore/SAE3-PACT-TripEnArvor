@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 
 startSession();
 
@@ -167,6 +168,8 @@ if (!$submitted) {
     $tel = $_POST['tel'];
     $password_hash;
 
+    $id_compte;
+
     if ($password === $confirm_password) {
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
     }
@@ -182,9 +185,9 @@ if (!$submitted) {
                 if ($name === '') $name = null;
                 if ($first_name === '') $first_name = null;
                 if ($tel === '') $tel = null;
-                $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?);";
+                $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
+                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
                 break;
             case 'pro-publique':
                 $denomination = $_POST['denomination'];
@@ -200,9 +203,9 @@ if (!$submitted) {
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
                 break;
             case 'pro-privé':
                 $denomination = $_POST['denomination'];
@@ -219,9 +222,9 @@ if (!$submitted) {
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
                 break;
             default:
                 $ok = false;
@@ -231,6 +234,12 @@ if (!$submitted) {
     <h1>OK</h1>
     <a href=".">ok</a>
 <?php
+        $_SESSION['id'] = $id_compte;
+        if (isIdProPrivee($id_compte) || isIdProPublique($id_compte)) {
+            redirectTo('/back/');
+        } else if (isIdMember($id_compte)) {
+            redirectTo('/front/');
+        }
     } else {
 ?>
         <h1>Pas OK</h1>
