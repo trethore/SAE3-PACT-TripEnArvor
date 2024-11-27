@@ -120,10 +120,12 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td>Adresse postale</td>
                     <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
                 </tr>
-                <tr>
-                    <td>Complément d'adresse</td>
-                    <td><?php echo htmlentities($detailCompte["complement_adresse"]);?></td>
-                </tr>
+                <?php  if (isset($detailCompte["complement_adresse"])) { ?>
+                    <tr>
+                        <td>Complément d'adresse</td>
+                        <td><?php echo htmlentities($detailCompte["complement_adresse"]); ?></td>
+                    </tr> 
+                <?php } ?>
                 <tr>
                     <td>Code postal</td>
                     <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
