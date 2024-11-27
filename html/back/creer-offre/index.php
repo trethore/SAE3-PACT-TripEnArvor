@@ -624,8 +624,8 @@
 
         // Sélectionner tous les boutons radio
 
-        const isIdProPrivee = <?php echo json_encode($isIdProPrivee); ?>;
-        const isIdProPublique = <?php echo json_encode($isIdProPublique); ?>;
+        const isIdProPrivee = <?php echo $isIdProPrivee ?>;
+        const isIdProPublique = <?php echo $isIdProPublique ?>;
         console.log(isIdProPrivee);
         
 
