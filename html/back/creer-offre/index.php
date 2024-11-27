@@ -243,7 +243,7 @@
 
                     <div id="tarifs">
                         <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
+                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" required/>
                         <input type="number" name="tarif1" min="0" placeholder="prix" required/><span>€</span>
                         <br>
                         <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
@@ -625,18 +625,18 @@
 
         // Sélectionner tous les boutons radio
 
-        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
-        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-        console.log(isIdProPublique);
+       // const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        //const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+        //console.log(isIdProPublique);
 
 
         //champ type masqué si le pro est publique
-         if(isIdProPublique){  
+        //  if(isIdProPublique){  
             
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
+        //     document.getElementById("labeltype").style.display = 'none';
+        //     document.getElementById("type").style.display = 'none';
            
-         }
+        //  }
         
 
 
@@ -702,9 +702,9 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
-            document.getElementById("tarifs").style.display = 'inline';
-        }
+        // if((typechoisi !== "restaurant")&& (isIdProPrivee)){
+        //     document.getElementById("tarifs").style.display = 'inline';
+        // }
     }
 
 
