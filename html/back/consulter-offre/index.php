@@ -96,7 +96,7 @@ try {
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
-    $membre = $stmtMembre->fetch(PDO::FETCH_ASSOC);
+    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
 
     $nombreNote = getNombreNotes($id_offre_cible);
