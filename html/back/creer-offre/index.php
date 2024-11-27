@@ -628,7 +628,7 @@
 
         // Sélectionner tous les boutons radio
 
-        const isIdProPrivee = "<?php echo test1() ?>";
+        const isIdProPrivee = "<?php echo "test1()" ?>";
         console.log(isIdProPrivee);
         
 
