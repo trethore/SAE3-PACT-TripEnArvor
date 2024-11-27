@@ -104,6 +104,8 @@
                     $isIdProPublique = 0;
                 
                     print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
+                }elseif ($isIdProPublique === 1) {
+                   $isIdProPrivee = 0;
                 }
             ?>
 
