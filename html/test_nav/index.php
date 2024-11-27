@@ -5,10 +5,9 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT id_offre, titre FROM sae._offre');
+    $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
     $stmt->execute();
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    print_r($offres);
     $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
@@ -36,7 +35,7 @@ try {
             <datalist id="cont">
                 <?php 
                 foreach ($offres as $offre) { // Parcourt les titres récupérés
-                   ?><option value="<?php echo $offre['id_offre'] ?>"><?php echo $offre['titre'] ?></option><?php
+                   ?><option value="<?php echo $offre['titre'] ?>"><?php echo $offre['titre'] ?></option><?php
                 }
                 ?>
             </datalist>
