@@ -326,10 +326,11 @@ try {
                         <div class="display-ligne">
                             <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                             <p><strong>Bob</strong></p>
-                            <?php 
-                            $note = $a['note'];
-                            for ($etoileJaune = 1 ; $etoileJaune != $note ; $etoileJaune++) { ?>
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <?php } 
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
                             <p><em>14/08/2023</em></p>
                         </div>
