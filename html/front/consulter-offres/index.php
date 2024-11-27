@@ -405,20 +405,16 @@ try {
 
             locationInput.addEventListener("input", () => {
                 const searchValue = locationInput.value.trim().toLowerCase();
-                let hasResults = false;
 
                 // Filtrer les offres en fonction de la localisation
                 allOffers.forEach(offer => {
                     const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
                     if (location.includes(searchValue)) {
-                        offer.style.display = "block"; // Affiche l'offre
-                        hasResults = true;
+                        offer.style.display = ""; // Affiche l'offre
                     } else {
                         offer.style.display = "none"; // Cache l'offre
                     }
                 });
-
-                noOffersMessage.style.display = hasResults ? "none" : "block";
             });
         });
     </script>
