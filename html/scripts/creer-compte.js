@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.style.display = "flex";
                 if (listOfRequiredElements.includes(element)) {
                     setObligatoire(element, true);
+                } else {
+                    setObligatoire(element, false);
                 }
             } else {
                 element.style.display = "none";
