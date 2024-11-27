@@ -13,30 +13,17 @@ try {
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
-    $reqTypeOffre = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restaurant'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d''Attraction'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM sae._offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS offreSpe
-                        FROM _offre o
-                        WHERE o.id_offre = ?";
-
-    $stmtCategory = $dbh->prepare($reqTypeOffre);
-
     foreach ($offres as &$offre) {
-        $stmtCategory->execute([$offre['id_offre']]);
-        $categoryResult = $stmtCategory->fetch();
-        $offre['categorie'] = $categoryResult['offrespe'] ?? 'Inconnu';
+        $offre['categorie'] = getTypeOffre($offre['id_offre']);
     }
 
     foreach ($offres as &$offre) {
         $offre['note'] = 2;
     }
 
+    //foreach ($offres as &$offre) {
+    //    $offre['note'] = getNoteMoyenne($offre['id_offre']);
+    //}
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
