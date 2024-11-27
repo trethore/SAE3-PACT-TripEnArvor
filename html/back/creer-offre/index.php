@@ -402,6 +402,7 @@ function get_file_extension($type)
 
         if (isset($_POST['gammedeprix'])) {
             $gammedeprix = $_POST['gammedeprix'];
+            $gammedeprix = intval($gammedeprix);
         }
 
         if (isset($_POST['photo'])) {
@@ -409,26 +410,32 @@ function get_file_extension($type)
         }
         if (isset($_POST['duree'])) {
             $duree = $_POST['duree'];
+            $duree = intval($duree);
         }
         if (isset($_POST['attractions'])) {
             $nbattraction = $_POST['attractions'];
+            $nbattraction = intval($nbattraction);
         }
         if (isset($_POST['age'])) {
             $age = $_POST['age'];
+            $age = intval($age);
         }
 
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
+            $capacite = intval($capacite);
         }
         if (isset($_POST['lacat'])) {
             $categorie = $_POST['lacat'];
         }
 
         if ($categorie !== "restautant") {
-
-            if (isset($_POST['tarif1']) && (isset($_POST['nomtarif1nom']))) {
-                $tarif1 = $_POST['tarif1'];
-            } else {
+                
+            if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1nom']))) {
+                        $tarif1 = $_POST['tarif1'];
+                        $tarif1 = intval($tarif1);
+            }
+            else {
                 $tarif1 = 0;
             }
             $tarif_min = $tarif1;
@@ -439,14 +446,17 @@ function get_file_extension($type)
 
             if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2nom']))) {
                 $tarif2 = $_POST['tarif2'];
+                $tarif2 = intval($tarif2);
                 $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
             }
             if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3nom']))) {
                 $tarif3 = $_POST['tarif3'];
+                $tarif3 = intval($tarif3);
                 $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
             }
             if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4nom']))) {
                 $tarif4 = $_POST['tarif4'];
+                $tarif4 = intval($tarif4);
                 $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
             }
 
@@ -458,9 +468,6 @@ function get_file_extension($type)
 
         }
         print_r($_POST);
-
-
-            print_r($_POST);
 
 
 
@@ -479,7 +486,70 @@ function get_file_extension($type)
 
 
 
+            switch ($categorie) {
+                case 'activite':
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    
+                    $stmt = $dbh->prepare($requete);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
 
+                    break;
+
+                case 'parc':
+                    $file = $_FILES['plan'];
+                    $file_extension = get_file_extension($file['type']);
+                    $time = 'p' . strval(time());
+
+                    if ($file_extension !== '') {
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                        $fichier_img = 'plan_' . $time . $file_extension;
+                    }
+
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $stmt = $dbh->prepare($requete);
+                    $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
+
+                    break;
+
+                case 'spectacle':
+                    $type = "standard";
+                    $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    print($capacite);
+                    print $duree;
+                    $stmt = $dbh->prepare($requete);
+                     $stmt->execute([
+                        $titre, 
+                        $resume, 
+                        $ville, 
+                        intval($duree), 
+                        intval($capacite), 
+                        $id_compte, 
+                        $tarif_min, 
+                        $type
+                     ]);
+                    break;
+
+                case 'visite':
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $stmt = $dbh->prepare($requete);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $tarif_min, $type]);
+                    break;
+
+                case 'restaurant':
+                    $file = $_FILE['carte'];
+                    $file_extension = get_file_extension($file['type']);
+                    $time = 'p' . strval(time());
+
+                    if ($file_extension !== '') {
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                        $fichier_img = 'plan_' . $time . $file_extension;
+                    }
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $stmt = $dbh->prepare($requete);
+                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img, $id_compte, $tarif_min, $type]);
+                    default:
+                    die("Erreur de categorie!");
+            }
 
             try {
 
