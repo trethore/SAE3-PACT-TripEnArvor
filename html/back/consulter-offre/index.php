@@ -126,7 +126,7 @@ try {
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="fond-bloc">
+    <div class="fond-bloc display-ligne-espace">
         <div class="bouton-modifier display-ligne-espace"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
