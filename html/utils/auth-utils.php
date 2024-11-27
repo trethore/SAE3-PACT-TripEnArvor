@@ -23,7 +23,7 @@
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
 
@@ -48,7 +48,7 @@
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
     
@@ -73,7 +73,7 @@
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
 
