@@ -620,18 +620,18 @@
 
         // Sélectionner tous les boutons radio
 
-        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
-        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-        console.log(isIdProPrivee);
+        //const isIdProPrivee = "<?php //echo json_encode($isIdProPrivee) ?>";
+        //const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
+        //console.log(isIdProPrivee);
 
 
         //champ type masqué si le pro est publique
-        <?php if(isIdProPublique($id_compte)){ ?> 
+         if(isIdProPublique){  
             
             document.getElementById("labeltype").style.display = 'none';
             document.getElementById("type").style.display = 'none';
            
-            <?php } ?>
+         }
         
 
 
