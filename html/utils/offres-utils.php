@@ -131,39 +131,26 @@
         }
     }
 
-    /*function getNoteMoyenne($id_offre) {
+    function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqIMG = "SELECT img.lien_fichier 
-            FROM sae._image img
-            JOIN sae._offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = :id_offre
-            LIMIT 1;";
+        $reqNote = "SELECT AVG(note)
+            FROM sae._avis
+            WHERE id_offre = :id_offre";
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-            // Préparer et exécuter la requête
-            $stmtIMG = $conn->prepare($reqIMG);
-            $stmtIMG->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
-            $stmtIMG->execute();
+            $stmtNOTE = $conn->prepare($reqNote);
+            $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtNOTE->execute();
 
-            // Récupérer la première image
-            $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
-
-            if ($image && !empty($image['lien_fichier'])) {
-                // Afficher l'image si elle existe
-                $lienIMG = $image['lien_fichier'];
-            } else {
-                // Afficher une image par défaut
-                $lienIMG = 'default-image.jpg';
-            }
+            $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
             $conn = null;
-            return $lienIMG;
+            return $moyenne;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-    }*/
+    }
 ?>
