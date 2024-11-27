@@ -402,8 +402,10 @@
             $capacite = $_POST['capacite'];
         }
         if(isset($_SESSION['id_compte'])){
-            $id_compte =  $_SESSION['id_compte'];
+            
         }
+
+        $id_compte =  $_SESSION['id_compte'];
         $isIdProPrivee = isIdProPrivee($id_compte);
         $isIdProPublique = isIdProPublique($id_compte);
         echo $id_compte;
