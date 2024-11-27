@@ -177,12 +177,16 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            if (empty($tab["note"])) {
+                                            /*echo "<pre>";
+                                            print_r($tab["note"]);
+                                            echo "</pre>";*/
+
+                                            if (empty($tab["note"]["round"])) {
                                                 for ($i = 0; $i < 5; $i++) {
                                                     echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
                                                 }
                                             } else {
-                                                $note = $tab["note"];
+                                                $note = $tab["note"]["round"];
                                                 $etoilesPleines = $note;
                                                 $etoilesVides = 5 - $note;
 
@@ -195,7 +199,7 @@ try {
                                                 }
                                             }
                                         ?>
-                                        <p class="nombre-notes">(<?php echo $tab['nombre_notes'] ?>)</p>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
