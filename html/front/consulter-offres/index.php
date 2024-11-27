@@ -402,6 +402,7 @@ try {
             });
 
             const locationInput = document.getElementById("search-location");
+            const searchInput = document.querySelector(".input-search");
 
             locationInput.addEventListener("input", () => {
                 const searchValue = locationInput.value.trim().toLowerCase();
