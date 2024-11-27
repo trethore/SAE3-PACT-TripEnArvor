@@ -98,6 +98,12 @@ try {
     $stmtMembre->execute();
     $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
+    $reqDate = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDate = $dbh->prepare($reqDate);
+    $stmtDate->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDate->execute();
+    $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+
 
     $nombreNote = getNombreNotes($id_offre_cible);
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
@@ -344,7 +350,9 @@ try {
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
-                            <p><em><strong>14/08/2023</strong></em></p>
+                            <?php foreach ($date as $d) { ?>
+                                <p><strong><?php echo htmlentities($d['date']) ?></strong></p>
+                            <?php } ?>
                         </div>
                         <p class="transparent">.</p>
                     </div>
