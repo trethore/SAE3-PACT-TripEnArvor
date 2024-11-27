@@ -424,13 +424,7 @@
             die("Erreur : utilisateur non connecté.");
         }
 
-        //champ type masqué si le pro est publique
-        if(isIdProPublique($id_compte)){ ?> 
-            <script>
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
-            </script>
-        <?php } 
+        
 
 
     
@@ -628,6 +622,15 @@
         const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
         const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
         console.log(isIdProPrivee);
+
+
+        //champ type masqué si le pro est publique
+        <?php if(isIdProPublique($id_compte)){ ?> 
+            
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
+           
+            <?php } ?>
         
 
 
