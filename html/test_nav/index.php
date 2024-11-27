@@ -39,7 +39,7 @@ try {
                 }
             ?>
             <script>
-                elementList = parentNode.querySelectorAll('div[option]');
+                elementList = document.querySelectorAll('div[option]');
 
                 elementList.forEach(element => {
                     element.addEventListener("click", (event) => {
