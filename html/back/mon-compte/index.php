@@ -57,7 +57,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $stmt = $conn->prepare($reqCompte);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_COLUMN)
+                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Détails du compte</h1>
             <article>
