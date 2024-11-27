@@ -177,6 +177,10 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
+                                            echo "<pre>";
+                                            print_r($tab["note"]);
+                                            echo "</pre>";
+                                            
                                             if (empty($tab["note"])) {
                                                 for ($i = 0; $i < 5; $i++) {
                                                     echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
