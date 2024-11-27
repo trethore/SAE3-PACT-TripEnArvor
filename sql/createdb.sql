@@ -35,7 +35,7 @@ CREATE TABLE _compte (
     id_compte       SERIAL,
     nom_compte      VARCHAR(30),
     prenom          VARCHAR(30),
-    email           VARCHAR(320) NOT NULL,
+    email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
     id_adresse      INTEGER,
