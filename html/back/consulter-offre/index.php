@@ -327,14 +327,7 @@ try {
                     <div class="display-ligne">
                         <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                         <p><strong><?php echo htmlentities($membre['pseudo']); ?></strong></p>
-                        <?php for ($etoile_jaune = 1 ; $etoile_jaune != $avis['note'] ; $etoile_jaune + 1) { ?>
-                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <?php }
-                        if ($avis['note'] != 5) {
-                            for ($etoile_grise = 1 ; $etoile_grise != (5 - $avis['note']) ; $etoile_grise + 1) { ?>
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                            <?php }
-                        } ?>
+
                         <p><em>14/08/2023</em></p>
                     </div>
 
