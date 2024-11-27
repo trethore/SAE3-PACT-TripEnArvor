@@ -428,7 +428,7 @@ function get_file_extension($type)
         }
         if (isset($_POST['lacat'])) {
             $categorie = $_POST['lacat'];
-            print $_POST['lacat'];
+            print $_POST['lacat'];  
             
         }
 
@@ -475,7 +475,8 @@ function get_file_extension($type)
         }
         print_r($_POST);
 
-        print $_POST['lacat'];
+        $categorie =  $_POST['lacat'];
+        print("la categoire   ".$categorie);
 
 
 
