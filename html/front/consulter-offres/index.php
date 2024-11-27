@@ -128,8 +128,8 @@ try {
                         <div>
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
-                                <label><input type="radio" name="localisation"> Rechercher</label>
-                                <input type="text" placeholder="Rechercher...">
+                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                                <input id="search-location" type="text" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -387,6 +387,29 @@ try {
             // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
+            });
+
+            const locationInput = document.getElementById("search-location");
+
+            locationInput.addEventListener("input", () => {
+                const searchValue = locationInput.value.trim().toLowerCase();
+
+                // Filtrer les offres en fonction de la localisation
+                const filteredOffers = allOffers.filter(offer => {
+                    const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                    return location.includes(searchValue);
+                });
+
+                // Mettre à jour l'affichage des offres
+                offersContainer.innerHTML = ""; // Réinitialise les offres affichées
+
+                if (filteredOffers.length > 0) {
+                    filteredOffers.forEach(offer => offersContainer.appendChild(offer));
+                } else {
+                    // Afficher un message si aucune offre ne correspond
+                    const noOffersMessage = document.getElementById("no-offers-message");
+                    noOffersMessage.style.display = "block";
+                }
             });
         });
     </script>
