@@ -1,14 +1,8 @@
 <?php
-$driver = "mysql"; // Remplacez par "pgsql" pour PostgreSQL, "sqlite" pour SQLite, etc.
-$server = "localhost"; // L'hôte de la base de données (souvent "localhost")
-$dbname = "votre_base_de_donnees"; // Le nom de votre base de données
-$user = "votre_utilisateur"; // Le nom d'utilisateur de la base de données
-$pass = "votre_mot_de_passe"; // Le mot de passe de la base de données
-
 try {
-    $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
+    $stmt = $dbh->prepare('SELECT id_offre, titre FROM sae._offre');
     $stmt->execute();
-    $titres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+    $offres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
@@ -34,8 +28,8 @@ try {
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php 
-                foreach ($titres as $titre) { // Parcourt les titres récupérés
-                    echo "<option value=\"{$titre}\"></option>";
+                foreach ($offres as $offre) { // Parcourt les titres récupérés
+                   ?><option value="<?php echo $offre['id_offre'] ?>"><?php echo $offre['titre'] ?></option><?php
                 }
                 ?>
             </datalist>
