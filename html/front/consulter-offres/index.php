@@ -21,6 +21,10 @@ try {
     foreach ($offres as &$offre) {
         $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
+    
+    foreach ($offres as &$offre) {
+        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -173,22 +177,25 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            $note = $tab["note"];
-                                            echo "<pre>";
-                                            print_r($note);
-                                            echo "</pre>";
-                                            /*$etoilesPleines = $note;
-                                            $etoilesVides = 5 - $note;
+                                            if (empty($tab["note"])) {
+                                                for ($i = 0; $i < 5; $i++) {
+                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                }
+                                            } else {
+                                                $note = $tab["note"];
+                                                $etoilesPleines = $note;
+                                                $etoilesVides = 5 - $note;
 
-                                            for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
+                                                for ($i = 0; $i < $etoilesPleines; $i++) {
+                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
+                                                }
+
+                                                for ($i = 0; $i < $etoilesVides; $i++) {
+                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                }
                                             }
-
-                                            for ($i = 0; $i < $etoilesVides; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
-                                            }*/
                                         ?>
-                                        <p class="nombre-notes">(120)</p>
+                                        <p class="nombre-notes">(<?php echo $tab['nombre_notes'] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
