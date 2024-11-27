@@ -98,10 +98,10 @@
         </div> -->
         <main>
             <?php 
-        $id_compte =  $_SESSION['id'];
-        //$isIdProPrivee = isIdProPrivee($id_compte);
-        //$isIdProPublique = isIdProPublique($id_compte);
-        print "$id_compte";?>
+                $id_compte =  $_SESSION['id'];
+                $isIdProPrivee = isIdProPrivee($id_compte);
+                $isIdProPublique = isIdProPublique($id_compte); ?>
+
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
                 <h3>Informations importantes</h3>
@@ -406,9 +406,7 @@
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
         }
-        if(isset($_SESSION['id_compte'])){
-            
-        }
+        
 
 
         
@@ -607,6 +605,7 @@
             die();
         }
     }
+
     ?>
 
 
@@ -626,8 +625,9 @@
 
         // Sélectionner tous les boutons radio
 
-        //const isIdProPrivee = "<?php //echo json_encode($)"test1()" ?>";
-        //console.log(isIdProPrivee);
+        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+        console.log(isIdProPrivee);
         
 
 
