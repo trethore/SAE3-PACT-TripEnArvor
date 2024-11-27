@@ -274,14 +274,11 @@ try {
                     <p>
                         <?php 
                         echo htmlentities($jour['nom_jour'] . " : ");
-                        $validHours = false; // Flag to check if there are valid hours for this day
-                        foreach ($horaires as $horaire) {
-                            if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
+                        $validHours = false; 
+                        if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
                                 echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
                                 $validHours = true;
-                            }
-                        }
-                        if (!$validHours) {
+                        } else if (!$validHours) {
                             echo "Fermé"; 
                         }
                         ?>
