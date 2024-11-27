@@ -260,7 +260,7 @@ try {
     
         </section>
 
-        <section class="fond-blocs bordure">
+        <section class="fond-blocs">
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
@@ -332,7 +332,6 @@ try {
                         <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                         <p class="transparent">.</p>
                     </div>
-                    <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
                             <p><strong>AntoineL</strong></p>
