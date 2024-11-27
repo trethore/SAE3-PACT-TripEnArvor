@@ -101,13 +101,13 @@
                 $isIdProPublique = isIdProPublique($id_compte);
                 print_r($isIdProPublique);
                 
-                if ($isIdProPublique !== 1){
-                    $isIdProPublique = 0;
+                if ($isIdProPublique !== true){
+                    $isIdProPublique = false;
                     print "pro prive ";
                 
                     
-                }else if ($isIdProPublique === 1) {
-                   $isIdProPrivee = 0;
+                }else if ($isIdProPublique === true) {
+                   $isIdProPrivee = false;
                    print"prop publique"; 
                 }
                 print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
