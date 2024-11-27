@@ -341,34 +341,36 @@ try {
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                        <p class="titre-avis"><?php echo htmlentities($a['titre']) ?></p>
+                        <?php foreach ($membre as $m) { ?>
+                            <p class="titre-avis"><?php echo htmlentities($m['pseudo']) ?></p>
+                        <?php } ?>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
-                            <?php foreach ($membre as $m) { ?>
-                                <p><strong><?php echo htmlentities($m['pseudo']) ?></strong></p>
-                            <?php } ?>
-                            <!-- <p><strong></p/?php echo htmlentities($membre['pseudo']) ?></strong></p> -->
+                            <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } 
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
-                            <?php foreach ($dateAvis as $da) { ?>
-                                <p><strong><?php echo htmlentities($da['date']) ?></strong></p>
+                            <?php foreach ($dateAvis as $da) { 
+                                $publication = explode(' ', $dp['date']);
+                                $datePub = $publication[0]; 
+                                $heurePub = $publication[1]; ?>
+                                <p><strong><?php echo htmlentities($datePub); ?> à <?php echo htmlentities($heurePub); ?></strong></p>
                             <?php } ?>
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <?php foreach ($datePassage as $dp) { 
                         $passage = explode(' ', $dp['date']);
-                        $date = $passage[0]; 
-                        $heure = $passage[1]; ?>
-                        <p>Y était le : <?php echo htmlentities($date); ?> à <?php echo htmlentities($heure); ?></p>
+                        $datePass = $passage[0]; 
+                        $heurePass = $passage[1]; ?>
+                        <p>Y était le : <?php echo htmlentities($datePass); ?> à <?php echo htmlentities($heurePass); ?></p>
                     <?php } ?>
+                    <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
