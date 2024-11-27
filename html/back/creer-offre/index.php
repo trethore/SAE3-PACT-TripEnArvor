@@ -98,7 +98,7 @@
             <?php 
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
-                
+                $isIdProPublique = isIdProPublique($id_compte);
                 
                 if ($isIdProPublique !== 1){
                     $isIdProPublique = 0;
