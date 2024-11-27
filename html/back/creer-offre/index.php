@@ -34,7 +34,25 @@ function get_file_extension($type)
     }
     return $extension;
 }
-?>
+
+    $id_compte =  $_SESSION['id'];
+    $isIdProPrivee = isIdProPrivee($id_compte);
+    $isIdProPublique = isIdProPublique($id_compte);
+    print_r($id_compte);
+    //print_r($isIdProPublique);
+
+    if ($isIdProPublique !== true) {
+        $isIdProPublique = false;
+        //print "pro prive ";
+
+
+    } else if ($isIdProPublique === true) {
+        $isIdProPrivee = false;
+        //print"prop publique"; 
+    }
+    //print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,24 +114,7 @@ function get_file_extension($type)
             </div>
         </div> -->
         <main>
-            <?php
-            $id_compte =  $_SESSION['id'];
-            $isIdProPrivee = isIdProPrivee($id_compte);
-            $isIdProPublique = isIdProPublique($id_compte);
-            print_r($id_compte);
-            //print_r($isIdProPublique);
-
-            if ($isIdProPublique !== true) {
-                $isIdProPublique = false;
-                //print "pro prive ";
-
-
-            } else if ($isIdProPublique === true) {
-                $isIdProPrivee = false;
-                //print"prop publique"; 
-            }
-            //print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
-            ?>
+            
 
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
@@ -434,9 +435,12 @@ function get_file_extension($type)
             if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1nom']))) {
                         $tarif1 = $_POST['tarif1'];
                         $tarif1 = intval($tarif1);
+                        $nomtarif1 = $_POST['nomtarif1nom'];
             }
             else {
                 $tarif1 = 0;
+                $nomtarif1 = "nomtarif1";
+
             }
             $tarif_min = $tarif1;
             $tabtarifs = array(
@@ -653,16 +657,18 @@ function get_file_extension($type)
                         break;
                 }
 
-
-                foreach ($tabtarifs as $key => $value) {
-                    $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
-
-                    // Préparation de la requête pour la vue tarif
-                    $stmt_tarif = $dbh->prepare($requete_tarif);
-
-                    // Exécution de la requête pour insérer dans la vue tarif
-                    $stmt_tarif->execute([$id_offre, $value, $key]);
+                if ($isIdProPrivee){
+                    foreach ($tabtarifs as $key => $value) {
+                        $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
+    
+                        // Préparation de la requête pour la vue tarif
+                        $stmt_tarif = $dbh->prepare($requete_tarif);
+    
+                        // Exécution de la requête pour insérer dans la vue tarif
+                        $stmt_tarif->execute([$id_offre, $value, $key]);
+                    }
                 }
+                
 
 
 
