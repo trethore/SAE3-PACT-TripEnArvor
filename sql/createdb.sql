@@ -590,7 +590,7 @@ BEGIN
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
     INSERT INTO _compte_professionnel_prive(id_compte, siren)
         VALUES (id_compte_temp, NEW.siren);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.siren);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -682,7 +682,7 @@ BEGIN
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
     INSERT INTO _compte_professionnel_publique(id_compte)
         VALUES (id_compte_temp);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -768,7 +768,7 @@ BEGIN
         RETURNING id_compte INTO id_compte_temp;
     INSERT INTO _compte_membre(id_compte, pseudo)
         VALUES (id_compte_temp, NEW.pseudo);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.pseudo);
 END;
 $$ LANGUAGE 'plpgsql';
 
