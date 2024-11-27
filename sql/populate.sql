@@ -251,7 +251,7 @@ VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse
 'www.durand-informatique.com', '123456789');
 
 INSERT INTO sae._date(date)
-	VALUES ('2024-11-27 11:00:00'), ('2024-11-27 17:00:00'), ('12024-11-27 20:00:00'), ('2024-11-27 21:00:00');
+	VALUES ('2024-11-27 11:00:00'), ('2024-11-27 17:00:00'), ('2024-11-27 20:00:00'), ('2024-11-27 21:00:00');
     
 INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
 VALUES 
