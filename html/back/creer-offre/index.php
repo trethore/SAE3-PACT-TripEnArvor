@@ -391,7 +391,7 @@
 
         // $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
         // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
-        if (isset($_POST['decriptionC'])) {
+        if (isset($_POST['descriptionC'])) {
             $resume = $_POST['descriptionC'];
         }
 
@@ -479,7 +479,7 @@
 
             switch ($categorie) {
                 case 'activite':
-                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES ($titre, $resume, $ville, $duree, $age) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $duree, $age]);
@@ -503,11 +503,11 @@
                     break;
 
                 case 'spectacle':
-                    $requete = "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $duree, $capacite]); //ajouter id_compte_professionel, prix_offre, type_offre 
+                    $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite)]); //ajouter id_compte_professionel, prix_offre, type_offre 
                     break;
 
                 case 'visite':
