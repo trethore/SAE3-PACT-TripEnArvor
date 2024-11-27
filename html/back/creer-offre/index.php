@@ -620,18 +620,18 @@
 
         // Sélectionner tous les boutons radio
 
-        //const isIdProPrivee = "<?php //echo json_encode($isIdProPrivee) ?>";
-        const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
+        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
         console.log(isIdProPublique);
 
 
         //champ type masqué si le pro est publique
-        //  if(isIdProPublique){  
+         if(isIdProPublique){  
             
-        //     document.getElementById("labeltype").style.display = 'none';
-        //     document.getElementById("type").style.display = 'none';
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
            
-        //  }
+         }
         
 
 
@@ -658,10 +658,10 @@
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            // if (isIdProPrivee) {
-            //     document.getElementById("labelgammedeprix").style.display = 'inline';
-            //     document.getElementById("gammedeprix").style.display = 'inline';
-            // }
+            if (isIdProPrivee) {
+                document.getElementById("labelgammedeprix").style.display = 'inline';
+                document.getElementById("gammedeprix").style.display = 'inline';
+            }
             document.getElementById("tarifs").style.display = 'none';
             
             
@@ -697,9 +697,9 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        // if((typechoisi !== "restaurant")&& (isIdProPrivee)){
-        //     document.getElementById("tarifs").style.display = 'inline';
-        // }
+        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
+            document.getElementById("tarifs").style.display = 'inline';
+        }
     }
 
 
