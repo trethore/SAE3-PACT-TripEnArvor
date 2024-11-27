@@ -239,5 +239,17 @@ INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
 ('Tarif Réduit Après-midi', 15, 2),   
 ('Tarif Standard Soir', 25, 3), 
 ('Tarif Réduit Soir', 18, 3);   
+
+
+
+
+
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren)
+VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 101, 
+'Société Informatique Durand', 'Spécialisée dans le développement de logiciels personnalisés.', 
+'www.durand-informatique.com', '123456789');
+
+
+
 COMMIT;
 
