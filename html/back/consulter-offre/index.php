@@ -268,7 +268,7 @@ try {
 
         </section>
 
-        <section class="double-blocs bordure">
+        <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
                 <div>
@@ -306,7 +306,7 @@ try {
             
         </section>
 
-        <section id="carte" class="fond-blocs bordure">
+        <section id="carte" class="fond-blocs">
 
             <h1>Localisation</h1>
             <div id="map" class="carte"></div>
