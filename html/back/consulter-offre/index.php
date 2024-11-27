@@ -362,8 +362,12 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <?php foreach ($datePassage as $dp) { ?>
-                        <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?> Y était le : <?php echo htmlentities($dp['date']) ?></p>
+                    <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <?php foreach ($datePassage as $dp) { 
+                        $passage = explode(' ', $dp['date']);
+                        $date = $passage[0]; 
+                        $heure = $passage[1]; ?>
+                        <p>Y était le : <?php echo htmlentities($date); ?> à <?php echo htmlentities($heure); ?></p>
                     <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
