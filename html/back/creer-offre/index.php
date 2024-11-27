@@ -405,10 +405,14 @@
             
         }
 
+        function test1(){
+            return 1;
+        }
+
         $id_compte =  $_SESSION['id_compte'];
         $id_compte = 1;
-        $isIdProPrivee = isIdProPrivee($id_compte);
-        $isIdProPublique = isIdProPublique($id_compte);
+        //$isIdProPrivee = isIdProPrivee($id_compte);
+        //$isIdProPublique = isIdProPublique($id_compte);
         echo $id_compte;
 
         
@@ -624,8 +628,7 @@
 
         // Sélectionner tous les boutons radio
 
-        const isIdProPrivee = "<?php echo $isIdProPrivee ?>";
-        const isIdProPublique = "<?php echo $isIdProPublique ?>";
+        const isIdProPrivee = "<?php echo test1() ?>";
         console.log(isIdProPrivee);
         
 
