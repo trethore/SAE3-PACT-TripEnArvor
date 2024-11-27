@@ -436,7 +436,8 @@ function get_file_extension($type)
                 $_POST['nomtarif1nom'] => $tarif1
             );
 
-            if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2nom']))) {
+
+            if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2nom']))) {
                 $tarif2 = $_POST['tarif2'];
                 $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
             }
@@ -454,6 +455,10 @@ function get_file_extension($type)
                     $tarif_min = $value;
                 }
             }
+
+        }
+        print_r($_POST);
+
 
             print_r($_POST);
 
@@ -634,7 +639,8 @@ function get_file_extension($type)
                 die();
             }
         }
-    }
+    
+
 
     ?>
 
