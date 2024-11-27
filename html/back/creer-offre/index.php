@@ -102,7 +102,7 @@
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte); 
                 print "prive ". $isIdProPrivee. "  "; print "publique ".$isIdProPublique;
-                if ($isIdProPrivee == null){
+                if ($isIdProPrivee === null){
                     print "cé nul";
                 }
                 ?>
