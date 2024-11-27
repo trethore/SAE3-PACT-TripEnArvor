@@ -19,12 +19,8 @@ try {
     }
 
     foreach ($offres as &$offre) {
-        $offre['note'] = 2;
+        $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
-
-    //foreach ($offres as &$offre) {
-    //    $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    //}
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
