@@ -420,7 +420,7 @@
             $capacite = $_POST['capacite'];
         }
         
-
+        print_r($_POST);
 
         
 
