@@ -329,7 +329,7 @@ try {
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                        <p><?php echo htmlentities($a['titre']) ?></p>
+                        <p class="titre-avis"><?php echo htmlentities($a['titre']) ?></p>
                         <p class="transparent">.</p>
                     </div>
                     <div class="display-ligne-espace">
