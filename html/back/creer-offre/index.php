@@ -473,6 +473,8 @@ function get_file_extension($type)
         }
         print_r($_POST);
 
+        print $categorie;
+
 
 
 
