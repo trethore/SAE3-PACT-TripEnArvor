@@ -415,7 +415,7 @@ try {
                 });
 
                 // Mettre à jour l'affichage des offres
-                offersContainer.innerHTML = ""; // Réinitialise les offres affichées
+                offersContainer.innerHTML = "";
 
                 if (filteredOffers.length > 0) {
                     filteredOffers.forEach(offer => offersContainer.appendChild(offer));
