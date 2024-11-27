@@ -1,14 +1,37 @@
 <?php
-    require_once("../../utils/offres-utils.php");
-    require_once("../../utils/site-utils.php");
-    require_once("../../utils/session-utils.php");
-    require_once("../../utils/auth-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
 
     session_start();
-    if (isset($_POST['titre'])) {
+    if (isset($_POST['titre'])) { // les autres svp²
         $submitted = true;
     } else {
         $submitted = false;
+    }
+
+    
+
+    function get_file_extension($type){
+        $extension = '';
+        switch ($type) {
+            case 'image/png':
+                $extension = '.png';
+                break;
+            case 'image/jpeg':
+                $extension = '.jpg';
+                break;
+            case 'image/webp':
+                $extension = '.webp';
+                break;
+            case 'image/gif':
+                $extension = '.gif';
+                break;
+            default:
+                break;
+        }
+        return $extension;
     }
 ?>
 <!DOCTYPE html>
@@ -28,20 +51,20 @@
 </head>
 
 <body>
-    <header>
+    <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche..." />
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <?php
     if (!$submitted) {
     ?>
-        <div id="offre">
+        <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
             <div class="close">
@@ -72,8 +95,18 @@
                 <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
                 <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
             </div>
-        </div>
+        </div> -->
         <main>
+            <?php 
+                $id_compte =  $_SESSION['id'];
+                $isIdProPrivee = isIdProPrivee($id_compte);
+                $isIdProPublique = isIdProPublique($id_compte); 
+                print "prive ". $isIdProPrivee. "  "; print "publique ".$isIdProPublique;
+                if ($isIdProPrivee == null){
+                    print "cé nul";
+                }
+                ?>
+
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
                 <h3>Informations importantes</h3>
@@ -98,8 +131,8 @@
                                 </div>
                             </td>
                         </tr>
-                        <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td>
+                        <!-- <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
+                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td> -->
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix"/></td>
@@ -107,30 +140,30 @@
                         <tr>
                             <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="dispo" name="ladispo">
                                         <option value="">Choisir une disponibilité</option>
                                         <option value="ouvert"> Ouvert </option>
                                         <option value="ferme"> Fermé </option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </td>
                         </tr>
 
 
                         <tr>
-                            <td><label id="labeladresse" for="adresse">Adresse</label></td>
+                            <!-- <td><label id="labeladresse" for="adresse">Adresse</label></td> -->
                             <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                         </tr>
                         <tr>
-                            <td><label for="cp">Code Postal </label></td>
-                            <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td>
+                             <td><!--<label for="cp" id="labelcp">Code Postal </label>--></td>
+                            <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td> 
                             <td><label for="ville">Ville <span class="required">*</span></label></td>
                             <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
 
                         </tr>
                         <tr>
-                            <td><label for="photo"> Photo <span class="required">*</span> (max. 5)</label></td>
+                            <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                             <td>
                                 <div>
                                     <!-- <label for="file-upload">
@@ -142,22 +175,22 @@
 
                         </tr>
                         <tr>
-                            <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
+                            <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
                             <td>
-                                <div class="custom-select-container">
+                                <!-- <div class="custom-select-container">
                                     <select class="custom-select" id="type" name="letype">
                                         <option value="standard"> Offre Standard </option>
                                         <option value="premium"> Offre Premium </option>
                                     </select>
-                                </div>
+                                </div> -->
                             </td>
                         </tr>
                         <tr>
-                            <div id="options">
+                            <!-- <div id="options">
                                 <td><label>Options</label></td>
                                 <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
                                 <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
-                            </div>
+                            </div> -->
                         </t>
                         
                     </table>
@@ -208,10 +241,10 @@
                     <!-- <h3>Description détaillée de l'offre</h3> -->
                     <!-- <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea> -->
 
-                    <!-- <div id="tarifs">
-                        <h3>Tarifs</h3>
+                    <div id="tarifs">
+                        <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
                         <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
-                        <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
+                        <input type="number" name="tarif1" min="0" placeholder="prix" required/><span>€</span>
                         <br>
                         <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif2" min="0" placeholder="prix" /><span>€</span>
@@ -222,15 +255,15 @@
                         <input type="text" id="tarif4nom" name="tarif4nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif4" min="0" placeholder="prix" /><span>€</span>
                         <br>
-                        <label for="grilleT">Grille tarifaire complète</label>
-                        <input type="file" id="grilleT" name="grilleT" />
+                        <!-- <label for="grilleT">Grille tarifaire complète</label>
+                        <input type="file" id="grilleT" name="grilleT" /> -->
 
 
-                    </div> -->
+                    </div>
                     <br>
 
 
-                    <h3>Ouverture</h3>
+                    <!-- <h3>Ouverture</h3>
                     <table border="0">
                         <tr>
                             <td>Lundi</td>
@@ -274,7 +307,7 @@
                             <td>-></td>
                             <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
                         </tr>
-                    </table>
+                    </table> -->
                     <div class="bt_cree">
                         <input class="valider" type="submit" value="Créer l'offre" />
 
@@ -335,17 +368,10 @@
 
     <?php
     } else {
-
-
-        $server = 'postgresdb';
-        $driver = 'pgsql';
-        $dbname = 'sae';
-        $user   = 'sae';
-        $pass    = 'naviguer-vag1n-eNTendes';
-
+        
         $resume= $_POST['descriptionC'];
         // Inclusion des paramètres de connexion
-        // include('../../php/connect_params.php');
+        include('../../php/connect_params.php');
 
         // Récupération des données du formulaire avec $_POST
         // $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
@@ -359,7 +385,6 @@
         // $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
         if (isset($_POST['decriptionC'])) {
             $resume = $_POST['descriptionC'];
-            print $_POST['descriptionC'];
         }
 
         if (isset($_POST['ville'])) {
@@ -369,9 +394,7 @@
         if (isset($_POST['gammedeprix'])) {
             $gammedeprix = $_POST['gammedeprix'];
         }
-        if (isset($_POST['prix'])) {
-            $prixmin = $_POST['prix'];
-        }
+        
         if (isset($_POST['photo'])) {
             $photo1 = $_FILE['photo'];
         }
@@ -388,9 +411,12 @@
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
         }
-        if(isset($_SESSION['id_compte'])){
-            $id_compte =  $_SESSION['id_compte'];
-        }
+        
+
+
+        
+
+        
 
         
         //print_r($_FILES);
@@ -403,16 +429,10 @@
             die("Erreur : utilisateur non connecté.");
         }
 
-        if(!$id_compte){
-            //isIdProPrivee($id_compte)){ ?>
-            <script>
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
-            </script>
-        <?php } ?>
+        
 
 
-    <?php
+    
         try {
 
 
@@ -423,6 +443,7 @@
             
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Début de la requête SQL
     
@@ -503,17 +524,38 @@
             }
 
             if ($categorie !== "restautant") {
+                if (isset($_POST['tarif1'])) {
+                    $tarif1 = $_POST['tarif1'];
+                }
+                else {
+                    $tarif1 = 0;
+                }
+                $tabtarifs = array(
+                    $_POST['nomtarif1nom'] => $tarif1
+                );
 
-                $id_offre = $stmt->fetchColumn();
+                if (isset($_POST['tarif2'])) {
+                    $tarif2 = $_POST['tarif2'];
+                    $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
+                }
+                if (isset($_POST['tarif3'])) {
+                    $tarif3 = $_POST['tarif3'];
+                    $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
+                }
+                if (isset($_POST['tarif4'])) {
+                    $tarif4 = $_POST['tarif4'];
+                    $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
+                }
 
-                // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-                $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix) VALUES (?, ?);";
+                foreach ($tabtarifs as $key => $value) {
+                    $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
+    
+                    // Préparation de la requête pour la vue tarif
+                    $stmt_tarif = $dbh->prepare($requete_tarif);
 
-                // Préparation de la requête pour la vue tarif
-                $stmt_tarif = $dbh->prepare($requete_tarif);
-
-                // Exécution de la requête pour insérer dans la vue tarif
-                $stmt_tarif->execute([$id_offre, $id_offre, $prix]);
+                    // Exécution de la requête pour insérer dans la vue tarif
+                    $stmt_tarif->execute([$id_offre, $value, $key]);
+                }
 
             }
 
@@ -534,7 +576,7 @@
 
                 $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
 
-                print $requete_image;
+                //print $requete_image;
 
                 //preparation requete
                 $stmt_image = $dbh->prepare($requete_image);
@@ -547,7 +589,7 @@
 
                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                 $stmt_image_offre = $dbh->prepare($requete_image);
-                $stmt_image_offre->execute([$id_image, $id_offre]);
+                $stmt_image_offre->execute([$id_offre, $id_image]);
 
             }
 
@@ -563,6 +605,7 @@
             die();
         }
     }
+
     ?>
 
 
@@ -581,32 +624,52 @@
         // });
 
         // Sélectionner tous les boutons radio
-        let radioButtons = document.querySelectorAll('input[type="radio"][name="option"]');
+
+        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+        console.log(isIdProPublique);
+
+
+        //champ type masqué si le pro est publique
+         if(isIdProPublique){  
+            
+            document.getElementById("labeltype").style.display = 'none';
+            document.getElementById("type").style.display = 'none';
+           
+         }
+        
 
 
         let typecategorie = document.getElementById('categorie');
-        let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let typerestaurant = ["carte", "labelcarte"];
         let typevisite = ["labelduree", "duree", "labelduree2"];
         let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
         let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
         let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-        let typeprix = ["labelprix", "prix", "labelprix2"];
+        //let typeprix = ["labelprix", "prix", "labelprix2"];
         let obligatoireselontype = ["carte", "labelcarte","labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2","labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
         obligatoireselontype.forEach(element => {
             document.getElementById(element).style.display = 'none';
         });
-
+    
+    document.getElementById("tarifs").style.display = 'none';
+    
+ 
     categorie.addEventListener('change', function () {
         let typeselectionne = categorie.value;
-
-    // Afficher les champs selon la catégorie sélectionnée
+    // Afficher les champs selon la catégorie sélectionnée test
     switch (typeselectionne) {
         case "restaurant":
-            document.getElementById("labelprix").style.display = 'none';
-            document.getElementById("prix").style.display = 'none';
-            document.getElementById("labelprix2").style.display = 'none';
             afficheSelonType(typerestaurant);
+            
+            if (isIdProPrivee) {
+                document.getElementById("labelgammedeprix").style.display = 'inline';
+                document.getElementById("gammedeprix").style.display = 'inline';
+            }
+            document.getElementById("tarifs").style.display = 'none';
+            
+            
             break;
 
         case "activite":
@@ -639,10 +702,8 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if(typechoisi !== "restaurant"){
-            prix.forEach(element => {
-                document.getElementById(element).style.display = 'inline';
-            });
+        if((typechoisi !== "restaurant")&& (isIdProPrivee)){
+            document.getElementById("tarifs").style.display = 'inline';
         }
     }
 

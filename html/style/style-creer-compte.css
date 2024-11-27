@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    font-size: 100%;
+
+    --noir: rgba(0, 0, 0, 1);
+    --blanc: rgba(255, 255, 255, 1);
+    --blanc-leger: rgba(236, 236, 236, 1);
+    --beige: rgba(234, 226, 218, 1);
+    --bleu: rgba(47, 89, 82, 1);
+    --vert-principale: rgba(98, 107, 32, 1);
+    --vert-secondaire: rgba(152, 166, 50, 1);
+    --marron: rgba(191, 140, 44, 1);
+    --orange-principale: rgba(217, 102, 54, 1);
+    --orange-secondaire-1: rgba(217, 111, 50, 1);
+    --orange-secondaire-2: rgba(242, 139, 48, 1);
+    --fond-bouton: rgba(217, 217, 217, 0.73);
+  
+    --mobile-star-size: 30px;
+    --like-size: 35px;
+  
+    --jaune-etoile: rgba(254, 194, 1, 1);
+    --gris-etoile: rgba(128, 128, 128, 1);
+    --gris: rgba(193, 192, 192, 1);
+    --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
+    --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
+
+    --violet: #4a1774;
+    --couleur-bouton-creer-compte: var(--violet);
+}
+
+/* debug */
+/* * {
+    border: 1px solid black;
+} */
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+hr {
+    background: transparent;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 75vw;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+form div {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+textarea,
+select,
+input {
+    padding: 1rem;
+    box-sizing: border-box;
+
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+
+    text-align: left;
+
+    margin-top: 5px;
+    margin-left: 5px;
+
+    font: inherit;
+
+    color: var(--noir);
+}
+
+select {
+    cursor: pointer;
+    width: fit-content;
+}
+
+input[type="submit"] {
+    padding: 1rem 5rem;
+}
+
+input[type="submit"]:enabled {
+    border: var(--couleur-bouton-creer-compte) 2px solid;
+    cursor: pointer;
+    background-color: var(--couleur-bouton-creer-compte);
+    color: white;
+    transition: all 250ms ease-in-out;
+}
+
+input[type="submit"]:enabled:hover {
+    background-color: white;
+    color: var(--couleur-bouton-creer-compte);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 4rem;
+}
+
+form > div {
+    display: none;
+}
+
+#div-type-compte {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+label {
+    padding-left: 1rem;
+}
+
+label span {
+    display: none;
+    color: red;
+}
+
+#div-type-compte label span {
+    display: inline;
+}
+
+form span span {
+    color: red;
+}
+
+input:disabled {
+    background: none;
+    background-color: lightgray;
+    color: dimgray;
+}
+
+#div-name-and-first-name {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+}
+
+#div-name-and-first-name div {
+    width: 50%;
+}
+
+#div-adresse > div {
+    width: 100%;
+}
+
+#div-adresse .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#div-adresse .row div {
+    width: 33%;
+}

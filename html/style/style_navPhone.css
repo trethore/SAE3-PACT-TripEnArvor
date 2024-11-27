@@ -21,14 +21,14 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-    height: 4em;
     padding: 0 10% 20px 10%;
-    margin: 5% auto;
+    margin: 20% auto 3% auto;
 }
 
 .nav-content > div > img {
     width: 4em;
     height: 4em;
+    margin: 1em 1em 0em 1em;
 }
 
 .nav-content > img {
@@ -38,13 +38,10 @@
 }
 
 .btOn{
-    width: 4em;
-    height: 4em;
     background-color: var(--violet-principal);
     border: 3px solid white;
-    border-radius: 1em;
-    margin: -0.2em;
-    padding: ;
+    border-radius: 30px 40px;
+    margin: -1.2em -1.2em -1.2em -1.2em;
 }
 
 
@@ -61,10 +58,6 @@
         width: 3em;
         height: 3em;
    }
-    .btOn{
-    width: 3em;
-    height: 3em;
-    }
 }
   
   /* Small devices (portrait tablets and large phones, 600px and up) */

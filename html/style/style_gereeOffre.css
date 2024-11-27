@@ -1,4 +1,6 @@
-/* #labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"], #lien, #tel, #decriptionL   */
+#labeldispo, #dispo, #labeladresse, #adresse, #cp, #labeltype, #type, div[id = "options"], #labelcp{
+  display: none;
+}
 
 h2 {
   width: 55%;
@@ -214,9 +216,7 @@ input[type="url"], input[type="tel"]{
 
 /****Tarif****/
 
-#tarifs{
-  display:none;
-}
+
 
 /* #options{
   display: none;
