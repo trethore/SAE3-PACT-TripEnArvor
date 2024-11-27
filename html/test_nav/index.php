@@ -1,3 +1,18 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,7 +31,27 @@
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php 
+                foreach ($offres as $offre) { // Parcourt les titres récupérés
+                   ?><option value="<?php echo $offre['titre'] ?>" id ="<?php echo $offre['id_offre'] ?>" ><?php echo $offre['titre'] ?></option><?php
+                }
+            ?>
+            <script>
+                elementList = document.querySelectorAll('div[option]');
+                console.log(elementList);
+
+                elementList.forEach(element => {
+                    element.addEventListener("click", (event) => {
+                        // TODO: set to front pls my dear
+                        console.log("go");
+                        window.location.href = "/back/consulter-offre/index.php?id=" + element.id; 
+                    });
+                });
+
+            </script>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>

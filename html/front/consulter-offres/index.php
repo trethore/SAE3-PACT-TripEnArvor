@@ -19,12 +19,12 @@ try {
     }
 
     foreach ($offres as &$offre) {
-        $offre['note'] = 2;
+        $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
-
-    //foreach ($offres as &$offre) {
-    //    $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    //}
+    
+    foreach ($offres as &$offre) {
+        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -50,7 +50,7 @@ try {
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <!-- Conteneur principal -->
@@ -129,8 +129,8 @@ try {
                         <div>
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
-                                <label><input type="radio" name="localisation"> Rechercher</label>
-                                <input type="text" placeholder="Rechercher...">
+                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                                <input id="search-location" type="text" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -177,19 +177,29 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            $note = ceil($tab["note"]);
-                                            $etoilesPleines = $note;
-                                            $etoilesVides = 5 - $note;
+                                            if (empty($tab["note"])) {
+                                                ?>
+                                                    <p>Pas d'avis disponibles.</p>
+                                                <?php
+                                            } else {
+                                                $note = $tab["note"];
+                                                $etoilesPleines = $note;
+                                                $etoilesVides = 5 - $note;
 
-                                            for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
-                                            }
+                                                for ($i = 0; $i < $etoilesPleines; $i++) {
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                    <?php
+                                                }
 
-                                            for ($i = 0; $i < $etoilesVides; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                for ($i = 0; $i < $etoilesVides; $i++) {
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                                    <?php
+                                                }
                                             }
                                         ?>
-                                        <p class="nombre-notes">(120)</p>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
@@ -265,9 +275,10 @@ try {
                 const city = offerElement.querySelector('.lieu-offre').textContent.trim();
                 const price = offerElement.querySelector('.prix span').textContent.trim();
                 const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                /*const image = offerElement.querySelector('.image-offre').style.backgroundImage;*/
+                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
                 const description = offerElement.querySelector('.description-offre').textContent.trim();
                 const profile = offerElement.querySelector('.nom-offre').textContent.trim();
+                const nombre_notes = offerElement.querySelector('.nombre-notes').textContent.trim();
 
                 return `
                     <div class="offre">
@@ -275,7 +286,7 @@ try {
                             <a href="#">
                                 <div class="lieu-offre">${city}</div>
                                 <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style=background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
+                                <img class="image-offre" style=background: center; background-image: ${image}">
                                 <p class="titre-offre">${title}</p>
                                 <p class="categorie-offre">${category}</p>s
                                 <p class="description-offre">${description}</p>
@@ -287,7 +298,7 @@ try {
                                         <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
                                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <p class="nombre-notes">(120)</p>
+                                        <p class="nombre-notes">(${nombre_notes})</p>
                                     </div>
                                     <p class="prix">A partir de <span>${price}</span></p>
                                 </div>
@@ -388,6 +399,29 @@ try {
             // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
+            });
+
+            const locationInput = document.getElementById("search-location");
+            const searchInput = document.querySelector(".input-search");
+
+            locationInput.addEventListener("input", () => {
+                const searchValue = locationInput.value.trim().toLowerCase();
+                const query = searchInput.value.toLowerCase().trim();
+
+                // Filtrer les offres en fonction de la localisation
+                const filteredOffers = allOffers.filter(offer => {
+                    const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                    return location.includes(searchValue);
+                });
+
+                // Mettre à jour l'affichage des offres
+                offersContainer.innerHTML = ""; // Réinitialise les offres affichées
+
+                if (filteredOffers.length > 0) {
+                    filteredOffers.forEach(offer => offersContainer.appendChild(offer));
+                } else {
+                    noOffersMessage.style.display = "block";
+                }
             });
         });
     </script>

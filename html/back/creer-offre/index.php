@@ -61,9 +61,7 @@
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-    <?php
-    if (!$submitted) {
-    ?>
+    <?php if (!$submitted) { ?>
         <!-- <div id="offre">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
@@ -97,6 +95,25 @@
             </div>
         </div> -->
         <main>
+            <?php 
+                $id_compte =  $_SESSION['id'];
+                $isIdProPrivee = isIdProPrivee($id_compte);
+                $isIdProPublique = isIdProPublique($id_compte);
+                print_r($id_compte);
+                //print_r($isIdProPublique);
+                
+                if ($isIdProPublique !== true){
+                    $isIdProPublique = false;
+                    //print "pro prive ";
+                
+                    
+                }else if ($isIdProPublique === true) {
+                   $isIdProPrivee = false;
+                   //print"prop publique"; 
+                }
+                //print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
+            ?>
+
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
                 <h3>Informations importantes</h3>
@@ -233,7 +250,7 @@
 
                     <div id="tarifs">
                         <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
+                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" required/>
                         <input type="number" name="tarif1" min="0" placeholder="prix" required/><span>€</span>
                         <br>
                         <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
@@ -401,9 +418,10 @@
         if (isset($_POST['capacite'])) {
             $capacite = $_POST['capacite'];
         }
-        if(isset($_SESSION['id_compte'])){
-            $id_compte =  $_SESSION['id_compte'];
-        }
+        
+
+
+        
 
         
 
@@ -418,13 +436,7 @@
             die("Erreur : utilisateur non connecté.");
         }
 
-        //champ type masqué si le pro est publique
-        if(isIdProPublique($id_compte)){ ?> 
-            <script>
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
-            </script>
-        <?php } 
+        
 
 
     
@@ -520,7 +532,7 @@
 
             if ($categorie !== "restautant") {
                 if (isset($_POST['tarif1'])) {
-                    $tarif1 = $_POST['tarif1'];
+                            $tarif1 = $_POST['tarif1'];
                 }
                 else {
                     $tarif1 = 0;
@@ -600,6 +612,7 @@
             die();
         }
     }
+
     ?>
 
 
@@ -618,8 +631,14 @@
         // });
 
         // Sélectionner tous les boutons radio
-        const isIdProPrivee = <?php echo json_encode(isIdProPrivee($id_compte)); ?>;
-        const isIdProPublique = <?php echo json_encode(isIdProPublique($id_compte)); ?>;
+
+        const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+        const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+        console.log(isIdProPublique);
+
+        
+
+        
 
 
         let typecategorie = document.getElementById('categorie');
@@ -753,6 +772,7 @@
             quitterDiv.style.display = "none";
             alert("Modification valider avec succès");
         }
+    
     </script>
 
 </body>

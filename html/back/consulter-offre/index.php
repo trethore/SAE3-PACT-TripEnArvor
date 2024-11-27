@@ -71,11 +71,11 @@ try {
     $stmtJour->execute();
     $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
     
-    $reqHoraire = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour NATURAL JOIN _horaire WHERE id_offre = :id_offre";
+    $reqHoraire = "SELECT DISTINCT ouverture, fermeture FROM _offre NATURAL JOIN _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE id_offre = :id_offre";
     $stmtHoraire = $dbh->prepare($reqHoraire);
     $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtHoraire->execute();
-    $horaires = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+    $horaire = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
     
     
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
@@ -84,6 +84,19 @@ try {
     $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtTags->execute();
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
+
+    // ===== Requête SQL pour récupérer les avis de l'offre ===== //
+    $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
+    $stmtAvis = $dbh->prepare($reqAvis);
+    $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtAvis->execute();
+    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+
+    $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis JOIN compte_membre ON _avis.id_membre = compte_membre.id_compte WHERE id_offre = :id_offre";
+    $stmtMembre = $dbh->prepare($reqMembre);
+    $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtMembre->execute();
+    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
@@ -122,12 +135,12 @@ try {
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="fond-bloc">
-        <div class="bouton-modifier display-ligne-espace"> 
+    <div class="fond-bloc display-ligne-espace">
+        <div class="bouton-modifier"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
@@ -274,15 +287,14 @@ try {
                 <?php foreach ($jours as $jour) { ?>
                     <p>
                         <?php 
-                        echo htmlentities($jour['nom_jour'] . " : ");
-                        $validHours = false; 
-                        if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
-                                echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
-                                $validHours = true;
-                        } else if (!$validHours) {
-                            echo "Fermé"; 
-                        }
-                        ?>
+                        echo htmlentities($jour['nom_jour'] . " : "); 
+                        foreach ($horaire as $h) {
+                            if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
+                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
+                            } else {
+                                echo "Fermé"; 
+                            }
+                        } ?>
                     </p>
                 <?php } ?>
             </div> 
@@ -308,36 +320,34 @@ try {
                 <p>49 avis</p>
             </div>
 
-            <div class="fond-blocs-avis">
-
-                <div class="display-ligne-espace">
-
-                    <div class="display-ligne">
-                        <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                        <p><strong>Stanislas</strong></p>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <p><em>14/08/2023</em></p>
+            <?php foreach ($avis as $a) { ?>
+                <div class="fond-blocs-avis">
+                    <div class="display-ligne-espace">
+                        <div class="display-ligne">
+                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
+                            <p><strong>Bob</strong></p>
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <?php } 
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                            <?php } ?>
+                            <p><em>14/08/2023</em></p>
+                        </div>
+                        <p><strong>⁝</strong></p>
                     </div>
-
-                    <p><strong>⁝</strong></p>
-                </div>
-
-                <p>Restaurant très bon avec des ingrédients de qualité</p>
-
-                <div class="display-ligne-espace">
-                    <p class="transparent">.</p>
-                    <div class="display-notation">
-                        <a href="#"><strong>Répondre</strong></a>
-                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                    <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <p><?php echo htmlentities($a['commentaire']); ?></p>
+                    <div class="display-ligne-espace">
+                        <p class="transparent">.</p>
+                        <div class="display-notation">
+                            <a href="#"><strong>Répondre</strong></a>
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                        </div>
                     </div>
-                </div>
-
-            </div>        
+                </div>      
+            <?php } ?>  
 
         </section>        
          
