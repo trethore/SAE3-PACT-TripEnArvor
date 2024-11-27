@@ -102,10 +102,12 @@
                 
                 if ($isIdProPublique !== 1){
                     $isIdProPublique = 0;
+                    print "pro prive ";
                 
                     
                 }else if ($isIdProPublique === 1) {
                    $isIdProPrivee = 0;
+                   print"prop publique"; 
                 }
                 print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
             ?>
