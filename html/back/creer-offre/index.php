@@ -404,6 +404,8 @@
         if(isset($_SESSION['id_compte'])){
             $id_compte =  $_SESSION['id_compte'];
         }
+        $isIdProPrivee = isIdProPrivee($id_compte);
+        $isIdProPublique = isIdProPublique($id_compte);
 
         
 
@@ -617,8 +619,9 @@
         // });
 
         // Sélectionner tous les boutons radio
-        const isIdProPrivee = <?php echo json_encode(isIdProPrivee($id_compte)); ?>;
-        const isIdProPublique = <?php echo json_encode(isIdProPublique($id_compte)); ?>;
+
+        const isIdProPrivee = <?php echo json_encode($isIdProPrivee); ?>;
+        const isIdProPublique = <?php echo json_encode($isIdProPublique); ?>;
 
 
         let typecategorie = document.getElementById('categorie');
