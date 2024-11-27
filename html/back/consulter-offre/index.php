@@ -92,7 +92,7 @@ try {
     $stmtAvis->execute();
     $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE id_offre = _avis.id_offre = :id_offre";
+    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
