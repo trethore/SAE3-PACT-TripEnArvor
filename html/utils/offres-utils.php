@@ -151,7 +151,30 @@
             $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
             $conn = null;
-            return $moyenne;
+            return $moyenne["round"];
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getNombreNotes($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqNote = "SELECT COUNT(*)
+            FROM sae._avis
+            WHERE id_offre = :id_offre";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+            $stmtNOTE = $conn->prepare($reqNote);
+            $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtNOTE->execute();
+
+            $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
+
+            $conn = null;
+            return $moyenne["count"];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();

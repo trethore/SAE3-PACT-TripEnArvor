@@ -168,8 +168,6 @@ if (!$submitted) {
     $tel = $_POST['tel'];
     $password_hash;
 
-    $id_compte;
-
     if ($password === $confirm_password) {
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
     }
@@ -187,7 +185,8 @@ if (!$submitted) {
                 if ($tel === '') $tel = null;
                 $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
+                $_SESSION['id'] = $stmt->fetch()['id_compte'];
                 break;
             case 'pro-publique':
                 $denomination = $_POST['denomination'];
@@ -205,7 +204,8 @@ if (!$submitted) {
                 $id_adresse = $stmt->fetch()['id_adresse'];
                 $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                $_SESSION['id'] = $stmt->fetch()['id_compte'];
                 break;
             case 'pro-privé':
                 $denomination = $_POST['denomination'];
@@ -224,7 +224,8 @@ if (!$submitted) {
                 $id_adresse = $stmt->fetch()['id_adresse'];
                 $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
-                $id_compte = $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                $_SESSION['id'] = $stmt->fetch()['id_compte'];
                 break;
             default:
                 $ok = false;
@@ -234,11 +235,10 @@ if (!$submitted) {
     <h1>OK</h1>
     <a href=".">ok</a>
 <?php
-        $_SESSION['id'] = $id_compte;
-        if (isIdProPrivee($id_compte) || isIdProPublique($id_compte)) {
-            redirectTo('/back/');
-        } else if (isIdMember($id_compte)) {
-            redirectTo('/front/');
+        if (isIdProPrivee($_SESSION['id']) || isIdProPublique($_SESSION['id'])) {
+            redirectTo('/back/liste-back/');
+        } else if (isIdMember($_SESSION['id'])) {
+            redirectTo('/front/consulter-offres/');
         }
     } else {
 ?>

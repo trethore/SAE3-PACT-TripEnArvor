@@ -19,11 +19,10 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
 
@@ -44,11 +43,10 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
     
@@ -69,11 +67,10 @@
             if ($result === false || !isset($result['count'])) {
                 return false;
             }
-            
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
+            return false;
         }
     }
 
