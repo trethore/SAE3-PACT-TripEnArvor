@@ -192,11 +192,12 @@ try {
                 
             <div class="display-ligne-espace">
                 <div class="display-ligne">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <?php } 
+                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                    <?php } ?>
                     <!-- Affichage du nombre d'avis de l'offre -->
                     <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
                     <a href="#avis">Voir les avis</a>
@@ -329,15 +330,14 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
-                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                            <p><strong>Bob</strong></p>
+                            <p><strong><?php echo htmlentities($membre['pseudo']) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } 
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
-                            <p><em>14/08/2023</em></p>
+                            <p><em><strong>14/08/2023</strong></em></p>
                         </div>
                         <p><strong>⁝</strong></p>
                     </div>
