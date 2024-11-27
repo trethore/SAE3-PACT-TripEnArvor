@@ -395,6 +395,7 @@ a {
 
 .fond-blocs-avis:first-child {
     font-size: 50px;
+    padding-left: 0;
 }
 
 .fond-blocs-avis > p {
