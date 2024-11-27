@@ -199,7 +199,7 @@ try {
                                                 }
                                             }
                                         ?>
-                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"]["count"] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
