@@ -1,5 +1,5 @@
 <?php 
-    require_once('/var/www/html/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
 
     function getTypeOffre($id_offre) {
@@ -18,6 +18,7 @@
 
             try {
                 $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->prepare("SET SCHEMA 'sae';")->execute();
 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqTypeOffre);
@@ -28,7 +29,7 @@
                 $conn = null;
                 return $type_offre;
             } catch(Exception $e) {
-                print "Erreur !: " . $e->getMessage() . "<br/>";
+                print "Erreur !: " . $e->getMessage() . "<br>";
                 die();
             }
     }
@@ -44,6 +45,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -52,8 +54,6 @@
 
             // Récupérer la première image
             $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
-
-
 
             if ($image && !empty($image['lien_fichier'])) {
                 // Afficher l'image si elle existe
@@ -66,7 +66,7 @@
             $conn = null;
             return $lienIMG;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -81,6 +81,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -98,7 +99,7 @@
             $conn = null;
             return $images;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -111,6 +112,7 @@
 
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter les requêtes des dates d'ouverture
             $stmtDateOuv = $conn->prepare($reqDateOuv);
@@ -128,7 +130,30 @@
             $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
             
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getNoteMoyenne($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqNote = "SELECT ROUND(AVG(note))
+            FROM sae._avis
+            WHERE id_offre = :id_offre";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+            $stmtNOTE = $conn->prepare($reqNote);
+            $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtNOTE->execute();
+
+            $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
+
+            $conn = null;
+            return $moyenne;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
