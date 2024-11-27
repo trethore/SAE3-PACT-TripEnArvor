@@ -47,10 +47,10 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <article>
+        <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
             <a href="/back/se-connecter">Se déconnecter</a>
-        </article>
+        </nav>
         <section>
             <?php 
                 // Préparation et exécution de la requête
@@ -60,10 +60,10 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Détails du compte</h1>
-            <nav>
+            <article>
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
                 <a>Importer une photo de profil</a>
-            </nav>
+            </article>
             <h2>Vue d'ensemble</h2>
             <table>
                 <tr>
