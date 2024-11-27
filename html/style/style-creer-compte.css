@@ -118,6 +118,8 @@ input[type="submit"]:enabled:hover {
 textarea {
     resize: vertical;
     min-height: 4rem;
+    max-height: 100vh;
+    max-height: 100dvh;
 }
 
 form > div {
