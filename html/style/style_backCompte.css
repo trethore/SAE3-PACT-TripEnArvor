@@ -48,7 +48,7 @@ a {
 /********************
         NAV
 *********************/
-nav {
+main > nav {
     display: flex;
     flex-direction: column;
 
@@ -61,7 +61,7 @@ nav {
     margin-right: 1em;
 }
 
-nav a {
+main > nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -78,11 +78,11 @@ nav a {
     height: 3em;
 }
 
-nav a:last-child {
+main > nav a:last-child {
     color: cyan;
 }
 
-nav a:hover {
+main > nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
