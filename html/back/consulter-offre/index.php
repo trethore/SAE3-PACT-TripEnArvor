@@ -125,8 +125,8 @@ try {
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <div class="fond-bloc display-ligne">
-        <div class="bouton-modifier display-ligne-espace"> 
+    <div class="fond-bloc display-ligne-espace">
+        <div class="bouton-modifier"> 
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
