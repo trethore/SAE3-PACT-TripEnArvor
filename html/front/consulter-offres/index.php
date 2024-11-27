@@ -173,7 +173,7 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            console.log($tab["note"]);
+                                            echo $tab["note"];
                                             $note = ceil($tab["note"]);
                                             $etoilesPleines = $note;
                                             $etoilesVides = 5 - $note;
