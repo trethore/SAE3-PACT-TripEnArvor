@@ -57,7 +57,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $stmt = $conn->prepare($reqCompte);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
-                while($row = $stmt->fetch(PDO::FETCH_COLUMN)) {
+                $detailCompte = $stmt->fetch(PDO::FETCH_COLUMN)
             ?>
             <h1>Détails du compte</h1>
             <article>
@@ -68,41 +68,41 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td><?php echo htmlentities($row["denomination"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["denomination"]);?></td>
                 </tr>
                 <tr>
                     <td>A propos</td>
                     <td>
-                        <div><?php echo htmlentities($row["a_propos"]);?></div>
+                        <div><?php echo htmlentities($detailCompte["a_propos"]);?></div>
                     </td>
                 </tr>
                 <tr>
                     <td>Site web</td>
-                    <td><?php echo htmlentities($row["site_web"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["site_web"]);?></td>
                 </tr>
             </table>
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
                     <td>Nom</td>
-                    <td><?php echo htmlentities($row["nom_compte"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["nom_compte"]);?></td>
                 </tr>
                 <tr>
                     <td>Prenom</td>
-                    <td><?php echo htmlentities($row["prenom"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["prenom"]);?></td>
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td><?php echo htmlentities($row["email"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["email"]);?></td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
-                    <td><?php echo htmlentities($row["tel"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["tel"]);?></td>
                 </tr>
                 <?php if ($typeCompte == 'proPrive') {?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><?php echo htmlentities($row["siren"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["siren"]);?></td>
                 </tr>
                 <?php } ?>
                 <tr>
@@ -111,36 +111,35 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td><?php echo htmlentities($row["mot_de_passe"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
                 </tr>
             </table>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><?php echo htmlentities($row["num_et_nom_de_voie"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
                 </tr>
                 <tr>
                     <td>Complément d'adresse</td>
-                    <td><?php echo htmlentities($row["complement_adresse"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["complement_adresse"]);?></td>
                 </tr>
                 <tr>
                     <td>Code postal</td>
-                    <td><?php echo htmlentities($row["code_postal"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><?php echo htmlentities($row["ville"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["ville"]);?></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><?php echo htmlentities($row["pays"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["pays"]);?></td>
                 </tr>
             </table>
             <div>
                 <a>Modifier les informations</a>
             </div>
-            <?php } ?>
         </section>
     </main>
 </body>
