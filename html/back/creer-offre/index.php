@@ -99,12 +99,18 @@
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte);
+                print_r($isIdProPublique);
                 
                 if ($isIdProPublique !== 1){
                     $isIdProPublique = 0;
+                    print "pro prive ";
                 
-                    print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
+                    
+                }else if ($isIdProPublique === 1) {
+                   $isIdProPrivee = 0;
+                   print"prop publique"; 
                 }
+                print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
             ?>
 
             <h2> Création d'une offre</h2>
