@@ -77,6 +77,10 @@ nav a {
     height: 3em;
 }
 
+nav a:last-child {
+    color: cyan;
+}
+
 nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
