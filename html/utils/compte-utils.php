@@ -1,6 +1,6 @@
 <?php 
-    include('/var/www/html/php/connect_params.php');
-    include('/var/www/html/utils/site-utils.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
     function getTypeCompte($id_compte) {
         global $driver, $server, $dbname, $user, $pass;
         $reqTypeCompte = "SELECT 
@@ -24,7 +24,7 @@
                 $conn = null;
                 return $type_compte;
             } catch(Exception $e) {
-                print "Erreur !: " . $e->getMessage() . "<br/>";
+                print "Erreur !: " . $e->getMessage() . "<br>";
                 die();
             }
     }

@@ -1,9 +1,9 @@
 <?php
-include('../../php/connect_params.php');
-require_once('../../utils/offres-utils.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);

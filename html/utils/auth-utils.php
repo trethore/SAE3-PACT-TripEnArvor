@@ -1,7 +1,7 @@
 <?php 
     // Quelques fonctions pour savoir le compte d'un utilisateur
-    require_once('/var/www/html/php/connect_params.php');
-    require_once('/var/www/html/utils/site-utils.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
     function isIdMember($id) {
         global $driver, $server, $dbname, $user, $pass;
         try {
@@ -18,7 +18,7 @@
             
             return $result['count'] > 0;
         }catch(Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -39,7 +39,7 @@
             
             return $result['count'] > 0;
         }catch(Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -60,7 +60,7 @@
             
             return $result['count'] > 0;
         }catch(Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -68,7 +68,7 @@
 
     function redirectToListOffreIfNecessary($id) {
         if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
-            redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+            redirectTo('/front/consulter-offres/');
             return true;
         }     
         return false;   
