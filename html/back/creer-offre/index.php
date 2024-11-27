@@ -99,6 +99,7 @@
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte);
+                print_r($id_compte);
                 print_r($isIdProPublique);
                 
                 if ($isIdProPublique !== true){
@@ -634,6 +635,9 @@
         const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
         const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
         console.log(isIdProPublique);
+
+        
+
         
 
 
