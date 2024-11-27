@@ -40,6 +40,10 @@ main {
     margin: 1em;
 }
 
+a {
+    cursor: pointer;
+}
+
 /********************
         NAV
 *********************/
@@ -108,8 +112,9 @@ table tr {
     margin: 1em 0;
 }
 
-td {
+tr > td {
     vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
+    width: 15em;
 }
 
 table td + td {

@@ -121,8 +121,8 @@ try {
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <div class="fond-bloc">
@@ -275,17 +275,15 @@ try {
                         <?php 
                         echo htmlentities($jour['nom_jour'] . " : ");
                         $validHours = false; // Flag to check if there are valid hours for this day
-                        
                         foreach ($horaires as $horaire) {
                             if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
-                                // Only display valid opening and closing hours
                                 echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
-                                $validHours = true; // Set flag to true if valid hours are found
+                                $validHours = true;
                             }
                         }
                         
                         if (!$validHours) {
-                            echo "Fermé"; // Print "Fermé" if no valid hours were found
+                            echo "Fermé"; 
                         }
                         ?>
                     </p>

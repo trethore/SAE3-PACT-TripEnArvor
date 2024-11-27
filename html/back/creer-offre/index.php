@@ -5,7 +5,7 @@
     require_once("../../utils/auth-utils.php");
 
     session_start();
-    if (isset($_POST['titre'])) { // les autres svp
+    if (isset($_POST['titre'])) { // les autres svp²
         $submitted = true;
     } else {
         $submitted = false;
@@ -58,8 +58,8 @@
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <?php
     if (!$submitted) {
@@ -425,14 +425,6 @@
             </script>
         <?php } 
 
-        if(isIdProPublique($id_compte)){ ?> 
-            <script>
-            document.getElementById("tarifs").style.display = 'none';
-            document.getElementById("gammedeprix").style.display = 'none';
-            document.getElementById("labelgammedeprix").style.display = 'none';
-            </script>
-        <?php } 
-
 
     
         try {
@@ -628,7 +620,7 @@
 
 
         let typecategorie = document.getElementById('categorie');
-        let typerestaurant = ["carte", "labelcarte","labelgammedeprix", "gammedeprix"];
+        let typerestaurant = ["carte", "labelcarte"];
         let typevisite = ["labelduree", "duree", "labelduree2"];
         let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
         let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
@@ -650,9 +642,9 @@
         case "restaurant":
             afficheSelonType(typerestaurant);
             
-            if (isIdProPublique($id_compte)) {
-                document.getElementById("labelgammedeprix").style.display = 'none';
-                document.getElementById("gammedeprix").style.display = 'none';
+            if (<?php isIdProPrivee($id_compte)?>) {
+                document.getElementById("labelgammedeprix").style.display = 'inline';
+                document.getElementById("gammedeprix").style.display = 'inline';
             }
             document.getElementById("tarifs").style.display = 'none';
             console.log(<?php $id_compte ?>);
@@ -690,7 +682,7 @@
         typechoisi.forEach(element => {
             document.getElementById(element).style.display = 'inline';
         });
-        if((typechoisi !== "restaurant")&& (isIdProPrivee($id_compte))){
+        if((typechoisi !== "restaurant")&& (<?php isIdProPrivee($id_compte)?>)){
             document.getElementById("tarifs").style.display = 'inline';
         }
     }
