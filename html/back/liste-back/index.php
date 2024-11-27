@@ -1,32 +1,26 @@
 <?php
-require_once('../../php/connect_params.php');
-require_once('../../utils/offres-utils.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
 startSession();
-if (isset($_SESSION["id"])) {
-    redirectToListOffreIfNecessary($_SESSION["id"]);
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToListOffreIfNecessary($id_compte);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-
-/*******************
-Requete SQL préfaite
-********************/
-$reqOffre = "SELECT * from sae._offre;";
-
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
-
-$result = $conn->query($reqOffre); 
 
 ?>
 <!DOCTYPE html>
@@ -35,8 +29,8 @@ $result = $conn->query($reqOffre);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -48,7 +42,7 @@ $result = $conn->query($reqOffre);
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <h1>Liste de vos Offres</h1>
@@ -56,7 +50,7 @@ $result = $conn->query($reqOffre);
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Une Recherche en Particulier ? Filtrez !</h2>
+            <h2>Filtres</h2>
             <div>
                 <div>
                     <!-- Catégorie -->
@@ -159,23 +153,30 @@ $result = $conn->query($reqOffre);
                 </div>
             </div>
         </article>
-        <section class="lesOffres">
-            <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
+        <section class="lesOffres"><?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
             <article>
-                <a onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
-                    <!--------------------------------------- 
-                    Récuperer la premère image liée à l'offre 
+                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
+
+                    <!---------------------------------------
+                    Récuperer la premère image liée à l'offre
                     ---------------------------------------->
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
-                    <!--------------------------------------- 
-                    Récuperer le titre liée à l'offre 
+
+                    <!---------------------------------------
+                    Récuperer le titre liée à l'offre
                     ---------------------------------------->
                     <p><?php echo htmlentities($row["titre"]) ?></p>
-                    <!---------------------------------------------------------------------------- 
-                    Choix du type de l'activité (Restaurant, parc, etc...)
-                    ------------------------------------------------------------------------------>
+
+                    <!--------------------------------------------------------
+                    Choix du type de l'activité (Restaurant, parc, etc...
+                    --------------------------------------------------------->
                     <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
@@ -195,6 +196,7 @@ $result = $conn->query($reqOffre);
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
                     } ?>">
+
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
@@ -207,10 +209,25 @@ $result = $conn->query($reqOffre);
                         <p>49</p>
                     </div>
                     <div>
-                        <p>Avis non lues : <span><b>4</b></span></p>
-                        <p>Avis non répondues : <span><b>1</b></span></p>
+                        <!-------------------------------------- 
+                        Affichage des avis non lues
+                        ---------------------------------------->
+                        <p>Avis non lus : <span><b>4</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis non répondues
+                        ---------------------------------------->
+                        <p>Avis non répondus : <span><b>1</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis blacklistés 
+                        ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
+
+                    <!-------------------------------------- 
+                    Affichage du prix 
+                    ---------------------------------------->  
                     <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
                 </a>
             </article>
@@ -218,8 +235,6 @@ $result = $conn->query($reqOffre);
             <!-------------------------------------- 
             Pagination
             ---------------------------------------->
-            <div class="pagination">
-            </div>
         </section>
     </main>
     <footer>
@@ -256,5 +271,8 @@ $result = $conn->query($reqOffre);
         Redden's, Inc.
         </div>
     </footer>
+
+    
+
 </body>
 </html>

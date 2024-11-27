@@ -1,16 +1,15 @@
 <?php
-include('../../php/connect_params.php');
-include('../../utils/auth-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
-if (session_status() == PHP_SESSION_NONE){
-    session_start();
-}
+startSession();
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte');
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT email, mot_de_passe, id_compte from _compte;');
     $stmt->execute();
     $result = $stmt->fetchAll();
     $dbh = null;

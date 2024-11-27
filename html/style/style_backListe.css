@@ -39,8 +39,6 @@ h1 {
     font-weight: 600;
     color: var(--orange-principale);
     background: var(--blanc-leger);
-    border-radius: 15px;
-    border: 3px solid var(--orange-principale);
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 64pt;
@@ -60,6 +58,10 @@ h3 {
     color: var(--noir);
 }
 
+a {
+    text-decoration: none;
+    color: var(--noir);
+}
 
 
 /***************************
@@ -82,8 +84,8 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 50%;
-    transform: translate(-50% , -3.5em);
+    left: 5%;
+    transform: translate(0 , -3.5em);
     width: auto; 
     z-index: 1; 
 }
@@ -369,12 +371,10 @@ h3 {
     align-items: center;
     justify-content: center;
 
-    right: 0;
-
     color: var(--noir);
 
     height: 37px;
-    width: auto;
+    width: 120px;
     padding: 0.2em;
 
     opacity: 73%;
@@ -393,12 +393,12 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    left: 75% !important;
+    left: 68% !important;
 
     color: var(--noir);
 
     height: 37px;
-    width: 67.8px;
+    width: 90px;
 
     opacity: 73%;
 
@@ -420,7 +420,7 @@ h3 {
     position: absolute;
     left: 2%;
     right: 36%;
-    top: 43%;
+    top: 44%;
 
     font-weight: 700;
     font-size: 20px;
@@ -432,7 +432,7 @@ h3 {
 .lesOffres .ouverture-offre + img + p + p {
     position: absolute;
     left: 2%;
-    top: 54%;
+    top: 56%;
 
     font-style: italic;
     font-weight: 400;

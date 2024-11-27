@@ -1,6 +1,7 @@
 <?php 
-    include('/var/www/html/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
+
     function getTypeOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqTypeOffre = "SELECT 
@@ -17,6 +18,7 @@
 
             try {
                 $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->prepare("SET SCHEMA 'sae';")->execute();
 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqTypeOffre);
@@ -27,12 +29,113 @@
                 $conn = null;
                 return $type_offre;
             } catch(Exception $e) {
-                print "Erreur !: " . $e->getMessage() . "<br/>";
+                print "Erreur !: " . $e->getMessage() . "<br>";
                 die();
             }
     }
 
     function getFirstIMG($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqIMG = "SELECT img.lien_fichier 
+            FROM sae._image img
+            JOIN sae._offre_contient_image oci 
+            ON img.lien_fichier = oci.id_image
+            WHERE oci.id_offre = :id_offre
+            LIMIT 1;";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+
+            // Préparer et exécuter la requête
+            $stmtIMG = $conn->prepare($reqIMG);
+            $stmtIMG->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtIMG->execute();
+
+            // Récupérer la première image
+            $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
+
+            if ($image && !empty($image['lien_fichier'])) {
+                // Afficher l'image si elle existe
+                $lienIMG = $image['lien_fichier'];
+            } else {
+                // Afficher une image par défaut
+                $lienIMG = 'default-image.jpg';
+            }
+
+            $conn = null;
+            return $lienIMG;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getIMGbyId($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqIMG = "SELECT img.lien_fichier 
+            FROM sae._image img
+            JOIN sae._offre_contient_image oci 
+            ON img.lien_fichier = oci.id_image
+            WHERE oci.id_offre = :id_offre;";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+
+            // Préparer et exécuter la requête
+            $stmtIMG = $conn->prepare($reqIMG);
+            $stmtIMG->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtIMG->execute();
+
+            // Récupérer toutes les images sous forme de tableau
+            $images = $stmtIMG->fetchAll(PDO::FETCH_COLUMN);
+
+            // Si aucune image trouvée, retourner une image par défaut
+            if (empty($images)) {
+                $images[] = 'default-image.jpg';
+            }
+
+            $conn = null;
+            return $images;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function isOpen() {
+        global $driver, $server, $dbname, $user, $pass;
+        // une offre est ouverte si sa date de fermeture est sup à la date d'ouverture
+        $reqDateOuv = "SELECT date_heure from sae._dates_mise_hors_ligne_offre where id_offre = :id_offre;";
+        $reqDateFer = "SELECT date_heure from sae._dates_mise_en_ligne_offre where id_offre = :id_offre;";
+
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+
+            // Préparer et exécuter les requêtes des dates d'ouverture
+            $stmtDateOuv = $conn->prepare($reqDateOuv);
+            $stmtDateOuv->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateOuv->execute();
+
+            // Préparer et exécuter les requêtes des dates de fermeture
+            $stmtDateFer = $conn->prepare($reqDateFer);
+            $stmtDateFer->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateFer->execute();
+
+            // Récupérer les dates d'ouvertures
+            $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
+            // Récupérer les dates de fermetures
+            $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
+            
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    /*function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqIMG = "SELECT img.lien_fichier 
             FROM sae._image img
@@ -52,8 +155,6 @@
             // Récupérer la première image
             $image = $stmtIMG->fetch(PDO::FETCH_ASSOC);
 
-
-
             if ($image && !empty($image['lien_fichier'])) {
                 // Afficher l'image si elle existe
                 $lienIMG = $image['lien_fichier'];
@@ -65,10 +166,8 @@
             $conn = null;
             return $lienIMG;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
-
-
-    }
+    }*/
 ?>
