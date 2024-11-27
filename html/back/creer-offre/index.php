@@ -481,7 +481,18 @@ function get_file_extension($type)
 
 
 
+            
+            
 
+            try {
+
+
+
+                // Connexion à la base de données
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+            // Début de la requête SQL
 
             //print_r($_FILES);
 
@@ -493,6 +504,23 @@ function get_file_extension($type)
                 die("Erreur : utilisateur non connecté.");
             }
 
+            // Déterminer la table cible selon la catégorie
+            switch ($categorie) {
+                case 'activite':
+                    $requeteCategorie = 'activite';
+                    break;
+                case 'parc':
+                    $requeteCategorie = 'parc_attraction';
+                    break;
+                case 'spectacle':
+                    $requeteCategorie = 'spectacle';
+                    break;
+                case 'visite':
+                    $requeteCategorie = 'visite';
+                    break;
+                default:
+                    die("Erreur de categorie!");
+            }
 
 
             switch ($categorie) {
@@ -556,111 +584,86 @@ function get_file_extension($type)
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img, $id_compte, $tarif_min, $type]);
+                    break;
+                    
                     default:
                     die("Erreur de categorie!");
-            }
-
-            try {
-
-
-
-
-
-                // Connexion à la base de données
-                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
-                // Début de la requête SQL
-
-
-
-                // Déterminer la table cible selon la catégorie
-                switch ($categorie) {
-                    case 'activite':
-                        $requeteCategorie = 'activite';
-                        break;
-                    case 'parc':
-                        $requeteCategorie = 'parc_attraction';
-                        break;
-                    case 'spectacle':
-                        $requeteCategorie = 'spectacle';
-                        break;
-                    case 'visite':
-                        $requeteCategorie = 'visite';
-                        break;
-                    default:
-                        die("Erreur de categorie!");
                 }
+                
 
 
 
-                switch ($categorie) {
-                    case 'activite':
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
-
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age]);
-
-                        break;
-
-                    case 'parc':
-                        $file = $_FILES['plan'];
-                        $file_extension = get_file_extension($file['type']);
-                        $time = 'p' . strval(time());
-
-                        if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
-                            $fichier_img = 'plan_' . $time . $file_extension;
-                        }
-
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
-
-                        break;
-
-                    case 'spectacle':
-                        $type = "standard";
-                        $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
-                        print($capacite);
-                        print $duree;
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([
-                            $titre,
-                            $resume,
-                            $ville,
-                            intval($duree),
-                            intval($capacite),
-                            $id_compte,
-                            $tarif_min,
-                            $type
-                        ]);
-                        break;
-
-                    case 'visite':
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree]);
-                        break;
-
-                    case 'restaurant':
-                        $file = $_FILE['carte'];
-                        $file_extension = get_file_extension($file['type']);
-                        $time = 'p' . strval(time());
-
-                        if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
-                            $fichier_img = 'plan_' . $time . $file_extension;
-                        }
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+                
 
 
-                    default:
-                        die('erreur switch requete');
-                        break;
-                }
+
+                // switch ($categorie) {
+                //     case 'activite':
+                //         $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, duree, age_min) VALUES (?, ?, ?, ?, ?) returning id_offre";
+
+                //         $stmt = $dbh->prepare($requete);
+                //         $stmt->execute([$titre, $resume, $ville, $duree, $age]);
+
+                //         break;
+
+                //     case 'parc':
+                //         $file = $_FILES['plan'];
+                //         $file_extension = get_file_extension($file['type']);
+                //         $time = 'p' . strval(time());
+
+                //         if ($file_extension !== '') {
+                //             move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                //             $fichier_img = 'plan_' . $time . $file_extension;
+                //         }
+
+                //         $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, age_min, nb_attractions, plan) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                //         $stmt = $dbh->prepare($requete);
+                //         $stmt->execute([$titre, $resume, $ville, $duree, $age, $fichier_img]);
+
+                //         break;
+
+                //     case 'spectacle':
+                //         $type = "standard";
+                //         $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                //         print($capacite);
+                //         print $duree;
+                //         $stmt = $dbh->prepare($requete);
+                //         $stmt->execute([
+                //             $titre,
+                //             $resume,
+                //             $ville,
+                //             intval($duree),
+                //             intval($capacite),
+                //             $id_compte,
+                //             $tarif_min,
+                //             $type
+                //         ]);
+                //         break;
+
+                //     case 'visite':
+                //         $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, duree) VALUES (?, ?, ?, ?) returning id_offre";
+                //         $stmt = $dbh->prepare($requete);
+                //         $stmt->execute([$titre, $resume, $ville, $duree]);
+                //         break;
+
+                //     case 'restaurant':
+                //         $file = $_FILE['carte'];
+                //         $file_extension = get_file_extension($file['type']);
+                //         $time = 'p' . strval(time());
+
+                //         if ($file_extension !== '') {
+                //             move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                //             $fichier_img = 'plan_' . $time . $file_extension;
+                //         }
+                //         $requete = "INSERT INTO sae.offre_" . $requeteCategorie . "(titre, resume, ville, gamme_prix, carte) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                //         $stmt = $dbh->prepare($requete);
+                //         $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img]);
+
+
+                //     default:
+                //         die('erreur switch requete');
+                //         break;
+                // }
 
                 if ($isIdProPrivee){
                     foreach ($tabtarifs as $key => $value) {
