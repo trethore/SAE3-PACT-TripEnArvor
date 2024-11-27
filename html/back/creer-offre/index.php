@@ -451,7 +451,7 @@
                     $tarif_min = $value;
                 } 
             }
-        
+        }
         print_r($_POST);
 
         
@@ -634,7 +634,8 @@
                 die();
             }
         }
-    }
+    
+
 
     ?>
 
