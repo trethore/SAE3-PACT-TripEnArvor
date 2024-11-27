@@ -177,13 +177,11 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            /*echo "<pre>";
-                                            print_r($tab["note"]);
-                                            echo "</pre>";*/
-
                                             if (empty($tab["note"]["round"])) {
                                                 for ($i = 0; $i < 5; $i++) {
-                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                    ?>
+                                                        <p>Pas d'avis disponibles.</p>
+                                                    <?php
                                                 }
                                             } else {
                                                 $note = $tab["note"]["round"];
@@ -191,11 +189,15 @@ try {
                                                 $etoilesVides = 5 - $note;
 
                                                 for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                    <?php
                                                 }
 
                                                 for ($i = 0; $i < $etoilesVides; $i++) {
-                                                    echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                                    <?php
                                                 }
                                             }
                                         ?>
@@ -275,9 +277,10 @@ try {
                 const city = offerElement.querySelector('.lieu-offre').textContent.trim();
                 const price = offerElement.querySelector('.prix span').textContent.trim();
                 const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                /*const image = offerElement.querySelector('.image-offre').style.backgroundImage;*/
+                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
                 const description = offerElement.querySelector('.description-offre').textContent.trim();
                 const profile = offerElement.querySelector('.nom-offre').textContent.trim();
+                const nombre_notes = offerElement.querySelector('.nombre-notes').textContent.trim();
 
                 return `
                     <div class="offre">
@@ -285,7 +288,7 @@ try {
                             <a href="#">
                                 <div class="lieu-offre">${city}</div>
                                 <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style=background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
+                                <img class="image-offre" style=background: center; background-image: ${image}">
                                 <p class="titre-offre">${title}</p>
                                 <p class="categorie-offre">${category}</p>s
                                 <p class="description-offre">${description}</p>
@@ -297,7 +300,7 @@ try {
                                         <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
                                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <p class="nombre-notes">(120)</p>
+                                        <p class="nombre-notes">(${nombre_notes})</p>
                                     </div>
                                     <p class="prix">A partir de <span>${price}</span></p>
                                 </div>
