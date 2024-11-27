@@ -387,14 +387,17 @@ a {
 .fond-blocs-avis {
     background: var(--blanc-leger);    
     margin: 30px 0;
-    padding: 30px 30px 30px 94px;
+    padding: 30px 30px 30px 60px;
     border-radius: 15px;
     color: var(--noir);
     border: 3px solid var(--orange-principale);
 }
 
+.fond-blocs-avis:first-child {
+    font-size: 50px;
+}
+
 .fond-blocs-avis > p {
-    font-size: 64px;
     margin: 0 0 0 75px ;
 }
 
