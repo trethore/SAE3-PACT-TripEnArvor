@@ -1,8 +1,12 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
 try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $stmt = $dbh->prepare('SELECT id_offre, titre FROM sae._offre');
     $stmt->execute();
     $offres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+    $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
