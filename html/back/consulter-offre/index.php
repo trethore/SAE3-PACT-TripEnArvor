@@ -359,7 +359,7 @@ try {
                                 $publication = explode(' ', $da['date']);
                                 $datePub = $publication[0]; 
                                 $heurePub = $publication[1]; ?>
-                                <p><strong><?php echo htmlentities($datePub); ?> à <?php echo htmlentities($heurePub); ?></strong></p>
+                                <p><strong>Publié le <?php echo htmlentities($datePub); ?> à <?php echo htmlentities($heurePub); ?></strong></p>
                             <?php } ?>
                         </div>
                         <p class="transparent">.</p>
@@ -368,9 +368,8 @@ try {
                         $passage = explode(' ', $dp['date']);
                         $datePass = $passage[0]; 
                         $heurePass = $passage[1]; ?>
-                        <p>Y était le : <?php echo htmlentities($datePass); ?> à <?php echo htmlentities($heurePass); ?></p>
+                        <p>Y était le : <?php echo htmlentities($datePass); ?> à <?php echo htmlentities($heurePass); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <?php } ?>
-                    <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
