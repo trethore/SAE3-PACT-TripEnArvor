@@ -34,7 +34,7 @@ try {
     }
 
     foreach ($offres as &$offre) {
-        $offre['note'] = 3;
+        $offre['note'] = 2;
     }
 
 } catch (PDOException $e) {
@@ -101,7 +101,7 @@ try {
                         <div>
                             <div>
                                 <label>Note minimum :</label>
-                                <select>
+                                <select class="note">
                                     <option></option>
                                     <option>★★★★★</option>
                                     <option>★★★★</option>
@@ -187,11 +187,19 @@ try {
                                 <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                 <div class="bas-offre">
                                     <div class="etoiles">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                            $note = ceil($tab["note"]);
+                                            $etoilesPleines = $note;
+                                            $etoilesVides = 5 - $note;
+
+                                            for ($i = 0; $i < $etoilesPleines; $i++) {
+                                                echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
+                                            }
+
+                                            for ($i = 0; $i < $etoilesVides; $i++) {
+                                                echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                            }
+                                        ?>
                                         <p class="nombre-notes">(120)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
@@ -249,7 +257,6 @@ try {
             const offersContainer = document.querySelector(".section-offres");
             const offers = document.querySelectorAll('.offre');
             const allOffers = Array.from(offers);
-            console.log(allOffers);
 
             // Create the "no offers" message element
             const noOffersMessage = document.createElement("div");
@@ -302,18 +309,14 @@ try {
 
             selectElement.addEventListener('change', () => {
                 const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
-
-                console.log(allOffers);
                 
                 if (selectedValue == "price-asc") {
-                    console.log("asc");
                     allOffers.sort((a, b) => {
                         const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
                         return priceA - priceB;
                     });
                 } else if (selectedValue == "price-desc") {
-                    console.log("desc");
                     allOffers.sort((a, b) => {
                         const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
@@ -333,7 +336,7 @@ try {
                 const filters = {
                     categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
                     availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
-                    minRating: document.querySelector(".trier select")?.value || null,
+                    minRating: document.querySelector(".trier .note")?.value || null,
                     minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
                     maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
                 };
@@ -350,15 +353,17 @@ try {
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
                     const price = parseFloat(priceText) || 0;
                     const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    /*const etoiles = offer.querySelector(".etoile");
-                    console.log(etoiles);
-                    const note = etoiles.length;
-                    console.log('note' + note);
-
-                    let numberOfStarsWanted = filters.minRating.length;
-                    console.log('note voulue' + numberOfStarsWanted);*/
-
+                    const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
+                    const numberOfStarsWanted = filters.minRating;
+                    console.log('note voulue : ' + numberOfStarsWanted.length);
+                    const note = etoilesPleinesOffre.length;
+                    console.log('note offre : ' + note);
                     let matches = true;
+
+                    // Filter by stars
+                    if (filters.numberOfStarsWanted > note) {
+                        matches = false;
+                    }
 
                     // Filter by category
                     if (!filters.categories.includes(category)) {
@@ -377,9 +382,6 @@ try {
                         (filters.maxPrice !== null && price > filters.maxPrice)) {
                         matches = false;
                     }
-
-                    console.log(filters.minPrice);
-                    console.log(filters.maxPrice);
 
                     // Filter by note
                     /*if (numberOfStarsWanted > note) {

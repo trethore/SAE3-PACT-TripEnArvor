@@ -271,15 +271,27 @@ try {
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
                 <?php foreach ($jours as $jour) { ?>
-                <p>
-                    <?php echo htmlentities($jour['nom_jour'] . " : "); 
-                    foreach ($horaires as $horaire) {
-                        echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
-                    } ?> 
-                </p>
-            <?php } ?>
+                    <p>
+                        <?php 
+                        echo htmlentities($jour['nom_jour'] . " : ");
+                        $validHours = false; // Flag to check if there are valid hours for this day
+                        
+                        foreach ($horaires as $horaire) {
+                            if (!empty($horaire['ouverture']) && !empty($horaire['fermeture'])) {
+                                // Only display valid opening and closing hours
+                                echo htmlentities($horaire['ouverture'] . " - " . $horaire['fermeture'] . "\t");
+                                $validHours = true; // Set flag to true if valid hours are found
+                            }
+                        }
+                        
+                        if (!$validHours) {
+                            echo "Fermé"; // Print "Fermé" if no valid hours were found
+                        }
+                        ?>
+                    </p>
+                <?php } ?>
             </div> 
-    
+            
         </section>
 
         <section id="carte" class="fond-blocs bordure">
