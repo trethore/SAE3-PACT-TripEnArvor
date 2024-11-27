@@ -178,11 +178,9 @@ try {
                                     <div class="etoiles">
                                         <?php
                                             if (empty($tab["note"]["round"])) {
-                                                for ($i = 0; $i < 5; $i++) {
-                                                    ?>
-                                                        <p>Pas d'avis disponibles.</p>
-                                                    <?php
-                                                }
+                                                ?>
+                                                    <p>Pas d'avis disponibles.</p>
+                                                <?php
                                             } else {
                                                 $note = $tab["note"]["round"];
                                                 $etoilesPleines = $note;
