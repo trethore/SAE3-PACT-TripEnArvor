@@ -406,22 +406,20 @@ try {
 
             locationInput.addEventListener("input", () => {
                 const searchValue = locationInput.value.trim().toLowerCase();
-                const query = searchInput.value.toLowerCase().trim();
+                let hasResults = false;
 
                 // Filtrer les offres en fonction de la localisation
-                const filteredOffers = allOffers.filter(offer => {
+                allOffers.forEach(offer => {
                     const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
-                    return location.includes(searchValue);
+                    if (location.includes(searchValue)) {
+                        offer.style.display = "block"; // Affiche l'offre
+                        hasResults = true;
+                    } else {
+                        offer.style.display = "none"; // Cache l'offre
+                    }
                 });
 
-                // Mettre à jour l'affichage des offres
-                offersContainer.innerHTML = "";
-
-                if (filteredOffers.length > 0) {
-                    filteredOffers.forEach(offer => offersContainer.appendChild(offer));
-                } else {
-                    noOffersMessage.style.display = "block";
-                }
+                noOffersMessage.style.display = hasResults ? "none" : "block";
             });
         });
     </script>
