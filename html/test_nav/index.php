@@ -1,35 +1,36 @@
 <?php
+// Initialisation de la connexion à la base de données
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connexion réussie à la base de données !<br>";
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit; // Stoppe le script si la connexion échoue
+}
+
+// Vérification de la connexion avec une requête simple
+try {
+    $stmt = $dbh->query("SELECT 1");
+    if ($stmt) {
+        echo "Connexion réussie et requête exécutée avec succès.<br>";
+    }
+} catch (PDOException $e) {
+    echo "Erreur lors de l'exécution de la requête de test : " . $e->getMessage();
+    exit;
+}
+
+// Récupération des titres des offres
 try {
     $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
     $stmt->execute();
     $titres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+    echo "Titres récupérés avec succès !<br>";
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
-
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connexion réussie à la base de données !";
-    } catch (PDOException $e) {
-        echo "Erreur de connexion : " . $e->getMessage();
-    }
-
-    try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-            // Test avec une requête
-            $stmt = $dbh->query("SELECT 1");
-            if ($stmt) {
-                echo "Connexion réussie et requête exécutée avec succès.";
-            }
-        } catch (PDOException $e) {
-            echo "Erreur : " . $e->getMessage();
-        }
-        
-    
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
