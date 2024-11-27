@@ -98,6 +98,18 @@ try {
     $stmtMembre->execute();
     $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
+    $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDateAvis = $dbh->prepare($reqDateAvis);
+    $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDateAvis->execute();
+    $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
+
+    $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDatePassage = $dbh->prepare($reqDatePassage);
+    $stmtDatePassage->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDatePassage->execute();
+    $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
+
 
     $nombreNote = getNombreNotes($id_offre_cible);
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
@@ -163,7 +175,7 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
@@ -313,7 +325,7 @@ try {
 
         </section>
 
-        <section class="fond-blocs bordure-top">
+        <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
                 <h2>Note moyenne : </h2>
@@ -344,11 +356,15 @@ try {
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
-                            <p><em><strong>14/08/2023</strong></em></p>
+                            <?php foreach ($dateAvis as $da) { ?>
+                                <p><strong><?php echo htmlentities($da['date']) ?></strong></p>
+                            <?php } ?>
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <?php foreach ($datePassage as $dp) { ?>
+                        <p>Contexte : <?php echo htmlentities($a['contexte_visite']); ?> Y était le : <?php echo htmlentities($dp['date']) ?></p>
+                    <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
@@ -365,7 +381,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
-            <button><img src="/images/universel/icones/fleche-haut.png"></button>
+            <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
