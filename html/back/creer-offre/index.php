@@ -101,7 +101,7 @@
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte); 
-                print $isIdProPrivee. "  "; print $isIdProPublique?>
+                print "prive ". $isIdProPrivee. "  "; print "publique ".$isIdProPublique?>
 
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
