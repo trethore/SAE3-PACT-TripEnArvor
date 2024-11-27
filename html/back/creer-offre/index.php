@@ -100,18 +100,18 @@
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte);
                 print_r($id_compte);
-                print_r($isIdProPublique);
+                //print_r($isIdProPublique);
                 
                 if ($isIdProPublique !== true){
                     $isIdProPublique = false;
-                    print "pro prive ";
+                    //print "pro prive ";
                 
                     
                 }else if ($isIdProPublique === true) {
                    $isIdProPrivee = false;
-                   print"prop publique"; 
+                   //print"prop publique"; 
                 }
-                print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
+                //print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
             ?>
 
             <h2> Création d'une offre</h2>
