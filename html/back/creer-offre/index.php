@@ -637,12 +637,12 @@
 
 
         //champ type masqué si le pro est publique
-         if(isIdProPublique){  
+        //  if(isIdProPublique){  
             
-            document.getElementById("labeltype").style.display = 'none';
-            document.getElementById("type").style.display = 'none';
+        //     document.getElementById("labeltype").style.display = 'none';
+        //     document.getElementById("type").style.display = 'none';
            
-         }
+        //  }
         
 
 
