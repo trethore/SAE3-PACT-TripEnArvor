@@ -504,8 +504,10 @@
 
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_". $requeteCategorie."(titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    print($capacite);
+                    print $duree;
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $duree, $capacite]);
+                    $stmt->execute([$titre, $resume, $ville, $duree, $capacite]); //ajouter id_compte_professionel, prix_offre, type_offre 
                     break;
 
                 case 'visite':
