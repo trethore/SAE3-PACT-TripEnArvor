@@ -54,7 +54,7 @@ nav {
 
     position: sticky;
     top: 1em;
-    background-color: var(--violet-principale);
+    background-color: var(--violet-principal);
     border-radius: 15px;
     width: 15em;
     height: 100vh;
@@ -70,10 +70,10 @@ nav a {
 
     text-align: center;
     background-color: var(--blanc-leger);
-    color: var(--violet-principale);  
+    color: var(--violet-principal);  
     margin: 1em 0.5em 1em;
     padding: 0.5em 1em;
-    border: 2px solid var(--violet-principale);
+    border: 2px solid var(--violet-principal);
     border-radius: 15px;
     height: 3em;
 }
@@ -84,7 +84,7 @@ nav a:last-child {
 
 nav a:hover {
     color: var(--blanc-leger);
-    background-color: var(--violet-principale);
+    background-color: var(--violet-principal);
     border: 2px solid var(--blanc-leger);
 }
 
@@ -128,7 +128,7 @@ tr > td {
 table td + td {
     text-align: right;
     width: 28em;
-    color: var(--violet-principale);
+    color: var(--violet-principal);
 }
 
 td > div {
@@ -144,17 +144,17 @@ td > div {
 main > section a {
     text-decoration: none;
     color: var(--blanc-leger);
-    background-color: var(--violet-principale);
-    border: 2px solid var(--violet-principale);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--violet-principal);
     border-radius: 15px;
     margin: 1em 0;
     padding: 0.2em 1em;
 }
 
 main > section a:hover {
-    color: var(--violet-principale);
+    color: var(--violet-principal);
     background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principale);
+    border: 2px solid var(--violet-principal);
 }
 
 table + div {
