@@ -395,6 +395,7 @@ a {
 
 .titre-avis {
     font-size: 32px;
+    font-weight: bold;
 }
 
 .fond-blocs-avis > p {
