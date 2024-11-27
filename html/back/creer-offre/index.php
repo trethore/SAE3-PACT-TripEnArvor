@@ -406,6 +406,7 @@
         }
         $isIdProPrivee = isIdProPrivee($id_compte);
         $isIdProPublique = isIdProPublique($id_compte);
+        echo $id_compte;
 
         
 
@@ -622,6 +623,8 @@
 
         const isIdProPrivee = <?php echo json_encode($isIdProPrivee); ?>;
         const isIdProPublique = <?php echo json_encode($isIdProPublique); ?>;
+        console.log(isIdProPrivee);
+        
 
 
         let typecategorie = document.getElementById('categorie');
