@@ -433,15 +433,15 @@
                 $_POST['nomtarif1nom'] => $tarif1
             );
 
-            if (isset($_POST['tarif2'])) {
+            if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2nom']))) {
                 $tarif2 = $_POST['tarif2'];
                 $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
             }
-            if (isset($_POST['tarif3'])) {
+            if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3nom']))) {
                 $tarif3 = $_POST['tarif3'];
                 $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
             }
-            if (isset($_POST['tarif4'])) {
+            if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4nom']))) {
                 $tarif4 = $_POST['tarif4'];
                 $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
             }
