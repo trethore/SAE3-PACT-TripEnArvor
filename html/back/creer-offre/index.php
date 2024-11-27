@@ -250,8 +250,8 @@
 
                     <div id="tarifs">
                         <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" required/>
-                        <input type="number" name="tarif1" min="0" placeholder="prix" required/><span>€</span>
+                        <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
+                        <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
                         <br>
                         <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
                         <input type="number" name="tarif2" min="0" placeholder="prix" /><span>€</span>
@@ -420,6 +420,38 @@
             $capacite = $_POST['capacite'];
         }
         
+        if ($categorie !== "restautant") {
+                
+            if (isset($_POST['tarif1'])) {
+                        $tarif1 = $_POST['tarif1'];
+            }
+            else {
+                $tarif1 = 0;
+            }
+            $tarif_min = $tarif1;
+            $tabtarifs = array(
+                $_POST['nomtarif1nom'] => $tarif1
+            );
+
+            if (isset($_POST['tarif2'])) {
+                $tarif2 = $_POST['tarif2'];
+                $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
+            }
+            if (isset($_POST['tarif3'])) {
+                $tarif3 = $_POST['tarif3'];
+                $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
+            }
+            if (isset($_POST['tarif4'])) {
+                $tarif4 = $_POST['tarif4'];
+                $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
+            }
+
+            foreach ($tabtarifs as $key => $value) {
+                if($tarif_min > $value){
+                    $tarif_min = $value;
+                } 
+            }
+        
         print_r($_POST);
 
         
@@ -503,11 +535,12 @@
                     break;
 
                 case 'spectacle':
-                    $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $type = "standard";
+                    $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite, id_compte_professionel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite)]); //ajouter id_compte_professionel, prix_offre, type_offre 
+                    $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite, $id_compte, $tarif_min, $type)]); //ajouter id_compte_professionel, prix_offre, type_offre 
                     break;
 
                 case 'visite':
@@ -535,31 +568,8 @@
                     break;
             }
 
-            if ($categorie !== "restautant") {
-                if (isset($_POST['tarif1'])) {
-                            $tarif1 = $_POST['tarif1'];
-                }
-                else {
-                    $tarif1 = 0;
-                }
-                $tabtarifs = array(
-                    $_POST['nomtarif1nom'] => $tarif1
-                );
-
-                if (isset($_POST['tarif2'])) {
-                    $tarif2 = $_POST['tarif2'];
-                    $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
-                }
-                if (isset($_POST['tarif3'])) {
-                    $tarif3 = $_POST['tarif3'];
-                    $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
-                }
-                if (isset($_POST['tarif4'])) {
-                    $tarif4 = $_POST['tarif4'];
-                    $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
-                }
-
-                foreach ($tabtarifs as $key => $value) {
+            
+                foreach ($tabtarifs as $key => $value){
                     $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
     
                     // Préparation de la requête pour la vue tarif
@@ -568,9 +578,7 @@
                     // Exécution de la requête pour insérer dans la vue tarif
                     $stmt_tarif->execute([$id_offre, $value, $key]);
                 }
-
-            }
-
+            
 
 
 
@@ -611,10 +619,11 @@
             $dbh = null;
 
             print "Offre créée avec succès!";
-        } catch (PDOException $e) {
-            // Affichage de l'erreur en cas d'échec
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
+            } catch (PDOException $e) {
+                // Affichage de l'erreur en cas d'échec
+                print "Erreur !: " . $e->getMessage() . "<br/>";
+                die();
+            }
         }
     }
 
