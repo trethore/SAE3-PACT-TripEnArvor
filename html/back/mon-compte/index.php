@@ -47,10 +47,10 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <article>
+        <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
             <a href="/back/se-connecter">Se déconnecter</a>
-        </article>
+        </nav>
         <section>
             <?php 
                 // Préparation et exécution de la requête
@@ -60,7 +60,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Détails du compte</h1>
-            <article>
+            <article style="display: none;">
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
                 <a>Importer une photo de profil</a>
             </article>
@@ -120,10 +120,12 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td>Adresse postale</td>
                     <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
                 </tr>
-                <tr>
-                    <td>Complément d'adresse</td>
-                    <td><?php echo htmlentities($detailCompte["complement_adresse"]);?></td>
-                </tr>
+                <?php  if (isset($detailCompte["complement_adresse"])) { ?>
+                    <tr>
+                        <td>Complément d'adresse</td>
+                        <td><?php echo htmlentities($detailCompte["complement_adresse"]); ?></td>
+                    </tr> 
+                <?php } ?>
                 <tr>
                     <td>Code postal</td>
                     <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
@@ -142,5 +144,39 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             </div>
         </section>
     </main>
+    <footer>
+        <div class="footer-top">
+        <div class="footer-top-left">
+            <span class="footer-subtitle">P.A.C.T</span>
+            <span class="footer-title">TripEnArmor</span>
+        </div>
+        <div class="footer-top-right">
+            <span class="footer-connect">Restons connectés !</span>
+            <div class="social-icons">
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
+            </div>
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
+        </div>
+        <div class="footer-bottom">
+        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        Conditions générales - ©
+        Redden's, Inc.
+        </div>
+    </footer>
 </body>
 </html>
