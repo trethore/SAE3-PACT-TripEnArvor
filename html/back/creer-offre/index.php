@@ -467,13 +467,13 @@ function get_file_extension($type)
             foreach ($tabtarifs as $key => $value) {
                 if ($tarif_min > $value) {
                     $tarif_min = $value;
-                }
+                } 
             }
 
         }
         print_r($_POST);
 
-        print $categorie;
+        print $_POST['lacat'];
 
 
 
