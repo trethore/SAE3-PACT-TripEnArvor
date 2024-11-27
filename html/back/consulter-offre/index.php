@@ -326,7 +326,11 @@ try {
                         <div class="display-ligne">
                             <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
                             <p><strong>Bob</strong></p>
-                            <p><?php echo htmlentities($a['note']) ?></p>
+                            <?php 
+                            $note = $a['note'];
+                            for ($etoileJaune = 1 ; $etoileJaune != $note ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <?php } ?>
                             <p><em>14/08/2023</em></p>
                         </div>
                         <p><strong>⁝</strong></p>
