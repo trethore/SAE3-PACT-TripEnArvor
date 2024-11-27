@@ -89,13 +89,13 @@ try {
     $stmtAvis = $dbh->prepare($reqAvis);
     $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAvis->execute();
-    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+    $avis = $stmtAvis->fetch(PDO::FETCH_ASSOC);
 
     $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis NATURAL JOIN compte_membre WHERE id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
-    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+    $membre = $stmtMembre->fetch(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
