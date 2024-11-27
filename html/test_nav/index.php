@@ -3,6 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $stmt = $dbh->prepare('SELECT id_offre, titre FROM sae._offre');
     $stmt->execute();
     $offres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
