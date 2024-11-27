@@ -86,17 +86,21 @@ try {
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les avis de l'offre ===== //
-    $reqAvis = "SELECT * FROM _offre NATURAL JOIN _avis WHERE id_offre = :id_offre";
+    $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
     $stmtAvis = $dbh->prepare($reqAvis);
     $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAvis->execute();
     $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis JOIN compte_membre ON _avis.id_membre = compte_membre.id_compte WHERE id_offre = :id_offre";
+    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
     $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+
+
+    $nombreNote = getNombreNotes($id_offre_cible);
+    $noteMoyenne = getNoteMoyenne($id_offre_cible);
 
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
@@ -188,13 +192,14 @@ try {
                 
             <div class="display-ligne-espace">
                 <div class="display-ligne">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <?php } 
+                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                    <?php } ?>
                     <!-- Affichage du nombre d'avis de l'offre -->
-                    <!-- <p> <//?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p> -->
+                    <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
@@ -263,7 +268,7 @@ try {
 
         </section>
 
-        <section class="double-blocs bordure">
+        <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
                 <div>
@@ -301,34 +306,47 @@ try {
             
         </section>
 
-        <section id="carte" class="fond-blocs bordure">
+        <section id="carte" class="fond-blocs">
 
             <h1>Localisation</h1>
             <div id="map" class="carte"></div>
 
         </section>
 
-        <section id="avis" class="fond-blocs avis">
+        <section class="fond-blocs bordure-top">
 
             <div class="display-ligne">
-                <h2>Note moyenne :</h2>
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <p>49 avis</p>
+                <h2>Note moyenne : </h2>
+                <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <?php } 
+                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
+                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                <?php } ?>
+                <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                        <div class="display-ligne">
-                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                            <p><strong>Bob</strong></p>
-                            <p><em>14/08/2023</em></p>
-                        </div>
+                        <p class="titre-avis"><?php echo htmlentities($a['titre']) ?></p>
                         <p><strong>⁝</strong></p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <div class="display-ligne">
+                            <?php foreach ($membre as $m) { ?>
+                                <p><strong><?php echo htmlentities($m['pseudo']) ?></strong></p>
+                            <?php } ?>
+                            <!-- <p><strong></p/?php echo htmlentities($membre['pseudo']) ?></strong></p> -->
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <?php } 
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                            <?php } ?>
+                            <p><em><strong>14/08/2023</strong></em></p>
+                        </div>
+                        <p class="transparent">.</p>
                     </div>
                     <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>

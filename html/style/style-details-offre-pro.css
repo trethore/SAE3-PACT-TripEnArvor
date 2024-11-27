@@ -393,13 +393,18 @@ a {
     border: 3px solid var(--orange-principale);
 }
 
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding: 10px;
+}
+
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {

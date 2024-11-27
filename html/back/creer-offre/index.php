@@ -442,6 +442,17 @@
                 $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
             }
             if ((isset($_POST['tarif4']))&&(isset($_POST['nomtarif4nom']))) {
+
+            if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2nom']))) {
+                $tarif2 = $_POST['tarif2'];
+                $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
+            }
+            if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3nom']))) {
+                $tarif3 = $_POST['tarif3'];
+                $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
+            }
+            if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4nom']))) {
+
                 $tarif4 = $_POST['tarif4'];
                 $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
             }
@@ -449,7 +460,7 @@
             foreach ($tabtarifs as $key => $value) {
                 if($tarif_min > $value){
                     $tarif_min = $value;
-                } 
+                }  
             }
         }
         print_r($_POST);

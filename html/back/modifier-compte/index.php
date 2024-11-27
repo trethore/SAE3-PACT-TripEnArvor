@@ -1,37 +1,13 @@
-<?php
-require_once('../../php/connect_params.php');
-require_once('../../utils/compte-utils.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
-
-try {
-    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $conn->prepare("SET SCHEMA 'sae';")->execute();
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
-
-startSession();
-$id_compte = $_SESSION["id"];
-if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    redirectTo("https://redden.ventsdouest.dev/front/se-connecter/");
-}
-
-$reqCompte = "SELECT * from sae._compte_membre cm 
-                join sae._compte c on c.id_compte = cm.id_compte 
-                join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cm.id_compte = :id_compte;";
-?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_frontCompte.css">
+    <link rel="stylesheet" href="/style/style_backCompte.css">
+    <link rel="stylesheet" href="/style/style_backCompteModif.css">
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
-    <title>Mon compte</title>
+    <title>Modifier mon compte</title>
 </head>
 <body>
     <header>
@@ -45,12 +21,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <nav>
-            <a class="ici" href="/front/mon-compte">Mes infos</a>
-            <a href="/back/se-connecter">Se déconnecter</a>
-        </nav>
-        <section>
-            <?php 
+    <?php 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqCompte);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
@@ -62,45 +33,82 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
                 <a>Importer une photo de profil</a>
             </article>
+            <h2>Vue d'ensemble</h2>
+            <table>
+                <tr>
+                    <td>Dénomination Sociale</td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
+                </tr>
+                <tr>
+                    <td>A propos</td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["a_propos"]);?>"></td>
+                </tr>
+                <tr>
+                    <td>Site web</td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["site_web"]);?>"></td>
+                </tr>
+            </table>
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
-                    <td>Pseudo</td>
-                    <td><?php echo htmlentities($detailCompte["pseudo"]);?></td>
-                </tr>
-                <tr>
                     <td>Nom</td>
-                    <td><?php echo htmlentities($detailCompte["nom_compte"]);?></td>
+                    <td>
+                        <input type="text" placeholder="<?php 
+                                if (isset($detailCompte["nom_compte"])) {
+                                    echo htmlentities($detailCompte["nom_compte"]);} ?>">
+                    </td>
                 </tr>
                 <tr>
                     <td>Prenom</td>
-                    <td><?php echo htmlentities($detailCompte["prenom"]);?></td>
+                    <td>
+                        <input type="text" placeholder="<?php 
+                                    if (isset($detailCompte["prenom"])) {
+                                        echo htmlentities($detailCompte["prenom"]);} ?>"> 
+                    </td>
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td><?php echo htmlentities($detailCompte["email"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["email"]);?>"></td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
-                    <td><?php echo htmlentities($detailCompte["tel"]);?></td>
+                    <td>
+                        <input type="text" placeholder="<?php 
+                                        if (isset($detailCompte["tel"])) {
+                                            echo htmlentities($detailCompte["tel"]);} ?>"> 
+                    </td>
+                </tr>
+                <?php if ($typeCompte == 'proPrive') {?>
+                <tr>
+                    <td>N° SIREN</td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <td>N° IBAN</td>
+                    <td><input type="text" placeholder="<?php echo htmlentities("à implémenter");?>"></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["mot_de_passe"]);?>"></td>
                 </tr>
             </table>
+            <?php if (isset($detailCompte["id_adresse"])) { ?>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
                 </tr>
-                <?php  if (isset($detailCompte["complement_adresse"])) { ?>
-                    <tr>
-                        <td>Complément d'adresse</td>
-                        <td><?php echo htmlentities($detailCompte["complement_adresse"]); ?></td>
-                    </tr> 
-                <?php } ?>
+                <tr>
+                    <td>Complément d'adresse</td>
+                    <?php   ?>
+                    <td>
+                        <input type="text" placeholder="<?php 
+                            if (isset($detailCompte["complement_adresse"])) {
+                                echo htmlentities($detailCompte["complement_adresse"]);} ?>">
+                    </td>
+                </tr>
                 <tr>
                     <td>Code postal</td>
                     <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
@@ -113,11 +121,10 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                     <td>Pays</td>
                     <td><?php echo htmlentities($detailCompte["pays"]);?></td>
                 </tr>
-            </table>
+            </table> <?php } ?>
             <div>
-                <a>Modifier les informations</a>
+                <a>Valider les modifications</a>
             </div>
-        </section>
     </main>
     <footer>
         <div class="footer-top">

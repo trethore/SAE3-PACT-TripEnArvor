@@ -1,12 +1,19 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
 try {
-    $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
     $stmt->execute();
-    $titres = $stmt->fetchAll(PDO::FETCH_COLUMN); // Récupère uniquement la colonne "titre"
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -27,10 +34,23 @@ try {
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php 
-                foreach ($titres as $titre) { // Parcourt les titres récupérés
-                    echo "<option value=\"{$titre}\"></option>";
+                foreach ($offres as $offre) { // Parcourt les titres récupérés
+                   ?><option value="<?php echo $offre['titre'] ?>" id ="<?php echo $offre['id_offre'] ?>" ><?php echo $offre['titre'] ?></option><?php
                 }
-                ?>
+            ?>
+            <script>
+                elementList = document.querySelectorAll('div[option]');
+                console.log(elementList);
+
+                elementList.forEach(element => {
+                    element.addEventListener("click", (event) => {
+                        // TODO: set to front pls my dear
+                        console.log("go");
+                        window.location.href = "/back/consulter-offre/index.php?id=" + element.id; 
+                    });
+                });
+
+            </script>
             </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
