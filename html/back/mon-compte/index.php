@@ -60,7 +60,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Détails du compte</h1>
-            <article>
+            <article style="display: none;">
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
                 <a>Importer une photo de profil</a>
             </article>
