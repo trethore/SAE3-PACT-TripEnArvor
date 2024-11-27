@@ -90,13 +90,13 @@ try {
     $stmtAvis = $dbh->prepare($reqAvis);
     $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtAvis->execute();
-    $avis = $stmtAvis->fetch(PDO::FETCH_ASSOC);
+    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
     $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis NATURAL JOIN compte_membre WHERE id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
-    $membre = $stmtMembre->fetch(PDO::FETCH_ASSOC);
+    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
@@ -320,32 +320,35 @@ try {
                 <p>49 avis</p>
             </div>
 
-            <div class="fond-blocs-avis">
+            <?php foreach ($avis as $a) { ?>
 
-                <div class="display-ligne-espace">
+                <div class="fond-blocs-avis">
 
-                    <div class="display-ligne">
-                        <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                        <p><strong><?php echo htmlentities($membre['pseudo']); ?></strong></p>
+                    <div class="display-ligne-espace">
 
-                        <p><em>14/08/2023</em></p>
+                        <div class="display-ligne">
+                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
+                            <p><strong><?php echo htmlentities($membre['pseudo']); ?></strong></p>
+
+                            <p><em>14/08/2023</em></p>
+                        </div>
+
+                        <p><strong>⁝</strong></p>
+                    </div>
+                    <p>Contexte de la visite : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <p><?php echo htmlentities($a['commentaire']); ?></p>
+
+                    <div class="display-ligne-espace">
+                        <p class="transparent">.</p>
+                        <div class="display-notation">
+                            <a href="#"><strong>Répondre</strong></a>
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                        </div>
                     </div>
 
-                    <p><strong>⁝</strong></p>
-                </div>
-                <p>Contexte de la visite : <?php echo htmlentities($avis['contexte_visite']); ?></p>
-                <p><?php echo htmlentities($avis['commentaire']); ?></p>
-
-                <div class="display-ligne-espace">
-                    <p class="transparent">.</p>
-                    <div class="display-notation">
-                        <a href="#"><strong>Répondre</strong></a>
-                        <p><?php echo htmlentities($avis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p><?php echo htmlentities($avis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
-                    </div>
-                </div>
-
-            </div>        
+                </div>      
+            <?php } ?>  
 
         </section>        
          
