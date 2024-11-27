@@ -103,10 +103,11 @@
                 if ($isIdProPublique !== 1){
                     $isIdProPublique = 0;
                 
-                    print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
-                }elseif ($isIdProPublique === 1) {
+                    
+                }else if ($isIdProPublique === 1) {
                    $isIdProPrivee = 0;
                 }
+                print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
             ?>
 
             <h2> Création d'une offre</h2>
