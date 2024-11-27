@@ -16,6 +16,10 @@
             
             $dbh = null;
             
+            if ($result === false || !isset($result['count'])) {
+                return false;
+            }
+            
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
@@ -37,6 +41,10 @@
             
             $dbh = null;
             
+            if ($result === false || !isset($result['count'])) {
+                return false;
+            }
+            
             return $result['count'] > 0;
         }catch(Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
@@ -57,6 +65,10 @@
             $result = $stmt->fetch();
             
             $dbh = null;
+            
+            if ($result === false || !isset($result['count'])) {
+                return false;
+            }
             
             return $result['count'] > 0;
         }catch(Exception $e) {
