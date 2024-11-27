@@ -328,7 +328,7 @@ try {
                             <p><strong>Bob</strong></p>
                             <?php 
                             $note = $a['note'];
-                            for ($etoileJaune = 1 ; $etoileJaune != $note ; $etoileJaune + 1) { ?>
+                            for ($etoileJaune = 1 ; $etoileJaune != $note ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } ?>
                             <p><em>14/08/2023</em></p>
