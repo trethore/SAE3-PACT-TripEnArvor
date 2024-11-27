@@ -101,7 +101,7 @@
                 $id_compte =  $_SESSION['id'];
                 $isIdProPrivee = isIdProPrivee($id_compte);
                 $isIdProPublique = isIdProPublique($id_compte); 
-                print "prive ". $isIdProPrivee. "  "; print "publique ".$isIdProPublique;
+                print "prive ". $isIdProPrivee. "  "; print_r($isIdProPublique);
                 if ($isIdProPublique === null){
                     print "cé nul";
                 }
