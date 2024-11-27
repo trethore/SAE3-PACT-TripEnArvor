@@ -137,7 +137,7 @@
 
     function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT note
+        $reqNote = "SELECT ROUND(AVG(note))
             FROM sae._avis
             WHERE id_offre = :id_offre";
         
