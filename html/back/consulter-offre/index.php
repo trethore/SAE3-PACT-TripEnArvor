@@ -75,7 +75,7 @@ try {
     $stmtHoraire = $dbh->prepare($reqHoraire);
     $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtHoraire->execute();
-    $horaires = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+    $horaire = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
     
     
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
