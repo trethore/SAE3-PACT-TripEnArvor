@@ -649,7 +649,6 @@
                 document.getElementById("gammedeprix").style.display = 'inline';
             }
             document.getElementById("tarifs").style.display = 'none';
-            console.log(<?php $id_compte ?>);
             
             
             break;
