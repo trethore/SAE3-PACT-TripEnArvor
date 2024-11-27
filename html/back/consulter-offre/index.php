@@ -92,11 +92,11 @@ try {
     $stmtAvis->execute();
     $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis NATURAL JOIN _compte_membre WHERE id_offre = :id_offre";
+    $reqMembre = "SELECT * FROM _offre NATURAL JOIN _avis JOIN compte_membre ON _avis.id_membre = compte_membre.id_compte WHERE id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
-    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+    $membre = $stmtMembre->fetch(PDO::FETCH_ASSOC);
 
 
     $nombreNote = getNombreNotes($id_offre_cible);
