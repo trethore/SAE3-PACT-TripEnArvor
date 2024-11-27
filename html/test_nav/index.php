@@ -44,6 +44,7 @@ try {
                 elementList.forEach(element => {
                     element.addEventListener("click", (event) => {
                         // TODO: set to front pls my dear
+                        console.log("go");
                         window.location.href = "/back/consulter-offre/index.php?id=" + element.id; 
                     });
                 });
