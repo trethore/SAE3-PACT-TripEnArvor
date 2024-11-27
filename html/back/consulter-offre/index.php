@@ -329,9 +329,10 @@ try {
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
+                        <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                         <div class="display-ligne">
-                            <p><strong><?php echo htmlentities($a['titre'] . " - ") ?></strong></p>
-                            <p><strong><?php echo htmlentities($membre['pseudo']) ?></strong></p>
+                            <p>test</p>
+                            <!-- <p><strong></p/?php echo htmlentities($membre['pseudo']) ?></strong></p> -->
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } 
