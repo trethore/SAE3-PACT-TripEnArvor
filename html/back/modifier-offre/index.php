@@ -6,11 +6,12 @@ else{
     $submitted = false;
 }
 
-include('connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
             $user, $pass);
-    
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
     $dbh = null;
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";

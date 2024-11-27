@@ -1,8 +1,8 @@
 <?php
-    require_once("../../utils/offres-utils.php");
-    require_once("../../utils/site-utils.php");
-    require_once("../../utils/session-utils.php");
-    require_once("../../utils/auth-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
 
     session_start();
     if (isset($_POST['titre'])) { // les autres svp²
@@ -438,6 +438,7 @@
             
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Début de la requête SQL
     

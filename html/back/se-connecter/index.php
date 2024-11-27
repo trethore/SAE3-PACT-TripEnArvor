@@ -1,7 +1,7 @@
 <?php
-require_once('../../php/connect_params.php');
-require_once('../../utils/auth-utils.php');
-require_once('../../utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 

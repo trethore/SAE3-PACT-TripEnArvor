@@ -1,5 +1,5 @@
 <?php 
-    require_once('/var/www/html/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
     // Quelques fonctions pour avoir les infos des offres
 
     function getTypeOffre($id_offre) {
@@ -18,6 +18,7 @@
 
             try {
                 $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->prepare("SET SCHEMA 'sae';")->execute();
 
                 // Préparation et exécution de la requête
                 $stmt = $conn->prepare($reqTypeOffre);
@@ -28,7 +29,7 @@
                 $conn = null;
                 return $type_offre;
             } catch(Exception $e) {
-                print "Erreur !: " . $e->getMessage() . "<br/>";
+                print "Erreur !: " . $e->getMessage() . "<br>";
                 die();
             }
     }
@@ -44,6 +45,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -64,7 +66,7 @@
             $conn = null;
             return $lienIMG;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -79,6 +81,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter la requête
             $stmtIMG = $conn->prepare($reqIMG);
@@ -96,7 +99,7 @@
             $conn = null;
             return $images;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -109,6 +112,7 @@
 
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             // Préparer et exécuter les requêtes des dates d'ouverture
             $stmtDateOuv = $conn->prepare($reqDateOuv);
@@ -126,7 +130,7 @@
             $images = $stmtDateOuv->fetchAll(PDO::FETCH_ASSOC);
             
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -162,7 +166,7 @@
             $conn = null;
             return $lienIMG;
         } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
+            print "Erreur !: " . $e->getMessage() . "<br>";
             die();
         }
     }*/
