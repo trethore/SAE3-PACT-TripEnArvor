@@ -169,7 +169,7 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
             <div class="carousel">
@@ -373,7 +373,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
-            <button><img src="/images/universel/icones/fleche-haut.png"></button>
+            <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
