@@ -41,11 +41,12 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     const elementProPublique = [
-        divEmail,        divPassword,  divConfirmPassword,
-        divName,         divFirstName, divTel,
-        divDenomination, divAPropos,   divSiteWeb,
-        divAddress,      divStreet,    divAddressComplement,
-        divCodePostal,   divCity,      divCountry
+        divEmail,             divPassword,     divConfirmPassword,
+        divNameAndFirstName,  divName,         divFirstName,
+        divTel,               divDenomination, divAPropos,
+        divSiteWeb,           divAddress,      divStreet,
+        divAddressComplement, divCodePostal,  divCity,
+        divCountry
     ];
     const elementObligatoireProPublique = [
         divEmail,        divPassword,   divConfirmPassword,
@@ -56,12 +57,12 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     const elementProPrive = [
-        divEmail,             divPassword,   divConfirmPassword,
-        divName,              divFirstName,  divTel,
-        divDenomination,      divAPropos,    divSiteWeb,
-        divSiren,             divAddress,    divStreet,
-        divAddressComplement, divCodePostal, divCity,
-        divCountry
+        divEmail,             divPassword,          divConfirmPassword,
+        divNameAndFirstName,  divName,              divFirstName,
+        divTel,               divDenomination,      divAPropos,
+        divSiteWeb,           divSiren,             divAddress,
+        divStreet,            divAddressComplement, divCodePostal,
+        divCity,divCountry
     ];
     const elementObligatoireProPrive = [
         divEmail,           divPassword,    divConfirmPassword,
@@ -82,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.style.display = "flex";
                 if (listOfRequiredElements.includes(element)) {
                     setObligatoire(element, true);
+                } else {
+                    setObligatoire(element, false);
                 }
             } else {
                 element.style.display = "none";
