@@ -1,4 +1,10 @@
 <?php
+$driver = "mysql"; // Remplacez par "pgsql" pour PostgreSQL, "sqlite" pour SQLite, etc.
+$server = "localhost"; // L'hôte de la base de données (souvent "localhost")
+$dbname = "votre_base_de_donnees"; // Le nom de votre base de données
+$user = "votre_utilisateur"; // Le nom d'utilisateur de la base de données
+$pass = "votre_mot_de_passe"; // Le mot de passe de la base de données
+
 try {
     $stmt = $dbh->prepare('SELECT titre FROM sae._offre');
     $stmt->execute();
