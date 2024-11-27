@@ -40,6 +40,7 @@ try {
             ?>
             <script>
                 elementList = document.querySelectorAll('div[option]');
+                console.log(elementList);
 
                 elementList.forEach(element => {
                     element.addEventListener("click", (event) => {
