@@ -356,7 +356,7 @@ try {
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php } ?>
                             <?php foreach ($dateAvis as $da) { 
-                                $publication = explode(' ', $dp['date']);
+                                $publication = explode(' ', $da['date']);
                                 $datePub = $publication[0]; 
                                 $heurePub = $publication[1]; ?>
                                 <p><strong><?php echo htmlentities($datePub); ?> à <?php echo htmlentities($heurePub); ?></strong></p>
