@@ -38,6 +38,7 @@ VALUES
 ('12 Rue de Paris', 'Paris', '75000', 'France'),
 ('45 Boulevard de Lyon', 'Lyon', '69000', 'France'),
 ('8 Avenue de Bordeaux', 'Bordeaux', '33000', 'France'),
+('10 Avenue de Bordeaux', 'Bordeaux', '33000', 'France'),
 ('27 Rue de Lille', 'Lille', '59000', 'France');
 
 -- ####################################################################
@@ -65,7 +66,7 @@ VALUES
 -- ####################################################################
 
 INSERT INTO _prestation (nom_prestation, description) VALUES
-('Dégustation', 'Dégustations de fromages de spécialité su pays.'),
+('Dégustation', 'Dégustations de fromages de spécialité du pays.'),
 ('Découverte historique', 'Écouté des histoires surprenante du guide.'),
 ('Poterie', 'Créez vos propres poteries.');
 
@@ -215,6 +216,48 @@ INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
 (4, 'image14.webp'),
 (5, 'image15.webp'),
 (6, 'image16.webp');
+
+
+INSERT INTO _horaires_du_jour (nom_jour, id_offre) VALUES
+('Lundi', 1),    
+('Mardi', 2),   
+('Mercredi', 3), 
+('Jeudi', 1),    
+('Vendredi', 2); 
+
+INSERT INTO _horaire (ouverture, fermeture, horaires_du_jour) VALUES
+('08:00', '12:00', 1),
+('13:00', '17:00', 1), 
+('09:00', '13:00', 2), 
+('14:00', '18:00', 3), 
+('08:00', '12:00', 4), 
+('13:00', '17:00', 5); 
+
+INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
+('Tarif Standard Matin', 15, 1), 
+('Tarif Réduit Matin', 10, 1),   
+('Tarif Standard Après-midi', 20, 2), 
+('Tarif Réduit Après-midi', 15, 2),   
+('Tarif Standard Soir', 25, 3), 
+('Tarif Réduit Soir', 18, 3);   
+
+
+
+
+
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren)
+VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 5, 
+'Société Informatique Durand', 'Spécialisée dans le développement de logiciels personnalisés.', 
+'www.durand-informatique.com', '123456789');
+
+INSERT INTO sae._date(date)
+	VALUES ('2024-11-27 11:00:00'), ('2024-11-27 17:00:00'), ('12024-11-27 20:00:00'), ('2024-11-27 21:00:00');
+    
+INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
+VALUES 
+(4, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', '1', '0', 'famille', 1,2),
+(5, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',3, 4);
+
 
 
 

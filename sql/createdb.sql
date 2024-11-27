@@ -231,6 +231,7 @@ CREATE TABLE _option (
 CREATE TABLE _avis (
     id_avis         SERIAL,
     id_membre       INTEGER NOT NULL,
+    id_offre        INTEGER NOT NULL,
     note            INTEGER NOT NULL,
     titre           VARCHAR(128) NOT NULL,
     commentaire     VARCHAR(1024) NOT NULL,
@@ -242,6 +243,7 @@ CREATE TABLE _avis (
     CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
+    CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date)
 );
 
@@ -299,6 +301,7 @@ CREATE TABLE _image (
 
 CREATE TABLE _tarif_publique (
     id_tarif_publique    SERIAL,
+    nom_tarif VARCHAR(64),
     prix        INTEGER NOT NULL,
     id_offre    INTEGER NOT NULL,
     CONSTRAINT _tarif_publique_pk PRIMARY KEY (id_tarif_publique),
