@@ -444,7 +444,7 @@ function get_file_extension($type)
             }
             $tarif_min = $tarif1;
             $tabtarifs = array(
-                $_POST['nomtarif1nom'] => $tarif1
+                $_POST[$nomtarif1] => $tarif1
             );
 
 
@@ -517,7 +517,7 @@ function get_file_extension($type)
 
                 case 'spectacle':
                     $type = "standard";
-                    $requete = "INSERT INTO sae.offre_$requeteCategorie (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
