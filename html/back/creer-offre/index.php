@@ -97,6 +97,11 @@
             </div>
         </div> -->
         <main>
+            <?php 
+        $id_compte =  $_SESSION['id_compte'];
+        //$isIdProPrivee = isIdProPrivee($id_compte);
+        //$isIdProPublique = isIdProPublique($id_compte);
+        echo $id_compte;?>
             <h2> Création d'une offre</h2>
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
                 <h3>Informations importantes</h3>
@@ -406,10 +411,7 @@
         }
 
 
-        $id_compte =  $_SESSION['id_compte'];
-        //$isIdProPrivee = isIdProPrivee($id_compte);
-        //$isIdProPublique = isIdProPublique($id_compte);
-        echo $id_compte;
+        
 
         
 
