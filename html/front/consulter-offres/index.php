@@ -177,12 +177,12 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            if (empty($tab["note"]["round"])) {
+                                            if (empty($tab["note"])) {
                                                 ?>
                                                     <p>Pas d'avis disponibles.</p>
                                                 <?php
                                             } else {
-                                                $note = $tab["note"]["round"];
+                                                $note = $tab["note"];
                                                 $etoilesPleines = $note;
                                                 $etoilesVides = 5 - $note;
 
@@ -199,7 +199,7 @@ try {
                                                 }
                                             }
                                         ?>
-                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"]["count"] ?>)</p>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
