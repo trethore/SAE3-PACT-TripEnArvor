@@ -621,8 +621,8 @@
         // Sélectionner tous les boutons radio
 
         //const isIdProPrivee = "<?php //echo json_encode($isIdProPrivee) ?>";
-        //const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
-        //console.log(isIdProPrivee);
+        const isIdProPublique = "<?php //echo json_encode($isIdProPublique) ?>";
+        console.log(isIdProPublique);
 
 
         //champ type masqué si le pro est publique
