@@ -249,174 +249,101 @@ try {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const h2 = document.querySelector(".filtre-tri h2");
-            const fondFiltres = document.querySelector(".fond-filtres");
+    const h2 = document.querySelector(".filtre-tri h2");
+    const fondFiltres = document.querySelector(".fond-filtres");
 
-            const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
-            const offersContainer = document.querySelector(".section-offres");
-            const offers = document.querySelectorAll('.offre');
-            const allOffers = Array.from(offers);
+    const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
+    const offersContainer = document.querySelector(".section-offres");
+    const offers = Array.from(document.querySelectorAll(".offre"));
 
-            // Create the "no offers" message element
-            const noOffersMessage = document.createElement("div");
-            noOffersMessage.classList.add("no-offers-message");
-            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
-            offersContainer.parentNode.insertBefore(noOffersMessage, offersContainer);
-            noOffersMessage.style.display = "none";
+    const noOffersMessage = document.querySelector("#no-offers-message");
 
-            h2.addEventListener("click", () => {
-                fondFiltres.classList.toggle("hidden");
+    h2.addEventListener("click", () => {
+        fondFiltres.classList.toggle("hidden");
+    });
+
+    // Function to filter offers based on active inputs
+    const applyFilters = () => {
+        let visibleOffers = offers;
+
+        // Filter by Category
+        const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
+        const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
+        if (selectedCategories.length > 0) {
+            visibleOffers = visibleOffers.filter(offer => {
+                const category = offer.querySelector(".categorie-offre").textContent.trim();
+                return selectedCategories.includes(category);
             });
+        }
 
-            const selectElement = document.querySelector('.tris');
-
-            const rebuildOfferHTML = (offerElement) => {
-                const title = offerElement.querySelector('.titre-offre').textContent.trim();
-                const city = offerElement.querySelector('.lieu-offre').textContent.trim();
-                const price = offerElement.querySelector('.prix span').textContent.trim();
-                const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                const image = offerElement.querySelector('.image-offre').style.backgroundImage;
-                const description = offerElement.querySelector('.description-offre').textContent.trim();
-                const profile = offerElement.querySelector('.nom-offre').textContent.trim();
-                const nombre_notes = offerElement.querySelector('.nombre-notes').textContent.trim();
-
-                return `
-                    <div class="offre">
-                        <div class="sous-offre">
-                            <a href="#">
-                                <div class="lieu-offre">${city}</div>
-                                <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style=background: center; background-image: ${image}">
-                                <p class="titre-offre">${title}</p>
-                                <p class="categorie-offre">${category}</p>s
-                                <p class="description-offre">${description}</p>
-                                <p class="nom-offre">${profile}</p>
-                                <div class="bas-offre">
-                                    <div class="etoiles">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <p class="nombre-notes">(${nombre_notes})</p>
-                                    </div>
-                                    <p class="prix">A partir de <span>${price}</span></p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>`;
-            };
-
-            selectElement.addEventListener('change', () => {
-                const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
-                
-                if (selectedValue == "price-asc") {
-                    allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
-                        return priceA - priceB;
-                    });
-                } else if (selectedValue == "price-desc") {
-                    allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
-                        return priceB - priceA;
-                    });
-                }
-
-                offersContainer.innerHTML = '';
-
-                allOffers.forEach(offerElement => {
-                    const offerHTML = rebuildOfferHTML(offerElement);
-                    offersContainer.insertAdjacentHTML('beforeend', offerHTML);
-                });
+        // Filter by Availability
+        const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+        if (availabilityInput) {
+            const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+            visibleOffers = visibleOffers.filter(offer => {
+                const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                return offerAvailability === availability;
             });
+        }
 
-            const applyFilters = () => {
-                const filters = {
-                    categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
-                    availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
-                    minRating: document.querySelector(".trier .note")?.value || null,
-                    minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
-                    maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
-                };
-
-                // Treat no categories checked as all categories selected
-                if (filters.categories.length === 0) {
-                    filters.categories = Array.from(document.querySelectorAll(".categorie label")).map(label => label.textContent.trim());
-                }
-
-                let visibleOffers = 0;
-
-                const locationInput = document.getElementById("search-location");
-                const searchInput = document.querySelector(".input-search");
-
-                locationInput.addEventListener("input", () => {
-                    const searchValue = locationInput.value.trim().toLowerCase();
-
-                    allOffers.forEach(offer => {
-                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
-                        if (location.includes(searchValue)) {
-                            offer.style.display = "block";
-                        } else {
-                            offer.style.display = "none";
-                        }
-                    });
-                });
-
-                allOffers.forEach(offer => {
-                    const category = offer.querySelector(".categorie-offre")?.textContent.trim();
-                    const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
-                    const price = parseFloat(priceText) || 0;
-                    const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
-                    const numberOfStarsWanted = filters.minRating;
-                    const filtreNote =  numberOfStarsWanted.length;
-                    const note = etoilesPleinesOffre.length;
-
-                    let matches = true;
-
-                    // Filter by stars
-                    if (filtreNote > note) {
-                        matches = false;
-                    }
-
-                    // Filter by category
-                    if (!filters.categories.includes(category)) {
-                        matches = false;
-                    }
-
-                    // Filter by availability
-                    if (filters.availability === "Ouvert" && !isAvailable) {
-                        matches = false;
-                    } else if (filters.availability === "Fermé" && isAvailable) {
-                        matches = false;
-                    }
-
-                    // Filter by price
-                    if ((filters.minPrice !== null && price < filters.minPrice) || 
-                        (filters.maxPrice !== null && price > filters.maxPrice)) {
-                        matches = false;
-                    }
-
-                    // Show or hide the offer
-                    if (matches) {
-                        offer.style.display = "block";
-                        visibleOffers++;
-                    } else {
-                        offer.style.display = "none";
-                    }
-                });
-
-                // Show or hide the "no offers" message
-                noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
-            };
-
-            // Add change event listeners to filter inputs
-            filterInputs.forEach(input => {
-                input.addEventListener("change", applyFilters);
+        // Filter by Note
+        const minNoteSelect = document.querySelector(".note");
+        const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+        if (selectedNote) {
+            visibleOffers = visibleOffers.filter(offer => {
+                const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                return stars >= selectedNote;
             });
+        }
+
+        // Filter by Price Range
+        const minPrice = parseFloat(document.querySelector(".min").value || "0");
+        const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+        visibleOffers = visibleOffers.filter(offer => {
+            const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
+            return price >= minPrice && price <= maxPrice;
         });
+
+        // Update Visibility
+        offers.forEach(offer => {
+            if (visibleOffers.includes(offer)) {
+                offer.style.display = "";
+            } else {
+                offer.style.display = "none";
+            }
+        });
+
+        // Show/Hide "No Offers" Message
+        noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+    };
+
+    // Sort Offers
+    const sortOffers = () => {
+        const selectElement = document.querySelector(".tris");
+        const selectedValue = selectElement.value;
+
+        if (selectedValue === "price-asc" || selectedValue === "price-desc") {
+            offers.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
+                const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+            });
+
+            offers.forEach(offer => offersContainer.appendChild(offer));
+        }
+    };
+
+    // Add Event Listeners
+    filterInputs.forEach(input => input.addEventListener("input", () => {
+        applyFilters();
+        sortOffers();
+    }));
+
+    document.querySelector(".tris").addEventListener("change", () => {
+        sortOffers();
+        applyFilters();
+    });
+});
     </script>
 </body>
 </html>
