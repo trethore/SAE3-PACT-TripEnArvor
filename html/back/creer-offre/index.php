@@ -562,6 +562,9 @@ function get_file_extension($type)
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
 
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+
                     break;
 
                 case 'parc':
@@ -594,6 +597,9 @@ function get_file_extension($type)
                     $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                     $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
+
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
                     break;
 
                 case 'spectacle':
@@ -612,12 +618,16 @@ function get_file_extension($type)
                         $tarif_min, 
                         $type
                      ]);
+
+                     $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                     break;
 
                 case 'visite':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $tarif_min, $type]);
+
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                     break;
 
                 case 'restaurant':
@@ -650,6 +660,8 @@ function get_file_extension($type)
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_plan_image = $dbh->prepare($requete_plan_offre);
                     $stmt_plan_image->execute([$id_offre, $fichier_carte]);
+
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                     break;
                     
                     default:
