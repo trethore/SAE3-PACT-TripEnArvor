@@ -158,9 +158,7 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <p id="no-offers-message">
-                Aucun résultat ne correspond à vos critères.
-            </p>
+            <p id="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
                     ?>
