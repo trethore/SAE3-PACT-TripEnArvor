@@ -17,6 +17,8 @@ if (isset($id_compte)) {
     redirectToListOffreIfNecessary($id_compte);
 }
 
+$typeCompte = getTypeCompte($id_compte);
+
 $reqCompte = "SELECT * from sae._compte_professionnel cp 
                 join sae._compte c on c.id_compte = cp.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
