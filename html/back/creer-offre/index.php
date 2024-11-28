@@ -619,9 +619,11 @@ function get_file_extension($type)
                         $type
                      ]);
 
-                     print($requete);
+                     //print($requete);
 
                      $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+                     print_r($id_offre);
                     break;
 
                 case 'visite':
