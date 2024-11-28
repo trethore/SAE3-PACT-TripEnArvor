@@ -304,6 +304,7 @@ try {
                                 <td><?php echo htmlentities($t['prix']) . " €"?></td>
                             </tr>
                         <?php } ?>
+                    </table>
                 </div>
                 <button>Voir les tarifs supplémentaires</button>
             </div>
