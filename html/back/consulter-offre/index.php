@@ -64,26 +64,30 @@ try {
     $stmtCompte->execute();
     $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
 
-    // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
-    $stmtJour = $dbh->prepare($reqJour);
-    $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtJour->execute();
-    $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
     
-    $reqHoraire = "SELECT DISTINCT ouverture, fermeture FROM _offre NATURAL JOIN _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE id_offre = :id_offre";
-    $stmtHoraire = $dbh->prepare($reqHoraire);
-    $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtHoraire->execute();
-    $horaire = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
-    
-    
+// ===== GESTION DES TAGS ===== //
+
     // ===== Requête SQL pour récupérer les tags de l'offre ===== //
     $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
     $stmtTags = $dbh->prepare($reqTags);
     $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtTags->execute();
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
+
+// ===== GESTION DES TARIFS ===== //
+
+    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    $tarifs = getTarifs($id_offre_cible);
+
+// ===== GESTION DE L'OUVERTURE ===== //
+
+    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
+    $jours = getJoursOuverture($id_offre_cible);
+    
+    // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
+    $horaire = getHorairesOuverture($id_offre_cible);
+
+// ===== GESTION DES AVIS ===== //
 
     // ===== Requête SQL pour récupérer les avis d'une offre ===== //
     $avis = getAvis($id_offre_cible);
@@ -101,14 +105,15 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
-    $tarifs = getTarifs($id_offre_cible);
+// ===== GESTION DES NOTES ===== //
 
     // ===== Requête SQL pour récupérer le nombre de notes d'une offre ===== //
     $nombreNote = getNombreNotes($id_offre_cible);
 
     // ===== Requête SQL pour récupérer la note moyenne d'une offre ===== //
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
+
+// ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
