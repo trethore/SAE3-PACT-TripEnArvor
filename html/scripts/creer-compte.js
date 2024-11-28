@@ -103,12 +103,12 @@ document.addEventListener("DOMContentLoaded", function() {
             case "pro-publique":
                 showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPublique, elementObligatoireProPublique);
                 submitInput.disabled = false;
-                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
+                submitInput.style = "--couleur-bouton-creer-compte: var(--violet-principal);"
                 break;
             case "pro-privé":
                 showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPrive, elementObligatoireProPrive);
                 submitInput.disabled = false;
-                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
+                submitInput.style = "--couleur-bouton-creer-compte: var(--violet-principal);"
                 break;
             case "":
             default:

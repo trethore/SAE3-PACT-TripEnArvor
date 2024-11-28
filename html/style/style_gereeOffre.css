@@ -239,7 +239,7 @@ input::file-selector-button{
 
 input::file-selector-button:hover{
   background: #fff;
-  color: var(--orange-principale);
+  color: var(--violet-principal);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
   transition: 0.3s ease-in-out;
 }
@@ -276,7 +276,7 @@ input::file-selector-button:hover{
 
 .valider:hover{
   background: var(--blanc-leger);
-  color: var(--orange-principale);
+  color: var(--violet-principal);
   transition: 0.3s ease-in-out;
 }
 
