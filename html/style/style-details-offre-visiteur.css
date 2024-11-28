@@ -241,7 +241,7 @@ a {
     td {
         padding: 20px;
         text-align: center;
-        border: 1px solid var(--blanc-leger);  
+        border: 3px solid var(--noir);  
         font-weight: 600;
     }
 
@@ -289,6 +289,23 @@ a {
     border-radius: 15px;
     color: var(--noir);
     border: 3px solid var(--violet-principal);
+}
+
+#avis > div > button {
+    color: var(--blanc-leger);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
+}
+
+#avis > div > button:hover {
+    color: var(--violet-principal);
+    background: var(--blanc-leger);
+    border: 3px solid var(--violet-principal);
+    transition: 0.3s ease-in-out;
 }
 
 .titre-avis {
