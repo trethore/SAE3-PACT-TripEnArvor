@@ -85,24 +85,16 @@ try {
     $stmtTags->execute();
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
-    // ===== Requête SQL pour récupérer les avis de l'offre ===== //
+    // ===== Requête SQL pour récupérer les avis d'une offre ===== //
     $avis = getAvis($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
-    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
-    $stmtMembre = $dbh->prepare($reqMembre);
-    $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtMembre->execute();
-    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    $membre = getInformationsMembre($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer la date de publication d'un avis sur l'offre ===== //
-    $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
-    $stmtDateAvis = $dbh->prepare($reqDateAvis);
-    $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtDateAvis->execute();
-    $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
+    $dateAvis = getDatePublication($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur l'offre ===== //
+    // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
     // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
