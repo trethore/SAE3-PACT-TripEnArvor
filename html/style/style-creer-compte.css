@@ -155,10 +155,11 @@ input:disabled {
     background: none;
     background-color: lightgray;
     color: dimgray;
+    border: 2px solid lightgray;
 }
 
 #div-name-and-first-name {
-    display: none;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -167,6 +168,7 @@ input:disabled {
 
 #div-name-and-first-name div {
     width: 50%;
+    display: none;
 }
 
 #div-adresse > div {
