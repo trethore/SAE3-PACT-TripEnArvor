@@ -114,7 +114,11 @@ try {
     $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les différents tarifs de l'offre ===== //
-    $tarifs = getTarifs($id_offre_cible);
+    $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _offre.id_offre = :id_offre";
+    $stmtTarifs = $dbh->prepare($reqTarifs);
+    $stmtTarifs->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtTarifs->execute();
+    $tarifs = $stmtTarifs->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer le nombre de notes de l'offre ===== //
     $nombreNote = getNombreNotes($id_offre_cible);
