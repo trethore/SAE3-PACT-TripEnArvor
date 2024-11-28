@@ -302,7 +302,7 @@
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtDatePublication = $conn->prepare($reqDatePublication);
-            $stmtDatePublication->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+            $stmtDatePublication->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDatePublication->execute();
             $datePublication = $stmtDatePublication->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
