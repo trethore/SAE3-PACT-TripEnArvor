@@ -158,7 +158,7 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
+            <p id="no-offers-message">
                 Aucun résultat ne correspond à vos critères.
             </p>
                 <?php
