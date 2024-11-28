@@ -364,7 +364,7 @@ try {
                     </div>
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
-                    <p>Y était le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
