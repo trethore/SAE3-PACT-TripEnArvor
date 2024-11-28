@@ -567,6 +567,19 @@ function get_file_extension($type)
                     if ($file_extension !== '') {
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
+
+                        $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+
+                        //print $requete_image;
+
+                        //preparation requete
+                        $stmt_plan = $dbh->prepare($requete_plan);
+
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_plan->execute([$fichier_img]);
+
+                        // Récupérer l'ID retourné par la requête
+                        $id_plan = $stmt->fetchColumn();
                     }
 
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
@@ -606,7 +619,20 @@ function get_file_extension($type)
 
                     if ($file_extension !== '') {
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
-                        $fichier_img = 'plan_' . $time . $file_extension;
+                        $fichier_img = 'carte_' . $time . $file_extension;
+
+                        $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+
+                        //print $requete_image;
+
+                        //preparation requete
+                        $stmt_carte = $dbh->prepare($requete_carte);
+
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_carte->execute([$fichier_img]);
+
+                        // Récupérer l'ID retourné par la requête
+                        $id_carte = $stmt->fetchColumn();
                     }
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
