@@ -47,106 +47,106 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-    <?php 
-                // Préparation et exécution de la requête
-                $stmt = $conn->prepare($reqCompte);
-                $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
-            ?>
-            <h1>Détails du compte</h1>
-            <h2>Vue d'ensemble</h2>
-            <table>
-                <tr>
-                    <td>Dénomination Sociale</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>A propos</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["a_propos"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Site web</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["site_web"]);?>"></td>
-                </tr>
-            </table>
-            <h2>Informations personnelles</h2>
-            <table>
-                <tr>
-                    <td>Nom</td>
-                    <td>
-                        <input type="text" placeholder="<?php 
-                                if (isset($detailCompte["nom_compte"])) {
-                                    echo htmlentities($detailCompte["nom_compte"]);} ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Prenom</td>
-                    <td>
-                        <input type="text" placeholder="<?php 
-                                    if (isset($detailCompte["prenom"])) {
-                                        echo htmlentities($detailCompte["prenom"]);} ?>"> 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Adresse mail</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["email"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>N° de téléphone</td>
-                    <td>
-                        <input type="text" placeholder="<?php 
-                                        if (isset($detailCompte["tel"])) {
-                                            echo htmlentities($detailCompte["tel"]);} ?>"> 
-                    </td>
-                </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td>N° IBAN</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities("à implémenter");?>"></td>
-                </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["mot_de_passe"]);?>"></td>
-                </tr>
-            </table>
-            <?php if (isset($detailCompte["id_adresse"])) { ?>
-            <h2>Mon adresse</h2>
-            <table>
-                <tr>
-                    <td>Adresse postale</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Complément d'adresse</td>
-                    <?php   ?>
-                    <td>
-                        <input type="text" placeholder="<?php 
-                            if (isset($detailCompte["complement_adresse"])) {
-                                echo htmlentities($detailCompte["complement_adresse"]);} ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Code postal</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["code_postal"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Ville</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["ville"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Pays</td>
-                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["pays"]);?>"></td>
-                </tr>
-            </table> <?php } ?>
-            <div>
-                <a href="/back/mon-compte">Valider les modifications</a>
-            </div>
+        <?php 
+            // Préparation et exécution de la requête
+            $stmt = $conn->prepare($reqCompte);
+            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+            $stmt->execute();
+            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
+        ?>
+        <h1>Détails du compte</h1>
+        <h2>Vue d'ensemble</h2>
+        <table>
+            <tr>
+                <td>Dénomination Sociale</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
+            </tr>
+            <tr>
+                <td>A propos</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["a_propos"]);?>"></td>
+            </tr>
+            <tr>
+                <td>Site web</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["site_web"]);?>"></td>
+            </tr>
+        </table>
+        <h2>Informations personnelles</h2>
+        <table>
+            <tr>
+                <td>Nom</td>
+                <td>
+                    <input type="text" placeholder="<?php 
+                            if (isset($detailCompte["nom_compte"])) {
+                                echo htmlentities($detailCompte["nom_compte"]);} ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Prenom</td>
+                <td>
+                    <input type="text" placeholder="<?php 
+                                if (isset($detailCompte["prenom"])) {
+                                    echo htmlentities($detailCompte["prenom"]);} ?>"> 
+                </td>
+            </tr>
+            <tr>
+                <td>Adresse mail</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["email"]);?>"></td>
+            </tr>
+            <tr>
+                <td>N° de téléphone</td>
+                <td>
+                    <input type="text" placeholder="<?php 
+                                    if (isset($detailCompte["tel"])) {
+                                        echo htmlentities($detailCompte["tel"]);} ?>"> 
+                </td>
+            </tr>
+            <?php if ($typeCompte == 'proPrive') {?>
+            <tr>
+                <td>N° SIREN</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <td>N° IBAN</td>
+                <td><input type="text" placeholder="<?php echo htmlentities("à implémenter");?>"></td>
+            </tr>
+            <tr>
+                <td>Mot de passe</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["mot_de_passe"]);?>"></td>
+            </tr>
+        </table>
+        <?php if (isset($detailCompte["id_adresse"])) { ?>
+        <h2>Mon adresse</h2>
+        <table>
+            <tr>
+                <td>Adresse postale</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
+            </tr>
+            <tr>
+                <td>Complément d'adresse</td>
+                <?php   ?>
+                <td>
+                    <input type="text" placeholder="<?php 
+                        if (isset($detailCompte["complement_adresse"])) {
+                            echo htmlentities($detailCompte["complement_adresse"]);} ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Code postal</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["code_postal"]);?>"></td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["ville"]);?>"></td>
+            </tr>
+            <tr>
+                <td>Pays</td>
+                <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["pays"]);?>"></td>
+            </tr>
+        </table> <?php } ?>
+        <div>
+            <a href="/back/mon-compte">Valider les modifications</a>
+        </div>
     </main>
     <footer>
         <div class="footer-top">
