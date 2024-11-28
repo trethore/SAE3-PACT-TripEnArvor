@@ -486,6 +486,11 @@ function get_file_extension($type)
 
             try {
 
+                // Connexion à la base de données
+                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+
                 //INSERTION IMAGE dans _image
                 $time = 'p' . strval(time());
                 $file = $_FILES['photo'];
@@ -526,10 +531,7 @@ function get_file_extension($type)
                 die("Erreur : utilisateur non connecté.");
             }
 
-             // Connexion à la base de données
-             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-             $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
+             
 
             // Déterminer la table cible selon la catégorie
             switch ($categorie) {
