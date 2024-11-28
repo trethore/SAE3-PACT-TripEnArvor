@@ -35,11 +35,11 @@ try {
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php foreach ($offres as $offre): ?>
+                <?php foreach ($offres as $offre) { ?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
-                <?php endforeach; ?>
+                <?php } ?>
             </datalist>
 
         </div>
@@ -60,10 +60,11 @@ try {
                     if (selectedOption) {
                         const idOffre = selectedOption.getAttribute("data-id");
 
-                        console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
 
                         // Rediriger si un ID valide est trouvé
                         if (idOffre) {
+                            // TD passer du back au front quand fini
                             window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
                         }
                     }
@@ -74,7 +75,7 @@ try {
                     value: option.value,
                     id: option.getAttribute("data-id")
                 }));
-                console.log("Options disponibles dans le datalist :", options);
+                //console.log("Options disponibles dans le datalist :", options);
             });
         </script>
 
