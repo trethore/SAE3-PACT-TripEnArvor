@@ -180,6 +180,176 @@
             die();
         }
     }
+
+// ===== GESTION DES OFFRES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
+    function getOffre($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            $offre = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $offre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonciton qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    function getActivite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtActivite = $conn->prepare($reqActivite);
+            $stmtActivite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtActivite->execute();
+            $activite = $stmtActivite->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $activite;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
+    function getVisite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtVisite = $conn->prepare($reqVisite);
+            $stmtVisite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtVisite->execute();
+            $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $visite;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
+    function getSpectacle($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtSpectacle = $conn->prepare($reqSpectacle);
+            $stmtSpectacle->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtSpectacle->execute();
+            $spectacle = $stmtSpectacle->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $spectacle;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
+    function getParcAttraction($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAttraction = $conn->prepare($reqAttraction);
+            $stmtAttraction->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAttraction->execute();
+            $attraction = $stmtAttraction->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $attraction;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
+    function getRestaurant($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtRestaurant = $conn->prepare($reqRestaurant);
+            $stmtRestaurant->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtRestaurant->execute();
+            $restaurant = $stmtRestaurant->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $restaurant;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES ADRESSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
+    function getAdresse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAdresse = $conn->prepare($reqAdresse);
+            $stmtAdresse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAdresse->execute();
+            $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC); 
+            $conn = null;
+            return $adresse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        } 
+    }  
+
+// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
+    function getCompte($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtCompte = $conn->prepare($reqCompte);
+            $stmtCompte->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtCompte->execute();
+            $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $compte;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES TAGS ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les tags d'une offre ===== //
+    function getTags($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtTags = $conn->prepare($reqTags);
+            $stmtTags->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTags->execute();
+            $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $tags;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
  
 // ===== GESTION DES TARIFS ===== //
   
