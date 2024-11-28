@@ -180,4 +180,22 @@
             die();
         }
     }
+    
+    // ===== Fonction qui exécute une requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    function getTarifs($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtTarifs = $conn->prepare($reqTarifs);
+            $stmtTarifs->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTarifs->execute();
+            $tarifs = $stmtTarifs->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $tarifs;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>
