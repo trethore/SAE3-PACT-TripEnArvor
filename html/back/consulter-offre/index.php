@@ -92,26 +92,38 @@ try {
     $stmtAvis->execute();
     $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
     $stmtMembre = $dbh->prepare($reqMembre);
     $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtMembre->execute();
     $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer la date de publication d'un avis sur l'offre ===== //
     $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
     $stmtDateAvis = $dbh->prepare($reqDateAvis);
     $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtDateAvis->execute();
     $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur l'offre ===== //
     $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
     $stmtDatePassage = $dbh->prepare($reqDatePassage);
     $stmtDatePassage->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
     $stmtDatePassage->execute();
     $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer les différents tarifs de l'offre ===== //
+    $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _avis.id_offre = :id_offre";
+    $stmtTarifs = $dbh->prepare($reqTarifs);
+    $stmtTarifs->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtTarifs->execute();
+    $tarifs = $stmtTarifs->fetchAll(PDO::FETCH_ASSOC);
 
+    // ===== Requête SQL pour récupérer le nombre de notes de l'offre ===== //
     $nombreNote = getNombreNotes($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la note moyenne de l'offre ===== //
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
 
     // ===== Requête SQL pour récupérer le type de l'offre ===== //
@@ -284,16 +296,14 @@ try {
 
             <div class="fond-blocs bloc-tarif">
                 <div>
-                    <h2>Tarifs :</h2>
-                    <?php if (!empty($offre['tarifs'])): ?>
+                    <h2>Tarifs : </h2>
                     <table>
-                        <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
-                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
-                        } ?>
-                    </table>
-                <?php else: ?>
-                    <p>Tarifs non disponibles.</p>
-                <?php endif; ?>
+                        <?php foreach ($tarifs as $t) { ?>
+                            <tr>
+                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                            </tr>
+                        <?php } ?>
                 </div>
                 <button>Voir les tarifs supplémentaires</button>
             </div>
