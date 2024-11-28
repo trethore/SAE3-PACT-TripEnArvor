@@ -35,40 +35,49 @@ try {
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php
-                foreach ($offres as $offre) { // Parcourt les offres récupérées
-                    echo "<option value=\"{$offre['titre']}\" id=\"{$offre['id_offre']}\">{$offre['titre']}</option>";
-                }
-                ?>
-
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const inputSearch = document.querySelector(".input-search");
-                        const datalist = document.querySelector("#cont");
-
-                        // Écouteur pour capturer les changements dans le champ de recherche
-                        inputSearch.addEventListener("change", () => {
-                            const selectedOption = Array.from(datalist.options).find(
-                                option => option.value === inputSearch.value
-                            );
-
-                            if (selectedOption) {
-                                const idOffre = selectedOption.getAttribute("id");
-                                console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
-                                // Redirection vers l'URL correspondante
-                                if (idOffre) {
-                                    window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-                                }
-                            }
-                        });
-                    });
-                </script>
+                <?php foreach ($offres as $offre): ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php endforeach; ?>
             </datalist>
+
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+
+                        console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
+
     </header>
     <main>
     </main>
