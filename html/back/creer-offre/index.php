@@ -502,7 +502,7 @@ function get_file_extension($type)
 
                     $fichier_img = $time . $file_extension;
 
-                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
 
                     //print $requete_image;
 
@@ -570,7 +570,7 @@ function get_file_extension($type)
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
                         $fichier_plan = 'plan_' . $time . $file_extension;
 
-                        $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+                        $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
 
                         //print $requete_image;
 
