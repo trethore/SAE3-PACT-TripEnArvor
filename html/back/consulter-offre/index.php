@@ -8,6 +8,8 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $id_offre_cible = intval($_GET['id']);
 
+// ===== GESTION DES OFFRES ===== //
+
     // ===== Requête SQL pour récupérer les informations d'une offre ===== //
     $offre = getOffre($id_offre_cible);
 
@@ -34,11 +36,7 @@ try {
 // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
-    $stmtCompte = $dbh->prepare($reqCompte);
-    $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtCompte->execute();
-    $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+    $compte = getCompte($id_compte);
 
 // ===== GESTION DES IMAGES ===== //
 
