@@ -111,19 +111,19 @@
                 </tr>
                 <tr>
                     <td>Code postal</td>
-                    <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["code_postal"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><?php echo htmlentities($detailCompte["ville"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["ville"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><?php echo htmlentities($detailCompte["pays"]);?></td>
+                    <td><input type="text" placeholder="<?php echo htmlentities($detailCompte["pays"]);?>"></td>
                 </tr>
             </table> <?php } ?>
             <div>
-                <a>Valider les modifications</a>
+                <a href="/back/mon-compte">Valider les modifications</a>
             </div>
     </main>
     <footer>
