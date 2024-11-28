@@ -5,6 +5,10 @@
        GENERALISATION
 *************************/
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
@@ -16,21 +20,19 @@ h1 {
     font-size: 64px;
     font-weight: bold;
     text-align: center;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
 }
 
 h2 {
     font-size: 36px;
     font-weight: bold;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
 }
 
 .fond-blocs {
     background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
-    padding: 30px;
-    
-}
+    padding: 30px;}
 
 a {
     color: var(--noir);
@@ -47,7 +49,7 @@ a {
 }
 
 .bordure {
-    border-bottom: 3px solid var(--orange-principale);
+    border-bottom: 3px solid var(--violet-principal);
 }
 
 /********************************
@@ -61,19 +63,22 @@ a {
         margin: 30px 30px 0 30px;
     }
 
-    .bouton-modifier > div > button {
-        background: var(--orange-principale);
-        color: var(--blanc);
+
+    .bouton-modifier > button {
+        color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 40px;
+        font-size: 60px;
+        background-color: var(--violet-principal);
         padding: 10px 80px;
         border-radius: 15px;
+        border: 0;
     }
 
-    .bouton-modifier > div > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc);
-        border: 3px solid var(--orange-principale);
+    .bouton-modifier > button:hover {
+        color: var(--violet-principal);
+        background: var(--blanc-leger);
+        border: 3px solid var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
     #confirm {
@@ -162,6 +167,7 @@ a {
 
 .information-offre {
     font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -184,26 +190,6 @@ a {
     margin: 0 10px;
 }
 
-    /*****************************
-            BOUTONS TARIFS                
-    *****************************/
-
-    .display-ligne-espace > button {
-        color: var(--blanc-leger);
-        text-decoration: none;
-        font-size: 40px;
-        background-color: var(--orange-principale);
-        padding: 10px 80px;
-        border-radius: 15px;
-        border: 0;
-    }
-
-    .display-ligne-espace > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
-    }
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
@@ -212,7 +198,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-      }
+    }
 
     .carousel-images {
         display: flex;
@@ -234,7 +220,7 @@ a {
     }
 
     .arrow-left > img, .arrow-right > img {
-        background-color: var(--orange-principale);
+        background-color: var(--violet-principal);
         border-radius: 90px;
     } 
 
@@ -261,7 +247,7 @@ a {
 
     .liste-caracteristique > li {
         color: var(--noir);
-        border-left: 5px solid var(--orange-principale);
+        border-left: 5px solid var(--violet-principal);
         font-size: 40px;
         list-style: none;
         display: flex;
@@ -288,7 +274,7 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
-        border-left: 3px solid var(--orange-principale);
+        border-left: 3px solid var(--violet-principal);
     }
 
     .epingle {
@@ -300,20 +286,21 @@ a {
         font-size: 60px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
-        background-color: var(--orange-principale);
+        background-color: var(--violet-principal);
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
-        color: var(--orange-principale);
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
+        color: var(--violet-principal);
         background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
+        border: 3px solid var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -328,16 +315,17 @@ a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
-        background-color: var(--orange-principale);
+        background-color: var(--violet-principal);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
     }
 
     .bloc-tarif > button:hover {
-        color: var(--orange-principale);
+        color: var(--violet-principal);
         background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
+        border: 3px solid var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -405,15 +393,21 @@ a {
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
+    border: 3px solid var(--violet-principal);
+}
+
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
 }
 
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--violet-principal);
 }
 
 .pouce {
@@ -435,7 +429,7 @@ a {
 }
 
 .display-notation > a {
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     text-decoration: none;
     margin-right: 15px;
 }
@@ -452,16 +446,17 @@ a {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background: var(--orange-principale);
+    background: var(--violet-principal);
     padding: 10px auto;
     border-radius: 15px;
     border: 0;
 }
 
 .navigation > button:hover {
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     background: var(--blanc-leger);
-    border: 1px solid var(--orange-principale);
+    border: 1px solid var(--violet-principal);
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
@@ -470,12 +465,6 @@ a {
 
 footer > div > a {
     text-decoration: none;
-}
-
-
-
-#avis {
-    display: none;
 }
 
 #carte {

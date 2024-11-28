@@ -30,6 +30,12 @@ h2 {
     color: var(--noir);
 }
 
+h2:hover {
+    background: var(--blanc-leger);
+    border-color: var(--violet-principal);
+    color: var(--violet-principal);
+}
+
 h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
@@ -48,6 +54,9 @@ h3 {
     background: var(--blanc-leger);
     border-radius: 15px;
     border:3px solid var(--violet-principal);
+
+    min-width: 100%;
+    max-width: 1000px;
 }
 
 .filtre-tri > h2 {
@@ -349,7 +358,7 @@ h3 {
     height: 37px;
     width: 117px;
 
-    opacity: 73%;
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -372,7 +381,9 @@ h3 {
     height: 37px;
     width: 67.8px;
 
-    opacity: 73%;
+    text-decoration: none;
+
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -518,35 +529,6 @@ h3 {
     margin-top: 16px;
 }
 
-.pagination {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: end;
-}
-
-.pagination-btn {
-    background-color: var(--blanc-leger);
-    color: var(--violet-principal);
-    padding: 5px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    text-decoration: none;
-    border-radius: 15px;
-    font-weight: 600;
-    font-size: 20px;
-    border-color: var(--violet-principal);
-    border-width: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.pagination-btn:hover {
-    background-color: var(--violet-principal);
-    color: var(--blanc-leger);
-}
-
 .fond-filtres {
     overflow: hidden; /* Permet l'effet de rétractation */
     max-height: 1000px; /* Grande valeur initiale */
@@ -559,8 +541,8 @@ h3 {
 }
 
 .no-offers-message {
-    text-align: center;
-    color: #555;
-    font-size: 1.2em;
-    margin: 20px 0;
+    text-align: center; 
+    color: var(--violet-principal);
+    font-size: 20pt;
+    margin: 20px 430px;
 }

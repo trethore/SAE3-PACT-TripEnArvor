@@ -1,0 +1,36 @@
+main {
+    flex-direction: column;
+    background-color: var(--blanc);
+    border-radius: 15px;
+    padding: 0 4em 1em;
+    width: 50em;
+}
+
+input {
+    text-align: center;
+    color: var(--violet-principal);
+    background-color: var(--blanc-leger);
+    padding: 0.5em 2em;
+    border-radius: 10px;
+    border: 1px solid var(--blanc);
+}
+
+input::placeholder {
+    color: var(--gris-etoile);
+}
+
+table + div > a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--violet-principal);
+    border-radius: 15px;
+    margin: 2em 0 1em;
+    padding: 0.2em 1em;
+}
+
+table + div > a:hover {
+    color: var(--violet-principal);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--violet-principal);
+}
