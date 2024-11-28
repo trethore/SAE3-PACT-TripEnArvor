@@ -158,7 +158,7 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <p id="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
+            <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
                     ?>
@@ -254,7 +254,7 @@ try {
             const offersContainer = document.querySelector(".section-offres");
             const offers = Array.from(document.querySelectorAll(".offre"));
 
-            const noOffersMessage = document.querySelector(".no-offers-messages");
+            const noOffersMessage = document.querySelector(".no-offers-message");
 
             const locationInput = document.getElementById("search-location");
 
