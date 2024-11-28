@@ -34,7 +34,6 @@ try {
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
-            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php
                 foreach ($offres as $offre) { // Parcourt les offres récupérées
