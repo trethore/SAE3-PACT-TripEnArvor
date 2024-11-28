@@ -48,15 +48,15 @@ h3 {
 ****************************/
 .filtre-tri {
     position: relative;
-    margin: 1em;
+    margin: 1em 0;
     padding: 3em 2em 1em;
+
+    width: 100%;
+    box-sizing: border-box;
     
     background: var(--blanc-leger);
     border-radius: 15px;
     border:3px solid var(--violet-principal);
-
-    min-width: 100%;
-    max-width: 1000px;
 }
 
 .filtre-tri > h2 {
