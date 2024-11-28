@@ -1,3 +1,27 @@
+<?php 
+require_once('../../php/connect_params.php');
+require_once('../../utils/compte-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
+
+try {
+    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+
+startSession();
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToListOffreIfNecessary($id_compte);
+}
+
+$reqCompte = "SELECT * from sae._compte_professionnel cp 
+                join sae._compte c on c.id_compte = cp.id_compte 
+                join sae._adresse a on c.id_adresse = a.id_adresse 
+                where cp.id_compte = :id_compte;";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backCompte.css">
     <link rel="stylesheet" href="/style/style_backCompteModif.css">
-    <link rel="stylesheet" href="/style/style_HFF.css">
+    <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
 </head>
