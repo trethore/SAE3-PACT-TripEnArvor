@@ -731,21 +731,6 @@ function get_file_extension($type)
                 //         break;
                 // }
 
-                if ($isIdProPrivee){
-                    foreach ($tabtarifs as $key => $value) {
-                        $requete_tarif = "INSERT INTO _tarif_publique (id_offre, prix, nom_tarif) VALUES (?, ?, ?);";
-    
-                        // Préparation de la requête pour la vue tarif
-                        $stmt_tarif = $dbh->prepare($requete_tarif);
-    
-                        // Exécution de la requête pour insérer dans la vue tarif
-                        $stmt_tarif->execute([$id_offre, $value, $key]);
-                    }
-                }
-                
-
-
-
                 if ($file_extension !== '') {
 
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -756,9 +741,28 @@ function get_file_extension($type)
 
                 }
 
-
-
                 $dbh -> prepare("commit;")->execute();
+
+                if ($isIdProPrivee){
+                    foreach ($tabtarifs as $key => $value) {
+                        $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+    
+                        // Préparation de la requête pour la vue tarif
+                        $stmt_tarif = $dbh->prepare($requete_tarif);
+    
+                        // Exécution de la requête pour insérer dans la vue tarif
+                        $stmt_tarif->execute([$key, $value, $id_offre]);
+                    }
+                }
+                
+
+
+
+                
+
+
+
+                
                 // Fermeture de la connexion
                 $dbh = null;
 
