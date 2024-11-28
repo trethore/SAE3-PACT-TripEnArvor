@@ -130,7 +130,7 @@ try {
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
-                                <input type="text" name="location" class="input-search" id="search-location" placeholder="Rechercher...">
+                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -325,7 +325,7 @@ try {
                 });
 
                 // Show/Hide "No Offers" Message
-                noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+                noOffersMessage.style.display = visibleOffers.length > 0 ? "block" : "none";
             };
 
             // Sort Offers
