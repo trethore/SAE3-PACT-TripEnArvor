@@ -50,7 +50,7 @@ try {
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <!-- Conteneur principal -->
@@ -164,7 +164,7 @@ try {
                     ?>
                     <div class="offre">
                         <div class="sous-offre">
-                            <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                            <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
