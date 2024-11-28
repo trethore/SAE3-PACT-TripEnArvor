@@ -123,7 +123,7 @@
                 </tr>
             </table> <?php } ?>
             <div>
-                <a href="/back/modifier-compte">Valider les modifications</a>
+                <a href="/back/mon-compte">Valider les modifications</a>
             </div>
     </main>
     <footer>
