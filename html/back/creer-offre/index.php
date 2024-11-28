@@ -550,7 +550,7 @@ function get_file_extension($type)
 
                 case 'spectacle':
                     $type = "standard";
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
