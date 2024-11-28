@@ -1,3 +1,19 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,28 +32,47 @@
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
-            <button class="btn-search">
-                <img class="cherchero" src="/images/universel/icones/chercher.png" />
-            </button>
-            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche..." />
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php foreach ($offres as $offre): ?>
-                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                        <?php echo htmlspecialchars($offre['titre']); ?>
-                    </option>
-                <?php endforeach; ?>
+                <?php
+                foreach ($offres as $offre) { // Parcourt les offres récupérées
+                    echo "<option value=\"{$offre['titre']}\" id=\"{$offre['id_offre']}\">{$offre['titre']}</option>";
+                }
+                ?>
+
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const inputSearch = document.querySelector(".input-search");
+                        const datalist = document.querySelector("#cont");
+
+                        // Écouteur pour capturer les changements dans le champ de recherche
+                        inputSearch.addEventListener("change", () => {
+                            const selectedOption = Array.from(datalist.options).find(
+                                option => option.value === inputSearch.value
+                            );
+
+                            if (selectedOption) {
+                                const idOffre = selectedOption.getAttribute("id");
+                                console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                                // Redirection vers l'URL correspondante
+                                if (idOffre) {
+                                    window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                                }
+                            }
+                        });
+                    });
+                </script>
             </datalist>
         </div>
-        <a href="/back/liste-back">
-            <img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" />
-        </a>
-        <a href="/back/se-connecter">
-            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
-        </a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-
-    <main></main>
-
+    <main>
+    </main>
     <footer>
         <div class="footer-top">
             <div class="footer-top-left">
@@ -61,66 +96,31 @@
                     </a>
                 </div>
             </div>
+
+
+            <!-- Barre en bas du footer incluse ici -->
+
         </div>
         <div class="footer-bottom">
-            Politique de confidentialité - Politique RGPD - 
-            <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-            Conditions générales - © Redden's, Inc.
+            Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+            Conditions générales - ©
+            Redden's, Inc.
         </div>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const inputSearch = document.querySelector(".input-search");
-            const datalist = document.querySelector("#cont");
 
-            // Test 1: Vérifier si le champ input et datalist existent
-            if (!inputSearch) {
-                console.error("ERREUR : L'élément input-search est introuvable !");
-                return;
-            }
-            console.log("Test 1 OK : L'élément input-search a été trouvé.");
 
-            if (!datalist) {
-                console.error("ERREUR : L'élément datalist est introuvable !");
-                return;
-            }
-            console.log("Test 2 OK : L'élément datalist a été trouvé.");
-
-            // Test 2: Vérifier si des options existent dans le datalist
-            const options = Array.from(datalist.options);
-            if (options.length === 0) {
-                console.warn("ALERTE : Aucune option trouvée dans le datalist !");
-            } else {
-                console.log(`Test 3 OK : ${options.length} option(s) trouvée(s) dans le datalist.`);
-            }
-
-            // Ajouter un écouteur sur l'input
-            inputSearch.addEventListener("change", () => {
-                console.log("Événement 'change' déclenché sur le champ input.");
-
-                // Test 3: Vérifier si une valeur correspondante a été sélectionnée
-                const selectedOption = options.find(option => option.value === inputSearch.value);
-
-                if (!selectedOption) {
-                    console.warn("Aucune option ne correspond à la saisie :", inputSearch.value);
-                    return;
-                }
-                console.log("Test 4 OK : Une option correspondante a été trouvée :", selectedOption.value);
-
-                // Test 4: Vérifier si l'attribut data-id est défini
-                const idOffre = selectedOption.getAttribute("data-id");
-                if (!idOffre) {
-                    console.error("ERREUR : Aucun ID trouvé pour l'option sélectionnée !");
-                    return;
-                }
-                console.log("Test 5 OK : ID trouvé pour l'option :", idOffre);
-
-                // Redirection (Test final)
-                console.log("Redirection vers :", `/back/consulter-offre/index.php?id=${idOffre}`);
-                window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-            });
-        });
-    </script>
 </body>
+
+<div class="telephone-nav">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <div class="btOn">
+            <img src="/images/frontOffice/icones/accueil.png">
+        </div>
+        <img src="/images/frontOffice/icones/chercher.png">
+        <img src="/images/frontOffice/icones/utilisateur.png">
+    </div>
+</div>
+
 </html>
