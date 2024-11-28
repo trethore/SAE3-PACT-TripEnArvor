@@ -221,6 +221,24 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
+    function getInformationsMembre($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtMembre = $conn->prepare($reqMembre);
+            $stmtMembre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtMembre->execute();
+            $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $membre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     function getDatePassage($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -238,6 +256,25 @@
             die();
         }
     }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    function getDatePublication($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePublication = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePublication = $conn->prepare($reqDatePublication);
+            $stmtDatePublication->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+            $stmtDatePublication->execute();
+            $datePublication = $stmtDatePublication->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePublication;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    
 
 
 ?>
