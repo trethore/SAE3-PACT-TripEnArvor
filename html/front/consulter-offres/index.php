@@ -322,6 +322,8 @@ try {
                     }
                 });
 
+                console.log(visibleOffers);
+
                 // Show/Hide "No Offers" Message
                 noOffersMessage.style.display = visibleOffers.length > 0 ? "block" : "none";
             };
