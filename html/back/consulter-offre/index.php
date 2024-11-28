@@ -341,7 +341,7 @@ try {
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php echo htmlentities($m['pseudo']) ?></p>
+                            <p class="titre-avis"><?php echo htmlentities($membre['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
