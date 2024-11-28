@@ -39,8 +39,9 @@ header {
 }
 
 .logo {
-	width: 72px;
-	height: 105px;
+	width: auto;
+	height: 75px;
+	margin: 0.5em 0;
 }
 
 .text-wrapper-17 {
@@ -72,7 +73,7 @@ header {
 
 .ICON-utilisateur {
 	margin-left: 15px;
-	width: 53px;
+	width: auto;
 	height: 60px;
 	object-fit: cover;
 
@@ -80,7 +81,7 @@ header {
 
 .ICON-accueil {
 	margin: 0 15px 0 50px;
-	width: 65px;
+	width: auto;
 	height: 60px;
 	object-fit: cover;
 }
