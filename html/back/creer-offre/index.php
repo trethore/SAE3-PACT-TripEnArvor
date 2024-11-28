@@ -38,8 +38,6 @@ function get_file_extension($type)
     $id_compte =  $_SESSION['id'];
     $isIdProPrivee = isIdProPrivee($id_compte);
     $isIdProPublique = isIdProPublique($id_compte);
-    print_r($id_compte);
-    print_r($_SESSION);
     //print_r($isIdProPublique);
 
     if ($isIdProPublique !== true) {
@@ -488,8 +486,12 @@ function get_file_extension($type)
             try {
 
                 // Connexion à la base de données
-                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+                $dbh -> prepare("start transaction;")->execute();
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                
 
 
                 //INSERTION IMAGE dans _image
@@ -637,11 +639,13 @@ function get_file_extension($type)
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                         $stmt_carte->execute([$fichier_img]);
 
-                    }
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                    $stmt = $dbh->prepare($requete);
-                    $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $tarif_min, $type]);
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $tarif_min, $type]);
+    
 
+                    }
+          
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_plan_image = $dbh->prepare($requete_plan_offre);
@@ -749,10 +753,12 @@ function get_file_extension($type)
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_image_offre = $dbh->prepare($requete_image);
                     $stmt_image_offre->execute([$id_offre, $fichier_img]);
+
                 }
 
 
 
+                $dbh -> prepare("commit;")->execute();
                 // Fermeture de la connexion
                 $dbh = null;
 
