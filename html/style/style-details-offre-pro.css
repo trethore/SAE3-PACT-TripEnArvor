@@ -20,13 +20,13 @@ h1 {
     font-size: 64px;
     font-weight: bold;
     text-align: center;
-    color: var(--violet-principal);
+    color: var(--orange-principale);
 }
 
 h2 {
     font-size: 36px;
     font-weight: bold;
-    color: var(--violet-principal);
+    color: var(--orange-principale);
 }
 
 .fond-blocs {
@@ -49,7 +49,7 @@ a {
 }
 
 .bordure {
-    border-bottom: 3px solid var(--violet-principal);
+    border-bottom: 3px solid var(--orange-principale);
 }
 
 /********************************
@@ -68,16 +68,16 @@ a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 60px;
-        background-color: var(--violet-principal);
+        background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
     }
 
     .bouton-modifier > button:hover {
-        color: var(--violet-principal);
+        color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--violet-principal);
+        border: 3px solid var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -220,7 +220,7 @@ a {
     }
 
     .arrow-left > img, .arrow-right > img {
-        background-color: var(--violet-principal);
+        background-color: var(--orange-principale);
         border-radius: 90px;
     } 
 
@@ -247,7 +247,7 @@ a {
 
     .liste-caracteristique > li {
         color: var(--noir);
-        border-left: 5px solid var(--violet-principal);
+        border-left: 5px solid var(--orange-principale);
         font-size: 40px;
         list-style: none;
         display: flex;
@@ -274,7 +274,7 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
-        border-left: 3px solid var(--violet-principal);
+        border-left: 3px solid var(--orange-principale);
     }
 
     .epingle {
@@ -290,16 +290,16 @@ a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
-        background-color: var(--violet-principal);
+        background-color: var(--orange-principale);
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
-        color: var(--violet-principal);
+        color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--violet-principal);
+        border: 3px solid var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -315,16 +315,16 @@ a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
-        background-color: var(--violet-principal);
+        background-color: var(--orange-principale);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
     }
 
     .bloc-tarif > button:hover {
-        color: var(--violet-principal);
+        color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--violet-principal);
+        border: 3px solid var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -393,7 +393,7 @@ a {
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
-    border: 3px solid var(--violet-principal);
+    border: 3px solid var(--orange-principale);
 }
 
 .titre-avis {
@@ -407,7 +407,7 @@ a {
 }
 
 .bordure-top {
-    border-top: 3px solid var(--violet-principal);
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {
@@ -429,7 +429,7 @@ a {
 }
 
 .display-notation > a {
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     text-decoration: none;
     margin-right: 15px;
 }
@@ -446,16 +446,16 @@ a {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 40px;
-    background: var(--violet-principal);
+    background: var(--orange-principale);
     padding: 10px auto;
     border-radius: 15px;
     border: 0;
 }
 
 .navigation > button:hover {
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     background: var(--blanc-leger);
-    border: 1px solid var(--violet-principal);
+    border: 1px solid var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
 

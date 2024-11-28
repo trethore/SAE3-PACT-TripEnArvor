@@ -7,7 +7,7 @@
     --beige: rgba(234, 226, 218, 1);
 
     --marron: rgba(191, 140, 44, 1);
-    --violet-principal: rgba(217, 102, 54, 1);
+    --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
 
@@ -37,7 +37,7 @@ body {
 h1 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     background: var(--blanc-leger);
     margin: 0.5em 0.2em;
     text-align: center;
@@ -74,13 +74,13 @@ a {
     
     background: var(--blanc-leger);
     border-radius: 15px;
-    border:3px solid var(--violet-principal);
+    border:3px solid var(--orange-principale);
 }
 
 .filtre-tri > h2 {
     color: var(--blanc-leger);
     text-align: center;
-    background-color: var(--violet-principal);
+    background-color: var(--orange-principale);
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
@@ -188,7 +188,7 @@ a {
 
 .filtre-tri h3 {
     margin: 0 0 0.1em;
-    color: var(--violet-principal);
+    color: var(--orange-principale);
 }
 
 .filtre-tri label {
@@ -223,7 +223,7 @@ a {
     padding: 0 0 0 2em;
     font-size: 20px;
     font-weight: 500;
-    color: var(--violet-principal);
+    color: var(--orange-principale);
 }
 
 .filtre-tri .trier > div  div div div {
@@ -357,7 +357,7 @@ a {
 }
 
 .lesOffres article > a {
-    border: 3px solid var(--violet-principal);
+    border: 3px solid var(--orange-principale);
 }
 
 .lieu-offre {
@@ -492,7 +492,7 @@ a {
 }
 
 .lesOffres .etoiles + div + p {
-    background: var(--violet-principal);
+    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
@@ -530,7 +530,7 @@ a {
 
 .pagination-btn {
     background-color: var(--blanc-leger);
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     padding: 5px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -546,6 +546,6 @@ a {
 }
 
 .pagination-btn:hover {
-    background-color: var(--violet-principal);
+    background-color: var(--orange-principale);
     color: var(--blanc-leger);
 }
