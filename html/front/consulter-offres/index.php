@@ -348,6 +348,22 @@ try {
 
                 let visibleOffers = 0;
 
+                const locationInput = document.getElementById("search-location");
+                const searchInput = document.querySelector(".input-search");
+
+                locationInput.addEventListener("input", () => {
+                    const searchValue = locationInput.value.trim().toLowerCase();
+
+                    allOffers.forEach(offer => {
+                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                        if (location.includes(searchValue)) {
+                            offer.style.display = "block";
+                        } else {
+                            offer.style.display = "none";
+                        }
+                    });
+                });
+
                 allOffers.forEach(offer => {
                     const category = offer.querySelector(".categorie-offre")?.textContent.trim();
                     const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
@@ -399,22 +415,6 @@ try {
             // Add change event listeners to filter inputs
             filterInputs.forEach(input => {
                 input.addEventListener("change", applyFilters);
-            });
-
-            const locationInput = document.getElementById("search-location");
-            const searchInput = document.querySelector(".input-search");
-
-            locationInput.addEventListener("input", () => {
-                const searchValue = locationInput.value.trim().toLowerCase();
-
-                allOffers.forEach(offer => {
-                    const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
-                    if (location.includes(searchValue)) {
-                        offer.style.display = "block";
-                    } else {
-                        offer.style.display = "none";
-                    }
-                });
             });
         });
     </script>
