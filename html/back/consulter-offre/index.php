@@ -357,9 +357,9 @@ try {
                             <?php } ?>
                             <?php foreach ($dateAvis as $da) { 
                                 $publication = explode(' ', $da['date']);
-                                $datePub = $publication[0]; 
-                                $heurePub = $publication[1]; ?>
-                                <p><strong>Publié le <?php echo htmlentities($datePub); ?> à <?php echo htmlentities($heurePub); ?></strong></p>
+                                $datePub = explode('-', $publication[0]); 
+                                $heurePub = explode(':', $publication[1]); ?>
+                                <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
                             <?php } ?>
                         </div>
                         <p class="transparent">.</p>
@@ -367,7 +367,7 @@ try {
                     <?php foreach ($datePassage as $dp) { 
                         $passage = explode(' ', $dp['date']);
                         $datePass = explode('-', $passage[0]); ?>
-                        <p>Y était le : <?php echo htmlentities($datePass[0] . "/" . $datePass[1] . "/" . $datePass[2]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                        <p>Y était le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[1]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
