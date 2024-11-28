@@ -2,7 +2,8 @@ main {
     flex-direction: column;
     background-color: var(--blanc);
     border-radius: 15px;
-    padding: 0 1em 1em;
+    padding: 0 4em 1em;
+    width: 50em;
 }
 
 input {
@@ -15,7 +16,7 @@ input {
 }
 
 input::placeholder {
-    color: var(--orange-principale);
+    color: var(--gris-etoile);
 }
 
 table + div > a {
@@ -24,7 +25,7 @@ table + div > a {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     border-radius: 15px;
-    margin: 1em 0;
+    margin: 2em 0 1em;
     padding: 0.2em 1em;
 }
 
