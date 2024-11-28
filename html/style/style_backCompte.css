@@ -112,7 +112,6 @@ section > h1 + article {
 }
 
 table {
-    width: 40em;
     border-spacing: 2em 0.5em;
 }
 
@@ -122,12 +121,11 @@ table tr {
 
 tr > td {
     vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
-    width: 15em;
+    width: 16em;
 }
 
 table td + td {
     text-align: right;
-    width: 28em;
     color: var(--orange-principale);
 }
 
