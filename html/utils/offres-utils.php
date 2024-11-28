@@ -180,7 +180,9 @@
             die();
         }
     }
-    
+ 
+// ===== GESTION DES TARIFS ===== //
+  
     // ===== Fonction qui exécute une requête SQL pour récupérer les différents tarifs d'une offre ===== //
     function getTarifs($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -198,4 +200,44 @@
             die();
         }
     }
+
+// ===== GESTION DES AVIS ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les avis d'une offre ===== //
+    function getAvis($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAvis = $conn->prepare($reqAvis);
+            $stmtAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAvis->execute();
+            $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $avis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    function getDatePassage($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePassage = $conn->prepare($reqDatePassage);
+            $stmtDatePassage->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDatePassage->execute();
+            $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePassage;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+
 ?>
