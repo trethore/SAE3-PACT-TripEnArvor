@@ -251,15 +251,29 @@ VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse
 'www.durand-informatique.com', '123456789');
 
 INSERT INTO sae._date(date)
-	VALUES ('2024-11-27 11:00:00'), ('2024-11-27 17:00:00'), ('2024-11-27 20:00:00'), ('2024-11-27 21:00:00');
-    
+VALUES 
+('2024-11-27 11:00:00'), 
+('2024-11-27 17:00:00'), 
+('2024-11-27 20:00:00'), 
+('2024-11-27 21:00:00'),
+('2024-11-28 11:00:00'), 
+('2024-11-28 17:00:00'), 
+('2024-11-28 20:00:00'), 
+('2024-11-28 21:00:00'),
+('2024-11-29 17:00:00'), 
+('2024-11-29 21:00:00');  
+ 
 INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
 VALUES 
-(4, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', '1', '0', 'famille', 1,2),
-(5, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',3, 4);
-
-
-
+(3, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', 1, 0, 'famille', 2,1),
+(4, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',4,3),
+(3, 5, 1, 'Pas bon','Je n ai pas aimé la sauce.', 0, 5, 'amis', 6,5),
+(4, 6, 2, 'Bizzare', 'Le service et le personnel me derange.', 3, 2, 'amis',8, 7);
+(3, 6, 5, 'Super expérience !', 'J adore les pates', 1, 0, 'famille', 2,1),
+INSERT INTO sae._reponse(id_avis, texte, publie_le)
+VALUES 
+    (3, 'Nous avons modifié notre carte.', 9),
+    (4, 'Nous sommes désolé du désagrement causé.', 10);
 
 COMMIT;
 
