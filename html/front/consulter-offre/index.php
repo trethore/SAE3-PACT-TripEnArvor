@@ -36,7 +36,7 @@ try {
 // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
-    $compte = getCompte($id_compte);
+    $compte = getCompte($id_offre_cible);
 
 // ===== GESTION DES IMAGES ===== //
 
