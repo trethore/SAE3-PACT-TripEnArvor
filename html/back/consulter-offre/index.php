@@ -92,7 +92,11 @@ try {
     $membre = getInformationsMembre($id_offre_cible);
 
     // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
-    $dateAvis = getDatePublication($id_offre_cible);
+    $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+    $stmtDateAvis = $dbh->prepare($reqDateAvis);
+    $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+    $stmtDateAvis->execute();
+    $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
