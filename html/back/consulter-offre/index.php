@@ -366,9 +366,8 @@ try {
                     </div>
                     <?php foreach ($datePassage as $dp) { 
                         $passage = explode(' ', $dp['date']);
-                        $datePass = $passage[0]; 
-                        $heurePass = $passage[1]; ?>
-                        <p>Y était le : <?php echo htmlentities($datePass); ?> à <?php echo htmlentities($heurePass); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                        $datePass = explode('-', $passage[0]); ?>
+                        <p>Y était le : <?php echo htmlentities($datePass[0] . "/" . $datePass[1] . "/" . $datePass[2]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
