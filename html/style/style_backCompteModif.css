@@ -1,17 +1,24 @@
 main {
     flex-direction: column;
+    background-color: var(--blanc);
+    border-radius: 15px;
+    padding: 0 1em 1em;
 }
 
 input {
     text-align: center;
     color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    padding: 0.5em 2em;
+    border-radius: 10px;
+    border: 1px solid var(--blanc);
 }
 
 input::placeholder {
     color: var(--orange-principale);
 }
 
-a {
+table + div > a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
@@ -21,7 +28,7 @@ a {
     padding: 0.2em 1em;
 }
 
-a:hover {
+table + div > a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
