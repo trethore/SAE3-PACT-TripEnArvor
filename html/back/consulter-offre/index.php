@@ -354,13 +354,11 @@ try {
                             <?php } 
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                            <?php } ?>
-                            <?php foreach ($dateAvis as $da) { 
-                                $publication = explode(' ', $da['date']);
+                            <?php }
+                                $publication = explode(' ', $dateAvis[$compteur]['date']);
                                 $datePub = explode('-', $publication[0]); 
                                 $heurePub = explode(':', $publication[1]); ?>
                                 <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
-                            <?php } ?>
                         </div>
                         <p class="transparent">.</p>
                     </div>
