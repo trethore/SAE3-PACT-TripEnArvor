@@ -1,56 +1,53 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
 
-session_start();
-if (isset($_POST['titre'])) { // les autres svp²
-    $submitted = true;
-} else {
-    $submitted = false;
-}
-
-
-
-function get_file_extension($type)
-{
-    $extension = '';
-    switch ($type) {
-        case 'image/png':
-            $extension = '.png';
-            break;
-        case 'image/jpeg':
-            $extension = '.jpg';
-            break;
-        case 'image/webp':
-            $extension = '.webp';
-            break;
-        case 'image/gif':
-            $extension = '.gif';
-            break;
-        default:
-            break;
+    session_start();
+    if (isset($_POST['titre'])) { // les autres svp²
+        $submitted = true;
+    } else {
+        $submitted = false;
     }
-    return $extension;
-}
+
+
+
+    function get_file_extension($type)
+    {
+        $extension = '';
+        switch ($type) {
+            case 'image/png':
+                $extension = '.png';
+                break;
+            case 'image/jpeg':
+                $extension = '.jpg';
+                break;
+            case 'image/webp':
+                $extension = '.webp';
+                break;
+            case 'image/gif':
+                $extension = '.gif';
+                break;
+            default:
+                die("probleme extension image");
+                break;
+        }
+        return $extension;
+    }
 
     $id_compte =  $_SESSION['id'];
     $isIdProPrivee = isIdProPrivee($id_compte);
     $isIdProPublique = isIdProPublique($id_compte);
-    //print_r($isIdProPublique);
+
 
     if ($isIdProPublique !== true) {
         $isIdProPublique = false;
-        //print "pro prive ";
-
 
     } else if ($isIdProPublique === true) {
         $isIdProPrivee = false;
-        //print"prop publique"; 
     }
-    //print "prive ". $isIdProPrivee. "  "; print"publique ".$isIdProPublique;
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,6 +76,7 @@ function get_file_extension($type)
         <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
+    
     <?php if (!$submitted) { ?>
         <!-- <div id="offre">
             <h1>Valider les modifications</h1>
@@ -114,10 +112,12 @@ function get_file_extension($type)
         </div> -->
         <main>
             
-
             <h2> Création d'une offre</h2>
+
             <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+
                 <h3>Informations importantes</h3>
+
                 <div class="important">
                     <table border="0">
                         <tr>
@@ -126,21 +126,19 @@ function get_file_extension($type)
                         </tr>
                         <tr>
                             <td><label for="categorie">Catégorie <span class="required">*</span></label></td>
-                            <td>
-                                <div class="custom-select-container">
-                                    <select class="custom-select" id="categorie" name="lacat">
-                                        <option value="">Choisir une catégorie </option>
-                                        <option value="restaurant"> Restaurant</option>
-                                        <option value="parc"> Parc d'attraction</option>
-                                        <option value="spectacle"> Spectacle</option>
-                                        <option value="visite"> Visite</option>
-                                        <option value="activite"> Activité</option>
-                                    </select>
-                                </div>
-                            </td>
+                               <td> <div class="custom-select-container">
+                                        <select class="custom-select" id="categorie" name="lacat">
+                                            <option value="">Choisir une catégorie </option>
+                                            <option value="restaurant"> Restaurant</option>
+                                            <option value="parc"> Parc d'attraction</option>
+                                            <option value="spectacle"> Spectacle</option>
+                                            <option value="visite"> Visite</option>
+                                            <option value="activite"> Activité</option>
+                                        </select>
+                                </div></td>
                         </tr>
-                        <!-- <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
-                        <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td> -->
+                            <!-- <td><label id="labelprix" for="prix">Prix minimal <span class="required">*</span></label></td>
+                            <td><input type="number" id="prix" name="prix" /><label id="labelprix2">€</label></td> -->
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
                             <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
@@ -154,9 +152,9 @@ function get_file_extension($type)
                                         <option value="ouvert"> Ouvert </option>
                                         <option value="ferme"> Fermé </option>
                                     </select> -->
-                </div>
-                </td>
-                </tr>
+                                </div>
+                            </td>
+                        </tr>
 
 
                 <tr>
@@ -168,19 +166,16 @@ function get_file_extension($type)
                     <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td>
                     <td><label for="ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
-
                 </tr>
                 <tr>
                     <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
-                    <td>
-                        <div>
+                    <td><div>
                             <!-- <label for="file-upload">
                                 <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                             </label> -->
                             <input id="photo" type="file" name="photo" required />
                         </div>
                     </td>
-
                 </tr>
                 <tr>
                     <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
@@ -195,13 +190,12 @@ function get_file_extension($type)
                 </tr>
                 <tr>
                     <!-- <div id="options">
-                                <td><label>Options</label></td>
-                                <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
-                                <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
-                            </div> -->
-                    </t>
-
-                    </table>
+                        <td><label>Options</label></td>
+                        <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
+                        <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
+                    </div> -->
+                </tr>
+            </table>
 
 
                     <div>
