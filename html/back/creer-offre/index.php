@@ -39,6 +39,7 @@ function get_file_extension($type)
     $isIdProPrivee = isIdProPrivee($id_compte);
     $isIdProPublique = isIdProPublique($id_compte);
     print_r($id_compte);
+    print_r($_SESSION);
     //print_r($isIdProPublique);
 
     if ($isIdProPublique !== true) {
