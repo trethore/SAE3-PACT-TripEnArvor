@@ -407,13 +407,12 @@ try {
             locationInput.addEventListener("input", () => {
                 const searchValue = locationInput.value.trim().toLowerCase();
 
-                // Filtrer les offres en fonction de la localisation
                 allOffers.forEach(offer => {
                     const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
                     if (location.includes(searchValue)) {
-                        offer.style.display = ""; // Affiche l'offre
+                        offer.style.display = "block";
                     } else {
-                        offer.style.display = "none"; // Cache l'offre
+                        offer.style.display = "none";
                     }
                 });
             });
