@@ -341,9 +341,7 @@ try {
             <?php foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                        <?php foreach ($membre as $m) { ?>
-                            <p class="titre-avis"><?php echo htmlentities($m['pseudo']) ?></p>
-                        <?php } ?>
+                            <p class="titre-avis"><?php echo htmlentities($membre['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
@@ -367,7 +365,7 @@ try {
                     <?php foreach ($datePassage as $dp) { 
                         $passage = explode(' ', $dp['date']);
                         $datePass = explode('-', $passage[0]); ?>
-                        <p>Y était le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[1]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                        <p>Y était le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <?php } ?>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
