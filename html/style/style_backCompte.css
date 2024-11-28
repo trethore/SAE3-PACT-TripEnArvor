@@ -141,7 +141,7 @@ td > div {
 /********************
         BOUTON
 *********************/
-main > section a {
+section a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
@@ -151,7 +151,7 @@ main > section a {
     padding: 0.2em 1em;
 }
 
-main > section a:hover {
+section a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
