@@ -86,11 +86,7 @@ try {
     $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer les avis de l'offre ===== //
-    $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
-    $stmtAvis = $dbh->prepare($reqAvis);
-    $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtAvis->execute();
-    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+    $avis = getAvis($id_offre_cible);
 
     // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
@@ -107,24 +103,21 @@ try {
     $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
 
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur l'offre ===== //
-    $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
-    $stmtDatePassage = $dbh->prepare($reqDatePassage);
-    $stmtDatePassage->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtDatePassage->execute();
-    $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
+    $datePassage = getDatePassage($id_offre_cible);
 
+    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
     $tarifs = getTarifs($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer le nombre de notes de l'offre ===== //
+    // ===== Requête SQL pour récupérer le nombre de notes d'une offre ===== //
     $nombreNote = getNombreNotes($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer la note moyenne de l'offre ===== //
+    // ===== Requête SQL pour récupérer la note moyenne d'une offre ===== //
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer le type de l'offre ===== //
+    // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
-    // ===== Requête SQL pour récuéprer les images de l'offre ===== //
+    // ===== Requête SQL pour récuéprer les images d'une offre ===== //
     $images = getIMGbyId($id_offre_cible);
 
 } catch (PDOException $e) {
