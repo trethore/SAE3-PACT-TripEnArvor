@@ -115,7 +115,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                 </tr>
             </table>
             <div>
-                <a>Modifier les informations</a>
+                <a href="/front/modifier-compte">Modifier les informations</a>
             </div>
         </section>
     </main>
