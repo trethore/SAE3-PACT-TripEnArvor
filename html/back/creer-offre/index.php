@@ -525,7 +525,7 @@ function get_file_extension($type)
 
             switch ($categorie) {
                 case 'activite':
-                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
@@ -542,7 +542,7 @@ function get_file_extension($type)
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
 
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
 
@@ -550,7 +550,7 @@ function get_file_extension($type)
 
                 case 'spectacle':
                     $type = "standard";
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
@@ -567,7 +567,7 @@ function get_file_extension($type)
                     break;
 
                 case 'visite':
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $tarif_min, $type]);
                     break;
@@ -581,7 +581,7 @@ function get_file_extension($type)
                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_img = 'plan_' . $time . $file_extension;
                     }
-                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_img, $id_compte, $tarif_min, $type]);
                     break;
