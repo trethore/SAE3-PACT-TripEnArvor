@@ -486,11 +486,33 @@ function get_file_extension($type)
 
             try {
 
+                //INSERTION IMAGE dans _image
+                $time = 'p' . strval(time());
+                $file = $_FILES['photo'];
+                $file_extension = get_file_extension($file['type']);
+
+                if ($file_extension !== '') {
+                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
-                // Connexion à la base de données
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+                    $fichier_img = $time . $file_extension;
+
+                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
+
+                    //print $requete_image;
+
+                    //preparation requete
+                    $stmt_image = $dbh->prepare($requete_image);
+
+                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                    $stmt_image->execute([$fichier_img]);
+
+                    // Récupérer l'ID retourné par la requête
+                    $id_image = $stmt->fetchColumn();
+                }
+
+
+               
 
             // Début de la requête SQL
 
@@ -503,6 +525,11 @@ function get_file_extension($type)
             if (!$id_compte) {
                 die("Erreur : utilisateur non connecté.");
             }
+
+             // Connexion à la base de données
+             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+             $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
 
             // Déterminer la table cible selon la catégorie
             switch ($categorie) {
@@ -680,31 +707,9 @@ function get_file_extension($type)
 
 
 
-
-
-                //INSERTION IMAGE
-                $time = 'p' . strval(time());
-                $file = $_FILES['photo'];
-                $file_extension = get_file_extension($file['type']);
-
                 if ($file_extension !== '') {
-                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
-
-                    $fichier_img = $time . $file_extension;
-
-                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?) returning id_image';
-
-                    //print $requete_image;
-
-                    //preparation requete
-                    $stmt_image = $dbh->prepare($requete_image);
-
-                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                    $stmt_image->execute([$fichier_img]);
-
-                    // Récupérer l'ID retourné par la requête
-                    $id_image = $stmt->fetchColumn();
+                    //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_image_offre = $dbh->prepare($requete_image);
