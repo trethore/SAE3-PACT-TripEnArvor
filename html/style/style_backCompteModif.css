@@ -43,7 +43,6 @@ table + div > input:hover {
 **********************/
         /* Overlay pour le fond */
         #popupOverlay {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -55,7 +54,6 @@ table + div > input:hover {
 
         /* Style de la popup */
         #popup {
-            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -65,6 +63,7 @@ table + div > input:hover {
             width: 350px;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         /* Titre de la popup */
@@ -90,6 +89,7 @@ table + div > input:hover {
             margin: 0 10px;
             border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
 
