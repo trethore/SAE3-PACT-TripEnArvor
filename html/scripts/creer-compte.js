@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function setRequired(element, required) {
         element.querySelector("label span").style.display = required ? "inline" : "none";
         element.querySelector("input, textarea").required = required;
+        if (!required) {
+            showRequiredMessage(element, false);
+        }
     }
 
     function showFieldsAndMakeItRequiredIfNecessary(listOfAllElements, listOfElementToShow, listOfRequiredElements) {
