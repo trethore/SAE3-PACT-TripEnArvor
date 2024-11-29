@@ -82,12 +82,14 @@ $factures = [
             <h1>Mes factures</h1>
             <ul>
                 <?php
-                    foreach ($factures as $facture) {
-                        ?>
-                        <p class="facture hidden">Facture du <?php echo $facture["date"]?> - Abonnement de "<?php echo $facture["nom_offre"]?>"</p>
-                        <img class="image-facture" src="/images/universel/facture.png">
-                        <?php
-                    }
+                foreach ($factures as $facture) {
+                ?>
+                    <li>
+                        <p class="facture">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
+                        <img class="image-facture hidden" src="/images/universel/facture.png" alt="Facture <?php echo $facture["nom_offre"] ?>">
+                    </li>
+                <?php
+                }
                 ?>
             </ul>
         </section>
@@ -128,11 +130,13 @@ $factures = [
     </footer>
 
     <script>
-        const titre = document.querySelector(".facture");
-        const imgFacture = document.querySelector(".image-facture");
+        const titres = document.querySelectorAll(".facture");
+        const imagesFactures = document.querySelectorAll(".image-facture");
 
-        titre.addEventListener("click", () => {
-            imgFacture.classList.toggle("hidden");
+        titres.forEach((titre, index) => {
+            titre.addEventListener("click", () => {
+                imagesFactures[index].classList.toggle("hidden");
+            });
         });
     </script>
 </body>

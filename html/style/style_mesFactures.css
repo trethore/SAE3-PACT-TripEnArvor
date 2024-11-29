@@ -124,3 +124,7 @@ ul {
     max-height: 0;
     transition: max-height 0.5s ease-out;
 }
+
+.image-facture.hidden {
+    display: none;
+}
