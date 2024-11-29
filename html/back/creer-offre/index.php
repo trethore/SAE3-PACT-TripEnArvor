@@ -456,6 +456,7 @@
 
             }
             print_r($_POST);
+            print(" tarif 1 : ".$tarif1. " nomtarif : ".$nomtarif1);
 
             
 
