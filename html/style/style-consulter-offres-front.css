@@ -548,5 +548,5 @@ h3 {
     text-align: center; 
     color: var(--violet-principal);
     font-size: 20pt;
-    margin: 20px 430px;
+    margin: 20px auto;
 }

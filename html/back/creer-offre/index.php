@@ -243,16 +243,16 @@
 
                 <div id="tarifs">
                     <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                    <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif1" name="nomtarif1" placeholder="Nom du tarif" />
                     <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif2" name="nomtarif2" placeholder="Nom du tarif" />
                     <input type="number" name="tarif2" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif3nom" name="tarif3nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif3" name="nomtarif3" placeholder="Nom du tarif" />
                     <input type="number" name="tarif3" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif4nom" name="tarif4nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif4" name="nomtarif4" placeholder="Nom du tarif" />
                     <input type="number" name="tarif4" min="0" placeholder="prix" /><span>€</span>
                     <br>
                     <!-- <label for="grilleT">Grille tarifaire complète</label>
@@ -416,10 +416,11 @@
 
             if ($categorie !== "restaurant") {
                     
-                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1nom']))) {
+                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))) {
                             $tarif1 = $_POST['tarif1'];
                             $tarif1 = intval($tarif1);
-                            $nomtarif1 = $_POST['nomtarif1nom'];
+                            $nomtarif1 = $_POST['nomtarif1'];
+                            
                 }
                 else {
                     $tarif1 = 0;
@@ -430,22 +431,22 @@
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
+                print $tarif_min;
 
-
-                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2nom']))) {
+                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))) {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
-                    $tabtarifs[$_POST['nomtarif2nom']] = $tarif2;
+                    $tabtarifs[$_POST['nomtarif2']] = $tarif2;
                 }
-                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3nom']))) {
+                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))) {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
-                    $tabtarifs[$_POST['nomtarif3nom']] = $tarif3;
+                    $tabtarifs[$_POST['nomtarif3']] = $tarif3;
                 }
-                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4nom']))) {
+                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4']))) {
                     $tarif4 = $_POST['tarif4'];
                     $tarif4 = intval($tarif4);
-                    $tabtarifs[$_POST['nomtarif4nom']] = $tarif4;
+                    $tabtarifs[$_POST['nomtarif4']] = $tarif4;
                 }
 
                 foreach ($tabtarifs as $key => $value) {
@@ -456,7 +457,8 @@
 
             }
             print_r($_POST);
-
+            
+            print("tarif1 : ".$tarif1." nomtarif1: ".$nomtarif1);
             
 
             
@@ -612,7 +614,7 @@
 
                         $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]);
 
 
                     }
