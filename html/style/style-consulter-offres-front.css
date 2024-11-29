@@ -127,7 +127,8 @@ h3 {
 .filtre-tri .disponibilite, 
 .filtre-tri .trier,
 .filtre-tri .typeOffre, 
-.filtre-tri .date {
+.filtre-tri .date,
+.filtre-tri .trier2 {
     margin: 0 1em;
     border-radius: 10px;
 }
@@ -289,7 +290,11 @@ h3 {
 }
 
 .filtre-tri .trier {
-    flex: 6;
+    flex: 3;
+}
+
+.filtre-tri .trier2 {
+    flex: 2;
 }
 
 .filtre-tri .localisation {

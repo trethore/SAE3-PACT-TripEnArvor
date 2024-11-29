@@ -8,117 +8,85 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $id_offre_cible = intval($_GET['id']);
 
-    // ===== Requête SQL pour récupérer les informations de l'offre ===== //
-    $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
-    $stmtOffre = $dbh->prepare($reqOffre);
-    $stmtOffre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtOffre->execute();
-    $offre = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+// ===== GESTION DES OFFRES ===== //
 
-    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une activité ===== //
-    $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
-    $stmtActivite = $dbh->prepare($reqActivite);
-    $stmtActivite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtActivite->execute();
-    $activite = $stmtActivite->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations d'une offre ===== //
+    $offre = getOffre($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est une visite ===== //
-    $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
-    $stmtVisite = $dbh->prepare($reqVisite);
-    $stmtVisite->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtVisite->execute();
-    $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    $activite = getActivite($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un spectacle ===== //
-    $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
-    $stmtSpectacle = $dbh->prepare($reqSpectacle);
-    $stmtSpectacle->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtSpectacle->execute();
-    $spectacle = $stmtSpectacle->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
+    $visite = getVisite($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un parc d'attractions ===== //
-    $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
-    $stmtAttraction = $dbh->prepare($reqAttraction);
-    $stmtAttraction->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtAttraction->execute();
-    $attraction = $stmtAttraction->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
+    $spectacle = getSpectacle($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations de l'offre si l'offre est un restaurant ===== //
-    $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
-    $stmtRestaurant = $dbh->prepare($reqRestaurant);
-    $stmtRestaurant->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtRestaurant->execute();
-    $restaurant = $stmtRestaurant->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
+    $attraction = getParcAttraction($id_offre_cible);
 
-    // ===== Requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
-    $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
-    $stmtAdresse = $dbh->prepare($reqAdresse);
-    $stmtAdresse->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtAdresse->execute();
-    $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC);    
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
+    $restaurant = getRestaurant($id_offre_cible);
+
+// ===== GESTION DES ADRESSES ===== //
+
+    // ===== Requête SQL pour récupérer les informations de l'adresse d'une offre ===== //
+    $adresse = getAdresse($id_offre_cible);    
+
+// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
-    $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
-    $stmtCompte = $dbh->prepare($reqCompte);
-    $stmtCompte->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtCompte->execute();
-    $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+    $compte = getCompte($id_compte);
 
-    // ===== Requête SQL pour récupérer les informations des jours et horaires d'ouverture de l'offre ===== //
-    $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
-    $stmtJour = $dbh->prepare($reqJour);
-    $stmtJour->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtJour->execute();
-    $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
-    
-    $reqHoraire = "SELECT DISTINCT ouverture, fermeture FROM _offre NATURAL JOIN _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE id_offre = :id_offre";
-    $stmtHoraire = $dbh->prepare($reqHoraire);
-    $stmtHoraire->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtHoraire->execute();
-    $horaire = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
-    
-    
-    // ===== Requête SQL pour récupérer les tags de l'offre ===== //
-    $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
-    $stmtTags = $dbh->prepare($reqTags);
-    $stmtTags->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtTags->execute();
-    $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
+// ===== GESTION DES IMAGES ===== //
 
-    // ===== Requête SQL pour récupérer les avis de l'offre ===== //
-    $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
-    $stmtAvis = $dbh->prepare($reqAvis);
-    $stmtAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtAvis->execute();
-    $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
-
-    $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
-    $stmtMembre = $dbh->prepare($reqMembre);
-    $stmtMembre->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtMembre->execute();
-    $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
-
-    $reqDateAvis = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
-    $stmtDateAvis = $dbh->prepare($reqDateAvis);
-    $stmtDateAvis->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtDateAvis->execute();
-    $dateAvis = $stmtDateAvis->fetchAll(PDO::FETCH_ASSOC);
-
-    $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
-    $stmtDatePassage = $dbh->prepare($reqDatePassage);
-    $stmtDatePassage->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-    $stmtDatePassage->execute();
-    $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
-
-
-    $nombreNote = getNombreNotes($id_offre_cible);
-    $noteMoyenne = getNoteMoyenne($id_offre_cible);
-
-    // ===== Requête SQL pour récupérer le type de l'offre ===== //
-    $categorie = getTypeOffre($id_offre_cible);
-
-    // ===== Requête SQL pour récuéprer les images de l'offre ===== //
+    // ===== Requête SQL pour récuéprer les images d'une offre ===== //
     $images = getIMGbyId($id_offre_cible);
+
+// ===== GESTION DES NOTES ===== //
+
+    // ===== Requête SQL pour récupérer le nombre de notes d'une offre ===== //
+    $nombreNote = getNombreNotes($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la note moyenne d'une offre ===== //
+    $noteMoyenne = getNoteMoyenne($id_offre_cible);
+    
+// ===== GESTION DES TAGS ===== //
+
+    // ===== Requête SQL pour récupérer les tags d'une offre ===== //
+    $tags = getTags($id_offre_cible);
+
+// ===== GESTION DES TARIFS ===== //
+
+    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    $tarifs = getTarifs($id_offre_cible);
+
+// ===== GESTION DE L'OUVERTURE ===== //
+
+    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
+    $jours = getJoursOuverture($id_offre_cible);
+    
+    // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
+    $horaire = getHorairesOuverture($id_offre_cible);
+
+// ===== GESTION DES AVIS ===== //
+
+    // ===== Requête SQL pour récupérer les avis d'une offre ===== //
+    $avis = getAvis($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    $membre = getInformationsMembre($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
+    $dateAvis = getDatePublication($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    $datePassage = getDatePassage($id_offre_cible);
+
+// ===== GESTION DES TYPES ===== //
+
+    // ===== Requête SQL pour récupérer le type d'une offre ===== //
+    $categorie = getTypeOffre($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -284,16 +252,15 @@ try {
 
             <div class="fond-blocs bloc-tarif">
                 <div>
-                    <h2>Tarifs :</h2>
-                    <?php if (!empty($offre['tarifs'])): ?>
+                    <h2>Tarifs : </h2>
                     <table>
-                        <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
-                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
-                        } ?>
+                        <?php foreach ($tarifs as $t) { ?>
+                            <tr>
+                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                            </tr>
+                        <?php } ?>
                     </table>
-                <?php else: ?>
-                    <p>Tarifs non disponibles.</p>
-                <?php endif; ?>
                 </div>
                 <button>Voir les tarifs supplémentaires</button>
             </div>
