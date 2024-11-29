@@ -16,7 +16,7 @@ h1 {
     color: var(--noir);
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 40pt;
+    font-size: 30pt;
 }
 
 h2 {
@@ -38,6 +38,7 @@ main {
     flex-wrap: nowrap;
     flex-direction: row;
     margin: 1em;
+    width: 60%;
 }
 
 a {
@@ -99,14 +100,16 @@ section {
     background-color: var(--blanc);
     border-radius: 15px;
     padding: 0 1em 1em;
+    width: 90%;
 }
 
 p {
     text-align: left;
     border-bottom: var(--noir) solid 1px;
     border-spacing: 0.5em;
+    margin-bottom: 1.5em;
 }
 
 ul {
-    inline-size: 0;
+    inline-size: 90%;
 }
