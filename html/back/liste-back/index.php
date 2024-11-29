@@ -133,7 +133,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <div class="typeOffre">
                         <h3>Type d'offre</h3>
                         <div>
-                            <label><input type="radio" name="typeOffre"> Payante</label>
+                            <label><input type="radio" name="typeOffre"> Standard</label>
                             <label><input type="radio" name="typeOffre"> Premium</label>
                         </div>
                     </div>
