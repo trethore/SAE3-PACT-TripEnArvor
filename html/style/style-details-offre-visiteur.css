@@ -285,106 +285,88 @@ a {
         BLOCS AVIS                                                   
 *************************/
 
-    .bouton-modifier {
-        margin: 30px 30px 0 30px;
+    /* Styles pour la pop-up */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
     }
 
+    .popup.hidden {
+        display: none;
+    }
 
-    .bouton-modifier > button {
-        color: var(--blanc-leger);
-        text-decoration: none;
-        font-size: 60px;
-        background-color: var(--orange-principale);
-        padding: 10px 80px;
+    .popup-content {
+        background: var(--blanc-leger);
+        padding: 20px 40px;
         border-radius: 15px;
-        border: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        max-width: 90%;
+        text-align: center;
     }
 
-    .bouton-modifier > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
-        transition: 0.3s ease-in-out;
+    .popup-content h2 {
+        color: var(--violet-principal);
+        margin-bottom: 20px;
     }
 
-    #confirm {
-        background: var(--blanc-leger);
-        border: 3px solid var(--noir);
-        color: var(--noir);
+    .popup-content label {
+        display: block;
         font-size: 20px;
-        display: none;
-        border-radius: 15px;
-        text-align: center;
-        width: fit-content;
-        padding: 10px;
-        position: fixed;
-        left: 50%;
-        top: 40%;
-        transform: translateX(-50%);
-        z-index: 1;
+        margin: 10px 0 5px;
+        text-align: left;
     }
 
-    #final {
-        background: var(--blanc-leger);
-        border: 3px solid var(--noir);
-        color: var(--noir);
-        font-size: 32px;
-        display: none;
-        border-radius: 15px;
-        text-align: center;
-        width: fit-content;
+    .popup-content input, .popup-content textarea {
+        width: 100%;
         padding: 10px;
-        position: fixed;
-        left: 50%;
-        top: 40%;
-        transform: translateX(-50%);
-        z-index: 1;
+        margin-bottom: 15px;
+        border: 2px solid var(--noir);
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .popup-content button[type="submit"] {
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: var(--violet-principal);
+        color: var(--blanc-leger);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .popup-content button[type="submit"]:hover {
+        background-color: var(--blanc-leger);
+        color: var(--violet-principal);
+        border: 2px solid var(--violet-principal);
+        transition: 0.3s;
+    }
+
+    .popup-content .message {
+        margin-top: 10px;
+        font-size: 18px;
+        color: var(--orange-principale);
     }
 
     .close {
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .close button:first-child {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
+        background: none;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--noir);
         cursor: pointer;
-        padding: 5px 15px;
-        margin-bottom: 12px;
-        background: var(--noir);
-        color: var(--blanc-leger);
-        font-size: 32px;
-        width: fit-content;
-    }
-
-    #final button {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
-        cursor: pointer;
-        padding: 5px 15px;
-        margin-bottom: 12px;
-        background: var(--noir);
-        color: var(--blanc-leger);
-        font-size: 32px;
-        width: fit-content;
-    }
-
-    .close button:last-child {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
-        cursor: pointer;
-        padding: 5px 60px;
-        margin-bottom: 12px;
-        background: var(--gris);
-        color: var(--blanc-leger);
-        font-size: 20px;
-        width: fit-content;
+        position: absolute;
+        top: 15px;
+        right: 15px;
     }
 
 .fond-blocs-avis {
