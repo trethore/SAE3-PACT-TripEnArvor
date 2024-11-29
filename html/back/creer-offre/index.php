@@ -243,16 +243,16 @@
 
                 <div id="tarifs">
                     <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                    <input type="text" id="tarif1nom" name="tarif1nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif1" name="nomtarif1" placeholder="Nom du tarif" />
                     <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif2nom" name="tarif2nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif2" name="nomtarif2" placeholder="Nom du tarif" />
                     <input type="number" name="tarif2" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif3nom" name="tarif3nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif3" name="nomtarif3" placeholder="Nom du tarif" />
                     <input type="number" name="tarif3" min="0" placeholder="prix" /><span>€</span>
                     <br>
-                    <input type="text" id="tarif4nom" name="tarif4nom" placeholder="Nom du tarif" />
+                    <input type="text" id="nomtarif4" name="nomtarif4" placeholder="Nom du tarif" />
                     <input type="number" name="tarif4" min="0" placeholder="prix" /><span>€</span>
                     <br>
                     <!-- <label for="grilleT">Grille tarifaire complète</label>
@@ -420,7 +420,7 @@
                             $tarif1 = $_POST['tarif1'];
                             $tarif1 = intval($tarif1);
                             $nomtarif1 = $_POST['nomtarif1'];
-                            print(" tarif 1 : ".$tarif1. " nomtarif : ".$nomtarif1);
+                            
                 }
                 else {
                     $tarif1 = 0;
