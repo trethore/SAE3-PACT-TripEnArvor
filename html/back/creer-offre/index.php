@@ -176,14 +176,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
+                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
                     <td>
-                        <!-- <div class="custom-select-container">
-                                    <select class="custom-select" id="type" name="letype">
-                                        <option value="standard"> Offre Standard </option>
-                                        <option value="premium"> Offre Premium </option>
-                                    </select>
-                                </div> -->
+                        <div class="custom-select-container">
+                            <select class="custom-select" id="type" name="letype">
+                                <option value="standard"> Offre Standard </option>
+                                <option value="premium"> Offre Premium </option>
+                            </select>
+                        </div>
+                                
                     </td>
                 </tr>
                 <tr>
@@ -362,6 +363,7 @@
         <?php
         } else {
             $id_compte =  $_SESSION['id'];
+            $type = "standard"
 
             $resume = $_POST['descriptionC'];
             // Inclusion des paramètres de connexion
@@ -676,6 +678,11 @@ if (!is_dir($target_dir)) {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+
+            if(isIdProPublique){
+                document.getElementById("type").style.display = 'none';
+                document.getElementById("labeltype").style.display = 'none';
+            }
 
 
 
