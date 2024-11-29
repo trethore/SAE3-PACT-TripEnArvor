@@ -166,7 +166,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             <article class="offre">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
+                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
@@ -186,6 +186,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
+                    <p class="type-offre" style="display: none"><?php echo $row["type_offre"]; ?></p>
                     <img src=" <?php
                     switch ($row["type_offre"]) {
                         case 'gratuite':
@@ -205,11 +206,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
                     <div class="etoiles">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
                         <p>49</p>
                     </div>
                     <div>
@@ -314,6 +315,16 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
                         return offerAvailability === availability;
+                    });
+                }
+
+                // Filter by Type
+                const typeInput = document.querySelector(".typeOffre input[type='radio']:checked");
+                if (typeInput) {
+                    const type = typeInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const typeAvailability = offer.querySelector(".type-offre").textContent.trim().toLowerCase();
+                        return typeAvailability === type;
                     });
                 }
 
