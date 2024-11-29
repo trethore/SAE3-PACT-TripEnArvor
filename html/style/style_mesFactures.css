@@ -103,5 +103,10 @@ section {
 
 p {
     text-align: left;
-    border-bottom: var(--noir) solid 2px;
+    border-bottom: var(--noir) solid 1px;
+    border-spacing: 0.5em;
+}
+
+ul {
+    inline-size: 0;
 }
