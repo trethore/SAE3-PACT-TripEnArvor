@@ -128,7 +128,7 @@ try {
 
         <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
-            <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($images as $image) { ?>
@@ -148,12 +148,12 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
                     <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
                 <?php } else {
-                    echo "Adresse introuvable";
+                    echo "Pas d'adresse disponible";
                 } ?>
             </div>
                 
@@ -170,7 +170,7 @@ try {
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
+                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] ?? "Pas de nom disponible" . " " . $compte['prenom'] ?? "Pas de prénom disponible"); ?></p> 
             </div>
         </section>
 
@@ -179,7 +179,7 @@ try {
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
                     <?php foreach ($tags as $tag) { ?>
-                        <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <li><?php echo htmlentities($tag['nom_tag'] ?? "Pas de tag disponible"); ?></li>
                     <?php } ?>
                 </ul>
             </div> 
@@ -187,12 +187,12 @@ try {
             <div class="fond-blocs bloc-a-propos">
                 <div class="display-ligne-espace">
                     <!-- Affichage le titre de l'offre -->
-                    <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
                 <!-- Affichage du résumé de l'offre -->
-                <p><?php echo htmlentities($offre['resume']); ?></p>
+                <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
@@ -222,7 +222,7 @@ try {
                 } ?>
                 
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
     
         </section>
@@ -231,7 +231,7 @@ try {
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
         </section>
 
@@ -257,14 +257,17 @@ try {
                 <!-- Affichage des horaires d'ouverture de l'offre -->
                 <?php foreach ($jours as $jour) { ?>
                     <p>
-                        <?php 
-                        echo htmlentities($jour['nom_jour'] . " : "); 
-                        foreach ($horaire as $h) {
-                            if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
-                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                            } else {
-                                echo "Fermé"; 
+                        <?php if (!empty($jour['nom_jour'])) {
+                            echo htmlentities($jour['nom_jour'] . " : "); 
+                            foreach ($horaire as $h) {
+                                if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
+                                    echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
+                                } else {
+                                    echo "Fermé"; 
+                                }
                             }
+                        } else {
+                            echo "Pas d'information sur les jours et les horaires d'ouverture";
                         } ?>
                     </p>
                 <?php } ?>
@@ -325,7 +328,7 @@ try {
                     <input type="datetime-local" id="date" name="date" required/><br>
                     <p class="transparent">.</p>
                 </div>
-                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
                 <button type="submit">Publier</button>
                 <button type="button" id="cancelFormButton">Annuler</button>
             </form>
