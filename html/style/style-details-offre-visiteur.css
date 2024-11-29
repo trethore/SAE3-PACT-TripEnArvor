@@ -292,6 +292,7 @@ form {
     text-align: center;
     padding: 30px;
     width: 80%;
+    left: 50%;
 }
 
 form > h2 {
