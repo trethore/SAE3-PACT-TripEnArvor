@@ -290,7 +290,11 @@ h3 {
 }
 
 .filtre-tri .trier {
-    flex: 6;
+    flex: 3;
+}
+
+.filtre-tri .trier2 {
+    flex: 2;
 }
 
 .filtre-tri .localisation {
