@@ -305,10 +305,13 @@ try {
                     <label for="note">Saisissez votre note</label>
                     <p class="transparent">.</p>
                 </div>
-                <input type="number" id="note" name="avis"/><br>
+                <div class="display-ligne-espace">
+                    <input type="number" id="note" name="avis" min="0" max="0" required/><br>
+                    <p class="transparent">.</p>
+                </div>
                 <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                <button type="publier">Publier</button>
-                <button type="annuler">Annuler</button>
+                <button type="submit">Publier</button>
+                <button >Annuler</button>
             </form>
 
             <?php 
