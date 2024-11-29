@@ -297,37 +297,33 @@ try {
             <form id="avisForm" action="" method="post" style="display: none;">
                 <h2 for="creation-avis">Création d'avis</h2><br>
                 <div class="display-ligne-espace">
+                    <label for="titre">Saisissez le titre de votre avis</label>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
+                    <textarea id="titre" name="titre" required></textarea><br>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
                     <label for="avis">Rédigez votre avis</label>
                     <p class="transparent">.</p>
                 </div>
                 <textarea id="avis" name="avis" required></textarea><br>
                 <div class="display-ligne-espace">
-                    <div class="display-ligne-espace">
-                        <label for="note">Saisissez votre note</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <label for="titre">Saisissez votre titre</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <label for="titre">Saisissez la date de votre visite</label>
-                        <p class="transparent">.</p>
-                    </div>
+                    <label for="note">Saisissez la note de votre avis</label>
+                    <p class="transparent">.</p>
                 </div>
                 <div class="display-ligne-espace">
-                    <div class="display-ligne-espace">
-                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <textarea id="titre" name="titre" required></textarea><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <input type="datetime-local" id="date" name="date" required/><br>
-                        <p class="transparent">.</p>
-                    </div>
+                    <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
+                    <label for="titre">Saisissez la date de votre visite</label>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
+                    <input type="datetime-local" id="date" name="date" required/><br>
+                    <p class="transparent">.</p>
                 </div>
                 <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
                 <button type="submit">Publier</button>

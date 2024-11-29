@@ -316,6 +316,15 @@ textarea {
     font-family: "Poppins", sans-serif;
 }
 
+#titre {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+    border-radius: 5px;
+    height: auto;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;  
+}
+
 input {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
