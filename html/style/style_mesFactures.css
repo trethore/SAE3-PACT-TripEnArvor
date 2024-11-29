@@ -113,14 +113,3 @@ p {
 ul {
     inline-size: 90%;
 }
-
-.image-facture {
-    transform: translateY(-100%);
-    opacity: 0;
-    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-}
-
-.image-facture.hidden {
-    transform: translateY(0);
-    opacity: 1;
-}
