@@ -5,6 +5,14 @@
        GENERALISATION
 *************************/
 
+html {
+    scroll-behavior: smooth;
+}
+
+button {
+    font-family: "Poppins", sans-serif ;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
@@ -28,9 +36,7 @@ h2 {
 .fond-blocs {
     background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
-    padding: 30px;
-    
-}
+    padding: 30px;}
 
 a {
     color: var(--noir);
@@ -46,28 +52,13 @@ a {
     display: flex;
 }
 
+.bordure {
+    border-bottom: 3px solid var(--violet-principal);
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
-
-.bouton-modifier {
-    margin: 30px 30px 0 30px;
-}
-
-.bouton-modifier > div > button {
-    background: var(--violet-principal);
-    color: var(--blanc);
-    text-decoration: none;
-    font-size: 40px;
-    padding: 10px 80px;
-    border-radius: 15px;
-}
-
-.bouton-modifier > div > button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border: 3px solid var(--violet-principal);
-}
 
 .bloc-presentation > div > p {
     font-size: 32px;
@@ -75,6 +66,7 @@ a {
 
 .information-offre {
     font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -97,22 +89,6 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
-    color: var(--blanc-leger);
-    text-decoration: none;
-    font-size: 40px;
-    background-color: var(--violet-principal);
-    padding: 10px 80px;
-    border-radius: 15px;
-    border: 0;
-}
-
-.display-ligne-espace > button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc-leger);
-    border: 3px solid var(--violet-principal);
-}
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
@@ -121,7 +97,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-      }
+    }
 
     .carousel-images {
         display: flex;
@@ -209,7 +185,7 @@ a {
         font-size: 60px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
@@ -219,10 +195,11 @@ a {
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--violet-principal);
         background: var(--blanc-leger);
         border: 3px solid var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -247,6 +224,7 @@ a {
         color: var(--violet-principal);
         background: var(--blanc-leger);
         border: 3px solid var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -267,7 +245,7 @@ a {
     td {
         padding: 20px;
         text-align: center;
-        border: 1px solid var(--blanc-leger);  
+        border: 3px solid var(--noir);  
         font-weight: 600;
     }
 
@@ -287,7 +265,6 @@ a {
 
     .bloc-ouverture {
         flex: 1; 
-        margin-left: 0;
     }
 
     .bloc-ouverture > ul > li {
@@ -308,21 +285,57 @@ a {
         BLOCS AVIS                                                   
 *************************/
 
+form {
+    background: var(--blanc-leger);
+    text-align: center;
+    padding: 10px;
+}
+
+textarea {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+    border-radius: 15px;
+    width: 100%;
+}
+
 .fond-blocs-avis {
     background: var(--blanc-leger);    
     margin: 30px 0;
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
+    border: 3px solid var(--violet-principal);
+}
+
+#avis > button, #avis > form > button {
+    color: var(--blanc-leger);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
+}
+
+#avis > button:hover, #avis > form > button:hover {
+    color: var(--violet-principal);
+    background: var(--blanc-leger);
+    border: 3px solid var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
+
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
 }
 
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--violet-principal);
 }
 
 .pouce {
@@ -371,6 +384,7 @@ a {
     color: var(--violet-principal);
     background: var(--blanc-leger);
     border: 1px solid var(--violet-principal);
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
@@ -381,14 +395,6 @@ footer > div > a {
     text-decoration: none;
 }
 
-#avis {
-    display: none;
-}
-
 #carte {
     display: none;
-}
-
-.bordure {
-    border-bottom: 3px solid var(--violet-principal);
 }

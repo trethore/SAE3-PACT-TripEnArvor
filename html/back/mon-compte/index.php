@@ -14,9 +14,8 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-if (isset($id_compte)) {
-    redirectToListOffreIfNecessary($id_compte);
-}
+redirectToListOffreIfNecessary($id_compte);
+
 
 $typeCompte = getTypeCompte($id_compte);
 
@@ -141,7 +140,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
             </table>
             <div>
-                <a>Modifier les informations</a>
+                <a href="/back/modifier-compte">Modifier les informations</a>
             </div>
         </section>
     </main>

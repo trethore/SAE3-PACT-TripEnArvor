@@ -122,12 +122,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 submitInput.style = "--couleur-bouton-creer-compte: var(--violet);"
                 break;
             case "pro-publique":
-                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPublique, elementObligatoireProPublique);
                 if (inputCgu.checked)
                     submitInput.disabled = false;
                 else
                     submitInput.disabled = true;
-                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);";
                 break;
             case "pro-privé":
                 showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPrive, elementObligatoireProPrive);
@@ -135,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     submitInput.disabled = false;
                 else
                     submitInput.disabled = true;
-                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);"
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);";
                 break;
             case "":
             default:
