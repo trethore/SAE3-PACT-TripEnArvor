@@ -144,7 +144,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
             </table> <?php } ?>
             <div>
-            <input type="submit">Valider les modifications</input>
+            <input type="submit" value="Valider les modifications">
         </div>
         </form>
         <div id="popupOverlay"></div>
