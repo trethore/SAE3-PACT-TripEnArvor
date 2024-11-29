@@ -44,8 +44,11 @@ a {
 ****************************/
 .filtre-tri {
     position: relative;
-    margin: 1em;
+    margin: 1em 2.5em;
     padding: 3em 2em 1em;
+
+    width: 95vw;
+    box-sizing: border-box;
     
     background: var(--blanc-leger);
     border-radius: 15px;
