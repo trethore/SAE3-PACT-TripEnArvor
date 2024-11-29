@@ -292,23 +292,24 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <div class="display-ligne-espace">
-                <div class="bouton-modifier">
-                    <div id="confirm">
-                        <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                        <div class="close">
-                            <button onclick="showFinal()">Mettre hors ligne</button>
-                            <button onclick="btnAnnuler()">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="final">
-                        <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-                        <button onclick="btnAnnuler()">Fermer</button>
-                    </div>  
-                    <button id="bouton1" onclick="showConfirm()">Publier un avis</button>
+            <button>Publier un avis</button>
+
+            <form action="" method="post">
+                <h2 for="avis">Création d'avis</h2><br>
+                <div class="display-ligne-espace">
+                    <label for="avis">Rédiger votre avis</label>
                     <p class="transparent">.</p>
                 </div>
-            </div>
+                <br><textarea id="avis" name="avis" required></textarea><br>
+                <div class="display-ligne-espace">
+                    <label for="note">Rédiger votre avis</label>
+                    <p class="transparent">.</p>
+                </div>
+                <br><input type="number" id="note" name="avis"/><br>
+                <p>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</p>
+                <button type="publier">Publier</button>
+                <button type="annuler">Annuler</button>
+            </form>
 
             <?php 
             $compteur = 0;
@@ -405,46 +406,6 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
-
-        let confirmDiv = document.getElementById("confirm");
-        let finalDiv = document.getElementById("final");
-
-        function showConfirm() {
-            confirmDiv.style.display = "block";
-            let header = document.getElementById('header');
-            header.style.filter = "blur(10px)";
-            let body = document.getElementById('body');
-            body.style.filter = "blur(10px)";
-            let footer = document.getElementById('footer');
-            footer.style.filter = "blur(10px)";
-            let bouton1 = document.getElementById('bouton1');
-            bouton1.style.filter = "blur(10px)";
-            let bouton2 = document.getElementById('bouton2');
-            bouton2.style.filter = "blur(10px)";
-            let popup = document.getElementById('confirm');
-            popup.style.filter = "none";
-        }
-
-        function showFinal() {
-            finalDiv.style.display = "block";
-            confirmDiv.style.display = "none";
-            popup.style.filter = "none";
-        }
-
-        function btnAnnuler() {
-            confirmDiv.style.display = "none";
-            finalDiv.style.display = "none";
-            let header = document.getElementById('header');
-            header.style.filter = "blur(0px)";
-            let body = document.getElementById('body');
-            body.style.filter = "blur(0px)";
-            let footer = document.getElementById('footer');
-            footer.style.filter = "blur(0px)";
-            let bouton1 = document.getElementById('bouton1');
-            bouton1.style.filter = "blur(0px)";
-            let bouton2 = document.getElementById('bouton2');
-            bouton2.style.filter = "blur(0px)";
-        }
 
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');

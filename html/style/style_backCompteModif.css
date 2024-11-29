@@ -1,3 +1,6 @@
+/********************************************
+    CHANGEMENT EN PLUS DE style_backCompte
+*********************************************/
 main {
     flex-direction: column;
     background-color: var(--blanc);
@@ -19,7 +22,7 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div > a {
+table + div > input {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
@@ -29,8 +32,69 @@ table + div > a {
     padding: 0.2em 1em;
 }
 
-table + div > a:hover {
+table + div > input:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
 }
+
+/*********************
+       POP-UP
+**********************/
+        /* Overlay pour le fond */
+        #popupOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Style de la popup */
+        #popup {
+            position: fixed;
+            display: flex; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--blanc-leger);
+            padding: 30px;
+            width: 350px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Titre de la popup */
+        #popup h3 {
+            margin-bottom: 15px;
+            font-weight: var(--semi-bold);
+            color: var(--noir);
+        }
+
+        /* Texte de la popup */
+        #popup p {
+            color: var(--noir);
+            margin-bottom: 20px;
+        }
+
+        /* Style des boutons */
+        #popup button {
+            background-color: var(--orange-principale);
+            border: 2px solid var(--orange-principale);
+            color: var(--blanc-leger);
+            font-weight: bold;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #popup button:hover {
+            color: var(--orange-principale);
+            background-color: var(--blanc-leger);
+            border: 2px solid var(--orange-principale);
+        }

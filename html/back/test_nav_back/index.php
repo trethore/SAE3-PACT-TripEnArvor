@@ -1,12 +1,15 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
+startSession();
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-    $stmt->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
+    $stmt->execute([$_SESSION['id']]);
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
 } catch (PDOException $e) {
@@ -119,16 +122,5 @@ try {
 
 
 </body>
-
-<div class="telephone-nav">
-    <div class="bg"></div>
-    <div class="nav-content">
-        <div class="btOn">
-            <img src="/images/frontOffice/icones/accueil.png">
-        </div>
-        <img src="/images/frontOffice/icones/chercher.png">
-        <img src="/images/frontOffice/icones/utilisateur.png">
-    </div>
-</div>
 
 </html>

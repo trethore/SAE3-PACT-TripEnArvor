@@ -412,6 +412,7 @@
                 
             }
             $categorie =  $_POST['lacat'];
+            print($categorie);
 
             if ($categorie !== "restaurant") {
                     
@@ -469,7 +470,7 @@
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-            $dbh -> prepare("start transaction;")->execute();
+            $dbh->beginTransaction();
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
                 
@@ -568,16 +569,18 @@
                 case 'spectacle':
                     $type = "standard";
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                    print($capacite);
-                    print $duree;
                     $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
+                    $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
                         //print($requete);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        /////TEST
+                        // if (!$id_offre) {
+                        //     throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
+                        // }
 
-                        print_r($id_offre);
+                        // print_r("ID de l'offre insérée : " . $id_offre);
                     break;
 
                 case 'visite':
@@ -632,12 +635,13 @@
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    $stmt_image_offre = $dbh->prepare($requete_image);
+                    $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
                     $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                 }
 
-                $dbh -> prepare("commit;")->execute();
+                $dbh->commit();
+
 
                 if ($isIdProPrivee){
                     foreach ($tabtarifs as $key => $value) {
@@ -659,6 +663,7 @@
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
+                $dbh->rollBack();
                 die();
             }
         }
