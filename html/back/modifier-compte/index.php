@@ -55,7 +55,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         ?>
         <h1>Détails du compte</h1>
         <h2>Vue d'ensemble</h2>
-        <form action="" method="POST" id="myForm">
+        <form action="#" method="POST" id="myForm">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -144,7 +144,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
             </table> <?php } ?>
             <div>
-            <input type="submit">Valider les modifications</input>
+            <input type="submit" value="Valider les modifications">
         </div>
         </form>
         <div id="popupOverlay"></div>
