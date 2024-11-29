@@ -1,5 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
+startSession();
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
