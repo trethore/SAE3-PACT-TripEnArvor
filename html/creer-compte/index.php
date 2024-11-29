@@ -21,7 +21,7 @@ $submitted = isset($_POST['type-compte']);
 if (!$submitted) {
 ?>
     <header>
-        <a href="">
+        <a href="/html/front/consulter-offres/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
         </a>
     </header>
