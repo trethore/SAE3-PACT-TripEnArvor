@@ -408,11 +408,8 @@
             }
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
-                print $_POST['lacat'];   // ne rentre pas dans le if on sait pas pourquoi 
-                
             }
-            // $categorie =  $_POST['lacat'];
-            // print($categorie);
+            
 
             if ($categorie !== "restaurant") {
                     
@@ -496,6 +493,10 @@
                 $stmt_image->execute([$fichier_img]);
 
             }
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
+if (!is_dir($target_dir)) {
+    die("Erreur : Le répertoire cible n'existe pas ou n'est pas accessible.");
+}
                 
 
             // Déterminer la table cible selon la catégorie
