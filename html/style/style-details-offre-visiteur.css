@@ -291,6 +291,7 @@ form {
     border-radius: 15px;
     text-align: center;
     padding: 10px;
+    width: 80%;
 }
 
 label {
