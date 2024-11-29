@@ -102,9 +102,6 @@ section {
 }
 
 p {
-    text-align: center;
-}
-
-hr {
-    text-align: center;
+    text-align: left;
+    border-bottom: var(--noir) solid 2px;
 }
