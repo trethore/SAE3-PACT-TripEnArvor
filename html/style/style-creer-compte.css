@@ -82,6 +82,11 @@ form div {
     flex-direction: column;
 }
 
+form > label {
+    text-align: center;
+    width: 50%;
+}
+
 textarea,
 select,
 input {
@@ -299,6 +304,11 @@ input:disabled {
     }
 
     #div-adresse .row div {
+        width: 100%;
+    }
+
+    form > label {
+        text-align: center;
         width: 100%;
     }
 }
