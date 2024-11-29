@@ -412,6 +412,7 @@
                 
             }
             $categorie =  $_POST['lacat'];
+            print($categorie);
 
             if ($categorie !== "restaurant") {
                     
