@@ -363,7 +363,7 @@
         <?php
         } else {
             $id_compte =  $_SESSION['id'];
-            $type = "standard"
+            $type = "standard";
 
             $resume = $_POST['descriptionC'];
             // Inclusion des paramètres de connexion
@@ -410,6 +410,9 @@
             }
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
+            }
+            if (isset($_POST['type'])) {
+                $type = $_POST['type'];
             }
             
 
