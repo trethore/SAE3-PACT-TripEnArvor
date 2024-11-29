@@ -149,6 +149,7 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
+                <?php print_r($adresse) ?>
                 <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
@@ -254,14 +255,12 @@ try {
                     <p>
                         <?php 
                         echo htmlentities($jour['nom_jour'] . " : "); 
-                        $compteur = 0;
                         foreach ($horaire as $h) {
-                            if (!empty($h[$compteur]['ouverture']) && !empty($h[$compteur]['fermeture'])) {
-                                echo htmlentities($h[$compteur]['ouverture'] . " - " . $h[$compteur]['fermeture'] . "\t");
+                            if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
+                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
                             } else {
                                 echo "Fermé"; 
                             }
-                            $compteur++;
                         } ?>
                     </p>
                 <?php } ?>
