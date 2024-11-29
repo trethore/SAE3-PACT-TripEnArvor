@@ -477,6 +477,22 @@
 
                 
 
+            $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
+            $stmt_verif = $dbh->prepare($requete_verif);
+            $stmt_verif->execute([$fichier_img]);
+
+            if ($stmt_verif->fetchColumn() > 0) {
+                die("Erreur : Le fichier existe déjà dans la base de données.");
+            }
+
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
+            $target_file = $target_dir . $time . $file_extension;
+
+            if (file_exists($target_file)) {
+                die("Erreur : Le fichier existe déjà dans le répertoire.");
+}
+
+
 
             //INSERTION IMAGE dans _image
             $time = 'p' . strval(time());
