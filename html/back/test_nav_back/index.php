@@ -5,7 +5,8 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre WHERE ');
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compteWHERE id_compte = ?');
+    $stmt->bindParam(  '1', $_SESSION['id'], PDO::PARAM_INT);
     $stmt->execute();
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
