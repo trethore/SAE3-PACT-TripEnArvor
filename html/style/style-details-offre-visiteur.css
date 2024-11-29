@@ -285,6 +285,108 @@ a {
         BLOCS AVIS                                                   
 *************************/
 
+    .bouton-modifier {
+        margin: 30px 30px 0 30px;
+    }
+
+
+    .bouton-modifier > button {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 60px;
+        background-color: var(--orange-principale);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+
+    .bouton-modifier > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+    #confirm {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 20px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    #final {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 32px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .close {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .close button:first-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    #final button {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .close button:last-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 60px;
+        margin-bottom: 12px;
+        background: var(--gris);
+        color: var(--blanc-leger);
+        font-size: 20px;
+        width: fit-content;
+    }
+
 .fond-blocs-avis {
     background: var(--blanc-leger);    
     margin: 30px 0;

@@ -571,16 +571,7 @@
                     print($capacite);
                     print $duree;
                     $stmt = $dbh->prepare($requete);
-                        $stmt->execute([
-                        $titre, 
-                        $resume, 
-                        $ville, 
-                        intval($duree), 
-                        intval($capacite), 
-                        $id_compte, 
-                        $tarif_min, 
-                        $type
-                        ]);
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
                         //print($requete);
 
