@@ -20,6 +20,11 @@ $submitted = isset($_POST['type-compte']);
 <?php
 if (!$submitted) {
 ?>
+    <header>
+        <a href="">
+            <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
+        </a>
+    </header>
     <form action="/creer-compte/" method="post">
         <h1>Créer un compte</h1>
         <span>Vous avez déjà un compte ? <a href="/back/se-connecter/">Connexion</a></span>

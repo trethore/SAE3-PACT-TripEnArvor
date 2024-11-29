@@ -34,6 +34,15 @@
     border: 1px solid black;
 } */
 
+header {
+    position: fixed;
+    padding: 2rem;
+}
+
+header img {
+    height: 8rem;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
@@ -202,6 +211,16 @@ input:disabled {
 
 @media screen and (max-width: 675px) {
 
+    header {
+        position: static;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding-bottom: 0;
+    }
+
     #div-adresse .row {
         flex-direction: column;
         align-items: center;
@@ -235,6 +254,49 @@ input:disabled {
 }
 
 @media screen and (max-width: 330px) {
+
+    #div-adresse .row div {
+        width: 100%;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    
+    :root {
+        font-size: 200%;
+    }
+
+    header {
+        position: static;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding-bottom: 0;
+    }
+
+    #div-type-compte {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    form {
+        max-width: 100vw;
+    }
+
+    #div-name-and-first-name {
+        flex-direction: column;
+    }
+
+    #div-name-and-first-name div {
+        width: 100%;
+    }
+
+    #div-adresse .row {
+        flex-direction: column;
+        align-items: center;
+    }
 
     #div-adresse .row div {
         width: 100%;
