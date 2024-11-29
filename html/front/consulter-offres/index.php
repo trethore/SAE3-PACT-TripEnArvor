@@ -86,7 +86,7 @@ try {
                         
                     <!-- Trier -->
                     <div class="trier">
-                        <h3>Trier</h3>
+                        <h3>Date et prix</h3>
                         <div>
                             <div>
                                 <label>Note minimum :</label>
@@ -111,15 +111,16 @@ try {
                                         <input class="max" type="number" min="0">
                                     </div>
                                 </div>
-                                <div>
-                                    <select class="tris">
-                                        <option value="default">Trier par :</option>
-                                        <option value="price-asc">Prix croissant</option>
-                                        <option value="price-desc">Prix décroissant</option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
+                    </div>
+                
+                    <div>
+                        <select class="tris">
+                            <option value="default">Trier par :</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                        </select>
                     </div>
                 </div>
                 <div>
