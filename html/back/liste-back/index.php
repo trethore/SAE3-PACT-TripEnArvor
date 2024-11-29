@@ -171,17 +171,17 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
                     ---------------------------------------->
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
                     <!---------------------------------------
                     Récuperer le titre liée à l'offre
                     ---------------------------------------->
-                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <p class="titre-offre"><?php echo htmlentities($row["titre"]) ?></p>
 
                     <!--------------------------------------------------------
                     Choix du type de l'activité (Restaurant, parc, etc...
                     --------------------------------------------------------->
-                    <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
+                    <p class="categorie-offre"> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
@@ -232,7 +232,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->  
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                    <p class="prix">A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
                 </a>
             </article>
             <?php } ?>
