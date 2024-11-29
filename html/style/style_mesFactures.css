@@ -163,3 +163,7 @@ table + div {
 table + div > a {
     display: inline-block;
 }
+
+hr {
+    color: var(--orange-principale);
+}
