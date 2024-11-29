@@ -17,11 +17,11 @@ $id_compte = $_SESSION["id"];
 redirectToListOffreIfNecessary($id_compte);
 
 $factures = [
-    "date" => "aujourd'hui",
+    "date" => "aujourd'hui lol",
     "nom_offre" => "BOBOBOB",
 ]
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
