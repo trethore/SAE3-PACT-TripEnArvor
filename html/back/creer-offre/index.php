@@ -484,7 +484,7 @@
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . $time . $file_extension);
 
 
                 $fichier_img = $time . $file_extension;
@@ -498,10 +498,6 @@
                 $stmt_image->execute([$fichier_img]);
 
             }
-            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
-if (!is_dir($target_dir)) {
-    die("Erreur : Le répertoire cible n'existe pas ou n'est pas accessible.");
-}
                 
 
             // Déterminer la table cible selon la catégorie
@@ -543,7 +539,7 @@ if (!is_dir($target_dir)) {
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'plan_' . $time . $file_extension);
                         $fichier_plan = 'plan_' . $time . $file_extension;
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -603,7 +599,7 @@ if (!is_dir($target_dir)) {
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'carte_' . $time . $file_extension);
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
