@@ -297,15 +297,15 @@ try {
             <form action="" method="post">
                 <h2 for="avis">Création d'avis</h2><br>
                 <div class="display-ligne-espace">
-                    <label for="avis">Rédiger votre avis</label>
+                    <label for="avis">Rédigez votre avis</label>
                     <p class="transparent">.</p>
                 </div>
-                <br><textarea id="avis" name="avis" required></textarea><br>
+                <textarea id="avis" name="avis" required></textarea><br>
                 <div class="display-ligne-espace">
-                    <label for="note">Rédiger votre avis</label>
+                    <label for="note">Saisissez votre note</label>
                     <p class="transparent">.</p>
                 </div>
-                <br><input type="number" id="note" name="avis"/><br>
+                <input type="number" id="note" name="avis"/><br>
                 <p>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</p>
                 <button type="publier">Publier</button>
                 <button type="annuler">Annuler</button>
