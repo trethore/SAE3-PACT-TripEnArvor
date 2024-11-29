@@ -420,6 +420,7 @@
                             $tarif1 = $_POST['tarif1'];
                             $tarif1 = intval($tarif1);
                             $nomtarif1 = $_POST['nomtarif1'];
+                            print(" tarif 1 : ".$tarif1. " nomtarif : ".$nomtarif1);
                 }
                 else {
                     $tarif1 = 0;
@@ -456,7 +457,7 @@
 
             }
             print_r($_POST);
-            print(" tarif 1 : ".$tarif1. " nomtarif : ".$nomtarif1);
+            
 
             
 
