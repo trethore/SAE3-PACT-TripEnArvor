@@ -85,7 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <p data-pdf="/images/universel/facture.pdf">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
+                        <a href="#" onclick="window.open('/images/universel/facture.pdf', '_blank', 'fullscreen=yes'); return false;"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
                     </li>
                 <?php
                 }
@@ -127,16 +127,5 @@ $factures = [
         Redden's, Inc.
         </div>
     </footer>
-
-    <script>
-        const listItems = document.querySelectorAll("li");
-
-        listItems.forEach(item => {
-            item.addEventListener("click", () => {
-                const pdfUrl = item.getAttribute("data-pdf");
-                window.open(pdfUrl, "_blank");
-            });
-        });
-    </script>
 </body>
 </html>
