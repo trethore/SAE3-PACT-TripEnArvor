@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 submitInput.style = "--couleur-bouton-creer-compte: var(--violet);"
                 break;
             case "pro-publique":
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPublique, elementObligatoireProPublique);
                 if (inputCgu.checked)
                     submitInput.disabled = false;
                 else
