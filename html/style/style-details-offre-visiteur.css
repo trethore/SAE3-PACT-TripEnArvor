@@ -287,21 +287,15 @@ a {
 
 form {
     background: var(--blanc-leger);
-    border: 3px solid var(--noir);
-    border-radius: 15px;
     text-align: center;
-    width: fit-content;
     padding: 10px;
-}
-
-label {
-    font-size: 24px;
-    color: var(--violet-principal);
 }
 
 textarea {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
+    border-radius: 15px;
+    width: 100%;
 }
 
 .fond-blocs-avis {
@@ -313,7 +307,7 @@ textarea {
     border: 3px solid var(--violet-principal);
 }
 
-#avis > div > button {
+#avis > button, #avis > form > button {
     color: var(--blanc-leger);
     text-decoration: none;
     font-size: 24px;
@@ -323,7 +317,7 @@ textarea {
     border: 0;
 }
 
-#avis > div > button:hover {
+#avis > button:hover, #avis > form > button:hover {
     color: var(--violet-principal);
     background: var(--blanc-leger);
     border: 3px solid var(--violet-principal);

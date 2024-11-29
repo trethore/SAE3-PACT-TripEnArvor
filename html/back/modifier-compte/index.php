@@ -55,7 +55,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         ?>
         <h1>Détails du compte</h1>
         <h2>Vue d'ensemble</h2>
-        <form action="#" method="POST" id="myForm">
+        <form method="POST" id="myForm">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -155,14 +155,14 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <button type="button" id="valider">Valider</button>
         </div>
         <script>
-        const form = document.getElementById("profileForm");
+        const form = document.getElementById("myForm");
         const popupOverlay = document.getElementById("popupOverlay");
         const popup = document.getElementById("popup");
         const annulerButton = document.getElementById("annuler");
         const validerButton = document.getElementById("valider");
 
         // Affiche la popup à la soumission du formulaire
-        form.addEventListener("submit", function(event) {
+        myForm.addEventListener("submit", function(event) {
             event.preventDefault(); // Empêche l'envoi du formulaire
             popupOverlay.style.display = "block";
             popup.style.display = "block";

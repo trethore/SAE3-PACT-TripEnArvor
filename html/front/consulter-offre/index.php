@@ -295,9 +295,10 @@ try {
             <button>Publier un avis</button>
 
             <form action="" method="post">
-                <label for="avis">Rédigez votre avis :</label>
-                <textarea id="avis" name="avis" required></textarea>
+                <h2 for="avis">Rédigez votre avis :</h2><br>
+                <textarea id="avis" name="avis" required></textarea><br>
                 <button type="publier">Publier</button>
+                <button type="annuler">Annuler</button>
             </form>
 
             <?php 
