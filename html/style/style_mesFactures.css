@@ -114,17 +114,13 @@ ul {
     inline-size: 90%;
 }
 
-.facture {
+.image-facture {
     overflow: hidden;
     max-height: 1000px;
     transition: max-height 0.5s ease-out;
 }
 
-.facture.hidden {
+.image-facture.hidden {
     max-height: 0;
     transition: max-height 0.5s ease-out;
-}
-
-.image-facture.hidden {
-    display: none;
 }
