@@ -574,12 +574,12 @@
                         //print($requete);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        /////TEST
+                        // if (!$id_offre) {
+                        //     throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
+                        // }
 
-                        if (!$id_offre) {
-                            throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
-                        }
-
-                        print_r("ID de l'offre insérée : " . $id_offre);
+                        // print_r("ID de l'offre insérée : " . $id_offre);
                     break;
 
                 case 'visite':
