@@ -285,89 +285,24 @@ a {
         BLOCS AVIS                                                   
 *************************/
 
-    /* Styles pour la pop-up */
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+form {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+    border-radius: 15px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+}
 
-    .popup.hidden {
-        display: none;
-    }
+label {
+    font-size: 24px;
+    color: var(--violet-principal);
+}
 
-    .popup-content {
-        background: var(--blanc-leger);
-        padding: 20px 40px;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 400px;
-        max-width: 90%;
-        text-align: center;
-    }
-
-    .popup-content h2 {
-        color: var(--violet-principal);
-        margin-bottom: 20px;
-    }
-
-    .popup-content label {
-        display: block;
-        font-size: 20px;
-        margin: 10px 0 5px;
-        text-align: left;
-    }
-
-    .popup-content input, .popup-content textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 2px solid var(--noir);
-        border-radius: 8px;
-        font-size: 16px;
-    }
-
-    .popup-content button[type="submit"] {
-        font-size: 20px;
-        padding: 10px 20px;
-        background-color: var(--violet-principal);
-        color: var(--blanc-leger);
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .popup-content button[type="submit"]:hover {
-        background-color: var(--blanc-leger);
-        color: var(--violet-principal);
-        border: 2px solid var(--violet-principal);
-        transition: 0.3s;
-    }
-
-    .popup-content .message {
-        margin-top: 10px;
-        font-size: 18px;
-        color: var(--orange-principale);
-    }
-
-    .close {
-        background: none;
-        border: none;
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--noir);
-        cursor: pointer;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
+textarea {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+}
 
 .fond-blocs-avis {
     background: var(--blanc-leger);    

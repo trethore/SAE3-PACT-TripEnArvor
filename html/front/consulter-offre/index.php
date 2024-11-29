@@ -292,23 +292,13 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <div id="popup" class="popup hidden">
-                <div class="popup-content">
-                    <button id="closePopup" class="close">&times;</button>
-                    <h2>Publier un avis</h2>
-                    <form action="" method="post">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="nom" required>
-                        <label for="avis">Avis :</label>
-                        <textarea id="avis" name="avis" rows="4" required></textarea>
-                        <button type="submit">Envoyer</button>
-                    </form>
-                    <?php if (!empty($message)) : ?>
-                        <p class="message"><?php echo $message; ?></p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <button id="openPopup">Publier un avis</button>
+            <button>Publier un avis</button>
+
+            <form action="" method="post">
+                <label for="avis">Rédigez votre avis :</label>
+                <textarea id="avis" name="avis" required></textarea>
+                <button type="publier">Publier</button>
+            </form>
 
             <?php 
             $compteur = 0;
@@ -405,25 +395,6 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
-
-        const openPopup = document.getElementById('openPopup');
-        const closePopup = document.getElementById('closePopup');
-        const popup = document.getElementById('popup');
-
-        openPopup.addEventListener('click', () => {
-            popup.classList.remove('hidden');
-        });
-
-        closePopup.addEventListener('click', () => {
-            popup.classList.add('hidden');
-        });
-
-        // Fermer la pop-up en cliquant en dehors du contenu
-        window.addEventListener('click', (e) => {
-            if (e.target === popup) {
-                popup.classList.add('hidden');
-            }
-        });
 
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');
