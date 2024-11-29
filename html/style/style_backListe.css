@@ -517,5 +517,5 @@ a {
     text-align: center; 
     color: var(--orange-principale);
     font-size: 20pt;
-    margin: 20px 430px;
+    margin: 20px auto;
 }
