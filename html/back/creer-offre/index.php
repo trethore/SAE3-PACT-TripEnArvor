@@ -469,7 +469,7 @@
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-            $dbh -> prepare("start transaction;")->execute();
+            $dbh->beginTransaction();
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
                 
@@ -575,7 +575,11 @@
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
-                        print_r($id_offre);
+                        if (!$id_offre) {
+                            throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
+                        }
+
+                        print_r("ID de l'offre insérée : " . $id_offre);
                     break;
 
                 case 'visite':
@@ -635,7 +639,8 @@
 
                 }
 
-                $dbh -> prepare("commit;")->execute();
+                $dbh->commit();
+
 
                 if ($isIdProPrivee){
                     foreach ($tabtarifs as $key => $value) {
@@ -657,6 +662,7 @@
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
+                $dbh->rollBack();
                 die();
             }
         }
