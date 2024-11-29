@@ -32,7 +32,6 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <link rel="stylesheet" href="/style/style_backCompteModif.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
-    <script src="/scripts/popup.js"></script>
     <title>Modifier mon compte</title>
 </head>
 <body>
@@ -207,5 +206,6 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         Redden's, Inc.
         </div>
     </footer>
+    <script src="/scripts/popup.js"></script>
 </body>
 </html>
