@@ -85,7 +85,6 @@ $factures = [
                     foreach ($factures as $facture) {
                         ?>
                         <p>Facture du <?php echo $facture["date"]?> - Abonnement de "<?php echo $facture["nom_offre"]?>"</p>
-                        <hr>
                         <?php
                     }
                 ?>
