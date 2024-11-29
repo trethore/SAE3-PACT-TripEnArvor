@@ -149,27 +149,27 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         </form>
         <div id="popupOverlay"></div>
         <div id="validerModifCompte">
-            <h1>Valider les modifications</h1>
+            <h3>Valider les modifications</h3>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-            <div class="close">
-                <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
-                <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+            <div >
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Valider </button>
             </div>
         </div>
         <div id="annulerModifCompte">
-            <h1>Annuler les modifications</h1>
+            <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
-            <div class="close">
-                <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-                <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+            <div>
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Valider </button>
             </div>
         </div>
         <div id="quitterModifCompte">
-            <h1>Valider les modifications</h1>
-            <p>Si vous quittez cette page, vous annulez les modifications faites pour l’instant</p>
-            <div class="close">
-                <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
-                <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+            <h3>Valider les modifications</h3>
+            <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
+            <div>
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Valider </button>
             </div>
         </div> 
     </main>
