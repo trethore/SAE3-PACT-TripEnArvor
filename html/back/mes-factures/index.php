@@ -17,7 +17,7 @@ $id_compte = $_SESSION["id"];
 redirectToListOffreIfNecessary($id_compte);
 
 $factures = [
-    "date" => "aujourd'hui",
+    "date" => "aujourd'hui lol",
     "nom_offre" => "BOBOBOB",
 ]
 ?>
