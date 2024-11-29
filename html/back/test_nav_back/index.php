@@ -1,13 +1,15 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
+startSession();
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compteWHERE id_compte = ?');
-    $stmt->bindParam(  '1', $_SESSION['id'], PDO::PARAM_INT);
-    $stmt->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
+    $stmt->execute([$_SESSION['id']]);
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
 } catch (PDOException $e) {

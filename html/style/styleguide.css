@@ -115,6 +115,8 @@
 /*
 PHP requête min pour faire fonctionnner le header
 
+php Front
+
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
@@ -187,11 +189,11 @@ try {
     </script>
 </header>
 
+
 /******************
        FOOTER
 *******************/
 /*
-
 <footer>
   <div class="footer-top">
     <div class="footer-top-left">
