@@ -147,40 +147,30 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <input type="submit" value="Valider les modifications">
         </div>
         </form>
-        <div id="popupOverlay"></div>
-        <div id="popup">
-            <h3>Valider les modifications</h3>
+        <div id="validerModifCompte">
+            <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-            <button type="button" id="annuler">Annuler</button>
-            <button type="button" id="valider">Valider</button>
+            <div class="close">
+                <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
+                <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+            </div>
         </div>
-        <script>
-        const form = document.getElementById("myForm");
-        const popupOverlay = document.getElementById("popupOverlay");
-        const popup = document.getElementById("popup");
-        const annulerButton = document.getElementById("annuler");
-        const validerButton = document.getElementById("valider");
-
-        // Affiche la popup à la soumission du formulaire
-        myForm.addEventListener("submit", function(event) {
-            event.preventDefault(); // Empêche l'envoi du formulaire
-            popupOverlay.style.display = "block";
-            popup.style.display = "block";
-        });
-
-        // Ferme la popup sans valider
-        annulerButton.addEventListener("click", function() {
-            popupOverlay.style.display = "none";
-            popup.style.display = "none";
-        });
-
-        // Valide les modifications et soumet le formulaire
-        validerButton.addEventListener("click", function() {
-            popupOverlay.style.display = "none";
-            popup.style.display = "none";
-            form.submit();
-        });
-    </script>
+        <div id="annulerModifCompte">
+            <h1>Annuler les modifications</h1>
+            <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+            <div class="close">
+                <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
+                <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+            </div>
+        </div>
+        <div id="quitterModifCompte">
+            <h1>Valider les modifications</h1>
+            <p>Si vous quittez cette page, vous annulez les modifications faites pour l’instant</p>
+            <div class="close">
+                <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
+                <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+            </div>
+        </div> 
     </main>
     <footer>
         <div class="footer-top">
