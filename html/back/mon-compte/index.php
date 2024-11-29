@@ -49,6 +49,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <main>
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
+            <a href="/back/mes-factures">Mes factures</a>
             <a href="/back/se-connecter">Se déconnecter</a>
         </nav>
         <section>
