@@ -292,7 +292,6 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <div class="display-ligne-espace">
                 <div class="bouton-modifier">
                     <div id="confirm">
                         <p>Voulez-vous mettre votre offre hors ligne ?</p>
@@ -306,9 +305,7 @@ try {
                         <button onclick="btnAnnuler()">Fermer</button>
                     </div>  
                     <button id="bouton1" onclick="showConfirm()">Publier un avis</button>
-                    <p class="transparent">.</p>
                 </div>
-            </div>
 
             <?php 
             $compteur = 0;
