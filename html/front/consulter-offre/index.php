@@ -308,6 +308,7 @@ try {
                     <?php endif; ?>
                 </div>
             </div>
+            <button id="openPopup">Publier un avis</button>
 
             <?php 
             $compteur = 0;
