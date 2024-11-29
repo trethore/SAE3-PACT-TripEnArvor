@@ -44,8 +44,11 @@ a {
 ****************************/
 .filtre-tri {
     position: relative;
-    margin: 1em;
+    margin: 1em 2.5em;
     padding: 3em 2em 1em;
+
+    width: 95vw;
+    box-sizing: border-box;
     
     background: var(--blanc-leger);
     border-radius: 15px;
@@ -119,7 +122,8 @@ a {
 .filtre-tri .disponibilite, 
 .filtre-tri .trier,
 .filtre-tri .typeOffre, 
-.filtre-tri .date {
+.filtre-tri .date,
+.filtre-tri .trier2 {
     margin: 0 1em;
     border-radius: 10px;
 }
@@ -282,6 +286,10 @@ a {
 
 .filtre-tri .trier {
     flex: 6;
+}
+
+.filtre-tri .trier2 {
+    flex: 2;
 }
 
 .filtre-tri .localisation {
