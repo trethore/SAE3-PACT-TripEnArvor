@@ -170,17 +170,26 @@ try {
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] ?? "Pas de nom disponible" . " " . $compte['prenom'] ?? "Pas de prénom disponible"); ?></p> 
+                <?php if (!empty($compte['nom_compte']) || !empty($compte['prenom'])) { ?>
+                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p>
+                <? } else {
+                    echo "Pas d'information sur le propriétaire de l'offre";
+                }?> 
             </div>
-        </section>
+
+        </section>  
 
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <?php foreach ($tags as $tag) { ?>
-                        <li><?php echo htmlentities($tag['nom_tag'] ?? "Pas de tag disponible"); ?></li>
-                    <?php } ?>
+                    <?php if (!empty($tags)) {
+                        foreach ($tags as $tag) { ?>
+                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <?php }
+                    } else {
+                        echo "Pas de tags disponibles";
+                    } ?>
                 </ul>
             </div> 
 
@@ -241,12 +250,16 @@ try {
                 <div>
                     <h2>Tarifs : </h2>
                     <table>
-                        <?php foreach ($tarifs as $t) { ?>
-                            <tr>
-                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                            </tr>
-                        <?php } ?>
+                        <?php foreach ($tarifs as $t) { 
+                            if ($t[0]['nom_tarif'] != "nomtarif1") { ?>
+                                <tr>
+                                    <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                    <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                </tr>
+                            <? } else {
+                                echo "Pas de tarifs diponibles" ;
+                            }
+                        } ?>
                     </table>
                 </div>
                 <button>Voir les tarifs supplémentaires</button>
