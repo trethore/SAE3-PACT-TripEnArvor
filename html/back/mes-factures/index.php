@@ -85,7 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <p data-pdf="images/universel/facture.pdf">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
+                        <p data-pdf="/images/universel/facture.pdf">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
                     </li>
                 <?php
                 }
