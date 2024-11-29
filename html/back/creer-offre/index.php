@@ -569,7 +569,7 @@
                     $type = "standard";
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
+                    $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
                         //print($requete);
 
@@ -630,7 +630,7 @@
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    $stmt_image_offre = $dbh->prepare($requete_image);
+                    $stmt_image_offre = $dbh->prepare($requete_image_contient_image);
                     $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                 }
