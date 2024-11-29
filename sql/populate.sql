@@ -265,12 +265,13 @@ VALUES
 (3, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', 1, 0, 'famille', 2,1),
 (4, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',4,3),
 (3, 5, 1, 'Pas bon','Je n ai pas aimé la sauce.', 0, 5, 'amis', 6,5),
-(4, 6, 2, 'Bizzare', 'Le service et le personnel me derange.', 3, 2, 'amis',8, 7);
-(3, 6, 5, 'Super expérience !', 'J adore les pates', 1, 0, 'famille', 2,1),
+(4, 6, 2, 'Bizarre', 'Le service et le personnel me derange.', 3, 2, 'amis',8, 7),
+(3, 6, 5, 'Super expérience !', 'J adore les pates', 1, 0, 'famille', 2,1);
 INSERT INTO sae._reponse(id_avis, texte, publie_le)
 VALUES 
     (3, 'Nous avons modifié notre carte.', 9),
-    (4, 'Nous sommes désolé du désagrement causé.', 10);
+    (4, 'Nous sommes désolé du désagrément causé.', 10);
 
 COMMIT;
 
+-- ROLLBACK;
