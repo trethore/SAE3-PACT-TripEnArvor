@@ -84,7 +84,8 @@ $factures = [
                 <?php
                     foreach ($factures as $facture) {
                         ?>
-                        <p>Facture du <?php echo $facture["date"]?> - Abonnement de "<?php echo $facture["nom_offre"]?>"</p>
+                        <p class="facture hidden">Facture du <?php echo $facture["date"]?> - Abonnement de "<?php echo $facture["nom_offre"]?>"</p>
+                        <img class="image-facture" src="/images/universel/facture.png">
                         <?php
                     }
                 ?>
@@ -125,5 +126,14 @@ $factures = [
         Redden's, Inc.
         </div>
     </footer>
+
+    <script>
+        const titre = document.querySelector(".facture");
+        const imgFacture = document.querySelector(".image-facture");
+
+        titre.addEventListener("click", () => {
+            imgFacture.classList.toggle("hidden");
+        });
+    </script>
 </body>
 </html>
