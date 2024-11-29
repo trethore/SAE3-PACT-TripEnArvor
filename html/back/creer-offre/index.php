@@ -176,14 +176,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
+                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
                     <td>
-                        <!-- <div class="custom-select-container">
-                                    <select class="custom-select" id="type" name="letype">
-                                        <option value="standard"> Offre Standard </option>
-                                        <option value="premium"> Offre Premium </option>
-                                    </select>
-                                </div> -->
+                        <div class="custom-select-container">
+                            <select class="custom-select" id="type" name="letype">
+                                <option value="standard"> Offre Standard </option>
+                                <option value="premium"> Offre Premium </option>
+                            </select>
+                        </div>
+                                
                     </td>
                 </tr>
                 <tr>
@@ -362,6 +363,7 @@
         <?php
         } else {
             $id_compte =  $_SESSION['id'];
+            $type = "standard"
 
             $resume = $_POST['descriptionC'];
             // Inclusion des paramètres de connexion
@@ -408,11 +410,8 @@
             }
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
-                print $_POST['lacat'];   // ne rentre pas dans le if on sait pas pourquoi 
-                
             }
-            // $categorie =  $_POST['lacat'];
-            // print($categorie);
+            
 
             if ($categorie !== "restaurant") {
                     
@@ -496,6 +495,10 @@
                 $stmt_image->execute([$fichier_img]);
 
             }
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
+if (!is_dir($target_dir)) {
+    die("Erreur : Le répertoire cible n'existe pas ou n'est pas accessible.");
+}
                 
 
             // Déterminer la table cible selon la catégorie
@@ -675,6 +678,11 @@
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+
+            if(isIdProPublique){
+                document.getElementById("type").style.display = 'none';
+                document.getElementById("labeltype").style.display = 'none';
+            }
 
 
 
