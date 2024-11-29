@@ -297,24 +297,24 @@ try {
             <form id="avisForm" action="" method="post" style="display: none;">
                 <h2 for="creation-avis">Création d'avis</h2><br>
                 <div class="display-ligne-espace">
+                    <label for="titre">Saisissez le titre de votre avis</label>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
+                    <textarea id="titre" name="titre" required></textarea><br>
+                    <p class="transparent">.</p>
+                </div>
+                <div class="display-ligne-espace">
                     <label for="avis">Rédigez votre avis</label>
                     <p class="transparent">.</p>
                 </div>
                 <textarea id="avis" name="avis" required></textarea><br>
                 <div class="display-ligne-espace">
-                    <label for="note">Saisissez votre note</label>
+                    <label for="note">Saisissez la note de votre avis</label>
                     <p class="transparent">.</p>
                 </div>
                 <div class="display-ligne-espace">
                     <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <label for="titre">Saisissez votre titre</label>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <textarea id="titre" name="titre" required></textarea><br>
                     <p class="transparent">.</p>
                 </div>
                 <div class="display-ligne-espace">
