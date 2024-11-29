@@ -247,22 +247,19 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs : </h2>
-                    <table>
-                        <?php foreach ($tarifs as $t) { 
-                            if ($t['nom_tarif'] != "nomtarif1") { ?>
-                                <tr>
-                                    <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                    <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                </tr>
-                            <? } else {
-                                echo "Pas de tarifs diponibles" ;
-                            }
-                        } ?>
-                    </table>
-                </div>
-                <button>Voir les tarifs supplémentaires</button>
+                <h2>Tarifs : </h2><br>
+                <table>
+                    <?php foreach ($tarifs as $t) { 
+                        if ($t['nom_tarif'] != "nomtarif1") { ?>
+                            <tr>
+                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                            </tr>
+                        <? } else {
+                            echo "Pas de tarifs diponibles" ;
+                        }
+                    } ?>
+                </table>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
