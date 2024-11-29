@@ -292,20 +292,13 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-                <div class="bouton-modifier">
-                    <div id="confirm">
-                        <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                        <div class="close">
-                            <button onclick="showFinal()">Mettre hors ligne</button>
-                            <button onclick="btnAnnuler()">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="final">
-                        <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-                        <button onclick="btnAnnuler()">Fermer</button>
-                    </div>  
-                    <button id="bouton1" onclick="showConfirm()">Publier un avis</button>
-                </div>
+            <button>Publier un avis</button>
+
+            <form action="" method="post">
+                <label for="avis">Rédigez votre avis :</label>
+                <textarea id="avis" name="avis" required></textarea>
+                <button type="publier">Publier</button>
+            </form>
 
             <?php 
             $compteur = 0;
@@ -402,40 +395,6 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
-
-        let confirmDiv = document.getElementById("confirm");
-        let finalDiv = document.getElementById("final");
-
-        // Fonction pour afficher la popup de confirmation
-        function showConfirm() {
-            confirmDiv.style.display = "block";
-            applyBlur(true);
-        }
-
-        // Fonction pour afficher la confirmation finale et fermer la première popup
-        function showFinal() {
-            confirmDiv.style.display = "none";
-            finalDiv.style.display = "block";
-        }
-
-        // Fonction pour annuler l'action et masquer toutes les popups
-        function btnAnnuler() {
-            confirmDiv.style.display = "none";
-            finalDiv.style.display = "none";
-            applyBlur(false);
-        }
-
-        // Fonction pour appliquer ou supprimer le flou sur la page
-        function applyBlur(apply) {
-            const header = document.getElementById("header");
-            const body = document.getElementById("body");
-            const footer = document.getElementById("footer");
-            const filterValue = apply ? "blur(10px)" : "none";
-
-            header.style.filter = filterValue;
-            body.style.filter = filterValue;
-            footer.style.filter = filterValue;
-        }
 
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');

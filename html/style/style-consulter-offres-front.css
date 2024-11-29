@@ -48,7 +48,7 @@ h3 {
 ****************************/
 .filtre-tri {
     position: relative;
-    margin: 1em 0;
+    margin: 1em 1em 1em 1em;
     padding: 3em 2em 1em;
 
     width: 100%;
