@@ -51,14 +51,14 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         ----------------->
         <article class="filtre-tri">
             <h2>Filtres et tris</h2>
-            <div>
+            <div class="fond-filtres hidden">
                 <div>
                     <!-- Catégorie -->
                     <div class="categorie">
                         <h3>Catégorie</h3>
                         <div>
-                            <label><input type="checkbox"> Parc d'Attraction</label>
-                            <label><input type="checkbox"> Restaurant</label>
+                            <label><input type="checkbox"> Parc attraction</label>
+                            <label><input type="checkbox"> Restauration</label>
                             <label><input type="checkbox"> Visite</label>
                             <label><input type="checkbox"> Spectacle</label>
                             <label><input type="checkbox"> Activité</label>
@@ -76,11 +76,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         
                     <!-- Trier -->
                     <div class="trier">
-                        <h3>Trier</h3>
+                        <h3>Note et prix</h3>
                         <div>
                             <div>
                                 <label>Note minimum :</label>
-                                <select>
+                                <select class="note">
                                     <option></option>
                                     <option>★★★★★</option>
                                     <option>★★★★</option>
@@ -94,22 +94,25 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <div>
                                     <div>
                                         <label>Prix minimum &nbsp;:</label>
-                                        <input type="number" min="0">
+                                        <input class="min" type="number" min="0">
                                     </div>
                                     <div>
                                         <label>Prix maximum :</label>
-                                        <input type="number" min="0">
+                                        <input class="max" type="number" min="0">
                                     </div>
                                 </div>
-                                <div>
-                                    <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
-                                    </select>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="trier2">
+                        <h3>Trier</h3>
+                        <div>
+                            <select class="tris">
+                                <option value="default">Trier par :</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -120,8 +123,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         <div>
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
-                                <label><input type="radio" name="localisation"> Rechercher</label>
-                                <input type="text" placeholder="Rechercher...">
+                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -147,7 +150,6 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <label>Date de fin &emsp;&emsp;:</label>
                                 <input type="date">
                             </div>
-
                         </div>
                     </div>
                 </div>
