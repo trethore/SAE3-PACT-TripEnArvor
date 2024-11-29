@@ -272,7 +272,120 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         </div>
     </footer>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
 
+            const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
+            const offersContainer = document.querySelector(".section-offres");
+            const offers = Array.from(document.querySelectorAll(".offre"));
+
+            const noOffersMessage = document.querySelector(".no-offers-message");
+
+            const locationInput = document.getElementById("search-location");
+
+            h2.addEventListener("click", () => {
+                fondFiltres.classList.toggle("hidden");
+            });
+
+            // Function to filter offers based on active inputs
+            const applyFilters = () => {
+                let visibleOffers = offers;
+
+                // Filter by Category
+                const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
+                const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
+                if (selectedCategories.length > 0) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const category = offer.querySelector(".categorie-offre").textContent.trim();
+                        return selectedCategories.includes(category);
+                    });
+                }
+
+                // Filter by Availability
+                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                if (availabilityInput) {
+                    const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                        return offerAvailability === availability;
+                    });
+                }
+
+                // Filter by Note
+                const minNoteSelect = document.querySelector(".note");
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+                if (selectedNote) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                        return stars >= selectedNote;
+                    });
+                }
+
+                // Filter by Price Range
+                const minPrice = parseFloat(document.querySelector(".min").value || "0");
+                const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+                visibleOffers = visibleOffers.filter(offer => {
+                    const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
+                    return price >= minPrice && price <= maxPrice;
+                });
+
+                // Filter by Location
+                const searchLocation = locationInput.value.trim().toLowerCase();
+                if (searchLocation) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                        return location.includes(searchLocation);
+                    });
+                }
+
+                // Update Visibility
+                offers.forEach(offer => {
+                    if (visibleOffers.includes(offer)) {
+                        offer.style.display = "";
+                    } else {
+                        offer.style.display = "none";
+                    }
+                });
+
+                console.log(visibleOffers);
+
+                // Show/Hide "No Offers" Message
+                noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+            };
+
+            // Sort Offers
+            const sortOffers = () => {
+                const selectElement = document.querySelector(".tris");
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === "price-asc" || selectedValue === "price-desc") {
+                    offers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
+            };
+
+            // Add Event Listeners
+            filterInputs.forEach(input => input.addEventListener("input", () => {
+                applyFilters();
+                sortOffers();
+            }));
+
+            document.querySelector(".tris").addEventListener("change", () => {
+                sortOffers();
+                applyFilters();
+            });
+
+            locationInput.addEventListener("input", () => {
+                applyFilters();
+            });
+        });
+    </script>
 </body>
 </html>
