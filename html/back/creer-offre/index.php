@@ -411,8 +411,8 @@
                 print $_POST['lacat'];   // ne rentre pas dans le if on sait pas pourquoi 
                 
             }
-            $categorie =  $_POST['lacat'];
-            print($categorie);
+            // $categorie =  $_POST['lacat'];
+            // print($categorie);
 
             if ($categorie !== "restaurant") {
                     
@@ -457,8 +457,6 @@
 
             }
             print_r($_POST);
-            
-            print("tarif1 : ".$tarif1." nomtarif1: ".$nomtarif1);
             
 
             
