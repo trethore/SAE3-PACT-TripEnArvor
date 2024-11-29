@@ -17,9 +17,32 @@ $id_compte = $_SESSION["id"];
 redirectToListOffreIfNecessary($id_compte);
 
 $factures = [
-    "date" => "aujourd'hui lol",
-    "nom_offre" => "BOBOBOB",
+    [
+        "date" => "12/09/2024",
+        "nom_offre" => "Côté plage"
+    ],
+    [
+        "date" => "04/09/2024",
+        "nom_offre" => "La cité Médiévale"
+    ],
+    [
+        "date" => "15/08/2024",
+        "nom_offre" => "Côté plage"
+    ],
+    [
+        "date" => "04/08/2024",
+        "nom_offre" => "La cité Médiévale"
+    ],
+    [
+        "date" => "15/07/2024",
+        "nom_offre" => "Côté plage"
+    ],
+    [
+        "date" => "04/07/2024",
+        "nom_offre" => "La cité Médiévale"
+    ],
 ]
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -60,7 +83,7 @@ $factures = [
             <ul>
                 <?php
                     foreach ($factures as $facture) {
-                        
+                        echo $facture["date"] . " - ";
                     }
                 ?>
             </ul>
