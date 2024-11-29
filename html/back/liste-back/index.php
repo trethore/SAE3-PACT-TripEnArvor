@@ -50,7 +50,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Filtres</h2>
+            <h2>Filtres et tris</h2>
             <div>
                 <div>
                     <!-- Catégorie -->
@@ -153,13 +153,15 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 </div>
             </div>
         </article>
-        <section class="lesOffres"><?php
+        <section class="lesOffres">
+            <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
+            <?php
             $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
             $stmtOffre = $conn->prepare($reqOffre);
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article>
+            <article class="offre">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
@@ -278,7 +280,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             const fondFiltres = document.querySelector(".fond-filtres");
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
-            const offersContainer = document.querySelector(".section-offres");
+            const offersContainer = document.querySelector(".lesOffres");
             const offers = Array.from(document.querySelectorAll(".offre"));
 
             const noOffersMessage = document.querySelector(".no-offers-message");
