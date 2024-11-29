@@ -85,8 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <p class="facture">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
-                        <img class="image-facture hidden" src="/images/universel/facture.png" alt="Facture <?php echo $facture["nom_offre"] ?>">
+                        <p data-pdf="images/universel/facture.pdf">Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p>
                     </li>
                 <?php
                 }
@@ -130,12 +129,12 @@ $factures = [
     </footer>
 
     <script>
-        const titres = document.querySelectorAll(".facture");
-        const imagesFactures = document.querySelectorAll(".image-facture");
+        const listItems = document.querySelectorAll("li");
 
-        titres.forEach((titre, index) => {
-            titre.addEventListener("click", () => {
-                imagesFactures[index].classList.toggle("hidden");
+        listItems.forEach(item => {
+            item.addEventListener("click", () => {
+                const pdfUrl = item.getAttribute("data-pdf");
+                window.open(pdfUrl, "_blank");
             });
         });
     </script>
