@@ -270,80 +270,83 @@ Telephone nav pour le front a mettre en dessous le body
 **********************/
 /* 
               ----POP-UP POUR LA PAGE DE CREATION D'OFFRE----
+<div id="popupOverlay"></div>
 <div id="validerCreerOffre">
     <h3>Valider votre offre</h3>
     <p>Voulez-vous valider la création de votre offre ?</p>
     <div class="close">
-        <button class="bouton1" onclick="closeOffreAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeOffreValider()"> Valider </button>
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
     </div>
 </div>
 <div id="annulerCreerOffre">
     <h3>Annuler votre offre</h3>
     <p>Voulez-vous annuler la création de votre offre ?</p>
     <div class="close">
-        <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2" > Valider </button>
     </div>
 </div>
 <div id="quitterCreerOffre">
     <h3>Quitter la page</h3>
     <p>Si vous quittez cette page, vous annulez la création de cette offre</p>
     <div class="close">
-        <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+        <button class="bouton1" > Annuler </button>
+        <button class="bouton2" > Valider </button>
     </div>
 </div>
 
               ----POP-UP POUR LA PAGE DE MODIFICATION D'OFFRE----
+<div id="popupOverlay"></div>
 <div id="validerModifOffre">
     <h3>Valider les modifications</h3>
     <p>Voulez-vous valider les modifications apporter à votre offre ?</p>
     <div class="close">
-        <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
     </div>
 </div>
 <div id="annulerModifOffre">
     <h3>Annuler les modifications</h3>
     <p>Voulez-vous annuler les modifications apporter à votre offre ?</p>
     <div class="close">
-        <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+        <button class="bouton1" > Annuler </button>
+        <button class="bouton2" > Valider </button>
     </div>
 </div>
 <div id="quitterModifOffre">
     <h3>Valider les modifications</h3>
     <p>Si vous quittez cette page, vous annulez les modifications faites pour l’instant</p>
     <div class="close">
-        <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
     </div>
 </div> 
 
               ----POP-UP POUR LA PAGE DE MODIFICATION DU COMPTE----
+<div id="popupOverlay"></div>
 <div id="validerModifCompte">
     <h3>Valider les modifications</h3>
     <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-    <div class="close">
-        <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+    <div >
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
     </div>
 </div>
 <div id="annulerModifCompte">
     <h3>Annuler les modifications</h3>
     <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
-    <div class="close">
-        <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+    <div>
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
     </div>
 </div>
 <div id="quitterModifCompte">
     <h3>Valider les modifications</h3>
-    <p>Si vous quittez cette page, vous annulez les modifications faites pour l’instant</p>
-    <div class="close">
-        <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
-        <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+    <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
+    <div>
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
     </div>
 </div> 
 */

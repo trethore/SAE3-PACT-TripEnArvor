@@ -1,8 +1,8 @@
 const form = document.getElementById("myForm");
 const popupOverlay = document.getElementById("popupOverlay");
-const popup = document.getElementById("popup");
-const annulerButton = document.getElementById("annuler");
-const validerButton = document.getElementById("valider");
+const popup = document.getElementById("validerModifCompte");
+const boutonAnnuler = document.getElementById("boutonAnnuler");
+const boutonValider = document.getElementById("boutonValider");
 
 // Affiche la popup à la soumission du formulaire
 form.addEventListener("submit", function(event) {
@@ -12,13 +12,13 @@ form.addEventListener("submit", function(event) {
 });
 
 // Ferme la popup sans valider
-annulerButton.addEventListener("click", function() {
+boutonAnnuler.addEventListener("click", function() {
     popupOverlay.style.display = "none";
     popup.style.display = "none";
 });
 
 // Valide les modifications et soumet le formulaire
-validerButton.addEventListener("click", function() {
+boutonValider.addEventListener("click", function() {
     popupOverlay.style.display = "none";
     popup.style.display = "none";
     form.submit();
