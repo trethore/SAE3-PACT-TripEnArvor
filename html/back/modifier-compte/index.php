@@ -147,6 +147,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <input type="submit" value="Valider les modifications">
         </div>
         </form>
+        <div id="popupOverlay"></div>
         <div id="validerModifCompte">
             <h1>Valider les modifications</h1>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>

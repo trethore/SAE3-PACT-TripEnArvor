@@ -65,7 +65,9 @@
 }
 
 /* Style de la popup */
-#popup {
+#validerModifCompte, 
+#annulerModifCompte, 
+#quitterModifCompte {
     display: none;
   position: fixed;
   display: flex; 
@@ -83,19 +85,25 @@
 }
 
 /* Titre de la popup */
-#popup h3 {
+#validerModifCompte h3, 
+#annulerModifCompte h3, 
+#quitterModifCompte h3 {
   font-weight: var(--semi-bold);
   color: var(--noir);
 }
 
 /* Texte de la popup */
-#popup p {
+#validerModifCompte p, 
+#annulerModifCompte p, 
+#quitterModifCompte p {
   color: var(--noir);
   margin-bottom: 20px;
 }
 
 /* Style des boutons */
-#popup button {
+#validerModifCompte button, 
+#annulerModifCompte button, 
+#quitterModifCompte button {
   background-color: var(--orange-principale);
   border: 2px solid var(--orange-principale);
   color: var(--blanc-leger);
@@ -108,7 +116,9 @@
   transition: background-color 0.3s ease;
 }
 
-#popup button:hover {
+#validerModifCompte button:hover,
+#annulerModifCompte button:hover,
+#quitterModifCompte button:hover {
   color: var(--orange-principale);
   background-color: var(--blanc-leger);
   border: 2px solid var(--orange-principale);
