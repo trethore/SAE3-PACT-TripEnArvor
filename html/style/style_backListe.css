@@ -62,10 +62,11 @@ a {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 5%;
+    left: 2%;
     transform: translate(0 , -3.5em);
-    width: auto; 
+    min-width: auto;
     z-index: 1; 
+    cursor: pointer;
 }
 
 .filtre-tri h2 + div{
@@ -514,7 +515,7 @@ a {
 
 .no-offers-message {
     text-align: center; 
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     font-size: 20pt;
     margin: 20px 430px;
 }
