@@ -630,7 +630,7 @@
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
                     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    $stmt_image_offre = $dbh->prepare($requete_image_contient_image);
+                    $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
                     $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                 }
