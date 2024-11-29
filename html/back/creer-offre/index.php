@@ -430,7 +430,7 @@
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
-
+                print $tarif_min;
 
                 if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2nom']))) {
                     $tarif2 = $_POST['tarif2'];
@@ -612,7 +612,7 @@
 
                         $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]);
 
 
                     }
