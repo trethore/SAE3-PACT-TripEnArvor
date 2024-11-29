@@ -288,7 +288,6 @@ a {
 form {
     background: var(--blanc-leger);
     text-align: center;
-    width: 100%;
     padding: 10px;
 }
 
@@ -296,6 +295,7 @@ textarea {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
     border-radius: 15px;
+    width: 100%;
 }
 
 .fond-blocs-avis {
