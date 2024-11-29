@@ -292,20 +292,22 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-                <div class="bouton-modifier">
-                    <div id="confirm">
-                        <p>Voulez-vous mettre votre offre hors ligne ?</p>
-                        <div class="close">
-                            <button onclick="showFinal()">Mettre hors ligne</button>
-                            <button onclick="btnAnnuler()">Annuler</button>
-                        </div>
-                    </div>
-                    <div id="final">
-                        <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
-                        <button onclick="btnAnnuler()">Fermer</button>
-                    </div>  
-                    <button id="bouton1" onclick="showConfirm()">Publier un avis</button>
+            <div id="popup" class="popup hidden">
+                <div class="popup-content">
+                    <button id="closePopup" class="close">&times;</button>
+                    <h2>Publier un avis</h2>
+                    <form action="" method="post">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" required>
+                        <label for="avis">Avis :</label>
+                        <textarea id="avis" name="avis" rows="4" required></textarea>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                    <?php if (!empty($message)) : ?>
+                        <p class="message"><?php echo $message; ?></p>
+                    <?php endif; ?>
                 </div>
+            </div>
 
             <?php 
             $compteur = 0;
@@ -403,39 +405,24 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-        let confirmDiv = document.getElementById("confirm");
-        let finalDiv = document.getElementById("final");
+        const openPopup = document.getElementById('openPopup');
+        const closePopup = document.getElementById('closePopup');
+        const popup = document.getElementById('popup');
 
-        // Fonction pour afficher la popup de confirmation
-        function showConfirm() {
-            confirmDiv.style.display = "block";
-            applyBlur(true);
-        }
+        openPopup.addEventListener('click', () => {
+            popup.classList.remove('hidden');
+        });
 
-        // Fonction pour afficher la confirmation finale et fermer la première popup
-        function showFinal() {
-            confirmDiv.style.display = "none";
-            finalDiv.style.display = "block";
-        }
+        closePopup.addEventListener('click', () => {
+            popup.classList.add('hidden');
+        });
 
-        // Fonction pour annuler l'action et masquer toutes les popups
-        function btnAnnuler() {
-            confirmDiv.style.display = "none";
-            finalDiv.style.display = "none";
-            applyBlur(false);
-        }
-
-        // Fonction pour appliquer ou supprimer le flou sur la page
-        function applyBlur(apply) {
-            const header = document.getElementById("header");
-            const body = document.getElementById("body");
-            const footer = document.getElementById("footer");
-            const filterValue = apply ? "blur(10px)" : "none";
-
-            header.style.filter = filterValue;
-            body.style.filter = filterValue;
-            footer.style.filter = filterValue;
-        }
+        // Fermer la pop-up en cliquant en dehors du contenu
+        window.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.classList.add('hidden');
+            }
+        });
 
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');
