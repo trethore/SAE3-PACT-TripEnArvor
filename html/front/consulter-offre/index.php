@@ -251,7 +251,7 @@ try {
                     <h2>Tarifs : </h2>
                     <table>
                         <?php foreach ($tarifs as $t) { 
-                            if ($t[0]['nom_tarif'] != "nomtarif1") { ?>
+                            if ($t['nom_tarif'] != "nomtarif1") { ?>
                                 <tr>
                                     <td><?php echo htmlentities($t['nom_tarif']) ?></td>
                                     <td><?php echo htmlentities($t['prix']) . " €"?></td>
