@@ -699,7 +699,7 @@
             if(isIdProPublique){
                  document.getElementById("type").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
-                 print("le type est caché");
+                 console.log("le type est caché");
             }
 
 
