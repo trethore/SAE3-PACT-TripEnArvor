@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+session_start();
 $id_compte =  $_SESSION['id'];
 
 try {
