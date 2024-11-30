@@ -697,8 +697,8 @@
             console.log(isIdProPublique);
 
             if(isIdProPublique){
-                document.getElementById("type").style.display = 'none';
-                document.getElementById("labeltype").style.display = 'none';
+                 document.getElementById("type").style.display = 'none';
+                 document.getElementById("labeltype").style.display = 'none';
             }
 
 
