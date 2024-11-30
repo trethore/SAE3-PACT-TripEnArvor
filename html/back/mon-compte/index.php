@@ -14,9 +14,8 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-if (isset($id_compte)) {
-    redirectToListOffreIfNecessary($id_compte);
-}
+redirectToListOffreIfNecessary($id_compte);
+
 
 $typeCompte = getTypeCompte($id_compte);
 
@@ -50,6 +49,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <main>
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
+            <a href="/back/mes-factures">Mes factures</a>
             <a href="/back/se-connecter">Se déconnecter</a>
         </nav>
         <section>

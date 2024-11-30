@@ -30,7 +30,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/style_navPhone.css"/>
+    <link rel="stylesheet" href="/style/styleguide.css"/>
     <title>Liste de vos offres</title>
 </head>
 <body>
@@ -50,15 +50,15 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Filtres</h2>
-            <div>
+            <h2>Filtres et tris</h2>
+            <div class="fond-filtres hidden">
                 <div>
                     <!-- Catégorie -->
                     <div class="categorie">
                         <h3>Catégorie</h3>
                         <div>
-                            <label><input type="checkbox"> Parc d'Attraction</label>
-                            <label><input type="checkbox"> Restaurant</label>
+                            <label><input type="checkbox"> Parc attraction</label>
+                            <label><input type="checkbox"> Restauration</label>
                             <label><input type="checkbox"> Visite</label>
                             <label><input type="checkbox"> Spectacle</label>
                             <label><input type="checkbox"> Activité</label>
@@ -76,11 +76,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         
                     <!-- Trier -->
                     <div class="trier">
-                        <h3>Trier</h3>
+                        <h3>Note et prix</h3>
                         <div>
                             <div>
                                 <label>Note minimum :</label>
-                                <select>
+                                <select class="note">
                                     <option></option>
                                     <option>★★★★★</option>
                                     <option>★★★★</option>
@@ -94,22 +94,25 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <div>
                                     <div>
                                         <label>Prix minimum &nbsp;:</label>
-                                        <input type="number" min="0">
+                                        <input class="min" type="number" min="0">
                                     </div>
                                     <div>
                                         <label>Prix maximum :</label>
-                                        <input type="number" min="0">
+                                        <input class="max" type="number" min="0">
                                     </div>
                                 </div>
-                                <div>
-                                    <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
-                                    </select>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="trier2">
+                        <h3>Trier</h3>
+                        <div>
+                            <select class="tris">
+                                <option value="default">Trier par :</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -120,8 +123,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         <div>
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
-                                <label><input type="radio" name="localisation"> Rechercher</label>
-                                <input type="text" placeholder="Rechercher...">
+                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -130,7 +133,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <div class="typeOffre">
                         <h3>Type d'offre</h3>
                         <div>
-                            <label><input type="radio" name="typeOffre"> Payante</label>
+                            <label><input type="radio" name="typeOffre"> Standard</label>
                             <label><input type="radio" name="typeOffre"> Premium</label>
                         </div>
                     </div>
@@ -147,41 +150,43 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <label>Date de fin &emsp;&emsp;:</label>
                                 <input type="date">
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </article>
-        <section class="lesOffres"><?php
+        <section class="lesOffres">
+            <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
+            <?php
             $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
             $stmtOffre = $conn->prepare($reqOffre);
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article>
+            <article class="offre">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'OUVERTURE'?></div>
+                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
                     ---------------------------------------->
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
                     <!---------------------------------------
                     Récuperer le titre liée à l'offre
                     ---------------------------------------->
-                    <p><?php echo htmlentities($row["titre"]) ?></p>
+                    <p class="titre-offre"><?php echo htmlentities($row["titre"]) ?></p>
 
                     <!--------------------------------------------------------
                     Choix du type de l'activité (Restaurant, parc, etc...
                     --------------------------------------------------------->
-                    <p> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
+                    <p class="categorie-offre"> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
+                    <p class="type-offre" style="display: none"><?php echo $row["type_offre"]; ?></p>
                     <img src=" <?php
                     switch ($row["type_offre"]) {
                         case 'gratuite':
@@ -201,11 +206,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
                     <div class="etoiles">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
+                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
                         <p>49</p>
                     </div>
                     <div>
@@ -228,7 +233,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->  
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                    <p class="prix">A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
                 </a>
             </article>
             <?php } ?>
@@ -272,7 +277,130 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         </div>
     </footer>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
 
+            const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
+            const offersContainer = document.querySelector(".lesOffres");
+            const offers = Array.from(document.querySelectorAll(".offre"));
+
+            const noOffersMessage = document.querySelector(".no-offers-message");
+
+            const locationInput = document.getElementById("search-location");
+
+            h2.addEventListener("click", () => {
+                fondFiltres.classList.toggle("hidden");
+            });
+
+            // Function to filter offers based on active inputs
+            const applyFilters = () => {
+                let visibleOffers = offers;
+
+                // Filter by Category
+                const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
+                const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
+                if (selectedCategories.length > 0) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const category = offer.querySelector(".categorie-offre").textContent.trim();
+                        return selectedCategories.includes(category);
+                    });
+                }
+
+                // Filter by Availability
+                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                if (availabilityInput) {
+                    const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                        return offerAvailability === availability;
+                    });
+                }
+
+                // Filter by Type
+                const typeInput = document.querySelector(".typeOffre input[type='radio']:checked");
+                if (typeInput) {
+                    const type = typeInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const typeAvailability = offer.querySelector(".type-offre").textContent.trim().toLowerCase();
+                        return typeAvailability === type;
+                    });
+                }
+
+                // Filter by Note
+                const minNoteSelect = document.querySelector(".note");
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+                if (selectedNote) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                        return stars >= selectedNote;
+                    });
+                }
+
+                // Filter by Price Range
+                const minPrice = parseFloat(document.querySelector(".min").value || "0");
+                const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+                visibleOffers = visibleOffers.filter(offer => {
+                    const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
+                    return price >= minPrice && price <= maxPrice;
+                });
+
+                // Filter by Location
+                const searchLocation = locationInput.value.trim().toLowerCase();
+                if (searchLocation) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                        return location.includes(searchLocation);
+                    });
+                }
+
+                // Update Visibility
+                offers.forEach(offer => {
+                    if (visibleOffers.includes(offer)) {
+                        offer.style.display = "";
+                    } else {
+                        offer.style.display = "none";
+                    }
+                });
+
+                console.log(visibleOffers);
+
+                // Show/Hide "No Offers" Message
+                noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+            };
+
+            // Sort Offers
+            const sortOffers = () => {
+                const selectElement = document.querySelector(".tris");
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === "price-asc" || selectedValue === "price-desc") {
+                    offers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
+            };
+
+            // Add Event Listeners
+            filterInputs.forEach(input => input.addEventListener("input", () => {
+                applyFilters();
+                sortOffers();
+            }));
+
+            document.querySelector(".tris").addEventListener("change", () => {
+                sortOffers();
+                applyFilters();
+            });
+
+            locationInput.addEventListener("input", () => {
+                applyFilters();
+            });
+        });
+    </script>
 </body>
 </html>

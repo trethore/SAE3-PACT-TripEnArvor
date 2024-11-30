@@ -1,3 +1,6 @@
+/********************************************
+    CHANGEMENT EN PLUS DE style_backCompte
+*********************************************/
 main {
     flex-direction: column;
     background-color: var(--blanc);
@@ -19,7 +22,7 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div > a {
+table + div > input {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
@@ -29,8 +32,9 @@ table + div > a {
     padding: 0.2em 1em;
 }
 
-table + div > a:hover {
+table + div > input:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
 }
+
