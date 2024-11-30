@@ -9,7 +9,7 @@ if (!isset($_SESSION['id'])) {
     echo "Pas connecté";
     exit;
 } else {
-    echo "Connecté";
+    echo "Connecté  avec id : " . $_SESSION['id'];
 }
 
 
