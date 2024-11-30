@@ -310,7 +310,7 @@ try {
                     <p class="transparent">.</p>
                 </div>
                 <div class="display-ligne-espace">
-                    <textfield id="titre" name="titre" required></textfield><br>
+                    <input type="text" id="titre" name="titre" required></input><br>
                     <p class="transparent">.</p>
                 </div>
                 <div class="display-ligne-espace">
