@@ -265,22 +265,18 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php foreach ($jours as $jour) { ?>
-                    <p>
-                        <?php if (!empty($jour['nom_jour'])) {
-                            echo htmlentities($jour['nom_jour'] . " : "); 
+                <?php if (!empty($jour['nom_jour'])) {
+                    foreach ($jours as $jour) { ?>
+                        <p>
+                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
                             foreach ($horaire as $h) {
-                                if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
-                                    echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                                } else {
-                                    echo "Fermé"; 
-                                }
-                            }
-                        } else {
-                            echo "Pas d'information sur les jours et les horaires d'ouverture";
-                        } ?>
-                    </p>
-                <?php } ?>
+                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
+                            } ?>
+                        </p>
+                    <?php }
+                } else {
+                    echo "Pas d'information sur les jours et les horaires d'ouverture";
+                } ?>
             </div> 
             
         </section>
