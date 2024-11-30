@@ -696,10 +696,10 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            if(isIdProPublique){
-                document.getElementById("type").style.display = 'none';
-                document.getElementById("labeltype").style.display = 'none';
-            }
+            // if(isIdProPublique){
+            //     document.getElementById("type").style.display = 'none';
+            //     document.getElementById("labeltype").style.display = 'none';
+            // }
 
 
 
