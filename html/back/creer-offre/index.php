@@ -176,10 +176,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
+                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
                     <td>
-                        <div class="custom-select-container">
-                            <select class="custom-select" id="type" name="letype">
+                        <div class="custom-select-container" id="type">
+                            <select class="custom-select" name="letype">
                                 <option value="standard"> Offre Standard </option>
                                 <option value="premium"> Offre Premium </option>
                             </select>
