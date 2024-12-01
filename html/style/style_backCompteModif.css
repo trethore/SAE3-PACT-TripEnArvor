@@ -43,7 +43,7 @@ table + div > input:hover {
 #annulerModifCompte, 
 #quitterModifCompte {
     position: fixed;
-    display: flex; 
+    z-index: 11;
     flex-direction: column;
     top: 50%;
     left: 50%;

@@ -8,7 +8,7 @@ const boutonValider = document.getElementById("boutonValider");
 form.addEventListener("submit", function(event) {
     event.preventDefault(); // Empêche l'envoi du formulaire
     popupOverlay.style.display = "block";
-    popup.style.display = "block";
+    popup.style.display = "flex";
 });
 
 // Ferme la popup sans valider
