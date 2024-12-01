@@ -69,20 +69,19 @@ Style de la popup
 #validerModifCompte, 
 #annulerModifCompte, 
 #quitterModifCompte {
-    display: none;
-  position: fixed;
-  display: flex; 
-  flex-direction: column;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--blanc-leger);
-  padding: 0 1em 1em;
-  width: 500px;
-  height: 300px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    display: flex; 
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc-leger);
+    padding: 0 1em 1em;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* 

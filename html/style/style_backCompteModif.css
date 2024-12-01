@@ -42,7 +42,6 @@ table + div > input:hover {
 #validerModifCompte, 
 #annulerModifCompte, 
 #quitterModifCompte {
-    display: none;
     position: fixed;
     display: flex; 
     flex-direction: column;
