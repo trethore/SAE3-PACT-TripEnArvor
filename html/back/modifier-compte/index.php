@@ -55,7 +55,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         ?>
         <h1>Détails du compte</h1>
         <h2>Vue d'ensemble</h2>
-        <form method="POST" id="myForm">
+        <form method="POST" id="myForm" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>

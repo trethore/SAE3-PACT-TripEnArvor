@@ -69,7 +69,7 @@ $factures = [
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
             <a class="ici" href="/back/mes-factures">Mes factures</a>
-            <a href="/back/se-connecter">Se déconnecter</a>
+            <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
             <?php 
