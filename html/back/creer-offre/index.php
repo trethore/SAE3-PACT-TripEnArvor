@@ -178,8 +178,8 @@
                 <tr>
                     <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
                     <td>
-                        <div class="custom-select-container" id="type">
-                            <select class="custom-select" name="letype">
+                        <div class="custom-select-container" id="divtype">
+                            <select class="custom-select" name="letype" id="selectype">
                                 <option value="standard"> Offre Standard </option>
                                 <option value="premium"> Offre Premium </option>
                             </select>
@@ -697,7 +697,8 @@
             console.log(isIdProPublique);
 
             if(isIdProPublique){
-                 document.getElementById("type").style.display = 'none';
+                console.log("l'id est publique");
+                 document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
                  console.log("le type est caché");
             }
