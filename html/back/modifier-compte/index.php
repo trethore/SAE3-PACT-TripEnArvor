@@ -160,16 +160,16 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
             <div>
-                <button id="boutonAnnuler"> Reprendre </button>
-                <button id="boutonValider"> Quitter </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
         </div>
         <div id="quitterModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonAnnuler"> Reprendre </button>
-                <button id="boutonValider"> Quitter </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
         </div> 
     </main>
