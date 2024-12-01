@@ -30,7 +30,7 @@ h2 {
 }
 
 h2:hover {
-    background: var(--blanc-leger);
+    background-color: var(--blanc-leger);
     border-color: var(--violet-principal);
     color: var(--violet-principal);
 }
