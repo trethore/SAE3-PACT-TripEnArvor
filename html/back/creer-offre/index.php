@@ -413,6 +413,8 @@
             }
             if (isset($_POST['type'])) {
                 $type = $_POST['type'];
+            }else {
+                $type = "standard";
             }
             
 
@@ -587,7 +589,6 @@
                     break;
 
                 case 'spectacle':
-                    $type = "standard";
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
