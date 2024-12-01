@@ -147,8 +147,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <input type="submit" value="Valider les modifications">
         </div>
         </form>
-        <div id="popupOverlay"></div>
-        <div id="validerModifCompte">
+        <div id="popupOverlay" style="display: none;"></div>
+        <div id="validerModifCompte" style="display: none;">
             <h3>Valider les modifications</h3>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
@@ -156,20 +156,20 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 <button id="boutonValider"> Valider </button>
             </div>
         </div>
-        <div id="annulerModifCompte">
+        <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
             <div>
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonAnnuler"> Reprendre </button>
+                <button id="boutonValider"> Quitter </button>
             </div>
         </div>
-        <div id="quitterModifCompte">
-            <h3>Valider les modifications</h3>
+        <div id="quitterModifCompte" style="display: none;">
+            <h3>Annuler les modifications</h3>
             <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonAnnuler"> Reprendre </button>
+                <button id="boutonValider"> Quitter </button>
             </div>
         </div> 
     </main>
