@@ -307,7 +307,7 @@ try {
 
                 <button id="showFormButton">Publier un avis</button>
 
-                <form id="avisForm" action="" method="post" style="display: none;">
+                <form id="avisForm" action="index.php" method="post" style="display: none;">
                     <h2 for="creation-avis">Création d'avis</h2><br>
                     <div class="display-ligne-espace">
                         <label for="titre">Saisissez le titre de votre avis</label>
@@ -315,6 +315,21 @@ try {
                     </div>
                     <div class="display-ligne-espace">
                         <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="contexte">Contexte de visite :</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <select id="contexte" name="contexte" required>
+                            <option value="" disabled selected>Choisissez un contexte</option>
+                            <option value="affaires">Affaires</option>
+                            <option value="couple">Couple</option>
+                            <option value="famille">Famille</option>
+                            <option value="amis">Amis</option>
+                            <option value="solo">Solo</option>
+                        </select><br>
                         <p class="transparent">.</p>
                     </div>
                     <div class="display-ligne-espace">
