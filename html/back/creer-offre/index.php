@@ -391,7 +391,6 @@
 
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
-                $gammedeprix = intval($gammedeprix);
             }
 
             if (isset($_POST['photo'])) {
