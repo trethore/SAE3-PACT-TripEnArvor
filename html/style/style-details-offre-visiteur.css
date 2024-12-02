@@ -291,8 +291,8 @@ form {
     border: 3px solid var(--violet-principal);
     border-radius: 15px;
     text-align: center;
+    align-items: center;
     padding: 30px;
-    width: 80%;
 }
 
 form > h2 {

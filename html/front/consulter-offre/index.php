@@ -160,6 +160,9 @@ try {
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
                     <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $offre['ville']); ?></p>
+                    <?php echo '<pre>';
+                    print_r($offre['ville']); 
+                    echo '</pre>'; ?>
                 <?php } else {
                     echo "Pas d'adresse disponible";
                 } ?>
