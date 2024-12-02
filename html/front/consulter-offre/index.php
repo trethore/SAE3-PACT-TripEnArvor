@@ -160,9 +160,6 @@ try {
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
                     <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $offre['ville']); ?></p>
-                    <?php echo '<pre>';
-                    print_r($offre['ville']); 
-                    echo '</pre>'; ?>
                 <?php } else {
                     echo "Pas d'adresse disponible";
                 } ?>
@@ -421,10 +418,6 @@ try {
                         $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                         $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
-
-                        header("Location: index.php?id=" . urlencode($_GET['id']));
-                        exit;
-
                     } catch (PDOException $e) {
                         echo "Erreur : " . $e->getMessage();
                         die();
