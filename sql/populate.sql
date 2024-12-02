@@ -164,7 +164,6 @@ VALUES
 -- ####################################################################
 -- ASSOCIATION DES TAGS AUX OFFRES
 -- ####################################################################
-SELECT * from sae._offre;
 -- Offres de restauration
 INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
 VALUES 
