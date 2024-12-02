@@ -442,7 +442,8 @@
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                }
+                    print("rentré dans le connard de isset pour 0 raisons");
+                }else
                 if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))) {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
