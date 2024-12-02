@@ -113,3 +113,9 @@ p {
 ul {
     inline-size: 90%;
 }
+
+li {
+    list-style: none;
+    text-decoration: none;
+    color: var(--noir);
+}
