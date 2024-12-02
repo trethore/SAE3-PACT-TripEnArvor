@@ -85,7 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="#" onclick="window.open('/images/universel/facture.pdf', '_blank', 'fullscreen=yes'); return false;"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/images/universel/facture.pdf" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
                     </li>
                 <?php
                 }
