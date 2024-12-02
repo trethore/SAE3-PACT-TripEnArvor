@@ -592,7 +592,7 @@
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
-                        //print($requete);
+                        print("le tarif min du spectacle ".$tarif_min);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         /////TEST
@@ -630,9 +630,9 @@
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                         $stmt_carte->execute([$fichier_img]);
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, gamme_prix, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]);
 
 
                     }
@@ -684,7 +684,7 @@
                     if (redirect) {
                         window.location.href = '/back/liste-back';
                     }
-                  </script>";
+                  </script>"; //if premium afficher
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
