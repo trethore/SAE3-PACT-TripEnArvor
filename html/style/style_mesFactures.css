@@ -117,5 +117,8 @@ ul {
 li {
     list-style: none;
     text-decoration: none;
+}
+
+li > p {
     color: var(--noir);
 }
