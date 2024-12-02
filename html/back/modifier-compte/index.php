@@ -35,9 +35,9 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <title>Modifier mon compte</title>
 </head>
 <body>
-    <?php
-    if (!$submitted) {
-    ?>
+<?php
+if (!$submitted) {
+?>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
