@@ -3,6 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/debug-utils.php");
 
     session_start();
     if (isset($_POST['titre'])) { // les autres svp²
@@ -10,7 +11,12 @@
     } else {
         $submitted = false;
     }
-
+    $photosDir = "../../images/universel/photos/";
+    if (!is_dir($photosDir)) {
+        if (mkdir($photosDir,0755,true)) {
+            printInConsole("Dossier photo crée !");
+        }
+    }
 
 
     function get_file_extension($type)
