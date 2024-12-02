@@ -98,7 +98,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-        width: 1380px;
+        width: 100%;
     }
 
     .carousel-images {

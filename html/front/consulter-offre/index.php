@@ -259,7 +259,7 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <h2>Tarifs : </h2><br>
+                <h2>Tarifs : </h2>
                 <table>
                     <?php foreach ($tarifs as $t) { 
                         if ($t['nom_tarif'] != "nomtarif1") { 
@@ -422,7 +422,8 @@ try {
                         $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                         $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
 
-                        unset($_POST);
+                        header("Location: index.php?id=" . urlencode($_GET['id']));
+                        exit;
 
                     } catch (PDOException $e) {
                         echo "Erreur : " . $e->getMessage();
