@@ -442,7 +442,6 @@
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                    print("rentré dans le connard de isset pour 0 raisons");
                 }else
                 if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))&& $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
@@ -461,7 +460,6 @@
                         $tarif_min = $value;
                     } 
                 }
-                print("le tarif min du spectacle ".$tarif_min);
 
             }
             print_r($_POST);
@@ -490,7 +488,7 @@
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . $time . $file_extension);
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
                 $fichier_img = $time . $file_extension;
@@ -513,7 +511,7 @@
                 die("Erreur : Le fichier existe déjà dans la base de données.");
             }
 
-            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
             $target_file = $target_dir . $time . $file_extension;
 
             if (file_exists($target_file)) {
@@ -561,7 +559,7 @@
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'plan_' . $time . $file_extension);
                         $fichier_plan = 'plan_' . $time . $file_extension;
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -621,7 +619,7 @@
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
