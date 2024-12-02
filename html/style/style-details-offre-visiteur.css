@@ -306,6 +306,7 @@ form > p {
 
 label {
     text-align: start;
+    color: var(--violet-principal);
 }
 
 textarea {
@@ -322,7 +323,7 @@ textarea {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
     border-radius: 5px;
-    height: 25px;
+    height: 30px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;  
 }
