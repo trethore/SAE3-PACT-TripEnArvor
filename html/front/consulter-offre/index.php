@@ -313,7 +313,7 @@ try {
 
                 <button id="showFormButton">Publier un avis</button>
 
-                <form id="avisForm" action="index.php" method="post" enctype="multipart/form-data" style="display: none;">
+                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                     <h2 for="creation-avis">Création d'avis</h2><br>
                     <div class="display-ligne-espace">
                         <label for="titre">Saisissez le titre de votre avis</label>
