@@ -1,7 +1,7 @@
 # **Documentation : Consultation des données par l'administrateur**
 
 ## **Objectif**
-Permettre à l'administrateur de consulter les données d’un utilisateur ou d’une offre afin de vérifier leur conformité aux normes légales (ex. RGPD).
+Comment consulter les données d’un utilisateur ou d’une offre afin de vérifier leur conformité aux normes légales (ex. RGPD).
 
 ---
 
@@ -70,10 +70,5 @@ Permettre à l'administrateur de consulter les données d’un utilisateur ou d�
 - **Logs et traçabilité** : Documenter toutes les consultations dans un fichier ou une table dédiée pour assurer la traçabilité.  
 - **Modifications** : Ne pas modifier directement les données sans justification légale.  
 - **Sécurisation** : Ne jamais exposer les identifiants administrateurs ou les données consultées.
-
----
-
-## **Conclusion**
-Ces étapes permettent à l’administrateur de consulter les données de manière conforme aux réglementations légales. En cas de doute sur une donnée, signaler au service juridique ou au responsable de la conformité.
 
 ---
