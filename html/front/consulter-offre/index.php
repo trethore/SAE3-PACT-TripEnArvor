@@ -7,11 +7,9 @@ session_start();
 if (!isset($_SESSION['id'])) {
     // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
     echo "Pas connecté";
-    exit;
 } else {
     echo "Connecté  avec id : " . $_SESSION['id'];
 }
-
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
