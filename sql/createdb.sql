@@ -212,6 +212,17 @@ CREATE VIEW offre_restauration AS
     NATURAL JOIN _offre
 ;
 
+/* ============================== NOTE ================================ */
+CREATE TABLE _note(
+    id_note   SERIAL,  
+    nom_note  VARCHAR(30) NOT NULL,
+    note      INTEGER NOT NULL,
+    id_avis   INTEGER NOT NULL,
+    CONSTRAINT _note_pk PRIMARY KEY (id_note),
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+);
+
+
 
 /* ============================== OPTIONS ============================== */
 
@@ -1376,4 +1387,7 @@ BEFORE INSERT
 ON _offre_souscrit_option
 FOR EACH ROW
 EXECUTE PROCEDURE offre_souscrit_une_seule_option();
+
+
+
 
