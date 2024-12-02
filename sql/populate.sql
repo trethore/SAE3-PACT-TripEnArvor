@@ -330,15 +330,23 @@ VALUES
  
 INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
 VALUES 
-(3, 2, 5, 'Super expérience !', 'Le service était excellent, et le personnel très accueillant.', 1, 0, 'famille', 2,1),
-(4, 3, 3, 'Bonne expérience !', 'Le service était excellent, et le personnel très accueillant, mais je n aime pas la viande.', 3, 0, 'famille',4,3),
-(3, 5, 1, 'Pas bon','Je n ai pas aimé la sauce.', 0, 5, 'amis', 6,5),
-(4, 6, 2, 'Bizarre', 'Le service et le personnel me derange.', 3, 2, 'amis',8, 7),
-(3, 6, 5, 'Super expérience !', 'J adore les pates', 1, 0, 'famille', 2,1);
+-- Atelier de Tissage Breton
+(3, 2, 5, 'Accueil chaleureux et service au top', 'Le personnel était très accueillant et le service irréprochable.', 1, 0, 'famille', 2, 1),
+
+-- Visite de la ville close
+(4, 3, 3, 'Bonne visite, mais quelques points négatifs', 'Le personnel était sympathique, et les découvertes intéressantes', 3, 0, 'famille', 4, 3),
+
+-- Balade à Saint-Malo
+(5, 5, 4, 'Belle promenade malgré tout', 'La balade était agréable et bien organisée.', 2, 1, 'amis', 7, 6);
+
+-- Fest-Noz
+(4, 6, 2, 'Ambiance mitigée', 'Malgré une bonne ambiance, le service et le personnel m’ont mis mal à l’aise.', 3, 2, 'amis', 8, 7),
+(3, 6, 5, 'Plats savoureux et moment agréable', 'Les crêpes étaient délicieuses, j’ai passé un bon moment.', 1, 0, 'famille', 2, 1);
+
 INSERT INTO sae._reponse(id_avis, texte, publie_le)
 VALUES 
-    (3, 'Nous avons modifié notre carte.', 9),
-    (4, 'Nous sommes désolé du désagrément causé.', 10);
+(3, 'Nous avons modifié notre carte.', 9),
+(4, 'Nous sommes désolé du désagrément causé.', 10);
 
 COMMIT;
 
