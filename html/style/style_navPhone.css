@@ -1,0 +1,80 @@
+.telephone-nav {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.bg {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    transform: rotate(-3deg) scale(200%);
+    background-color: var(--violet-secondaire);
+    z-index: -1;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0 10% 20px 10%;
+    margin: 20% auto 3% auto;
+}
+
+.nav-content > div > img {
+    width: 4em;
+    height: 4em;
+    margin: 1em 1em 0em 1em;
+}
+
+.nav-content > img {
+    width: 4em;
+    height: 4em;
+   
+}
+
+.btOn{
+    background-color: var(--violet-principal);
+    border: 3px solid white;
+    border-radius: 30px 40px;
+    margin: -1.2em -1.2em -1.2em -1.2em;
+}
+
+
+
+.btOff{}
+
+@media only screen and (max-width: 600px) {
+  .nav-content > div > img {
+        width: 3em;
+        height: 3em;
+    }
+
+    .nav-content > img {
+        width: 3em;
+        height: 3em;
+   }
+}
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .nav-content > img {
+        
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 900px) {
+    .telephone-nav {
+        display: none;
+    }
+  } 

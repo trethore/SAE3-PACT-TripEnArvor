@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  /****************
+      COULEURS
+  *****************/
+  --noir: rgba(0, 0, 0, 1);
+  --blanc: rgba(255, 255, 255, 1);
+  --blanc-leger: rgba(236, 236, 236, 1);
+  --beige: rgba(234, 226, 218, 1);
+  
+  --violet-principal: rgba(74, 23, 116, 1);
+  --violet-secondaire: rgba(145, 115, 225, 1);
+  --marron: rgba(191, 140, 44, 1);
+  --orange-principale: rgba(217, 102, 54, 1);
+  --orange-secondaire-1: rgba(217, 111, 50, 1);
+  --orange-secondaire-2: rgba(242, 139, 48, 1);
+  
+  --fond-bouton: rgba(217, 217, 217, 0.73);
+  --transparent: rgba(255, 255, 255, 0);
+  --semi-trans: rgba(255, 255, 255, 0.5);
+
+  --jaune-etoile: rgba(254, 194, 1, 1);
+  --gris-etoile: rgba(128, 128, 128, 1);
+  --gris: rgba(193, 192, 192, 1);
+
+  --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
+  --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
+  --gradient-violet: linear-gradient(90deg, rgba(186,140,224,1) 0%, rgba(132,79,177,1) 16%, rgba(127,73,172,1) 38%, rgba(121,66,167,1) 63%);
+
+  /*******************
+      FONT WEIGHT
+  ********************/
+  /* Regular */
+  --regular : 400;
+  
+  /* Medium */
+  --medium: 500;
+
+  /* Semi-Bold */
+  --semi-bold: 600;
+
+  /* Bold */
+  --bold: 700;
+
+  /****************
+        SIZE
+  *****************/
+  --mobile-star-size: 30px;
+  --like-size: 35px;
+}
+
+/*********************
+       POP-UP
+**********************/
+/* Overlay pour le fond */
+#popupOverlay {
+  display: none;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 
+Style de la popup
+#validerModifCompte, 
+#annulerModifCompte, 
+#quitterModifCompte {
+    position: fixed;
+    z-index: 11;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc-leger);
+    padding: 0 1em 1em;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+Titre de la popup
+#validerModifCompte h3, 
+#annulerModifCompte h3, 
+#quitterModifCompte h3 {
+    font-weight: var(--semi-bold);
+    margin-bottom: 0;
+    font-size: 24pt;
+    color: var(--noir);
+}
+
+Texte de la popup
+#validerModifCompte p, 
+#annulerModifCompte p, 
+#quitterModifCompte p {
+    color: var(--noir);
+    font-size: 14pt;
+    margin-bottom: 20px;
+}
+
+Style des boutons
+#validerModifCompte button, 
+#annulerModifCompte button, 
+#quitterModifCompte button {
+    background-color: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
+    color: var(--blanc-leger);
+    font-weight: var(--bold);
+    font-size: 12pt;
+    width: 200px;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#validerModifCompte button:hover,
+#annulerModifCompte button:hover,
+#quitterModifCompte button:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
+}
+*/
+
+/*
+PHP requête min pour faire fonctionnner le header
+
+php Front
+
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+/*********************
+       HEADER
+**********************/
+/*
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
+
+
+/******************
+       FOOTER
+*******************/
+/*
+<footer>
+  <div class="footer-top">
+    <div class="footer-top-left">
+      <span class="footer-subtitle">P.A.C.T</span>
+      <span class="footer-title">TripEnArmor</span>
+    </div>
+    <div class="footer-top-right">
+      <span class="footer-connect">Restons connectés !</span>
+      <div class="social-icons">
+        <a href="https://x.com/?locale=fr">
+          <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+        </a>
+        <a href="https://www.facebook.com/?locale=fr_FR">
+          <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+        </a>
+        <a href="https://www.youtube.com/">
+          <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+        </a>
+        <a href="https://www.instagram.com/">
+          <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+        </a>
+      </div>
+    </div>
+
+
+      <!-- Barre en bas du footer incluse ici -->
+
+  </div>
+  <div class="footer-bottom">
+    Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+    Conditions générales - ©
+    Redden's, Inc.
+  </div>
+</footer>
+*/
+
+
+/************************
+       NAV TELEPHONE
+Telephone nav pour le front a mettre en dessous le body
+*************************/
+/*
+<link rel="stylesheet" href="/style/style_navPhone.css"/>
+    <div class="telephone-nav">
+        <div class="bg"></div>
+        <div class="nav-content">
+        <div class = "btOn">
+            <img src="/images/frontOffice/icones/accueil.png">
+            </div>
+            <img src="/images/frontOffice/icones/chercher.png">
+            <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
+    </div>
+*/
+
+
+/*********************
+       POP-UP
+**********************/
+/* 
+              ----POP-UP POUR LA PAGE DE CREATION D'OFFRE----
+<div id="popupOverlay"></div>
+<div id="validerCreerOffre">
+    <h3>Valider votre offre</h3>
+    <p>Voulez-vous valider la création de votre offre ?</p>
+    <div class="close">
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
+    </div>
+</div>
+<div id="annulerCreerOffre">
+    <h3>Annuler votre offre</h3>
+    <p>Voulez-vous annuler la création de votre offre ?</p>
+    <div class="close">
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2" > Valider </button>
+    </div>
+</div>
+<div id="quitterCreerOffre">
+    <h3>Quitter la page</h3>
+    <p>Si vous quittez cette page, vous annulez la création de cette offre</p>
+    <div class="close">
+        <button class="bouton1" > Annuler </button>
+        <button class="bouton2" > Valider </button>
+    </div>
+</div>
+
+              ----POP-UP POUR LA PAGE DE MODIFICATION D'OFFRE----
+<div id="popupOverlay"></div>
+<div id="validerModifOffre">
+    <h3>Valider les modifications</h3>
+    <p>Voulez-vous valider les modifications apporter à votre offre ?</p>
+    <div class="close">
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
+    </div>
+</div>
+<div id="annulerModifOffre">
+    <h3>Annuler les modifications</h3>
+    <p>Voulez-vous annuler les modifications apporter à votre offre ?</p>
+    <div class="close">
+        <button class="bouton1" > Annuler </button>
+        <button class="bouton2" > Valider </button>
+    </div>
+</div>
+<div id="quitterModifOffre">
+    <h3>Valider les modifications</h3>
+    <p>Si vous quittez cette page, vous annulez les modifications faites pour l’instant</p>
+    <div class="close">
+        <button class="bouton1"> Annuler </button>
+        <button class="bouton2"> Valider </button>
+    </div>
+</div> 
+
+              ----POP-UP POUR LA PAGE DE MODIFICATION DU COMPTE----
+<div id="popupOverlay"></div>
+<div id="validerModifCompte">
+    <h3>Valider les modifications</h3>
+    <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
+    <div >
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
+    </div>
+</div>
+<div id="annulerModifCompte">
+    <h3>Annuler les modifications</h3>
+    <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+    <div>
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
+    </div>
+</div>
+<div id="quitterModifCompte">
+    <h3>Valider les modifications</h3>
+    <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
+    <div>
+        <button id="boutonAnnuler"> Annuler </button>
+        <button id="boutonValider"> Valider </button>
+    </div>
+</div> 
+*/
