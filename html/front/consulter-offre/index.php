@@ -416,20 +416,7 @@ try {
                         $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                         $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
 
-                        echo "<pre>";
-                        print_r([
-                            'id_membre' => $id_membre,
-                            'id_offre' => $id_offre,
-                            'note' => $note,
-                            'titre' => $titre,
-                            'commentaire' => $commentaire,
-                            'nb_pouce_haut' => 0,  // Ces valeurs sont hardcodées
-                            'nb_pouce_bas' => 0,
-                            'contexte_visite' => $contexte_visite,
-                            'idDatePublication' => $idDatePublication,
-                            'idDateVisite' => $idDateVisite
-                        ]);
-                        echo "</pre>";
+                        unset($_POST);
 
                     } catch (PDOException $e) {
                         echo "Erreur : " . $e->getMessage();
