@@ -296,7 +296,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
     function getAdresse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAdresse = "SELECT * FROM _offre NATURAL JOIN _adresse WHERE _offre.id_offre = :id_offre";
+        $reqAdresse = "SELECT * FROM _offre JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre =  :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAdresse = $conn->prepare($reqAdresse);
