@@ -386,6 +386,8 @@ try {
                         $jourUpdate = $dateParts[2]; 
                         $heureMinute = $visite_le[1]; 
                         $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
+                    } else {
+                        $visite_le =  date('Y-m-d H:i:s');
                     }
                     if (isset($_SESSION['id'])) {
                         $id_membre = intval($_SESSION['id']);
