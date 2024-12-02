@@ -29,12 +29,6 @@ h2 {
     color: var(--noir);
 }
 
-h2:hover {
-    background-color: var(--blanc-leger);
-    border-color: var(--violet-principal);
-    color: var(--violet-principal);
-}
-
 h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
@@ -70,6 +64,12 @@ h3 {
     min-width: auto;
     z-index: 1;
     cursor: pointer;
+}
+
+.filtre-tri > h2:hover {
+    background-color: var(--blanc-leger);
+    border-color: var(--violet-principal);
+    color: var(--violet-principal);
 }
 
 .filtre-tri h2 + div {
