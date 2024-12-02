@@ -1,6 +1,8 @@
 const form = document.getElementById("myForm");
 const popupOverlay = document.getElementById("popupOverlay");
-const popup = document.getElementById("validerModifCompte");
+const popupValider = document.getElementById("validerModifCompte");
+const popupAnnuler = document.getElementById("annulerModifCompte");
+const popupQuitter = document.getElementById("quitterModifCompte");
 const boutonAnnuler = document.getElementById("boutonAnnuler");
 const boutonValider = document.getElementById("boutonValider");
 
@@ -17,19 +19,19 @@ const boutonQuitter = document.getElementById("boutonQuitter");
 form.addEventListener("submit", function(event) {
     event.preventDefault(); // Empêche l'envoi du formulaire
     popupOverlay.style.display = "block";
-    popup.style.display = "flex";
+    popupValider.style.display = "flex";
 });
 
 // Ferme la popup sans valider
 boutonAnnuler.addEventListener("click", function() {
     popupOverlay.style.display = "none";
-    popup.style.display = "none";
+    popupValider.style.display = "none";
 });
 
 // Valide les modifications et soumet le formulaire
 boutonValider.addEventListener("click", function() {
     popupOverlay.style.display = "none";
-    popup.style.display = "none";
+    popupValider.style.display = "none";
     form.submit();
 });
 
@@ -42,7 +44,7 @@ Array.from(retourMenu).forEach((element) => {
     element.addEventListener("click", function(event) {
         event.preventDefault(); // Empêche le changement de page
         popupOverlay.style.display = "block";
-        popup.style.display = "flex";
+        popupQuitter.style.display = "flex";
     });
 });
 
@@ -56,7 +58,7 @@ Array.from(retourCompte).forEach((element) => {
     element.addEventListener("click", function(event) {
         event.preventDefault(); // Empêche le changement de page
         popupOverlay.style.display = "block";
-        popup.style.display = "flex";
+        popupQuitter.style.display = "flex";
     });
 });
 
@@ -64,7 +66,7 @@ Array.from(retourCompte).forEach((element) => {
 // Reprends les modifications
 boutonReprendre.addEventListener("click", function() {
     popupOverlay.style.display = "none";
-    popup.style.display = "none";
+    popupQuitter.style.display = "none";
 })
 
 // Quitte la page sans enregistrer les modification
