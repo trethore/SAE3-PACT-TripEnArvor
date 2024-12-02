@@ -348,7 +348,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='redden.ventsdouest.dev/back/liste-back/'">Retour à la liste des offres</button>
+            <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
             <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
