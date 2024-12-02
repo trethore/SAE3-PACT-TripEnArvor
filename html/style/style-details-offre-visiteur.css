@@ -326,7 +326,7 @@ textarea {
     font-family: "Poppins", sans-serif;  
 }
 
-input {
+input, select {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
     border-radius: 5px;
