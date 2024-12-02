@@ -15,7 +15,7 @@ startSession();
 $id_compte = $_SESSION["id"];
 redirectToListOffreIfNecessary($id_compte);
 
-
+$submitted = isset($_POST['type-compte']);
 $typeCompte = getTypeCompte($id_compte);
 
 $reqCompte = "SELECT * from sae._compte_professionnel cp 
@@ -24,7 +24,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 where cp.id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,6 +45,9 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <a href="/back/liste-back" class="retourAcceuil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte" class="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
+    <?php
+    if (!$submitted) {
+    ?>
     <main>
         <?php 
             // Préparation et exécution de la requête
@@ -55,11 +58,11 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         ?>
         <h1>Détails du compte</h1>
         <h2>Vue d'ensemble</h2>
-        <form method="POST" id="myForm">
+        <form action="/back/modifier-compte" method="POST" id="myForm">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td><input type="text" name="denomi" id="denomi" value="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
+                    <td><input type="text" name="denomination" id="denomination" value="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
                 </tr>
                 <tr>
                     <td>A propos</td>
@@ -106,7 +109,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td><input type="text" name="siren" id="siren" value="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
                 </tr>
                 <?php } ?>
-                <tr>
+                <tr style="display: none;">
                     <td>N° IBAN</td>
                     <td><input type="text" name="iban" id="iban" value="<?php echo htmlentities("à implémenter");?>"></td>
                 </tr>
@@ -173,6 +176,100 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             </div>
         </div> 
     </main>
+    <?php
+} else {
+    $ok = true;
+    switch ($_POST['type-compte']) {
+        case 'pro-publique':
+            $ok = $ok && isset($_POST['email']);
+            $ok = $ok && isset($_POST['mdp']);
+            $ok = $ok && isset($_POST['nom']);
+            $ok = $ok && isset($_POST['prenom']);
+            $ok = $ok && isset($_POST['tel']);
+            $ok = $ok && isset($_POST['denomination']);
+            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['site']);
+            $ok = $ok && isset($_POST['rue']);
+            $ok = $ok && isset($_POST["compl_adr"]);
+            $ok = $ok && isset($_POST['cp']);
+            $ok = $ok && isset($_POST['ville']);
+            $ok = $ok && isset($_POST['pays']);
+            break;
+        case 'pro-privé':
+            $ok = $ok && isset($_POST['email']);
+            $ok = $ok && isset($_POST['mdp']);
+            $ok = $ok && isset($_POST['nom']);
+            $ok = $ok && isset($_POST['prenom']);
+            $ok = $ok && isset($_POST['tel']);
+            $ok = $ok && isset($_POST['denomination']);
+            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['site']);
+            $ok = $ok && isset($_POST['siren']);
+            $ok = $ok && isset($_POST['rue']);
+            $ok = $ok && isset($_POST["compl_adr"]);
+            $ok = $ok && isset($_POST['cp']);
+            $ok = $ok && isset($_POST['ville']);
+            $ok = $ok && isset($_POST['pays']);
+            break;
+        default:
+            $ok = false;
+            break;
+    }
+
+    $type_compte = $_POST['type-compte'];
+    $email = $_POST['email'];
+    $password = $_POST['mdp'];
+    $name = $_POST['nom'];
+    $first_name = $_POST['prenom'];
+    $tel = $_POST['tel'];
+
+    if ($ok) {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        switch ($_POST['type-compte']) {
+            case 'pro-publique':
+                $denomination = $_POST['denomination'];
+                $a_propos = $_POST['a-propos'];
+                $site_web = $_POST['site'];
+                $street = $_POST['rue'];
+                $address_complement = $_POST['address-complement'];
+                $code_postal = $_POST['cp'];
+                $city = $_POST['ville'];
+                $country = $_POST['pays'];
+                if ($address_complement === '') $address_complement = null;
+                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $id_adresse = $stmt->fetch()['id_adresse'];
+                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                break;
+            case 'pro-privé':
+                $denomination = $_POST['denomination'];
+                $a_propos = $_POST['a-propos'];
+                $site_web = $_POST['site'];
+                $siren = $_POST['siren'];
+                $street = $_POST['rue'];
+                $address_complement = $_POST['address-complement'];
+                $code_postal = $_POST['cp'];
+                $city = $_POST['ville'];
+                $country = $_POST['pays'];
+                if ($address_complement === '') $address_complement = null;
+                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $id_adresse = $stmt->fetch()['id_adresse'];
+                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                break;
+            default:
+                $ok = false;
+                break;
+        }
+    } ?>
     <footer>
         <div class="footer-top">
         <div class="footer-top-left">
