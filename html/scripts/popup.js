@@ -38,7 +38,8 @@ boutonValider.addEventListener("click", function() {
 ************************************/
 
 // Affiche la popup de retour à l'accueil
-retourMenu.addEventListener("click", function() {
+retourMenu.addEventListener("click", function(event) {
+    event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";
     popup.style.display = "flex";
 });
@@ -49,7 +50,8 @@ retourMenu.addEventListener("click", function() {
 ************************************/
 
 // Affiche la popup de retour au compte
-retourCompte.addEventListener("click", function() {
+retourCompte.addEventListener("click", function(event) {
+    event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";
     popup.style.display = "flex";
 });
@@ -63,6 +65,6 @@ boutonReprendre.addEventListener("click", function() {
 
 // Quitte la page sans enregistrer les modification
 boutonQuitter.addEventListener("click", function() {
-    popupOverlay.style.display = "none";
-    popup.style.display = "none";
+    // Redirige vers l'URL initiale
+    window.location.href = retourMenu.href;
 })
