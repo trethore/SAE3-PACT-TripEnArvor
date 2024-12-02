@@ -217,16 +217,6 @@ CREATE VIEW offre_restauration AS
     NATURAL JOIN _offre
 ;
 
-/* ============================== NOTE ================================ */
-CREATE TABLE _note(
-    id_note   SERIAL,  
-    nom_note  VARCHAR(30) NOT NULL,
-    note      INTEGER NOT NULL,
-    id_avis   INTEGER NOT NULL,
-    CONSTRAINT _note_pk PRIMARY KEY (id_note),
-    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
-);
-
 /* ============================== OPTIONS ============================== */
 
 CREATE TABLE _option (
@@ -269,6 +259,18 @@ CREATE TABLE _reponse (
     CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
+
+
+/* ============================== NOTE ================================ */
+CREATE TABLE _note(
+    id_note   SERIAL,  
+    nom_note  VARCHAR(30) NOT NULL,
+    note      INTEGER NOT NULL,
+    id_avis   INTEGER NOT NULL,
+    CONSTRAINT _note_pk PRIMARY KEY (id_note),
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+);
+
 
 
 /* ##################################################################### */
@@ -1371,8 +1373,6 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
-COMMIT;
-
 
 CREATE FUNCTION offre_souscrit_une_seule_option() RETURNS TRIGGER AS $$
 BEGIN
@@ -1391,5 +1391,11 @@ FOR EACH ROW
 EXECUTE PROCEDURE offre_souscrit_une_seule_option();
 
 
-
+-- CREATE FUNCTION offre_restauration_possede_4_notes_detaillees() RETURNS TRIGGER AS $$
+-- BEGIN
+--     PERFORM *
+--     FROM _offre_restauration
+--     NATURAL JOIN 
+-- END;
+-- $$ LANGUAGE 'plpgsql';
 
