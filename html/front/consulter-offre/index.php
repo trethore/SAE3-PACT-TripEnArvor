@@ -158,18 +158,8 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { 
-                    $adresseComplete = [];
-                    if (!empty($adresse['num_et_nom_de_voie'])) {
-                        $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
-                    }
-                    if (!empty($adresse['complement_adresse'])) {
-                        $adresseComplete[] = htmlentities($adresse['complement_adresse']);
-                    }
-                    if (!empty($adresse['code_postal']) || !empty($adresse['ville'])) {
-                        $adresseComplete[] = htmlentities(trim($adresse['code_postal'] . ' ' . $adresse['ville']));
-                    } ?>
-                    <p><?php echo implode(', ', $adresseComplete); ?></p>
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
+                    <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $offre['ville']); ?></p>
                 <?php } else {
                     echo "Pas d'adresse disponible";
                 } ?>
