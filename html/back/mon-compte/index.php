@@ -106,7 +106,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td><?php echo htmlentities($detailCompte["siren"]);?></td>
                 </tr>
                 <?php } ?>
-                <tr>
+                <tr style="display: none;">
                     <td>N° IBAN</td>
                     <td><?php echo htmlentities("à implémenter");?></td>
                 </tr>
