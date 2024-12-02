@@ -35,6 +35,9 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <title>Modifier mon compte</title>
 </head>
 <body>
+    <?php
+    if (!$submitted) {
+    ?>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
@@ -45,9 +48,6 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte" class="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
-    <?php
-    if (!$submitted) {
-    ?>
     <main>
         <?php 
             // Préparation et exécution de la requête
@@ -177,6 +177,40 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             </div>
         </div> 
     </main>
+    <footer>
+        <div class="footer-top">
+        <div class="footer-top-left">
+            <span class="footer-subtitle">P.A.C.T</span>
+            <span class="footer-title">TripEnArmor</span>
+        </div>
+        <div class="footer-top-right">
+            <span class="footer-connect">Restons connectés !</span>
+            <div class="social-icons">
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
+            </div>
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
+        </div>
+        <div class="footer-bottom">
+        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        Conditions générales - ©
+        Redden's, Inc.
+        </div>
+    </footer>
     <?php
 } else {
     $ok = true;
@@ -274,41 +308,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 $ok = false;
                 break;
         }
-    } ?>
-    <footer>
-        <div class="footer-top">
-        <div class="footer-top-left">
-            <span class="footer-subtitle">P.A.C.T</span>
-            <span class="footer-title">TripEnArmor</span>
-        </div>
-        <div class="footer-top-right">
-            <span class="footer-connect">Restons connectés !</span>
-            <div class="social-icons">
-            <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-            </a>
-            <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-            </a>
-            <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-            </a>
-            <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-            </a>
-            </div>
-        </div>
-
-
-        <!-- Barre en bas du footer incluse ici -->
-
-        </div>
-        <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
-        </div>
-    </footer>
+} ?>
     <script src="/scripts/popup.js"></script>
 </body>
 </html>
