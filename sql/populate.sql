@@ -96,22 +96,22 @@ INSERT INTO _offre_activite_propose_prestation (nom_prestation, id_offre_activit
 -- ####################################################################
 
 -- Insertion dans offre_visite
-INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree)
+INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree,date_evenement)
 VALUES 
-('Visite de la Ville Close', 'Découvrez la Ville Close de Concarneau, un joyau historique entouré de remparts.', 'Concarneau', 'La Ville Close, située au cœur de Concarneau, est une cité médiévale fortifiée entourée par les eaux. Ce site emblématique de Bretagne offre une plongée dans l’histoire avec ses remparts bien préservés et ses ruelles pavées. Vous pourrez visiter le musée de la Pêche, qui retrace l’histoire maritime de la région, et profiter des nombreuses boutiques d’artisans et cafés locaux. Depuis les remparts, admirez une vue imprenable sur le port et les environs. Une promenade incontournable pour les amateurs d’histoire et de paysages pittoresques.', 'www.concarneau-visite.bzh', 1, 2, 10, 'standard', 120),
-('Découverte des Alignements de Carnac', 'Explorez les mystérieux alignements de Carnac, un site mégalithique unique en Europe.', 'Carnac', 'Les alignements de Carnac sont une série impressionnante de plus de 3 000 menhirs érigés il y a des milliers d’années. Ce site archéologique, unique au monde, intrigue par son ampleur et son mystère. Accompagné d’un guide, découvrez les théories sur leur origine et leur usage, ainsi que les légendes qui entourent ces pierres. Le parcours inclut une balade à travers les principaux alignements, tels que Le Ménec et Kermario, ainsi que la visite d’un tumulus. Une expérience fascinante pour les passionnés d’histoire, de culture celtique et de patrimoine breton.', 'www.carnac-aligne.bzh', 2, 3, 15, 'standard', 180),
-('Balade à Saint-Malo', 'Une immersion dans les remparts de Saint-Malo, avec des panoramas exceptionnels sur la mer.', 'Saint-Malo', 'Découvrez Saint-Malo, la célèbre cité corsaire, en vous promenant sur ses remparts. Cette balade vous offre une vue imprenable sur la mer, les plages et le port. Apprenez l’histoire de cette ville fortifiée, notamment son rôle stratégique dans le commerce et la piraterie. Ne manquez pas la cathédrale Saint-Vincent et explorez les ruelles animées du centre-ville, où vous trouverez des boutiques, des crêperies et des souvenirs locaux. Une visite incontournable pour comprendre le passé maritime de la Bretagne et profiter d’un cadre exceptionnel.', 'www.saintmalo-tourisme.bzh', 2, 4, 5, 'gratuite', 90);
+('Visite de la Ville Close', 'Découvrez la Ville Close de Concarneau, un joyau historique entouré de remparts.', 'Concarneau', 'La Ville Close, située au cœur de Concarneau, est une cité médiévale fortifiée entourée par les eaux. Ce site emblématique de Bretagne offre une plongée dans l’histoire avec ses remparts bien préservés et ses ruelles pavées. Vous pourrez visiter le musée de la Pêche, qui retrace l’histoire maritime de la région, et profiter des nombreuses boutiques d’artisans et cafés locaux. Depuis les remparts, admirez une vue imprenable sur le port et les environs. Une promenade incontournable pour les amateurs d’histoire et de paysages pittoresques.', 'www.concarneau-visite.bzh', 1, 2, 10, 'standard', 120,14),
+('Découverte des Alignements de Carnac', 'Explorez les mystérieux alignements de Carnac, un site mégalithique unique en Europe.', 'Carnac', 'Les alignements de Carnac sont une série impressionnante de plus de 3 000 menhirs érigés il y a des milliers d’années. Ce site archéologique, unique au monde, intrigue par son ampleur et son mystère. Accompagné d’un guide, découvrez les théories sur leur origine et leur usage, ainsi que les légendes qui entourent ces pierres. Le parcours inclut une balade à travers les principaux alignements, tels que Le Ménec et Kermario, ainsi que la visite d’un tumulus. Une expérience fascinante pour les passionnés d’histoire, de culture celtique et de patrimoine breton.', 'www.carnac-aligne.bzh', 2, 3, 15, 'standard', 180,15),
+('Balade à Saint-Malo', 'Une immersion dans les remparts de Saint-Malo, avec des panoramas exceptionnels sur la mer.', 'Saint-Malo', 'Découvrez Saint-Malo, la célèbre cité corsaire, en vous promenant sur ses remparts. Cette balade vous offre une vue imprenable sur la mer, les plages et le port. Apprenez l’histoire de cette ville fortifiée, notamment son rôle stratégique dans le commerce et la piraterie. Ne manquez pas la cathédrale Saint-Vincent et explorez les ruelles animées du centre-ville, où vous trouverez des boutiques, des crêperies et des souvenirs locaux. Une visite incontournable pour comprendre le passé maritime de la Bretagne et profiter d’un cadre exceptionnel.', 'www.saintmalo-tourisme.bzh', 2, 4, 5, 'gratuite', 90,16);
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE SPECTACLES
 -- ####################################################################visite
 
 -- Insertion dans offre_spectacle
-INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree, capacite)
+INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree, capacite, date_evenement)
 VALUES 
-('Fest-Noz Traditionnel', 'Plongez dans une soirée bretonne festive, avec danses et musique traditionnelle en live.', 'Quimper', 'Le Fest-Noz, inscrit au patrimoine immatériel de l’UNESCO, est une véritable célébration de la culture bretonne. Lors de cette soirée animée, laissez-vous emporter par les rythmes envoûtants de la musique traditionnelle jouée en live par des groupes locaux, avec des instruments tels que la bombarde, le biniou et l’accordéon. Les danses bretonnes, faciles à apprendre, invitent tout le monde, débutants ou experts, à se joindre à la ronde. Les pauses sont l’occasion de déguster des spécialités bretonnes comme le cidre et les crêpes. Un événement unique pour vivre la convivialité et la richesse culturelle de la Bretagne.', 'www.festnoz-quimper.bzh', 1, 1, 20, 'standard', 180, 200),
-('Spectacle Son et Lumière', 'Découvrez l’histoire bretonne à travers un spectacle captivant mêlant projections lumineuses et musique.', 'Saint-Malo', 'Ce spectacle son et lumière, organisé dans les remparts de Saint-Malo, offre une immersion spectaculaire dans l’histoire bretonne. Les projections animées illuminent les vieilles pierres, racontant des récits captivants sur les corsaires, les batailles maritimes et les légendes locales. Accompagné d’une bande-son envoûtante et parfois de performances en direct, ce spectacle est une expérience unique pour petits et grands. Une belle façon de redécouvrir Saint-Malo sous un angle artistique et immersif.', 'www.saintmalo-spectacle.bzh', 2, 2, 25, 'premium', 90, 300),
-('Concert de Musique Celtique', 'Un concert vibrant de musique celtique, mêlant instruments traditionnels et modernité.', 'Lorient', 'Plongez dans l’univers de la musique celtique avec ce concert exceptionnel organisé à Lorient, la capitale interceltique. Des artistes renommés vous offrent une performance où se mêlent instruments traditionnels comme la harpe celtique, la cornemuse et le violon, avec des arrangements modernes. Ce concert, empreint d’émotion et d’énergie, célèbre la richesse musicale des pays celtiques, avec des airs entraînants et des ballades nostalgiques. Un événement incontournable pour les amateurs de musique et de culture bretonne.', 'www.celticlorient.bzh', 2, 3, 30, 'standard', 120, 150);
+('Fest-Noz Traditionnel', 'Plongez dans une soirée bretonne festive, avec danses et musique traditionnelle en live.', 'Quimper', 'Le Fest-Noz, inscrit au patrimoine immatériel de l’UNESCO, est une véritable célébration de la culture bretonne. Lors de cette soirée animée, laissez-vous emporter par les rythmes envoûtants de la musique traditionnelle jouée en live par des groupes locaux, avec des instruments tels que la bombarde, le biniou et l’accordéon. Les danses bretonnes, faciles à apprendre, invitent tout le monde, débutants ou experts, à se joindre à la ronde. Les pauses sont l’occasion de déguster des spécialités bretonnes comme le cidre et les crêpes. Un événement unique pour vivre la convivialité et la richesse culturelle de la Bretagne.', 'www.festnoz-quimper.bzh', 1, 1, 20, 'standard', 180, 200,11),
+('Spectacle Son et Lumière', 'Découvrez l’histoire bretonne à travers un spectacle captivant mêlant projections lumineuses et musique.', 'Saint-Malo', 'Ce spectacle son et lumière, organisé dans les remparts de Saint-Malo, offre une immersion spectaculaire dans l’histoire bretonne. Les projections animées illuminent les vieilles pierres, racontant des récits captivants sur les corsaires, les batailles maritimes et les légendes locales. Accompagné d’une bande-son envoûtante et parfois de performances en direct, ce spectacle est une expérience unique pour petits et grands. Une belle façon de redécouvrir Saint-Malo sous un angle artistique et immersif.', 'www.saintmalo-spectacle.bzh', 2, 2, 25, 'premium', 90, 300,12),
+('Concert de Musique Celtique', 'Un concert vibrant de musique celtique, mêlant instruments traditionnels et modernité.', 'Lorient', 'Plongez dans l’univers de la musique celtique avec ce concert exceptionnel organisé à Lorient, la capitale interceltique. Des artistes renommés vous offrent une performance où se mêlent instruments traditionnels comme la harpe celtique, la cornemuse et le violon, avec des arrangements modernes. Ce concert, empreint d’émotion et d’énergie, célèbre la richesse musicale des pays celtiques, avec des airs entraînants et des ballades nostalgiques. Un événement incontournable pour les amateurs de musique et de culture bretonne.', 'www.celticlorient.bzh', 2, 3, 30, 'standard', 120, 150,13);
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE PARCS D'ATTRACTION
@@ -317,17 +317,22 @@ VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse
 
 INSERT INTO sae._date(date)
 VALUES 
-('2024-11-27 11:00:00'), 
+('2024-11-27 11:00:00'), --1
 ('2024-11-27 17:00:00'), 
 ('2024-11-27 20:00:00'), 
 ('2024-11-27 21:00:00'),
-('2024-11-28 11:00:00'), 
+('2024-11-28 11:00:00'), -- 5
 ('2024-11-28 17:00:00'), 
 ('2024-11-28 20:00:00'), 
 ('2024-11-28 21:00:00'),
 ('2024-11-29 17:00:00'), 
-('2024-11-29 21:00:00');  
- 
+('2024-11-29 21:00:00'), -- 10
+('2024-10-29 19:00:00'), 
+('2024-10-14 22:00:01'),
+('2024-10-29 22:00:00'), 
+('2024-10-29 21:00:00'), 
+('2024-10-14 22:14:01'), -- 15
+('2024-10-29 22:02:03'); 
 INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
 VALUES 
 -- Atelier de Tissage Breton
