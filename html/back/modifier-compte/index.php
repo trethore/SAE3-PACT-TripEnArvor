@@ -153,7 +153,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
                 <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonValider"> Valider </button> 
             </div>
         </div>
         <div id="annulerModifCompte">
