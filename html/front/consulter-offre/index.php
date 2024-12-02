@@ -385,7 +385,6 @@ try {
                         $moisUpdate = $dateParts[1]; 
                         $jourUpdate = $dateParts[2]; 
                         $heureMinute = $visite_le[1]; 
-                        $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
                     }
                     if (isset($_SESSION['id'])) {
                         $id_membre = intval($_SESSION['id']);
@@ -394,6 +393,7 @@ try {
                         $id_offre = intval($_GET['id']);
                     }
 
+                    $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
                     $publie_le = date('Y-m-d H:i:s');
 
                     try {
