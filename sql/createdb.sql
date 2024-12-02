@@ -148,10 +148,12 @@ CREATE VIEW offre_activite AS
 /* ======================= OFFRE VISITE CONCRETE ======================= */
 
 CREATE TABLE _offre_visite (
-    id_offre    INTEGER,
-    duree       INTEGER NOT NULL,
+    id_offre        INTEGER,
+    duree           INTEGER NOT NULL,
+    date_evenement  INTEGER NOT NULL,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_visite_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)
 );
 
 CREATE VIEW offre_visite AS
@@ -164,11 +166,14 @@ CREATE VIEW offre_visite AS
 /* ===================== OFFRE SPECTACLE CONCRETE ====================== */
 
 CREATE TABLE _offre_spectacle (
-    id_offre    INTEGER,
-    duree       INTEGER NOT NULL,
-    capacite    INTEGER NOT NULL,
+    id_offre       INTEGER,
+    duree          INTEGER NOT NULL,
+    capacite       INTEGER NOT NULL,
+    date_evenement INTEGER NOT NULL,
     CONSTRAINT _offre_spectacle_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_spectacle_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)
+
 );
 
 CREATE VIEW offre_spectacle AS
@@ -222,8 +227,6 @@ CREATE TABLE _note(
     CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
 );
 
-
-
 /* ============================== OPTIONS ============================== */
 
 CREATE TABLE _option (
@@ -231,7 +234,6 @@ CREATE TABLE _option (
     prix_option INTEGER NOT NULL,
     CONSTRAINT _option_pk PRIMARY KEY (nom_option)
 );
-
 
 
 /* ##################################################################### */
