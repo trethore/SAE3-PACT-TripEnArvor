@@ -68,7 +68,7 @@
 <body>
     <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -199,9 +199,9 @@
 
             <div>
                 <!-- activite, visite, spectacle -->
-                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2">minutes</label>
+                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
-                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2">an(s)</label>
+                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
 
                 <br>
                 <!-- spectacle -->
