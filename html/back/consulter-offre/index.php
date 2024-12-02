@@ -36,7 +36,7 @@ try {
 // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
-    $compte = getCompte($id_compte);
+    $compte = getCompte($id_offre_cible);
 
 // ===== GESTION DES IMAGES ===== //
 
@@ -114,7 +114,7 @@ try {
     
     <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -348,7 +348,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
+            <button onclick="location.href='redden.ventsdouest.dev/back/liste-back/'">Retour à la liste des offres</button>
             <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 

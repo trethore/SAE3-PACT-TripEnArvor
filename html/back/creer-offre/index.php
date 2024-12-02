@@ -68,7 +68,7 @@
 <body>
     <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -503,20 +503,22 @@
 
             }
 
-            $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
-            $stmt_verif = $dbh->prepare($requete_verif);
-            $stmt_verif->execute([$fichier_img]);
+            // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
+            // $stmt_verif = $dbh->prepare($requete_verif);
+            // $stmt_verif->execute([$fichier_img]);
 
-            if ($stmt_verif->fetchColumn() > 0) {
-                die("Erreur : Le fichier existe déjà dans la base de données.");
-            }
+            // if ($stmt_verif->fetchColumn() > 0) {
+            //     die("Erreur : Le fichier existe déjà dans la base de données.");
+            // }
+
 
             $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
             $target_file = $target_dir . $time . $file_extension;
 
-            if (file_exists($target_file)) {
-                die("Erreur : Le fichier existe déjà dans le répertoire.");
-            }
+
+            // if (file_exists($target_file)) {
+            //     die("Erreur : Le fichier existe déjà dans le répertoire.");
+            // }
                 
             $dbh->beginTransaction();
             // Déterminer la table cible selon la catégorie

@@ -38,7 +38,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -71,6 +71,12 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td>Dénomination Sociale</td>
                     <td><?php echo htmlentities($detailCompte["denomination"]);?></td>
                 </tr>
+                <?php if ($typeCompte == 'proPrive') {?>
+                <tr>
+                    <td>N° SIREN</td>
+                    <td><?php echo htmlentities($detailCompte["siren"]);?></td>
+                </tr>
+                <?php } ?>
                 <tr>
                     <td>A propos</td>
                     <td>
@@ -100,13 +106,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"]);?></td>
                 </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><?php echo htmlentities($detailCompte["siren"]);?></td>
-                </tr>
-                <?php } ?>
-                <tr>
+                <tr style="display: none;">
                     <td>N° IBAN</td>
                     <td><?php echo htmlentities("à implémenter");?></td>
                 </tr>
