@@ -56,6 +56,7 @@
 /* Overlay pour le fond */
 #popupOverlay {
   display: none;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -64,65 +65,72 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Style de la popup */
+/* 
+Style de la popup
 #validerModifCompte, 
 #annulerModifCompte, 
 #quitterModifCompte {
-    display: none;
-  position: fixed;
-  display: flex; 
-  flex-direction: column;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--blanc-leger);
-  padding: 0 1em 1em;
-  width: 500px;
-  height: 300px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    z-index: 11;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc-leger);
+    padding: 0 1em 1em;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Titre de la popup */
+Titre de la popup
 #validerModifCompte h3, 
 #annulerModifCompte h3, 
 #quitterModifCompte h3 {
-  font-weight: var(--semi-bold);
-  color: var(--noir);
+    font-weight: var(--semi-bold);
+    margin-bottom: 0;
+    font-size: 24pt;
+    color: var(--noir);
 }
 
-/* Texte de la popup */
+Texte de la popup
 #validerModifCompte p, 
 #annulerModifCompte p, 
 #quitterModifCompte p {
-  color: var(--noir);
-  margin-bottom: 20px;
+    color: var(--noir);
+    font-size: 14pt;
+    margin-bottom: 20px;
 }
 
-/* Style des boutons */
+Style des boutons
 #validerModifCompte button, 
 #annulerModifCompte button, 
 #quitterModifCompte button {
-  background-color: var(--orange-principale);
-  border: 2px solid var(--orange-principale);
-  color: var(--blanc-leger);
-  font-weight: bold;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+    background-color: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
+    color: var(--blanc-leger);
+    font-weight: var(--bold);
+    font-size: 12pt;
+    width: 200px;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 }
 
 #validerModifCompte button:hover,
 #annulerModifCompte button:hover,
 #quitterModifCompte button:hover {
-  color: var(--orange-principale);
-  background-color: var(--blanc-leger);
-  border: 2px solid var(--orange-principale);
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
 }
+*/
 
 /*
 PHP requête min pour faire fonctionnner le header

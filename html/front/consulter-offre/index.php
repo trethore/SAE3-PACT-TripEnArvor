@@ -2,6 +2,17 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+session_start();
+// Vérifier si l'utilisateur est connecté (si la session 'id' existe)
+if (!isset($_SESSION['id'])) {
+    // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
+    echo "Pas connecté";
+    exit;
+} else {
+    echo "Connecté  avec id : " . $_SESSION['id'];
+}
+
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -128,7 +139,7 @@ try {
 
         <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
-            <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($images as $image) { ?>
@@ -148,12 +159,12 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
                     <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
                 <?php } else {
-                    echo "Adresse introuvable";
+                    echo "Pas d'adresse disponible";
                 } ?>
             </div>
                 
@@ -170,29 +181,38 @@ try {
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
+                <?php if (!empty($compte['nom_compte']) || !empty($compte['prenom'])) { ?>
+                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p>
+                <? } else {
+                    echo "Pas d'information sur le propriétaire de l'offre";
+                }?> 
             </div>
-        </section>
+
+        </section>  
 
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <?php foreach ($tags as $tag) { ?>
-                        <li><?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } ?>
+                    <?php if (!empty($tags)) {
+                        foreach ($tags as $tag) { ?>
+                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <?php }
+                    } else {
+                        echo "Pas de tags disponibles";
+                    } ?>
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
                 <div class="display-ligne-espace">
                     <!-- Affichage le titre de l'offre -->
-                    <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
                 <!-- Affichage du résumé de l'offre -->
-                <p><?php echo htmlentities($offre['resume']); ?></p>
+                <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
@@ -222,7 +242,7 @@ try {
                 } ?>
                 
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
     
         </section>
@@ -231,43 +251,43 @@ try {
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
         </section>
 
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs : </h2>
-                    <table>
-                        <?php foreach ($tarifs as $t) { ?>
+                <h2>Tarifs : </h2><br>
+                <table>
+                    <?php foreach ($tarifs as $t) { 
+                        if ($t['nom_tarif'] != "nomtarif1") { ?>
                             <tr>
                                 <td><?php echo htmlentities($t['nom_tarif']) ?></td>
                                 <td><?php echo htmlentities($t['prix']) . " €"?></td>
                             </tr>
-                        <?php } ?>
-                    </table>
-                </div>
-                <button>Voir les tarifs supplémentaires</button>
+                        <? } else {
+                            echo "Pas de tarifs diponibles" ;
+                        }
+                    } ?>
+                </table>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php foreach ($jours as $jour) { ?>
-                    <p>
-                        <?php 
-                        echo htmlentities($jour['nom_jour'] . " : "); 
-                        foreach ($horaire as $h) {
-                            if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
+                <?php if (!empty($jour['nom_jour'])) {
+                    foreach ($jours as $jour) { ?>
+                        <p>
+                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                            foreach ($horaire as $h) {
                                 echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                            } else {
-                                echo "Fermé"; 
-                            }
-                        } ?>
-                    </p>
-                <?php } ?>
+                            } ?>
+                        </p>
+                    <?php }
+                } else {
+                    echo "Pas d'information sur les jours et les horaires d'ouverture";
+                } ?>
             </div> 
             
         </section>
@@ -291,46 +311,50 @@ try {
                 <?php } ?>
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
+            
+            <?php if (isset($_SESSION['id'])) { ?>
 
-            <button id="showFormButton">Publier un avis</button>
+                <button id="showFormButton">Publier un avis</button>
 
-            <form id="avisForm" action="" method="post" style="display: none;">
-                <h2 for="creation-avis">Création d'avis</h2><br>
-                <div class="display-ligne-espace">
-                    <label for="titre">Saisissez le titre de votre avis</label>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <textarea id="titre" name="titre" required></textarea><br>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <label for="avis">Rédigez votre avis</label>
-                    <p class="transparent">.</p>
-                </div>
-                <textarea id="avis" name="avis" required></textarea><br>
-                <div class="display-ligne-espace">
-                    <label for="note">Saisissez la note de votre avis</label>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <label for="titre">Saisissez la date de votre visite</label>
-                    <p class="transparent">.</p>
-                </div>
-                <div class="display-ligne-espace">
-                    <input type="datetime-local" id="date" name="date" required/><br>
-                    <p class="transparent">.</p>
-                </div>
-                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                <button type="submit">Publier</button>
-                <button type="button" id="cancelFormButton">Annuler</button>
-            </form>
+                <form id="avisForm" action="" method="post" style="display: none;">
+                    <h2 for="creation-avis">Création d'avis</h2><br>
+                    <div class="display-ligne-espace">
+                        <label for="titre">Saisissez le titre de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="avis">Rédigez votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <textarea id="avis" name="avis" required></textarea><br>
+                    <div class="display-ligne-espace">
+                        <label for="note">Saisissez la note de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="titre">Saisissez la date de votre visite</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="datetime-local" id="date" name="date" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                    <button type="submit">Publier</button>
+                    <button type="button" id="cancelFormButton">Annuler</button>
+                </form>
+            <?php } else {
+                echo "Connexion requise pour publier un avis";
+            } 
 
-            <?php 
             $compteur = 0;
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">

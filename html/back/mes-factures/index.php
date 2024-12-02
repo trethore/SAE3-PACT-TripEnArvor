@@ -82,9 +82,13 @@ $factures = [
             <h1>Mes factures</h1>
             <ul>
                 <?php
-                    foreach ($factures as $facture) {
-                        echo $facture["date"] . " - ";
-                    }
+                foreach ($factures as $facture) {
+                ?>
+                    <li>
+                        <a href="#" onclick="window.open('/images/universel/facture.pdf', '_blank', 'fullscreen=yes'); return false;"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                    </li>
+                <?php
+                }
                 ?>
             </ul>
         </section>

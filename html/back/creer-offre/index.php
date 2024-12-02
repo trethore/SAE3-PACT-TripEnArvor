@@ -176,10 +176,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td> -->
+                    <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
                     <td>
-                        <div class="custom-select-container">
-                            <select class="custom-select" id="type" name="letype">
+                        <div class="custom-select-container" id="type">
+                            <select class="custom-select" name="letype">
                                 <option value="standard"> Offre Standard </option>
                                 <option value="premium"> Offre Premium </option>
                             </select>
@@ -363,7 +363,7 @@
         <?php
         } else {
             $id_compte =  $_SESSION['id'];
-            $type = "standard"
+            $type = "standard";
 
             $resume = $_POST['descriptionC'];
             // Inclusion des paramètres de connexion
@@ -410,6 +410,9 @@
             }
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
+            }
+            if (isset($_POST['type'])) {
+                $type = $_POST['type'];
             }
             
 
@@ -469,19 +472,22 @@
             // Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
-            $dbh->beginTransaction();
+            
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
                 
 
+            
 
+
+           
             //INSERTION IMAGE dans _image
             $time = 'p' . strval(time());
             $file = $_FILES['photo'];
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . $time . $file_extension);
 
 
                 $fichier_img = $time . $file_extension;
@@ -495,12 +501,23 @@
                 $stmt_image->execute([$fichier_img]);
 
             }
-            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
-if (!is_dir($target_dir)) {
-    die("Erreur : Le répertoire cible n'existe pas ou n'est pas accessible.");
-}
-                
 
+            $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
+            $stmt_verif = $dbh->prepare($requete_verif);
+            $stmt_verif->execute([$fichier_img]);
+
+            if ($stmt_verif->fetchColumn() > 0) {
+                die("Erreur : Le fichier existe déjà dans la base de données.");
+            }
+
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
+            $target_file = $target_dir . $time . $file_extension;
+
+            if (file_exists($target_file)) {
+                die("Erreur : Le fichier existe déjà dans le répertoire.");
+            }
+                
+            $dbh->beginTransaction();
             // Déterminer la table cible selon la catégorie
             switch ($categorie) {
                 case 'activite':
@@ -540,7 +557,7 @@ if (!is_dir($target_dir)) {
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'plan_' . $time . $file_extension);
                         $fichier_plan = 'plan_' . $time . $file_extension;
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -600,7 +617,7 @@ if (!is_dir($target_dir)) {
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'carte_' . $time . $file_extension);
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -680,8 +697,9 @@ if (!is_dir($target_dir)) {
             console.log(isIdProPublique);
 
             if(isIdProPublique){
-                document.getElementById("type").style.display = 'none';
-                document.getElementById("labeltype").style.display = 'none';
+                 document.getElementById("type").style.display = 'none';
+                 document.getElementById("labeltype").style.display = 'none';
+                 console.log("le type est caché");
             }
 
 
