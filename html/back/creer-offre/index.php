@@ -420,7 +420,7 @@
 
             if ($categorie !== "restaurant") {
                     
-                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))) {
+                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))&& $_POST['tarif1'] !== "") {
                     $tarif1 = $_POST['tarif1'];
                     $tarif1 = intval($tarif1);
                     $nomtarif1 = $_POST['nomtarif1'];
@@ -438,18 +438,18 @@
                 );
                 print $tarif_min;
 
-                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))) {
+                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))&& $_POST['tarif2'] !== "") {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
                     print("rentré dans le connard de isset pour 0 raisons");
                 }else
-                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))) {
+                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))&& $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
                     $tabtarifs[$_POST['nomtarif3']] = $tarif3;
                 }
-                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4']))) {
+                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4']))&& $_POST['tarif4'] !== "") {
                     $tarif4 = $_POST['tarif4'];
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
