@@ -431,7 +431,8 @@
                     $nomtarif1 = "nomtarif1";
 
                 }
-                $tarif_min = $tarif1;     
+                $tarif_min = $tarif1; 
+                print("tarif1 ". $tarif1." tarif min ".$tarif_min);    
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
