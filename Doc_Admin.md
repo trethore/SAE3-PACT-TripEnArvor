@@ -1,7 +1,7 @@
 # **Documentation : Consultation des données par l'administrateur**
 
 ## **Objectif**
-Permettre à l'administrateur de consulter les données d’un utilisateur ou d’une offre afin de vérifier leur conformité aux normes légales (ex. RGPD).
+Comment consulter les données d’un utilisateur ou d’une offre afin de vérifier leur conformité aux normes légales (ex. RGPD).
 
 ---
 
@@ -10,8 +10,7 @@ Permettre à l'administrateur de consulter les données d’un utilisateur ou d�
    - Identifiants administrateur (login et mot de passe).  
    - Droits suffisants pour consulter les données des utilisateurs et des offres.
 2. **Outils nécessaires**  
-   - Logiciel de gestion de base de données (ex. MySQL Workbench, pgAdmin, ou équivalent selon la technologie utilisée).  
-   - Connexion sécurisée au serveur hébergeant la base de données.
+   - Logiciel de gestion de base de données (ex. SQL Workbench, pgAdmin).  
 
 ---
 
@@ -70,10 +69,5 @@ Permettre à l'administrateur de consulter les données d’un utilisateur ou d�
 - **Logs et traçabilité** : Documenter toutes les consultations dans un fichier ou une table dédiée pour assurer la traçabilité.  
 - **Modifications** : Ne pas modifier directement les données sans justification légale.  
 - **Sécurisation** : Ne jamais exposer les identifiants administrateurs ou les données consultées.
-
----
-
-## **Conclusion**
-Ces étapes permettent à l’administrateur de consulter les données de manière conforme aux réglementations légales. En cas de doute sur une donnée, signaler au service juridique ou au responsable de la conformité.
 
 ---

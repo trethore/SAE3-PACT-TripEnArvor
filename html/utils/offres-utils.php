@@ -201,7 +201,7 @@
         }
     }
 
-    // ===== Fonciton qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
     function getActivite($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";

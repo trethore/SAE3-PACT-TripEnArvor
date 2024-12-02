@@ -59,6 +59,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <h1>Détails du compte</h1>
         <h2>Mon entreprise</h2>
         <form action="/back/modifier-compte" method="POST" id="myForm">
+
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>

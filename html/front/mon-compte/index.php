@@ -15,7 +15,7 @@ try {
 startSession();
 $id_compte = $_SESSION["id"];
 if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    redirectTo("https://redden.ventsdouest.dev/front/se-connecter/");
+    redirectTo("https://redden.ventsdouest.dev/se-connecter/");
 }
 
 $reqCompte = "SELECT * from sae._compte_membre cm 
@@ -47,7 +47,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <main>
         <nav>
             <a class="ici" href="/front/mon-compte">Mes infos</a>
-            <a href="/back/se-connecter">Se déconnecter</a>
+            <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
             <?php 

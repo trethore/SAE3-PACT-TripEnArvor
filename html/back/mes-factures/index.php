@@ -69,7 +69,7 @@ $factures = [
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
             <a class="ici" href="/back/mes-factures">Mes factures</a>
-            <a href="/back/se-connecter">Se déconnecter</a>
+            <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
             <?php 
@@ -85,7 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="#" onclick="window.open('/images/universel/facture.pdf', '_blank', 'fullscreen=yes'); return false;"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/images/universel/facture.pdf" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
                     </li>
                 <?php
                 }
