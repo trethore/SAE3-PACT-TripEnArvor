@@ -3,13 +3,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
 session_start();
-// Vérifier si l'utilisateur est connecté (si la session 'id' existe)
-if (!isset($_SESSION['id'])) {
-    // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
-    echo "Pas connecté";
-} else {
-    echo "Connecté  avec id : " . $_SESSION['id'];
-}
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -314,7 +307,7 @@ try {
 
                 <button id="showFormButton">Publier un avis</button>
 
-                <form id="avisForm" action="" method="post" style="display: none;">
+                <form id="avisForm" action="index.php" method="post" style="display: none;">
                     <h2 for="creation-avis">Création d'avis</h2><br>
                     <div class="display-ligne-espace">
                         <label for="titre">Saisissez le titre de votre avis</label>
@@ -322,6 +315,21 @@ try {
                     </div>
                     <div class="display-ligne-espace">
                         <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="contexte">Contexte de visite :</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <select id="contexte" name="contexte" required>
+                            <option value="" disabled selected>Choisissez un contexte</option>
+                            <option value="affaires">Affaires</option>
+                            <option value="couple">Couple</option>
+                            <option value="famille">Famille</option>
+                            <option value="amis">Amis</option>
+                            <option value="solo">Solo</option>
+                        </select><br>
                         <p class="transparent">.</p>
                     </div>
                     <div class="display-ligne-espace">

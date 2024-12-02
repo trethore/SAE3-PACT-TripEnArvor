@@ -4,8 +4,8 @@ const popup = document.getElementById("validerModifCompte");
 const boutonAnnuler = document.getElementById("boutonAnnuler");
 const boutonValider = document.getElementById("boutonValider");
 
-const retourCompte = document.getElementsByClassName("ICON-utilisateur");
-const retourMenu = document.getElementsByClassName("ICON-accueil");
+const retourCompte = document.getElementsByClassName("retourCompte");
+const retourMenu = document.getElementsByClassName("retourAcceuil");
 const boutonReprendre = document.getElementById("boutonReprendre");
 const boutonQuitter = document.getElementById("boutonQuitter");
 
