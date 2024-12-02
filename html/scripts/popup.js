@@ -5,7 +5,7 @@ const boutonAnnuler = document.getElementById("boutonAnnuler");
 const boutonValider = document.getElementById("boutonValider");
 
 const retourCompte = document.getElementsByClassName("retourCompte");
-const retourMenu = document.getElementsByClassName("retourAcceuil");
+const retourMenu = document.getElementsByClassName("retourAccueil");
 const boutonReprendre = document.getElementById("boutonReprendre");
 const boutonQuitter = document.getElementById("boutonQuitter");
 
@@ -16,7 +16,7 @@ form.addEventListener("submit", function(event) {
     popup.style.display = "flex";
 });
 
-// Affiche la popup de retour à l'acceuil
+// Affiche la popup de retour à l'accueil
 retourMenu.addEventListener("click", function() {
     popupOverlay.style.display = "block";
     popup.style.display = "flex";

@@ -15,7 +15,7 @@ startSession();
 $id_compte = $_SESSION["id"];
 redirectToListOffreIfNecessary($id_compte);
 
-$submitted = isset($_POST['type-compte']);
+$submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
 $reqCompte = "SELECT * from sae._compte_professionnel cp 
@@ -37,12 +37,12 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAcceuil">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back" class="retourAcceuil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte" class="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <?php
@@ -57,13 +57,19 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
         <h1>Détails du compte</h1>
-        <h2>Vue d'ensemble</h2>
+        <h2>Mon entreprise</h2>
         <form action="/back/modifier-compte" method="POST" id="myForm">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
                     <td><input type="text" name="denomination" id="denomination" value="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
                 </tr>
+                <?php if ($typeCompte == 'proPrive') {?>
+                <tr>
+                    <td>N° SIREN</td>
+                    <td><input type="text" name="siren" id="siren" value="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
+                </tr>
+                <?php } ?>
                 <tr>
                     <td>A propos</td>
                     <td><input type="text" name="a_propos" id="a_propos" value="<?php echo htmlentities($detailCompte["a_propos"]);?>"></td>
@@ -103,12 +109,6 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                                             echo htmlentities($detailCompte["tel"]);} ?>"> 
                     </td>
                 </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
-                </tr>
-                <?php } ?>
                 <tr style="display: none;">
                     <td>N° IBAN</td>
                     <td><input type="text" name="iban" id="iban" value="<?php echo htmlentities("à implémenter");?>"></td>
@@ -179,8 +179,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <?php
 } else {
     $ok = true;
-    switch ($_POST['type-compte']) {
-        case 'pro-publique':
+    switch ($typeCompte) {
+        case 'proPublique':
             $ok = $ok && isset($_POST['email']);
             $ok = $ok && isset($_POST['mdp']);
             $ok = $ok && isset($_POST['nom']);
@@ -195,7 +195,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             $ok = $ok && isset($_POST['ville']);
             $ok = $ok && isset($_POST['pays']);
             break;
-        case 'pro-privé':
+
+        case 'proPrive':
             $ok = $ok && isset($_POST['email']);
             $ok = $ok && isset($_POST['mdp']);
             $ok = $ok && isset($_POST['nom']);
@@ -211,12 +212,13 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             $ok = $ok && isset($_POST['ville']);
             $ok = $ok && isset($_POST['pays']);
             break;
+
         default:
             $ok = false;
             break;
+        }
     }
 
-    $type_compte = $_POST['type-compte'];
     $email = $_POST['email'];
     $password = $_POST['mdp'];
     $name = $_POST['nom'];
@@ -225,45 +227,47 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
 
     if ($ok) {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        switch ($_POST['type-compte']) {
-            case 'pro-publique':
+        switch ($typeCompte) {
+            case 'proPublique':
                 $denomination = $_POST['denomination'];
                 $a_propos = $_POST['a-propos'];
                 $site_web = $_POST['site'];
                 $street = $_POST['rue'];
-                $address_complement = $_POST['address-complement'];
+                $address_complement = $_POST['compl_adr'];
                 $code_postal = $_POST['cp'];
                 $city = $_POST['ville'];
                 $country = $_POST['pays'];
                 if ($address_complement === '') $address_complement = null;
-                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+
+                $query = "UPDATE sae._adresse set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                $query = "UPDATE sae.compte_professionnel_publique set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) = (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
                 $_SESSION['id'] = $stmt->fetch()['id_compte'];
                 break;
-            case 'pro-privé':
+            case 'proPrive':
                 $denomination = $_POST['denomination'];
                 $a_propos = $_POST['a-propos'];
                 $site_web = $_POST['site'];
                 $siren = $_POST['siren'];
                 $street = $_POST['rue'];
-                $address_complement = $_POST['address-complement'];
+                $address_complement = $_POST['compl_adr'];
                 $code_postal = $_POST['cp'];
                 $city = $_POST['ville'];
                 $country = $_POST['pays'];
                 if ($address_complement === '') $address_complement = null;
-                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+
+                $query = "UPDATE sae._adresse SET (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
+
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                $query = "UPDATE sae.compte_professionnel_prive set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) where id_compte = ?";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
-                $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren, $id_compte]);
                 break;
             default:
                 $ok = false;
