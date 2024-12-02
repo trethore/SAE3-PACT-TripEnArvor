@@ -364,7 +364,7 @@ try {
                     <button type="button" id="cancelFormButton">Annuler</button>
                 </form>
 
-                <? if (!$submitted) { ?>
+                <? if ($submitted) { ?>
 
                     <?php if (isset($_POST['titre'])) {
                         $titre = htmlspecialchars($_POST['titre']);
