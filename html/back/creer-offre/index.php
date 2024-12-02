@@ -455,10 +455,12 @@
                 }
 
                 foreach ($tabtarifs as $key => $value) {
+                    print($value);
                     if ($tarif_min > $value) {
                         $tarif_min = $value;
                     } 
                 }
+                print("le tarif min du spectacle ".$tarif_min);
 
             }
             print_r($_POST);
@@ -590,9 +592,10 @@
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
+                    print("le tarif min du spectacle ".$tarif_min);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
-                        print("le tarif min du spectacle ".$tarif_min);
+                        
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         /////TEST
