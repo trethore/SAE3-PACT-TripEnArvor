@@ -461,7 +461,7 @@
 
             }
             print_r($_POST);
-            print_r($_FILES)
+            print_r($_FILES);
             
 
             
@@ -477,10 +477,6 @@
 
             
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
-                
-
-            
 
 
            
@@ -690,6 +686,7 @@
                 die();
             }
         }
+    
         
         ?>
 
