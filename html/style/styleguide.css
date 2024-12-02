@@ -65,73 +65,6 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* 
-Style de la popup
-#validerModifCompte, 
-#annulerModifCompte, 
-#quitterModifCompte {
-    position: fixed;
-    z-index: 11;
-    flex-direction: column;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--blanc-leger);
-    padding: 0 1em 1em;
-    width: 500px;
-    height: 300px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-Titre de la popup
-#validerModifCompte h3, 
-#annulerModifCompte h3, 
-#quitterModifCompte h3 {
-    font-weight: var(--semi-bold);
-    margin-bottom: 0;
-    font-size: 24pt;
-    color: var(--noir);
-}
-
-Texte de la popup
-#validerModifCompte p, 
-#annulerModifCompte p, 
-#quitterModifCompte p {
-    color: var(--noir);
-    font-size: 14pt;
-    margin-bottom: 20px;
-}
-
-Style des boutons
-#validerModifCompte button, 
-#annulerModifCompte button, 
-#quitterModifCompte button {
-    background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
-    color: var(--blanc-leger);
-    font-weight: var(--bold);
-    font-size: 12pt;
-    width: 200px;
-    height: 50px;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-#validerModifCompte button:hover,
-#annulerModifCompte button:hover,
-#quitterModifCompte button:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
-}
-*/
-
 /*
 PHP requête min pour faire fonctionnner le header
 
@@ -325,33 +258,6 @@ Telephone nav pour le front a mettre en dessous le body
     <div class="close">
         <button class="bouton1"> Annuler </button>
         <button class="bouton2"> Valider </button>
-    </div>
-</div> 
-
-              ----POP-UP POUR LA PAGE DE MODIFICATION DU COMPTE----
-<div id="popupOverlay"></div>
-<div id="validerModifCompte" style="display: none;">
-    <h3>Valider les modifications</h3>
-    <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-    <div >
-        <button id="boutonAnnuler"> Annuler </button>
-        <button id="boutonValider"> Valider </button> 
-    </div>
-</div>
-<div id="annulerModifCompte" style="display: none;">
-    <h3>Annuler les modifications</h3>
-    <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
-    <div>
-        <button id="boutonReprendre"> Reprendre </button>
-        <button id="boutonQuitter"> Quitter </button>
-    </div>
-</div>
-<div id="quitterModifCompte" style="display: none;">
-    <h3>Annuler les modifications</h3>
-    <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
-    <div>
-        <button id="boutonReprendre"> Reprendre </button>
-        <button id="boutonQuitter"> Quitter </button>
     </div>
 </div> 
 */
