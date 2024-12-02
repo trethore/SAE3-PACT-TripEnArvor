@@ -3,13 +3,15 @@ const popupOverlay = document.getElementById("popupOverlay");
 const popupValider = document.getElementById("validerModifCompte");
 const popupAnnuler = document.getElementById("annulerModifCompte");
 const popupQuitter = document.getElementById("quitterModifCompte");
-const boutonAnnuler = document.getElementById("boutonAnnuler");
-const boutonValider = document.getElementById("boutonValider");
+
+const boutonAnnuler = document.getElementsByClassName("boutonAnnuler");
+const boutonValider = document.getElementsByClassName("boutonValider");
+const boutonReprendre = document.getElementsByClassName("boutonReprendre");
+const boutonQuitter = document.getElementsByClassName("boutonQuitter");
 
 const retourCompte = document.getElementsByClassName("retourCompte");
 const retourMenu = document.getElementsByClassName("retourAccueil");
-const boutonReprendre = document.getElementById("boutonReprendre");
-const boutonQuitter = document.getElementById("boutonQuitter");
+
 
 /**************************
     POP-UP DE VALIDATION 

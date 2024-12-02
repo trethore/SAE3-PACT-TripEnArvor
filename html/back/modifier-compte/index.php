@@ -156,24 +156,24 @@ if (!$submitted) {
             <h3>Valider les modifications</h3>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button> 
+                <button class="boutonAnnuler"> Annuler </button>
+                <button class="boutonValider"> Valider </button> 
             </div>
         </div>
         <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
-                <button id="boutonQuitter"> Quitter </button>
+                <button class="boutonReprendre"> Reprendre </button>
+                <button class="boutonQuitter"> Quitter </button>
             </div>
         </div>
         <div id="quitterModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
-                <button id="boutonQuitter"> Quitter </button>
+                <button class="boutonReprendre"> Reprendre </button>
+                <button class="boutonQuitter"> Quitter </button>
             </div>
         </div> 
     </main>
