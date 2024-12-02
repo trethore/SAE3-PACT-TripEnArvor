@@ -681,7 +681,7 @@
                 echo "<script>
                     const redirect = confirm('Offre créée avec succès ! Cliquez sur OK pour continuer.');
                     if (redirect) {
-                        window.location.href = '/liste-back';
+                        window.location.href = '/back/liste-back';
                     }
                   </script>";
             } catch (PDOException $e) {
