@@ -391,6 +391,7 @@
 
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
+                print($gammedeprix);
             }
 
             if (isset($_POST['photo'])) {
