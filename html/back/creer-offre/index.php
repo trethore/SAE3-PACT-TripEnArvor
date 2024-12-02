@@ -578,7 +578,7 @@
                         $stmt_plan = $dbh->prepare($requete_plan);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_plan->execute([$fichier_img]);
+                        $stmt_plan->execute([$fichier_plan]);
 
                     }
 
@@ -638,7 +638,7 @@
                         $stmt_carte = $dbh->prepare($requete_carte);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_carte->execute([$fichier_img]);
+                        $stmt_carte->execute([$fichier_carte]);
 
                         $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, gamme_prix, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
