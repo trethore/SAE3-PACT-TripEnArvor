@@ -3,13 +3,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
 session_start();
-// Vérifier si l'utilisateur est connecté (si la session 'id' existe)
-if (!isset($_SESSION['id'])) {
-    // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
-    echo "Pas connecté";
-} else {
-    echo "Connecté  avec id : " . $_SESSION['id'];
-}
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
