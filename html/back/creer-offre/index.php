@@ -779,10 +779,6 @@
                 }
             }
 
-            <?php if($submitted){
-
-            }
-
 
 
             let offreDiv = document.getElementById("offre");
