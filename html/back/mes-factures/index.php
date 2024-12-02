@@ -57,7 +57,7 @@ $factures = [
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -69,7 +69,7 @@ $factures = [
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
             <a class="ici" href="/back/mes-factures">Mes factures</a>
-            <a href="/back/se-connecter">Se déconnecter</a>
+            <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
             <?php 
@@ -85,7 +85,7 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="#" onclick="window.open('/images/universel/facture.pdf', '_blank', 'fullscreen=yes'); return false;"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/images/universel/facture.pdf" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
                     </li>
                 <?php
                 }

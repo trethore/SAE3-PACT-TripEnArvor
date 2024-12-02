@@ -68,12 +68,12 @@
 <body>
     <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     
@@ -178,8 +178,8 @@
                 <tr>
                     <td><label id ="labeltype" for="type">Type de l'offre <span class="required">*</span></label></td>
                     <td>
-                        <div class="custom-select-container" id="type">
-                            <select class="custom-select" name="letype">
+                        <div class="custom-select-container" id="divtype">
+                            <select class="custom-select" name="letype" id="selectype">
                                 <option value="standard"> Offre Standard </option>
                                 <option value="premium"> Offre Premium </option>
                             </select>
@@ -413,6 +413,8 @@
             }
             if (isset($_POST['type'])) {
                 $type = $_POST['type'];
+            }else {
+                $type = "standard";
             }
             
 
@@ -587,7 +589,6 @@
                     break;
 
                 case 'spectacle':
-                    $type = "standard";
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
@@ -697,7 +698,8 @@
             console.log(isIdProPublique);
 
             if(isIdProPublique){
-                 document.getElementById("type").style.display = 'none';
+                console.log("l'id est publique");
+                 document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
                  console.log("le type est caché");
             }

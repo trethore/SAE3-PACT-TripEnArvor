@@ -27,7 +27,7 @@ if (!$submitted) {
     </header>
     <form action="/creer-compte/" method="post">
         <h1>Créer un compte</h1>
-        <span>Vous avez déjà un compte ? <a href="/back/se-connecter/">Connexion</a></span>
+        <span>Vous avez déjà un compte ? <a href="/se-connecter/">Connexion</a></span>
         <span><span>*</span> Champs obligatoires</span>
         <hr>
         <div id="div-type-compte">

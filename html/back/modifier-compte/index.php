@@ -37,13 +37,13 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAcceuil">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/liste-back" class="retourAcceuil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte" class="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <?php 
@@ -55,7 +55,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         ?>
         <h1>Détails du compte</h1>
         <h2>Vue d'ensemble</h2>
-        <form method="POST" id="myForm">
+        <form method="POST" id="myForm" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -147,29 +147,29 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <input type="submit" value="Valider les modifications">
         </div>
         </form>
-        <div id="popupOverlay"></div>
-        <div id="validerModifCompte">
+        <div id="popupOverlay" style="display: none;"></div>
+        <div id="validerModifCompte" style="display: none;">
             <h3>Valider les modifications</h3>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
                 <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonValider"> Valider </button> 
             </div>
         </div>
-        <div id="annulerModifCompte">
+        <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
             <div>
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
         </div>
-        <div id="quitterModifCompte">
-            <h3>Valider les modifications</h3>
+        <div id="quitterModifCompte" style="display: none;">
+            <h3>Annuler les modifications</h3>
             <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
         </div> 
     </main>
