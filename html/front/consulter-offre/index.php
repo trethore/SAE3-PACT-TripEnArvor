@@ -169,7 +169,7 @@ try {
                     if (!empty($adresse['code_postal']) || !empty($adresse['ville'])) {
                         $adresseComplete[] = htmlentities(trim($adresse['code_postal'] . ' ' . $adresse['ville']));
                     } ?>
-                    <p><?php echo htmlentities(implode(', ', $adresseComplete)); ?></p>
+                    <p><?php echo implode(', ', $adresseComplete); ?></p>
                 <?php } else {
                     echo "Pas d'adresse disponible";
                 } ?>
