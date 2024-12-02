@@ -677,7 +677,7 @@
                 $dbh->commit();
 
 
-                if ($isIdProPrivee){
+                if (($isIdProPrivee)&&($categorie !== "restaurant")){
                     foreach ($tabtarifs as $key => $value) {
                         $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
