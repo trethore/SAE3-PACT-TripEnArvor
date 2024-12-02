@@ -536,6 +536,7 @@
                     break;
                 case "restaurant":
                         $requeteCategorie = 'restauration';
+                        break;
                 default:
                     die("Erreur de categorie!");
             }
