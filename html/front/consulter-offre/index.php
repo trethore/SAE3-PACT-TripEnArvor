@@ -313,58 +313,58 @@ try {
 
                 <button id="showFormButton">Publier un avis</button>
 
-                <? if (!$submitted) { ?>
+                <form id="avisForm" action="index.php" method="post" enctype="multipart/form-data" style="display: none;">
+                    <h2 for="creation-avis">Création d'avis</h2><br>
+                    <div class="display-ligne-espace">
+                        <label for="titre">Saisissez le titre de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="contexte">Contexte de visite :</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <select id="contexte" name="contexte" required>
+                            <option value="" disabled selected>Choisissez un contexte</option>
+                            <option value="affaires">Affaires</option>
+                            <option value="couple">Couple</option>
+                            <option value="famille">Famille</option>
+                            <option value="amis">Amis</option>
+                            <option value="solo">Solo</option>
+                        </select><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="avis">Rédigez votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <textarea id="avis" name="avis" required></textarea><br>
+                    <div class="display-ligne-espace">
+                        <label for="note">Saisissez la note de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="date">Saisissez la date de votre visite</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="datetime-local" id="date" name="date" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                    <button type="submit">Publier</button>
+                    <button type="button" id="cancelFormButton">Annuler</button>
+                </form>
 
-                    <form id="avisForm" action="index.php" method="post" enctype="multipart/form-data" style="display: none;">
-                        <h2 for="creation-avis">Création d'avis</h2><br>
-                        <div class="display-ligne-espace">
-                            <label for="titre">Saisissez le titre de votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="text" id="titre" name="titre" required></input><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="contexte">Contexte de visite :</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <select id="contexte" name="contexte" required>
-                                <option value="" disabled selected>Choisissez un contexte</option>
-                                <option value="affaires">Affaires</option>
-                                <option value="couple">Couple</option>
-                                <option value="famille">Famille</option>
-                                <option value="amis">Amis</option>
-                                <option value="solo">Solo</option>
-                            </select><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="avis">Rédigez votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <textarea id="avis" name="avis" required></textarea><br>
-                        <div class="display-ligne-espace">
-                            <label for="note">Saisissez la note de votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="date">Saisissez la date de votre visite</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="datetime-local" id="date" name="date" required/><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                        <button type="submit">Publier</button>
-                        <button type="button" id="cancelFormButton">Annuler</button>
-                    </form>
+                <? if (!$submitted) { ?>
 
                     <?php if (isset($_POST['titre'])) {
                         $titre = htmlspecialchars($_POST['titre']);
@@ -386,8 +386,6 @@ try {
                         $jourUpdate = $dateParts[2]; 
                         $heureMinute = $visite_le[1]; 
                         $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
-                    } else {
-                        $visite_le =  date('Y-m-d H:i:s');
                     }
                     if (isset($_SESSION['id'])) {
                         $id_membre = intval($_SESSION['id']);
