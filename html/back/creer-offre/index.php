@@ -199,9 +199,9 @@
 
             <div>
                 <!-- activite, visite, spectacle -->
-                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2">minutes</label>
+                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
-                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2">an(s)</label>
+                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
 
                 <br>
                 <!-- spectacle -->
@@ -421,9 +421,9 @@
             if ($categorie !== "restaurant") {
                     
                 if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))) {
-                            $tarif1 = $_POST['tarif1'];
-                            $tarif1 = intval($tarif1);
-                            $nomtarif1 = $_POST['nomtarif1'];
+                    $tarif1 = $_POST['tarif1'];
+                    $tarif1 = intval($tarif1);
+                    $nomtarif1 = $_POST['nomtarif1'];
                             
                 }
                 else {
@@ -461,6 +461,7 @@
 
             }
             print_r($_POST);
+            print_r($_FILES);
             
 
             
@@ -476,10 +477,6 @@
 
             
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
-                
-
-            
 
 
            
@@ -504,20 +501,20 @@
 
             }
 
-            $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
-            $stmt_verif = $dbh->prepare($requete_verif);
-            $stmt_verif->execute([$fichier_img]);
+            // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
+            // $stmt_verif = $dbh->prepare($requete_verif);
+            // $stmt_verif->execute([$fichier_img]);
 
-            if ($stmt_verif->fetchColumn() > 0) {
-                die("Erreur : Le fichier existe déjà dans la base de données.");
-            }
+            // if ($stmt_verif->fetchColumn() > 0) {
+            //     die("Erreur : Le fichier existe déjà dans la base de données.");
+            // }
 
-            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
-            $target_file = $target_dir . $time . $file_extension;
+            // $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
+            // $target_file = $target_dir . $time . $file_extension;
 
-            if (file_exists($target_file)) {
-                die("Erreur : Le fichier existe déjà dans le répertoire.");
-            }
+            // if (file_exists($target_file)) {
+            //     die("Erreur : Le fichier existe déjà dans le répertoire.");
+            // }
                 
             $dbh->beginTransaction();
             // Déterminer la table cible selon la catégorie
@@ -534,8 +531,9 @@
                 case 'visite':
                     $requeteCategorie = 'visite';
                     break;
-                case 'restaurant':
+                case "restaurant":
                         $requeteCategorie = 'restauration';
+                        break;
                 default:
                     die("Erreur de categorie!");
             }
@@ -613,7 +611,7 @@
                     break;
 
                 case 'restaurant':
-                    $file = $_FILE['carte'];
+                    $file = $_FILES['carte'];
                     $file_extension = get_file_extension($file['type']);
                     $time = 'p' . strval(time());
 
@@ -688,6 +686,7 @@
                 die();
             }
         }
+    
         
         ?>
 

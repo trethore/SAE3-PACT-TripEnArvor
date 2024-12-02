@@ -10,8 +10,7 @@ Comment consulter les données d’un utilisateur ou d’une offre afin de véri
    - Identifiants administrateur (login et mot de passe).  
    - Droits suffisants pour consulter les données des utilisateurs et des offres.
 2. **Outils nécessaires**  
-   - Logiciel de gestion de base de données (ex. MySQL Workbench, pgAdmin, ou équivalent selon la technologie utilisée).  
-   - Connexion sécurisée au serveur hébergeant la base de données.
+   - Logiciel de gestion de base de données (ex. SQL Workbench, pgAdmin).  
 
 ---
 

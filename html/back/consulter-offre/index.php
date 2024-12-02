@@ -36,7 +36,7 @@ try {
 // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
-    $compte = getCompte($id_compte);
+    $compte = getCompte($id_offre_cible);
 
 // ===== GESTION DES IMAGES ===== //
 
@@ -348,7 +348,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
+            <button onclick="location.href='redden.ventsdouest.dev/back/liste-back/'">Retour à la liste des offres</button>
             <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
