@@ -37,11 +37,13 @@ boutonValider.addEventListener("click", function() {
     POP-UP DE RETOUR A L'ACCUEIL 
 ************************************/
 
-// Affiche la popup de retour à l'accueil
-retourMenu.addEventListener("click", function(event) {
-    event.preventDefault(); // Empêche le changement de page
-    popupOverlay.style.display = "block";
-    popup.style.display = "flex";
+// Ajout d'un écouteur sur chaque élément avec la classe "retourAccueil"
+Array.from(retourMenu).forEach((element) => {
+    element.addEventListener("click", function(event) {
+        event.preventDefault(); // Empêche le changement de page
+        popupOverlay.style.display = "block";
+        popup.style.display = "flex";
+    });
 });
 
 
@@ -49,11 +51,13 @@ retourMenu.addEventListener("click", function(event) {
     POP-UP DE RETOUR AU COMPTE 
 ************************************/
 
-// Affiche la popup de retour au compte
-retourCompte.addEventListener("click", function(event) {
-    event.preventDefault(); // Empêche le changement de page
-    popupOverlay.style.display = "block";
-    popup.style.display = "flex";
+// Ajout d'un écouteur sur chaque élément avec la classe "retourCompte"
+Array.from(retourCompte).forEach((element) => {
+    element.addEventListener("click", function(event) {
+        event.preventDefault(); // Empêche le changement de page
+        popupOverlay.style.display = "block";
+        popup.style.display = "flex";
+    });
 });
 
 
