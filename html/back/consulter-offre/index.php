@@ -167,12 +167,6 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <?php
-                echo '<pre>';
-                print_r($adresse);
-                print_r($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']);
-                echo '</pre>';
-                ?>
                 <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
             </div>
                 
