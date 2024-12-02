@@ -421,9 +421,9 @@
             if ($categorie !== "restaurant") {
                     
                 if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))) {
-                            $tarif1 = $_POST['tarif1'];
-                            $tarif1 = intval($tarif1);
-                            $nomtarif1 = $_POST['nomtarif1'];
+                    $tarif1 = $_POST['tarif1'];
+                    $tarif1 = intval($tarif1);
+                    $nomtarif1 = $_POST['nomtarif1'];
                             
                 }
                 else {
@@ -534,7 +534,7 @@
                 case 'visite':
                     $requeteCategorie = 'visite';
                     break;
-                case 'restaurant':
+                case "restaurant":
                         $requeteCategorie = 'restauration';
                 default:
                     die("Erreur de categorie!");
