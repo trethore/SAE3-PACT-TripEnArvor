@@ -461,6 +461,7 @@
 
             }
             print_r($_POST);
+            print_r($_FILES)
             
 
             
@@ -614,7 +615,7 @@
                     break;
 
                 case 'restaurant':
-                    $file = $_FILE['carte'];
+                    $file = $_FILES['carte'];
                     $file_extension = get_file_extension($file['type']);
                     $time = 'p' . strval(time());
 
