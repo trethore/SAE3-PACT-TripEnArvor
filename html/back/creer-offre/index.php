@@ -586,13 +586,15 @@
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
 
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                     $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                     $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
 
-                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                    
 
                     break;
 
@@ -646,13 +648,15 @@
 
 
                     }
+
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
             
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                     $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_carte_image = $dbh->prepare($requete_carte_offre);
                     $stmt_carte_image->execute([$id_offre, $fichier_carte]);
 
-                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                    
                     break;
                     
                     default:
