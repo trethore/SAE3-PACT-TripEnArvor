@@ -678,7 +678,12 @@
                 // Fermeture de la connexion
                 $dbh = null;
 
-                print "Offre créée avec succès!";
+                echo "<script>
+                    const redirect = confirm('Offre créée avec succès ! Cliquez sur OK pour continuer.');
+                    if (redirect) {
+                        window.location.href = '/liste-back';
+                    }
+                  </script>";
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -772,6 +777,10 @@
                 if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
                 }
+            }
+
+            <?php if($submitted){
+
             }
 
 
