@@ -3,6 +3,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
 session_start();
+if (isset($_POST['titre'])) { // les autres svp²
+    $submitted = true;
+} else {
+    $submitted = false;
+}
+
 // Vérifier si l'utilisateur est connecté (si la session 'id' existe)
 if (!isset($_SESSION['id'])) {
     // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
@@ -365,6 +371,19 @@ try {
                     </div>
                 </div>
             </footer>
-        <?php } ?>
+        <?php } else {
+             
+             try {
+    
+                // Connexion à la base de données
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    
+                
+                $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            }catch(PDOException $e){
+
+            }
+
+        }?>
     </body>
 </html>
