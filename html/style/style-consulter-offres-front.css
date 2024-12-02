@@ -68,7 +68,7 @@ h3 {
 
 .filtre-tri > h2:hover {
     background-color: var(--blanc-leger);
-    border: var(--violet-principal);
+    border: solid 2px var(--violet-principal);
     color: var(--violet-principal);
 }
 
