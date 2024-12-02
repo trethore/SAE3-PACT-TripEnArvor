@@ -337,7 +337,7 @@ VALUES
 (4, 3, 3, 'Bonne visite, mais quelques points négatifs', 'Le personnel était sympathique, et les découvertes intéressantes', 3, 0, 'famille', 4, 3),
 
 -- Balade à Saint-Malo
-(5, 5, 4, 'Belle promenade malgré tout', 'La balade était agréable et bien organisée.', 2, 1, 'amis', 7, 6);
+(4, 5, 4, 'Belle promenade malgré tout', 'La balade était agréable et bien organisée.', 2, 1, 'amis', 7, 6),
 
 -- Fest-Noz
 (4, 6, 2, 'Ambiance mitigée', 'Malgré une bonne ambiance, le service et le personnel m’ont mis mal à l’aise.', 3, 2, 'amis', 8, 7),
