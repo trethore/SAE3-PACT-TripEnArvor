@@ -455,7 +455,7 @@
                 }
 
                 foreach ($tabtarifs as $key => $value) {
-                    print($value);
+                    print("clé : ".$key. "valeur : ".$value);
                     if ($tarif_min > $value) {
                         $tarif_min = $value;
                     } 
