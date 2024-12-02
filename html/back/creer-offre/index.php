@@ -716,7 +716,7 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            if(isIdProPublique){
+            if(isIdProPubliquen === true){
                 console.log("l'id est publique");
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
