@@ -91,6 +91,24 @@ try {
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
+    $titre = htmlspecialchars($_POST['titre']);
+    $commentaire = htmlspecialchars($_POST['avis']);
+    $note = intval($_POST['note']);
+    $visite_le = $_POST['date']; // Date de la visite (format YYYY-MM-DD)
+    $contexte_visite = htmlspecialchars($_POST['contexte']); // Ajoutez ce champ dans le formulaire
+    $id_membre = $_SESSION['id']; // ID du membre connecté
+    $id_offre = intval($_GET['id']); // ID de l'offre liée à l'avis
+
+    print_r($titre);
+    print_r($comment);
+    print_r($note);
+    print_r($visite_le);
+    print_r($contexte_visite);
+    print_r($id_membre);
+    print_r($id_offre);
+
+
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
