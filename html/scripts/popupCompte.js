@@ -30,7 +30,7 @@ const boutonRetourCompte = document.getElementById("boutonRetourCompte");
 
 // Affiche la popup à la soumission du formulaire
 form.addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêche l'envoi du formulaire
+    //event.preventDefault(); // Empêche l'envoi du formulaire
     popupOverlay.style.display = "block";
     popupValider.style.display = "flex";
 });
