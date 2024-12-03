@@ -260,93 +260,93 @@ if (!$submitted) {
             $ok = false;
             break;
         }
-    }
 
-    $email = $_POST['email'];
-    $password = $_POST['mdp'];
-    $name = $_POST['nom'];
-    $first_name = $_POST['prenom'];
-    $tel = $_POST['tel'];
-
-    if ($ok) {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        switch ($typeCompte) {
-            case 'proPublique':
-                $denomination = $_POST['denomination'];
-                $a_propos = $_POST['a-propos'];
-                $site_web = $_POST['site'];
-                $street = $_POST['rue'];
-                $address_complement = $_POST['compl_adr'];
-                $code_postal = $_POST['cp'];
-                $city = $_POST['ville'];
-                $country = $_POST['pays'];
-                if ($address_complement === '') $address_complement = null;
-                // Requete SQL pour modifier la table adresse
-                $query = "UPDATE sae._adresse 
-                            set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                $id_adresse = $stmt->fetch()['id_adresse'];
-
-                // Requete SQL pour modifier la table _compte
-                $query = "UPDATE sae._compte 
-                            set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
-                            where id_compte = ?;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
-
-                // Requete SQL pour modifier la table _compte_professionnel
-                $query = "UPDATE sae._compte_professionnel
-                            set (denomination, a_propos, site_web) = (?, ?, ?)
-                            where id_compte = ?;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
-                break;
-                
-            case 'proPrive':
-                $denomination = $_POST['denomination'];
-                $a_propos = $_POST['a-propos'];
-                $site_web = $_POST['site'];
-                $siren = $_POST['siren'];
-                $street = $_POST['rue'];
-                $address_complement = $_POST['compl_adr'];
-                $code_postal = $_POST['cp'];
-                $city = $_POST['ville'];
-                $country = $_POST['pays'];
-                if ($address_complement === '') $address_complement = null;
-                // Requete SQL pour modifier la table adresse
-                $query = "UPDATE sae._adresse 
-                            set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                $id_adresse = $stmt->fetch()['id_adresse'];
-
-                // Requete SQL pour modifier la table _compte
-                $query = "UPDATE sae._compte 
-                            set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
-                            where id_compte = ?;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
-
-                // Requete SQL pour modifier la table _compte_professionnel
-                $query = "UPDATE sae._compte_professionnel
-                            set (denomination, a_propos, site_web) = (?, ?, ?)
-                            where id_compte = ?;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
-
-                                // Requete SQL pour modifier la table _compte_professionnel_prive
-                                $query = "UPDATE sae._compte_professionnel_prive
-                                set siren = ?
+        $email = $_POST['email'];
+        $password = $_POST['mdp'];
+        $name = $_POST['nom'];
+        $first_name = $_POST['prenom'];
+        $tel = $_POST['tel'];
+    
+        if ($ok) {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            switch ($typeCompte) {
+                case 'proPublique':
+                    $denomination = $_POST['denomination'];
+                    $a_propos = $_POST['a-propos'];
+                    $site_web = $_POST['site'];
+                    $street = $_POST['rue'];
+                    $address_complement = $_POST['compl_adr'];
+                    $code_postal = $_POST['cp'];
+                    $city = $_POST['ville'];
+                    $country = $_POST['pays'];
+                    if ($address_complement === '') $address_complement = null;
+                    // Requete SQL pour modifier la table adresse
+                    $query = "UPDATE sae._adresse 
+                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
+                    $id_adresse = $stmt->fetch()['id_adresse'];
+    
+                    // Requete SQL pour modifier la table _compte
+                    $query = "UPDATE sae._compte 
+                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $dbh->prepare($query);
-                    $stmt->execute([$siren, $id_compte]);
-            default:
-                $ok = false;
-                break;
-        }
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
+    
+                    // Requete SQL pour modifier la table _compte_professionnel
+                    $query = "UPDATE sae._compte_professionnel
+                                set (denomination, a_propos, site_web) = (?, ?, ?)
+                                where id_compte = ?;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
+                    break;
+                    
+                case 'proPrive':
+                    $denomination = $_POST['denomination'];
+                    $a_propos = $_POST['a-propos'];
+                    $site_web = $_POST['site'];
+                    $siren = $_POST['siren'];
+                    $street = $_POST['rue'];
+                    $address_complement = $_POST['compl_adr'];
+                    $code_postal = $_POST['cp'];
+                    $city = $_POST['ville'];
+                    $country = $_POST['pays'];
+                    if ($address_complement === '') $address_complement = null;
+                    // Requete SQL pour modifier la table adresse
+                    $query = "UPDATE sae._adresse 
+                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
+                    $id_adresse = $stmt->fetch()['id_adresse'];
+    
+                    // Requete SQL pour modifier la table _compte
+                    $query = "UPDATE sae._compte 
+                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                                where id_compte = ?;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
+    
+                    // Requete SQL pour modifier la table _compte_professionnel
+                    $query = "UPDATE sae._compte_professionnel
+                                set (denomination, a_propos, site_web) = (?, ?, ?)
+                                where id_compte = ?;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
+    
+                                    // Requete SQL pour modifier la table _compte_professionnel_prive
+                                    $query = "UPDATE sae._compte_professionnel_prive
+                                    set siren = ?
+                                    where id_compte = ?;";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute([$siren, $id_compte]);
+                default:
+                    $ok = false;
+                    break;
+                }
+        }   
 } ?>
     <script src="/scripts/popup.js"></script>
 </body>
