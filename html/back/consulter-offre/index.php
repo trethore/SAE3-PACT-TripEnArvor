@@ -2,6 +2,12 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+if (isset($_POST['titre'])) { 
+    $submitted = true;
+} else {
+    $submitted = false;
+}
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -375,9 +381,9 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <button id="showFormButton-<?php echo $compteur; ?>"><strong>Répondre</strong></button>
+                                <button id="showFormButton"><strong>Répondre</strong></button>
 
-                                <form id="avisForm-<?php echo $compteur; ?>" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
 
                                     <h2 for="creation-reponse">Répondre à un avis</h2><br>
                                     <div class="display-ligne-espace">
@@ -389,8 +395,8 @@ try {
                                     <button type="submit">Publier</button>
                                     <button type="button" id="cancelFormButton">Annuler</button>
                                 </form>
-                                <?php $submitted = $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reponse']);
-                                if ($submitted) { 
+
+                                <?php if ($submitted) { 
 
                                     if (isset($_POST['reponse'])) {
                                         $reponse = htmlspecialchars($_POST['reponse']);
@@ -518,10 +524,22 @@ try {
                 });
             });
 
+        // Cibler les éléments
+        const showFormButton = document.getElementById('showFormButton');
+        const avisForm = document.getElementById('avisForm');
+        const cancelFormButton = document.getElementById('cancelFormButton');
 
-        const images = document.querySelector('.carousel-images');
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
+        // Afficher le formulaire au clic sur "Publier un avis"
+        showFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'block'; // Affiche le formulaire
+            showFormButton.style.display = 'none'; // Masque le bouton
+        });
+
+        // Masquer le formulaire au clic sur "Annuler"
+        cancelFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'none'; // Masque le formulaire
+            showFormButton.style.display = 'block'; // Réaffiche le bouton
+        });
     
 
         let confirmDiv = document.getElementById("confirm");
