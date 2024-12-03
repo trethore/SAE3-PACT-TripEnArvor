@@ -145,7 +145,7 @@ try {
 
         <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
-            <h1><?php echo htmlentities($offre['titre'] ?? 'Titre inconnu'); ?></h1>
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($images as $image) { ?>
@@ -165,9 +165,26 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <p><em><?php echo htmlentities($categorie ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
+                        $adresseComplete = [];
+                        if (!empty($adresse['num_et_nom_de_voie'])) {
+                            $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
+                        }
+                        if (!empty($adresse['complement_adresse'])) {
+                            $adresseComplete[] = htmlentities($adresse['complement_adresse']);
+                        }
+                        if (!empty($adresse['code_postal'])) {
+                            $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
+                        }
+                        if (!empty($offre['ville'])) {
+                            $adresseComplete[] = htmlentities($offre['ville']);
+                        } ?>
+                        <p><?php echo implode(' ', $adresseComplete); ?>
+                    <?php } else {
+                        echo "Pas d'adresse disponible";
+                    }?>            
             </div>
                 
             <div class="display-ligne-espace">
@@ -183,29 +200,38 @@ try {
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p> 
+                <?php if (!empty($compte['denomination'])) { ?>
+                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
+                <? } else {
+                    echo "Pas d'information sur le propriétaire de l'offre";
+                }?>            
             </div>
+
         </section>
 
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <?php foreach ($tags as $tag) { ?>
-                        <li><?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } ?>
+                    <?php if (!empty($tags)) {
+                        foreach ($tags as $tag) { ?>
+                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <?php }
+                    } else {
+                        echo "Pas de tags disponibles";
+                    } ?>
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
                 <div class="display-ligne-espace">
                     <!-- Affichage le titre de l'offre -->
-                    <h2>À propos de : <?php echo htmlentities($offre['titre']); ?></h2> 
+                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
                 <!-- Affichage du résumé de l'offre -->
-                <p><?php echo htmlentities($offre['resume']); ?></p>
+                <p><?php echo htmlentities($offre['resume']) ?? "Pas de resumé disponible"; ?></p>
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
@@ -223,19 +249,19 @@ try {
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a href="/images/universel/photo<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         </div>
                         <?php break; ?>
                     <?php case "Restauration": ?>
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a href="/images/universel/photo<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
                         </div>
                         <?php break;
                 } ?>
                 
                 <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'])); ?></p>
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
     
         </section>
@@ -244,7 +270,7 @@ try {
 
             <h2>Description détaillée de l'offre :</h2>
             <!-- Affichage de la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['description_detaille'])); ?></p>
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
         </section>
 
@@ -254,12 +280,18 @@ try {
                 <div>
                     <h2>Tarifs : </h2>
                     <table>
-                        <?php foreach ($tarifs as $t) { ?>
-                            <tr>
-                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                            </tr>
-                        <?php } ?>
+                        <?php foreach ($tarifs as $t) { 
+                            if ($t['nom_tarif'] != "nomtarif1") { 
+                                if (!empty($t['nom_tarif'])) {?>
+                                    <tr>
+                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                    </tr>
+                            <?  }
+                            } else {
+                                echo "Pas de tarifs diponibles" ;
+                            }
+                        } ?>
                     </table>
                 </div>
                 <button>Voir les tarifs supplémentaires</button>
@@ -268,19 +300,18 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php foreach ($jours as $jour) { ?>
-                    <p>
-                        <?php 
-                        echo htmlentities($jour['nom_jour'] . " : "); 
-                        foreach ($horaire as $h) {
-                            if (!empty($h['ouverture']) && !empty($h['fermeture'])) {
+                <?php if (!empty($jour['nom_jour'])) {
+                    foreach ($jours as $jour) { ?>
+                        <p>
+                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                            foreach ($horaire as $h) {
                                 echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                            } else {
-                                echo "Fermé"; 
-                            }
-                        } ?>
-                    </p>
-                <?php } ?>
+                            } ?>
+                        </p>
+                    <?php }
+                } else {
+                    echo "Pas d'information sur les jours et les horaires d'ouverture";
+                } ?>
             </div> 
             
         </section>
@@ -341,6 +372,17 @@ try {
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
+
+                       
+                    <div class="display-ligne-espace">
+                        <p class="titre-avis">C'est moi le professionnel</p>
+                        <p><strong>⁝</strong></p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <p><strong>Répondu le : blablabla on s'en blc mdr</strong></p>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p>C'est ma réponse blablabla ...</p>
                 </div>      
             <?php $compteur++;
             } ?>  
