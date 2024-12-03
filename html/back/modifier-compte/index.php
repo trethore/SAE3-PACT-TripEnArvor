@@ -314,6 +314,7 @@ if (!$submitted) {
                     
                     require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/debug-utils.php');
                     printInConsole("test");
+                    echo "<pre> toto </pre>";
                     break;
                     
                 case 'proPrive':
