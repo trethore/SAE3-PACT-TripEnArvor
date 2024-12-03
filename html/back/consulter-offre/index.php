@@ -2,13 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
-if (isset($_POST['reponse'])) { 
-    $submitted = true;
-} else {
-    $submitted = false;
-}
-
-
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -396,8 +389,8 @@ try {
                                     <button type="submit">Publier</button>
                                     <button type="button" id="cancelFormButton">Annuler</button>
                                 </form>
-
-                                <? if ($submitted) { 
+                                <?php $submitted = $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reponse']);
+                                if ($submitted) { 
 
                                     if (isset($_POST['reponse'])) {
                                         $reponse = htmlspecialchars($_POST['reponse']);
