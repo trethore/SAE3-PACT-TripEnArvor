@@ -261,8 +261,8 @@ CREATE TABLE _reponse (
 );
 
 
-/* ============================== NOTE ================================ */
-CREATE TABLE _note(
+/* ========================== NOTE DÉTAILLÉE =========================== */
+CREATE TABLE _note_detaillee (
     id_note   SERIAL,  
     nom_note  VARCHAR(30) NOT NULL,
     note      INTEGER NOT NULL,
