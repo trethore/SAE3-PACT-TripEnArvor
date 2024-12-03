@@ -383,11 +383,14 @@ try {
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php $compte['denomination'] ?></p>
+                            <p class="titre-avis"><?php $compte[$compteur]['denomination'] ?></p>
                             <p><strong>⁝</strong></p>
                         </div>
                         <div class="display-ligne-espace">
-                            <p class="reponse"><strong><?php echo htmlentities($dateReponse[$compteur]['date']) ?></strong></p>
+                            <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                            $dateRep = explode('-', $rep[0]); 
+                            $heureRep = explode(':', $rep[1]); ?>
+                            <p><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                             <p class="transparent">.</p>
                         </div>
                         <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
