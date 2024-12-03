@@ -382,9 +382,10 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <button id="showFormButton"><strong>Répondre</strong></button>
+                                <button id="showFormButton-<?php echo $compteur; ?>"><strong>Répondre</strong></button>
 
-                                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                                <form id="avisForm-<?php echo $compteur; ?>" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+
                                     <h2 for="creation-reponse">Répondre à un avis</h2><br>
                                     <div class="display-ligne-espace">
                                         <label for="reponse">Rédigez votre réponse</label>
@@ -509,22 +510,21 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-        // Cibler les éléments
-        const showFormButton = document.getElementById('showFormButton');
-        const avisForm = document.getElementById('avisForm');
-        const cancelFormButton = document.getElementById('cancelFormButton');
+            document.querySelectorAll('[id^="showFormButton"]').forEach((button, index) => {
+                const avisForm = document.getElementById(`avisForm-${index}`);
+                const cancelFormButton = avisForm.querySelector('button[type="button"]');
 
-        // Afficher le formulaire au clic sur "Publier un avis"
-        showFormButton.addEventListener('click', () => {
-            avisForm.style.display = 'block'; // Affiche le formulaire
-            showFormButton.style.display = 'none'; // Masque le bouton
-        });
+                button.addEventListener('click', () => {
+                    avisForm.style.display = 'block';
+                    button.style.display = 'none';
+                });
 
-        // Masquer le formulaire au clic sur "Annuler"
-        cancelFormButton.addEventListener('click', () => {
-            avisForm.style.display = 'none'; // Masque le formulaire
-            showFormButton.style.display = 'block'; // Réaffiche le bouton
-        });
+                cancelFormButton.addEventListener('click', () => {
+                    avisForm.style.display = 'none';
+                    button.style.display = 'block';
+                });
+            });
+
 
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');
