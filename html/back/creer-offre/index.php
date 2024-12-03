@@ -725,8 +725,12 @@
 
 
 
+            let tarif1js =tarif1.value; let tarif2js =tarif2.value;  let tarif3js =tarif3.value; let tarif4js =tarif4.value;
+            let tabtarifjs = [tarif1js, tarif2js, tarif3js, tarif4js];
 
-
+            let nomtarif1js = nomtarif1.value; let nomtarif2js = nomtarif2.value;  let nomtarif3js = nomtarif3.value; let nomtarif4js = nomtarif4.value;
+            let tabnomtarifjs = [nomtarif1js, nomtarif2js, nomtarif3js, nomtarif4js];
+           
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
@@ -795,14 +799,36 @@
             }
 
             const boutonValider = document.getElementById("valider");
-
+            const lacat = categorie.value; // Récupère la valeur de la catégorie
+        
             boutonValider.addEventListener("click", function (event) {
-                const lacat = categorie.value; // Récupère la valeur de la catégorie
                 if (lacat === "") {
                     event.preventDefault(); // Empêche la soumission
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
+            const tarif = tarif.value; // Récupère la valeur de la tarif
+
+            if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+                boutonValider.addEventListener("click", function (event) {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasdeTarif = alert("Remplir au moins 1 tarif");
+                });
+            }
+            if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+                boutonValider.addEventListener("click", function (event) {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+                });
+            }
+            const gammeprix = gammedeprix.value;
+            if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+                boutonValider.addEventListener("click", function (event) {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasdegammeprix = alert("Remplir la gamme de prix");
+                });
+            }
 
 
 
