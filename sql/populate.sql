@@ -354,7 +354,7 @@ VALUES
 
 -- Fest-Noz
 (4, 6, 2, 'Ambiance mitigée', 'Malgré une bonne ambiance, le service et le personnel m’ont mis mal à l’aise.', 3, 2, 'amis', 8, 7),
-(3, 6, 5, 'Plats savoureux et moment agréable', 'Les crêpes étaient délicieuses, j’ai passé un bon moment.', 1, 0, 'famille', 2, 1);
+(3, 6, 5, 'Plats savoureux et moment agréable', 'Les crêpes étaient délicieuses, j’ai passé un bon moment.', 1, 0, 'famille', 2, 1),
 
 -- Restauration 
 (4, 1, 2, 'Expérience décevante', 'Le service n était pas à la hauteur de mes attentes. Plusieurs points à améliorer.', 4, 2, 'affaires', 4, 3),

@@ -972,7 +972,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_visite(id_offre, duree,date_evenement)
         VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre,NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1061,7 +1061,7 @@ BEGIN
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_spectacle(id_offre, duree, capacite,date_evenement)
         VALUES (id_offre_temp, NEW.duree, NEW.capacite,NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre,NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
 END;
 $$ LANGUAGE 'plpgsql';
 
