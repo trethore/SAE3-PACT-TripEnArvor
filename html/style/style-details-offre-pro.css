@@ -410,8 +410,14 @@ a {
     margin-left: 60px;
 }
 
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 150px;
+}
+
 .indentation {
     padding-left: 10px;
+    margin-top: 15px;
 }
 
 .fond-blocs-avis > p {
