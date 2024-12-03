@@ -583,18 +583,20 @@ try {
         }
 
         function hoverImgPouceHaut() {
-            if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-up.png") {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up-hover.png"
+            const pouceHaut = document.getElementById("pouce_haut");
+            if (pouceHaut.src == "/images/universel/icones/pouce-up.png") {
+                pouceHaut.src = "/images/universel/icones/pouce-up-hover.png"
             } else {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up.png"
+                pouceHaut.src = "/images/universel/icones/pouce-up.png"
             }
         }
 
         function hoverImgPouceBas() {
-            if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-down.png") {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-down-hover.png"
+            pouceBas = document.getElementById("pouce_bas");
+            if (pouceBas.src == "/images/universel/icones/pouce-down.png") {
+                pouceBas.src = "/images/universel/icones/pouce-down-hover.png"
             } else {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-down.png"
+                pouceBas.src = "/images/universel/icones/pouce-down.png"
             }
         }
 
