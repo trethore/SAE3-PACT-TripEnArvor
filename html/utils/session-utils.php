@@ -7,6 +7,7 @@
         }
     }
     function endSession() {
+        session_unset();
         session_destroy();
         redirectTo('/front/consulter-offres/');
     }
