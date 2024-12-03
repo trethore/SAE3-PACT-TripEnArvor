@@ -348,6 +348,6 @@ if (!$submitted) {
                 }
         }   
 } ?>
-    <script src="/scripts/popup.js"></script>
+    <script src="/scripts/popupCompte.js"></script>
 </body>
 </html>
