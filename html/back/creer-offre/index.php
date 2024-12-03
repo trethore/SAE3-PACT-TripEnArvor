@@ -702,12 +702,10 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            // if(isIdProPublique){
-            //     console.log("l'id est publique");
-            //      document.getElementById("divtype").style.display = 'none';
-            //      document.getElementById("labeltype").style.display = 'none';
-            //      console.log("le type est caché");
-            // }
+            if(isIdProPublique){
+                 document.getElementById("divtype").style.display = 'none';
+                 document.getElementById("labeltype").style.display = 'none';
+            }
 
 
 
