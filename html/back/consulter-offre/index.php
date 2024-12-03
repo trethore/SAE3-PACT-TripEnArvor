@@ -387,16 +387,17 @@ try {
                             <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             <p><strong>⁝</strong></p>
                         </div>
-                        <div class="display-ligne-espace">
-                            <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
-                            $dateRep = explode('-', $rep[0]); 
-                            $heureRep = explode(':', $rep[1]); ?>
-                            <p><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
-                            <p class="transparent">.</p>
+                        <div class="reponse">
+                            <div class="display-ligne-espace">
+                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                $dateRep = explode('-', $rep[0]); 
+                                $heureRep = explode(':', $rep[1]); ?>
+                                <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
+                                <p class="transparent">.</p>
+                            </div>
+                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
                         </div>
-                        <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
                     <?php } ?>
-                   
                 </div>      
             <?php $compteur++;
             } ?>  
