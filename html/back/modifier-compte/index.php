@@ -261,7 +261,7 @@ if (!$submitted) {
             $ok = false;
             break;
         }
-
+        print_r($ok);
         // Récupération des données du formulaire
         $nouveauMotDePasse = $_POST['mdp'] ?? '';
         $ancienMotDePasse = $_POST['ancien_mdp'] ?? '';
