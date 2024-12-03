@@ -17,7 +17,9 @@ redirectToConnexionIfNecessary($id_compte);
 
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
-
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
 $reqCompte = "SELECT * from sae._compte_professionnel cp 
                 join sae._compte c on c.id_compte = cp.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
@@ -224,10 +226,7 @@ if (!$submitted) {
     </footer>
     <?php
 } else {
-    echo "<pre>";
-    echo "Formulaire soumis\n";
-    print_r($_POST);
-    echo "Valeur de \$ok : " . ($ok ? "true" : "false") . "\n";
+    
     exit;
     
     $ok = true;
