@@ -507,21 +507,6 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-            document.querySelectorAll('[id^="showFormButton"]').forEach((button, index) => {
-                const avisForm = document.getElementById(`avisForm-${index}`);
-                const cancelFormButton = avisForm.querySelector('button[type="button"]');
-
-                button.addEventListener('click', () => {
-                    avisForm.style.display = 'block';
-                    button.style.display = 'none';
-                });
-
-                cancelFormButton.addEventListener('click', () => {
-                    avisForm.style.display = 'none';
-                    button.style.display = 'block';
-                });
-            });
-
         document.addEventListener('DOMContentLoaded', () => {
             const showFormButton = document.getElementById('showFormButton');
             const avisForm = document.getElementById('avisForm');
