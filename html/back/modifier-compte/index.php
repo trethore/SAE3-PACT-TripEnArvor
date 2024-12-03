@@ -282,13 +282,21 @@ if (!$submitted) {
                 $country = $_POST['pays'];
                 if ($address_complement === '') $address_complement = null;
 
-                $query = "UPDATE sae._adresse set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                $query = "UPDATE sae._adresse 
+                            set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "UPDATE sae.compte_professionnel_publique set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) = (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                $query = "UPDATE sae._compte 
+                            set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                            where id_compte = ?;
+
+                            update sae._compte_professionnel
+                            set (denomination, a_propos, site_web) = (?, ?, ?)
+                            where id_compte = ?;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte, $id_compte, $denomination, $a_propos, $site_web, $id_compte]);
                 $_SESSION['id'] = $stmt->fetch()['id_compte'];
                 break;
             case 'proPrive':
