@@ -432,7 +432,7 @@ try {
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
@@ -458,8 +458,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -568,6 +568,14 @@ try {
         function updateCarousel() {
         const width = images.clientWidth;
         images.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
+
+        function hoverImg() {
+            if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-up.png") {
+                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up-hover.png"
+            } else {
+                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up.png"
+            }
         }
 
     </script>
