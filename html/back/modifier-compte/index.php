@@ -268,7 +268,7 @@ if (!$submitted) {
         $tel = $_POST['tel'];
     
         if ($ok) {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
                 case 'proPublique':
                     $denomination = $_POST['denomination'];
@@ -284,7 +284,7 @@ if (!$submitted) {
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
                                     where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
@@ -292,14 +292,14 @@ if (!$submitted) {
                     $query = "UPDATE sae._compte 
                                 set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
     
                     // Requete SQL pour modifier la table _compte_professionnel
                     $query = "UPDATE sae._compte_professionnel
                                 set (denomination, a_propos, site_web) = (?, ?, ?)
                                 where id_compte = ?;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
                     break;
                     
@@ -318,7 +318,7 @@ if (!$submitted) {
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
                                     where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
@@ -326,21 +326,21 @@ if (!$submitted) {
                     $query = "UPDATE sae._compte 
                                 set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
     
                     // Requete SQL pour modifier la table _compte_professionnel
                     $query = "UPDATE sae._compte_professionnel
                                 set (denomination, a_propos, site_web) = (?, ?, ?)
                                 where id_compte = ?;";
-                    $stmt = $dbh->prepare($query);
+                    $stmt = $conn->prepare($query);
                     $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
     
                                     // Requete SQL pour modifier la table _compte_professionnel_prive
                                     $query = "UPDATE sae._compte_professionnel_prive
                                     set siren = ?
                                     where id_compte = ?;";
-                        $stmt = $dbh->prepare($query);
+                        $stmt = $conn->prepare($query);
                         $stmt->execute([$siren, $id_compte]);
                 default:
                     $ok = false;
