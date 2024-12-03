@@ -197,7 +197,7 @@ a {
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
-
+ 
     .carousel {
         position: relative;
         overflow: hidden;
@@ -404,6 +404,20 @@ a {
     font-size: 32px;
     font-weight: bold;
     padding-left: 10px;
+}
+
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 10px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
 }
 
 .fond-blocs-avis > p {

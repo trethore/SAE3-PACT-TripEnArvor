@@ -145,7 +145,7 @@
                         </tr>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
-                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" /></td>
                         </tr>
                         <tr>
                             <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
@@ -316,7 +316,7 @@
                     </tr>
                 </table> -->
                 <div class="bt_cree">
-                    <input class="valider" type="submit" value="Créer l'offre" />
+                    <input class="valider" type="submit" id="valider" value="Créer l'offre" />
 
                     <a href="#" id="back-to-top">
                         <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
@@ -391,7 +391,7 @@
 
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
-                $gammedeprix = intval($gammedeprix);
+                print($gammedeprix);
             }
 
             if (isset($_POST['photo'])) {
@@ -576,7 +576,7 @@
                         $stmt_plan = $dbh->prepare($requete_plan);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_plan->execute([$fichier_img]);
+                        $stmt_plan->execute([$fichier_plan]);
 
                     }
 
@@ -584,13 +584,15 @@
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
 
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                    $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                    $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                     $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
 
-                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                    
 
                     break;
 
@@ -628,21 +630,23 @@
                         $stmt_carte = $dbh->prepare($requete_carte);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_carte->execute([$fichier_img]);
+                        $stmt_carte->execute([$fichier_carte]);
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, gamme_prix, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel,prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]); //mise a 0 de prix offre pour l'instant
 
 
                     }
-            
-                    //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                    $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    $stmt_plan_image = $dbh->prepare($requete_plan_offre);
-                    $stmt_plan_image->execute([$id_offre, $fichier_carte]);
 
                     $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+            
+                    //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                    $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                    $stmt_carte_image = $dbh->prepare($requete_carte_offre);
+                    $stmt_carte_image->execute([$id_offre, $fichier_carte]);
+
+                    
                     break;
                     
                     default:
@@ -663,7 +667,7 @@
                 $dbh->commit();
 
 
-                if ($isIdProPrivee){
+                if (($isIdProPrivee)&&($categorie !== "restaurant")){
                     foreach ($tabtarifs as $key => $value) {
                         $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
@@ -777,6 +781,38 @@
                     document.getElementById("tarifs").style.display = 'inline';
                 }
             }
+
+            const boutonValider = document.getElementById("valider");
+            const lacat = categorie.value; // Récupère la valeur de la catégorie
+        
+            boutonValider.addEventListener("click", function (event) {
+                if (lacat === "") {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasDeCat = alert("Selectionner une categorie");
+                }
+            });
+
+            // const tarif = tarif.value; // Récupère la valeur de la tarif
+
+            // if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdeTarif = alert("Remplir au moins 1 tarif");
+            //     });
+            // }
+            // if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+            //     });
+            // }
+            // const gammeprix = gammedeprix.value;
+            // if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdegammeprix = alert("Remplir la gamme de prix");
+            //     });
+            // }
 
 
 

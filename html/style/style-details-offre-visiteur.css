@@ -98,6 +98,7 @@ a {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
+        width: 100%;
     }
 
     .carousel-images {
@@ -291,8 +292,8 @@ form {
     border: 3px solid var(--violet-principal);
     border-radius: 15px;
     text-align: center;
+    align-items: center;
     padding: 30px;
-    width: 80%;
 }
 
 form > h2 {
@@ -305,6 +306,7 @@ form > p {
 
 label {
     text-align: start;
+    color: var(--violet-principal);
 }
 
 textarea {
@@ -321,7 +323,7 @@ textarea {
     background: var(--blanc-leger);
     border: 3px solid var(--noir);
     border-radius: 5px;
-    height: 25px;
+    height: 30px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;  
 }
@@ -433,4 +435,12 @@ footer > div > a {
 
 #carte {
     display: none;
+}
+
+.pouce_haut:hover {
+    background-image: ('/images/universel/icones/pouce-up-hover.png');
+}
+
+.pouce_bas:hover {
+    background-image: ('/images/universel/icones/pouce-down-hover.png');
 }

@@ -158,11 +158,25 @@ try {
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
-                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($adresse['ville'])) { ?>
-                    <p><?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] . ', ' . $adresse['code_postal'] . " " . $adresse['ville']); ?></p>
-                <?php } else {
-                    echo "Pas d'adresse disponible";
-                } ?>
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
+                        $adresseComplete = [];
+                        if (!empty($adresse['num_et_nom_de_voie'])) {
+                            $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
+                        }
+                        if (!empty($adresse['complement_adresse'])) {
+                            $adresseComplete[] = htmlentities($adresse['complement_adresse']);
+                        }
+                        if (!empty($adresse['code_postal'])) {
+                            $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
+                        }
+                        if (!empty($offre['ville'])) {
+                            $adresseComplete[] = htmlentities($offre['ville']);
+                        } ?>
+                        <p><?php echo implode(' ', $adresseComplete); ?>
+                    <?php } else {
+                        echo "Pas d'adresse disponible";
+                    }?>
+
             </div>
                 
             <div class="display-ligne-espace">
@@ -178,8 +192,8 @@ try {
                     <a href="#avis">Voir les avis</a>
                 </div>
                 <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
-                <?php if (!empty($compte['nom_compte']) || !empty($compte['prenom'])) { ?>
-                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['nom_compte'] . " " . $compte['prenom']); ?></p>
+                <?php if (!empty($compte['denomination'])) { ?>
+                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
                 <? } else {
                     echo "Pas d'information sur le propriétaire de l'offre";
                 }?> 
@@ -255,15 +269,17 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <h2>Tarifs : </h2><br>
+                <h2>Tarifs : </h2>
                 <table>
                     <?php foreach ($tarifs as $t) { 
-                        if ($t['nom_tarif'] != "nomtarif1") { ?>
-                            <tr>
-                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                            </tr>
-                        <? } else {
+                        if ($t['nom_tarif'] != "nomtarif1") { 
+                            if (!empty($t['nom_tarif'])) {?>
+                                <tr>
+                                    <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                    <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                </tr>
+                        <?  }
+                        } else {
                             echo "Pas de tarifs diponibles" ;
                         }
                     } ?>
@@ -313,58 +329,58 @@ try {
 
                 <button id="showFormButton">Publier un avis</button>
 
-                <? if (!$submitted) { ?>
+                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                    <h2 for="creation-avis">Création d'avis</h2><br>
+                    <div class="display-ligne-espace">
+                        <label for="titre">Saisissez le titre de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="contexte">Contexte de visite :</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <select id="contexte" name="contexte" required>
+                            <option value="" disabled selected>Choisissez un contexte</option>
+                            <option value="affaires">Affaires</option>
+                            <option value="couple">Couple</option>
+                            <option value="famille">Famille</option>
+                            <option value="amis">Amis</option>
+                            <option value="solo">Solo</option>
+                        </select><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="avis">Rédigez votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <textarea id="avis" name="avis" required></textarea><br>
+                    <div class="display-ligne-espace">
+                        <label for="note">Saisissez la note de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="date">Saisissez la date de votre visite</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="datetime-local" id="date" name="date" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                    <button type="submit">Publier</button>
+                    <button type="button" id="cancelFormButton">Annuler</button>
+                </form>
 
-                    <form id="avisForm" action="index.php" method="post" enctype="multipart/form-data" style="display: none;">
-                        <h2 for="creation-avis">Création d'avis</h2><br>
-                        <div class="display-ligne-espace">
-                            <label for="titre">Saisissez le titre de votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="text" id="titre" name="titre" required></input><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="contexte">Contexte de visite :</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <select id="contexte" name="contexte" required>
-                                <option value="" disabled selected>Choisissez un contexte</option>
-                                <option value="affaires">Affaires</option>
-                                <option value="couple">Couple</option>
-                                <option value="famille">Famille</option>
-                                <option value="amis">Amis</option>
-                                <option value="solo">Solo</option>
-                            </select><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="avis">Rédigez votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <textarea id="avis" name="avis" required></textarea><br>
-                        <div class="display-ligne-espace">
-                            <label for="note">Saisissez la note de votre avis</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <label for="date">Saisissez la date de votre visite</label>
-                            <p class="transparent">.</p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <input type="datetime-local" id="date" name="date" required/><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                        <button type="submit">Publier</button>
-                        <button type="button" id="cancelFormButton">Annuler</button>
-                    </form>
+                <? if ($submitted) { ?>
 
                     <?php if (isset($_POST['titre'])) {
                         $titre = htmlspecialchars($_POST['titre']);
@@ -415,7 +431,6 @@ try {
                         $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                         $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
-
                     } catch (PDOException $e) {
                         echo "Erreur : " . $e->getMessage();
                         die();
@@ -429,7 +444,7 @@ try {
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
@@ -455,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -563,9 +578,35 @@ try {
 
         // Met à jour l'affichage du carrousel
         function updateCarousel() {
-        const width = images.clientWidth;
-        images.style.transform = `translateX(-${currentIndex * width}px)`;
+            const width = images.clientWidth;
+            images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
+
+        function togglePouce(index, type) {
+            const pouceHaut = document.getElementById(`pouce_haut_${index}`);
+            const pouceBas = document.getElementById(`pouce_bas_${index}`);
+
+            if (type === 'haut') {
+                if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
+                    // Activate pouce haut and deactivate pouce bas
+                    pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                } else {
+                    // Deactivate pouce haut
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                }
+            } else if (type === 'bas') {
+                if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
+                    // Activate pouce bas and deactivate pouce haut
+                    pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                } else {
+                    // Deactivate pouce bas
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                }
+            }
+        }
+
 
     </script>
 

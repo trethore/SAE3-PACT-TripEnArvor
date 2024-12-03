@@ -316,7 +316,7 @@
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
     function getCompte($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqCompte = "SELECT * FROM _offre NATURAL JOIN _compte WHERE id_offre = :id_offre";
+        $reqCompte = "SELECT * FROM _offre JOIN _compte_professionnel ON _offre.id_compte_professionnel = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtCompte = $conn->prepare($reqCompte);
@@ -483,6 +483,40 @@
         }
     }
     
+// ===== GESTION DES RÉPONSES ===== //
 
-
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    function getReponse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtReponse = $conn->prepare($reqReponse);
+            $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtReponse->execute();
+            $reponse = $stmtReponse->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    function getDatePublicationReponse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePublicationReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePublicationReponse = $conn->prepare($reqDatePublicationReponse);
+            $stmtDatePublicationReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDatePublicationReponse->execute();
+            $datePublicationReponse = $stmtDatePublicationReponse->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePublicationReponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>

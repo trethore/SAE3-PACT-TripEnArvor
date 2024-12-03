@@ -14,7 +14,7 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToListOffreIfNecessary($id_compte);
+redirectToConnexionIfNecessary($id_compte);
 
 
 $typeCompte = getTypeCompte($id_compte);
