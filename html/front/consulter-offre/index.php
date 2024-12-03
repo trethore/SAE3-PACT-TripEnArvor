@@ -470,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onmouseover=hoverImgPouceHaut() src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onmouseover=hoverImgPouceBas() src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -582,11 +582,19 @@ try {
         images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        function hoverImg() {
+        function hoverImgPouceHaut() {
             if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-up.png") {
                 document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up-hover.png"
             } else {
                 document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up.png"
+            }
+        }
+
+        function hoverImgPouceBas() {
+            if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-down.png") {
+                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-down-hover.png"
+            } else {
+                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-down.png"
             }
         }
 
