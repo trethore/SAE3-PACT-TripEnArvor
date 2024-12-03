@@ -401,19 +401,28 @@ try {
                                 if (isset($_POST['reponse'])) {
                                     $reponse = htmlspecialchars($_POST['reponse']);
                                 } 
+                                
                                 $publie_le = date('Y-m-d H:i:s');
                                 try {
                                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
                                     $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                                     $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
                                     $stmtInsertionDateReponse->execute([$publie_le]);
                                     $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
                                     $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
                                     $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
                                     $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
+
+                                    print_r($publie_le);
+                                    print_r($a['id_avis']);
+                                    print_r($reponse);
+                                    print_r($idDateReponse);
+
                                 } catch (PDOException $e) {
                                     echo "Erreur : " . $e->getMessage();
                                     die();
