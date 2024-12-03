@@ -403,6 +403,10 @@ try {
                                 } 
                                 
                                 $publie_le = date('Y-m-d H:i:s');
+
+                                print_r($publie_le);
+                                print_r($a['id_avis']);
+                                print_r($reponse);
                                 try {
                                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -417,11 +421,6 @@ try {
                                     $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
                                     $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
                                     $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
-
-                                    print_r($publie_le);
-                                    print_r($a['id_avis']);
-                                    print_r($reponse);
-                                    print_r($idDateReponse);
 
                                 } catch (PDOException $e) {
                                     echo "Erreur : " . $e->getMessage();
