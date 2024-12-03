@@ -41,7 +41,8 @@ table + div > input:hover {
 /* Style de la popup */
 #validerModifCompte, 
 #annulerModifCompte, 
-#quitterModifCompte {
+#popupRetourAccueil,
+#popupRetourCompte {
     position: fixed;
     z-index: 11;
     flex-direction: column;
@@ -60,7 +61,8 @@ table + div > input:hover {
 /* Titre de la popup */
 #validerModifCompte h3, 
 #annulerModifCompte h3, 
-#quitterModifCompte h3 {
+#popupRetourAccueil h3,
+#popupRetourCompte h3 {
     font-weight: var(--semi-bold);
     margin-bottom: 0;
     font-size: 24pt;
@@ -70,7 +72,8 @@ table + div > input:hover {
 /* Texte de la popup */
 #validerModifCompte p, 
 #annulerModifCompte p, 
-#quitterModifCompte p {
+#popupRetourAccueil p,
+#popupRetourCompte p {
     color: var(--noir);
     font-size: 14pt;
     margin-bottom: 20px;
@@ -79,7 +82,8 @@ table + div > input:hover {
 /* Style des boutons */
 #validerModifCompte button, 
 #annulerModifCompte button, 
-#quitterModifCompte button {
+#popupRetourAccueil button,
+#popupRetourCompte button {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
@@ -97,7 +101,8 @@ table + div > input:hover {
 
 #validerModifCompte button:hover,
 #annulerModifCompte button:hover,
-#quitterModifCompte button:hover {
+#popupRetourAccueil button:hover,
+#popupRetourCompte button:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);

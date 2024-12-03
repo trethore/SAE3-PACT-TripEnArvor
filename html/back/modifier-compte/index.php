@@ -46,7 +46,7 @@ if (!$submitted) {
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte" class="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <?php 
@@ -156,24 +156,32 @@ if (!$submitted) {
             <h3>Valider les modifications</h3>
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
-                <button class="boutonAnnuler"> Annuler </button>
-                <button class="boutonValider"> Valider </button> 
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Valider </button> 
             </div>
         </div>
         <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
             <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
             <div>
-                <button class="boutonReprendre"> Reprendre </button>
-                <button class="boutonQuitter"> Quitter </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
         </div>
-        <div id="quitterModifCompte" style="display: none;">
+        <div id="popupRetourAccueil" style="display: none;">
             <h3>Annuler les modifications</h3>
-            <p>Si vous quittez cette page, vous annulez les modifications faites pour l'instant</p>
+            <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button class="boutonReprendre"> Reprendre </button>
-                <button class="boutonQuitter"> Quitter </button>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonRetourAccueil"> Quitter </button>
+            </div>
+        </div> 
+        <div id="popupRetourCompte" style="display: none;">
+            <h3>Annuler les modifications</h3>
+            <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
+            <div>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonRetourCompte"> Quitter </button>
             </div>
         </div> 
     </main>

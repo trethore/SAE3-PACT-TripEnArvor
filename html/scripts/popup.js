@@ -1,16 +1,27 @@
 const form = document.getElementById("myForm");
 const popupOverlay = document.getElementById("popupOverlay");
+
+// constante pour valider les modifications du compte
 const popupValider = document.getElementById("validerModifCompte");
+const boutonAnnuler = document.getElementById("boutonAnnuler");
+const boutonValider = document.getElementById("boutonValider");
+
+// constante pour annuler les modifications du compte
 const popupAnnuler = document.getElementById("annulerModifCompte");
-const popupQuitter = document.getElementById("quitterModifCompte");
 
-const boutonAnnuler = document.getElementsByClassName("boutonAnnuler");
-const boutonValider = document.getElementsByClassName("boutonValider");
-const boutonReprendre = document.getElementsByClassName("boutonReprendre");
-const boutonQuitter = document.getElementsByClassName("boutonQuitter");
 
-const retourCompte = document.getElementsByClassName("retourCompte");
-const retourMenu = document.getElementsByClassName("retourAccueil");
+// constante de la popup pour retourner à l'accueil
+const declencherPopupAccueil = document.querySelectorAll(".retourAccueil")
+const popupAccueil = document.getElementById("popupRetourAccueil");
+const boutonReprendreAccueil = document.getElementById("boutonReprendreAccueil");
+const boutonRetourAccueil = document.getElementById("boutonRetourAccueil");
+
+// constante de la popup pour retourner au compte
+const declencherPopupCompte = document.getElementById("retourCompte");
+const popupCompte = document.getElementById("popupRetourCompte");
+const boutonReprendreCompte = document.getElementById("boutonReprendreCompte");
+const boutonRetourCompte = document.getElementById("boutonRetourCompte");
+
 
 
 /**************************
@@ -42,7 +53,7 @@ boutonValider.addEventListener("click", function() {
 ************************************/
 
 // Ajout d'un écouteur sur chaque élément avec la classe "retourAccueil"
-Array.from(retourMenu).forEach((element) => {
+Array.from(declencherPopupAccueil).forEach((element) => {
     element.addEventListener("click", function(event) {
         event.preventDefault(); // Empêche le changement de page
         popupOverlay.style.display = "block";
@@ -50,29 +61,37 @@ Array.from(retourMenu).forEach((element) => {
     });
 });
 
+// Redirection vers la page d'accueil sans enregistrer les modification
+boutonRetourAccueil.addEventListener("click", function() {
+    // Redirige vers l'URL initiale
+    window.location.href = popupAccueil.href;
+});
 
 /***********************************
     POP-UP DE RETOUR AU COMPTE 
 ************************************/
 
-// Ajout d'un écouteur sur chaque élément avec la classe "retourCompte"
-Array.from(retourCompte).forEach((element) => {
-    element.addEventListener("click", function(event) {
-        event.preventDefault(); // Empêche le changement de page
-        popupOverlay.style.display = "block";
-        popupQuitter.style.display = "flex";
-    });
+// Affiche la popup pour retourner sur le compte
+declencherPopupCompte.addEventListener("click", function(event) {
+    event.preventDefault(); // Empêche le changement de page
+    popupOverlay.style.display = "block";
+    popupQuitter.style.display = "flex";
+});
+
+// Redirection vers la page du compte sans enregistrer les modification
+boutonRetourCompte.addEventListener("click", function() {
+    // Redirige vers l'URL initiale
+    window.location.href = popupCompte.href;
 });
 
 
-// Reprends les modifications
-boutonReprendre.addEventListener("click", function() {
-    popupOverlay.style.display = "none";
-    popupQuitter.style.display = "none";
-})
+/***********************************
+     REPRENDRE LES MODIFICATIONS 
+************************************/
+Array.from(boutonReprendre).forEach((element) => {
+    element.addEventListener("click", function() {
+        popupOverlay.style.display = "none";
+        popupQuitter.style.display = "none";
+    });
+});
 
-// Quitte la page sans enregistrer les modification
-boutonQuitter.addEventListener("click", function() {
-    // Redirige vers l'URL initiale
-    window.location.href = retourMenu.href;
-})
