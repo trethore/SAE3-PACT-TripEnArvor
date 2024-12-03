@@ -470,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onmouseover=hoverImgPouceHaut() src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onmouseover=hoverImgPouceBas() src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onclick="togglePouce('haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onclick="togglePouce('bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -578,43 +578,32 @@ try {
 
         // Met à jour l'affichage du carrousel
         function updateCarousel() {
-        const width = images.clientWidth;
-        images.style.transform = `translateX(-${currentIndex * width}px)`;
+            const width = images.clientWidth;
+            images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        /*function clickImgPouceHaut() {
+        function togglePouce(type) {
             const pouceHaut = document.getElementById("pouce_haut");
-            if (pouceHaut.src == "/images/universel/icones/pouce-up.png") {
-                pouceHaut.src = "/images/universel/icones/pouce-up-hover.png"
-            } else {
-                pouceHaut.src = "/images/universel/icones/pouce-up.png"
-            }
-        }
-
-        function clickImgPouceBas() {
-            pouceBas = document.getElementById("pouce_bas");
-            if (pouceBas.src == "/images/universel/icones/pouce-down.png") {
-                pouceBas.src = "/images/universel/icones/pouce-down-hover.png"
-            } else {
-                pouceBas.src = "/images/universel/icones/pouce-down.png"
-            }
-        }*/ 
-
-        function hoverImgPouceHaut() {
-            const pouceHaut = document.getElementById("pouce_haut");
-            if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
-                pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
-            } else {
-                pouceHaut.src = "/images/universel/icones/pouce-up.png";
-            }
-        }
-
-        function hoverImgPouceBas() {
             const pouceBas = document.getElementById("pouce_bas");
-            if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
-                pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
-            } else {
-                pouceBas.src = "/images/universel/icones/pouce-down.png";
+
+            if (type === 'haut') {
+                if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
+                    // Activate pouce haut and deactivate pouce bas
+                    pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                } else {
+                    // Deactivate pouce haut
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                }
+            } else if (type === 'bas') {
+                if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
+                    // Activate pouce bas and deactivate pouce haut
+                    pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                } else {
+                    // Deactivate pouce bas
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                }
             }
         }
 
