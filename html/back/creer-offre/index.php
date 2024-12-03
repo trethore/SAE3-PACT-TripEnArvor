@@ -794,14 +794,15 @@
                 }
             }
 
-            function validateForm(event) {
+            const boutonValider = document.getElementById("valider");
+
+            boutonValider.addEventListener("click", function (event) {
+                const lacat = categorie.value; // Récupère la valeur de la catégorie
                 if (lacat === "") {
-                    event.preventDefault(); // Empêche la soumission du formulaire
-                    alert("La catégorie doit être renseignée."); // Affiche une alerte
-                    return false;
+                    event.preventDefault(); // Empêche la soumission
+                    let pasDeCat = alert("Selectionner une categorie");
                 }
-                return true; // Permet la soumission si la condition est respectée
-            }
+            });
 
 
 
