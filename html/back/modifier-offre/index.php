@@ -148,7 +148,7 @@ try {
             </div>
             <main>
                 
-                <h2> Modifier <?php echo htmlentities($titre) ?></h2>
+                <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
 
                 <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
 
@@ -162,7 +162,15 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="categorie">Catégorie</label></td>
-                                <td><?php echo htmlentities($categorie) ?> </td>
+                                <td><div class="custom-select-container">
+                                        <select class="custom-select" id="categorie" name="lacat">
+                                            <option value="restaurant"> Restaurant</option>
+                                            <option value="parc"> Parc d'attraction</option>
+                                            <option value="spectacle"> Spectacle</option>
+                                            <option value="visite"> Visite</option>
+                                            <option value="activite"> Activité</option>
+                                        </select>
+                                </div></td>
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
@@ -269,23 +277,28 @@ try {
                         <h3>Description détaillée de l'offre</h3>
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
 
-                    <div id="tarifs">
-                        <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
-                        <?php  $i=0; foreach ($tarifs as $t) { $i++; ?>
-                        <input type="text" id="nomtarif1" name="nomtarif1" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']) ?>"/>
-                        <input type="number" name="tarif1" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']) ?>"/><span>€</span> 
-                        <br><?php 
-                        }
-                        while($i!==4){ ?>
-                            <input type="text" id="nomtarif1" name="nomtarif1" placeholder="Nom du tarif"/>
-                            <input type="number" name="tarif1" min="0" placeholder="prix" /><span>€</span> 
-                            <br>
-                        <?php $i++; 
-                        } ?>
-                       
-                        <!-- <label for="grilleT">Grille tarifaire complète</label>
-                        <input type="file" id="grilleT" name="grilleT" /> -->
-                    </div>
+                        <div id="tarifs">
+                            <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
+                            <?php  
+                            $i = 0; // Compteur pour les champs
+                            // Boucle pour afficher les tarifs existants
+                            foreach ($tarifs as $t) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']); ?>" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']); ?>" /><span>€</span> 
+                                <br>
+                            <?php 
+                            }
+                            // Complète les champs vides si moins de 4
+                            while ($i < 4) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" /><span>€</span> 
+                                <br>
+                            <?php 
+                            } ?>
+                        </div>
+
                     <br>
 
 
