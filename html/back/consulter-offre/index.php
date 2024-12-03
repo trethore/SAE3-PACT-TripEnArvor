@@ -397,6 +397,8 @@ try {
                                 <button type="button" id="cancelFormButton-<?php echo $compteur; ?>" class="cancel-form-btn">Annuler</button>
                             </form>
 
+                            <?php print_r($a['id_avis']); ?>
+
                             <?php if ($submitted) { 
                                 if (isset($_POST['reponse'])) {
                                     $reponse = htmlspecialchars($_POST['reponse']);
