@@ -347,27 +347,29 @@ CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
+/* ##################################################################### */
+/*                                FACTURES                               */
+/* ##################################################################### */
 
 
-CREATE TABLE _facture (
-    id_facture                  SERIAL,
-    id_offre                    INTEGER NOT NULL,
-    id_date_emission            INTEGER NOT NULL,
-    id_date_echeance_reglement  INTEGER NOT NULL,
+CREATE TABLE _facture(
+    numero_facture    SERIAL,
+    montant_ht        INTEGER NOT NULL,
+    id_date_emission  INTEGER NOT NULL,
+    id_date_echeance  INTEGER NOT NULL,
+    id_offre          INTEGER NOT NULL,
     CONSTRAINT _facture_pk
-        PRIMARY KEY (id_facture),
+        PRIMARY KEY (numero_facture),
     CONSTRAINT _facture_fk_offre
         FOREIGN KEY (id_offre)
         REFERENCES _offre(id_offre),
     CONSTRAINT _facture_fk_date_emission
         FOREIGN KEY (id_date_emission)
         REFERENCES _date(id_date),
-    CONSTRAINT _facture_fk_date_echeance_reglement
-        FOREIGN KEY (id_date_echeance_reglement)
+    CONSTRAINT _facture_fk_date_echeance
+        FOREIGN KEY (id_date_echeance)
         REFERENCES _date(id_date)    
 );
-
-
 
 /* ##################################################################### */
 /*                              ASSOCIATIONS                             */
