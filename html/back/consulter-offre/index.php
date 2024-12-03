@@ -383,7 +383,7 @@ try {
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php $compte[$compteur]['denomination'] ?></p>
+                            <p class="titre-avis"><?php $compte['denomination'] ?></p>
                             <p><strong>⁝</strong></p>
                         </div>
                         <div class="display-ligne-espace">
