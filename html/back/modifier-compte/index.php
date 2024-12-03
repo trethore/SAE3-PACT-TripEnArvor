@@ -228,7 +228,6 @@ if (!$submitted) {
     switch ($typeCompte) {
         case 'proPublique':
             $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['mdp']);
             $ok = $ok && isset($_POST['nom']);
             $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
@@ -244,7 +243,6 @@ if (!$submitted) {
 
         case 'proPrive':
             $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['mdp']);
             $ok = $ok && isset($_POST['nom']);
             $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
