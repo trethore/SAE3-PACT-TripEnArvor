@@ -13,7 +13,7 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToListOffreIfNecessary($id_compte);
+redirectToConnexionIfNecessary($id_compte);
 
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);

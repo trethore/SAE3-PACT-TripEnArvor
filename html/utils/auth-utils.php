@@ -74,10 +74,17 @@
         }
     }
 
-
     function redirectToListOffreIfNecessary($id) {
         if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
             redirectTo('/front/consulter-offres/');
+            return true;
+        }     
+        return false;   
+    }
+
+    function redirectToConnexionIfNecessary($id) {
+        if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
+            redirectTo('/se-connecter');
             return true;
         }     
         return false;   
