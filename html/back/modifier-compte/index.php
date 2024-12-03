@@ -91,7 +91,7 @@ if (!$submitted) {
                     </td>
                 </tr>
                 <tr>
-                    <td>Prenom</td>
+                    <td>Prénom</td>
                     <td>
                         <input type="text" name="prenom" id="prenom" value="<?php 
                                     if (isset($detailCompte["prenom"])) {
@@ -116,7 +116,10 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td><input type="password" name="mdp" id="mdp" value="<?php echo htmlentities($detailCompte["mot_de_passe"]);?>"></td>
+                    <td>
+                        <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
+                        <input type="hidden" name="ancien_mdp" value="<?php echo htmlentities($detailCompte['mot_de_passe']); ?>">
+                    </td>
                 </tr>
             </table>
             <?php if (isset($detailCompte["id_adresse"])) { ?>
@@ -261,6 +264,19 @@ if (!$submitted) {
             break;
         }
 
+        // Récupération des données du formulaire
+        $nouveauMotDePasse = $_POST['mdp'] ?? '';
+        $ancienMotDePasse = $_POST['ancien_mdp'] ?? '';
+        
+        // Traitement
+        if (!empty($nouveauMotDePasse)) {
+            // Si un nouveau mot de passe a été fourni, on le crypte
+            $motDePasseFinal = password_hash($nouveauMotDePasse, PASSWORD_BCRYPT);
+        } else {
+            // Sinon, on conserve l'ancien mot de passe
+            $motDePasseFinal = $ancienMotDePasse;
+        }  
+
         $email = $_POST['email'];
         $password = $_POST['mdp'];
         $name = $_POST['nom'];
@@ -288,19 +304,13 @@ if (!$submitted) {
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
-                    // Requete SQL pour modifier la table _compte
-                    $query = "UPDATE sae._compte 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                    // Requete SQL pour modifier la vue compte_professionnel_publique
+                    $query = "UPDATE sae.compte_professionnel_publique 
+                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) 
+                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
-    
-                    // Requete SQL pour modifier la table _compte_professionnel
-                    $query = "UPDATE sae._compte_professionnel
-                                set (denomination, a_propos, site_web) = (?, ?, ?)
-                                where id_compte = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
+                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $id_compte]);
                     break;
                     
                 case 'proPrive':
@@ -322,26 +332,14 @@ if (!$submitted) {
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
-                    // Requete SQL pour modifier la table _compte
-                    $query = "UPDATE sae._compte 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                    // Requete SQL pour modifier la vue compte_professionnel_prive
+                    $query = "UPDATE sae.compte_professionnel_prive 
+                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 
+                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
-    
-                    // Requete SQL pour modifier la table _compte_professionnel
-                    $query = "UPDATE sae._compte_professionnel
-                                set (denomination, a_propos, site_web) = (?, ?, ?)
-                                where id_compte = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
-    
-                                    // Requete SQL pour modifier la table _compte_professionnel_prive
-                                    $query = "UPDATE sae._compte_professionnel_prive
-                                    set siren = ?
-                                    where id_compte = ?;";
-                        $stmt = $conn->prepare($query);
-                        $stmt->execute([$siren, $id_compte]);
+                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $siren, $id_compte]);
+                    break;
                 default:
                     $ok = false;
                     break;
