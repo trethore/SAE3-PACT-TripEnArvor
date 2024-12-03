@@ -684,8 +684,10 @@
                 $dbh = null;
 
                 echo "<script>
-                        alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
-                        window.location.href = '/back/liste-back';
+                        const redirect = confirm('Formulaire soumis avec succès ! Cliquez sur OK pour continuer.');
+                        if (redirect) {
+                            window.location.href = 'success.php'; // Redirige vers la page de succès
+                        }
                   </script>"; //if premium afficher a changer si il faut voir les erreurs
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
