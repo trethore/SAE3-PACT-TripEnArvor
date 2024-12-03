@@ -392,7 +392,7 @@ try {
                                 <? if ($submitted) { 
 
                                     if (isset($_POST['reponse'])) {
-                                        $commentaire = htmlspecialchars($_POST['avis']);
+                                        $reponse = htmlspecialchars($_POST['reponse']);
                                     } 
 
                                     $publie_le = date('Y-m-d H:i:s');
@@ -408,17 +408,15 @@ try {
                                         $stmtInsertionDateReponse->execute([$publie_le]);
                                         $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                                        $reqInsertionReponse = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                                        $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
-                                        $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                        $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
                                     } catch (PDOException $e) {
                                         echo "Erreur : " . $e->getMessage();
                                         die();
                                     } 
                                 }
                             } ?>
-
-
 
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
