@@ -368,12 +368,26 @@ input, select {
     padding-left: 10px;
 }
 
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 3px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
+}
+
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
 .bordure-top {
-    border-top: 3px solid var(--violet-principal);
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {
@@ -395,7 +409,7 @@ input, select {
 }
 
 .display-notation > a {
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     text-decoration: none;
     margin-right: 15px;
 }
