@@ -140,8 +140,6 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
-    prix_offre              INTEGER NOT NULL,
-    type_offre              type_offre_t NOT NULL,
     abonnement              VARCHAR(63) NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
@@ -904,12 +902,12 @@ CREATE FUNCTION create_offre_activite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_activite(id_offre, duree, age_min)
         VALUES (id_offre_temp, NEW.duree, NEW.age_min);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -944,8 +942,6 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
         abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
@@ -994,12 +990,12 @@ CREATE FUNCTION create_offre_visite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_visite(id_offre, duree,date_evenement)
         VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1034,8 +1030,6 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
         abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
@@ -1084,12 +1078,12 @@ CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_spectacle(id_offre, duree, capacite,date_evenement)
         VALUES (id_offre_temp, NEW.duree, NEW.capacite,NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1175,12 +1169,12 @@ CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
         VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
-    RETURN ROW(id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement);
+    RETURN ROW(id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1215,8 +1209,6 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
         abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
@@ -1266,12 +1258,12 @@ CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
         VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
-    RETURN ROW(id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre, NEW.abonnement);
+    RETURN ROW(id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1306,8 +1298,6 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre,
         abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
