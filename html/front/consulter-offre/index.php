@@ -92,6 +92,14 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
+// ===== GESTION DES RÉPONSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    $reponse = getReponse($id_offre_cible);
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    $dateReponse = getDatePublicationReponse($id_offre_cible);
+
 // ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
@@ -474,6 +482,25 @@ try {
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
+
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+                        <div class="reponse">
+                            <div class="display-ligne-espace">
+                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p><strong>⁝</strong></p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <div class="display-ligne">
+                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                    $dateRep = explode('-', $rep[0]); 
+                                    $heureRep = explode(':', $rep[1]); ?>
+                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
+                                    <p class="transparent">.</p>
+                                </div>
+                            </div>
+                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                        </div>
+                    <?php } ?>
                 </div>      
             <?php $compteur++;
             } ?>  

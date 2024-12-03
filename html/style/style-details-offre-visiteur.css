@@ -373,7 +373,7 @@ input, select {
 }
 
 .bordure-top {
-    border-top: 3px solid var(--violet-principal);
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {
@@ -395,7 +395,7 @@ input, select {
 }
 
 .display-notation > a {
-    color: var(--violet-principal);
+    color: var(--orange-principale);
     text-decoration: none;
     margin-right: 15px;
 }
