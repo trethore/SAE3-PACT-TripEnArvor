@@ -2,7 +2,9 @@
     function printInConsole($text){
         ?>
         <script>
-            console.log(<?php echo $text; ?>);
+            window.onload = function() {
+                console.log(<?php echo $text; ?>);
+            };
         </script>
         <?php
     }
