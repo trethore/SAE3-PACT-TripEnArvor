@@ -582,6 +582,34 @@ try {
             images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
+        function updatePouce($id_avis, $type, $action) {
+            global $driver, $server, $dbname, $user, $pass;
+
+            // Determine the column to update based on the type
+            $column = $type === 'haut' ? 'nb_pouce_haut' : 'nb_pouce_bas';
+
+            // Determine whether to increment or decrement
+            $increment = $action === 'add' ? '+ 1' : '- 1';
+
+            // SQL query to modify the count
+            $reqUpdate = "UPDATE _avis SET $column = $column $increment WHERE id_avis = :id_avis";
+
+            try {
+                $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $stmtUpdate = $conn->prepare($reqUpdate);
+                $stmtUpdate->bindParam(':id_avis', $id_avis, PDO::PARAM_INT);
+                $stmtUpdate->execute();
+
+                $conn = null;
+                return true;
+            } catch (Exception $e) {
+                print "Erreur !: " . $e->getMessage() . "<br>";
+                die();
+            }
+        }
+
         function togglePouce(index, type) {
             const pouceHaut = document.getElementById(`pouce_haut_${index}`);
             const pouceBas = document.getElementById(`pouce_bas_${index}`);
@@ -591,6 +619,7 @@ try {
                     // Activate pouce haut and deactivate pouce bas
                     pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
+                    updatePouce($id_avis, $type, $action);
                 } else {
                     // Deactivate pouce haut
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
@@ -606,7 +635,6 @@ try {
                 }
             }
         }
-
 
     </script>
 
