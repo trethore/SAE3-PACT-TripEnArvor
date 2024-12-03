@@ -83,6 +83,14 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
+// ===== GESTION DES RÉPONSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    $reponse = getReponse($id_offre_cible);
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    $dateReponse = getDatePublicationReponse($id_offre_cible);
+
 // ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
@@ -373,16 +381,17 @@ try {
                         </div>
                     </div>
 
-                       
-                    <div class="display-ligne-espace">
-                        <p class="titre-avis">C'est moi le professionnel</p>
-                        <p><strong>⁝</strong></p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <p><strong>Répondu le : blablabla on s'en blc mdr</strong></p>
-                        <p class="transparent">.</p>
-                    </div>
-                    <p>C'est ma réponse blablabla ...</p>
+                    <?php if(!empty($reponse['texte'])) { ?>
+                        <div class="display-ligne-espace">
+                            <p class="titre-avis"><?php $compte['denomination'] ?></p>
+                            <p><strong>⁝</strong></p>
+                        </div>
+                        <div class="display-ligne-espace">
+                            <p class="reponse"><strong><?php echo htmlentities($dateReponse['date']) ?></strong></p>
+                            <p class="transparent">.</p>
+                        </div>
+                        <p><?php echo htmlentities($reponse['texte']) ?></p>
+                    <?php } ?>
                 </div>      
             <?php $compteur++;
             } ?>  
