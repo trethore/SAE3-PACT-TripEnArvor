@@ -158,7 +158,7 @@ try {
                         <table border="0">
                             <tr>
                                 <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                                <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($titre) ?> " required/></td>
+                                <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($offre['titre']) ?> " required/></td>
                             </tr>
                             <tr>
                                 <td><label for="categorie">Catégorie</label></td>
