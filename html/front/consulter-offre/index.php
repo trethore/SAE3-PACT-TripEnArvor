@@ -184,6 +184,7 @@ try {
                 <? } else {
                     echo "Pas d'information sur le propriétaire de l'offre";
                 }?> 
+                <?php print_r($offre['ville']) ?>
             </div>
 
         </section>  
