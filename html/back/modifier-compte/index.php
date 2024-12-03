@@ -157,7 +157,7 @@ if (!$submitted) {
             <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
             <div >
                 <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider" href="/back/mon-compte"> Valider </button> 
+                <button id="boutonValider"> Valider </button> 
             </div>
         </div>
         <div id="annulerModifCompte" style="display: none;">
@@ -173,7 +173,7 @@ if (!$submitted) {
             <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
             <div>
                 <button id="boutonReprendreAccueil"> Reprendre </button>
-                <button id="boutonRetourAccueil" href="/back/liste-back"> Quitter </button>
+                <button id="boutonRetourAccueil"> Quitter </button>
             </div>
         </div> 
         <div id="popupRetourCompte" style="display: none;">
@@ -181,7 +181,7 @@ if (!$submitted) {
             <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
             <div>
                 <button id="boutonReprendreCompte"> Reprendre </button>
-                <button id="boutonRetourCompte" href="/back/mon-compte"> Quitter </button>
+                <button id="boutonRetourCompte"> Quitter </button>
             </div>
         </div> 
     </main>

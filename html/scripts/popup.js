@@ -61,6 +61,11 @@ Array.from(declencherPopupAccueil).forEach((element) => {
     });
 });
 
+// Redirection vers la page d'accueil sans enregistrer les modification
+boutonRetourAccueil.addEventListener("click", function() {
+    // Redirige vers l'URL initiale
+    window.location.href = '/back/liste-back';
+});
 
 boutonReprendreAccueil.addEventListener("click", function() {
     popupOverlay.style.display = "none";
@@ -76,6 +81,12 @@ declencherPopupCompte.addEventListener("click", function(event) {
     event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";
     popupCompte.style.display = "flex";
+});
+
+// Redirection vers la page du compte sans enregistrer les modification
+boutonRetourCompte.addEventListener("click", function() {
+    // Redirige vers l'URL initiale
+    window.location.href = '/back/mon-compte';
 });
 
 boutonReprendreCompte.addEventListener("click", function() {
