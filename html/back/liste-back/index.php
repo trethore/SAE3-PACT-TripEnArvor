@@ -155,6 +155,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 </div>
             </div>
         </article>
+
         <section class="lesOffres">
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
             <?php
@@ -206,14 +207,26 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
                     <div class="etoiles">
-                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
-                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
-                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
-                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
-                        <img class="etoile" src="/images/universel/icones/etoile-pleine.png">
-                        <p>49</p>
+                        <?php 
+                            $note = getNoteMoyenne($row['id_offre']);
+                            $etoilesPleines = $note;
+                            $etoilesVides = 5 - $note;
+
+                            for ($i = 0; $i < $etoilesPleines; $i++) {
+                                ?>
+                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <?php
+                            }
+
+                            for ($i = 0; $i < $etoilesVides; $i++) {
+                                ?>
+                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <?php
+                            }
+                        ?>
+                        <p><?php echo getNombreNotes($row['id_offre']) ?></p>
                     </div>
-                    <div>
+                    <div style="display: none;">
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->

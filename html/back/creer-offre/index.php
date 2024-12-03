@@ -3,6 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/debug-utils.php");
 
     session_start();
     if (isset($_POST['titre'])) { // les autres svp²
@@ -10,7 +11,12 @@
     } else {
         $submitted = false;
     }
-
+    $photosDir = "../../images/universel/photos/";
+    if (!is_dir($photosDir)) {
+        if (mkdir($photosDir,0755,true)) {
+            printInConsole("Dossier photo crée !");
+        }
+    }
 
 
     function get_file_extension($type)
@@ -139,7 +145,7 @@
                         </tr>
                         <tr>
                             <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required">*</span> </label></td>
-                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                            <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" /></td>
                         </tr>
                         <tr>
                             <td><label id="labeldispo" for="dispo">Disponibilité </label></td>
@@ -385,7 +391,7 @@
 
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
-                $gammedeprix = intval($gammedeprix);
+                print($gammedeprix);
             }
 
             if (isset($_POST['photo'])) {
@@ -420,7 +426,7 @@
 
             if ($categorie !== "restaurant") {
                     
-                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))) {
+                if ((isset($_POST['tarif1']))&&(isset($_POST['nomtarif1']))&& $_POST['tarif1'] !== "") {
                     $tarif1 = $_POST['tarif1'];
                     $tarif1 = intval($tarif1);
                     $nomtarif1 = $_POST['nomtarif1'];
@@ -431,29 +437,31 @@
                     $nomtarif1 = "nomtarif1";
 
                 }
-                $tarif_min = $tarif1;     
+                $tarif_min = $tarif1; 
+                print("tarif1 ". $tarif1." tarif min ".$tarif_min);    
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
                 print $tarif_min;
 
-                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))) {
+                if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))&& $_POST['tarif2'] !== "") {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                }
-                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))) {
+                }else
+                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3']))&& $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
                     $tabtarifs[$_POST['nomtarif3']] = $tarif3;
                 }
-                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4']))) {
+                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4']))&& $_POST['tarif4'] !== "") {
                     $tarif4 = $_POST['tarif4'];
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
                 }
 
                 foreach ($tabtarifs as $key => $value) {
+                    print("clé : ".$key. "valeur : ".$value);
                     if ($tarif_min > $value) {
                         $tarif_min = $value;
                     } 
@@ -486,7 +494,7 @@
             $file_extension = get_file_extension($file['type']);
 
             if ($file_extension !== '') {
-                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . $time . $file_extension);
+                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
                 $fichier_img = $time . $file_extension;
@@ -509,8 +517,10 @@
             //     die("Erreur : Le fichier existe déjà dans la base de données.");
             // }
 
-            // $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/';
-            // $target_file = $target_dir . $time . $file_extension;
+
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
+            $target_file = $target_dir . $time . $file_extension;
+
 
             // if (file_exists($target_file)) {
             //     die("Erreur : Le fichier existe déjà dans le répertoire.");
@@ -557,7 +567,7 @@
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'plan_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'plan_' . $time . $file_extension);
                         $fichier_plan = 'plan_' . $time . $file_extension;
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -568,7 +578,7 @@
                         $stmt_plan = $dbh->prepare($requete_plan);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_plan->execute([$fichier_img]);
+                        $stmt_plan->execute([$fichier_plan]);
 
                     }
 
@@ -576,22 +586,25 @@
                     $stmt = $dbh->prepare($requete);
                     $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
 
+                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
                     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                    $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                    $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                     $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                     $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
 
-                    $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                    
 
                     break;
 
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
+                    print("le tarif min du spectacle ".$tarif_min);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
-                        //print($requete);
+                        
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         /////TEST
@@ -616,7 +629,7 @@
                     $time = 'p' . strval(time());
 
                     if ($file_extension !== '') {
-                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/' . 'carte_' . $time . $file_extension);
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
@@ -627,21 +640,23 @@
                         $stmt_carte = $dbh->prepare($requete_carte);
 
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                        $stmt_carte->execute([$fichier_img]);
+                        $stmt_carte->execute([$fichier_carte]);
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel,prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]); //mise a 0 de prix offre pour l'instant
 
 
                     }
-            
-                    //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                    $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    $stmt_plan_image = $dbh->prepare($requete_plan_offre);
-                    $stmt_plan_image->execute([$id_offre, $fichier_carte]);
 
                     $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+            
+                    //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                    $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                    $stmt_carte_image = $dbh->prepare($requete_carte_offre);
+                    $stmt_carte_image->execute([$id_offre, $fichier_carte]);
+
+                    
                     break;
                     
                     default:
@@ -662,7 +677,7 @@
                 $dbh->commit();
 
 
-                if ($isIdProPrivee){
+                if (($isIdProPrivee)&&($categorie !== "restaurant")){
                     foreach ($tabtarifs as $key => $value) {
                         $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
@@ -678,7 +693,12 @@
                 // Fermeture de la connexion
                 $dbh = null;
 
-                print "Offre créée avec succès!";
+                echo "<script>
+                    const redirect = confirm('Offre créée avec succès ! Cliquez sur OK pour continuer.');
+                    if (redirect) {
+                        window.location.href = '/back/liste-back';
+                    }
+                  </script>"; //if premium afficher
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -696,7 +716,7 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            if(isIdProPublique){
+            if(isIdProPublique === true){
                 console.log("l'id est publique");
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
