@@ -316,7 +316,7 @@
                     </tr>
                 </table> -->
                 <div class="bt_cree">
-                    <input class="valider" type="submit" value="Créer l'offre" />
+                    <input class="valider" type="submit" id="valider" value="Créer l'offre" />
 
                     <a href="#" id="back-to-top">
                         <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
