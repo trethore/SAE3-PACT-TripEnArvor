@@ -302,7 +302,6 @@ try {
                         } ?>
                     </table>
                 </div>
-                <button>Voir les tarifs supplémentaires</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
@@ -385,7 +384,7 @@ try {
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php $compte['denomination'] ?></p>
+                            <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             <p><strong>⁝</strong></p>
                         </div>
                         <div class="display-ligne-espace">
