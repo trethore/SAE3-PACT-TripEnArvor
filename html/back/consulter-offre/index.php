@@ -383,11 +383,11 @@ try {
                     </div>
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
-                        <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
-                            <p><strong>⁝</strong></p>
-                        </div>
-                        <div class="reponse">
+                        <div class="reponse"></div>
+                            <div class="display-ligne-espace">
+                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p><strong>⁝</strong></p>
+                            </div>
                             <div class="display-ligne-espace">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
                                 $dateRep = explode('-', $rep[0]); 
