@@ -381,7 +381,7 @@ try {
                         </div>
                     </div>
 
-                    <?php if(!empty($reponse['texte'])) { ?>
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="display-ligne-espace">
                             <p class="titre-avis"><?php $compte['denomination'] ?></p>
                             <p><strong>⁝</strong></p>
