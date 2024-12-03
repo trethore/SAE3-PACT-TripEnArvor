@@ -470,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onclick="togglePouce('haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onclick="togglePouce('bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onclick="togglePouce(<?php echo $compteur; ?>, 'haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onclick="togglePouce(<?php echo $compteur; ?>, 'bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -582,9 +582,9 @@ try {
             images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        function togglePouce(type) {
-            const pouceHaut = document.getElementById("pouce_haut");
-            const pouceBas = document.getElementById("pouce_bas");
+        function togglePouce(index, type) {
+            const pouceHaut = document.getElementById(`pouce_haut_${index}`);
+            const pouceBas = document.getElementById(`pouce_bas_${index}`);
 
             if (type === 'haut') {
                 if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
@@ -606,6 +606,7 @@ try {
                 }
             }
         }
+
 
     </script>
 
