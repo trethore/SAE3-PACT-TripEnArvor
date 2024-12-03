@@ -145,13 +145,11 @@ try {
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
             <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <button id="bouton2">Modifier l'offre</button>
+            <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
 
     <main id="body">
-
-        <a href="/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>">
 
         <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
