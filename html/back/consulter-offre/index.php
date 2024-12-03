@@ -381,21 +381,20 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <button id="showFormButton"><strong>Répondre</strong></button>
+                                <button id="showFormButton-<?php echo $compteur; ?>" class="show-form-btn"><strong>Répondre</strong></button>   
                             <?php } ?>
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
 
-                            <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
-                                <h2 for="creation-reponse">Répondre à un avis</h2><br>
+                            <form id="avisForm-<?php echo $compteur; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                                <h2>Répondre à un avis</h2>
                                 <div class="display-ligne-espace">
-                                    <label for="reponse">Rédigez votre réponse</label>
+                                    <textarea id="reponse-<?php echo $compteur; ?>" name="reponse" required></textarea><br>
                                     <p class="transparent">.</p>
                                 </div>
-                                <textarea id="reponse" name="reponse" required></textarea><br>
-                                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
                                 <button type="submit">Publier</button>
-                                <button type="button" id="cancelFormButton">Annuler</button>
+                                <button type="button" id="cancelFormButton-<?php echo $compteur; ?>" class="cancel-form-btn">Annuler</button>
                             </form>
 
                             <?php if ($submitted) { 
@@ -502,28 +501,32 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const showFormButton = document.getElementById('showFormButton');
-            const avisForm = document.getElementById('avisForm');
-            const cancelFormButton = document.getElementById('cancelFormButton');
+            document.addEventListener('DOMContentLoaded', () => {
+                // Récupérer tous les boutons Répondre
+                const showFormButtons = document.querySelectorAll('.show-form-btn');
+                const cancelFormButtons = document.querySelectorAll('.cancel-form-btn');
 
-            if (showFormButton && avisForm && cancelFormButton) {
-                // Afficher le formulaire au clic sur "Répondre"
-                showFormButton.addEventListener('click', () => {
-                    avisForm.style.display = 'block'; // Affiche le formulaire
-                    showFormButton.style.display = 'none'; // Masque le bouton
+                showFormButtons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        const form = document.getElementById(`avisForm-${index}`);
+                        if (form) {
+                            form.style.display = 'block'; // Afficher le formulaire
+                            button.style.display = 'none'; // Masquer le bouton Répondre
+                        }
+                    });
                 });
 
-                // Masquer le formulaire et réafficher le bouton "Répondre" au clic sur "Annuler"
-                cancelFormButton.addEventListener('click', () => {
-                    avisForm.style.display = 'none'; // Masque le formulaire
-                    showFormButton.style.display = 'block'; // Réaffiche le bouton
+                cancelFormButtons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        const form = document.getElementById(`avisForm-${index}`);
+                        const showFormButton = document.getElementById(`showFormButton-${index}`);
+                        if (form && showFormButton) {
+                            form.style.display = 'none'; // Masquer le formulaire
+                            showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
+                        }
+                    });
                 });
-            } else {
-                console.error("Un ou plusieurs éléments sont manquants. Vérifiez la structure du formulaire.");
-            }
-        });
-    
+            });
 
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
