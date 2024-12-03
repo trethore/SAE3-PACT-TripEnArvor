@@ -388,7 +388,7 @@ try {
                                 <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                                 <p><strong>⁝</strong></p>
                             </div>
-                            <div class="display-ligne-espace" style="height : 50px;">
+                            <div class="display-ligne-espace">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
                                 $dateRep = explode('-', $rep[0]); 
                                 $heureRep = explode(':', $rep[1]); ?>
