@@ -644,21 +644,20 @@
                     // Fermeture de la connexion
                     $dbh = null;
 
-                    echo "<script>
-                        const redirect = alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
+                echo "<script>
+                        const redirect = confirm('Formulaire soumis avec succès ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back';
+                            window.location.href = 'success.php'; // Redirige vers la page de succès
                         }
-                    </script>"; //if premium afficher
-                } catch (PDOException $e) {
-                    // Affichage de l'erreur en cas d'échec
-                    print "Erreur !: " . $e->getMessage() . "<br/>";
-                    $dbh->rollBack();
-                    die();
+                  </script>"; //if premium afficher a changer si il faut voir les erreurs
+            } catch (PDOException $e) {
+                // Affichage de l'erreur en cas d'échec
+                print "Erreur !: " . $e->getMessage() . "<br/>";
+                $dbh->rollBack();
+                die();
+                    
                 }
             }
-    
-        
         ?>
 
         <script>
