@@ -794,6 +794,15 @@
                 }
             }
 
+            function validateForm(event) {
+                if (lacat === "") {
+                    event.preventDefault(); // Empêche la soumission du formulaire
+                    alert("La catégorie doit être renseignée."); // Affiche une alerte
+                    return false;
+                }
+                return true; // Permet la soumission si la condition est respectée
+            }
+
 
 
             let offreDiv = document.getElementById("offre");
