@@ -470,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" onmouseover=hoverImgPouceHaut() src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" onmouseover=hoverImgPouceBas() src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -582,51 +582,41 @@ try {
         images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        let activePouce = null; // Tracks the active "pouce"
-
-        function togglePouce(pouceId, activeSrc, normalSrc, otherPouceId) {
-            const pouce = document.getElementById(pouceId);
-            const otherPouce = document.getElementById(otherPouceId);
-
-            if (activePouce === pouceId) {
-                // If already active, deactivate
-                pouce.src = normalSrc;
-                activePouce = null;
+        /*function clickImgPouceHaut() {
+            const pouceHaut = document.getElementById("pouce_haut");
+            if (pouceHaut.src == "/images/universel/icones/pouce-up.png") {
+                pouceHaut.src = "/images/universel/icones/pouce-up-hover.png"
             } else {
-                // Activate the clicked "pouce" and deactivate the other
-                pouce.src = activeSrc;
-                otherPouce.src = otherPouce.dataset.normalSrc; // Reset the other "pouce"
-                activePouce = pouceId;
+                pouceHaut.src = "/images/universel/icones/pouce-up.png"
             }
         }
 
-        // Initialize images and disable hover
-        function setupPouce(pouceId, activeSrc, normalSrc) {
-            const pouce = document.getElementById(pouceId);
+        function clickImgPouceBas() {
+            pouceBas = document.getElementById("pouce_bas");
+            if (pouceBas.src == "/images/universel/icones/pouce-down.png") {
+                pouceBas.src = "/images/universel/icones/pouce-down-hover.png"
+            } else {
+                pouceBas.src = "/images/universel/icones/pouce-down.png"
+            }
+        }*/ 
 
-            // Store normalSrc for resetting purposes
-            pouce.dataset.normalSrc = normalSrc;
-
-            pouce.onmouseover = () => {
-                if (activePouce !== pouceId) {
-                    pouce.src = activeSrc;
-                }
-            };
-
-            pouce.onmouseout = () => {
-                if (activePouce !== pouceId) {
-                    pouce.src = normalSrc;
-                }
-            };
-
-            pouce.onclick = () => {
-                togglePouce(pouceId, activeSrc, normalSrc, pouceId === "pouce_haut" ? "pouce_bas" : "pouce_haut");
-            };
+        function hoverImgPouceHaut() {
+            const pouceHaut = document.getElementById("pouce_haut");
+            if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
+                pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
+            } else {
+                pouceHaut.src = "/images/universel/icones/pouce-up.png";
+            }
         }
 
-        // Setup the "pouce" buttons
-        setupPouce("pouce_haut", "/images/universel/icones/pouce-up-hover.png", "/images/universel/icones/pouce-up.png");
-        setupPouce("pouce_bas", "/images/universel/icones/pouce-down-hover.png", "/images/universel/icones/pouce-down.png");
+        function hoverImgPouceBas() {
+            const pouceBas = document.getElementById("pouce_bas");
+            if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
+                pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
+            } else {
+                pouceBas.src = "/images/universel/icones/pouce-down.png";
+            }
+        }
 
     </script>
 
