@@ -348,7 +348,7 @@ try {
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
@@ -383,12 +383,12 @@ try {
                     </div>
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
-                        <div class="reponse"></div>
+                        <div class="reponse">
                             <div class="display-ligne-espace">
                                 <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                                 <p><strong>⁝</strong></p>
                             </div>
-                            <div class="display-ligne-espace">
+                            <div class="display-ligne-espace" style="height : 50px;">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
                                 $dateRep = explode('-', $rep[0]); 
                                 $heureRep = explode(':', $rep[1]); ?>
