@@ -375,7 +375,9 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <a href="#"><strong>Répondre</strong></a>
+                            <?php if(empty($reponse[$compteur]['texte'])) { ?>
+                                <a href="#"><strong>Répondre</strong></a>
+                            <?php } ?>
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
