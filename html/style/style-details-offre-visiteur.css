@@ -368,6 +368,20 @@ input, select {
     padding-left: 10px;
 }
 
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 3px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
+}
+
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
