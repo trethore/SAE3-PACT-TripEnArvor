@@ -438,11 +438,11 @@
 
                 }
                 $tarif_min = $tarif1; 
-                print("tarif1 ". $tarif1." tarif min ".$tarif_min);    
+               
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
-                print $tarif_min;
+              
 
                 if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))&& $_POST['tarif2'] !== "") {
                     $tarif2 = $_POST['tarif2'];
@@ -461,7 +461,6 @@
                 }
 
                 foreach ($tabtarifs as $key => $value) {
-                    print("clé : ".$key. "valeur : ".$value);
                     if ($tarif_min > $value) {
                         $tarif_min = $value;
                     } 
@@ -572,7 +571,6 @@
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
 
-                        //print $requete_image;
 
                         //preparation requete
                         $stmt_plan = $dbh->prepare($requete_plan);
@@ -599,18 +597,12 @@
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    print("le tarif min du spectacle ".$tarif_min);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
                         
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                        /////TEST
-                        // if (!$id_offre) {
-                        //     throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
-                        // }
-
-                        // print_r("ID de l'offre insérée : " . $id_offre);
+                       
                     break;
 
                 case 'visite':
@@ -631,8 +623,6 @@
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
-
-                        //print $requete_image;
 
                         //preparation requete
                         $stmt_carte = $dbh->prepare($requete_carte);
@@ -690,7 +680,7 @@
                 $dbh = null;
 
                 echo "<script>
-                    const redirect = confirm('Offre créée avec succès ! Cliquez sur OK pour continuer.');
+                    const redirect = alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
                     if (redirect) {
                         window.location.href = '/back/liste-back';
                     }

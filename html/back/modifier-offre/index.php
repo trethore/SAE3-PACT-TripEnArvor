@@ -252,7 +252,7 @@ try {
                         <table border="0">
                             <tr>
                                 <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
-                                <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." value="<?php echo htmlentities($offre['resume']) ?>" required></textarea></td>
+                                <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required><?php echo htmlentities($offre['resume']) ?></textarea></td>
 
                             </tr>
                             <tr>
@@ -267,7 +267,7 @@ try {
                     </div>
 
                         <h3>Description détaillée de l'offre</h3>
-                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... " value="<?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>"></textarea>
+                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
 
                     <div id="tarifs">
                         <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
