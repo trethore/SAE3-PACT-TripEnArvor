@@ -381,17 +381,7 @@ try {
                         </div>
                     </div>
 
-                    <?php if(!empty($reponse['texte'])) { ?>
-                        <div class="display-ligne-espace">
-                            <p class="titre-avis"><?php $compte['denomination'] ?></p>
-                            <p><strong>⁝</strong></p>
-                        </div>
-                        <div class="display-ligne-espace">
-                            <p class="reponse"><strong><?php echo htmlentities($dateReponse['date']) ?></strong></p>
-                            <p class="transparent">.</p>
-                        </div>
-                        <p><?php echo htmlentities($reponse['texte']) ?></p>
-                    <?php } ?>
+                   
                 </div>      
             <?php $compteur++;
             } ?>  
