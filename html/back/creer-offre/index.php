@@ -684,11 +684,9 @@
                 $dbh = null;
 
                 echo "<script>
-                    const redirect = alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
-                    if (redirect) {
+                        alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
                         window.location.href = '/back/liste-back';
-                    }
-                  </script>"; //if premium afficher
+                  </script>"; //if premium afficher a changer si il faut voir les erreurs
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
