@@ -436,3 +436,11 @@ footer > div > a {
 #carte {
     display: none;
 }
+
+.pouce_haut:hover {
+    background-image: ('/images/universel/icones/pouce-up-hover.png');
+}
+
+.pouce_bas:hover {
+    background-image: ('/images/universel/icones/pouce-down-hover.png');
+}
