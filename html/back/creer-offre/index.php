@@ -725,11 +725,11 @@
 
 
 
-            let tarif1js =tarif1.value; let tarif2js =tarif2.value;  let tarif3js =tarif3.value; let tarif4js =tarif4.value;
-            let tabtarifjs = [tarif1js, tarif2js, tarif3js, tarif4js];
+            // let tarif1js =tarif1.value; let tarif2js =tarif2.value;  let tarif3js =tarif3.value; let tarif4js =tarif4.value;
+            // let tabtarifjs = [tarif1js, tarif2js, tarif3js, tarif4js];
 
-            let nomtarif1js = nomtarif1.value; let nomtarif2js = nomtarif2.value;  let nomtarif3js = nomtarif3.value; let nomtarif4js = nomtarif4.value;
-            let tabnomtarifjs = [nomtarif1js, nomtarif2js, nomtarif3js, nomtarif4js];
+            // let nomtarif1js = nomtarif1.value; let nomtarif2js = nomtarif2.value;  let nomtarif3js = nomtarif3.value; let nomtarif4js = nomtarif4.value;
+            // let tabnomtarifjs = [nomtarif1js, nomtarif2js, nomtarif3js, nomtarif4js];
            
 
             let typecategorie = document.getElementById('categorie');
