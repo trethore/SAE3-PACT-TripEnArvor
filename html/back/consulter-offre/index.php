@@ -387,10 +387,10 @@ try {
                             <p><strong>⁝</strong></p>
                         </div>
                         <div class="display-ligne-espace">
-                            <p class="reponse"><strong><?php echo htmlentities($dateReponse['date']) ?></strong></p>
+                            <p class="reponse"><strong><?php echo htmlentities($dateReponse[$compteur]['date']) ?></strong></p>
                             <p class="transparent">.</p>
                         </div>
-                        <p><?php echo htmlentities($reponse['texte']) ?></p>
+                        <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
                     <?php } ?>
                    
                 </div>      
