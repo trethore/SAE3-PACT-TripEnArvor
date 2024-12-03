@@ -647,7 +647,7 @@
                 echo "<script>
                         const redirect = confirm('Formulaire soumis avec succès ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-offre/'
+                            window.location.href = '/back/liste-back/'
                         }
                   </script>"; //if premium afficher a changer si il faut voir les erreurs
             } catch (PDOException $e) {
