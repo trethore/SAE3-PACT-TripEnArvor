@@ -126,8 +126,10 @@ CREATE TABLE _offre (
     id_adresse              INTEGER,
     prix_offre              INTEGER NOT NULL,
     type_offre              type_offre_t NOT NULL,
+    id_abonnement           INTEGER NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte)
+    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (id_abonnement) REFERENCES _abonnement(id_abonnement)
 );
 
 
@@ -224,8 +226,9 @@ CREATE VIEW offre_restauration AS
 
 CREATE TABLE _option (
     nom_option  nom_option_t,
-    prix_option INTEGER NOT NULL,
-    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
+    id_prix INTEGER NOT NULL,
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option),
+    CONSTRAINT _option_fk_prix FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
 );
 
 
@@ -372,6 +375,23 @@ CREATE TABLE _facture(
     CONSTRAINT _facture_fk_date_echeance
         FOREIGN KEY (id_date_echeance)
         REFERENCES _date(id_date)    
+);
+CREATE TABLE _prix (
+    id_prix SERIAL,
+    prix_ht INTEGER NOT NULL
+);
+
+CREATE TABLE _abonnement (
+    nom VARCHAR(63),
+    id_prix INTEGER NOT NULL,
+    CONSTRAINT _abonnement_pk
+        PRIMARY KEY (nom),
+    CONSTRAINT _abonnement_fk_prix
+        FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+);
+
+
+
 );
 
 /* ##################################################################### */
