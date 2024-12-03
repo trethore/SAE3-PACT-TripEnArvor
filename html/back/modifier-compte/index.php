@@ -311,6 +311,9 @@ if (!$submitted) {
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $id_compte]);
+                    
+                    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/debug-utils.php');
+                    printInConsole("test");
                     break;
                     
                 case 'proPrive':
