@@ -529,7 +529,7 @@
                         $time = 'p' . strval(time());
 
                         if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos' . 'plan_' . $time . $file_extension);
+                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
                             $fichier_plan = 'plan_' . $time . $file_extension;
 
                             $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
