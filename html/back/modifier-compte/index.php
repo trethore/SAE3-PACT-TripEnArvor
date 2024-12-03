@@ -224,6 +224,12 @@ if (!$submitted) {
     </footer>
     <?php
 } else {
+    echo "<pre>";
+    echo "Formulaire soumis\n";
+    print_r($_POST);
+    echo "Valeur de \$ok : " . ($ok ? "true" : "false") . "\n";
+    exit;
+    
     $ok = true;
     switch ($typeCompte) {
         case 'proPublique':
