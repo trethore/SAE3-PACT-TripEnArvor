@@ -808,27 +808,27 @@
                 }
             });
 
-            const tarif = tarif.value; // Récupère la valeur de la tarif
+            // const tarif = tarif.value; // Récupère la valeur de la tarif
 
-            if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
-                boutonValider.addEventListener("click", function (event) {
-                    event.preventDefault(); // Empêche la soumission
-                    let pasdeTarif = alert("Remplir au moins 1 tarif");
-                });
-            }
-            if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
-                boutonValider.addEventListener("click", function (event) {
-                    event.preventDefault(); // Empêche la soumission
-                    let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
-                });
-            }
-            const gammeprix = gammedeprix.value;
-            if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
-                boutonValider.addEventListener("click", function (event) {
-                    event.preventDefault(); // Empêche la soumission
-                    let pasdegammeprix = alert("Remplir la gamme de prix");
-                });
-            }
+            // if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdeTarif = alert("Remplir au moins 1 tarif");
+            //     });
+            // }
+            // if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+            //     });
+            // }
+            // const gammeprix = gammedeprix.value;
+            // if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdegammeprix = alert("Remplir la gamme de prix");
+            //     });
+            // }
 
 
 
