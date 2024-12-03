@@ -151,6 +151,8 @@ try {
 
     <main id="body">
 
+        <a href="/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>">
+
         <section id="top" class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
@@ -375,8 +377,51 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <a href="#"><strong>Répondre</strong></a>
-                            <?php } ?>
+                                <a id="showFormButton"><strong>Répondre</strong></a>
+
+                                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                                    <h2 for="creation-reponse">Répondre à un avis</h2><br>
+                                    <div class="display-ligne-espace">
+                                        <label for="reponse">Rédigez votre réponse</label>
+                                        <p class="transparent">.</p>
+                                    </div>
+                                    <textarea id="reponse" name="reponse" required></textarea><br>
+                                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                                    <button type="submit">Publier</button>
+                                    <button type="button" id="cancelFormButton">Annuler</button>
+                                </form>
+
+                                <? if ($submitted) { 
+
+                                    if (isset($_POST['reponse'])) {
+                                        $commentaire = htmlspecialchars($_POST['avis']);
+                                    } 
+
+                                    $publie_le = date('Y-m-d H:i:s');
+
+                                    try {
+                                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                        $stmtInsertionDateReponse->execute([$publie_le]);
+                                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                        $reqInsertionReponse = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                        $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
+                                        $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                                    } catch (PDOException $e) {
+                                        echo "Erreur : " . $e->getMessage();
+                                        die();
+                                    } 
+                                }
+                            } ?>
+
+
+
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
@@ -460,6 +505,28 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
+
+        // Cibler les éléments
+        const showFormButton = document.getElementById('showFormButton');
+        const avisForm = document.getElementById('avisForm');
+        const cancelFormButton = document.getElementById('cancelFormButton');
+
+        // Afficher le formulaire au clic sur "Publier un avis"
+        showFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'block'; // Affiche le formulaire
+            showFormButton.style.display = 'none'; // Masque le bouton
+        });
+
+        // Masquer le formulaire au clic sur "Annuler"
+        cancelFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'none'; // Masque le formulaire
+            showFormButton.style.display = 'block'; // Réaffiche le bouton
+        });
+
+        const images = document.querySelector('.carousel-images');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+    
 
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
