@@ -45,7 +45,12 @@ boutonAnnuler.addEventListener("click", function() {
 boutonValider.addEventListener("click", function() {
     popupOverlay.style.display = "none";
     popupValider.style.display = "none";
-    form.submit();
+
+    if (form.checkValidity()) { // Vérifie si le formulaire est valide
+        form.submit();
+    } else {
+        console.error("Le formulaire contient des erreurs !");
+    }
 });
 
 /***********************************
