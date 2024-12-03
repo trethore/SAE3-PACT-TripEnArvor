@@ -1419,4 +1419,41 @@ FOR EACH ROW
 EXECUTE PROCEDURE offre_souscrit_une_seule_option();
 
 
+CREATE FUNCTION avis_sur_offre_restauration_possede_4_notes_detaillees() RETURNS TRIGGER AS $$
+DECLARE
+    nb INTEGER;
+BEGIN
+    nb := (SELECT COUNT(*)
+            FROM _offre_restauration
+            INNER JOIN _avis
+            ON _offre_restauration.id_offre = _avis.id_offre
+            INNER JOIN _note_detaillee
+            ON _avis.id_avis = _note_detaillee.id_avis
+            WHERE _avis.id_avis = NEW.id_avis);
+    
+    PERFORM *
+    FROM _offre_restauration
+    WHERE id_offre = NEW.id_offre;
+
+    IF FOUND THEN
+        IF nb <> 4 THEN
+            RAISE EXCEPTION 'Une offre de restauration doit avoir 4 notes détaillées.';
+        END IF;
+    ELSE
+        IF nb > 0 THEN
+            RAISE EXCEPTION 'Seul les offres de restaurations peut avoir des notes détaillées.';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER avis_sur_offre_restauration_possede_4_notes_detaillees_tg
+AFTER INSERT ON _avis
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
+
+
 COMMIT;
