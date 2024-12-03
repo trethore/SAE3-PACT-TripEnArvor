@@ -647,7 +647,7 @@
                 echo "<script>
                         const redirect = confirm('Formulaire soumis avec succès ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = 'success.php'; // Redirige vers la page de succès
+                            window.location.href = '/back/liste-offre/'
                         }
                   </script>"; //if premium afficher a changer si il faut voir les erreurs
             } catch (PDOException $e) {
@@ -747,7 +747,6 @@
             
         
             boutonValider.addEventListener("click", function (event) {
-                console.log(lacat);
                 if (typeselectionne === "") {
                     event.preventDefault(); // Empêche la soumission
                     let pasDeCat = alert("Selectionner une categorie");
