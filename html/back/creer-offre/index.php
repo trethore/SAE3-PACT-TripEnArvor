@@ -733,6 +733,7 @@
 
             categorie.addEventListener('change', function() {
                 let typeselectionne = categorie.value;
+                console.log(typeselectionne);
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (typeselectionne) {
                     case "restaurant":
@@ -784,6 +785,7 @@
 
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
+            
         
             boutonValider.addEventListener("click", function (event) {
                 if (lacat === "") {
