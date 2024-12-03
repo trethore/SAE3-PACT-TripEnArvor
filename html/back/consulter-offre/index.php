@@ -1,4 +1,4 @@
-<?php
+<button?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
@@ -382,7 +382,7 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <a id="showFormButton"><strong>Répondre</strong></a>
+                                <button id="showFormButton"><strong>Répondre</strong></button>
 
                                 <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                                     <h2 for="creation-reponse">Répondre à un avis</h2><br>
