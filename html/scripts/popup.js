@@ -57,7 +57,7 @@ Array.from(declencherPopupAccueil).forEach((element) => {
     element.addEventListener("click", function(event) {
         event.preventDefault(); // Empêche le changement de page
         popupOverlay.style.display = "block";
-        popupQuitter.style.display = "flex";
+        popupAccueil.style.display = "flex";
     });
 });
 
@@ -65,6 +65,11 @@ Array.from(declencherPopupAccueil).forEach((element) => {
 boutonRetourAccueil.addEventListener("click", function() {
     // Redirige vers l'URL initiale
     window.location.href = popupAccueil.href;
+});
+
+boutonReprendreAccueil.addEventListener("click", function() {
+    popupOverlay.style.display = "none";
+    popupQuitter.style.display = "none";
 });
 
 /***********************************
@@ -75,7 +80,7 @@ boutonRetourAccueil.addEventListener("click", function() {
 declencherPopupCompte.addEventListener("click", function(event) {
     event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";
-    popupQuitter.style.display = "flex";
+    popupCompte.style.display = "flex";
 });
 
 // Redirection vers la page du compte sans enregistrer les modification
@@ -84,14 +89,9 @@ boutonRetourCompte.addEventListener("click", function() {
     window.location.href = popupCompte.href;
 });
 
-
-/***********************************
-     REPRENDRE LES MODIFICATIONS 
-************************************/
-Array.from(boutonReprendre).forEach((element) => {
-    element.addEventListener("click", function() {
-        popupOverlay.style.display = "none";
-        popupQuitter.style.display = "none";
-    });
+boutonReprendreCompte.addEventListener("click", function() {
+    popupOverlay.style.display = "none";
+    popupQuitter.style.display = "none";
 });
+
 

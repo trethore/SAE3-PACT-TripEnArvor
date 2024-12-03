@@ -172,7 +172,7 @@ if (!$submitted) {
             <h3>Annuler les modifications</h3>
             <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonReprendreAccueil"> Reprendre </button>
                 <button id="boutonRetourAccueil"> Quitter </button>
             </div>
         </div> 
@@ -180,7 +180,7 @@ if (!$submitted) {
             <h3>Annuler les modifications</h3>
             <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonReprendreCompte"> Reprendre </button>
                 <button id="boutonRetourCompte"> Quitter </button>
             </div>
         </div> 
