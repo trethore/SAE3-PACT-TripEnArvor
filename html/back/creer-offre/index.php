@@ -667,21 +667,15 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            if(isIdProPublique === true){
-                console.log("l'id est publique");
+            if(isIdProPublique){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
-                 console.log("le type est caché");
             }
 
 
 
-            // let tarif1js =tarif1.value; let tarif2js =tarif2.value;  let tarif3js =tarif3.value; let tarif4js =tarif4.value;
-            // let tabtarifjs = [tarif1js, tarif2js, tarif3js, tarif4js];
 
-            // let nomtarif1js = nomtarif1.value; let nomtarif2js = nomtarif2.value;  let nomtarif3js = nomtarif3.value; let nomtarif4js = nomtarif4.value;
-            // let tabnomtarifjs = [nomtarif1js, nomtarif2js, nomtarif3js, nomtarif4js];
-           
+
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
@@ -700,6 +694,7 @@
 
             categorie.addEventListener('change', function() {
                 let typeselectionne = categorie.value;
+                console.log(typeselectionne);
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (typeselectionne) {
                     case "restaurant":
@@ -751,6 +746,7 @@
 
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
+            
         
             boutonValider.addEventListener("click", function (event) {
                 if (lacat === "") {
