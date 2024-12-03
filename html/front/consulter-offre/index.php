@@ -478,8 +478,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
 
@@ -609,35 +609,7 @@ try {
             images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        function updatePouce($id_avis, $type, $action) {
-            global $driver, $server, $dbname, $user, $pass;
-
-            // Determine the column to update based on the type
-            $column = $type === 'haut' ? 'nb_pouce_haut' : 'nb_pouce_bas';
-
-            // Determine whether to increment or decrement
-            $increment = $action === 'add' ? '+ 1' : '- 1';
-
-            // SQL query to modify the count
-            $reqUpdate = "UPDATE _avis SET $column = $column $increment WHERE id_avis = :id_avis";
-
-            try {
-                $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                $stmtUpdate = $conn->prepare($reqUpdate);
-                $stmtUpdate->bindParam(':id_avis', $id_avis, PDO::PARAM_INT);
-                $stmtUpdate->execute();
-
-                $conn = null;
-                return true;
-            } catch (Exception $e) {
-                print "Erreur !: " . $e->getMessage() . "<br>";
-                die();
-            }
-        }
-
-        function togglePouce(index, type) {
+        function togglePouce(index, type, id) {
             const pouceHaut = document.getElementById(`pouce_haut_${index}`);
             const pouceBas = document.getElementById(`pouce_bas_${index}`);
 
@@ -646,19 +618,22 @@ try {
                     // Activate pouce haut and deactivate pouce bas
                     pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
-                    updatePouce($id_avis, $type, $action);
+                    updatePouce(id, 'haut', 'add');
                 } else {
                     // Deactivate pouce haut
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                    updatePouce(id, 'haut', 'sub');
                 }
             } else if (type === 'bas') {
                 if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
                     // Activate pouce bas and deactivate pouce haut
                     pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                    updatePouce(id, 'bas', 'add');
                 } else {
                     // Deactivate pouce bas
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
+                    updatePouce(id, 'bas', 'sub');
                 }
             }
         }

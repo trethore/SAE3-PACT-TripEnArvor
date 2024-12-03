@@ -519,4 +519,33 @@
             die();
         }
     }
+
+    // ===== Fonction qui update le nombre de pouces en haut ou en bas =====//
+    function updatePouce($id_avis, $type, $action) {
+        global $driver, $server, $dbname, $user, $pass;
+
+        // Determine the column to update based on the type
+        $column = $type === 'haut' ? 'nb_pouce_haut' : 'nb_pouce_bas';
+
+        // Determine whether to increment or decrement
+        $increment = $action === 'add' ? '+ 1' : '- 1';
+
+        // SQL query to modify the count
+        $reqUpdate = "UPDATE _avis SET $column = $column $increment WHERE id_avis = :id_avis";
+
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmtUpdate = $conn->prepare($reqUpdate);
+            $stmtUpdate->bindParam(':id_avis', $id_avis, PDO::PARAM_INT);
+            $stmtUpdate->execute();
+
+            $conn = null;
+            return true;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>
