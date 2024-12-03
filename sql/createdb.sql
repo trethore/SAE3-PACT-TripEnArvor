@@ -970,9 +970,9 @@ BEGIN
     INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
         VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_visite(id_offre, duree)
-        VALUES (id_offre_temp, NEW.duree);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
+    INSERT INTO _offre_visite(id_offre, duree,date_evenement)
+        VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre,NEW.date_evenement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1012,9 +1012,10 @@ BEGIN
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_visite
-    SET duree = NEW.duree
+    SET duree = NEW.duree,
+        date_evenement = NEW.date_evenement
     WHERE id_offre = NEW.id_offre;
-
+    
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -1058,9 +1059,9 @@ BEGIN
     INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
         VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_spectacle(id_offre, duree, capacite)
-        VALUES (id_offre_temp, NEW.duree, NEW.capacite);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre);
+    INSERT INTO _offre_spectacle(id_offre, duree, capacite,date_evenement)
+        VALUES (id_offre_temp, NEW.duree, NEW.capacite,NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre,NEW.date_evenement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1101,7 +1102,8 @@ BEGIN
 
     UPDATE _offre_spectacle
     SET duree = NEW.duree,
-        capacite = NEW.capacite
+        capacite = NEW.capacite,
+        date_evenement = NEW.date_evenement
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
