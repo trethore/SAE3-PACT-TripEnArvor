@@ -360,6 +360,16 @@ VALUES
 (4, 12, 2, 'Expérience décevante', 'Le service n était pas à la hauteur de mes attentes. Plusieurs points à améliorer.', 4, 2, 'affaires', 4, 3),
 (3, 13, 5, 'Plats savoureux et moment agréable', 'Les pâtes étaient délicieuses, j’ai passé un très bon moment.', 1, 0, 'solo', 5, 4);
 
+INSERT INTO sae._note_detaillee (nom_note, note, id_avis) VALUES
+('Cuisine', 3, 6),
+('Service', 1, 6),
+('Ambiance', 4, 6),
+('Rapport qualité prix', 3, 6),
+('Cuisine', 5, 7),
+('Service', 4, 7),
+('Ambiance', 5, 7),
+('Rapport qualité prix', 4, 7);
+
 INSERT INTO sae._reponse(id_avis, texte, publie_le)
 VALUES 
 (3, 'Nous avons modifié notre carte.', 9),
