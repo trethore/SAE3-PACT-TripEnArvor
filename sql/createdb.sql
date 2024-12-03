@@ -1,3 +1,6 @@
+START TRANSACTION;
+
+
 DROP SCHEMA IF EXISTS sae CASCADE;
 CREATE SCHEMA sae;
 SET SCHEMA 'sae';
@@ -1403,3 +1406,6 @@ EXECUTE PROCEDURE offre_souscrit_une_seule_option();
 -- END;
 -- $$ LANGUAGE 'plpgsql';
 
+
+
+COMMIT;
