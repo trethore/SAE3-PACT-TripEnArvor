@@ -407,6 +407,10 @@ a {
 }
 
 .reponse {
+    padding-left: 30px;
+}
+
+.indentation {
     padding-left: 10px;
 }
 
