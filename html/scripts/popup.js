@@ -57,14 +57,19 @@ Array.from(declencherPopupAccueil).forEach((element) => {
     element.addEventListener("click", function(event) {
         event.preventDefault(); // Empêche le changement de page
         popupOverlay.style.display = "block";
-        popupQuitter.style.display = "flex";
+        popupAccueil.style.display = "flex";
     });
 });
 
 // Redirection vers la page d'accueil sans enregistrer les modification
 boutonRetourAccueil.addEventListener("click", function() {
     // Redirige vers l'URL initiale
-    window.location.href = popupAccueil.href;
+    window.location.href = '/back/liste-back';
+});
+
+boutonReprendreAccueil.addEventListener("click", function() {
+    popupOverlay.style.display = "none";
+    popupAccueil.style.display = "none";
 });
 
 /***********************************
@@ -75,23 +80,18 @@ boutonRetourAccueil.addEventListener("click", function() {
 declencherPopupCompte.addEventListener("click", function(event) {
     event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";
-    popupQuitter.style.display = "flex";
+    popupCompte.style.display = "flex";
 });
 
 // Redirection vers la page du compte sans enregistrer les modification
 boutonRetourCompte.addEventListener("click", function() {
     // Redirige vers l'URL initiale
-    window.location.href = popupCompte.href;
+    window.location.href = '/back/mon-compte';
 });
 
-
-/***********************************
-     REPRENDRE LES MODIFICATIONS 
-************************************/
-Array.from(boutonReprendre).forEach((element) => {
-    element.addEventListener("click", function() {
-        popupOverlay.style.display = "none";
-        popupQuitter.style.display = "none";
-    });
+boutonReprendreCompte.addEventListener("click", function() {
+    popupOverlay.style.display = "none";
+    popupCompte.style.display = "none";
 });
+
 

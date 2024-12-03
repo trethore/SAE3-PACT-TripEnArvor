@@ -316,7 +316,7 @@
                     </tr>
                 </table> -->
                 <div class="bt_cree">
-                    <input class="valider" type="submit" value="Créer l'offre" />
+                    <input class="valider" type="submit" id="valider" value="Créer l'offre" />
 
                     <a href="#" id="back-to-top">
                         <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
@@ -438,11 +438,11 @@
 
                 }
                 $tarif_min = $tarif1; 
-                print("tarif1 ". $tarif1." tarif min ".$tarif_min);    
+               
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
                 );
-                print $tarif_min;
+              
 
                 if ((isset($_POST['tarif2']))&&(isset($_POST['nomtarif2']))&& $_POST['tarif2'] !== "") {
                     $tarif2 = $_POST['tarif2'];
@@ -461,7 +461,6 @@
                 }
 
                 foreach ($tabtarifs as $key => $value) {
-                    print("clé : ".$key. "valeur : ".$value);
                     if ($tarif_min > $value) {
                         $tarif_min = $value;
                     } 
@@ -572,7 +571,6 @@
 
                         $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
 
-                        //print $requete_image;
 
                         //preparation requete
                         $stmt_plan = $dbh->prepare($requete_plan);
@@ -601,18 +599,12 @@
                 case 'spectacle':
                     $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     $stmt = $dbh->prepare($requete);
-                    print("le tarif min du spectacle ".$tarif_min);
                     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
 
                         
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                        /////TEST
-                        // if (!$id_offre) {
-                        //     throw new Exception("Erreur : l'insertion dans la table offre a échoué, id_offre est NULL.");
-                        // }
-
-                        // print_r("ID de l'offre insérée : " . $id_offre);
+                       
                     break;
 
                 case 'visite':
@@ -633,8 +625,6 @@
                         $fichier_carte= 'carte_' . $time . $file_extension;
 
                         $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
-
-                        //print $requete_image;
 
                         //preparation requete
                         $stmt_carte = $dbh->prepare($requete_carte);
@@ -694,7 +684,7 @@
                 $dbh = null;
 
                 echo "<script>
-                    const redirect = confirm('Offre créée avec succès ! Cliquez sur OK pour continuer.');
+                    const redirect = alert('Offre créée avec succès ! Cliquez sur OK pour continuer.');
                     if (redirect) {
                         window.location.href = '/back/liste-back';
                     }
@@ -725,8 +715,12 @@
 
 
 
+            // let tarif1js =tarif1.value; let tarif2js =tarif2.value;  let tarif3js =tarif3.value; let tarif4js =tarif4.value;
+            // let tabtarifjs = [tarif1js, tarif2js, tarif3js, tarif4js];
 
-
+            // let nomtarif1js = nomtarif1.value; let nomtarif2js = nomtarif2.value;  let nomtarif3js = nomtarif3.value; let nomtarif4js = nomtarif4.value;
+            // let tabnomtarifjs = [nomtarif1js, nomtarif2js, nomtarif3js, nomtarif4js];
+           
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
@@ -794,14 +788,37 @@
                 }
             }
 
-            function validateForm(event) {
+            const boutonValider = document.getElementById("valider");
+            const lacat = categorie.value; // Récupère la valeur de la catégorie
+        
+            boutonValider.addEventListener("click", function (event) {
                 if (lacat === "") {
-                    event.preventDefault(); // Empêche la soumission du formulaire
-                    alert("La catégorie doit être renseignée."); // Affiche une alerte
-                    return false;
+                    event.preventDefault(); // Empêche la soumission
+                    let pasDeCat = alert("Selectionner une categorie");
                 }
-                return true; // Permet la soumission si la condition est respectée
-            }
+            });
+
+            // const tarif = tarif.value; // Récupère la valeur de la tarif
+
+            // if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdeTarif = alert("Remplir au moins 1 tarif");
+            //     });
+            // }
+            // if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+            //     });
+            // }
+            // const gammeprix = gammedeprix.value;
+            // if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdegammeprix = alert("Remplir la gamme de prix");
+            //     });
+            // }
 
 
 

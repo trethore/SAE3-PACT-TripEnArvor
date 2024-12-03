@@ -172,7 +172,7 @@ if (!$submitted) {
             <h3>Annuler les modifications</h3>
             <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonReprendreAccueil"> Reprendre </button>
                 <button id="boutonRetourAccueil"> Quitter </button>
             </div>
         </div> 
@@ -180,7 +180,7 @@ if (!$submitted) {
             <h3>Annuler les modifications</h3>
             <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
             <div>
-                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonReprendreCompte"> Reprendre </button>
                 <button id="boutonRetourCompte"> Quitter </button>
             </div>
         </div> 
@@ -281,16 +281,29 @@ if (!$submitted) {
                 $city = $_POST['ville'];
                 $country = $_POST['pays'];
                 if ($address_complement === '') $address_complement = null;
-
-                $query = "UPDATE sae._adresse set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                // Requete SQL pour modifier la table adresse
+                $query = "UPDATE sae._adresse 
+                            set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "UPDATE sae.compte_professionnel_publique set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) = (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+
+                // Requete SQL pour modifier la table _compte
+                $query = "UPDATE sae._compte 
+                            set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                            where id_compte = ?;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
-                $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
+
+                // Requete SQL pour modifier la table _compte_professionnel
+                $query = "UPDATE sae._compte_professionnel
+                            set (denomination, a_propos, site_web) = (?, ?, ?)
+                            where id_compte = ?;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
                 break;
+                
             case 'proPrive':
                 $denomination = $_POST['denomination'];
                 $a_propos = $_POST['a-propos'];
@@ -302,16 +315,34 @@ if (!$submitted) {
                 $city = $_POST['ville'];
                 $country = $_POST['pays'];
                 if ($address_complement === '') $address_complement = null;
-
-                $query = "UPDATE sae._adresse SET (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                // Requete SQL pour modifier la table adresse
+                $query = "UPDATE sae._adresse 
+                            set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                 $stmt = $dbh->prepare($query);
                 $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-
                 $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "UPDATE sae.compte_professionnel_prive set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) where id_compte = ?";
+
+                // Requete SQL pour modifier la table _compte
+                $query = "UPDATE sae._compte 
+                            set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse) = (?, ?, ?, ?, ?, ?)
+                            where id_compte = ?;";
                 $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren, $id_compte]);
-                break;
+                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $id_compte]);
+
+                // Requete SQL pour modifier la table _compte_professionnel
+                $query = "UPDATE sae._compte_professionnel
+                            set (denomination, a_propos, site_web) = (?, ?, ?)
+                            where id_compte = ?;";
+                $stmt = $dbh->prepare($query);
+                $stmt->execute([$denomination, $a_propos, $site_web, $id_compte]);
+
+                                // Requete SQL pour modifier la table _compte_professionnel_prive
+                                $query = "UPDATE sae._compte_professionnel_prive
+                                set siren = ?
+                                where id_compte = ?;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$siren, $id_compte]);
             default:
                 $ok = false;
                 break;

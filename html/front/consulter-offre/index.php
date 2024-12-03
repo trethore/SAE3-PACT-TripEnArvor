@@ -470,8 +470,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut')" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas')" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
                 </div>      
@@ -578,17 +578,35 @@ try {
 
         // Met à jour l'affichage du carrousel
         function updateCarousel() {
-        const width = images.clientWidth;
-        images.style.transform = `translateX(-${currentIndex * width}px)`;
+            const width = images.clientWidth;
+            images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
-        function hoverImg() {
-            if (document.getElementById("pouce_haut").src == "/images/universel/icones/pouce-up.png") {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up-hover.png"
-            } else {
-                document.getElementById("pouce_haut").src = "/images/universel/icones/pouce-up.png"
+        function togglePouce(index, type) {
+            const pouceHaut = document.getElementById(`pouce_haut_${index}`);
+            const pouceBas = document.getElementById(`pouce_bas_${index}`);
+
+            if (type === 'haut') {
+                if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
+                    // Activate pouce haut and deactivate pouce bas
+                    pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                } else {
+                    // Deactivate pouce haut
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                }
+            } else if (type === 'bas') {
+                if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
+                    // Activate pouce bas and deactivate pouce haut
+                    pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                } else {
+                    // Deactivate pouce bas
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                }
             }
         }
+
 
     </script>
 
