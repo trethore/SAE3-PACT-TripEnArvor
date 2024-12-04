@@ -87,6 +87,7 @@ try {
 
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
+    
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -424,21 +425,352 @@ try {
                 </div>
             </footer>
         <?php } else {
+            if (isset($_POST['titre'])) {
+                $titre = $_POST['titre'];
+            }
+
+            if (isset($_POST['descriptionC'])) {
+                $resume = $_POST['descriptionC'];
+            }
+
+            if (isset($_POST['ville'])) {
+                $ville = $_POST['ville'];
+            }
+
+            if (isset($_POST['gammedeprix'])) {
+                $gammedeprix = $_POST['gammedeprix'];
+            }
+            if (isset($_POST['duree'])) {
+                $duree = $_POST['duree'];
+                $duree = intval($duree);
+            }
+            if (isset($_POST['attractions'])) {
+                $nbattraction = $_POST['attractions'];
+                $nbattraction = intval($nbattraction);
+            }
+            if (isset($_POST['age'])) {
+                $age = $_POST['age'];
+                $age = intval($age);
+            }
+
+            if (isset($_POST['capacite'])) {
+                $capacite = $_POST['capacite'];
+                $capacite = intval($capacite);
+            }
+            if (isset($_POST['lacat'])) {
+                $categorie = $_POST['lacat'];
+            }
+            if (isset($_POST['type'])&&($isIdProPrivee)) {
+                $type = $_POST['type'];
+            }else {
+                $type = "gratuit";
+            }
+            
+
+            if ($categorie !== "restaurant") {
+                    
+                if ((isset($_POST['tarif1'])) && (isset($_POST['nomtarif1'])) && $_POST['tarif1'] !== "") {
+                    $tarif1 = $_POST['tarif1'];
+                    $tarif1 = intval($tarif1);
+                    $nomtarif1 = $_POST['nomtarif1'];
+                            
+                }
+                else {
+                    $tarif1 = 0;
+                    $nomtarif1 = "nomtarif1";
+
+                }
+               
+                $tabtarifs = array(
+                $nomtarif1 => $tarif1
+                );
+              
+
+                if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2'])) && $_POST['tarif2'] !== "") {
+                    $tarif2 = $_POST['tarif2'];
+                    $tarif2 = intval($tarif2);
+                    $tabtarifs[$_POST['nomtarif2']] = $tarif2;
+                }else
+                if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3'])) && $_POST['tarif3'] !== "") {
+                    $tarif3 = $_POST['tarif3'];
+                    $tarif3 = intval($tarif3);
+                    $tabtarifs[$_POST['nomtarif3']] = $tarif3;
+                }
+                if ((isset($_POST['tarif4'])) && (isset($_POST['nomtarif4'])) && $_POST['tarif4'] !== "") {
+                    $tarif4 = $_POST['tarif4'];
+                    $tarif4 = intval($tarif4);
+                    $tabtarifs[$_POST['nomtarif4']] = $tarif4;
+                }
+
+            }
+
             if (isset($_POST['photo'])) {
                 $photo1 = $_FILE['photo'];
             }else{
                 $photo1 = $images[0];
             }
+
+            if(isset($_POST['adresse'])){
+                $adresse = $_POST['adresse'];
+            }else {
+                $adresse =null;
+            }
+            if(isset($_POST['cp'])){
+                $cp = $_POST['cp'];
+            }else {
+                $cp = null;
+            }
+            if(isset($_POST['option'])){
+                $option = $_POST['option'];
+            }else {
+                $option = null;
+            }
+            if(isset($_POST['lien'])){
+                $lien = $_POST['lien'];
+            }else {
+                $lien = null;
+            }
+            if(isset($_POST['tel'])){
+                $option = $_POST['tel'];
+            }else {
+                $tel = null;
+            }
+
+
+            if ($categorie !== "restaurant") {
+                foreach ($liste_tags as $tag) {
+                    if (isset($_POST[$tag['nom_tag']])) {
+                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+                    }
+                }
+            }
+           
+            $descriptionL = $_POST['descriptionL'];
+            
              
              try {
-    
+                // Vérifier si l'id_compte est défini (s'il est connecté)
+                if (!$id_compte) {
+                    die("Erreur : utilisateur non connecté.");
+                }
+
                 // Connexion à la base de données
                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
                 
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
-            }catch(PDOException $e){
 
+                //INSERTION IMAGE dans _image
+                $time = 'p' . strval(time());
+                $file = $_FILES['photo'];
+                $file_extension = get_file_extension($file['type']);
+
+                if ($file_extension !== '') {
+                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
+
+
+                    $fichier_img = $time . $file_extension;
+
+                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                    //preparation requete
+                    $stmt_image = $dbh->prepare($requete_image);
+
+                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                    $stmt_image->execute([$fichier_img]);
+
+                }
+
+                // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
+                // $stmt_verif = $dbh->prepare($requete_verif);
+                // $stmt_verif->execute([$fichier_img]);
+
+                // if ($stmt_verif->fetchColumn() > 0) {
+                //     die("Erreur : Le fichier existe déjà dans la base de données.");
+                // }
+
+
+                $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
+                $target_file = $target_dir . $time . $file_extension;
+
+
+                // if (file_exists($target_file)) {
+                //     die("Erreur : Le fichier existe déjà dans le répertoire.");
+                // }
+                    
+                $dbh->beginTransaction();
+                // Déterminer la table cible selon la catégorie
+                switch ($categorie) {
+                    case 'activite':
+                        $requeteCategorie = 'activite';
+                        break;
+                    case 'parc':
+                        $requeteCategorie = 'parc_attraction';
+                        break;
+                    case 'spectacle':
+                        $requeteCategorie = 'spectacle';
+                        break;
+                    case 'visite':
+                        $requeteCategorie = 'visite';
+                        break;
+                    case "restaurant":
+                            $requeteCategorie = 'restauration';
+                            break;
+                    default:
+                        die("Erreur de categorie!");
+                }
+
+                //SWITCH CREATION REQUETE OFFRE
+                switch ($categorie) {
+                    case 'activite':
+                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+
+                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+
+                        break;
+
+                    case 'parc':
+                        $file = $_FILES['plan'];
+                        $file_extension = get_file_extension($file['type']);
+                        $time = 'p' . strval(time());
+
+                        if ($file_extension !== '') {
+                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                            $fichier_plan = 'plan_' . $time . $file_extension;
+
+                            $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+
+                            //preparation requete
+                            $stmt_plan = $dbh->prepare($requete_plan);
+
+                            //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                            $stmt_plan->execute([$fichier_plan]);
+
+                        }
+
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type, $descriptionL, $lien]);
+
+                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                        $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                        $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
+                        $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
+
+
+                        
+
+                        break;
+
+                    case 'spectacle':
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $descriptionL, $lien]);
+
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        
+                        break;
+
+                    case 'visite':
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien]);
+
+                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        break;
+
+                    case 'restaurant':
+                        $file = $_FILES['carte'];
+                        $file_extension = get_file_extension($file['type']);
+                        $time = 'p' . strval(time());
+
+                        if ($file_extension !== '') {
+                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                            $fichier_carte= 'carte_' . $time . $file_extension;
+
+                            $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                            //preparation requete
+                            $stmt_carte = $dbh->prepare($requete_carte);
+
+                            //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                            $stmt_carte->execute([$fichier_carte]);
+
+                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type, $descriptionL, $lien]); 
+
+
+                        }
+
+                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                
+                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                        $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                        $stmt_carte_image = $dbh->prepare($requete_carte_offre);
+                        $stmt_carte_image->execute([$id_offre, $fichier_carte]);
+
+                        
+                        break;
+                        
+                        default:
+                        die("Erreur de categorie!");
+                    }
+                    
+
+                    if ($file_extension !== '') {
+
+                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+
+                        $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                        $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                        $stmt_image_offre->execute([$id_offre, $fichier_img]);
+
+                    }
+
+                    $dbh->commit();
+
+
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                        foreach ($tabtarifs as $key => $value) {
+                            $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+
+                            // Préparation de la requête pour la vue tarif
+                            $stmt_tarif = $dbh->prepare($requete_tarif);
+
+                            // Exécution de la requête pour insérer dans la vue tarif
+                            $stmt_tarif->execute([$key, $value, $id_offre]);
+                        }
+                    }
+
+                    
+                    
+                    // Fermeture de la connexion
+                    $dbh = null;
+
+
+
+
+
+                echo "<script>
+                        const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
+                        if (redirect) {
+                            window.location.href = '/back/liste-back/'
+                        }
+                  </script>";
+
+            }catch(PDOException $e){
+                // Affichage de l'erreur en cas d'échec
+                print "Erreur !: " . $e->getMessage() . "<br/>";
+                $dbh->rollBack();
+                die();
             }
 
         }?>
@@ -513,7 +845,7 @@ try {
 
                     case "parc":
                         afficheSelonType(typeparc);
-                        afficherTags(typeparc)
+                        afficherTags(typeparc);
                         break;
 
                     default:
