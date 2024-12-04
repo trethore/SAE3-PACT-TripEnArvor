@@ -437,7 +437,7 @@ try {
                         // if(!liste_tags.include()){
                         //     if($categorie != "restaurant")
                         //     foreach ($liste_tags as $tag)
-                        //     <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                        //     <li><input type="checkbox" name="" value=""> </li>
                         // }
 
 
@@ -450,11 +450,6 @@ try {
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
-
-
-
-
-
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
