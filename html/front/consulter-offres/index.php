@@ -173,9 +173,9 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
+                    <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                     <div class="offre">
                         <div class="sous-offre">
-                            <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
@@ -212,9 +212,9 @@ try {
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
                                 </div>
-                            </a>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 <?php
                     }
             ?>
