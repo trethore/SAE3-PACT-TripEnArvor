@@ -560,9 +560,20 @@
                         break;
 
                     case 'spectacle':
+                        try {
+                            $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                            $stmtInsertionDateEvent->execute([$date_event]);
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        } catch (PDOException $e) {
+                            echo "Erreur : " . $e->getMessage();
+                            die();
+                        } 
+                        
+
                         $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $date_event]);
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
