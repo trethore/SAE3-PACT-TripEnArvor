@@ -87,10 +87,6 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"]);?></td>
                 </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
-                </tr>
             </table>
             <h2>Mon adresse</h2>
             <table>
