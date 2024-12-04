@@ -536,18 +536,6 @@ try {
                 });
             });
 
-                cancelFormButtons.forEach((button, index) => {
-                    button.addEventListener('click', () => {
-                        const form = document.getElementById(`avisForm-${index}`);
-                        const showFormButton = document.getElementById(`showFormButton-${index}`);
-                        if (form && showFormButton) {
-                            form.style.display = 'none'; // Masquer le formulaire
-                            showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
-                        }
-                    });
-                });
-            });
-
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
 
