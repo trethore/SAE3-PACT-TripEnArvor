@@ -278,6 +278,7 @@ if (!$submitted) {
         $tel = $_POST['tel'];
     
         if ($ok) {
+            echo "trest";
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
                 case 'proPublique':
