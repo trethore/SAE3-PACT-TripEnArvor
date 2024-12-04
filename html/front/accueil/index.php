@@ -83,7 +83,14 @@ try {
                     </div>
                 </div>
             </div>
-            <p>Le Petit Coin de Mer</p>
+            <p>
+                Le Petit Coin de Mer
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+            </p>
         </section>
 
         <h1>Découvrir la Liste des Offres Disponibles</h1>

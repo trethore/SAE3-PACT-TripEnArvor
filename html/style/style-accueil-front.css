@@ -104,6 +104,7 @@ section > p {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
 
     left: 0;
 
@@ -116,4 +117,10 @@ section > p {
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
+}
+
+p > img {
+    height: 25px;
+    width: 25px;
+    margin: 5px;
 }
