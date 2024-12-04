@@ -251,7 +251,7 @@ try {
 
                     <br>
                     <!-- spectacle -->
-                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite']) ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite'])?? '' ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
