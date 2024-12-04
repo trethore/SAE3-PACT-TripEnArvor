@@ -20,8 +20,11 @@ if (!isset($id_compte) ||!isIdMember($id_compte)) {
 
 $reqCompte = "SELECT * from sae._compte_membre cm 
                 join sae._compte c on c.id_compte = cm.id_compte 
-                join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cm.id_compte = :id_compte;"; 
+                where cm.id_compte = :id_compte;";
+
+$reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville, pays from sae._adresse a 
+                    join sae._compte c on c.id_adresse = a.id_adresse 
+                    where c.id_compte = :id_compte;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -84,13 +87,16 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"]);?></td>
                 </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
-                </tr>
             </table>
             <h2>Mon adresse</h2>
             <table>
+                <?php 
+                    // Préparation et exécution de la requête
+                    $stmt = $conn->prepare($reqAdresse);
+                    $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+                    $stmt->execute();
+                    $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
+                ?>
                 <tr>
                     <td>Adresse postale</td>
                     <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
