@@ -581,9 +581,8 @@
                             }
 
                             // 2. Insérer les données dans la table offre_spectacle en utilisant l'ID de la date
-                            $requete = "INSERT INTO sae.offre_spectacle 
-                                (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                            $requete = "INSERT INTO sae.offre_activite (titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
