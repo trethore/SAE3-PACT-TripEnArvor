@@ -408,19 +408,17 @@ try {
                     <?php } ?>
                 </div>  
 
-                <?php if(!empty($reponse[$compteur]['texte'])) { ?>
-                    <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
-                        <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
-                        <h2>Répondre à un avis</h2>
-                        <div class="display-ligne-espace">
-                            <textarea id="reponse" name="reponse" required></textarea><br>
-                            <p class="transparent">.</p>
-                        </div>
-                        <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
-                        <button type="submit">Publier</button>
-                        <button type="button" class="cancel-form-btn">Annuler</button>
-                    </form>
-                <?php } ?>
+                <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                    <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
+                    <h2>Répondre à "nom_membre"</h2>
+                    <div class="display-ligne-espace">
+                        <textarea id="reponse" name="reponse" required></textarea><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
+                    <button type="submit">Publier</button>
+                    <button type="button" class="cancel-form-btn">Annuler</button>
+                </form>
 
                 <?php if ($submitted) { 
                     if (isset($_POST['reponse'])) {
@@ -508,35 +506,6 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
-
-            document.addEventListener('DOMContentLoaded', () => {
-                // Boutons pour afficher les formulaires
-                const showFormButtons = document.querySelectorAll('.show-form-btn');
-                const cancelFormButtons = document.querySelectorAll('.cancel-form-btn');
-
-                // Gérer l'affichage des formulaires
-                showFormButtons.forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const form = document.querySelector('.avis-form');
-                        if (form) {
-                            form.style.display = 'block'; // Afficher le formulaire
-                            button.style.display = 'none'; // Masquer le bouton Répondre
-                        }
-                    });
-                });
-
-                // Gérer la fermeture des formulaires
-                cancelFormButtons.forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const form = document.querySelector('.avis-form');
-                        const showFormButton = document.querySelector('.show-form-btn');
-                        if (form && showFormButton) {
-                            form.style.display = 'none'; // Masquer le formulaire
-                            showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
-                        }
-                    });
-                });
-            });
 
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
