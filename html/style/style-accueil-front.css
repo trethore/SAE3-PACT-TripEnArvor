@@ -82,13 +82,16 @@ section {
 }
 
 .arrow-left > img, .arrow-right > img {
+    background-color: var(--fond-bouton);
     border-radius: 90px;
+    height: 25px;
+    width: 25px;
 }
 
 .arrow-left {
-    left: 20px;
+    right: 85px;
 }
-      
+
 .arrow-right {
     right: 20px;
 }
@@ -109,8 +112,6 @@ section {
     justify-content: center;
     flex-direction: row;
 
-    left: 0;
-
     color: var(--noir);
 
     height: auto;
@@ -122,9 +123,4 @@ section {
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
-}
-
-p > img {
-    height: 25px;
-    width: 25px;
 }
