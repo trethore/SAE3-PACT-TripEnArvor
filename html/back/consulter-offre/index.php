@@ -409,9 +409,8 @@ try {
                 </div>  
 
                 <?php $id_avis = $a['id_avis']; 
-                print_r($id_avis);
                 if(empty($reponse[$compteur]['texte'])) { ?>
-                    <form id="avisForm-<?php echo $id_avis; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
+                    <form id="avisForm-<?php echo $id_avis; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                         <input type="hidden" name="id_avis" value="<?php echo htmlentities($id_avis); ?>" />
                         <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
                         <div class="display-ligne-espace">
