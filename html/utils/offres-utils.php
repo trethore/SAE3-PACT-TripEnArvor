@@ -36,12 +36,13 @@
 
     function getFirstIMG($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqIMG = "SELECT img.lien_fichier 
-            FROM sae._image img
-            JOIN sae._offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = :id_offre
-            LIMIT 1;";
+        $reqIMG = "SELECT img.lien_fichier
+                    FROM sae._image img
+                    JOIN sae._offre_contient_image oci 
+                    ON img.lien_fichier = oci.id_image
+                    WHERE oci.id_offre = 1
+                    ORDER BY CAST(REGEXP_REPLACE(img.lien_fichier, '\D', '', 'g') AS INTEGER)
+                    LIMIT 1;";
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
