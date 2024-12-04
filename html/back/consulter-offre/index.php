@@ -411,7 +411,7 @@ try {
                 <?php if(empty($reponse[$compteur]['texte'])) { ?>
                     <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
                         <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
-                        <h2>Répondre à "nom_membre"</h2>
+                        <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']) ?></h2>
                         <div class="display-ligne-espace">
                             <textarea id="reponse" name="reponse" required></textarea><br>
                             <p class="transparent">.</p>
