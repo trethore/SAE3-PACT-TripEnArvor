@@ -130,6 +130,38 @@ try {
         Redden's, Inc.
         </div>
     </footer>
+
+    <script>
+        const images = document.querySelector('.carousel-images');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        let currentIndex = 0;
+
+        // Gestion du clic sur le bouton "Suivant"
+        nextButton.addEventListener('click', () => {
+            currentIndex++;
+            if (currentIndex >= images.children.length) {
+                currentIndex = 0; // Revenir au début
+            }
+            updateCarousel();
+        });
+
+        // Gestion du clic sur le bouton "Précédent"
+        prevButton.addEventListener('click', () => {
+            currentIndex--;
+            if (currentIndex < 0) {
+                currentIndex = images.children.length - 1; // Revenir à la fin
+            }
+            updateCarousel();
+        });
+
+        // Met à jour l'affichage du carrousel
+        function updateCarousel() {
+            const width = images.clientWidth;
+            images.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
+    </script>
 </body>
 </html>
 
