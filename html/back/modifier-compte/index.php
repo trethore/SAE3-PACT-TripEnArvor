@@ -220,9 +220,6 @@ if (!$submitted) {
     </footer>
     <?php
 } else {
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
     $ok = true;
     switch ($typeCompte) {
         case 'proPublique':
@@ -258,7 +255,6 @@ if (!$submitted) {
             $ok = false;
             break;
         }
-        print_r($ok);
         // Récupération des données du formulaire
         $nouveauMotDePasse = $_POST['mdp'] ?? '';
         $ancienMotDePasse = $_POST['ancien_mdp'] ?? '';
@@ -279,7 +275,6 @@ if (!$submitted) {
         $tel = $_POST['tel'];
     
         if ($ok) {
-            echo "trest";
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
                 case 'proPublique':
@@ -342,7 +337,7 @@ if (!$submitted) {
                     break;
                 }
         }   
-        // redirectTo("/back/mon-compte");
+        redirectTo("/back/mon-compte");
     } ?>
 <script src="/scripts/popupCompte.js"></script>
 </body>
