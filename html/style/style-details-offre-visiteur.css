@@ -182,6 +182,8 @@ a {
 
     .display-ligne-espace > button {
         font-size: 60px;
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     .display-ligne-espace > a, .fond-blocs > a {
@@ -192,8 +194,6 @@ a {
         border: 3px solid var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
-        display: flex;
-        flex-wrap: nowrap;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
@@ -428,7 +428,6 @@ input, select {
     border: 3px solid var(--blanc-leger);
     color: var(--blanc-leger);
     padding: 10px 20px;
-    border: 0;
     text-align: center; 
     font-size: 40px;
     width: auto;
