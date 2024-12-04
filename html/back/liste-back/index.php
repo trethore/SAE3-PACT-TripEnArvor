@@ -255,10 +255,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 </a>
             </article>
             <?php } ?>
-            <!-------------------------------------- 
-            Pagination
-            ---------------------------------------->
         </section>
+        <a href="/back/creer-offre/">Créer une offre</a>
     </main>
     <footer>
         <div class="footer-top">
