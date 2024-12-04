@@ -190,7 +190,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <p class="type-offre" style="display: none"><?php echo $row["type_offre"]; ?></p>
                     <img src=" <?php
                     switch ($row["type_offre"]) {
-                        case 'gratuite':
+                        case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
                         
@@ -246,7 +246,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->  
-                    <p class="prix">A partir de <span><?php echo htmlentities($row["prix_offre"]) ?>€</span></p>
+                    <p class="prix">A partir de <span><?php echo htmlentities(($row["prix_offre"])) ?>€</span></p>
                 </a>
             </article>
             <?php } ?>

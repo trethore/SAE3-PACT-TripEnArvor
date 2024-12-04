@@ -62,6 +62,14 @@ if (!$submitted) {
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
+                    <td>Pseudo</td>
+                    <td>
+                        <input type="text" name="pseudo" id="pseudo" value="<?php 
+                                if (isset($detailCompte["pseudo"])) {
+                                    echo htmlentities($detailCompte["pseudo"]);} ?>">
+                    </td>
+                </tr>
+                <tr>
                     <td>Nom</td>
                     <td>
                         <input type="text" name="nom" id="nom" value="<?php 
@@ -201,33 +209,10 @@ if (!$submitted) {
 } else {
     $ok = true;
     switch ($typeCompte) {
-        case 'proPublique':
+        case 'membre':
             $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['nom']);
-            $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
-            $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a_propos']);
-            $ok = $ok && isset($_POST['site']);
-            $ok = $ok && isset($_POST['rue']);
-            $ok = $ok && isset($_POST['cp']);
-            $ok = $ok && isset($_POST['ville']);
-            $ok = $ok && isset($_POST['pays']);
-            break;
-
-        case 'proPrive':
-            $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['nom']);
-            $ok = $ok && isset($_POST['prenom']);
-            $ok = $ok && isset($_POST['tel']);
-            $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a_propos']);
-            $ok = $ok && isset($_POST['site']);
-            $ok = $ok && isset($_POST['siren']);
-            $ok = $ok && isset($_POST['rue']);
-            $ok = $ok && isset($_POST['cp']);
-            $ok = $ok && isset($_POST['ville']);
-            $ok = $ok && isset($_POST['pays']);
+            $ok = $ok && isset($_POST['pseudo']);
             break;
 
         default:
@@ -248,6 +233,7 @@ if (!$submitted) {
         }  
 
         $email = $_POST['email'];
+        $pseudo = $_POST['pseudo'];
         $password = $_POST['mdp'];
         $name = $_POST['nom'];
         $first_name = $_POST['prenom'];
@@ -256,10 +242,7 @@ if (!$submitted) {
         if ($ok) {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
-                case 'proPublique':
-                    $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a_propos'];
-                    $site_web = $_POST['site'];
+                case 'membre':
                     $street = $_POST['rue'];
                     $address_complement = $_POST['compl_adr'] ?? '';
                     $code_postal = $_POST['cp'];
@@ -275,42 +258,15 @@ if (!$submitted) {
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
                     // Requete SQL pour modifier la vue compte_professionnel_publique
-                    $query = "UPDATE sae.compte_professionnel_publique 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) 
-                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    $query = "UPDATE sae.compte_membre 
+                                set (pseudo, nom_compte, prenom, email, tel, mot_de_passe, id_adresse) 
+                                    = (?, ?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $id_compte]);
+                    $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $id_compte]);
                     
                     break;
-                    
-                case 'proPrive':
-                    $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a_propos'];
-                    $site_web = $_POST['site'];
-                    $siren = $_POST['siren'];
-                    $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'] ?? '';
-                    $code_postal = $_POST['cp'];
-                    $city = $_POST['ville'];
-                    $country = $_POST['pays'];
-                    if ($address_complement === '') $address_complement = null;
-                    // Requete SQL pour modifier la table adresse
-                    $query = "UPDATE sae._adresse 
-                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                    $id_adresse = $stmt->fetch()['id_adresse'];
-    
-                    // Requete SQL pour modifier la vue compte_professionnel_prive
-                    $query = "UPDATE sae.compte_professionnel_prive 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 
-                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                                where id_compte = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $siren, $id_compte]);
-                    break;
+
                 default:
                     $ok = false;
                     break;

@@ -11,7 +11,7 @@ main {
 
 input {
     text-align: center;
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     background-color: var(--blanc-leger);
     padding: 0.5em 2em;
     border-radius: 10px;
@@ -25,17 +25,17 @@ input::placeholder {
 table + div > input {
     text-decoration: none;
     color: var(--blanc-leger);
-    background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--violet-principal);
     border-radius: 15px;
     margin: 2em 0 1em;
     padding: 0.2em 1em;
 }
 
 table + div > input:hover {
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    border: 2px solid var(--violet-principal);
 }
 
 /* Style de la popup */
@@ -84,8 +84,8 @@ table + div > input:hover {
 #annulerModifCompte button, 
 #popupRetourAccueil button,
 #popupRetourCompte button {
-    background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
     font-weight: var(--bold);
     font-size: 12pt;
@@ -103,7 +103,7 @@ table + div > input:hover {
 #annulerModifCompte button:hover,
 #popupRetourAccueil button:hover,
 #popupRetourCompte button:hover {
-    color: var(--orange-principale);
+    color: var(--violet-principal);
     background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    border: 2px solid var(--violet-principal);
 }

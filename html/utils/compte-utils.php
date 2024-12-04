@@ -8,6 +8,7 @@
                             CASE
                                 WHEN EXISTS (SELECT 1 FROM sae._compte_professionnel_publique pu WHERE pu.id_compte = co.id_compte) THEN 'proPublique'
                                 WHEN EXISTS (SELECT 1 FROM sae._compte_professionnel_prive pr WHERE pr.id_compte = co.id_compte) THEN 'proPrive'
+                                WHEN EXISTS (SELECT 1 FROM sae._compte_membre m WHERE m.id_compte = co.id_compte) THEN 'membre'
                                 ELSE 'Inconnu'
                             END AS comptePro
                             FROM sae._compte co
