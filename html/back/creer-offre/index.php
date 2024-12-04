@@ -379,10 +379,10 @@
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
             }
-            if (isset($_POST['type'])) {
+            if (isset($_POST['type'])&&($isIdProPrivee)) {
                 $type = $_POST['type'];
             }else {
-                $type = "standard";
+                $type = "gratuit";
             }
             
 
@@ -399,7 +399,6 @@
                     $nomtarif1 = "nomtarif1";
 
                 }
-                $tarif_min = $tarif1; 
                
                 $tabtarifs = array(
                 $nomtarif1 => $tarif1
@@ -420,12 +419,6 @@
                     $tarif4 = $_POST['tarif4'];
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
-                }
-
-                foreach ($tabtarifs as $key => $value) {
-                    if ($tarif_min > $value) {
-                        $tarif_min = $value;
-                    } 
                 }
 
             }
@@ -512,7 +505,7 @@
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
@@ -542,9 +535,9 @@
 
                         }
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -559,18 +552,18 @@
                         break;
 
                     case 'spectacle':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
                         break;
 
                     case 'visite':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         break;
@@ -592,9 +585,9 @@
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel,prix_offre, type_offre) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, 0, $type]); //mise a 0 de prix offre pour l'instant
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]); 
 
 
                         }
@@ -638,6 +631,7 @@
                             $stmt_tarif->execute([$key, $value, $id_offre]);
                         }
                     }
+
                     
                     
                     // Fermeture de la connexion

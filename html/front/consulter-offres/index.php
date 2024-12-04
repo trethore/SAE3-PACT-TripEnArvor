@@ -25,6 +25,13 @@ try {
     foreach ($offres as &$offre) {
         $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
     }
+
+    foreach ($offres as &$offre) {
+        $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
+        if (getPrixPlusPetit($offre['id_offre']) == null) {
+            $offre['prix'] = 0;
+        }
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -203,7 +210,7 @@ try {
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
-                                    <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
+                                    <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
                                 </div>
                             </a>
                         </div>
@@ -344,6 +351,8 @@ try {
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "default") {
+
                 }
             };
 
