@@ -293,8 +293,27 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
 
                         <div id="tarifs">
-                            <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
                             
+                            <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
+                            <?php  
+                            $i = 0; // Compteur pour les champs
+                            // Boucle pour afficher les tarifs existants
+                            foreach ($tarifs as $t) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']); ?>" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']); ?>" /><span>€</span> 
+                                <br>
+                            <?php 
+                            }
+                            // Complète les champs vides si moins de 4
+                            while ($i < 4) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" /><span>€</span> 
+                                <br>
+                            <?php 
+                            } ?>
+
                         </div>
 
                     <br>
