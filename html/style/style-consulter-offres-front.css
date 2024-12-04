@@ -477,9 +477,12 @@ h3 {
 }
 
 .bas-offre {
-    position: relative !important;
     background-color: transparent !important;
-    top: 25em !important;
+    top: unset !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 1rem;
 }
 
 .etoiles {
