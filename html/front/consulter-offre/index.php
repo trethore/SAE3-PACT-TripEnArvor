@@ -620,13 +620,13 @@ try {
                     pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
                     <?php
-                        updatePouce(id, 'haut', 'add');
+                        // updatePouce(id, 'haut', 'add');
                     ?>
                 } else {
                     // Deactivate pouce haut
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
                     <?php
-                        updatePouce(id, 'haut', 'sub');
+                        // updatePouce(id, 'haut', 'sub');
                     ?>
                 }
             } else if (type === 'bas') {
@@ -635,13 +635,13 @@ try {
                     pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
                     <?php
-                        updatePouce(id, 'bas', 'add');
+                        // updatePouce(id, 'bas', 'add');
                     ?>
                 } else {
                     // Deactivate pouce bas
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
                     <?php
-                        updatePouce(id, 'bas', 'sub');
+                        // updatePouce(id, 'bas', 'sub');
                     ?>
                 }
             }
