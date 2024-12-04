@@ -91,13 +91,7 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
-                <p class="titre" id="carousel-titre">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                </p>
+                <p class="titre" id="carousel-titre"></p>
             </div>
         </section>
 
@@ -182,6 +176,15 @@ try {
 
             const currentImage = images.children[currentIndex];
             titreElement.textContent = currentImage.dataset.titre;
+
+            titreElement.innerHTML = `
+                ${titre}
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+            `;
         }
     </script>
 </body>
