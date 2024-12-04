@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
-if (isset($_POST['titre'])) { 
+if (isset($_POST['reponse'])) { 
     $submitted = true;
 } else {
     $submitted = false;
@@ -357,7 +357,7 @@ try {
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
-                    <div class="display-ligne-espace">
+                    <div class="display-ligne-espace"> 
                         <div class="display-ligne">
                             <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
