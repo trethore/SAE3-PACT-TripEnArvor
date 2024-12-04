@@ -13,11 +13,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-
-
 redirectToConnexionIfNecessary($id_compte);
 
 $submitted = isset($_POST['email']);
@@ -114,10 +109,6 @@ if (!$submitted) {
                                         if (isset($detailCompte["tel"])) {
                                             echo htmlentities($detailCompte["tel"]);} ?>"> 
                     </td>
-                </tr>
-                <tr style="display: none;">
-                    <td>N° IBAN</td>
-                    <td><input type="text" name="iban" id="iban" value="<?= htmlentities("à implémenter");?>"></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
