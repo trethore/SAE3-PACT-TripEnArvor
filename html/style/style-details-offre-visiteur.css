@@ -190,7 +190,7 @@ a {
         font-size: 24px;
         background-color: var(--violet-principal);
         border: 3px solid var(--blanc-leger);
-        padding: 10px 80px;
+        padding: 10px 20px;
         border-radius: 15px;
         border: 0;
     }
@@ -424,6 +424,7 @@ input, select {
 
 .navigation > button {
     background: var(--violet-principal);
+    border: 3px solid var(--blanc-leger);
     color: var(--blanc-leger);
     padding: 10px 20px;
     border: 0;
@@ -437,6 +438,7 @@ input, select {
 
 .navigation > button:hover {
     background: var(--blanc-leger);
+    border-color: var(--violet-principal);
     color: var(--violet-principal);
     transition: 0.3s ease-in-out;
 }
@@ -445,6 +447,7 @@ input, select {
     width: 50px;
     height: 50px;
     background: var(--violet-principal);
+    border: 3px solid var(--blanc-leger);
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -452,6 +455,7 @@ input, select {
 
 #remonte:hover {
     background: var(--blanc-leger);
+    border-color: var(--violet-principal);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     transition: 0.3s ease-in-out;
 }
