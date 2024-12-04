@@ -344,8 +344,7 @@
 
             // Récupération des données du formulaire avec $_POST
             
-                $date_event = $_POST['date_evenement'];
-                print_r("test 1234");
+            $date_event = $_POST['date_event'];
 
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
