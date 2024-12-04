@@ -82,15 +82,15 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
+                <p>
+                    Le Petit Coin de Mer
+                    <img src="/images/frontOffice/etoile-pleine.png">
+                    <img src="/images/frontOffice/etoile-pleine.png">
+                    <img src="/images/frontOffice/etoile-pleine.png">
+                    <img src="/images/frontOffice/etoile-pleine.png">
+                    <img src="/images/frontOffice/etoile-pleine.png">
+                </p>
             </div>
-            <p>
-                Le Petit Coin de Mer
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-            </p>
         </section>
 
         <h1>Découvrir la Liste des Offres Disponibles</h1>
