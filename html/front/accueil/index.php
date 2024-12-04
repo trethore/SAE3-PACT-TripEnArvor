@@ -74,7 +74,7 @@ try {
                     <img src="/images/universel/photos/image2.webp" alt="Image">
                     <img src="/images/universel/photos/image3.webp" alt="Image">
                 </div>
-                <div class="display-ligne-espace">
+                <div>
                     <div class="arrow-left">
                         <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
                     </div>
@@ -82,7 +82,7 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
-                <p>
+                <p class="titre">
                     Le Petit Coin de Mer
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
