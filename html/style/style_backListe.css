@@ -521,14 +521,16 @@ a {
 }
 
 section + a {
+    display: block;
     background: var(--orange-principale);
     color: var(--blanc);
     padding: 10px 20px;
     text-align: center;
     font-size: 30px;
+    width: 300px;
     border-radius: 15px;
     border: 2px solid var(--orange-principale);
-    margin: 0.5em 2.5em 1em;
+    margin: 0.5em 2em 1em auto;
 }
 
 section + a:hover {
