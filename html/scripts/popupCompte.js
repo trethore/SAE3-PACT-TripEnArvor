@@ -49,6 +49,7 @@ boutonValider.addEventListener("click", function() {
     if (form.checkValidity()) { // Vérifie si le formulaire est valide
         console.log("blkjqoihsqivoifudiopvo");
         form.submit();
+        window.location.href = '/back/mon-compte';
 
     } else {
         console.error("Le formulaire contient des erreurs !");
