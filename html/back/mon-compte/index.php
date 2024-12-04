@@ -183,7 +183,11 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         const seDeco = document.getElementById('deco');
 
         seDeco.addEventListener("click", function() {
-            <?php endSession(); ?>
+            <?php 
+                session_unset();
+                session_destroy();
+            ?>
+            window.location.href = "/front/consulter-offres"
         })
     </script>
 </body>
