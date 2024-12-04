@@ -11,6 +11,10 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
 startSession();
 $id_compte = $_SESSION["id"];
 redirectToConnexionIfNecessary($id_compte);
