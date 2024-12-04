@@ -156,7 +156,7 @@ a {
 }
 
 .filtre-tri h3 + div {
-    background: var(--gradient-orange);
+    background: var(--orange-principale);
     border-radius: 15px;
     padding: 0.5em;
     padding-left: 1em;
