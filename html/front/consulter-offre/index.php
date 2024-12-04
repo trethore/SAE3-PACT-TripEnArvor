@@ -610,6 +610,7 @@ try {
         }
 
         function togglePouce(index, type, id) {
+            console.log("index : " + index + ", type : " + type + "id :" + id);
             const pouceHaut = document.getElementById(`pouce_haut_${index}`);
             const pouceBas = document.getElementById(`pouce_bas_${index}`);
 
