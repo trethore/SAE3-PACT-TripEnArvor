@@ -49,7 +49,7 @@ body {
 
 /* Lien */
 .connecter a {
-    color: var(--vert-principale);
+    color: var(--violet-principal);
     width: 100%;
     transform: translateX(25%);
 }
@@ -186,5 +186,5 @@ section input:checked {
 .connecter button:hover,
 .connecter input[type="submit"]:hover {
     background: var(--blanc-leger);
-    color: var(--vert-principale);
+    color: var(--violet-principal);
 }
