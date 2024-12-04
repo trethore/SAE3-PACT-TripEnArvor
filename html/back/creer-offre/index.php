@@ -574,6 +574,8 @@
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            print_r($idDateEvent);
+                            print_r("here");
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
                             die();
