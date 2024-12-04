@@ -88,7 +88,8 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
     
-
+    $categorieBase = $categorie;
+    
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
