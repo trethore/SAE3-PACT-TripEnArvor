@@ -88,16 +88,16 @@ input[type="submit"] {
 }
 
 input[type="submit"]:enabled {
-    border: var(--couleur-bouton-creer-compte) 2px solid;
+    border: var(--violet-principal) 2px solid;
     cursor: pointer;
-    background-color: var(--couleur-bouton-creer-compte);
+    background-color: var(--violet-principal);
     color: white;
     transition: all 250ms ease-in-out;
 }
 
 input[type="submit"]:enabled:hover {
     background-color: white;
-    color: var(--couleur-bouton-creer-compte);
+    color: var(--violet-principal);
 }
 
 textarea {
