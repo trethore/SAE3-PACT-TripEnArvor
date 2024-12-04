@@ -261,8 +261,8 @@ try {
                     <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte" />
                     
                 </div>
-                <?php if(isset($activite['capacite'])){
-                    echo htmlentities($activite['capacite']);
+                <?php if(isset($activite['duree'])){
+                    echo htmlentities($activite['duree']);
                 }else{
                     echo "pas dispo";
                 }
