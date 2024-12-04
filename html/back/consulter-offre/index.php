@@ -177,7 +177,7 @@ try {
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                $jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
                 foreach ($horaire as $h) {
                     $ouvert_ferme = date('H:i');
