@@ -20,6 +20,12 @@ h1 {
     font-size: 55pt;
 }
 
+h1:hover {
+    color: var(--violet-principal);
+    background-color: var(--blanc-leger);
+    border: 2px var(--violet-principal) solid;
+}
+
 h2 {
     font-family: "Poppins", sans-serif;
     color: var(--violet-principal);
@@ -30,7 +36,7 @@ h2 {
     text-align: center;
 }
 
-section {
+section > img {
     position: absolute;
     width: 1226px;
     height: 396px;
