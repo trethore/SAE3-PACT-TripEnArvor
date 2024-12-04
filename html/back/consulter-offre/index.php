@@ -376,13 +376,13 @@ try {
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities($a['commentaire']); ?></p>
-                    <div class="display-ligne-espace">
+                    <!-- <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
-                    </div>  
+                    </div> -->
 
                     <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
