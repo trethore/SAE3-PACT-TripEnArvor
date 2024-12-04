@@ -344,5 +344,6 @@ if (!$submitted) {
                 }
         }   
 } ?>
+<script src="/scripts/popupCompte.js"></script>
 </body>
 </html>
