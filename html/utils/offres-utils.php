@@ -374,28 +374,10 @@
 
 // ===== GESTION DE L'OUVERTURE ===== //
 
-    // ===== Fonction qui exécute une requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
-    function getJoursOuverture($id_offre) {
-        global $driver, $server, $dbname, $user, $pass;
-        $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
-        try {
-            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $stmtJour = $conn->prepare($reqJour);
-            $stmtJour->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
-            $stmtJour->execute();
-            $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
-            $conn = null;
-            return $jours;
-        } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
-        }
-    }
-    
     // ===== Fonction qui exécute une requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     function getHorairesOuverture($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqHoraire = "SELECT DISTINCT * FROM _offre NATURAL JOIN _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE id_offre = :id_offre";
+        $reqHoraire = "SELECT * FROM _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);    
             $stmtHoraire = $conn->prepare($reqHoraire);
