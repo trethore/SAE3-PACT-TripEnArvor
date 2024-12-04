@@ -43,6 +43,14 @@ h2 {
     text-align: left;
 }
 
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
 section > img {
     width: 1226px;
     height: 396px;
