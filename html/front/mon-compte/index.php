@@ -99,25 +99,25 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
                 ?>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?></td>
                 </tr>
                 <?php  if (isset($detailCompte["complement_adresse"])) { ?>
                     <tr>
                         <td>Complément d'adresse</td>
-                        <td><?php echo htmlentities($detailCompte["complement_adresse"]); ?></td>
+                        <td><?php echo htmlentities($detailCompte["complement_adresse"] ?? ''); ?></td>
                     </tr> 
                 <?php } ?>
                 <tr>
                     <td>Code postal</td>
-                    <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["code_postal"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><?php echo htmlentities($detailCompte["ville"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["ville"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><?php echo htmlentities($detailCompte["pays"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
                 </tr>
             </table>
             <div>
