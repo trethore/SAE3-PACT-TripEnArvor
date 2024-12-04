@@ -211,6 +211,9 @@ try {
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                         <td><div>
+                            <?php foreach ($images as $image) { ?>
+                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                            <?php } ?>
                                 <!-- <label for="file-upload">
                                     <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                                 </label> -->
