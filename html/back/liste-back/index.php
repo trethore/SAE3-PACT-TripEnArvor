@@ -246,7 +246,12 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->  
-                    <p class="prix">A partir de <span><?php echo htmlentities(($row["prix_offre"])) ?>€</span></p>
+                    <p class="prix">A partir de <span><?php         
+                    $offre['prix'] = getPrixPlusPetit($row['id_offre']);
+                    if (getPrixPlusPetit($row['id_offre']) == null) {
+                        $offre['prix'] = 0;
+                    }
+                    echo htmlentities($offre['prix']); ?>€</span></p>
                 </a>
             </article>
             <?php } ?>
