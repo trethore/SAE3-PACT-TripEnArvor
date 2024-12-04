@@ -173,9 +173,7 @@ try {
                                             <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
-                                            <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>
-
-                                            
+                                            <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>  
                                         </select>
                                 
                                 </div></td>
@@ -266,6 +264,7 @@ try {
                 }else{
                     echo "pas dispo";
                 }
+
                 ?>
                     <br>
                     </div>
@@ -277,8 +276,14 @@ try {
                             foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } }
+                        foreach($liste_tags as $tag){ ?>
+                            <li><input type="checkbox" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <?php }
+                        foreach ($liste_tags_restaurant as $tag) { ?>
+                            <li><input type="checkbox" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                       
+                       <?php } ?>
                         
-                        ?>
                      </ul>   
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
@@ -435,9 +440,7 @@ try {
 
         }?>
         <script> 
-            const liste_tags = array["Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour"];
-            const liste_tags_restaurant = ["Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomie", "Italienne", "Restauration rapide", "Creperie"];
-            
+                
             liste_tags.forEach(element => {
                 
             });
@@ -457,6 +460,10 @@ try {
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
+
+            const liste_tags = "<?php echo json_encode($liste_tags) ?>";
+            const liste_tags_restaurant = "<?php echo json_encode($liste_tags_restaurant) ?>";
+            const $tags = "<?php echo json_encode($tags) ?>"
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
@@ -521,6 +528,22 @@ try {
                 });
                 if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
+                }
+            }
+
+            function afficherTags(){
+                if (typeselectionne === "restaurant"){
+                    liste_tags.forEach(tag => {
+                        if(!tags.includes(tag)){
+                            document.getElementById(tag).style.display ='none';
+                        }
+                    });
+                }else{
+                    liste_tags_restaurant.forEach(tag => {
+                        if(!tags.includes(tag)){
+                            document.getElementById(tag).style.display ='none';
+                        }
+                    });
                 }
             }
 
