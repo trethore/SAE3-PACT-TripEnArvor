@@ -176,7 +176,16 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <?php foreach ($horaire as $h) {
+                    $ouvert_ferme = date('H:i');
+                    if (($h['ouverture']  < $ouvert_ferme) && ($ouvert_ferme < $h['fermeture'])) {
+                        $ouverture = "Ouvert";
+                    }
+                    else {
+                        $ouverture = "Fermé";
+                    }
+                } ?>
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
                         $adresseComplete = [];
@@ -290,6 +299,7 @@ try {
             <div class="fond-blocs bloc-tarif">
                 <div>
                     <h2>Tarifs : </h2>
+                    <br>
                     <table>
                         <?php foreach ($tarifs as $t) { 
                              if (!empty($tarifs)) {
