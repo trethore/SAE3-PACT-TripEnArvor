@@ -341,116 +341,119 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
-            <?php if (isset($_SESSION['id'])) { ?>
+            <?php if (isset($_SESSION['id'])) { 
+                foreach ($avis as $a) { 
+                    if ($a['id_membre'] != $_SESSION['id']) { ?>
+                        <button id="showFormButton">Publier un avis</button>
 
-                <button id="showFormButton">Publier un avis</button>
+                        <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                            <h2 for="creation-avis">Création d'avis</h2><br>
+                            <div class="display-ligne-espace">
+                                <label for="titre">Saisissez le titre de votre avis</label>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <input type="text" id="titre" name="titre" required></input><br>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <label for="contexte">Contexte de visite :</label>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <select id="contexte" name="contexte" required>
+                                    <option value="" disabled selected>Choisissez un contexte</option>
+                                    <option value="affaires">Affaires</option>
+                                    <option value="couple">Couple</option>
+                                    <option value="famille">Famille</option>
+                                    <option value="amis">Amis</option>
+                                    <option value="solo">Solo</option>
+                                </select><br>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <label for="avis">Rédigez votre avis</label>
+                                <p class="transparent">.</p>
+                            </div>
+                            <textarea id="avis" name="avis" required></textarea><br>
+                            <div class="display-ligne-espace">
+                                <label for="note">Saisissez la note de votre avis</label>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <label for="date">Saisissez la date de votre visite</label>
+                                <p class="transparent">.</p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <input type="datetime-local" id="date" name="date" required/><br>
+                                <p class="transparent">.</p>
+                            </div>
+                            <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                            <button type="submit">Publier</button>
+                            <button type="button" id="cancelFormButton">Annuler</button>
+                        </form>
 
-                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
-                    <h2 for="creation-avis">Création d'avis</h2><br>
-                    <div class="display-ligne-espace">
-                        <label for="titre">Saisissez le titre de votre avis</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <input type="text" id="titre" name="titre" required></input><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <label for="contexte">Contexte de visite :</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <select id="contexte" name="contexte" required>
-                            <option value="" disabled selected>Choisissez un contexte</option>
-                            <option value="affaires">Affaires</option>
-                            <option value="couple">Couple</option>
-                            <option value="famille">Famille</option>
-                            <option value="amis">Amis</option>
-                            <option value="solo">Solo</option>
-                        </select><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <label for="avis">Rédigez votre avis</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <textarea id="avis" name="avis" required></textarea><br>
-                    <div class="display-ligne-espace">
-                        <label for="note">Saisissez la note de votre avis</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <label for="date">Saisissez la date de votre visite</label>
-                        <p class="transparent">.</p>
-                    </div>
-                    <div class="display-ligne-espace">
-                        <input type="datetime-local" id="date" name="date" required/><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                    <button type="submit">Publier</button>
-                    <button type="button" id="cancelFormButton">Annuler</button>
-                </form>
+                        <? if ($submitted) { ?>
 
-                <? if ($submitted) { ?>
+                            <?php if (isset($_POST['titre'])) {
+                                $titre = htmlspecialchars($_POST['titre']);
+                            }
+                            if (isset($_POST['contexte'])) {
+                                $contexte_visite = htmlspecialchars($_POST['contexte']);
+                            }
+                            if (isset($_POST['avis'])) {
+                                $commentaire = htmlspecialchars($_POST['avis']);
+                            } 
+                            if (isset($_POST['note'])) {
+                                $note = intval($_POST['note']);
+                            }
+                            if (isset($_POST['date'])) {
+                                $visite_le = explode('T', $_POST['date']);
+                                $dateParts = explode('-', $visite_le[0]);
+                                $anneeUpdate = $dateParts[0]; 
+                                $moisUpdate = $dateParts[1]; 
+                                $jourUpdate = $dateParts[2]; 
+                                $heureMinute = $visite_le[1]; 
+                                $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
+                            }
+                            if (isset($_SESSION['id'])) {
+                                $id_membre = intval($_SESSION['id']);
+                            }
+                            if (isset($_GET['id'])) {
+                                $id_offre = intval($_GET['id']);
+                            }
 
-                    <?php if (isset($_POST['titre'])) {
-                        $titre = htmlspecialchars($_POST['titre']);
+                            $publie_le = date('Y-m-d H:i:s');
+
+                            try {
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                                $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
+                                $stmtInsertionDatePublication->execute([$publie_le]);
+                                $idDatePublication = $stmtInsertionDatePublication->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                $reqInsertionDateVisite = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateVisite = $dbh->prepare($reqInsertionDateVisite);
+                                $stmtInsertionDateVisite->execute([$visite_le]);
+                                $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
+                                $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                            } catch (PDOException $e) {
+                                echo "Erreur : " . $e->getMessage();
+                                die();
+                            } 
+                        }
                     }
-                    if (isset($_POST['contexte'])) {
-                        $contexte_visite = htmlspecialchars($_POST['contexte']);
-                    }
-                    if (isset($_POST['avis'])) {
-                        $commentaire = htmlspecialchars($_POST['avis']);
-                    } 
-                    if (isset($_POST['note'])) {
-                        $note = intval($_POST['note']);
-                    }
-                    if (isset($_POST['date'])) {
-                        $visite_le = explode('T', $_POST['date']);
-                        $dateParts = explode('-', $visite_le[0]);
-                        $anneeUpdate = $dateParts[0]; 
-                        $moisUpdate = $dateParts[1]; 
-                        $jourUpdate = $dateParts[2]; 
-                        $heureMinute = $visite_le[1]; 
-                        $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
-                    }
-                    if (isset($_SESSION['id'])) {
-                        $id_membre = intval($_SESSION['id']);
-                    }
-                    if (isset($_GET['id'])) {
-                        $id_offre = intval($_GET['id']);
-                    }
-
-                    $publie_le = date('Y-m-d H:i:s');
-
-                    try {
-                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
-                        $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                        $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
-                        $stmtInsertionDatePublication->execute([$publie_le]);
-                        $idDatePublication = $stmtInsertionDatePublication->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                        $reqInsertionDateVisite = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                        $stmtInsertionDateVisite = $dbh->prepare($reqInsertionDateVisite);
-                        $stmtInsertionDateVisite->execute([$visite_le]);
-                        $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                        $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
-                        $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
-                    } catch (PDOException $e) {
-                        echo "Erreur : " . $e->getMessage();
-                        die();
-                    } 
                 }
             } else {
                 echo "Connexion requise pour publier un avis";
