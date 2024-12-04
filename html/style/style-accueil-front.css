@@ -12,8 +12,8 @@ body {
 h1 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    color: var(--violet-principal);
-    background: var(--blanc-leger);
+    color: var(--blanc-leger);
+    background: var(--violet-principal);
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
@@ -22,7 +22,10 @@ h1 {
 
 h2 {
     font-family: "Poppins", sans-serif;
+    color: var(--violet-principal);
+    font-style: normal;
     font-weight: 600;
-    font-size: 23pt;
-    color: var(--noir);
+    font-size: 40px;
+    line-height: 60px;
+    text-align: center;
 }
