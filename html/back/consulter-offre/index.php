@@ -410,7 +410,8 @@ try {
 
                 <?php if(empty($reponse[$compteur]['texte'])) { ?>
                     <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
-                        <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo'].' '.$a['id_avis']) ?></h2>
+                        <?php $id_avis = $a['id_avis']; ?>
+                        <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']) ?></h2>
                         <div class="display-ligne-espace">
                             <textarea id="reponse" name="reponse" required></textarea><br>
                             <p class="transparent">.</p>
@@ -441,7 +442,7 @@ try {
 
                         $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
                         $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                        $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
+                        $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
 
                     } catch (PDOException $e) {
                         echo "Erreur : " . $e->getMessage();
