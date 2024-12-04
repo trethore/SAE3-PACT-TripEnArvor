@@ -287,7 +287,7 @@ if (!$submitted) {
                     $a_propos = $_POST['a_propos'];
                     $site_web = $_POST['site'];
                     $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'];
+                    $address_complement = $_POST['compl_adr'] ?? '';
                     $code_postal = $_POST['cp'];
                     $city = $_POST['ville'];
                     $country = $_POST['pays'];
@@ -316,7 +316,7 @@ if (!$submitted) {
                     $site_web = $_POST['site'];
                     $siren = $_POST['siren'];
                     $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'];
+                    $address_complement = $_POST['compl_adr'] ?? '';
                     $code_postal = $_POST['cp'];
                     $city = $_POST['ville'];
                     $country = $_POST['pays'];
