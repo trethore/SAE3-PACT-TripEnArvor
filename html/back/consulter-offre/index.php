@@ -387,6 +387,7 @@ try {
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                         <form id="avisForm-<?php echo $compteur; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                            <input type='hidden' name='id_avis' value='" . htmlspecialchars($unAvis['id_avis'], ENT_QUOTES) . "' />
                             <h2>Répondre à un avis</h2>
                             <div class="display-ligne-espace">
                                 <textarea id="reponse-<?php echo $compteur; ?>" name="reponse" required></textarea><br>
@@ -424,7 +425,7 @@ try {
                                 die();
                             } 
                         } ?>
-                    </div>
+                    </div>  
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
@@ -445,7 +446,7 @@ try {
                         </div>
                     <?php } ?>
                 </div>      
-            <?php $compteur++;
+                <?php $compteur++;
             } ?>  
 
         </section>        
