@@ -23,8 +23,7 @@
   --jaune-etoile: rgba(254, 194, 1, 1);
   --gris-etoile: rgba(128, 128, 128, 1);
   --gris: rgba(193, 192, 192, 1);
-
-  --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
+  
   --gradient-violet: linear-gradient(90deg, rgba(186,140,224,1) 0%, rgba(132,79,177,1) 16%, rgba(127,73,172,1) 38%, rgba(121,66,167,1) 63%);
 
   --couleur-bouton-creer-compte: var(--violet-principale);
