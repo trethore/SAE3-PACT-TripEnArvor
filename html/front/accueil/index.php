@@ -76,12 +76,9 @@ try {
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php /*foreach ($images as $image) { ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-                    <?php }*/ ?>
-                    <img src="/images/universel/photos/image1.webp" alt="Image">
-                    <img src="/images/universel/photos/image2.webp" alt="Image">
-                    <img src="/images/universel/photos/image3.webp" alt="Image">
+                    <?php foreach ($ids as $offre) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image">
+                    <?php } ?>
                 </div>
                 <div>
                     <div class="arrow-left">
