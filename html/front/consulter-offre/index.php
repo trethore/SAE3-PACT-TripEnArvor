@@ -508,7 +508,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <a href="/html/front/consulter-offres/">Retour à la liste des offres</a>
+            <a href="/front/consulter-offres/">Retour à la liste des offres</a>
             <a href="#top"><img src="/images/universel/icones/fleche-haut.png"></a>
         </div>
 
