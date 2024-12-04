@@ -560,7 +560,7 @@
             $stmtPrix->execute();
             $prixPlusPetit = $stmtPrix->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
-            return $prixPlusPetit;
+            return $prixPlusPetit[0]["min"];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
