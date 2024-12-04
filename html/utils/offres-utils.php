@@ -311,12 +311,12 @@
         } 
     }  
 
-// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+// ===== GESTION DES COMPTES ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
     function getCompte($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqCompte = "SELECT * FROM _offre JOIN _compte_professionnel ON _offre.id_compte_professionnel = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
+        $reqCompte = "SELECT * FROM _offre JOIN _compte ON  _offre.id_compte_professionnel = _compte.id_compte JOIN _compte_professionnel ON _compte.id_compte = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtCompte = $conn->prepare($reqCompte);
@@ -330,6 +330,7 @@
             die();
         }
     }
+
 
 // ===== GESTION DES TAGS ===== //
 
