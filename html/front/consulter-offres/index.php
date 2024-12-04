@@ -28,6 +28,9 @@ try {
 
     foreach ($offres as &$offre) {
         $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
+        if (getPrixPlusPetit($offre['id_offre']) == null) {
+            $offre['prix'] = 0;
+        }
     }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
