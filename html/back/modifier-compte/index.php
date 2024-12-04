@@ -62,6 +62,7 @@ if (!$submitted) {
         <form action="/back/modifier-compte" method="POST" id="myForm">
             <label for="test">test : </label>
             <input type="text" name="test" id="test">
+            <button type="submit">Envoyer</button>
 
         <!-- <?php /*
             <table>
