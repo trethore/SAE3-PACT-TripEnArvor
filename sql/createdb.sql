@@ -1419,9 +1419,7 @@ DECLARE
     nb INTEGER;
 BEGIN
     nb := (SELECT COUNT(*)
-            FROM _offre_restauration
-            INNER JOIN _avis
-            ON _offre_restauration.id_offre = _avis.id_offre
+            FROM _avis
             INNER JOIN _note_detaillee
             ON _avis.id_avis = _note_detaillee.id_avis
             WHERE _avis.id_avis = NEW.id_avis);
