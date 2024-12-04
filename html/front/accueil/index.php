@@ -175,8 +175,9 @@ try {
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
             const currentImage = images.children[currentIndex];
-            titreElement.textContent = currentImage.dataset.titre;
+            const titre = currentImage.dataset.titre;
 
+            // Ajoutez le titre avec les étoiles
             titreElement.innerHTML = `
                 ${titre}
                 <img src="/images/frontOffice/etoile-pleine.png">
