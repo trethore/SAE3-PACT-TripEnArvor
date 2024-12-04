@@ -76,20 +76,20 @@ section {
 
 .arrow-left, .arrow-right {
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     transform: translateY(-50%);
     z-index: 1;
 }
 
 .arrow-left > img, .arrow-right > img {
-    background-color: var(--fond-bouton);
+    background-color: var(--violet-principal);
     border-radius: 90px;
-    height: 25px;
-    width: 25px;
+    height: 38px;
+    width: 39px;
 }
 
 .arrow-left {
-    right: 85px;
+    right: 69px;
 }
 
 .arrow-right {
@@ -99,7 +99,7 @@ section {
 .titre {
     position: absolute;
     left: 10px;
-    bottom: 10px;
+    bottom: 5px;
 
     z-index: 1;
 
@@ -117,10 +117,13 @@ section {
     height: auto;
     width: auto;
 
-    opacity: 90%;
-
     padding: 10px;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
+}
+
+p > img {
+    height: 25px;
+    width: 25px;
 }

@@ -311,19 +311,15 @@ try {
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php if (!empty($heure[0]['nom_jour'])) {
-                    foreach ($heure as $h) { ?>
-                        <p>
-                            <?php echo htmlentities($h['nom_jour'] . " : "); 
-                            foreach ($horaire as $h) {
-                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                            } ?>
-                        </p>
-                    <?php }
-                } else {
-                    echo "Pas d'information sur les jours et les horaires d'ouverture";
-                } ?>
+                <?php print_r($horaire) ?>
+                <?php foreach ($horaire as $h) { ?>
+                    <p>
+                        <?php echo htmlentities($h['nom_jour'] . " : "); 
+                        foreach ($horaire as $h) {
+                            echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
+                        } ?>
+                    </p>
+                <?php } ?>
             </div> 
             
         </section>
