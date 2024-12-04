@@ -92,12 +92,11 @@ try {
                     </div>
                 </div>
                 <p class="titre" id="carousel-titre">
-                    <!--Le Petit Coin de Mer
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">-->
+                    <img src="/images/frontOffice/etoile-pleine.png">
                 </p>
             </div>
         </section>
