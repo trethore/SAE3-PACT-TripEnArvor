@@ -84,12 +84,12 @@ section {
 .arrow-left > img, .arrow-right > img {
     background-color: var(--fond-bouton);
     border-radius: 90px;
-    height: 25px;
-    width: 25px;
+    height: 38px;
+    width: 39px;
 }
 
 .arrow-left {
-    right: 85px;
+    right: 69px;
 }
 
 .arrow-right {
