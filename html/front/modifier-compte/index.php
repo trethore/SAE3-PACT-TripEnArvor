@@ -1,7 +1,5 @@
 <?php 
 require_once('../../utils/session-utils.php');
-startSession();
-$id_compte = $_SESSION["id"];
 require_once('../../php/connect_params.php');
 require_once('../../utils/compte-utils.php');
 require_once('../../utils/site-utils.php');
@@ -9,28 +7,32 @@ require_once('../../utils/auth-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $conn->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-redirectToConnexionIfNecessary($id_compte);
-
+startSession();
+$id_compte = $_SESSION["id"];
+if (!isset($id_compte) ||!isIdMember($id_compte)) {
+    redirectTo("https://redden.ventsdouest.dev/front/consulter-offres/");
+}
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_professionnel cp 
-                join sae._compte c on c.id_compte = cp.id_compte 
+$reqCompte = "SELECT * from sae._compte_membre cm 
+                join sae._compte c on c.id_compte = cm.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cp.id_compte = :id_compte;";
+                where cm.id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backCompte.css">
-    <link rel="stylesheet" href="/style/style_backCompteModif.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_frontCompte.css">
+    <link rel="stylesheet" href="/style/style_frontCompteModif.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
 </head>
@@ -40,13 +42,13 @@ if (!$submitted) {
 ?>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <?php 
@@ -57,31 +59,18 @@ if (!$submitted) {
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
         <h1>Détails du compte</h1>
-        <h2>Mon entreprise</h2>
-        
-        <form action="/back/modifier-compte/" method="POST" id="myForm">
-            <table>
-                <tr>
-                    <td>Dénomination Sociale</td>
-                    <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"]);?>"></td>
-                </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"]);?>"></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td>A propos</td>
-                    <td><input type="text" name="a_propos" id="a_propos" value="<?= htmlentities($detailCompte["a_propos"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Site web</td>
-                    <td><input type="url" name="site" id="site" value="<?= htmlentities($detailCompte["site_web"]);?>"></td>
-                </tr>
-            </table>
+
+        <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
             <table>
+                <tr>
+                    <td>Pseudo</td>
+                    <td>
+                        <input type="text" name="pseudo" id="pseudo" value="<?php 
+                                if (isset($detailCompte["pseudo"])) {
+                                    echo htmlentities($detailCompte["pseudo"]);} ?>">
+                    </td>
+                </tr>
                 <tr>
                     <td>Nom</td>
                     <td>
@@ -222,33 +211,10 @@ if (!$submitted) {
 } else {
     $ok = true;
     switch ($typeCompte) {
-        case 'proPublique':
+        case 'membre':
             $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['nom']);
-            $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
-            $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a_propos']);
-            $ok = $ok && isset($_POST['site']);
-            $ok = $ok && isset($_POST['rue']);
-            $ok = $ok && isset($_POST['cp']);
-            $ok = $ok && isset($_POST['ville']);
-            $ok = $ok && isset($_POST['pays']);
-            break;
-
-        case 'proPrive':
-            $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['nom']);
-            $ok = $ok && isset($_POST['prenom']);
-            $ok = $ok && isset($_POST['tel']);
-            $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a_propos']);
-            $ok = $ok && isset($_POST['site']);
-            $ok = $ok && isset($_POST['siren']);
-            $ok = $ok && isset($_POST['rue']);
-            $ok = $ok && isset($_POST['cp']);
-            $ok = $ok && isset($_POST['ville']);
-            $ok = $ok && isset($_POST['pays']);
+            $ok = $ok && isset($_POST['pseudo']);
             break;
 
         default:
@@ -269,6 +235,7 @@ if (!$submitted) {
         }  
 
         $email = $_POST['email'];
+        $pseudo = $_POST['pseudo'];
         $password = $_POST['mdp'];
         $name = $_POST['nom'];
         $first_name = $_POST['prenom'];
@@ -277,10 +244,7 @@ if (!$submitted) {
         if ($ok) {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
-                case 'proPublique':
-                    $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a_propos'];
-                    $site_web = $_POST['site'];
+                case 'membre':
                     $street = $_POST['rue'];
                     $address_complement = $_POST['compl_adr'] ?? '';
                     $code_postal = $_POST['cp'];
@@ -296,48 +260,21 @@ if (!$submitted) {
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
                     // Requete SQL pour modifier la vue compte_professionnel_publique
-                    $query = "UPDATE sae.compte_professionnel_publique 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) 
-                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    $query = "UPDATE sae.compte_membre 
+                                set (pseudo, nom_compte, prenom, email, tel, mot_de_passe, id_adresse) 
+                                    = (?, ?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $id_compte]);
+                    $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $id_compte]);
                     
                     break;
-                    
-                case 'proPrive':
-                    $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a_propos'];
-                    $site_web = $_POST['site'];
-                    $siren = $_POST['siren'];
-                    $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'] ?? '';
-                    $code_postal = $_POST['cp'];
-                    $city = $_POST['ville'];
-                    $country = $_POST['pays'];
-                    if ($address_complement === '') $address_complement = null;
-                    // Requete SQL pour modifier la table adresse
-                    $query = "UPDATE sae._adresse 
-                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                    $id_adresse = $stmt->fetch()['id_adresse'];
-    
-                    // Requete SQL pour modifier la vue compte_professionnel_prive
-                    $query = "UPDATE sae.compte_professionnel_prive 
-                                set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 
-                                    = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                                where id_compte = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $denomination, $a_propos, $site_web, $siren, $id_compte]);
-                    break;
+
                 default:
                     $ok = false;
                     break;
                 }
         }   
-        redirectTo("/back/mon-compte");
+        redirectTo("/front/mon-compte");
     } ?>
 <script src="/scripts/popupCompte.js"></script>
 </body>

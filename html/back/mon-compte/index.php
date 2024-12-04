@@ -50,7 +50,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
             <a href="/back/mes-factures">Mes factures</a>
-            <a href="/se-connecter">Se déconnecter</a>
+            <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
             <?php 

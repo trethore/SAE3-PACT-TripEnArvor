@@ -118,7 +118,7 @@ try {
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/styleHFF.css"/>
+    <link rel="stylesheet" href="/style/style_HFF.css"/>
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
@@ -508,8 +508,8 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='liste-back'">Retour à la liste des offres</button>
-            <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
+            <a href="/front/consulter-offres/">Retour à la liste des offres</a>
+            <a href="#top"><img src="/images/universel/icones/fleche-haut.png"></a>
         </div>
 
     </main>

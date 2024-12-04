@@ -381,7 +381,7 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <button id="showFormButton-<?php echo $compteur; ?>" class="show-form-btn"><strong>Répondre</strong></button>   
+                                <button id="showFormButton-<?php echo $compteur; ?>" class="show-form-btn" data-id="<?php echo $id_avis; ?>"><strong>Répondre</strong></button>
                             <?php } ?>
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
@@ -407,46 +407,55 @@ try {
                         </div>
                     <?php } ?>
                 </div>  
-                <form id="avisForm-<?php echo $compteur; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
-                    <input type='hidden' name='id_avis' value='" . htmlspecialchars($unAvis['id_avis'], ENT_QUOTES) . "' />
-                    <h2>Répondre à un avis</h2>
-                    <div class="display-ligne-espace">
-                        <textarea id="reponse-<?php echo $compteur; ?>" name="reponse" required></textarea><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
-                    <button type="submit">Publier</button>
-                    <button type="button" id="cancelFormButton-<?php echo $compteur; ?>" class="cancel-form-btn">Annuler</button>
-                </form>
 
-                <?php if ($submitted) { 
-                    if (isset($_POST['reponse'])) {
-                        $reponse = htmlentities($_POST['reponse']);
-                    } 
-                                
-                    $publie_le = date('Y-m-d H:i:s');
+                <?php $id_avis = $a['id_avis']; 
+                if(empty($reponse[$compteur]['texte'])) { ?>
+                    <form id="avisForm-<?php echo $id_avis; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <input type="hidden" name="id_avis" value="<?php echo htmlentities($id_avis); ?>" />
+                        <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
+                        <div class="display-ligne-espace">
+                            <textarea id="reponse-<?php echo $id_avis; ?>" name="reponse" required></textarea><br>
+                            <p class="transparent">.</p>
+                        </div>
+                        <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
+                        <button type="submit" name="submit-reponse" value="true">Publier</button>
+                        <button type="button" class="cancel-form-btn">Annuler</button>
+                    </form>
 
-                    try {
-                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+                <?php }
 
-                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                        $stmtInsertionDateReponse->execute([$publie_le]);
-                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit-reponse']) && !empty($_POST['id_avis'])) {
+                    $id_avis = intval($_POST['id_avis']); // ID de l'avis ciblé
+                    $reponse = trim($_POST['reponse']);
+                    $publie_le = date('Y-m-d H:i:s'); // Date actuelle
 
-                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
-                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                        $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
+                    if (!empty($reponse)) {
+                        try {
+                            // Connexion à la base de données
+                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    } catch (PDOException $e) {
-                        echo "Erreur : " . $e->getMessage();
-                        die();
-                    } 
-                } ?>    
-                <?php $compteur++;
+                            // Insérer la date de publication
+                            $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                            $stmtInsertionDateReponse->execute([$publie_le]);
+                            $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                            // Insérer la réponse liée à l'avis
+                            $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                            $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                            $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
+
+                            echo "Réponse publiée avec succès.";
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+                        }
+                    } else {
+                        echo "La réponse ne peut pas être vide.";
+                    }
+                }
+                $compteur++;
             } ?>  
 
         </section>        
@@ -506,32 +515,34 @@ try {
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
 
-            document.addEventListener('DOMContentLoaded', () => {
-                // Récupérer tous les boutons Répondre
-                const showFormButtons = document.querySelectorAll('.show-form-btn');
-                const cancelFormButtons = document.querySelectorAll('.cancel-form-btn');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Boutons Répondre
+            const showFormButtons = document.querySelectorAll('.show-form-btn');
+            const cancelFormButtons = document.querySelectorAll('.cancel-form-btn');
 
-                showFormButtons.forEach((button, index) => {
-                    button.addEventListener('click', () => {
-                        const form = document.getElementById(`avisForm-${index}`);
-                        if (form) {
-                            form.style.display = 'block'; // Afficher le formulaire
-                            button.style.display = 'none'; // Masquer le bouton Répondre
-                        }
-                    });
-                });
-
-                cancelFormButtons.forEach((button, index) => {
-                    button.addEventListener('click', () => {
-                        const form = document.getElementById(`avisForm-${index}`);
-                        const showFormButton = document.getElementById(`showFormButton-${index}`);
-                        if (form && showFormButton) {
-                            form.style.display = 'none'; // Masquer le formulaire
-                            showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
-                        }
-                    });
+            showFormButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const idAvis = button.getAttribute('data-id'); // Récupère l'ID de l'avis
+                    const form = document.querySelector(`#avisForm-${idAvis}`); // Sélectionne le formulaire correspondant
+                    if (form) {
+                        form.style.display = 'block'; // Afficher le formulaire
+                        button.style.display = 'none'; // Masquer le bouton Répondre
+                    }
                 });
             });
+
+            cancelFormButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const form = button.closest('form');
+                    const idAvis = form.getAttribute('id').split('-')[1]; // Récupère l'ID de l'avis
+                    const showFormButton = document.querySelector(`.show-form-btn[data-id="${idAvis}"]`);
+                    if (form && showFormButton) {
+                        form.style.display = 'none'; // Masquer le formulaire
+                        showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
+                    }
+                });
+            });
+        });
 
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");

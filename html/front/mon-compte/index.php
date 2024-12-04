@@ -36,7 +36,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
@@ -47,7 +47,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <main>
         <nav>
             <a class="ici" href="/front/mon-compte">Mes infos</a>
-            <a href="/se-connecter">Se déconnecter</a>
+            <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
             <?php 
