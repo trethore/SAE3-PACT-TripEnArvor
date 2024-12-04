@@ -274,15 +274,9 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag); ?></li>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag); ?></li>
                     <?php } }
-                        foreach($liste_tags as $tag){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }
-                        foreach ($liste_tags_restaurant as $tag) { ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                       
-                       <?php } ?>
+                         ?>
                         
                      </ul>   
                     <h3>A propos de l'offre</h3>
@@ -510,6 +504,7 @@ try {
 
                     case "parc":
                         afficheSelonType(typeparc);
+                        afficherTags(typeparc)
                         break;
 
                     default:
@@ -531,7 +526,7 @@ try {
                 }
             }
 
-            function afficherTags(){
+            function afficherTags(typechoisi){
                 if (typeselectionne === "restaurant"){
                     liste_tags.forEach(tag => {
                         if(!tags.includes(tag)){
