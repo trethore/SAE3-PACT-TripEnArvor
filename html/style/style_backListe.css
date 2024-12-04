@@ -519,3 +519,23 @@ a {
     font-size: 20pt;
     margin: 20px auto;
 }
+
+section + a {
+    background: var(--gradient-orange);
+    color: var(--blanc);
+    padding: 10px 20px;
+    border: 0;
+    text-align: center;
+    font-size: 40px;
+    width: 517px;
+    height: 97px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    margin-left: 0;
+}
+
+section + a:hover {
+    background: var(--blanc-leger);
+    color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
