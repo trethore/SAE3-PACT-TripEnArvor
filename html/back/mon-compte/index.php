@@ -50,7 +50,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
             <a href="/back/mes-factures">Mes factures</a>
-            <a id="deco">Se déconnecter</a>
+            <a href="logout.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
             <?php 
@@ -179,16 +179,5 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
         Redden's, Inc.
         </div>
     </footer>
-    <script>
-        const seDeco = document.getElementById('deco');
-
-        seDeco.addEventListener("click", function() {
-            <?php 
-                session_unset();
-                session_destroy();
-            ?>
-            window.location.href = "/front/consulter-offres"
-        })
-    </script>
 </body>
 </html>
