@@ -67,8 +67,8 @@ try {
         <?php 
 
         $ids = getIdALaUne();
-        foreach ($ids as &$offre) {
-            $offre['titre'] = getOffre($offre["id_offre"])["titre"];
+        foreach ($ids as $key => $offre) {
+            $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
         }
         echo "<pre>";
         print_r($ids);
@@ -91,13 +91,7 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
-                <p class="titre" id="carousel-titre">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
-                </p>
+                <p class="titre" id="carousel-titre"></p>
             </div>
         </section>
 
@@ -181,7 +175,17 @@ try {
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
             const currentImage = images.children[currentIndex];
-            titreElement.textContent = currentImage.dataset.titre;
+            const titre = currentImage.dataset.titre;
+
+            // Ajoutez le titre avec les étoiles
+            titreElement.innerHTML = `
+                ${titre}
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+                <img src="/images/frontOffice/etoile-pleine.png">
+            `;
         }
     </script>
 </body>
