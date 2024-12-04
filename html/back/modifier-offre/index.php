@@ -168,7 +168,7 @@ try {
                             <tr>
                                 <td><label for="categorie">Catégorie</label></td>
                                 <td><div class="custom-select-container">
-                                        <select class="custom-select" id="categorie" name="lacat">
+                                        <!-- <select class="custom-select" id="categorie" name="lacat">
                                             <option value="restaurant" > Restaurant</option>
                                             <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
@@ -176,7 +176,14 @@ try {
                                             <option value="activite" <?php if($categorie === "activite"){echo "selected";} ?>> Activité</option>
 
                                             
-                                        </select>
+                                        </select> -->
+                                        <select class="custom-select" id="categorie" name="lacat">
+                                        <option value="restaurant" <?php echo ($categorie === "restaurant") ? "selected" : ""; ?>>Restaurant</option>
+                                        <option value="parc" <?php echo ($categorie === "parc") ? "selected" : ""; ?>>Parc d'attraction</option>
+                                        <option value="spectacle" <?php echo ($categorie === "spectacle") ? "selected" : ""; ?>>Spectacle</option>
+                                        <option value="visite" <?php echo ($categorie === "visite") ? "selected" : ""; ?>>Visite</option>
+                                        <option value="activite" <?php echo ($categorie === "activite") ? "selected" : ""; ?>>Activité</option>
+                                    </select>
                                 </div></td>
                             </tr>
                             <tr>
