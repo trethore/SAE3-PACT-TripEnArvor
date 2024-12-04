@@ -408,9 +408,10 @@ try {
                     <?php } ?>
                 </div>  
 
-                <?php if(empty($reponse[$compteur]['texte'])) { ?>
+                <?php $id_avis = $a['id_avis']; 
+                if(empty($reponse[$compteur]['texte'])) { ?>
                     <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
-                        <?php $id_avis = $a['id_avis']; ?>
+                        
                         <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']) ?></h2>
                         <div class="display-ligne-espace">
                             <textarea id="reponse" name="reponse" required></textarea><br>
