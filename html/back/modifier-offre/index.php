@@ -409,6 +409,11 @@ try {
                 </div>
             </footer>
         <?php } else {
+            if (isset($_POST['photo'])) {
+                $photo1 = $_FILE['photo'];
+            }else{
+                $photo1 = $images[0];
+            }
              
              try {
     
