@@ -42,11 +42,8 @@ h2 {
 }
 
 section > img {
-    position: absolute;
     width: 1226px;
     height: 396px;
-    left: 37px;
-    top: 119px;
 
     border-radius: 15px;
 }
