@@ -98,7 +98,7 @@
                             <td><label for="categorie">Catégorie <span class="required">*</span></label></td>
                                <td> <div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="">Choisir une catégorie </option>
+                                            <option value="" selected disabled hidden>Choisir une catégorie </option>
                                             <option value="restaurant"> Restaurant</option>
                                             <option value="parc"> Parc d'attraction</option>
                                             <option value="spectacle"> Spectacle</option>
@@ -354,7 +354,6 @@
 
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
-                print($gammedeprix);
             }
 
             if (isset($_POST['photo'])) {
@@ -645,7 +644,7 @@
                     $dbh = null;
 
                 echo "<script>
-                        const redirect = confirm('Formulaire soumis avec succès ! Cliquez sur OK pour continuer.');
+                        const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
                             window.location.href = '/back/liste-back/'
                         }
