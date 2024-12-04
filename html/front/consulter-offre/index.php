@@ -118,7 +118,7 @@ try {
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/styleHFF.css"/>
+    <link rel="stylesheet" href="/style/style_HFF.css"/>
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
