@@ -580,12 +580,11 @@
                         }
                         try {
                             // Requête pour insérer l'offre dans _offre_spectacle
-                            $requete = "INSERT INTO sae._offre_spectacle 
-                                        (titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, capacite, date_evenement)
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                            $requete = "INSERT INTO sae._offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $description_detaille, $site_web, $id_compte_professionnel, $id_adresse, $abonnement, intval($duree), intval($capacite), $idDateEvent]);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
