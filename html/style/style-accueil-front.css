@@ -1,0 +1,28 @@
+/************************
+    GENERALISATION
+*************************/
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: var(--noir);
+    background: var(--blanc-leger);
+}
+
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--violet-principal);
+    background: var(--blanc-leger);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
+}
+
+h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 23pt;
+    color: var(--noir);
+}
