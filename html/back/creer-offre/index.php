@@ -574,7 +574,7 @@
                             $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);  // Insérer la date
-                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];  // Récupérer l'ID de la date insérée
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];  // Récupérer l'ID de la date
 
                             if (!$idDateEvent) {
                                 throw new Exception("Erreur lors de la récupération de l'ID de la date.");
