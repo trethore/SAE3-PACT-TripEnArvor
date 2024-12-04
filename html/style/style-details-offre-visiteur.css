@@ -189,6 +189,7 @@ a {
         text-decoration: none;
         font-size: 24px;
         background-color: var(--violet-principal);
+        border: 3px solid var(--blanc-leger);
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
@@ -197,7 +198,7 @@ a {
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--violet-principal);
         background: var(--blanc-leger);
-        border: 3px solid var(--violet-principal);
+        border-color: var(--violet-principal);
         transition: 0.3s ease-in-out;
     }
 
@@ -214,6 +215,7 @@ a {
         text-decoration: none;
         font-size: 24px;
         background-color: var(--violet-principal);
+        border: 3px solid var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
@@ -222,7 +224,7 @@ a {
     .bloc-tarif > button:hover {
         color: var(--violet-principal);
         background: var(--blanc-leger);
-        border: 3px solid var(--violet-principal);
+        border-color: var(--violet-principal);
         transition: 0.3s ease-in-out;
     }
 
@@ -347,6 +349,7 @@ input, select {
     text-decoration: none;
     font-size: 24px;
     background-color: var(--violet-principal);
+    border: 3px solid var(--blanc-leger);
     padding: 10px 20px;
     border-radius: 15px;
     border: 0;
@@ -355,7 +358,7 @@ input, select {
 #avis > button:hover, #avis > form > button:hover {
     color: var(--violet-principal);
     background: var(--blanc-leger);
-    border: 3px solid var(--violet-principal);
+    border-color: var(--violet-principal);
     transition: 0.3s ease-in-out;
 }
 
@@ -384,7 +387,7 @@ input, select {
 }
 
 .bordure-top {
-    border-top: 3px solid var(--orange-principale);
+    border-top: 3px solid var(--violet-principal);
 }
 
 .pouce {
