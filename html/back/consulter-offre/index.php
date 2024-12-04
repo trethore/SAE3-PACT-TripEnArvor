@@ -410,7 +410,7 @@ try {
 
                 <?php $id_avis = $a['id_avis']; 
                 if(empty($reponse[$compteur]['texte'])) { ?>
-                    <form id="avisForm-<?php echo $id_avis; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                    <form id="avisForm-<?php echo $id_avis; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id_avis" value="<?php echo htmlentities($id_avis); ?>" />
                         <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
                         <div class="display-ligne-espace">
@@ -424,7 +424,7 @@ try {
 
                 <?php }
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit-reponse']) && !empty($_POST['id_avis'])) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reponse']) && !empty($_POST['id_avis'])) {
                     $id_avis = intval($_POST['id_avis']); // ID de l'avis ciblé
                     $reponse = trim($_POST['reponse']);
                     $publie_le = date('Y-m-d H:i:s'); // Date actuelle
