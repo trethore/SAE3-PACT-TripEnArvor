@@ -226,9 +226,7 @@ if (!$submitted) {
     </footer>
     <?php
 } else {
-    
-    exit;
-    
+    echo "fghvbjhgbnkjhghbnjhhnhjkhn";
     $ok = true;
     switch ($typeCompte) {
         case 'proPublique':
