@@ -187,9 +187,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <p class="type-offre" style="display: none"><?php echo $row["type_offre"]; ?></p>
                     <img src=" <?php
-                    switch ($row["type_offre"]) {
+                    switch ($row["abonnement"]) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
