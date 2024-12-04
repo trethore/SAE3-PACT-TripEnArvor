@@ -403,7 +403,6 @@ try {
                         </div>
                     <?php } else { ?>
                         <form id="avisForm-<?php echo $a['id_avis']; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="id_avis" value="<?php echo htmlentities($a['id_avis']); ?>" />
                             <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
                             <div class="display-ligne-espace">
                                 <textarea id="reponse-<?php echo $a['id_avis']; ?>" name="reponse" required></textarea><br>
@@ -417,7 +416,7 @@ try {
                             if (isset($_POST['reponse'])) {
                                 $reponse = htmlentities($_POST['reponse']);
                             } 
-                            $id_avis = intval($a['id_avis']); 
+                            $id_avis = $a['id_avis']; 
                             $publie_le = date('Y-m-d H:i:s');                             
                             try {
                                 // Connexion à la base de données
