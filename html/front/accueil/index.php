@@ -64,6 +64,15 @@ try {
     <main>
         <h2>Offres à la une</h2>
 
+        <?php 
+
+        $ids = getIdALaUne();
+        echo "<pre>";
+        print_r($ids);
+        echo "</pre>";
+
+        ?>
+
         <section>
             <div class="carousel">
                 <div class="carousel-images">
