@@ -284,7 +284,7 @@ if (!$submitted) {
             switch ($typeCompte) {
                 case 'proPublique':
                     $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a-propos'];
+                    $a_propos = $_POST['a_propos'];
                     $site_web = $_POST['site'];
                     $street = $_POST['rue'];
                     $address_complement = $_POST['compl_adr'];
@@ -312,7 +312,7 @@ if (!$submitted) {
                     
                 case 'proPrive':
                     $denomination = $_POST['denomination'];
-                    $a_propos = $_POST['a-propos'];
+                    $a_propos = $_POST['a_propos'];
                     $site_web = $_POST['site'];
                     $siren = $_POST['siren'];
                     $street = $_POST['rue'];
