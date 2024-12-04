@@ -350,7 +350,7 @@
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
                 die("Erreur : la date de l'événement est obligatoire.");
             }
-            $date_event = $_POST['date_event'];
+            $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
             
 
             if (isset($_POST['titre'])) {
@@ -568,25 +568,25 @@
 
                     case 'spectacle':
                         try {
-                            // Insérer la date de l'événement et récupérer l'ID
+                            // Insérer la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
-                            $stmtInsertionDateEvent->execute([$date_event]);
-                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            $stmtInsertionDateEvent->execute([$date_event]);  // Insérer la date
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];  // Récupérer l'ID de la date insérée
 
-                            // Vérifier que toutes les variables nécessaires sont définies
-                            if (!isset($titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent)) {
-                                throw new Exception("Erreur : certains paramètres sont manquants.");
+                            if (!$idDateEvent) {
+                                throw new Exception("Erreur lors de la récupération de l'ID de la date.");
                             }
 
-                            // Préparer et exécuter l'insertion dans la table des offres
-                            $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " 
-                            (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                            // Étape 2 : Insérer dans la table offre_spectacle
+                            $requete = "INSERT INTO sae.offre_spectacle 
+                                (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
 
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
+                            // Récupérer l'ID de l'offre insérée
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
