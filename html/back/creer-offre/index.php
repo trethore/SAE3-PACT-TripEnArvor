@@ -346,7 +346,12 @@
 
             // Récupération des données du formulaire avec $_POST
             
+            if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
+                die("Erreur : La date de l'événement est manquante.");
+            }
+            
             $date_event = $_POST['date_event'];
+            
 
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
