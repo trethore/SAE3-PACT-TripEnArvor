@@ -265,7 +265,7 @@ try {
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } 
+                    <?php } }
                         
                         ?>
                      </ul>   
@@ -413,11 +413,12 @@ try {
             liste_tags.forEach(element => {
                 
             });
-                        if(!liste_tags.include()){
-                            if($categorie != "restaurant")
-                            foreach ($liste_tags as $tag)
-                            <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                        }
+                        // if(!liste_tags.include()){
+                        //     if($categorie != "restaurant")
+                        //     foreach ($liste_tags as $tag)
+                        //     <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                        // }
+
 
         </script>
     </body>
