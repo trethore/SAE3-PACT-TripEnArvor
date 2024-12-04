@@ -176,9 +176,12 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <?php foreach ($horaire as $h) {
+                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                $jour_actuel = $jours[date('w')];
+                foreach ($horaire as $h) {
                     $ouvert_ferme = date('H:i');
-                    if (($h['ouverture']  < $ouvert_ferme) && ($ouvert_ferme < $h['fermeture'])) {
+                    if (($h['ouverture']  < $ouvert_ferme) && ($ouvert_ferme < $h['fermeture']) && ($h['nom_jour'] == $jour_actuel)) {
                         $ouverture = "Ouvert";
                     }
                     else {
