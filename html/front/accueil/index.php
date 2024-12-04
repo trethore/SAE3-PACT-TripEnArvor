@@ -67,9 +67,12 @@ try {
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($images as $image) { ?>
+                    <?php /*foreach ($images as $image) { ?>
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-                    <?php } ?>
+                    <?php }*/ ?>
+                    <img src="/images/universel/photos/image1.webp" alt="Image">
+                    <img src="/images/universel/photos/image2.webp" alt="Image">
+                    <img src="/images/universel/photos/image3.webp" alt="Image">
                 </div>
                 <div class="display-ligne-espace">
                     <div class="arrow-left">
