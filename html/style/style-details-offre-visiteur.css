@@ -192,7 +192,8 @@ a {
         border: 3px solid var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
-        border: 0;
+        display: flex;
+        flex-wrap: nowrap;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
