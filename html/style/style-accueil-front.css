@@ -95,6 +95,10 @@ section {
 }
 
 section > p {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
     z-index: 1;
 
     font-style: normal;
@@ -110,8 +114,8 @@ section > p {
 
     color: var(--noir);
 
-    height: 37px;
-    width: 117px;
+    height: auto;
+    width: auto;
 
     opacity: 90%;
 
@@ -122,5 +126,4 @@ section > p {
 p > img {
     height: 25px;
     width: 25px;
-    margin: 5px;
 }
