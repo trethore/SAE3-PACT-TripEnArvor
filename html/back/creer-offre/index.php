@@ -451,16 +451,8 @@
                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 
-                if (!isset($titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent)) {
-                    die("Erreur : certains paramètres sont manquants.");
-                }
-                
-                $dbh->prepare("SET SCHEMA 'sae';")->execute();
+                $dbh->prepare("SET SCHEMA 'sae';")->execute();          
 
-                echo "<pre>";
-print_r([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-echo "</pre>";
-die();
 
 
 
@@ -576,25 +568,34 @@ die();
 
                     case 'spectacle':
                         try {
+                            // Insérer la date de l'événement et récupérer l'ID
                             $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                            // Vérifier que toutes les variables nécessaires sont définies
+                            if (!isset($titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent)) {
+                                throw new Exception("Erreur : certains paramètres sont manquants.");
+                            }
+
+                            // Préparer et exécuter l'insertion dans la table des offres
+                            $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " 
+                            (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
+
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
                             die();
-                        } 
-                        
+                        } catch (Exception $e) {
+                            echo "Erreur : " . $e->getMessage();
+                            die();
+                        }
 
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                                                $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-
-                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                        
-                        break;
 
                     case 'visite':
                         $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
