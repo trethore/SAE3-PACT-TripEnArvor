@@ -312,7 +312,7 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php if (!empty($heure['nom_jour'])) {
+                <?php if (!empty($heure[0]['nom_jour'])) {
                     foreach ($heure as $h) { ?>
                         <p>
                             <?php echo htmlentities($h['nom_jour'] . " : "); 
