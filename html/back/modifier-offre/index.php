@@ -274,13 +274,13 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag); ?></li>
                     <?php } }
                         foreach($liste_tags as $tag){ ?>
-                            <li><input type="checkbox" name="<?php echo htmlentities($tag[$nom_tag]); ?>" value="<?php echo htmlentities($tag[$nom_tag]); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         <?php }
                         foreach ($liste_tags_restaurant as $tag) { ?>
-                            <li><input type="checkbox" name="<?php echo htmlentities($tag[$nom_tag]); ?>" value="<?php echo htmlentities($tag[$nom_tag]); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                        
                        <?php } ?>
                         
