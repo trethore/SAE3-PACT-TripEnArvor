@@ -402,7 +402,6 @@ try {
                             <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
                         </div>
                     <?php } else { ?>
-                        <!-- Formulaire de réponse affiché directement si aucune réponse n'existe -->
                         <form id="avisForm-<?php echo $a['id_avis']; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id_avis" value="<?php echo htmlentities($a['id_avis']); ?>" />
                             <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
@@ -413,11 +412,38 @@ try {
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
                             <button type="submit" name="submit-reponse" value="true">Publier</button>
                         </form>
-                    <?php } ?>
-                </div>  
 
-            <?php 
-            $compteur++; 
+                        <?php if (!empty($reponse)) {
+                            $id_avis = intval($a['id_avis']); 
+                            $reponse = trim($_POST['reponse']);
+                            $publie_le = date('Y-m-d H:i:s');                             
+                            try {
+                                // Connexion à la base de données
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                // Insérer la date de publication
+                                $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                $stmtInsertionDateReponse->execute([$publie_le]);
+                                $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                // Insérer la réponse liée à l'avis
+                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                                $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
+
+                                echo "Réponse publiée avec succès.";
+                            } catch (PDOException $e) {
+                                echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+                            }
+                        } else {
+                            echo "La réponse ne peut pas être vide.";
+                        }
+                    } ?>
+                </div>  
+            <?php $compteur++; 
             } 
             ?>  
 

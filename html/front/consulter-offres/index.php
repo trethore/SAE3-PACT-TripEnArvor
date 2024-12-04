@@ -178,7 +178,7 @@ try {
                         <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
-                                <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
+                                <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
                                 <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                                 <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                                 <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
