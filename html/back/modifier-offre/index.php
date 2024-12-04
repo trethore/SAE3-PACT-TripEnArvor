@@ -512,6 +512,7 @@ try {
             }else{
                 $photo1 = $images[0];
             }
+            
 
             if(isset($_POST['adresse'])){
                 $adresse = $_POST['adresse'];
@@ -538,6 +539,8 @@ try {
             }else {
                 $tel = null;
             }
+            $pays = "France";
+            $id_adresse =null;
 
 
             if ($categorie !== "restaurant") {
@@ -552,6 +555,7 @@ try {
             
              
              try {
+
                 // Vérifier si l'id_compte est défini (s'il est connecté)
                 if (!$id_compte) {
                     die("Erreur : utilisateur non connecté.");
@@ -560,7 +564,7 @@ try {
                 // Connexion à la base de données
                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     
-                
+                $dbh->beginTransaction();
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
                 //INSERTION IMAGE dans _image
@@ -584,208 +588,344 @@ try {
 
                 }
 
-                // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
-                // $stmt_verif = $dbh->prepare($requete_verif);
-                // $stmt_verif->execute([$fichier_img]);
-
-                // if ($stmt_verif->fetchColumn() > 0) {
-                //     die("Erreur : Le fichier existe déjà dans la base de données.");
-                // }
 
 
-                $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
-                $target_file = $target_dir . $time . $file_extension;
+
+                if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
+
+                    if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
+                        if ($comp_adresse === '') {$comp_adresse = null;}
+                        // Requete SQL pour modifier la table adresse
+                        $query = "UPDATE sae._adresse 
+                                    set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
+                                        where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                        $id_adresse = $stmt->fetch()['id_adresse'];
+                        
+                    }
 
 
-                // if (file_exists($target_file)) {
-                //     die("Erreur : Le fichier existe déjà dans le répertoire.");
-                // }
+
+                    switch ($categorie) {
+                        case 'activite':
+                           
+                            // Requete SQL pour modifier la vue offre
+                            $query = "UPDATE sae.offre_activite
+                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            where id_offre = ?;";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            
+                            break;
+
+                        case 'parc' :
+                            if(isset( $_FILES['plan'])){
+                                $file = $_FILES['plan'];
+                                $file_extension = get_file_extension($file['type']);
+                                $time = 'p' . strval(time());
+                                    if ($file_extension !== '') {
+                                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                                        $fichier_plan = 'plan_' . $time . $file_extension;
+            
+                                        $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+            
+            
+                                        //preparation requete
+                                        $stmt_plan = $dbh->prepare($requete_plan);
+            
+                                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                                        $stmt_plan->execute([$fichier_plan]);
+            
+                                    }
+                            }else{
+                                $fichier_plan = $attraction(['plan']);
+                            }
+                            
+                            // Requete SQL pour modifier la vue offre
+                            $query = "UPDATE sae.offre_parc
+                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            where id_offre = ?;";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            
+                            //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                            $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
+                            $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
+                            
+                            break;
+
+                        case 'spectacle':
+                            // Requete SQL pour modifier la vue offre
+                            $query = "UPDATE sae.offre_spectacle
+                            set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            where id_offre = ?;";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            break;
+                        
+                        case 'visite' :
+                            $query = "UPDATE sae.offre_visite
+                            set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            where id_offre = ?;";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            break;
+                        
+                        case 'restaurant':
+
+                            if(isset( $_FILES['carte'])){
+                                $file = $_FILES['carte'];
+                                $file_extension = get_file_extension($file['carte']);
+                                $time = 'p' . strval(time());
+                                    if ($file_extension !== '') {
+                                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                                        $fichier_carte = 'carte_' . $time . $file_extension;
+            
+                                        $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+            
+            
+                                        //preparation requete
+                                        $stmt_carte = $dbh->prepare($requete_carte);
+            
+                                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                                        $stmt_carte->execute([$fichier_carte]);
+            
+                                    }
+                            }else{
+                                $fichier_carte = $restaurant(['carte']);
+                            }
+                            
+                            // Requete SQL pour modifier la vue offre
+                            $query = "UPDATE sae.offre_restauration
+                            set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            where id_offre = ?;";
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            
+                            //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                            $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_carte_offre = $dbh->prepare($requete_plan_offre);
+                            $stmt_carte_offre->execute([$id_offre, $fichier_plan]);
+                            
+                            break;
+
+
+                        
+                        default:
+                            die("Erreur update!");
+                            break;
+                    }
+
+
+
+
+
+
+                }else{
+                
                     
-                $dbh->beginTransaction();
+                
 
-                //SWITCH CREATION REQUETE OFFRE
-                switch ($categorie) {
-                    case 'activite':
-                        try{
+                    //SWITCH CREATION REQUETE OFFRE
+                    switch ($categorie) {
+                        case 'activite':
+                            try{
+                                    // Requête SQL pour supprimer une visite
+                                    $requete = "DELETE FROM sae.offre_activite WHERE id_offre = ?";
+                                
+                                    // Préparation et exécution
+                                    $stmt = $dbh->prepare($requete);
+                                    $stmt->execute([$id_offre]);
+                                
+                                    echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                                } catch (PDOException $e) {
+                                    echo "Erreur !: " . $e->getMessage();
+                                
+                            }
+                            $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+
+                            break;
+
+                        case 'parc':
+                            $file = $_FILES['plan'];
+                            $file_extension = get_file_extension($file['type']);
+                            $time = 'p' . strval(time());
+
+                            if ($file_extension !== '') {
+                                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                                $fichier_plan = 'plan_' . $time . $file_extension;
+
+                                $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+
+                                //preparation requete
+                                $stmt_plan = $dbh->prepare($requete_plan);
+
+                                //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                                $stmt_plan->execute([$fichier_plan]);
+
+                            }
+
+                            try{
                                 // Requête SQL pour supprimer une visite
-                                $requete = "DELETE FROM sae.offre_activite WHERE id_offre = ?";
+                                $requete_supprimer = "DELETE FROM sae.offre_parc WHERE id_offre = ?";
                             
                                 // Préparation et exécution
-                                $stmt = $dbh->prepare($requete);
+                                $stmt = $dbh->prepare($requete_supprimer);
                                 $stmt->execute([$id_offre]);
                             
                                 echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
                             } catch (PDOException $e) {
                                 echo "Erreur !: " . $e->getMessage();
-                            
-                        }
-                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+                            }
 
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-
-
-                        break;
-
-                    case 'parc':
-                        $file = $_FILES['plan'];
-                        $file_extension = get_file_extension($file['type']);
-                        $time = 'p' . strval(time());
-
-                        if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
-                            $fichier_plan = 'plan_' . $time . $file_extension;
-
-                            $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
-
-
-                            //preparation requete
-                            $stmt_plan = $dbh->prepare($requete_plan);
-
-                            //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                            $stmt_plan->execute([$fichier_plan]);
-
-                        }
-
-                        try{
-                            // Requête SQL pour supprimer une visite
-                            $requete_supprimer = "DELETE FROM sae.offre_parc WHERE id_offre = ?";
-                        
-                            // Préparation et exécution
-                            $stmt = $dbh->prepare($requete_supprimer);
-                            $stmt->execute([$id_offre]);
-                        
-                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
-                        } catch (PDOException $e) {
-                            echo "Erreur !: " . $e->getMessage();
-                        }
-
-                        $requete = "INSERT INTO sae.offre_parc(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type, $descriptionL, $lien]);
-
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-
-                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                        $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                        $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
-                        $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
-
-
-                        
-
-                        break;
-
-                    case 'spectacle':
-                        try{
-                            // Requête SQL pour supprimer une visite
-                            $requete_supprimer = "DELETE FROM sae.offre_spectacle WHERE id_offre = ?";
-                        
-                            // Préparation et exécution
-                            $stmt = $dbh->prepare($requete_supprimer);
-                            $stmt->execute([$id_offre]);
-                        
-                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
-                        } catch (PDOException $e) {
-                            echo "Erreur !: " . $e->getMessage();
-                        }
-                        $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $descriptionL, $lien]);
+                            $requete = "INSERT INTO sae.offre_parc(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type, $descriptionL, $lien]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                        
-                        break;
 
-                    case 'visite':
-                        try{
-                            // Requête SQL pour supprimer une visite
-                            $requete_supprimer = "DELETE FROM sae.offre_visite WHERE id_offre = ?";
-                        
-                            // Préparation et exécution
-                            $stmt = $dbh->prepare($requete_supprimer);
-                            $stmt->execute([$id_offre]);
-                        
-                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
-                        } catch (PDOException $e) {
-                            echo "Erreur !: " . $e->getMessage();
+                            //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                            $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
+                            $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
+
+
+                            
+
+                            break;
+
+                        case 'spectacle':
+                            try{
+                                // Requête SQL pour supprimer une visite
+                                $requete_supprimer = "DELETE FROM sae.offre_spectacle WHERE id_offre = ?";
+                            
+                                // Préparation et exécution
+                                $stmt = $dbh->prepare($requete_supprimer);
+                                $stmt->execute([$id_offre]);
+                            
+                                echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                            } catch (PDOException $e) {
+                                echo "Erreur !: " . $e->getMessage();
+                            }
+                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $descriptionL, $lien]);
+
+                                $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            
+                            break;
+
+                        case 'visite':
+                            try{
+                                // Requête SQL pour supprimer une visite
+                                $requete_supprimer = "DELETE FROM sae.offre_visite WHERE id_offre = ?";
+                            
+                                // Préparation et exécution
+                                $stmt = $dbh->prepare($requete_supprimer);
+                                $stmt->execute([$id_offre]);
+                            
+                                echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                            } catch (PDOException $e) {
+                                echo "Erreur !: " . $e->getMessage();
+                            }
+                            $requete = "INSERT INTO sae.offre_visite(titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien]);
+
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            break;
+
+                        case 'restaurant':
+                            
+                            $file = $_FILES['carte'];
+                            $file_extension = get_file_extension($file['type']);
+                            $time = 'p' . strval(time());
+
+                            if ($file_extension !== '') {
+                                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
+                                $fichier_carte= 'carte_' . $time . $file_extension;
+
+                                $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                                //preparation requete
+                                $stmt_carte = $dbh->prepare($requete_carte);
+
+                                //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                                $stmt_carte->execute([$fichier_carte]);
+
+                                $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                $stmt = $dbh->prepare($requete);
+                                $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type, $descriptionL, $lien]); 
+
+
+                            }
+                            try{
+                                // Requête SQL pour supprimer une visite
+                                $requete_supprimer = "DELETE FROM sae.offre_restaurant WHERE id_offre = ?";
+                            
+                                // Préparation et exécution
+                                $stmt = $dbh->prepare($requete_supprimer);
+                                $stmt->execute([$id_offre]);
+                            
+                                echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                            } catch (PDOException $e) {
+                                echo "Erreur !: " . $e->getMessage();
+                            }
+
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                    
+                            //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                            $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_carte_image = $dbh->prepare($requete_carte_offre);
+                            $stmt_carte_image->execute([$id_offre, $fichier_carte]);
+
+                            
+                            break;
+                            
+                            default:
+                            die("Erreur de categorie!");
                         }
-                        $requete = "INSERT INTO sae.offre_visite(titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien]);
-
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                        break;
-
-                    case 'restaurant':
-                        $file = $_FILES['carte'];
-                        $file_extension = get_file_extension($file['type']);
-                        $time = 'p' . strval(time());
+                        
 
                         if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
-                            $fichier_carte= 'carte_' . $time . $file_extension;
 
-                            $requete_carte = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+                            //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
-                            //preparation requete
-                            $stmt_carte = $dbh->prepare($requete_carte);
-
-                            //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                            $stmt_carte->execute([$fichier_carte]);
-
-                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                            $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type, $descriptionL, $lien]); 
-
+                            $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                            $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                         }
-                        try{
-                            // Requête SQL pour supprimer une visite
-                            $requete_supprimer = "DELETE FROM sae.offre_restaurant WHERE id_offre = ?";
-                        
-                            // Préparation et exécution
-                            $stmt = $dbh->prepare($requete_supprimer);
-                            $stmt->execute([$id_offre]);
-                        
-                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
-                        } catch (PDOException $e) {
-                            echo "Erreur !: " . $e->getMessage();
-                        }
 
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                
-                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                        $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                        $stmt_carte_image = $dbh->prepare($requete_carte_offre);
-                        $stmt_carte_image->execute([$id_offre, $fichier_carte]);
+                        $dbh->commit();
+
 
                         
-                        break;
+
                         
-                        default:
-                        die("Erreur de categorie!");
-                    }
-                    
-
-                    if ($file_extension !== '') {
-
-                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-
-                        $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                        $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
-                        $stmt_image_offre->execute([$id_offre, $fichier_img]);
-
                     }
 
-                    $dbh->commit();
 
-
+                    //INSERTION DANS TARIF
                     if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                         // Requête SQL pour supprimer une visite
+                         $requete_supprimer = "DELETE FROM sae.offre_tarif_publique WHERE id_offre = ?";
+                            
+                         // Préparation et exécution
+                         $stmt = $dbh->prepare($requete_supprimer);
+                         $stmt->execute([$id_offre]);
+
                         foreach ($tabtarifs as $key => $value) {
-                            $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+                            $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix, id_offre) VALUES (?, ?, ?);";
 
                             // Préparation de la requête pour la vue tarif
                             $stmt_tarif = $dbh->prepare($requete_tarif);
@@ -795,8 +935,6 @@ try {
                         }
                     }
 
-                    
-                    
                     // Fermeture de la connexion
                     $dbh = null;
 
