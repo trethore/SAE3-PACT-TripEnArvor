@@ -15,7 +15,7 @@ try {
 startSession();
 $id_compte = $_SESSION["id"];
 if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    redirectTo("https://redden.ventsdouest.dev/se-connecter/");
+    redirectTo("https://redden.ventsdouest.dev/front/consulter-offres/");
 }
 
 $reqCompte = "SELECT * from sae._compte_membre cm 

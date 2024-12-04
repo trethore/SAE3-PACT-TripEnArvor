@@ -1,7 +1,5 @@
 <?php 
 require_once('../../utils/session-utils.php');
-startSession();
-$id_compte = $_SESSION["id"];
 require_once('../../php/connect_params.php');
 require_once('../../utils/compte-utils.php');
 require_once('../../utils/site-utils.php');
@@ -9,12 +7,16 @@ require_once('../../utils/auth-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $conn->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-redirectToConnexionIfNecessary($id_compte);
-
+startSession();
+$id_compte = $_SESSION["id"];
+if (!isset($id_compte) ||!isIdMember($id_compte)) {
+    redirectTo("https://redden.ventsdouest.dev/front/consulter-offres/");
+}
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
