@@ -18,19 +18,19 @@ redirectToConnexionIfNecessary($id_compte);
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_professionnel cp 
-                join sae._compte c on c.id_compte = cp.id_compte 
+$reqCompte = "SELECT * from sae._compte_membre cm 
+                join sae._compte c on c.id_compte = cm.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cp.id_compte = :id_compte;";
+                where cm.id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backCompte.css">
-    <link rel="stylesheet" href="/style/style_backCompteModif.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_frontCompte.css">
+    <link rel="stylesheet" href="/style/style_frontCompteModif.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
 </head>
@@ -40,13 +40,13 @@ if (!$submitted) {
 ?>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <?php 
@@ -57,29 +57,8 @@ if (!$submitted) {
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
         <h1>Détails du compte</h1>
-        <h2>Mon entreprise</h2>
-        
-        <form action="/back/modifier-compte/" method="POST" id="myForm">
-            <table>
-                <tr>
-                    <td>Dénomination Sociale</td>
-                    <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"]);?>"></td>
-                </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"]);?>"></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td>A propos</td>
-                    <td><input type="text" name="a_propos" id="a_propos" value="<?= htmlentities($detailCompte["a_propos"]);?>"></td>
-                </tr>
-                <tr>
-                    <td>Site web</td>
-                    <td><input type="url" name="site" id="site" value="<?= htmlentities($detailCompte["site_web"]);?>"></td>
-                </tr>
-            </table>
+
+        <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
@@ -337,7 +316,7 @@ if (!$submitted) {
                     break;
                 }
         }   
-        redirectTo("/back/mon-compte");
+        redirectTo("/front/mon-compte");
     } ?>
 <script src="/scripts/popupCompte.js"></script>
 </body>
