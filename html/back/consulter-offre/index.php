@@ -408,16 +408,16 @@ try {
                     <?php } ?>
                 </div>  
 
-                <form id="avisForm-<?php echo $compteur; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
-                    <input type='hidden' name='id_avis' value='<?php htmlspecialchars($a['id_avis']) ?>' />
+                <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                    <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
                     <h2>Répondre à un avis</h2>
                     <div class="display-ligne-espace">
-                        <textarea id="reponse-<?php echo $compteur; ?>" name="reponse" required></textarea><br>
+                        <textarea id="reponse" name="reponse" required></textarea><br>
                         <p class="transparent">.</p>
                     </div>
                     <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
                     <button type="submit">Publier</button>
-                    <button type="button" id="cancelFormButton-<?php echo $compteur; ?>" class="cancel-form-btn">Annuler</button>
+                    <button type="button" class="cancel-form-btn">Annuler</button>
                 </form>
 
                 <?php if ($submitted) { 
@@ -508,19 +508,33 @@ try {
             .openPopup();
 
             document.addEventListener('DOMContentLoaded', () => {
-                // Récupérer tous les boutons Répondre
+                // Boutons pour afficher les formulaires
                 const showFormButtons = document.querySelectorAll('.show-form-btn');
                 const cancelFormButtons = document.querySelectorAll('.cancel-form-btn');
 
-                showFormButtons.forEach((button, index) => {
+                // Gérer l'affichage des formulaires
+                showFormButtons.forEach((button) => {
                     button.addEventListener('click', () => {
-                        const form = document.getElementById(`avisForm-${index}`);
+                        const form = document.querySelector('.avis-form');
                         if (form) {
                             form.style.display = 'block'; // Afficher le formulaire
                             button.style.display = 'none'; // Masquer le bouton Répondre
                         }
                     });
                 });
+
+                // Gérer la fermeture des formulaires
+                cancelFormButtons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        const form = document.querySelector('.avis-form');
+                        const showFormButton = document.querySelector('.show-form-btn');
+                        if (form && showFormButton) {
+                            form.style.display = 'none'; // Masquer le formulaire
+                            showFormButton.style.display = 'block'; // Réafficher le bouton Répondre
+                        }
+                    });
+                });
+            });
 
                 cancelFormButtons.forEach((button, index) => {
                     button.addEventListener('click', () => {
