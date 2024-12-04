@@ -29,7 +29,7 @@ try {
     foreach ($offres as &$offre) {
         $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
         echo '<pre>';
-        echo $offre['prix'];
+        print_r($offre['prix']);
         echo '</pre>';
     }
 } catch (PDOException $e) {
