@@ -381,7 +381,7 @@ try {
                         <p class="transparent">.</p>
                         <div class="display-notation">
                             <?php if(empty($reponse[$compteur]['texte'])) { ?>
-                                <button id="showFormButton-<?php echo $compteur; ?>" class="show-form-btn"><strong>Répondre</strong></button>   
+                                <button id="showFormButton-<?php echo $compteur; ?>" class="show-form-btn" data-id="<?php echo $id_avis; ?>"><strong>Répondre</strong></button>
                             <?php } ?>
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
@@ -522,8 +522,8 @@ try {
 
             showFormButtons.forEach((button) => {
                 button.addEventListener('click', () => {
-                    const idAvis = button.getAttribute('data-id');
-                    const form = document.querySelector(`#avisForm-${idAvis}`);
+                    const idAvis = button.getAttribute('data-id'); // Récupère l'ID de l'avis
+                    const form = document.querySelector(`#avisForm-${idAvis}`); // Sélectionne le formulaire correspondant
                     if (form) {
                         form.style.display = 'block'; // Afficher le formulaire
                         button.style.display = 'none'; // Masquer le bouton Répondre
@@ -534,7 +534,7 @@ try {
             cancelFormButtons.forEach((button) => {
                 button.addEventListener('click', () => {
                     const form = button.closest('form');
-                    const idAvis = form.getAttribute('id').split('-')[1];
+                    const idAvis = form.getAttribute('id').split('-')[1]; // Récupère l'ID de l'avis
                     const showFormButton = document.querySelector(`.show-form-btn[data-id="${idAvis}"]`);
                     if (form && showFormButton) {
                         form.style.display = 'none'; // Masquer le formulaire
