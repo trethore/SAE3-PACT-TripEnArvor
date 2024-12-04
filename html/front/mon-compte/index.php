@@ -73,11 +73,11 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
                 </tr>
                 <tr>
                     <td>Nom</td>
-                    <td><?php echo htmlentities($detailCompte["nom_compte"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["nom_compte"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Prenom</td>
-                    <td><?php echo htmlentities($detailCompte["prenom"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["prenom"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
@@ -85,7 +85,7 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
-                    <td><?php echo htmlentities($detailCompte["tel"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["tel"] ?? '');?></td>
                 </tr>
             </table>
             <h2>Mon adresse</h2>
