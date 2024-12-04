@@ -89,7 +89,7 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"]);?>"></td>
+                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
@@ -107,7 +107,6 @@ if (!$submitted) {
                     </td>
                 </tr>
             </table>
-            <?php if (isset($detailCompte["id_adresse"])) { ?>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
@@ -124,17 +123,16 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td>Code postal</td>
-                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"]);?>"></td>
+                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"]);?>"></td>
+                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"]);?>"></td>
+                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
                 </tr>
-            </table> <?php } ?>
             <div>
             <input type="submit" value="Valider les modifications">
         </div>
