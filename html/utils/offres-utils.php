@@ -532,7 +532,7 @@
         }
     }
 
-    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    // ===== Fonction qui exécute une requête SQL pour récupérer le prix le plus petit sur une offre ===== //
     function getPrixPlusPetit($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqPrix = "SELECT MIN(prix) FROM _tarif_publique WHERE id_offre = :id_offre";
@@ -544,6 +544,23 @@
             $prixPlusPetit = $stmtPrix->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $prixPlusPetit[0]["min"];
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les ids des offres à la une ===== //
+    function getIdALaUne() {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqALaUne = "SELECT id_offre FROM sae._offre_souscrit_option WHERE nom_option = 'À la Une'";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtALaUne = $conn->prepare($reqALaUne);
+            $stmtALaUne->execute();
+            $ALaUne = $stmtALaUne->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $ALaUne;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
