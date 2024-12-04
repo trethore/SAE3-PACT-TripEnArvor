@@ -71,9 +71,6 @@ try {
     $tarifs = getTarifs($id_offre_cible);
 
 // ===== GESTION DE L'OUVERTURE ===== //
-
-    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
-    $jours = getJoursOuverture($id_offre_cible);
     
     // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     $horaire = getHorairesOuverture($id_offre_cible);
@@ -164,7 +161,22 @@ try {
 
             <div class="display-ligne-espace information-offre">
                 <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                $jour_actuel = $jours[date('w')];
+                $ouverture = "Fermé";
+                foreach ($horaire as $h) {
+                    $ouvert_ferme = date('H:i');
+                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                    if ($h['nom_jour'] == $jour_actuel) {
+                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                            $ouverture = "Ouvert";
+                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                            $ouverture = "Ferme bientôt";
+                        }
+                    } 
+                } ?>
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
                         $adresseComplete = [];
@@ -278,36 +290,32 @@ try {
 
             <div class="fond-blocs bloc-tarif">
                 <h2>Tarifs : </h2>
-                <table>
-                    <?php foreach ($tarifs as $t) { 
-                        if ($t['nom_tarif'] != "nomtarif1") { 
-                            if (!empty($t['nom_tarif'])) {?>
-                                <tr>
-                                    <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                    <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                </tr>
-                        <?  }
-                        } else {
-                            echo "Pas de tarifs diponibles" ;
-                        }
-                    } ?>
-                </table>
+                <?php if (!empty($tarifs)) { ?>
+                    <table>
+                        <?php foreach ($tarifs as $t) { 
+                            if ($t['nom_tarif'] != "nomtarif1") { 
+                                if (!empty($t['nom_tarif'])) {?>
+                                    <tr>
+                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                    </tr>
+                            <?php  }
+                            }
+                        } ?>
+                    </table>
+                <?php } else {
+                    echo "Pas de tarifs diponibles";
+                } ?>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php if (!empty($jour['nom_jour'])) {
-                    foreach ($jours as $jour) { ?>
-                        <p>
-                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
-                            foreach ($horaire as $h) {
-                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
-                            } ?>
-                        </p>
-                    <?php }
+                <?php if (!empty($horaire)) {
+                    foreach ($horaire as $h) { ?>
+                        <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
+                    <?php } 
                 } else {
-                    echo "Pas d'information sur les jours et les horaires d'ouverture";
+                    echo "Pas d'informations sur les jours et les horaires d'ouverture disponibles";
                 } ?>
             </div> 
             
@@ -457,7 +465,7 @@ try {
                     </div>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
-                            <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
+                            <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } 
@@ -474,33 +482,33 @@ try {
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
-                    <p><?php echo htmlentities($a['commentaire']); ?></p>
-                    <div class="display-ligne-espace">
+                    <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+                    <!-- <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'haut', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'bas', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
 
-                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+                    <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
                             <div class="display-ligne-espace">
-                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p class="titre-avis"><?php //echo htmlentities($compte['denomination']) ?></p>
                                 <p><strong>⁝</strong></p>
                             </div>
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
-                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                    <?php /*$rep = explode(' ', $dateReponse[$compteur]['date']);
                                     $dateRep = explode('-', $rep[0]); 
                                     $heureRep = explode(':', $rep[1]); ?>
-                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
+                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); */?></strong></p>
                                     <p class="transparent">.</p>
                                 </div>
                             </div>
-                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
-                        </div>
-                    <?php } ?>
+                            <p><?php //echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                        </div> -->
+                    <?php //} ?>
                 </div>      
             <?php $compteur++;
             } ?>  
@@ -508,8 +516,8 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <a href="/front/consulter-offres/">Retour à la liste des offres</a>
-            <a href="#top"><img src="/images/universel/icones/fleche-haut.png"></a>
+            <button onclick="location.href='../../back/consulter-offres/'">Retour à la liste des offres</button>
+            <button id="remonte" onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
         </div>
 
     </main>
