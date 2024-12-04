@@ -311,7 +311,6 @@ try {
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <?php print_r($horaire) ?>
                 <?php foreach ($horaire as $h) { ?>
                     <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
                 <?php } ?>
