@@ -701,11 +701,6 @@
                  document.getElementById("labeltype").style.display = 'none';
             }
 
-
-
-
-
-
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event"];
