@@ -64,7 +64,7 @@ if (!$submitted) {
         <h1>Détails du compte</h1>
         <h2>Mon entreprise</h2>
         
-        <form action="/back/modifier-compte" method="POST" id="myForm">
+        <form action="/back/modifier-compte/" method="POST" id="myForm">
             
             <label for="test">test : </label>
             <input type="text" name="test" id="test">
