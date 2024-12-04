@@ -65,7 +65,21 @@ try {
         <h2>Offres à la une</h2>
 
         <section>
-            <img src="/images/universel/photos/image1.webp">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <?php foreach ($images as $image) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                    <?php } ?>
+                </div>
+                <div class="display-ligne-espace">
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
+            </div>
         </section>
 
         <h1>Découvrir la Liste des Offres Disponibles</h1>

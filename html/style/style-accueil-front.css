@@ -57,3 +57,46 @@ section > img {
 
     border-radius: 15px;
 }
+
+/**********************************
+        IMAGES PRÉSENTATION                
+**********************************/
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: auto;
+}
+      
+.carousel-images img {
+    width: 100%;
+    height: 700px;
+    flex-shrink: 0;
+}
+
+.arrow-left, .arrow-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.arrow-left > img, .arrow-right > img {
+    background-color: var(--violet-principal);
+    border-radius: 90px;
+} 
+
+.arrow-left {
+    left: 20px;
+}
+      
+.arrow-right {
+    right: 20px;
+}
