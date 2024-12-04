@@ -220,6 +220,9 @@ if (!$submitted) {
     </footer>
     <?php
 } else {
+    echo "<pre>";
+    echo $_POST;
+    echo "</pre>";
     $ok = true;
     switch ($typeCompte) {
         case 'proPublique':
