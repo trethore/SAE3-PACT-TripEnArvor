@@ -18,12 +18,19 @@ h1 {
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 55pt;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 h1:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px var(--violet-principal) solid;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
 }
 
 h2 {
@@ -33,15 +40,12 @@ h2 {
     font-weight: 600;
     font-size: 40px;
     line-height: 60px;
-    text-align: center;
+    text-align: left;
 }
 
 section > img {
-    position: absolute;
     width: 1226px;
     height: 396px;
-    left: 37px;
-    top: 119px;
 
     border-radius: 15px;
 }
