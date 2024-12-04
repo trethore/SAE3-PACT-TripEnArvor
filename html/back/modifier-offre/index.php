@@ -83,6 +83,11 @@ try {
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
+
+
+    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
+    $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomie", "Italienne", "Restauration rapide", "Creperie");
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -164,7 +169,7 @@ try {
                                 <td><label for="categorie">Catégorie</label></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restaurant" <?php if($categorie === "restaurant"){echo "selected";} ?>> Restaurant</option>
+                                            <option value="restaurant" > Restaurant</option>
                                             <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
@@ -255,13 +260,15 @@ try {
                     </div>
 
                     <h3>Tags de l'offre</h3>
-
+                    <ul>
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } } ?>
+                    <?php } 
                         
+                        ?>
+                     </ul>   
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0">
@@ -399,5 +406,19 @@ try {
             }
 
         }?>
+        <script> 
+            const liste_tags = array["Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour"];
+            const liste_tags_restaurant = ["Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomie", "Italienne", "Restauration rapide", "Creperie"];
+            
+            liste_tags.forEach(element => {
+                
+            });
+                        if(!liste_tags.include()){
+                            if($categorie != "restaurant")
+                            foreach ($liste_tags as $tag)
+                            <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                        }
+
+        </script>
     </body>
 </html>
