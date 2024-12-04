@@ -478,8 +478,8 @@ try {
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>", 'haut', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>", 'bas', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
 
