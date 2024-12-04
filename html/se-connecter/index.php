@@ -44,7 +44,7 @@ try {
             $mdpUtilisateur = $_POST["mdp"];
             $id = -1;
             foreach ($result as $entry) {
-                if ($emailUtilisateur == $entry['email'] && $mdpUtilisateur == $entry['mot_de_passe']) {
+                if ($emailUtilisateur == $entry['email'] && password_verify($mdpUtilisateur, $entry['mot_de_passe']) ) {
                     $id = $entry['id_compte'];
                     $trouve = true;
                     $_SESSION['id'] = $id;
