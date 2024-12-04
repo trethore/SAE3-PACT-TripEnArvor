@@ -415,6 +415,7 @@ try {
                         <?php if (!empty($reponse)) {
                             if (isset($_POST['reponse'])) {
                                 $reponse = htmlentities($_POST['reponse']);
+                                print_r($reponse);
                             } 
                             $id_avis = $a['id_avis']; 
                             $publie_le = date('Y-m-d H:i:s');                             
