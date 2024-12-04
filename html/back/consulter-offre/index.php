@@ -409,6 +409,7 @@ try {
                 </div>  
 
                 <?php $id_avis = $a['id_avis']; 
+                print_r($id_avis);
                 if(empty($reponse[$compteur]['texte'])) { ?>
                     <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
                         
