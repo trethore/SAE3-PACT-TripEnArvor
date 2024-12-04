@@ -88,6 +88,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
     
+    $id_offre = $_GET['id'];
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -254,10 +255,10 @@ try {
                     <br>
                     <!-- parc -->
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
-                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
+                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php echo htmlentities($attraction[$plan]) ?>" alt="Plan" ><input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
-                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte" />
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php echo htmlentities($restaurant[$carte]) ?>" alt="Carte" > <input type="file" id="carte" name="carte" />
                     
                 </div>
                 <?php if(isset($activite['duree'])){
@@ -599,31 +600,24 @@ try {
                 // }
                     
                 $dbh->beginTransaction();
-                // Déterminer la table cible selon la catégorie
-                switch ($categorie) {
-                    case 'activite':
-                        $requeteCategorie = 'activite';
-                        break;
-                    case 'parc':
-                        $requeteCategorie = 'parc_attraction';
-                        break;
-                    case 'spectacle':
-                        $requeteCategorie = 'spectacle';
-                        break;
-                    case 'visite':
-                        $requeteCategorie = 'visite';
-                        break;
-                    case "restaurant":
-                            $requeteCategorie = 'restauration';
-                            break;
-                    default:
-                        die("Erreur de categorie!");
-                }
 
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        try{
+                                // Requête SQL pour supprimer une visite
+                                $requete = "DELETE FROM sae.offre_activite WHERE id_offre = ?";
+                            
+                                // Préparation et exécution
+                                $stmt = $dbh->prepare($requete);
+                                $stmt->execute([$id_offre]);
+                            
+                                echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                            } catch (PDOException $e) {
+                                echo "Erreur !: " . $e->getMessage();
+                            
+                        }
+                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
@@ -653,7 +647,20 @@ try {
 
                         }
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        try{
+                            // Requête SQL pour supprimer une visite
+                            $requete_supprimer = "DELETE FROM sae.offre_parc WHERE id_offre = ?";
+                        
+                            // Préparation et exécution
+                            $stmt = $dbh->prepare($requete_supprimer);
+                            $stmt->execute([$id_offre]);
+                        
+                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                        } catch (PDOException $e) {
+                            echo "Erreur !: " . $e->getMessage();
+                        }
+
+                        $requete = "INSERT INTO sae.offre_parc(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type, $descriptionL, $lien]);
 
@@ -670,7 +677,19 @@ try {
                         break;
 
                     case 'spectacle':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        try{
+                            // Requête SQL pour supprimer une visite
+                            $requete_supprimer = "DELETE FROM sae.offre_spectacle WHERE id_offre = ?";
+                        
+                            // Préparation et exécution
+                            $stmt = $dbh->prepare($requete_supprimer);
+                            $stmt->execute([$id_offre]);
+                        
+                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                        } catch (PDOException $e) {
+                            echo "Erreur !: " . $e->getMessage();
+                        }
+                        $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $descriptionL, $lien]);
 
@@ -679,7 +698,19 @@ try {
                         break;
 
                     case 'visite':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        try{
+                            // Requête SQL pour supprimer une visite
+                            $requete_supprimer = "DELETE FROM sae.offre_visite WHERE id_offre = ?";
+                        
+                            // Préparation et exécution
+                            $stmt = $dbh->prepare($requete_supprimer);
+                            $stmt->execute([$id_offre]);
+                        
+                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                        } catch (PDOException $e) {
+                            echo "Erreur !: " . $e->getMessage();
+                        }
+                        $requete = "INSERT INTO sae.offre_visite(titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien]);
 
@@ -708,6 +739,18 @@ try {
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type, $descriptionL, $lien]); 
 
 
+                        }
+                        try{
+                            // Requête SQL pour supprimer une visite
+                            $requete_supprimer = "DELETE FROM sae.offre_restaurant WHERE id_offre = ?";
+                        
+                            // Préparation et exécution
+                            $stmt = $dbh->prepare($requete_supprimer);
+                            $stmt->execute([$id_offre]);
+                        
+                            echo "La visite avec l'ID $id_offre a été supprimée avec succès.";
+                        } catch (PDOException $e) {
+                            echo "Erreur !: " . $e->getMessage();
                         }
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
