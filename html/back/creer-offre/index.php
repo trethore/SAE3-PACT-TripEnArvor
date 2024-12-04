@@ -343,10 +343,10 @@
             include('../../php/connect_params.php');
 
             // Récupération des données du formulaire avec $_POST
-
+            print_r("test 4321");
             if (isset($_POST['date_evenement'])) {
                 $date_event = $_POST['date_evenement'];
-                print_r(date('', strtotime($date_event)));
+                print_r("test 1234");
             }
 
             if (isset($_POST['titre'])) {
