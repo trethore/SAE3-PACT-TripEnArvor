@@ -350,7 +350,7 @@
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
                 die("Erreur : la date de l'événement est obligatoire.");
             }
-            $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
+            $date_event = $_POST['date_event']; // "2024-12-19"
             
 
             if (isset($_POST['titre'])) {
@@ -568,7 +568,7 @@
 
                     case 'spectacle':
                         try {
-                            // Insérer la date dans la table _date
+                            // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);  // Insérer la date
@@ -578,11 +578,10 @@
                                 throw new Exception("Erreur lors de la récupération de l'ID de la date.");
                             }
 
-                            // Étape 2 : Insérer dans la table offre_spectacle
+                            // Insertion dans la table offre_spectacle
                             $requete = "INSERT INTO sae.offre_spectacle 
                                 (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
-
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
