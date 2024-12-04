@@ -47,7 +47,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <main>
         <nav>
             <a class="ici" href="/front/mon-compte">Mes infos</a>
-            <a href="/se-connecter">Se déconnecter</a>
+            <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
             <?php 
