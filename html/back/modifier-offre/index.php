@@ -164,11 +164,13 @@ try {
                                 <td><label for="categorie">Catégorie</label></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restaurant"> Restaurant</option>
-                                            <option value="parc"> Parc d'attraction</option>
-                                            <option value="spectacle"> Spectacle</option>
-                                            <option value="visite"> Visite</option>
-                                            <option value="activite"> Activité</option>
+                                            <option value="restaurant" <?php if($categorie === "restaurant"){echo "selected";} ?>> Restaurant</option>
+                                            <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
+                                            <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
+                                            <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
+                                            <option value="activite" <?php if($categorie === "activite"){echo "selected";} ?>> Activité</option>
+
+                                            
                                         </select>
                                 </div></td>
                             </tr>
@@ -254,7 +256,12 @@ try {
 
                     <h3>Tags de l'offre</h3>
 
-                    <p> -- Choisir une catégorie -- </p>
+                    <?php 
+                        if (!empty($tags)) {
+                            foreach ($tags as $tag) { ?>
+                                <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                    <?php } ?>
+                        
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0">
