@@ -452,7 +452,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button onclick="location.href='#top'"><img src="/images/universel/icones/fleche-haut.png"></button>
+            <button onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
         </div>
 
     </main>
