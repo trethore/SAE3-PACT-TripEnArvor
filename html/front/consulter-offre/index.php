@@ -406,7 +406,7 @@ try {
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="datetime-local" id="date" name="date" required/><br>
+                                <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                                 <p class="transparent">.</p>
                             </div>
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
