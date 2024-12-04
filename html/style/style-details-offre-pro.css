@@ -9,6 +9,10 @@ html {
     scroll-behavior: smooth;
 }
 
+header {
+    text-decoration: none;
+}
+
 button {
     font-family: "Poppins", sans-serif;
 }
