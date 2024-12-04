@@ -68,9 +68,6 @@ try {
     $tarifs = getTarifs($id_offre_cible);
 
 // ===== GESTION DE L'OUVERTURE ===== //
-
-    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
-    $jours = getJoursOuverture($id_offre_cible);
     
     // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     $horaire = getHorairesOuverture($id_offre_cible);
@@ -315,10 +312,10 @@ try {
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
                 <!-- Affichage des horaires d'ouverture de l'offre -->
-                <?php if (!empty($jour['nom_jour'])) {
-                    foreach ($jours as $jour) { ?>
+                <?php if (!empty($heure['nom_jour'])) {
+                    foreach ($heure as $h) { ?>
                         <p>
-                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                            <?php echo htmlentities($h['nom_jour'] . " : "); 
                             foreach ($horaire as $h) {
                                 echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
                             } ?>
