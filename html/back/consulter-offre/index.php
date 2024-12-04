@@ -408,7 +408,7 @@ try {
                     <?php } ?>
                 </div>  
 
-                <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
                     <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
                     <h2>Répondre à "nom_membre"</h2>
                     <div class="display-ligne-espace">
