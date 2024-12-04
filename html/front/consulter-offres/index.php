@@ -295,8 +295,8 @@ try {
                 const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
-                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-vide']").length;
-                        return stars + 1 >= selectedNote;
+                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                        return stars <= selectedNote;
                     });
                 }
 
