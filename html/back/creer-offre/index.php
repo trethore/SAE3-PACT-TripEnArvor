@@ -235,7 +235,7 @@
                 
                 <br>
                 <div id="date_evenement">
-                    <label id="labeldate_event" for="date">Date de l'évenement <span class="required">*<input type="date" id="date_event" name="date_event">
+                    <label id="labeldate_event" for="date_event">Date de l'évenement <span class="required">*<input type="date" id="date_event" name="date_event">
                 </div>
 
                 <!-- <h3>Ouverture</h3>
@@ -679,9 +679,9 @@
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2","date_evenement"];
+            let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","date_evenement"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
             let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
