@@ -64,7 +64,9 @@ try {
     <main>
         <h2>Offres à la une</h2>
 
-        <section></section>
+        <section>
+            <img src="/images/universel/photos/image1.webp">
+        </section>
 
         <h1>Découvrir la Liste des Offres Disponibles</h1>
 
