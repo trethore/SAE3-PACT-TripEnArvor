@@ -221,7 +221,7 @@ if (!$submitted) {
     <?php
 } else {
     echo "<pre>";
-    echo $_POST;
+    print_r($_POST);
     echo "</pre>";
     $ok = true;
     switch ($typeCompte) {
