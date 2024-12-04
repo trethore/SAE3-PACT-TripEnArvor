@@ -67,6 +67,9 @@ try {
         <?php 
 
         $ids = getIdALaUne();
+        foreach ($ids as &$offre) {
+            $offre['titre'] = getOffre($offre["id_offre"])["titre"];
+        }
         echo "<pre>";
         print_r($ids);
         echo "</pre>";
@@ -77,7 +80,7 @@ try {
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($ids as $offre) { ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image">
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>">
                     <?php } ?>
                 </div>
                 <div>
@@ -88,13 +91,13 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
-                <p class="titre">
-                    Le Petit Coin de Mer
+                <p class="titre" id="carousel-titre">
+                    <!--Le Petit Coin de Mer
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
-                    <img src="/images/frontOffice/etoile-pleine.png">
+                    <img src="/images/frontOffice/etoile-pleine.png">-->
                 </p>
             </div>
         </section>
@@ -149,8 +152,11 @@ try {
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
+        const titreElement = document.querySelector('#carousel-titre');
 
         let currentIndex = 0;
+
+        updateCarousel();
 
         // Gestion du clic sur le bouton "Suivant"
         nextButton.addEventListener('click', () => {
@@ -174,6 +180,9 @@ try {
         function updateCarousel() {
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
+
+            const currentImage = images.children[currentIndex];
+            titreElement.textContent = currentImage.dataset.titre;
         }
     </script>
 </body>
