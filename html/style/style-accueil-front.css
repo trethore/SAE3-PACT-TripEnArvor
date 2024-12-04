@@ -94,7 +94,7 @@ section {
     right: 20px;
 }
 
-section > p {
+.titre {
     position: absolute;
     left: 0;
     top: 0;

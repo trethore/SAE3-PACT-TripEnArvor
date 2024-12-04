@@ -82,7 +82,7 @@ try {
                         <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
                     </div>
                 </div>
-                <p>
+                <p class="titre">
                     Le Petit Coin de Mer
                     <img src="/images/frontOffice/etoile-pleine.png">
                     <img src="/images/frontOffice/etoile-pleine.png">
