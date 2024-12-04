@@ -92,11 +92,11 @@ try {
                                 <label>Note minimum :</label>
                                 <select class="note">
                                     <option></option>
-                                    <option>★★★★★</option>
-                                    <option>★★★★</option>
-                                    <option>★★★</option>
-                                    <option>★★</option>
                                     <option>★</option>
+                                    <option>★★</option>
+                                    <option>★★★</option>
+                                    <option>★★★★</option>
+                                    <option>★★★★★</option>
                                 </select>
                             </div>
                             
@@ -292,10 +292,7 @@ try {
 
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
-                const selectedNote = minNoteSelect.value.lenght;
-                if (minNoteSelect.value == null) {
-                    selectedNote = 6;
-                }
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : 6;
                 console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
