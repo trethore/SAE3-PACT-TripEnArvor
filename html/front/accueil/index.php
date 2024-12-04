@@ -67,8 +67,8 @@ try {
         <?php 
 
         $ids = getIdALaUne();
-        foreach ($ids as &$offre) {
-            $offre['titre'] = getOffre($offre["id_offre"])["titre"];
+        foreach ($ids as $key => $offre) {
+            $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
         }
         echo "<pre>";
         print_r($ids);
