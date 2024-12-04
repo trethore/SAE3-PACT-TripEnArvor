@@ -181,10 +181,16 @@ try {
                 $jour_actuel = $jours[date('w')];
                 foreach ($horaire as $h) {
                     $ouvert_ferme = date('H:i');
-                    if (($h['ouverture']  < $ouvert_ferme) && ($ouvert_ferme < $h['fermeture']) && ($h['nom_jour'] == $jour_actuel)) {
-                        $ouverture = "Ouvert";
-                    }
-                    else {
+                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                    if ($h['nom_jour'] == $jour_actuel) {
+                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                            $ouverture = "Ouvert";
+                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                            $ouverture = "Fermé bientôt";
+                        } else {
+                            $ouverture = "Fermé";
+                        }
+                    } else {
                         $ouverture = "Fermé";
                     }
                 } ?>
@@ -303,30 +309,34 @@ try {
                 <div>
                     <h2>Tarifs : </h2>
                     <br>
-                    <table>
-                        <?php foreach ($tarifs as $t) { 
-                             if (!empty($tarifs)) {
+                    <?php if (!empty($tarifs)) { ?>
+                        <table>
+                            <?php foreach ($tarifs as $t) { 
                                 if ($t['nom_tarif'] != "nomtarif1") { 
                                     if (!empty($t['nom_tarif'])) {?>
                                         <tr>
                                             <td><?php echo htmlentities($t['nom_tarif']) ?></td>
                                             <td><?php echo htmlentities($t['prix']) . " €"?></td>
                                         </tr>
-                                <?  }
+                                <?php  }
                                 }
-                            } else {
-                                echo "Pas de tarifs diponibles";
-                            } 
-                        } ?>
-                    </table>
+                            } ?>
+                        </table>
+                    <?php } else {
+                        echo "Pas de tarifs diponibles";
+                    } ?>
                 </div>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <?php foreach ($horaire as $h) { ?>
-                    <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
-                <?php } ?>
+                <?php if (!empty($horaire)) {
+                    foreach ($horaire as $h) { ?>
+                        <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
+                    <?php } 
+                } else {
+                    echo "Pas d'informations sur les jours et les horaires d'ouverture disponibles";
+                } ?>
             </div> 
             
         </section>
