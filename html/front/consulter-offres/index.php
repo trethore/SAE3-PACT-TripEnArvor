@@ -296,7 +296,7 @@ try {
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
-                        return stars >= selectedNote;
+                        return stars => selectedNote;
                     });
                 }
 
@@ -325,8 +325,6 @@ try {
                         offer.style.display = "none";
                     }
                 });
-
-                console.log(visibleOffers);
 
                 // Show/Hide "No Offers" Message
                 noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
