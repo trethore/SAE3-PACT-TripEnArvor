@@ -26,6 +26,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Se connecter</title>
     <link rel="stylesheet" href="/style/style-se-connecter.css">
+    <link rel="stylesheet" href="/style/styleguide.css"/>
 </head>
 <body class="connecter">
     <!-- Logo -->
