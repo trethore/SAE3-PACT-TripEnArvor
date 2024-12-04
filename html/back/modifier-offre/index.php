@@ -317,14 +317,7 @@ try {
                         </div>
 
                     <br>
-                    <table>
-                        <?php foreach ($tarifs as $t) { ?>
-                            <tr>
-                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                            </tr>
-                        <?php } ?>
-                    </table>
+                    
 
 
                     <!-- <h3>Ouverture</h3>
