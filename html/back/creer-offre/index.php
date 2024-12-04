@@ -567,7 +567,7 @@
                         break;
 
                     case 'spectacle':
-                        $date_event = $_POST['date_event']; // Exemple : "2024-12-19"
+                        $date_event = $_POST['date_event']; // Exemple : "2022-12-08"
 
                         try {
                             // 1. Insérer la date dans la table _date
@@ -599,6 +599,7 @@
                             echo "Erreur : " . $e->getMessage();
                             die();
                         }
+
 
 
 
