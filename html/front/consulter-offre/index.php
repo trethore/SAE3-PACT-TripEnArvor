@@ -542,7 +542,7 @@ try {
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='../../back/consulter-offres/'">Retour à la liste des offres</button>
+            <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
             <button id="remonte" onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
         </div>
 
@@ -639,8 +639,8 @@ try {
 
         // Met à jour l'affichage du carrousel
         function updateCarousel() {
-            const width = images.clientWidth;
-            images.style.transform = `translateX(-${currentIndex * width}px)`;
+        const width = images.clientWidth;
+        images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
         function togglePouce(index, type, id) {
