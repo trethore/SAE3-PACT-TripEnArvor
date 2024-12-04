@@ -231,8 +231,12 @@
 
 
                 </div>
-                <br>
 
+                
+                <br>
+                <div id="date_evenement">
+                    <label id="labeldate_event" for="date">Date de l'évenement <span class="required">*<input type="date" id="date_event" name="date_event">
+                </div>
 
                 <!-- <h3>Ouverture</h3>
                 <table border="0">
@@ -339,6 +343,10 @@
             include('../../php/connect_params.php');
 
             // Récupération des données du formulaire avec $_POST
+
+            if (isset($_POST['date_evenement'])) {
+                $date_event = $_POST['date_evenement'];
+            }
 
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
@@ -552,18 +560,18 @@
                         break;
 
                     case 'spectacle':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $date_event]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
                         break;
 
                     case 'visite':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         break;
@@ -671,9 +679,9 @@
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2"];
+            let typevisite = ["labelduree", "duree", "labelduree2","date_evenement"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","date_evenement"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
             let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
 
