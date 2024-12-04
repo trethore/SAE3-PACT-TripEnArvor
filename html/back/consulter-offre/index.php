@@ -294,18 +294,22 @@ try {
                 <div>
                     <h2>Tarifs : </h2>
                     <table>
-                        <?php foreach ($tarifs as $t) { 
-                            if (!empty($t['nom_tarif'])) {
-                                if ($t['nom_tarif'] != "nomtarif1") { ?>
-                                    <tr>
-                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                    </tr>
+                        <?php if (!empty($tarifs)) {
+                            foreach ($tarifs as $t) { 
+                                if ($t['nom_tarif'] != "nomtarif1") { 
+                                    if (!empty($t['nom_tarif'])) {?>
+                                        <tr>
+                                            <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                            <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                        </tr>
                                 <?  }
-                            } else {
-                                echo "Pas de tarifs diponibles" ;
-                            }
-                        } ?>
+                                } else {
+                                    echo "Pas de tarifs diponibles";
+                                }
+                            } 
+                        } else {
+                            echo "Pas de tarifs diponibles";
+                        }?>
                     </table>
                 </div>
             </div>
