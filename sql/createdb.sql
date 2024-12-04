@@ -1,3 +1,7 @@
+ROLLBACK;
+START TRANSACTION;
+
+
 DROP SCHEMA IF EXISTS sae CASCADE;
 CREATE SCHEMA sae;
 SET SCHEMA 'sae';
@@ -11,8 +15,32 @@ SET SCHEMA 'sae';
 CREATE TYPE gamme_prix_t AS ENUM ('€', '€€', '€€€');
 CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dîner', 'Boissons');
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
-CREATE TYPE type_offre_t AS ENUM('gratuite', 'standard', 'premium');
+CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
+CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
+CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
+
+CREATE TABLE _date (
+    id_date     SERIAL,
+    date        TIMESTAMP NOT NULL,
+    CONSTRAINT _date_pk PRIMARY KEY (id_date)
+);
+
+
+CREATE TABLE _prix (
+    id_prix SERIAL,
+    prix_ht INTEGER NOT NULL,
+    CONSTRAINT _prix_pk PRIMARY KEY (id_prix)
+);
+
+CREATE TABLE _abonnement (
+    nom     VARCHAR(63),
+    id_prix INTEGER NOT NULL,
+    CONSTRAINT _abonnement_pk
+        PRIMARY KEY (nom),
+    CONSTRAINT _abonnement_fk_prix
+        FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+);
 
 
 /* ##################################################################### */
@@ -26,7 +54,7 @@ CREATE TABLE _compte (
     id_compte       SERIAL,
     nom_compte      VARCHAR(30),
     prenom          VARCHAR(30),
-    email           VARCHAR(320) NOT NULL,
+    email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
     id_adresse      INTEGER,
@@ -112,10 +140,10 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
-    prix_offre              INTEGER NOT NULL,
-    type_offre              type_offre_t NOT NULL,
+    abonnement              VARCHAR(63) NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte)
+    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom)
 );
 
 
@@ -139,10 +167,12 @@ CREATE VIEW offre_activite AS
 /* ======================= OFFRE VISITE CONCRETE ======================= */
 
 CREATE TABLE _offre_visite (
-    id_offre    INTEGER,
-    duree       INTEGER NOT NULL,
+    id_offre        INTEGER,
+    duree           INTEGER NOT NULL,
+    date_evenement  INTEGER NOT NULL,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_visite_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)
 );
 
 CREATE VIEW offre_visite AS
@@ -155,11 +185,14 @@ CREATE VIEW offre_visite AS
 /* ===================== OFFRE SPECTACLE CONCRETE ====================== */
 
 CREATE TABLE _offre_spectacle (
-    id_offre    INTEGER,
-    duree       INTEGER NOT NULL,
-    capacite    INTEGER NOT NULL,
+    id_offre       INTEGER,
+    duree          INTEGER NOT NULL,
+    capacite       INTEGER NOT NULL,
+    date_evenement INTEGER NOT NULL,
     CONSTRAINT _offre_spectacle_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+    CONSTRAINT _offre_spectacle_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_spectacle_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)
+
 );
 
 CREATE VIEW offre_spectacle AS
@@ -202,6 +235,61 @@ CREATE VIEW offre_restauration AS
     FROM _offre_restauration
     NATURAL JOIN _offre
 ;
+
+/* ============================== OPTIONS ============================== */
+
+CREATE TABLE _option (
+    nom_option  nom_option_t,
+    id_prix INTEGER NOT NULL,
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option),
+    CONSTRAINT _option_fk_prix FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+);
+
+
+/* ##################################################################### */
+/*                                 AVIS                                  */
+/* ##################################################################### */
+
+
+CREATE TABLE _avis (
+    id_avis         SERIAL,
+    id_membre       INTEGER NOT NULL,
+    id_offre        INTEGER NOT NULL,
+    note            INTEGER NOT NULL,
+    titre           VARCHAR(128) NOT NULL,
+    commentaire     VARCHAR(1024) NOT NULL,
+    nb_pouce_haut   INTEGER NOT NULL DEFAULT 0,
+    nb_pouce_bas    INTEGER NOT NULL DEFAULT 0,
+    contexte_visite contexte_visite_t NOT NULL,
+    publie_le       INTEGER NOT NULL,
+    visite_le       INTEGER NOT NULL,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
+    CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
+    CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date)
+);
+
+
+CREATE TABLE _reponse (
+    id_avis     INTEGER,
+    texte       VARCHAR(1024) NOT NULL,
+    publie_le   INTEGER NOT NULL,
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
+);
+
+
+/* ========================== NOTE DÉTAILLÉE =========================== */
+CREATE TABLE _note_detaillee (
+    id_note   SERIAL,  
+    nom_note  VARCHAR(30) NOT NULL,
+    note      INTEGER NOT NULL,
+    id_avis   INTEGER NOT NULL,
+    CONSTRAINT _note_pk PRIMARY KEY (id_note),
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+);
 
 
 
@@ -248,6 +336,7 @@ CREATE TABLE _image (
 
 CREATE TABLE _tarif_publique (
     id_tarif_publique    SERIAL,
+    nom_tarif VARCHAR(64),
     prix        INTEGER NOT NULL,
     id_offre    INTEGER NOT NULL,
     CONSTRAINT _tarif_publique_pk PRIMARY KEY (id_tarif_publique),
@@ -278,6 +367,29 @@ CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
+/* ##################################################################### */
+/*                                FACTURES                               */
+/* ##################################################################### */
+
+
+CREATE TABLE _facture(
+    numero_facture    SERIAL,
+    montant_ht        INTEGER NOT NULL,
+    id_date_emission  INTEGER NOT NULL,
+    id_date_echeance  INTEGER NOT NULL,
+    id_offre          INTEGER NOT NULL,
+    CONSTRAINT _facture_pk
+        PRIMARY KEY (numero_facture),
+    CONSTRAINT _facture_fk_offre
+        FOREIGN KEY (id_offre)
+        REFERENCES _offre(id_offre),
+    CONSTRAINT _facture_fk_date_emission
+        FOREIGN KEY (id_date_emission)
+        REFERENCES _date(id_date),
+    CONSTRAINT _facture_fk_date_echeance
+        FOREIGN KEY (id_date_echeance)
+        REFERENCES _date(id_date)    
+);
 
 
 
@@ -292,6 +404,46 @@ ALTER TABLE _compte
     ADD CONSTRAINT _compte_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
+
+
+/* ===================== OFFRE DATES MISE EN LIGNE ===================== */
+
+CREATE TABLE _offre_dates_mise_en_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_en_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_en_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ==================== OFFRE DATES MISE HORS LIGNE ==================== */
+
+CREATE TABLE _offre_dates_mise_hors_ligne (
+    id_offre    INTEGER,
+    id_date     INTEGER,
+    CONSTRAINT _offre_dates_mise_hors_ligne_pk PRIMARY KEY (id_offre, id_date),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_dates_mise_hors_ligne_fk_date FOREIGN KEY (id_date) REFERENCES _date(id_date)
+);
+
+
+/* ======================= OFFRE SOUSCRIT OPTION ======================= */
+
+CREATE TABLE _offre_souscrit_option (
+    id_offre    INTEGER,
+    nom_option  nom_option_t,
+    nb_semaine  INTEGER NOT NULL,
+    id_date     INTEGER NOT NULL,
+    CONSTRAINT _offre_souscrit_option_pk
+        PRIMARY KEY (id_offre, nom_option),
+    CONSTRAINT _offre_souscrit_option_fk_offre
+        FOREIGN KEY (id_offre)
+        REFERENCES _offre(id_offre),
+    CONSTRAINT _offre_souscrit_option_fk_option
+        FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option)
+);
 
 
 /* ====================== OFFRE SE SITUE ADRESSE ======================= */
@@ -357,20 +509,19 @@ CREATE TABLE _offre_possede_tag (
 );
 
 
-/* ==================== OFFRE EN LIGNE / HORS LIGNE ==================== */
+/* ======================== AVIS CONTIENT IMAGE ======================== */
 
-CREATE TABLE _dates_mise_en_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_en_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_en_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
-);
-
-CREATE TABLE _dates_mise_hors_ligne_offre (
-    id_offre    INTEGER,
-    date_heure  TIMESTAMP,
-    CONSTRAINT _dates_mise_hors_ligne_offre_pk PRIMARY KEY (id_offre, date_heure),
-    CONSTRAINT _dates_mise_hors_ligne_offre_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre)
+CREATE TABLE _avis_contient_image (
+    id_avis         INTEGER,
+    lien_fichier    VARCHAR(255),
+    CONSTRAINT _avis_contient_image_pk
+        PRIMARY KEY (id_avis, lien_fichier),
+    CONSTRAINT _avis_contient_image_fk_avis
+        FOREIGN KEY (id_avis)
+        REFERENCES _avis(id_avis),
+    CONSTRAINT _avis_contient_image_fk_image
+        FOREIGN KEY (lien_fichier)
+        REFERENCES _image(lien_fichier)
 );
 
 
@@ -497,7 +648,7 @@ BEGIN
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
     INSERT INTO _compte_professionnel_prive(id_compte, siren)
         VALUES (id_compte_temp, NEW.siren);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.siren);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -589,7 +740,7 @@ BEGIN
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
     INSERT INTO _compte_professionnel_publique(id_compte)
         VALUES (id_compte_temp);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -675,7 +826,7 @@ BEGIN
         RETURNING id_compte INTO id_compte_temp;
     INSERT INTO _compte_membre(id_compte, pseudo)
         VALUES (id_compte_temp, NEW.pseudo);
-    RETURN NEW;
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.pseudo);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -751,12 +902,12 @@ CREATE FUNCTION create_offre_activite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_activite(id_offre, duree, age_min)
         VALUES (id_offre_temp, NEW.duree, NEW.age_min);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -791,8 +942,7 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre
+        abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_activite
@@ -840,12 +990,12 @@ CREATE FUNCTION create_offre_visite() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_visite(id_offre, duree)
-        VALUES (id_offre_temp, NEW.duree);
-    RETURN NEW;
+    INSERT INTO _offre_visite(id_offre, duree,date_evenement)
+        VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -880,14 +1030,14 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre
+        abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_visite
-    SET duree = NEW.duree
+    SET duree = NEW.duree,
+        date_evenement = NEW.date_evenement
     WHERE id_offre = NEW.id_offre;
-
+    
     RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -928,12 +1078,12 @@ CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_spectacle(id_offre, duree, capacite)
-        VALUES (id_offre_temp, NEW.duree, NEW.capacite);
-    RETURN NEW;
+    INSERT INTO _offre_spectacle(id_offre, duree, capacite,date_evenement)
+        VALUES (id_offre_temp, NEW.duree, NEW.capacite,NEW.date_evenement);
+    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -969,12 +1119,14 @@ BEGIN
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
         prix_offre = prix_offre,
-        type_offre = type_offre
+        type_offre = type_offre,
+        abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_spectacle
     SET duree = NEW.duree,
-        capacite = NEW.capacite
+        capacite = NEW.capacite,
+        date_evenement = NEW.date_evenement
     WHERE id_offre = NEW.id_offre;
 
     RETURN NEW;
@@ -1017,12 +1169,12 @@ CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
         VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1057,8 +1209,7 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre
+        abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_parc_attraction
@@ -1107,12 +1258,12 @@ CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
 DECLARE
     id_offre_temp _offre.id_offre%type;
 BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.prix_offre, NEW.type_offre)
+    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
+        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
         RETURNING id_offre INTO id_offre_temp;
     INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
         VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
-    RETURN NEW;
+    RETURN ROW(id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -1147,8 +1298,7 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = NEW.prix_offre,
-        type_offre = NEW.type_offre
+        abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
     UPDATE _offre_restauration
@@ -1246,5 +1396,57 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE offre_contient_au_moins_une_image();
 
-COMMIT;
 
+CREATE FUNCTION offre_souscrit_une_seule_option() RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _offre_souscrit_option WHERE id_offre = NEW.id_offre;
+    IF FOUND THEN
+        RAISE EXCEPTION 'Une offre ne peut avoir qu''une seule option';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER offre_souscrit_une_seule_option_tg
+BEFORE INSERT
+ON _offre_souscrit_option
+FOR EACH ROW
+EXECUTE PROCEDURE offre_souscrit_une_seule_option();
+
+
+CREATE FUNCTION avis_sur_offre_restauration_possede_4_notes_detaillees() RETURNS TRIGGER AS $$
+DECLARE
+    nb INTEGER;
+BEGIN
+    nb := (SELECT COUNT(*)
+            FROM _avis
+            INNER JOIN _note_detaillee
+            ON _avis.id_avis = _note_detaillee.id_avis
+            WHERE _avis.id_avis = NEW.id_avis);
+    
+    PERFORM *
+    FROM _offre_restauration
+    WHERE id_offre = NEW.id_offre;
+
+    IF FOUND THEN
+        IF nb <> 4 THEN
+            RAISE EXCEPTION 'Une offre de restauration doit avoir 4 notes détaillées.';
+        END IF;
+    ELSE
+        IF nb > 0 THEN
+            RAISE EXCEPTION 'Seul les offres de restaurations peut avoir des notes détaillées.';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER avis_sur_offre_restauration_possede_4_notes_detaillees_tg
+AFTER INSERT ON _avis
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
+
+
+COMMIT;

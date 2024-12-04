@@ -1,32 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-:root {
-    --noir: rgba(0, 0, 0, 1);
-    --blanc: rgba(255, 255, 255, 1);
-    --blanc-leger: rgba(236, 236, 236, 1);
-    --beige: rgba(234, 226, 218, 1);
-    --bleu: rgba(47, 89, 82, 1);
-    --violet-principal: rgba(74, 23, 116, 1);
-    --violet-secondaire: rgba(145, 115, 225, 1);
-    --marron: rgba(191, 140, 44, 1);
-    --orange-principale: rgba(217, 102, 54, 1);
-    --orange-secondaire-1: rgba(217, 111, 50, 1);
-    --orange-secondaire-2: rgba(242, 139, 48, 1);
-    --fond-bouton: rgba(217, 217, 217, 0.73);
-  
-    --mobile-star-size: 30px;
-    --like-size: 35px;
-  
-    --jaune-etoile: rgba(254, 194, 1, 1);
-    --gris-etoile: rgba(128, 128, 128, 1);
-    --gris: rgba(193, 192, 192, 1);
-
-    --gradient-vert: linear-gradient(0.45turn, rgba(47, 89, 82, 1) 14%, rgba(98, 107, 32, 1) 59%, rgba(152, 166, 50, 1) 90%);
-    --gradient-orange: linear-gradient(0.45turn,rgba(217, 102, 54, 1) 10%, rgba(217, 111, 50, 1) 23%, rgba(242, 139, 48, 1) 90%);
-  }
-  
 /************************
-       GENERALISATION
+    GENERALISATION
 *************************/
 
 body {
@@ -42,10 +15,9 @@ h1 {
     color: var(--violet-principal);
     background: var(--blanc-leger);
     border-radius: 15px;
-    border: 3px solid var(--violet-principal);
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 64pt;
+    font-size: 55pt;
 }
 
 h2 {
@@ -62,15 +34,16 @@ h3 {
     color: var(--noir);
 }
 
-
-
 /***************************
     LES FILTRES ET TRIS
 ****************************/
 .filtre-tri {
     position: relative;
-    margin: 1em;
+    margin: 1em 2.5em;
     padding: 3em 2em 1em;
+
+    width: 95vw;
+    box-sizing: border-box;
     
     background: var(--blanc-leger);
     border-radius: 15px;
@@ -84,13 +57,20 @@ h3 {
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
-    left: 50%;
-    transform: translate(-50% , -3.5em);
-    width: auto; 
-    z-index: 1; 
+    left: 2%;
+    transform: translate(0, -3.5em);
+    min-width: auto;
+    z-index: 1;
+    cursor: pointer;
 }
 
-.filtre-tri h2 + div{
+.filtre-tri > h2:hover {
+    background-color: var(--blanc-leger);
+    border: solid 2px var(--violet-principal);
+    color: var(--violet-principal);
+}
+
+.filtre-tri h2 + div {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
@@ -144,7 +124,8 @@ h3 {
 .filtre-tri .disponibilite, 
 .filtre-tri .trier,
 .filtre-tri .typeOffre, 
-.filtre-tri .date {
+.filtre-tri .date,
+.filtre-tri .trier2 {
     margin: 0 1em;
     border-radius: 10px;
 }
@@ -306,7 +287,11 @@ h3 {
 }
 
 .filtre-tri .trier {
-    flex: 6;
+    flex: 3;
+}
+
+.filtre-tri .trier2 {
+    flex: 2;
 }
 
 .filtre-tri .localisation {
@@ -327,7 +312,7 @@ h3 {
     justify-content: space-between;
 }
 
-.sous-offre {
+.offre {
     position: relative;
     max-width: 379px;
     min-width: 379px;
@@ -340,11 +325,9 @@ h3 {
 
     margin-right: 4em;
     margin-bottom: 31px;
-
-    border: 3px solid var(--violet-principal);
 }
 
-.sous-offre div {
+.offre div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
@@ -353,6 +336,10 @@ h3 {
 
     background: #EAE2DA;
     border-radius: 15px 15px 10px 10px;
+}
+
+.sous-offre {
+    border: 3px solid var(--violet-principal);
 }
 
 .lieu-offre {
@@ -373,7 +360,7 @@ h3 {
     height: 37px;
     width: 117px;
 
-    opacity: 73%;
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -396,19 +383,21 @@ h3 {
     height: 37px;
     width: 67.8px;
 
-    opacity: 73%;
+    text-decoration: none;
+
+    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
 }
 
-.carte-offre {
+.image-offre {
     position: absolute;
-    width: 339px;
+    width: 321px;
     height: 208px;
+    margin: 0.5em;
     left: auto;
     top: auto;
-
     border-radius: 5px 5px 0px 0px;
 }
 
@@ -416,7 +405,9 @@ h3 {
     position: absolute;
     left: 2%;
     right: 36%;
-    top: 42%;
+    top: 44%;
+
+    margin-top: 1em;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -425,6 +416,7 @@ h3 {
     line-height: 25px;
     display: flex;
     align-items: center;
+    width: 80%;
 
     color: #000000;
 }
@@ -432,7 +424,7 @@ h3 {
 .categorie-offre {
     position: absolute;
     left: 2%;
-    top: 54%;
+    top: 56%;
 
     font-family: 'Poppins';
     font-style: italic;
@@ -448,7 +440,7 @@ h3 {
 .description-offre {
     position: absolute;
     left: 2%;
-    top: 60%;
+    top: 62%;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -462,7 +454,10 @@ h3 {
 .nom-offre {
     position: absolute;
     left: 73%;
-    top: 43%;
+    top: 45%;
+
+    margin-top: 1em;
+    margin-right: 1em;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -482,9 +477,12 @@ h3 {
 }
 
 .bas-offre {
-    position: relative !important;
     background-color: transparent !important;
-    top: 25em !important;
+    top: unset !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 1rem;
 }
 
 .etoiles {
@@ -537,31 +535,20 @@ h3 {
     margin-top: 16px;
 }
 
-.pagination {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: end;
+.fond-filtres {
+    overflow: hidden; /* Permet l'effet de rétractation */
+    max-height: 1000px; /* Grande valeur initiale */
+    transition: max-height 0.5s ease-out; /* Animation fluide */
 }
 
-.pagination-btn {
-    background-color: var(--blanc-leger);
+.fond-filtres.hidden {
+    max-height: 0; /* Rétractation */
+    transition: max-height 0.5s ease-out;
+}
+
+.no-offers-message {
+    text-align: center; 
     color: var(--violet-principal);
-    padding: 5px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-right: 30px;
-    text-decoration: none;
-    border-radius: 15px;
-    font-weight: 600;
-    font-size: 20px;
-    border-color: var(--blanc-leger);
-    border-width: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.pagination-btn:hover {
-    background-color: var(--violet-principal);
-    color: var(--blanc-leger);
+    font-size: 20pt;
+    margin: 20px auto;
 }

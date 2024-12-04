@@ -1,22 +1,99 @@
 <?php
-if (isset($_POST['titre'])){
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+
+session_start();
+if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
-}
-else{
+} else {
     $submitted = false;
 }
 
-include('connect_params.php');
+// Vérifier si l'utilisateur est connecté (si la session 'id' existe)
+if (!isset($_SESSION['id'])) {
+    // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
+    echo "Pas connecté";
+    exit;
+} else {
+    echo "Connecté  avec id : " . $_SESSION['id'];
+} 
+
 try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", 
-            $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $id_offre_cible = intval($_GET['id']);
+
+// ===== GESTION DES OFFRES ===== //
+
+    // ===== Requête SQL pour récupérer les informations d'une offre ===== //
+    $offre = getOffre($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    $activite = getActivite($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
+    $visite = getVisite($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
+    $spectacle = getSpectacle($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
+    $attraction = getParcAttraction($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
+    $restaurant = getRestaurant($id_offre_cible);
+
+// ===== GESTION DES ADRESSES ===== //
+
+    // ===== Requête SQL pour récupérer les informations de l'adresse d'une offre ===== //
+    $adresse = getAdresse($id_offre_cible); 
+
+    // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
+    $compte = getCompte($id_offre_cible);
+
+// ===== GESTION DES IMAGES ===== //
+
+    // ===== Requête SQL pour récuéprer les images d'une offre ===== //
+    $images = getIMGbyId($id_offre_cible);
+
+    // ===== GESTION DES TAGS ===== //
+
+    // ===== Requête SQL pour récupérer les tags d'une offre ===== //
+    $tags = getTags($id_offre_cible);
+
+// ===== GESTION DES TARIFS ===== //
+
+    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    $tarifs = getTarifs($id_offre_cible);
+
+// ===== GESTION DE L'OUVERTURE ===== //
+
+    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
+    $jours = getJoursOuverture($id_offre_cible);
     
-    $dbh = null;
+    // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
+    $horaire = getHorairesOuverture($id_offre_cible);
+
+    // ===== GESTION DES CATEGORIES ===== //
+
+    // ===== Requête SQL pour récupérer le type d'une offre ===== //
+    $categorie = getTypeOffre($id_offre_cible);
+
+
+
+    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
+    $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomie", "Italienne", "Restauration rapide", "Creperie");
+
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+    echo "Erreur : " . $e->getMessage();
     die();
 }
-    
+
+
 ?>
 
 <!DOCTYPE html>
@@ -24,439 +101,491 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Création offre</title>
-    <link rel="stylesheet" href="/style/styleguide.css" />
+    <link rel="stylesheet" href="../../style/styleguide.css" />
     <link rel="stylesheet" href="/style/style_HFB.css" />
-    <link rel="stylesheet" href="/style/style_gereeOffre.css" />
-    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
+    <title>Modifier offre</title>
 </head>
-<body>
-<header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT Pro</div>
-        <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="index.html"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="index.html"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
-<?php
-if (!$submitted) {
-?>
-    <div id="modif">
-        <h1>Valider les modifications</h1>
-        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
-        <div class="close">
-            <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
-            <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
-        </div>
-    </div>
-    <div id="annuler">
-        <h1>Valider les modifications</h1>
-        <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
-        <div class="close">
-            <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
-            <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
-        </div>
-    </div>
-    <main>
-        <h2> Modifier $$$</h2>
-        <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
-            <h3>Informations importante</h3>
-            <div class="important">
-            <table border="0">
-                <tr>
-                    <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                    <td colspan="3"><input type="text" id="titre" name ="titre" placeholder="Insérer un titre" required></td>
-                </tr>
-                <tr>
-                <td><label for="categorie">Catégorie </label></td>
-                    <td><div class="custom-select-container">
-                        <select class="custom-select" id = "categorie" name = "lacat"> 
-                            <option value="">Choisir une categorie</option>
-                            <option value = "restaurant"> Restaurant</option>
-                            <option value = "parc"> Parc d'attraction</option>
-                            <option value = "spectacle"> Spectacle</option>
-                            <option value = "visite"> Visite</option>
-                            <option value = "activite"> Activité</option>
-                        </select>
-                    </div></td>
-                </tr>
-                <td><label for="prix">Prix minimal</label></td><td><input type="number" id="prix">€</td>
-                <tr>
-                    <label for=""></label>
-                </tr>
-                <tr>
-                    <td><label for="dispo">Disponibilité </label></td>
-                    <td><div class="custom-select-container">
-                        <select class="custom-select" id = "dispo" name = "ladispo">
-                            <option value="">Choisir une disponibilité</option>
-                            <option value = "ouvert"> Ouvert </option>
-                            <option value = "ferme"> Fermé </option>
-                        </select>
-                    </div></td>
-                </tr>
-                
-                
-                <tr>
-                    <td><label for= "adresse">Adresse</label></td>
-                    <td colspan="3"><input type="text" id="adresse" name ="adresse" placeholder="(ex : 1 rue Montparnasse)" required></td>
-                </tr>
-                <tr>
-                    <td><label for= "cp">Code Postal </label></td>
-                    <td><input type="text" id="cp" name ="cp" placeholder="5 chiffres" size="5"></td>
-                    <td><label for= "ville">Ville <span class="required">*</span></label></td>
-                    <td><input type="text" id="ville" name ="ville" placeholder="Nom de ville" required></td>
-                
-                </tr>
-                <tr>
-                    <td><label for="photo"> Photo (max. 5)</label></td>
-                    <td><div>
-                        <!-- <label for="file-upload">
-                            <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
-                        </label> -->
-                        <input id="photo" type="file" />
-                    </div></td>
-                    
-                </tr>
-               <tr>
-                    <td><label for="type">Type de l'offre <span class="required">*</span></label></td>
-                    <td><div class="custom-select-container">
-                        <select class="custom-select" id = "type" name = "letype">
-                            <option value="">Choisir le type d'offre</option>
-                            <option value = "payante"> Offre Payante </option>
-                            <option value = "gratuite"> Offre Gratuite </option>
-                        </select>
-                    </div></td></tr>
-            </table>
-            <div id="options">
-                    <label>Options</label>
-                    <input type="checkbox" id="enRelief" name="enRelief"><label for="enRelief">En relief</label>
-                    <input type="checkbox" id="alaune" name="alaune"><label for="alaune">A la une</label>
+    <body>
+        <header id="header">
+            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+            <div class="text-wrapper-17">PACT Pro</div>
+            <div class="search-box">
+                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+                <input type="text" class="input-search" placeholder="Taper votre recherche...">
             </div>
-                </td>
-               </tr>
-            </table>
+            <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+            <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        </header>
         
-            </div>
-            
-            <br>
-            
-            <h3>Tags de l'offre</h3>
-            
-            <p> -- Choisir une catégorie -- </p>
-            <h3>A propos de l'offre</h3>
-            <div class="apropos">
-                <table border="0">
-                    <tr>
-                        <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
-                        <td><textarea id ="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required></textarea></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><label for="lien">Lien externe</label></td>
-                        <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="tel">Numéro de téléphone</label></td>
-                        <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)"></td>
-                    </tr>
-                </table>
-            </div>
-            
-            <h3>Description détaillée de l'offre</h3>
-            <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "></textarea>
-            
-            <div id = "tarifs">
-                <h3>Tarifs</h3>
-                <input type="text" id="tarif1nom" name="tarif1nom" placeholder= "Nom du tarif" required>
-                <input type="number" name="tarif1" min="0" placeholder="prix"><span>€</span>
-                <br>
-                <input type="text" id="tarif2nom" name="tarif2nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif2" min="0" placeholder="prix"><span>€</span>
-                <br>
-                <input type="text" id="tarif3nom" name="tarif3nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif3" min="0" placeholder="prix"><span>€</span>
-                <br>
-                <input type="text" id="tarif4nom" name="tarif4nom" placeholder= "Nom du tarif">
-                <input type="number" name="tarif4" min="0" placeholder="prix"><span>€</span>
-                <br>
-                <label for="grilleT">Grille tarifaire complète</label>
-                <input type="file" id="grilleT" name="grilleT">
-
-            
-            </div>
-            <br>
-
-
-    <h3>Ouverture</h3>
-    <table border="0">
-        <tr>
-            <td>Lundi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Mardi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Mercredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Jeudi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Vendredi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Samedi</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-        <tr>
-            <td>Dimanche</td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-            <td>-></td>
-            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
-        </tr>
-    </table>
-    <div class="bt_cree">
-                <input class="valider" type="submit" value="Créer l'offre">
-
-                <a href="#" id="back-to-top">
-                    <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
-                        height="50">
-                </a>
-            </div>
-
-        </form>
-        
-
-
-    </main>
-    <div>
-        
-
-        
-    </div>
-    <footer>
-        <div class="footer-top">
-            <div class="footer-top-left">
-                <span class="footer-subtitle">P.A.C.T</span>
-                <span class="footer-title">TripEnArmor</span>
-            </div>
-            <div class="footer-top-right">
-                <span class="footer-connect">Restons connectés !</span>
-                <div class="social-icons">
-                    <a href="https://x.com/?locale=fr">
-                        <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-                    </a>
-                    <a href="https://www.facebook.com/?locale=fr_FR">
-                        <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');">
-                        </div>
-                    </a>
-                    <a href="https://www.youtube.com/">
-                        <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');">
-                        </div>
-                    </a>
-                    <a href="https://www.instagram.com/">
-                        <div class="social-icon"
-                            style="background-image: url('/images/universel/icones/instagram.png');"></div>
-                    </a>
+        <?php if (!$submitted) { ?>
+            <div id="offre">
+                <h1>Valider les modifications</h1>
+                <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+                <div class="close">
+                    <button class="bouton1" onclick="closeOffreAnnuler()"> Annuler </button>
+                    <button class="bouton2" onclick="closeOffreValider()"> Valider </button>
                 </div>
             </div>
+            <div id="modif">
+                <h1>Valider les modifications</h1>
+                <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+                <div class="close">
+                    <button class="bouton1" onclick="closeModifAnnuler()"> Annuler </button>
+                    <button class="bouton2" onclick="closeModifAnnuler()"> Valider </button>
+                </div>
+            </div>
+            <div id="annuler">
+                <h1>Valider les modifications</h1>
+                <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+                <div class="close">
+                    <button class="bouton1" onclick="closeAnnulerAnnuler()"> Annuler </button>
+                    <button class="bouton2" onclick="closeAnnulerValider()"> Valider </button>
+                </div>
+            </div>
+            <div id="quitter">
+                <h1>Valider les modifications</h1>
+                <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
+                <div class="close">
+                    <button class="bouton1" onclick="closeQuitterAnnuler()"> Annuler </button>
+                    <button class="bouton2" onclick="closeQuitterValider()"> Valider </button>
+                </div>
+            </div>
+            <main>
+                
+                <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
+
+                <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+
+                    <h3>Informations importantes</h3>
+
+                    <div class="important">
+                        <table border="0">
+                            <tr>
+                                <td><label for="titre">Titre <span class="required">*</span></label> </td>
+                                <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($offre['titre']) ?> " required/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
+                                <td><div class="custom-select-container">
+                                        <select class="custom-select" id="categorie" name="lacat">
+                                            <option value="restaurant" <?php if($categorie === "restaurant"){ "selected";} ?>> Restaurant</option>
+                                            <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
+                                            <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
+                                            <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
+                                            <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>  
+                                        </select>
+                                
+                                </div></td>
+                            </tr>
+                            <tr>
+                                <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                            </tr>
+                            <tr>
+                                <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
+                                <td>
+                                    <!-- <div class="custom-select-container">
+                                        <select class="custom-select" id="dispo" name="ladispo">
+                                            <option value="">Choisir une disponibilité</option>
+                                            <option value="ouvert"> Ouvert </option>
+                                            <option value="ferme"> Fermé </option>
+                                        </select> -->
+                                    </div>
+                                </td>
+                            </tr>
 
 
-            <!-- Barre en bas du footer incluse ici -->
-
-        </div>
-        <div class="footer-bottom">
-            Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du
-            site -
-            Conditions générales - ©
-            Redden’s, Inc.
-        </div>
-    </footer>
-
-<?php
-}
-else {
-    // Afficher un message pour confirmer la création de l'offre
-    print("offre creee");
-
-    // Récupération des données du formulaire avec $_POST
-    $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
-    $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
-    $resume = isset($_POST['descriptionC']) ? $_POST['descriptionC'] : '';
-    $prix = isset($_POST['prix']) ? $_POST['prix'] : '';
-    $type = isset($_POST['type']) ? $_POST['type'] : '';
-    $photo1 = isset($_POST['photo1']) ? $_POST['photo1'] : '';
-    $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
-
-    // Inclusion des paramètres de connexion
-    include('connect_params.php');
-
-    try {
-        // Connexion à la base de données
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-
-        // Début de la requête SQL
-        $requete = "INSERT INTO offre_";
-        
-        // Déterminer la table cible selon la catégorie
-        switch ($categorie) {
-            case 'activite':
-                $requete .= 'activite';
-                break;
-            case 'parc':
-                $requete .= 'parc';
-                break;
-            case 'spectacle':
-                $requete .= 'spectacle';
-                break;
-            case 'visite':
-                $requete .= 'visite';
-                break;
-            default:
-                print "Erreur de categorie!";
-                die();
-        }
-
-        // Construction de la requête SQL avec les champs et les valeurs
-        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) returning id_offre";
-
-        // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
-
-        // Liaison des valeurs aux paramètres SQL
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':resume', $resume);
-        $stmt->bindParam(':ville', $ville);
-
-        // Exécution de la requête
-        $stmt->execute();
+                    <tr>
+                        <td><label id="labeladresse" for="adresse">Adresse</label></td>
+                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ) ?>"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="cp" id="labelcp">Code Postal </label></td>
+                        <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php echo htmlentities($adresse['code_postal']) ?>"/></td>
+                        <td><label for="ville">Ville <span class="required">*</span></label></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php echo htmlentities($adresse['ville'] )?>"required ></td>
+                    </tr>
+                    <tr>
+                        <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
+                        <td><div>
+                            <?php foreach ($images as $image) { ?>
+                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image" >
+                            <?php } ?>
+                                <!-- <label for="file-upload">
+                                    <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
+                                </label> -->
+                                <input id="photo" type="file" name="photo" value="" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label id ="labeltype" for="type">Type de l'offre (impossible de modifier le type)<span class="required">*</span></label></td>
+                        <td>
+                            <div class="custom-select-container" id="divtype">
+                                <select class="custom-select" name="letype" id="selectype" disabled>
+                                    <option value="standard"> Offre Standard </option>
+                                    <option value="premium"> Offre Premium </option>
+                                </select>
+                            </div>
+                                    
+                        </td>
+                    </tr>
+                    <tr>
+                        <div id="options">
+                            <td><label>Options</label></td>
+                            <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
+                        </div>
+                    </tr>
+                </table>
 
 
-        // Récupérer l'ID retourné par la requête
-        $offre_id = $stmt->fetchColumn();
+                <div>
+                    <!-- activite, visite, spectacle -->
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value="<?php echo htmlentities($activite['duree']) ?>"/><label id="labelduree2" for="duree">minutes</label>
+                    <!-- activité, parc -->
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php echo htmlentities($activite['age_min']) ?>"/> <label id="labelage2" for="age">an(s)</label>
 
-        // Maintenant, insérer dans la vue 'tarif' avec l'ID de l'offre et le prix
-        $requete_tarif = "INSERT INTO tarif (offre_id, prix) VALUES (:offre_id, :prix)";
+                    <br>
+                    <!-- spectacle -->
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite'])?? '' ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
+                    <br>
+                    <!-- parc -->
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
+                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
+                    <br>
+                    <!-- restaurant -->
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte" />
+                    
+                </div>
+                <?php if(isset($activite['duree'])){
+                    echo htmlentities($activite['duree']);
+                }else{
+                    echo "pas dispo";
+                }
 
-        // Préparation de la requête pour la vue tarif
-        $stmt_tarif = $dbh->prepare($requete_tarif);
+                ?>
+                    <br>
+                    </div>
 
-        // Liaison des valeurs pour la vue tarif
-        $stmt_tarif->bindParam(':offre_id', $offre_id);
-        $stmt_tarif->bindParam(':prix', $prix);
+                    <h3>Tags de l'offre</h3>
+                    <ul>
+                    <?php 
+                        if (!empty($tags)) {
+                            foreach ($tags as $tag) { ?>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                    <?php } }
+                        foreach($liste_tags as $tag){ 
+                            if(!in_array($tag, $tags)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                        <?php }}
+                        foreach ($liste_tags_restaurant as $tag) { 
+                            if(!in_array($tag, $tags)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                   
+                   <?php }}
+                         ?>
+                        
+                     </ul>   
+                    <h3>A propos de l'offre</h3>
+                    <div class="apropos">
+                        <table border="0">
+                            <tr>
+                                <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
+                                <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required><?php echo htmlentities($offre['resume']) ?></textarea></td>
 
-        // Exécution de la requête pour insérer dans la vue tarif
-        $stmt_tarif->execute();
+                            </tr>
+                            <tr>
+                                <td><label for="lien">Lien externe</label></td>
+                                <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php echo htmlentities($offre['site_web']); ?>"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="tel">Numéro de téléphone</label></td>
+                                <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)" value="<?php echo htmlentities($compte['tel']); ?>"/></td>
+                            </tr>
+                        </table>
+                    </div>
 
-        $requete .= "(titre, resume, ville) VALUES (:titre, :resume, :ville) RETURNING id";
+                        <h3>Description détaillée de l'offre</h3>
+                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
 
-        // Préparation de la requête
-        $stmt = $dbh->prepare($requete);
+                        <div id="tarifs">
+                            
+                            <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
+                            <?php  
+                            $i = 0; // Compteur pour les champs
+                            // Boucle pour afficher les tarifs existants
+                            foreach ($tarifs as $t) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']); ?>" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']); ?>" /><span>€</span> 
+                                <br>
+                            <?php 
+                            }
+                            // Complète les champs vides si moins de 4
+                            while ($i < 4) { 
+                                $i++; ?>
+                                <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" />
+                                <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" /><span>€</span> 
+                                <br>
+                            <?php 
+                            } ?>
 
-        // Liaison des valeurs aux paramètres SQL
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':resume', $resume);
-        $stmt->bindParam(':ville', $ville);
+                        </div>
 
-        // Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-        $stmt->execute();
-
-        // Récupérer l'ID retourné par la requête
-        $offre_id = $stmt->fetchColumn();
-
-        // Maintenant, insérer dans la table 'image' avec l'ID de l'offre et l'ID de l'image
-        $requete_image = "INSERT INTO offre_contient_image (id_offre, id_image) VALUES (:id_offre, :id_image)";
-
-        // Préparation de la requête pour la table image
-        $stmt_image = $dbh->prepare($requete_image);
-
-        // Liaison des valeurs pour la table image
-        $stmt_image->bindParam(':id_offre', $offre_id);
-        $stmt_image->bindParam(':id_image', $photo1);  // On suppose que $photo1 est l'ID de l'image
-
-        // Exécution de la requête pour insérer dans la table image
-        $stmt_image->execute();
-
-        // Fermeture de la connexion
-        $dbh = null;
-        
-        print "Offre et tarif créés avec succès!";
-    } catch (PDOException $e) {
-        // Affichage de l'erreur en cas d'échec
-        print "Erreur !: " . $e->getMessage() . "<br/>";
-        die();
-    }
-
-   
-}
-?>    
+                    <br>
+                    
 
 
+                    <!-- <h3>Ouverture</h3>
+                    <table border="0">
+                        <tr>
+                            <td>Lundi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                        <tr>
+                            <td>Mardi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                        <tr>
+                            <td>Mercredi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                        <tr>
+                            <td>Jeudi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                        <tr>
+                            <td>Vendredi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                        <tr>
+                            <td>Samedi</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00"></td>
+                        </tr>
+                        <tr>
+                            <td>Dimanche</td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                            <td>-></td>
+                            <td><input type="text" class="time-input" placeholder="00"> h <input type="text" class="time-input" placeholder="00" /></td>
+                        </tr>
+                    </table> -->
+                    <div class="bt_cree">
+                        <input class="valider" type="submit" value="Modifier l'offre" />
 
-    
-    <script>
-        let element = document.getElementById('type');
-        element.addEventListener('change', function() {
-            const type = this.value;
-            console.log(type);
-            if (type == "payante") {
-                document.getElementById('options').style.display = 'block';
-                document.getElementById('tarifs').style.display = 'block';
-            } else{
-                document.getElementById('options').style.display = 'none';
-                document.getElementById('tarifs').style.display = 'none';
+                        <a href="#" id="back-to-top">
+                            <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
+                                height="50">
+                        </a>
+                    </div>
+
+                </form>
+            </main>
+            
+            <footer>
+                <div class="footer-top">
+                    <div class="footer-top-left">
+                        <span class="footer-subtitle">P.A.C.T</span>
+                        <span class="footer-title">TripEnArmor</span>
+                    </div>
+                    <div class="footer-top-right">
+                        <span class="footer-connect">Restons connectés !</span>
+                        <div class="social-icons">
+                            <a href="https://x.com/?locale=fr">
+                                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+                            </a>
+                            <a href="https://www.facebook.com/?locale=fr_FR">
+                                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');">
+                                </div>
+                            </a>
+                            <a href="https://www.youtube.com/">
+                                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');">
+                                </div>
+                            </a>
+                            <a href="https://www.instagram.com/">
+                                <div class="social-icon"
+                                    style="background-image: url('/images/universel/icones/instagram.png');"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        <?php } else {
+            if (isset($_POST['photo'])) {
+                $photo1 = $_FILE['photo'];
+            }else{
+                $photo1 = $images[0];
             }
-        })
+             
+             try {
+    
+                // Connexion à la base de données
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    
+                
+                $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            }catch(PDOException $e){
 
-        var modifDiv = document.getElementById("modif");
-        function showModif() {
-            modifDiv.style.display = "block";
-        }
-        function closeModifAnnuler() {
-            modifDiv.style.display = "none";
-        }
-        function closeModifValider() {
-            modifDiv.style.display = "none";
-            alert("Modification valider avec succès");
-        }
+            }
 
-        var annulerDiv = document.getElementById("annuler");
-        function showAnnuler() {
-            annulerDiv.style.display = "block";
-        }
-        function closeAnnulerAnnuler() {
-            annulerDiv.style.display = "none";
-        }
-        function closeAnnulerValider() {
-            annulerDiv.style.display = "none";
-            alert("Modification valider avec succès");
-        }
-    </script>
+        }?>
+        <script> 
+                
+            liste_tags.forEach(element => {
+                
+            });
+                        // if(!liste_tags.include()){
+                        //     if($categorie != "restaurant")
+                        //     foreach ($liste_tags as $tag)
+                        //     <li><input type="checkbox" name="" value=""> </li>
+                        // }
 
-</body>
+
+
+            const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+            const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+            console.log(isIdProPublique);
+
+            if(isIdProPublique){
+                 document.getElementById("divtype").style.display = 'none';
+                 document.getElementById("labeltype").style.display = 'none';
+            }
+
+            const liste_tags = "<?php echo json_encode($liste_tags) ?>";
+            const liste_tags_restaurant = "<?php echo json_encode($liste_tags_restaurant) ?>";
+            const $tags = "<?php echo json_encode($tags) ?>"
+
+            let typecategorie = document.getElementById('categorie');
+            let typerestaurant = ["carte", "labelcarte"];
+            let typevisite = ["labelduree", "duree", "labelduree2"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
+            let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
+
+            obligatoireselontype.forEach(element => {
+                document.getElementById(element).style.display = 'none';
+            });
+
+            document.getElementById("tarifs").style.display = 'none';
+
+
+            categorie.addEventListener('change', function() {
+                const typeselectionne = categorie.value;
+                // Afficher les champs selon la catégorie sélectionnée test
+                switch (typeselectionne) {
+                    case "restaurant":
+                        afficheSelonType(typerestaurant);
+
+                        if (isIdProPrivee) {
+                            document.getElementById("labelgammedeprix").style.display = 'inline';
+                            document.getElementById("gammedeprix").style.display = 'inline';
+                        }
+                        document.getElementById("tarifs").style.display = 'none';
+
+
+                        break;
+
+                    case "activite":
+                        afficheSelonType(typeactivite);
+                        break;
+
+                    case "visite":
+                        afficheSelonType(typevisite);
+                        break;
+
+                    case "spectacle":
+                        afficheSelonType(typespectacle);
+                        break;
+
+                    case "parc":
+                        afficheSelonType(typeparc);
+                        afficherTags(typeparc)
+                        break;
+
+                    default:
+                        console.log("Aucune catégorie sélectionnée.");
+                }
+            });
+
+
+
+            function afficheSelonType(typechoisi) {
+                obligatoireselontype.forEach(element => {
+                    document.getElementById(element).style.display = 'none';
+                });
+                typechoisi.forEach(element => {
+                    document.getElementById(element).style.display = 'inline';
+                });
+                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                    document.getElementById("tarifs").style.display = 'inline';
+                }
+            }
+
+            function afficherTags(typechoisi){
+                if (typeselectionne === "restaurant"){
+                    liste_tags.forEach(tag => {
+                        if(!tags.includes(tag)){
+                            document.getElementById(tag).style.display ='none';
+                        }
+                    });
+                }else{
+                    liste_tags_restaurant.forEach(tag => {
+                        if(!tags.includes(tag)){
+                            document.getElementById(tag).style.display ='none';
+                        }
+                    });
+                }
+            }
+
+            const boutonValider = document.getElementById("valider");
+            const lacat = categorie.value; // Récupère la valeur de la catégorie
+            
+        
+            boutonValider.addEventListener("click", function (event) {
+                if (typeselectionne === "") {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasDeCat = alert("Selectionner une categorie");
+                }
+            });
+
+            // const tarif = tarif.value; // Récupère la valeur de la tarif
+
+            // if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdeTarif = alert("Remplir au moins 1 tarif");
+            //     });
+            // }
+            // if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+            //     });
+            // }
+            // const gammeprix = gammedeprix.value;
+            // if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdegammeprix = alert("Remplir la gamme de prix");
+            //     });
+            // }
+
+
+
+        </script>
+    </body>
 </html>
-
-
-

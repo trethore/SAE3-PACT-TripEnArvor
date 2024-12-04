@@ -1,5 +1,5 @@
 <?php
-    include('/var/www/html/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
     function startSession() {
         if (session_status() == PHP_SESSION_NONE) {
@@ -7,8 +7,9 @@
         }
     }
     function endSession() {
+        session_unset();
         session_destroy();
-        redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+        redirectTo('/front/consulter-offres/');
     }
 
     function checkAuth() {

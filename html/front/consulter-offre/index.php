@@ -1,72 +1,109 @@
 <?php
-// Démarrer la session
-session_start(); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
-include('../../connect_params.php');
+session_start();
 
-// Connexion à la base de données
+if (isset($_POST['titre'])) { 
+    $submitted = true;
+} else {
+    $submitted = false;
+}
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $id_offre_cible = intval($_GET['id']);
+
+// ===== GESTION DES OFFRES ===== //
+
+    // ===== Requête SQL pour récupérer les informations d'une offre ===== //
+    $offre = getOffre($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    $activite = getActivite($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
+    $visite = getVisite($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
+    $spectacle = getSpectacle($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
+    $attraction = getParcAttraction($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
+    $restaurant = getRestaurant($id_offre_cible);
+
+// ===== GESTION DES ADRESSES ===== //
+
+    // ===== Requête SQL pour récupérer les informations de l'adresse d'une offre ===== //
+    $adresse = getAdresse($id_offre_cible);    
+
+// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
+    $compte = getCompte($id_offre_cible);
+
+// ===== GESTION DES IMAGES ===== //
+
+    // ===== Requête SQL pour récuéprer les images d'une offre ===== //
+    $images = getIMGbyId($id_offre_cible);
+
+// ===== GESTION DES NOTES ===== //
+
+    // ===== Requête SQL pour récupérer le nombre de notes d'une offre ===== //
+    $nombreNote = getNombreNotes($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la note moyenne d'une offre ===== //
+    $noteMoyenne = getNoteMoyenne($id_offre_cible);
     
-    // Assurez-vous que l'ID de l'offre cible est bien défini et converti en entier
-    $id_offre_cible = isset($_GET['id_offre']) ? intval($_GET['id_offre']) : 1;  // Utilisation de l'ID dans l'URL ou défaut à 1
+// ===== GESTION DES TAGS ===== //
 
-    // Requête SQL pour récupérer le titre de l'offre
-    $reqOffre = "
-    SELECT 
-        o.titre, 
-        a.adresse, 
-        a.ville, 
-        o.categorie, 
-        o.ouvert, 
-        o.nombre_avis, 
-        o.nom_pro, 
-        o.prix_offre, 
-        o.a_propos, 
-        o.site, 
-        o.tel, 
-        o.\"desc\", 
-        o.desc2, 
-        o.horaires, 
-        o.tarifs 
-    FROM _offre o
-    JOIN public.adresse a ON o.id_adresse = a.id_adresse
-    WHERE o.id_offre = ?
-    ";
+    // ===== Requête SQL pour récupérer les tags d'une offre ===== //
+    $tags = getTags($id_offre_cible);
 
-    // Utilisation du schéma public pour l'adresse
+// ===== GESTION DES TARIFS ===== //
 
-    $stmt = $dbh->prepare($reqOffre);
-    $stmt->execute([$id_offre_cible]);
-    $offre = $stmt->fetch(PDO::FETCH_ASSOC);
+    // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    $tarifs = getTarifs($id_offre_cible);
 
-    // Vérifiez si l'offre a été trouvée
-    if (!$offre) {
-        die("Offre non trouvée");
-    }
+// ===== GESTION DE L'OUVERTURE ===== //
 
-    // Stocker certaines données dans la session
-    $_SESSION['offre_titre'] = $offre['titre'];
-    $_SESSION['offre_proprietaire'] = $offre['nom_pro'];
+    // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
+    $jours = getJoursOuverture($id_offre_cible);
+    
+    // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
+    $horaire = getHorairesOuverture($id_offre_cible);
 
-    // Requête SQL pour le type d'offre
-    $reqTypeOffre = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS type_offre
-                    FROM _offre o
-                    WHERE o.id_offre = ?";
-    $stmt2 = $dbh->prepare($reqTypeOffre);
-    $stmt2->execute([$id_offre_cible]);
-    $offreSpe = 'Inconnu';
-    if ($row_type = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $offreSpe = $row_type['type_offre'];
-    }
+// ===== GESTION DES AVIS ===== //
+
+    // ===== Requête SQL pour récupérer les avis d'une offre ===== //
+    $avis = getAvis($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    $membre = getInformationsMembre($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
+    $dateAvis = getDatePublication($id_offre_cible);
+
+    // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    $datePassage = getDatePassage($id_offre_cible);
+
+// ===== GESTION DES RÉPONSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    $reponse = getReponse($id_offre_cible);
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    $dateReponse = getDatePublicationReponse($id_offre_cible);
+
+// ===== GESTION DES TYPES ===== //
+
+    // ===== Requête SQL pour récupérer le type d'une offre ===== //
+    $categorie = getTypeOffre($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -79,252 +116,406 @@ try {
 <html>
 
 <head>
-
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/styleHFF.css"/>
+    <link rel="stylesheet" href="/style/style_HFF.css"/>
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 </head>
 
 <body>
-
-<header>
+    
+    <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/back/liste-back"><div class="text-wrapper-17">PACT Pro</div></a>
+        <div class="text-wrapper-17">PACT Pro</div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <main>
+    <main id="body">
 
-        <section class="fond-blocs">  
-
-            <h1><?php echo htmlentities($offreSpe ?? 'Type d\'offre inconnu'); ?></h1>
-            <div class="galerie-images-presentation"> 
-                <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
-                <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
-                <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
-                <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">
-                <img src="/images/universel/photos/hotel_2_5.png" alt="Image 5">
+        <section id="top" class="fond-blocs bordure">
+            <!-- Affichage du titre de l'offre -->
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
+            <div class="carousel">
+                <div class="carousel-images">
+                    <?php foreach ($images as $image) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                    <?php } ?>
+                </div>
+                <div class="display-ligne-espace">
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
             </div>
 
-            <div class="display-ligne-espace">
-                <!-- Afficher la catégorie de l'offre et si cette offre est ouverte -->
-                <p><em><?php echo htmlentities($offre['categorie'] ?? 'Catégorie inconnue') . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
-                <!-- Afficher l'adresse de l'offre et sa ville -->
-                <p><?php echo htmlentities($offre['adresse'] . ', ' . $offre['ville']); ?></p>
+
+            <div class="display-ligne-espace information-offre">
+                <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
+                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . (($offre['ouvert'] ?? 0) ? 'Ouvert' : 'Fermé'); ?></em></p>
+                <!-- Affichage de l'adresse de l'offre -->
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
+                        $adresseComplete = [];
+                        if (!empty($adresse['num_et_nom_de_voie'])) {
+                            $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
+                        }
+                        if (!empty($adresse['complement_adresse'])) {
+                            $adresseComplete[] = htmlentities($adresse['complement_adresse']);
+                        }
+                        if (!empty($adresse['code_postal'])) {
+                            $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
+                        }
+                        if (!empty($offre['ville'])) {
+                            $adresseComplete[] = htmlentities($offre['ville']);
+                        } ?>
+                        <p><?php echo implode(' ', $adresseComplete); ?>
+                    <?php } else {
+                        echo "Pas d'adresse disponible";
+                    }?>
+
             </div>
                 
-            <div class="display-ligne">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <p><?php echo htmlentities($offre['nombre_avis']) . ' avis'; ?></p>
-                <a href="#avis">Voir les avis</a>
-            </div>
-
             <div class="display-ligne-espace">
-                <!-- Afficher le nom du propriétaire de l'offre -->
-                <p>Proposée par : <?php echo htmlentities($offre['nom_pro']); ?></p> 
-                <!-- Afficher le prix de l'offre -->
-                <button><?php echo htmlentities($offre['prix_offre']); ?></button> 
+                <div class="display-ligne">
+                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
+                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                    <?php } 
+                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
+                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                    <?php } ?>
+                    <!-- Affichage du nombre d'avis de l'offre -->
+                    <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
+                    <a href="#avis">Voir les avis</a>
+                </div>
+                <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
+                <?php if (!empty($compte['denomination'])) { ?>
+                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
+                <? } else {
+                    echo "Pas d'information sur le propriétaire de l'offre";
+                }?> 
             </div>
 
-        </section>
+        </section>  
 
         <section class="double-blocs">
 
-            <div id="caracteristiques" class="fond-blocs bloc-caracteristique">
+            <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
-                    <li><img src="/images/universel/icones/hotel.png"><h2>Hôtel charmant</h2></li>
-                    <li><img src="/images/universel/icones/mer.png"><h2>Vue sur mer</h2></li>
-                    <li><img src="/images/universel/icones/coeur.png"><h2>Service attentionné</h2></li>
-                    <li><img src="/images/universel/icones/dej.png"><h2>Petit déjeuner maison</h2></li>
+                    <?php if (!empty($tags)) {
+                        foreach ($tags as $tag) { ?>
+                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                        <?php }
+                    } else {
+                        echo "Pas de tags disponibles";
+                    } ?>
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
-                <h2>À propos de : <?php echo htmlentities($offreSpe); ?></h2> 
-                <!-- Afficher le bloc résumant l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['a_propos'])); ?></p>
-                <!-- Afficher le lien du site internet de l'entreprise -->
-                <a href="<?php echo htmlentities($offre['site']); ?>"><img src="/images/universel/icones/lien.png" alt="epingle" class="epingle"><?php echo htmlentities($offre['site']); ?></a>
-                <!-- Afficher le numéro de téléphone du propriétaire de l'offre -->
-                <p>Numéro : <?php echo htmlentities($offre['tel']); ?></p>
+                <div class="display-ligne-espace">
+                    <!-- Affichage le titre de l'offre -->
+                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
+                    <!-- Affichage du lien du site du propriétaire de l'offre -->
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                </div>
+                <!-- Affichage du résumé de l'offre -->
+                <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
+                <!-- Affichage des informations spécifiques à un type d'offre -->
+                <?php switch ($categorie) {
+                    case "Activité": ?>
+                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
+                        <?php break; ?>
+                    <?php case "Visite": ?>
+                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
+                        <?php break; ?>
+                    <?php case "Spectacle": ?>
+                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                        <?php break; ?>
+                    <?php case "Parc attraction": ?>
+                        <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
+                        <div class="display-ligne-espace">
+                            <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                        </div>
+                        <?php break; ?>
+                    <?php case "Restauration": ?>
+                        <div class="display-ligne-espace">
+                            <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                        </div>
+                        <?php break;
+                } ?>
+                
+                <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
     
         </section>
 
-        <section class="fond-blocs">
+        <section class="fond-blocs bordure">
 
             <h2>Description détaillée de l'offre :</h2>
-            <!-- Afficher la description détaillée de l'offre -->
-            <p><?php echo nl2br(htmlentities($offre['desc'])); ?></p>
-            <p><?php echo nl2br(htmlentities($offre['desc2'])); ?></p>
+            <!-- Affichage de la description détaillée de l'offre -->
+            <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
         </section>
 
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-            <div>
-                <h2>Tarifs :</h2>
-                <div>
-                    <h2>Tarifs :</h2>
-                    <?php if (!empty($offre['tarifs'])): ?>
-                    <table>
-                        <?php foreach (explode(',', $offre['tarifs']) as $tarif) {
-                            echo '<tr><td>' . htmlentities(trim($tarif)) . '</td></tr>';
-                        } ?>
-                    </table>
-                <?php else: ?>
-                    <p>Tarifs non disponibles.</p>
-                <?php endif; ?>
-                </div>
+                <h2>Tarifs : </h2>
+                <table>
+                    <?php foreach ($tarifs as $t) { 
+                        if ($t['nom_tarif'] != "nomtarif1") { 
+                            if (!empty($t['nom_tarif'])) {?>
+                                <tr>
+                                    <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                    <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                </tr>
+                        <?  }
+                        } else {
+                            echo "Pas de tarifs diponibles" ;
+                        }
+                    } ?>
                 </table>
-                <button>Télécharger la grille des tarifs</button>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <!-- Afficher les horaires de l'offre -->
-                <p><?php echo nl2br(htmlentities($offre['horaires'])); ?></p>
+                <!-- Affichage des horaires d'ouverture de l'offre -->
+                <?php if (!empty($jour['nom_jour'])) {
+                    foreach ($jours as $jour) { ?>
+                        <p>
+                            <?php echo htmlentities($jour['nom_jour'] . " : "); 
+                            foreach ($horaire as $h) {
+                                echo htmlentities($h['ouverture'] . " - " . $h['fermeture'] . "\t");
+                            } ?>
+                        </p>
+                    <?php }
+                } else {
+                    echo "Pas d'information sur les jours et les horaires d'ouverture";
+                } ?>
             </div> 
-    
+            
         </section>
 
         <section id="carte" class="fond-blocs">
 
             <h1>Localisation</h1>
-            <div id="map" style="width: 1000px; height: 750px;" class="carte"></div>
+            <div id="map" class="carte"></div>
 
         </section>
 
-        <section id="avis" class="fond-blocs avis">
+        <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
-                <h2>Note moyenne :</h2>
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <p>49 avis</p>
+                <h2>Note moyenne : </h2>
+                <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
+                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                <?php } 
+                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
+                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                <?php } ?>
+                <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
+            
+            <?php if (isset($_SESSION['id'])) { ?>
 
-            <div class="fond-blocs-avis">
+                <button id="showFormButton">Publier un avis</button>
 
-                <div class="display-ligne-espace">
-
-                    <div class="display-ligne">
-                        <img src="/images/universel/icones/avatar-femme-1.png" class="avatar">
-                        <p><strong>Titouan</strong></p>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                        <p><em>24/11/2023</em></p>
-                    </div>
-
-                    <p><strong>⁝</strong></p>
-                </div>
-
-                <p>Personnel qui ne se soucie pas de ses clients, personne pour nous indiquer comment allumer la télévision, un scandale !</p>
-
-                <div class="display-ligne-espace">
-                    <p class="transparent">.</p>
-                    <div class="display-notation">
-                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
-                    </div>
-                </div>
-
-                <div class="reponse">
+                <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
+                    <h2 for="creation-avis">Création d'avis</h2><br>
                     <div class="display-ligne-espace">
+                        <label for="titre">Saisissez le titre de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="text" id="titre" name="titre" required></input><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="contexte">Contexte de visite :</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <select id="contexte" name="contexte" required>
+                            <option value="" disabled selected>Choisissez un contexte</option>
+                            <option value="affaires">Affaires</option>
+                            <option value="couple">Couple</option>
+                            <option value="famille">Famille</option>
+                            <option value="amis">Amis</option>
+                            <option value="solo">Solo</option>
+                        </select><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="avis">Rédigez votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <textarea id="avis" name="avis" required></textarea><br>
+                    <div class="display-ligne-espace">
+                        <label for="note">Saisissez la note de votre avis</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <label for="date">Saisissez la date de votre visite</label>
+                        <p class="transparent">.</p>
+                    </div>
+                    <div class="display-ligne-espace">
+                        <input type="datetime-local" id="date" name="date" required/><br>
+                        <p class="transparent">.</p>
+                    </div>
+                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                    <button type="submit">Publier</button>
+                    <button type="button" id="cancelFormButton">Annuler</button>
+                </form>
 
-                        <div class="display-ligne">
-                            <img src="/images/universel/icones/avatar-homme-1.png" class="avatar">
-                            <p><strong>Éric Dupont</strong></p>
-                            <p><em>24/11/2023</em></p>
-                        </div>
+                <? if ($submitted) { ?>
 
+                    <?php if (isset($_POST['titre'])) {
+                        $titre = htmlspecialchars($_POST['titre']);
+                    }
+                    if (isset($_POST['contexte'])) {
+                        $contexte_visite = htmlspecialchars($_POST['contexte']);
+                    }
+                    if (isset($_POST['avis'])) {
+                        $commentaire = htmlspecialchars($_POST['avis']);
+                    } 
+                    if (isset($_POST['note'])) {
+                        $note = intval($_POST['note']);
+                    }
+                    if (isset($_POST['date'])) {
+                        $visite_le = explode('T', $_POST['date']);
+                        $dateParts = explode('-', $visite_le[0]);
+                        $anneeUpdate = $dateParts[0]; 
+                        $moisUpdate = $dateParts[1]; 
+                        $jourUpdate = $dateParts[2]; 
+                        $heureMinute = $visite_le[1]; 
+                        $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
+                    }
+                    if (isset($_SESSION['id'])) {
+                        $id_membre = intval($_SESSION['id']);
+                    }
+                    if (isset($_GET['id'])) {
+                        $id_offre = intval($_GET['id']);
+                    }
+
+                    $publie_le = date('Y-m-d H:i:s');
+
+                    try {
+                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                        $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                        $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
+                        $stmtInsertionDatePublication->execute([$publie_le]);
+                        $idDatePublication = $stmtInsertionDatePublication->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                        $reqInsertionDateVisite = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                        $stmtInsertionDateVisite = $dbh->prepare($reqInsertionDateVisite);
+                        $stmtInsertionDateVisite->execute([$visite_le]);
+                        $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                        $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
+                        $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                    } catch (PDOException $e) {
+                        echo "Erreur : " . $e->getMessage();
+                        die();
+                    } 
+                }
+            } else {
+                echo "Connexion requise pour publier un avis";
+            } 
+
+            $compteur = 0;
+            foreach ($avis as $a) { ?>
+                <div class="fond-blocs-avis">
+                    <div class="display-ligne-espace">
+                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p><strong>⁝</strong></p>
                     </div>
-
-                    <p>Nous avons été à votre service durant tout votre séjour, merci de passer votre chemin à l’avenir.</p>
-
+                    <div class="display-ligne-espace">
+                        <div class="display-ligne">
+                            <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <?php } 
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                            <?php }
+                            $publication = explode(' ', $dateAvis[$compteur]['date']);
+                            $datePub = explode('-', $publication[0]); 
+                            $heurePub = explode(':', $publication[1]); ?>
+                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
+                        </div>
+                        <p class="transparent">.</p>
+                    </div>
+                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                    $datePass = explode('-', $passage[0]); ?>
+                    <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
+                    <p><?php echo htmlentities($a['commentaire']); ?></p>
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'haut', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php echo $compteur; ?>" onclick="togglePouce(<?php echo $compteur; ?>, 'bas', <?php echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
                         </div>
                     </div>
-                </div>             
 
-            </div>     
-
-            <div class="fond-blocs-avis">
-
-                <div class="display-ligne-espace">
-
-                    <div class="display-ligne">
-                        <img src="/images/universel/icones/avatar-homme-2.png" class="avatar">
-                        <p><strong>Mathéo</strong></p>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                        <p><em>15/12/2022</em></p>
-                    </div>
-
-                    <p><strong>⁝</strong></p>
-                </div>
-
-                <div class="image-avis"style="display: flex;">
-                    <div class="galerie-images-avis">
-                        <img src="/images/universel/photos/hotel_2.png" alt="Image 1">
-                        <img src="/images/universel/photos/hotel_2_2.png" alt="Image 2">
-                        <img src="/images/universel/photos/hotel_2_3.png" alt="Image 3">
-                        <img src="/images/universel/photos/hotel_2_4.png" alt="Image 4">                    
-                    </div>
-                    <p>Nous avons passé un séjour absolument merveilleux aux Embruns du Phare. Dès notre arrivée, nous avons été accueillis chaleureusement par le personnel, qui s'est montré attentif et disponible tout au long de notre séjour. La vue depuis notre chambre était à couper le souffle, avec l'océan s'étendant à perte de vue.</p>
-                </div>
-
-                <div class="display-ligne-espace">
-                    <p class="transparent">.</p>
-                    <div class="display-notation">
-                        <p>0</p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p>0</p><img src="/images/universel/icones/pouce-down.png" class="pouce">
-                    </div>
-                </div>
-
-            </div> 
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+                        <div class="reponse">
+                            <div class="display-ligne-espace">
+                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p><strong>⁝</strong></p>
+                            </div>
+                            <div class="display-ligne-espace">
+                                <div class="display-ligne">
+                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                    $dateRep = explode('-', $rep[0]); 
+                                    $heureRep = explode(':', $rep[1]); ?>
+                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
+                                    <p class="transparent">.</p>
+                                </div>
+                            </div>
+                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                        </div>
+                    <?php } ?>
+                </div>      
+            <?php $compteur++;
+            } ?>  
 
         </section>        
          
         <div class="navigation display-ligne-espace">
-            <button onclick="location.href='consulter-offres'">Retour à la liste des offres</button>
-            <button><img src="/images/universel/icones/fleche-haut.png"></button>
+            <a href="/front/consulter-offres/">Retour à la liste des offres</a>
+            <a href="#top"><img src="/images/universel/icones/fleche-haut.png"></a>
         </div>
 
     </main>
 
-    <footer>
+    <footer id="footer">
+
         <div class="footer-top">
         <div class="footer-top-left">
             <span class="footer-subtitle">P.A.C.T</span>
@@ -348,7 +539,6 @@ try {
             </div>
         </div>
 
-
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
@@ -371,6 +561,91 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
+
+        // Cibler les éléments
+        const showFormButton = document.getElementById('showFormButton');
+        const avisForm = document.getElementById('avisForm');
+        const cancelFormButton = document.getElementById('cancelFormButton');
+
+        // Afficher le formulaire au clic sur "Publier un avis"
+        showFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'block'; // Affiche le formulaire
+            showFormButton.style.display = 'none'; // Masque le bouton
+        });
+
+        // Masquer le formulaire au clic sur "Annuler"
+        cancelFormButton.addEventListener('click', () => {
+            avisForm.style.display = 'none'; // Masque le formulaire
+            showFormButton.style.display = 'block'; // Réaffiche le bouton
+        });
+
+        const images = document.querySelector('.carousel-images');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        let currentIndex = 0;
+
+        // Gestion du clic sur le bouton "Suivant"
+        nextButton.addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex >= images.children.length) {
+            currentIndex = 0; // Revenir au début
+        }
+        updateCarousel();
+        });
+
+        // Gestion du clic sur le bouton "Précédent"
+        prevButton.addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = images.children.length - 1; // Revenir à la fin
+        }
+        updateCarousel();
+        });
+
+        // Met à jour l'affichage du carrousel
+        function updateCarousel() {
+            const width = images.clientWidth;
+            images.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
+
+        function togglePouce(index, type, id) {
+            console.log("index : " + index + ", type : " + type + "id :" + id);
+            const pouceHaut = document.getElementById(`pouce_haut_${index}`);
+            const pouceBas = document.getElementById(`pouce_bas_${index}`);
+
+            if (type === 'haut') {
+                if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
+                    // Activate pouce haut and deactivate pouce bas
+                    pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                    <?php
+                        // updatePouce(id, 'haut', 'add');
+                    ?>
+                } else {
+                    // Deactivate pouce haut
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                    <?php
+                        // updatePouce(id, 'haut', 'sub');
+                    ?>
+                }
+            } else if (type === 'bas') {
+                if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
+                    // Activate pouce bas and deactivate pouce haut
+                    pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
+                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
+                    <?php
+                        // updatePouce(id, 'bas', 'add');
+                    ?>
+                } else {
+                    // Deactivate pouce bas
+                    pouceBas.src = "/images/universel/icones/pouce-down.png";
+                    <?php
+                        // updatePouce(id, 'bas', 'sub');
+                    ?>
+                }
+            }
+        }
 
     </script>
 

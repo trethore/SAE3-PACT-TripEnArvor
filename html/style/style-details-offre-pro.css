@@ -1,9 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-  
 /************************
        GENERALISATION
 *************************/
+
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    text-decoration: none;
+}
+
+button {
+    font-family: "Poppins", sans-serif;
+}
 
 body {
     font-family: "Poppins", sans-serif;
@@ -14,11 +23,13 @@ body {
 
 h1 {
     font-size: 64px;
+    font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
 }
 
 h2 {
+    font-size: 36px;
     font-weight: bold;
     color: var(--orange-principale);
 }
@@ -26,12 +37,10 @@ h2 {
 .fond-blocs {
     background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
-    padding: 30px;
-    
-}
+    padding: 30px;}
 
 a {
-    color: var(--blanc-leger);
+    color: var(--noir);
     text-decoration: underline;
 }
 
@@ -44,31 +53,127 @@ a {
     display: flex;
 }
 
+.bordure {
+    border-bottom: 3px solid var(--orange-principale);
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
 
-.bouton-modifier {
-    margin: 30px 30px 0 30px;
-}
+    /******************************
+            BOUTONS POP-UP                
+    ******************************/
+    .bouton-modifier {
+        margin: 30px 30px 0 30px;
+    }
 
-.bouton-modifier > div > button {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    text-decoration: none;
-    font-size: 40px;
-    padding: 10px 80px;
-    border-radius: 15px;
-}
 
-.bouton-modifier > div > button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border: 3px solid var(--orange-principale);
-}
+    .bouton-modifier > button {
+        color: var(--blanc-leger);
+        text-decoration: none;
+        font-size: 60px;
+        background-color: var(--orange-principale);
+        border: 3px solid var(--blanc-leger);
+        padding: 10px 80px;
+        border-radius: 15px;
+        border: 0;
+    }
+
+    .bouton-modifier > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc-leger);
+        border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+    #confirm {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 20px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    #final {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 32px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .close {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .close button:first-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    #final button {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .close button:last-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 60px;
+        margin-bottom: 12px;
+        background: var(--gris);
+        color: var(--blanc-leger);
+        font-size: 20px;
+        width: fit-content;
+    }
 
 .bloc-presentation > div > p {
     font-size: 32px;
+}
+
+.information-offre {
+    font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -91,69 +196,48 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
-    color: var(--blanc-leger);
-    text-decoration: none;
-    font-size: 40px;
-    background-color: var(--orange-principale);
-    padding: 10px 80px;
-    border-radius: 15px;
-    border: 0;
-}
-
-.display-ligne-espace > button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc-leger);
-    border: 3px solid var(--orange-principale);
-}
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
+ 
+    .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+    }
 
-    .carousel-container {
+    .carousel-images {
         display: flex;
         transition: transform 0.5s ease-in-out;
-        overflow: hidden; /* Empêche de voir les éléments hors de la zone visible */
+        height: auto;
     }
-    
-    .carousel-item {
-        flex: 0 0 100%; /* Assure qu'un seul élément prend toute la largeur */
-        text-align: center;
-        font-size: 2rem;
-        background-color: #ddd;
-        padding: 20px;
-        box-sizing: border-box;
-        opacity: 1;
-        transition: opacity 0.5s ease-in-out;
+      
+    .carousel-images img {
+        width: 100%;
+        height: 800px;
+        flex-shrink: 0;
     }
-    
-    .carousel-item:not(.active) {
-        opacity: 0.5; /* Rendre les éléments non actifs plus discrets */
-        pointer-events: none; /* Empêche les interactions avec les éléments non actifs */
-    }
-    
-    .carousel-btn {
+
+    .arrow-left, .arrow-right {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 50%;
-        z-index: 10; /* Assure que les boutons sont au-dessus des items */
+        z-index: 1;
     }
-    
-    .carousel-btn.prev {
-        left: 20px; /* Ajuste la position à gauche */
+
+    .arrow-left > img, .arrow-right > img {
+        background-color: var(--orange-principale);
+        border-radius: 90px;
+    } 
+
+    .arrow-left {
+        left: 20px;
     }
-    
-    .carousel-btn.next {
-        right: 20px; /* Ajuste la position à droite */
+      
+    .arrow-right {
+        right: 20px;
     }
-    
+      
 
 /**********************************
         PREMIER DOUBLE BLOC                               
@@ -168,9 +252,14 @@ a {
     }
 
     .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 5px solid var(--orange-principale);
+        font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
+        margin-bottom: 1em;
+        padding-left: 10px ;
     }
 
     .liste-caracteristique > li > img {
@@ -191,6 +280,7 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
+        border-left: 3px solid var(--orange-principale);
     }
 
     .epingle {
@@ -198,20 +288,26 @@ a {
         height: 20px;
     }
 
-    .display-ligne-espace > a {
+    .display-ligne-espace > button {
+        font-size: 60px;
+    }
+
+    .display-ligne-espace > a, .fond-blocs > a {
         color: var(--blanc-leger);
         text-decoration: none;
         font-size: 24px;
         background-color: var(--orange-principale);
+        border: 3px solid var(--blanc-leger);
         padding: 10px 80px;
         border-radius: 15px;
         border: 0;
     }
     
-    .display-ligne-espace > a:hover {
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -225,8 +321,9 @@ a {
     .bloc-tarif > button {
         color: var(--blanc-leger);
         text-decoration: none;
-        font-size: 20px;
+        font-size: 24px;
         background-color: var(--orange-principale);
+        border: 3px solid var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
@@ -236,6 +333,7 @@ a {
         color: var(--orange-principale);
         background: var(--blanc-leger);
         border: 3px solid var(--orange-principale);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -256,7 +354,7 @@ a {
     td {
         padding: 20px;
         text-align: center;
-        border: 1px solid var(--blanc-leger);  
+        border: 3px solid var(--noir);  
         font-weight: 600;
     }
 
@@ -300,18 +398,38 @@ a {
 .fond-blocs-avis {
     background: var(--blanc-leger);    
     margin: 30px 0;
-    padding: 30px;
+    padding: 15px;
     border-radius: 15px;
     color: var(--noir);
+    border: 3px solid var(--orange-principale);
+}
+
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 3px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
 }
 
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {
@@ -347,19 +465,37 @@ a {
 }
 
 .navigation > button {
-    color: var(--blanc-leger);
-    text-decoration: none;
-    font-size: 40px;
-    background: var(--gradient-orange);
-    padding: 10px auto;
-    border-radius: 15px;
+    background: var(--orange-principale);
+    color: var(--blanc);
+    padding: 10px 20px;
     border: 0;
+    text-align: center;
+    font-size: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+    margin-left: 0;
 }
 
 .navigation > button:hover {
-    color: var(--orange-principale);
     background: var(--blanc-leger);
-    border: 1px solid var(--orange-principale);
+    color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
+
+#remonte {
+    width: 50px;
+    height: 50px;
+    background: var(--orange-principale);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+#remonte:hover {
+    background: var(--blanc-leger);
+    content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
+    transition: 0.3s ease-in-out;
 }
 
 /*********************
@@ -370,97 +506,6 @@ footer > div > a {
     text-decoration: none;
 }
 
-#confirm {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    font-size: 20px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-#final {
-    background: var(--orange-principale);
-    color: var(--blanc);
-    font-size: 32px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.close {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.close button:first-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-#final button {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-.close button:last-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 60px;
-    margin-bottom: 12px;
-    background: var(--gris);
-    color: var(--blanc-leger);
-    font-size: 20px;
-    width: fit-content;
-}
-
-
-#avis {
-    display: none;
-}
-
 #carte {
     display: none;
-}
-
-#caracteristiques {
-    display: none;
-}
-
-.bordure {
-    border-bottom: 3px solid var(--orange-principale);
 }
