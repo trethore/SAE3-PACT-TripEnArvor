@@ -548,4 +548,22 @@
             die();
         }
     }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    function getPrixPlusPetit($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqPrix = "SELECT MIN(prix) FROM _tarif_publique WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtPrix = $conn->prepare($reqPrix);
+            $stmtPrix->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtPrix->execute();
+            $prixPlusPetit = $stmtPrix->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $prixPlusPetit;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>
