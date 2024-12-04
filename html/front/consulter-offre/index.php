@@ -619,22 +619,30 @@ try {
                     // Activate pouce haut and deactivate pouce bas
                     pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
-                    updatePouce(id, 'haut', 'add');
+                    <?php
+                        updatePouce(id, 'haut', 'add');
+                    ?>
                 } else {
                     // Deactivate pouce haut
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
-                    updatePouce(id, 'haut', 'sub');
+                    <?php
+                        updatePouce(id, 'haut', 'sub');
+                    ?>
                 }
             } else if (type === 'bas') {
                 if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
                     // Activate pouce bas and deactivate pouce haut
                     pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
                     pouceHaut.src = "/images/universel/icones/pouce-up.png";
-                    updatePouce(id, 'bas', 'add');
+                    <?php
+                        updatePouce(id, 'bas', 'add');
+                    ?>
                 } else {
                     // Deactivate pouce bas
                     pouceBas.src = "/images/universel/icones/pouce-down.png";
-                    updatePouce(id, 'bas', 'sub');
+                    <?php
+                        updatePouce(id, 'bas', 'sub');
+                    ?>
                 }
             }
         }
