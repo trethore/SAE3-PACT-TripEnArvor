@@ -341,11 +341,28 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
-            <?php if (isset($_SESSION['id'])) { 
-                foreach ($avis as $a) { 
-                    if ($a['id_membre'] != $_SESSION['id']) { ?>
+            <?php if (isset($_SESSION['id']) && isset($_GET['id'])) {
+                $id_membre = intval($_SESSION['id']);
+                $id_offre = intval($_GET['id']);
+
+                try {
+                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                    // Vérifier si l'utilisateur a déjà publié un avis pour cette offre
+                    $reqCheckAvis = "SELECT COUNT(*) AS avis_count FROM sae._avis WHERE id_membre = ? AND id_offre = ?";
+                    $stmtCheckAvis = $dbh->prepare($reqCheckAvis);
+                    $stmtCheckAvis->execute([$id_membre, $id_offre]);
+                    $avisCount = $stmtCheckAvis->fetch(PDO::FETCH_ASSOC)['avis_count'];
+
+                    if ($avisCount == 0) {
+                        // L'utilisateur n'a pas encore publié d'avis pour cette offre
+                        ?>
                         <button id="showFormButton">Publier un avis</button>
 
+                        <!-- Formulaire d'avis -->
                         <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
                             <div class="display-ligne-espace">
@@ -453,11 +470,17 @@ try {
                                 die();
                             } 
                         }
+                    } else {
+                        // Message informant que l'utilisateur a déjà publié un avis
+                        echo "<p>Vous avez déjà publié un avis pour cette offre.</p>";
                     }
+                } catch (PDOException $e) {
+                    echo "Erreur : " . $e->getMessage();
+                    die();
                 }
             } else {
                 echo "Connexion requise pour publier un avis";
-            } 
+            }
 
             $compteur = 0;
             foreach ($avis as $a) { ?>
