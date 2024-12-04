@@ -346,6 +346,7 @@
 
             if (isset($_POST['date_evenement'])) {
                 $date_event = $_POST['date_evenement'];
+                print_r(date('', strtotime($date_event)));
             }
 
             if (isset($_POST['titre'])) {
