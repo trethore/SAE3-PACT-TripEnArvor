@@ -26,6 +26,11 @@ h1:hover {
     border: 2px var(--violet-principal) solid;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 h2 {
     font-family: "Poppins", sans-serif;
     color: var(--violet-principal);
