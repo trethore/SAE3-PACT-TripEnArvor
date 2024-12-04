@@ -292,7 +292,7 @@ try {
 
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
-                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : 6;
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
                 console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {

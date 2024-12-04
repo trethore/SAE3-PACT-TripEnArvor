@@ -82,11 +82,11 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <label>Note minimum :</label>
                                 <select class="note">
                                     <option></option>
-                                    <option>★★★★★</option>
-                                    <option>★★★★</option>
-                                    <option>★★★</option>
-                                    <option>★★</option>
                                     <option>★</option>
+                                    <option>★★</option>
+                                    <option>★★★</option>
+                                    <option>★★★★</option>
+                                    <option>★★★★★</option>
                                 </select>
                             </div>
                             
