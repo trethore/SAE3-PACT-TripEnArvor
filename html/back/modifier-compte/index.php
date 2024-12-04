@@ -17,9 +17,7 @@ redirectToConnexionIfNecessary($id_compte);
 
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
+
 $reqCompte = "SELECT * from sae._compte_professionnel cp 
                 join sae._compte c on c.id_compte = cp.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
@@ -60,26 +58,31 @@ if (!$submitted) {
         ?>
         <h1>Détails du compte</h1>
         <h2>Mon entreprise</h2>
+        
         <form action="/back/modifier-compte" method="POST" id="myForm">
+            <label for="test">test : </label>
+            <input type="text" name="test" id="test">
+            <button type="submit">Envoyer</button>
 
+        <!-- <?php /*
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td><input type="text" name="denomination" id="denomination" value="<?php echo htmlentities($detailCompte["denomination"]);?>"></td>
+                    <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"]);?>"></td>
                 </tr>
                 <?php if ($typeCompte == 'proPrive') {?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?php echo htmlentities($detailCompte["siren"]);?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"]);?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
                     <td>A propos</td>
-                    <td><input type="text" name="a_propos" id="a_propos" value="<?php echo htmlentities($detailCompte["a_propos"]);?>"></td>
+                    <td><input type="text" name="a_propos" id="a_propos" value="<?= htmlentities($detailCompte["a_propos"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Site web</td>
-                    <td><input type="url" name="site" id="site" value="<?php echo htmlentities($detailCompte["site_web"]);?>"></td>
+                    <td><input type="url" name="site" id="site" value="<?= htmlentities($detailCompte["site_web"]);?>"></td>
                 </tr>
             </table>
             <h2>Informations personnelles</h2>
@@ -102,7 +105,7 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td><input type="email" name="email" id="email" value="<?php echo htmlentities($detailCompte["email"]);?>"></td>
+                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"]);?>"></td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
@@ -114,13 +117,13 @@ if (!$submitted) {
                 </tr>
                 <tr style="display: none;">
                     <td>N° IBAN</td>
-                    <td><input type="text" name="iban" id="iban" value="<?php echo htmlentities("à implémenter");?>"></td>
+                    <td><input type="text" name="iban" id="iban" value="<?= htmlentities("à implémenter");?>"></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
                     <td>
                         <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
-                        <input type="hidden" name="ancien_mdp" value="<?php echo htmlentities($detailCompte['mot_de_passe']); ?>">
+                        <input type="hidden" name="ancien_mdp" value="<?= htmlentities($detailCompte['mot_de_passe']); ?>">
                     </td>
                 </tr>
             </table>
@@ -129,7 +132,7 @@ if (!$submitted) {
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><input type="text" name="rue" id="rue" value="<?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
+                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Complément d'adresse</td>
@@ -141,21 +144,21 @@ if (!$submitted) {
                 </tr>
                 <tr>
                     <td>Code postal</td>
-                    <td><input type="text" name="cp" id="cp" value="<?php echo htmlentities($detailCompte["code_postal"]);?>"></td>
+                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><input type="text" name="ville" id="ville" value="<?php echo htmlentities($detailCompte["ville"]);?>"></td>
+                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"]);?>"></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><input type="text" name="pays" id="pays" value="<?php echo htmlentities($detailCompte["pays"]);?>"></td>
+                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"]);?>"></td>
                 </tr>
             </table> <?php } ?>
             <div>
             <input type="submit" value="Valider les modifications">
-        </div>
-        </form>
+        </div> */?>-->
+        </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">
             <h3>Valider les modifications</h3>
