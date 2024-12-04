@@ -407,8 +407,9 @@ try {
                         </div>
                     <?php } ?>
                 </div>  
+
                 <form id="avisForm-<?php echo $compteur; ?>" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
-                    <input type='hidden' name='id_avis' value='" . htmlspecialchars($unAvis['id_avis'], ENT_QUOTES) . "' />
+                    <input type='hidden' name='id_avis' value='<?php htmlspecialchars($a['id_avis']) ?>' />
                     <h2>Répondre à un avis</h2>
                     <div class="display-ligne-espace">
                         <textarea id="reponse-<?php echo $compteur; ?>" name="reponse" required></textarea><br>
