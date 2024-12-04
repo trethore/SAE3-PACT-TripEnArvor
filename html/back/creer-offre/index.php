@@ -235,8 +235,10 @@
                 
                 <br>
                 <div id="date_evenement">
-                    <label id="labeldate_event" for="date_event">Date de l'évenement <span class="required">*<input type="date" id="date_event" name="date_event">
+                    <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
+                    <input type="date" id="date_event" name="date_event" required>
                 </div>
+
 
                 <!-- <h3>Ouverture</h3>
                 <table border="0">
@@ -569,7 +571,7 @@
                         } 
                         
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie." (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
