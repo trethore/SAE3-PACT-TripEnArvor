@@ -26,9 +26,6 @@
   
   --gradient-violet: linear-gradient(90deg, rgba(186,140,224,1) 0%, rgba(132,79,177,1) 16%, rgba(127,73,172,1) 38%, rgba(121,66,167,1) 63%);
 
-  --couleur-bouton-creer-compte: var(--violet-principale);
-  --couleur-bouton-creer-compte: var(--violet-principal);
-
   /*******************
       FONT WEIGHT
   ********************/
