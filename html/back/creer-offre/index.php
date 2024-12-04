@@ -523,7 +523,7 @@
                         $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -567,37 +567,32 @@
                         break;
 
                     case 'spectacle':
-                        $date_event = $_POST['date_event']; // Exemple : "2022-12-08"
 
                         try {
-                            // 1. Insérer la date dans la table _date
-                            $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            // Insertion de la date dans la table _date
+                            $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
-                            $stmtInsertionDateEvent->execute([$date_event]);  // Insérer la date
-                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];  // Récupérer l'ID de la date
-
-                            if (!$idDateEvent) {
-                                throw new Exception("Erreur lors de la récupération de l'ID de la date.");
-                            }
-
-                            // 2. Insérer les données dans la table offre_spectacle en utilisant l'ID de la date
-                            $requete = "INSERT INTO sae.offre_activite (titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                            
-                            $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-
-                            // Récupérer l'ID de l'offre insérée
-                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-
-                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
-
+                            $stmtInsertionDateEvent->execute([$date_event]);
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
                             die();
-                        } catch (Exception $e) {
-                            echo "Erreur : " . $e->getMessage();
-                            die();
                         }
+                        try {
+                            // Requête pour insérer l'offre dans _offre_spectacle
+                            $requete = "INSERT INTO sae._offre_spectacle 
+                                        (titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, capacite, date_evenement)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                        
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $description_detaille, $site_web, $id_compte_professionnel, $id_adresse, $abonnement, intval($duree), intval($capacite), $idDateEvent]);
+                        
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion de l'offre : " . $e->getMessage();
+                        }
+
 
 
 
