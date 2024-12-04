@@ -414,8 +414,10 @@ try {
                         </form>
 
                         <?php if (!empty($reponse)) {
+                            if (isset($_POST['reponse'])) {
+                                $reponse = htmlentities($_POST['reponse']);
+                            } 
                             $id_avis = intval($a['id_avis']); 
-                            $reponse = htmlentities($_POST['reponse']);
                             $publie_le = date('Y-m-d H:i:s');                             
                             try {
                                 // Connexion à la base de données
