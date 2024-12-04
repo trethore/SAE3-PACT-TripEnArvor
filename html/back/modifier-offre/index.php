@@ -254,7 +254,7 @@ try {
                     <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite']) ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
-                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite'] ?? ''); ?>">
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
