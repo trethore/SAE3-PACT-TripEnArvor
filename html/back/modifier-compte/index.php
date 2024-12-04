@@ -1,9 +1,11 @@
 <?php 
+require_once('../../utils/session-utils.php');
+startSession();
+$id_compte = $_SESSION["id"];
 require_once('../../php/connect_params.php');
 require_once('../../utils/compte-utils.php');
-require_once('../../utils/auth-utils.php');
 require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
+require_once('../../utils/auth-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -15,8 +17,7 @@ echo "<pre>";
 print_r($_POST);
 echo "</pre>";
 
-startSession();
-$id_compte = $_SESSION["id"];
+
 redirectToConnexionIfNecessary($id_compte);
 
 $submitted = isset($_POST['email']);
