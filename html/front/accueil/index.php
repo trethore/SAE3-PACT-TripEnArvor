@@ -83,6 +83,7 @@ try {
                     </div>
                 </div>
             </div>
+            <p>Le Petit Coin de Mer</p>
         </section>
 
         <h1>Découvrir la Liste des Offres Disponibles</h1>
