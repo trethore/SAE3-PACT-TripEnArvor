@@ -5,5 +5,6 @@
                 window.location.href = "<?php echo($lien);?>";
             };
         </script><?php
+        die();
     }
 ?>

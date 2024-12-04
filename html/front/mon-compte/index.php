@@ -1,9 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once('../../php/connect_params.php');
+require_once('../../utils/compte-utils.php');
+require_once('../../utils/auth-utils.php');
+require_once('../../utils/site-utils.php');
+require_once('../../utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -14,42 +14,39 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessary($id_compte);
+if (!isset($id_compte) ||!isIdMember($id_compte)) {
+    redirectTo("https://redden.ventsdouest.dev/se-connecter/");
+}
 
-
-$typeCompte = getTypeCompte($id_compte);
-
-$reqCompte = "SELECT * from sae._compte_professionnel cp 
-                join sae._compte c on c.id_compte = cp.id_compte 
+$reqCompte = "SELECT * from sae._compte_membre cm 
+                join sae._compte c on c.id_compte = cm.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cp.id_compte = :id_compte;";
-
+                where cm.id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backCompte.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/style_frontCompte.css">
+    <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Mon compte</title>
 </head>
 <body>
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
         <nav>
-            <a class="ici" href="/back/mon-compte">Mes infos</a>
-            <a href="/back/mes-factures">Mes factures</a>
+            <a class="ici" href="/front/mon-compte">Mes infos</a>
             <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
@@ -65,31 +62,12 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
                 <a>Importer une photo de profil</a>
             </article>
-            <h2>Vue d'ensemble</h2>
-            <table>
-                <tr>
-                    <td>Dénomination Sociale</td>
-                    <td><?php echo htmlentities($detailCompte["denomination"]);?></td>
-                </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><?php echo htmlentities($detailCompte["siren"]);?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td>A propos</td>
-                    <td>
-                        <div><?php echo htmlentities($detailCompte["a_propos"]);?></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site web</td>
-                    <td><?php echo htmlentities($detailCompte["site_web"]);?></td>
-                </tr>
-            </table>
             <h2>Informations personnelles</h2>
             <table>
+                <tr>
+                    <td>Pseudo</td>
+                    <td><?php echo htmlentities($detailCompte["pseudo"]);?></td>
+                </tr>
                 <tr>
                     <td>Nom</td>
                     <td><?php echo htmlentities($detailCompte["nom_compte"]);?></td>
@@ -105,10 +83,6 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 <tr>
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"]);?></td>
-                </tr>
-                <tr style="display: none;">
-                    <td>N° IBAN</td>
-                    <td><?php echo htmlentities("à implémenter");?></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
@@ -141,7 +115,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
             </table>
             <div>
-                <a href="/back/modifier-compte">Modifier les informations</a>
+                <a href="/front/modifier-compte">Modifier les informations</a>
             </div>
         </section>
     </main>

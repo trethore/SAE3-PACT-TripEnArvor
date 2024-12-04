@@ -19,12 +19,12 @@ try {
     }
 
     foreach ($offres as &$offre) {
-        $offre['note'] = 2;
+        $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
-
-    //foreach ($offres as &$offre) {
-    //    $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    //}
+    
+    foreach ($offres as &$offre) {
+        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
+    }
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -50,7 +50,7 @@ try {
             <input type="text" class="input-search" placeholder="Taper votre recherche...">
         </div>
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
     <!-- Conteneur principal -->
@@ -67,8 +67,8 @@ try {
                     <div class="categorie">
                         <h3>Catégorie</h3>
                         <div>
-                            <label><input type="checkbox"> Parc d'Attraction</label>
-                            <label><input type="checkbox"> Restaurant</label>
+                            <label><input type="checkbox"> Parc attraction</label>
+                            <label><input type="checkbox"> Restauration</label>
                             <label><input type="checkbox"> Visite</label>
                             <label><input type="checkbox"> Spectacle</label>
                             <label><input type="checkbox"> Activité</label>
@@ -86,7 +86,7 @@ try {
                         
                     <!-- Trier -->
                     <div class="trier">
-                        <h3>Trier</h3>
+                        <h3>Note et prix</h3>
                         <div>
                             <div>
                                 <label>Note minimum :</label>
@@ -111,14 +111,18 @@ try {
                                         <input class="max" type="number" min="0">
                                     </div>
                                 </div>
-                                <div>
-                                    <select class="tris">
-                                        <option value="default">Trier par :</option>
-                                        <option value="price-asc">Prix croissant</option>
-                                        <option value="price-desc">Prix décroissant</option>
-                                    </select>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="trier2">
+                        <h3>Trier</h3>
+                        <div>
+                            <select class="tris">
+                                <option value="default">Trier par :</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -130,7 +134,7 @@ try {
                             <label><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
-                                <input id="search-location" type="text" placeholder="Rechercher...">
+                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -158,15 +162,13 @@ try {
 
         <!-- Offres -->
         <section class="section-offres">
-            <p id="no-offers-message" style="display: none; text-align: center; font-size: 18px; color: gray;">
-                Aucun résultat ne correspond à vos critères.
-            </p>
+            <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
                     ?>
                     <div class="offre">
                         <div class="sous-offre">
-                            <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                            <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" style="background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
@@ -177,19 +179,29 @@ try {
                                 <div class="bas-offre">
                                     <div class="etoiles">
                                         <?php
-                                            $note = ceil($tab["note"]);
-                                            $etoilesPleines = $note;
-                                            $etoilesVides = 5 - $note;
+                                            if (empty($tab["note"])) {
+                                                ?>
+                                                    <p>Pas d'avis disponibles.</p>
+                                                <?php
+                                            } else {
+                                                $note = $tab["note"];
+                                                $etoilesPleines = $note;
+                                                $etoilesVides = 5 - $note;
 
-                                            for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-pleine.png">';
-                                            }
+                                                for ($i = 0; $i < $etoilesPleines; $i++) {
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                    <?php
+                                                }
 
-                                            for ($i = 0; $i < $etoilesVides; $i++) {
-                                                echo '<img class="etoile" src="/images/frontOffice/etoile-vide.png">';
+                                                for ($i = 0; $i < $etoilesVides; $i++) {
+                                                    ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                                    <?php
+                                                }
                                             }
                                         ?>
-                                        <p class="nombre-notes">(120)</p>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
                                     <p class="prix">A partir de <span><?php echo $tab["prix_offre"] ?>€</span></p>
                                 </div>
@@ -244,171 +256,111 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-            const offers = document.querySelectorAll('.offre');
-            const allOffers = Array.from(offers);
+            const offers = Array.from(document.querySelectorAll(".offre"));
 
-            // Create the "no offers" message element
-            const noOffersMessage = document.createElement("div");
-            noOffersMessage.classList.add("no-offers-message");
-            noOffersMessage.textContent = "Aucune offre ne correspond à vos critères.";
-            offersContainer.parentNode.insertBefore(noOffersMessage, offersContainer);
-            noOffersMessage.style.display = "none";
+            const noOffersMessage = document.querySelector(".no-offers-message");
+
+            const locationInput = document.getElementById("search-location");
 
             h2.addEventListener("click", () => {
                 fondFiltres.classList.toggle("hidden");
             });
 
-            const selectElement = document.querySelector('.tris');
-
-            const rebuildOfferHTML = (offerElement) => {
-                const title = offerElement.querySelector('.titre-offre').textContent.trim();
-                const city = offerElement.querySelector('.lieu-offre').textContent.trim();
-                const price = offerElement.querySelector('.prix span').textContent.trim();
-                const category = offerElement.querySelector('.categorie-offre').textContent.trim();
-                /*const image = offerElement.querySelector('.image-offre').style.backgroundImage;*/
-                const description = offerElement.querySelector('.description-offre').textContent.trim();
-                const profile = offerElement.querySelector('.nom-offre').textContent.trim();
-
-                return `
-                    <div class="offre">
-                        <div class="sous-offre">
-                            <a href="#">
-                                <div class="lieu-offre">${city}</div>
-                                <div class="ouverture-offre">Ouvert</div>
-                                <img class="image-offre" style=background: url(/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>) center;">
-                                <p class="titre-offre">${title}</p>
-                                <p class="categorie-offre">${category}</p>s
-                                <p class="description-offre">${description}</p>
-                                <p class="nom-offre">${profile}</p>
-                                <div class="bas-offre">
-                                    <div class="etoiles">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                        <p class="nombre-notes">(120)</p>
-                                    </div>
-                                    <p class="prix">A partir de <span>${price}</span></p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>`;
-            };
-
-            selectElement.addEventListener('change', () => {
-                const selectedValue = selectElement.value; // Récupère la valeur de l'option sélectionnée
-                
-                if (selectedValue == "price-asc") {
-                    allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
-                        return priceA - priceB;
-                    });
-                } else if (selectedValue == "price-desc") {
-                    allOffers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector('.prix span').textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector('.prix span').textContent.replace('€', '').trim());
-                        return priceB - priceA;
-                    });
-                }
-
-                offersContainer.innerHTML = '';
-
-                allOffers.forEach(offerElement => {
-                    const offerHTML = rebuildOfferHTML(offerElement);
-                    offersContainer.insertAdjacentHTML('beforeend', offerHTML);
-                });
-            });
-
+            // Function to filter offers based on active inputs
             const applyFilters = () => {
-                const filters = {
-                    categories: Array.from(document.querySelectorAll(".categorie input:checked")).map(input => input.parentNode.textContent.trim()),
-                    availability: document.querySelector(".disponibilite input:checked")?.parentNode.textContent.trim() || null,
-                    minRating: document.querySelector(".trier .note")?.value || null,
-                    minPrice: parseFloat(document.querySelector(".trier .min")?.value) || null,
-                    maxPrice: parseFloat(document.querySelector(".trier .max")?.value) || null,
-                };
+                let visibleOffers = offers;
 
-                // Treat no categories checked as all categories selected
-                if (filters.categories.length === 0) {
-                    filters.categories = Array.from(document.querySelectorAll(".categorie label")).map(label => label.textContent.trim());
+                // Filter by Category
+                const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
+                const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
+                if (selectedCategories.length > 0) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const category = offer.querySelector(".categorie-offre").textContent.trim();
+                        return selectedCategories.includes(category);
+                    });
                 }
 
-                let visibleOffers = 0;
+                // Filter by Availability
+                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                if (availabilityInput) {
+                    const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                        return offerAvailability === availability;
+                    });
+                }
 
-                allOffers.forEach(offer => {
-                    const category = offer.querySelector(".categorie-offre")?.textContent.trim();
-                    const priceText = offer.querySelector(".prix span")?.textContent.replace("€", "").trim();
-                    const price = parseFloat(priceText) || 0;
-                    const isAvailable = offer.querySelector(".ouverture-offre")?.textContent.trim() === "Ouvert";
-                    const etoilesPleinesOffre = offer.querySelectorAll('.etoile[src="/images/frontOffice/etoile-pleine.png"]');
-                    const numberOfStarsWanted = filters.minRating;
-                    const filtreNote =  numberOfStarsWanted.length;
-                    const note = etoilesPleinesOffre.length;
+                // Filter by Note
+                const minNoteSelect = document.querySelector(".note");
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+                if (selectedNote) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                        return stars >= selectedNote;
+                    });
+                }
 
-                    let matches = true;
+                // Filter by Price Range
+                const minPrice = parseFloat(document.querySelector(".min").value || "0");
+                const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+                visibleOffers = visibleOffers.filter(offer => {
+                    const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
+                    return price >= minPrice && price <= maxPrice;
+                });
 
-                    // Filter by stars
-                    if (filtreNote > note) {
-                        matches = false;
-                    }
+                // Filter by Location
+                const searchLocation = locationInput.value.trim().toLowerCase();
+                if (searchLocation) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                        return location.includes(searchLocation);
+                    });
+                }
 
-                    // Filter by category
-                    if (!filters.categories.includes(category)) {
-                        matches = false;
-                    }
-
-                    // Filter by availability
-                    if (filters.availability === "Ouvert" && !isAvailable) {
-                        matches = false;
-                    } else if (filters.availability === "Fermé" && isAvailable) {
-                        matches = false;
-                    }
-
-                    // Filter by price
-                    if ((filters.minPrice !== null && price < filters.minPrice) || 
-                        (filters.maxPrice !== null && price > filters.maxPrice)) {
-                        matches = false;
-                    }
-
-                    // Show or hide the offer
-                    if (matches) {
-                        offer.style.display = "block";
-                        visibleOffers++;
+                // Update Visibility
+                offers.forEach(offer => {
+                    if (visibleOffers.includes(offer)) {
+                        offer.style.display = "";
                     } else {
                         offer.style.display = "none";
                     }
                 });
 
-                // Show or hide the "no offers" message
-                noOffersMessage.style.display = visibleOffers === 0 ? "block" : "none";
+                console.log(visibleOffers);
+
+                // Show/Hide "No Offers" Message
+                noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
             };
 
-            // Add change event listeners to filter inputs
-            filterInputs.forEach(input => {
-                input.addEventListener("change", applyFilters);
+            // Sort Offers
+            const sortOffers = () => {
+                const selectElement = document.querySelector(".tris");
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === "price-asc" || selectedValue === "price-desc") {
+                    offers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
+            };
+
+            // Add Event Listeners
+            filterInputs.forEach(input => input.addEventListener("input", () => {
+                applyFilters();
+                sortOffers();
+            }));
+
+            document.querySelector(".tris").addEventListener("change", () => {
+                sortOffers();
+                applyFilters();
             });
 
-            const locationInput = document.getElementById("search-location");
-
             locationInput.addEventListener("input", () => {
-                const searchValue = locationInput.value.trim().toLowerCase();
-
-                // Filtrer les offres en fonction de la localisation
-                const filteredOffers = allOffers.filter(offer => {
-                    const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
-                    return location.includes(searchValue);
-                });
-
-                // Mettre à jour l'affichage des offres
-                offersContainer.innerHTML = ""; // Réinitialise les offres affichées
-
-                if (filteredOffers.length > 0) {
-                    filteredOffers.forEach(offer => offersContainer.appendChild(offer));
-                } else {
-                    noOffersMessage.style.display = "block";
-                }
+                applyFilters();
             });
         });
     </script>

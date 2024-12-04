@@ -5,6 +5,14 @@
        GENERALISATION
 *************************/
 
+html {
+    scroll-behavior: smooth;
+}
+
+button {
+    font-family: "Poppins", sans-serif;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
@@ -28,8 +36,7 @@ h2 {
 .fond-blocs {
     background: var(--blanc-leger);    
     margin: 30px 30px 0 30px;
-    padding: 30px;
-}
+    padding: 30px;}
 
 a {
     color: var(--noir);
@@ -190,7 +197,7 @@ a {
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
-
+ 
     .carousel {
         position: relative;
         overflow: hidden;
@@ -343,7 +350,7 @@ a {
     td {
         padding: 20px;
         text-align: center;
-        border: 1px solid var(--blanc-leger);  
+        border: 3px solid var(--noir);  
         font-weight: 600;
     }
 
@@ -393,13 +400,32 @@ a {
     border: 3px solid var(--orange-principale);
 }
 
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 3px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
+}
+
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--orange-principale);
 }
 
 .pouce {

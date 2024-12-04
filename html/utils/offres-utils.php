@@ -137,7 +137,7 @@
 
     function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT AVG(note)
+        $reqNote = "SELECT ROUND(AVG(note))
             FROM sae._avis
             WHERE id_offre = :id_offre";
         
@@ -151,7 +151,398 @@
             $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
             $conn = null;
-            return $moyenne;
+            return $moyenne["round"];
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getNombreNotes($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqNote = "SELECT COUNT(*)
+            FROM sae._avis
+            WHERE id_offre = :id_offre";
+        
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+            $stmtNOTE = $conn->prepare($reqNote);
+            $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtNOTE->execute();
+
+            $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
+
+            $conn = null;
+            return $moyenne["count"];
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES OFFRES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
+    function getOffre($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            $offre = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $offre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
+    function getActivite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtActivite = $conn->prepare($reqActivite);
+            $stmtActivite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtActivite->execute();
+            $activite = $stmtActivite->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $activite;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
+    function getVisite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtVisite = $conn->prepare($reqVisite);
+            $stmtVisite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtVisite->execute();
+            $visite = $stmtVisite->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $visite;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
+    function getSpectacle($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtSpectacle = $conn->prepare($reqSpectacle);
+            $stmtSpectacle->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtSpectacle->execute();
+            $spectacle = $stmtSpectacle->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $spectacle;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
+    function getParcAttraction($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAttraction = $conn->prepare($reqAttraction);
+            $stmtAttraction->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAttraction->execute();
+            $attraction = $stmtAttraction->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $attraction;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
+    function getRestaurant($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtRestaurant = $conn->prepare($reqRestaurant);
+            $stmtRestaurant->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtRestaurant->execute();
+            $restaurant = $stmtRestaurant->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $restaurant;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES ADRESSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
+    function getAdresse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAdresse = "SELECT * FROM _offre JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre =  :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAdresse = $conn->prepare($reqAdresse);
+            $stmtAdresse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAdresse->execute();
+            $adresse = $stmtAdresse->fetch(PDO::FETCH_ASSOC); 
+            $conn = null;
+            return $adresse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        } 
+    }  
+
+// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+
+    // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
+    function getCompte($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqCompte = "SELECT * FROM _offre JOIN _compte_professionnel ON _offre.id_compte_professionnel = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtCompte = $conn->prepare($reqCompte);
+            $stmtCompte->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtCompte->execute();
+            $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $compte;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES TAGS ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les tags d'une offre ===== //
+    function getTags($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtTags = $conn->prepare($reqTags);
+            $stmtTags->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTags->execute();
+            $tags = $stmtTags->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $tags;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+ 
+// ===== GESTION DES TARIFS ===== //
+  
+    // ===== Fonction qui exécute une requête SQL pour récupérer les différents tarifs d'une offre ===== //
+    function getTarifs($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtTarifs = $conn->prepare($reqTarifs);
+            $stmtTarifs->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTarifs->execute();
+            $tarifs = $stmtTarifs->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $tarifs;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DE L'OUVERTURE ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
+    function getJoursOuverture($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqJour = "SELECT * FROM _offre NATURAL JOIN _horaires_du_jour WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtJour = $conn->prepare($reqJour);
+            $stmtJour->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtJour->execute();
+            $jours = $stmtJour->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $jours;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    
+    // ===== Fonction qui exécute une requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
+    function getHorairesOuverture($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqHoraire = "SELECT DISTINCT * FROM _offre NATURAL JOIN _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);    
+            $stmtHoraire = $conn->prepare($reqHoraire);
+            $stmtHoraire->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtHoraire->execute();
+            $horaire = $stmtHoraire->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $horaire;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+// ===== GESTION DES AVIS ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les avis d'une offre ===== //
+    function getAvis($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAvis = $conn->prepare($reqAvis);
+            $stmtAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAvis->execute();
+            $avis = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $avis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
+    function getInformationsMembre($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtMembre = $conn->prepare($reqMembre);
+            $stmtMembre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtMembre->execute();
+            $membre = $stmtMembre->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $membre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    function getDatePassage($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePassage = $conn->prepare($reqDatePassage);
+            $stmtDatePassage->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDatePassage->execute();
+            $datePassage = $stmtDatePassage->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePassage;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    function getDatePublication($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePublication = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePublication = $conn->prepare($reqDatePublication);
+            $stmtDatePublication->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDatePublication->execute();
+            $datePublication = $stmtDatePublication->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePublication;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    
+// ===== GESTION DES RÉPONSES ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    function getReponse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtReponse = $conn->prepare($reqReponse);
+            $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtReponse->execute();
+            $reponse = $stmtReponse->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    function getDatePublicationReponse($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePublicationReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDatePublicationReponse = $conn->prepare($reqDatePublicationReponse);
+            $stmtDatePublicationReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDatePublicationReponse->execute();
+            $datePublicationReponse = $stmtDatePublicationReponse->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePublicationReponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui update le nombre de pouces en haut ou en bas =====//
+    function updatePouce($id_avis, $type, $action) {
+        global $driver, $server, $dbname, $user, $pass;
+
+        // Determine the column to update based on the type
+        $column = $type === 'haut' ? 'nb_pouce_haut' : 'nb_pouce_bas';
+
+        // Determine whether to increment or decrement
+        $increment = $action === 'add' ? '+ 1' : '- 1';
+
+        // SQL query to modify the count
+        $reqUpdate = "UPDATE _avis SET $column = $column $increment WHERE id_avis = :id_avis";
+
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmtUpdate = $conn->prepare($reqUpdate);
+            $stmtUpdate->bindParam(':id_avis', $id_avis, PDO::PARAM_INT);
+            $stmtUpdate->execute();
+
+            $conn = null;
+            return true;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
