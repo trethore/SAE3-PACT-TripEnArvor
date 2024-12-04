@@ -360,7 +360,7 @@ try {
                     </div>
                     <div class="display-ligne-espace"> 
                         <div class="display-ligne">
-                            <p><strong><?php echo htmlentities($a['titre']) ?></strong></p>
+                            <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
                             <?php } 
@@ -377,7 +377,7 @@ try {
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
-                    <p><?php echo htmlentities($a['commentaire']); ?></p>
+                    <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     <!-- <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
