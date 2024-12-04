@@ -124,3 +124,8 @@ section {
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
 }
+
+p > img {
+    height: 25px;
+    width: 25px;
+}
