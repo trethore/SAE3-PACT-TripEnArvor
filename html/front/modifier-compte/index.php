@@ -276,6 +276,6 @@ if (!$submitted) {
         }   
         redirectTo("/front/mon-compte");
     } ?>
-<script src="/scripts/popupCompte.js"></script>
+<script src="/scripts/popupCompteFront.js"></script>
 </body>
 </html>

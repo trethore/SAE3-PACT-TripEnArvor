@@ -339,6 +339,6 @@ if (!$submitted) {
         }   
         redirectTo("/back/mon-compte");
     } ?>
-<script src="/scripts/popupCompte.js"></script>
+<script src="/scripts/popupCompteBack.js"></script>
 </body>
 </html>
