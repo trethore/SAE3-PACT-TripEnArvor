@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+date_default_timezone_set('Europe/Paris');
+
 session_start();
 
 if (isset($_POST['titre'])) { 
