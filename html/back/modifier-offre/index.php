@@ -169,11 +169,11 @@ try {
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restaurant" <?php if($categorie === "restaurant"){echo "selected";} ?>> Restaurant</option>
+                                            <option value="restaurant" <?php if($categorie === "restaurant"){ "selected";} ?>> Restaurant</option>
                                             <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
-                                            <option value="activite" <?php if($categorie === "activite"){echo "selected";} ?>> Activité</option>
+                                            <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>
 
                                             
                                         </select>
