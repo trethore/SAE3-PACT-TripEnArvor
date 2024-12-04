@@ -231,7 +231,7 @@ if (!$submitted) {
             $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
             $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['a_propos']);
             $ok = $ok && isset($_POST['site']);
             $ok = $ok && isset($_POST['rue']);
             $ok = $ok && isset($_POST['cp']);
@@ -245,7 +245,7 @@ if (!$submitted) {
             $ok = $ok && isset($_POST['prenom']);
             $ok = $ok && isset($_POST['tel']);
             $ok = $ok && isset($_POST['denomination']);
-            $ok = $ok && isset($_POST['a-propos']);
+            $ok = $ok && isset($_POST['a_propos']);
             $ok = $ok && isset($_POST['site']);
             $ok = $ok && isset($_POST['siren']);
             $ok = $ok && isset($_POST['rue']);
