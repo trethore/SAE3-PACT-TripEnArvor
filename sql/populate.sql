@@ -1,7 +1,42 @@
+ROLLBACK;
 SET SCHEMA 'sae';
 
 START TRANSACTION;
 
+INSERT INTO sae._prix (prix_ht) VALUES
+(0), (167), (334), (1668), (834);
+
+INSERT INTO sae._abonnement (nom, id_prix) VALUES
+('gratuit', 1),
+('standard', 2),
+('premium', 3);
+
+INSERT INTO sae._date(date)
+VALUES 
+('2024-11-27 11:00:00'), --1
+('2024-11-27 17:00:00'), 
+('2024-11-27 20:00:00'), 
+('2024-11-27 21:00:00'),
+('2024-11-28 11:00:00'), -- 5
+('2024-11-28 17:00:00'), 
+('2024-11-28 20:00:00'), 
+('2024-11-28 21:00:00'),
+('2024-11-29 17:00:00'), 
+('2024-11-29 21:00:00'), -- 10
+('2024-10-29 19:00:00'), 
+('2024-10-14 22:00:01'),
+('2024-10-29 22:00:00'), 
+('2024-10-29 21:00:00'), 
+('2024-10-14 22:14:01'), -- 15
+('2024-10-29 22:02:03'),
+('2024-11-13 22:14:01'), 
+('2024-11-30 22:02:03'), 
+('2024-11-28 09:00:00'),
+('2024-11-28 13:00:00'), -- 20
+('2024-11-28 16:30:00'), 
+('2024-11-29 10:00:00'), 
+('2024-11-29 15:00:00'), 
+('2024-11-29 18:00:00');
 INSERT INTO _image (lien_fichier) VALUES
 ('image1.webp'),
 ('image2.webp'),
@@ -35,10 +70,12 @@ INSERT INTO _image (lien_fichier) VALUES
 -- Insertion d'adresses pour les comptes
 INSERT INTO _adresse(num_et_nom_de_voie, ville, code_postal, pays)
 VALUES 
-('12 Rue de Paris', 'Paris', '75000', 'France'),
-('45 Boulevard de Lyon', 'Lyon', '69000', 'France'),
-('8 Avenue de Bordeaux', 'Bordeaux', '33000', 'France'),
-('27 Rue de Lille', 'Lille', '59000', 'France');
+('15 Rue de la Corniche', 'Brest', '29200', 'France'),
+('32 Quai Saint-Malo', 'Saint-Malo', '35400', 'France'),
+('7 Place de l’Église', 'Quimper', '29000', 'France'),
+('10 Avenue de l’Océan', 'Lorient', '56100', 'France'),
+('25 Rue du Château', 'Vannes', '56000', 'France');
+
 
 -- ####################################################################
 -- INSERTION DE COMPTES PROFESSIONNELS PUBLIQUES
@@ -64,21 +101,29 @@ VALUES
 -- INSERTION D'OFFRES D'ACTIVITÉS
 -- ####################################################################
 
-INSERT INTO _prestation (nom_prestation, description) VALUES
-('Dégustation', 'Dégustations de fromages de spécialité su pays.'),
-('Découverte historique', 'Écouté des histoires surprenante du guide.'),
-('Poterie', 'Créez vos propres poteries.');
+INSERT INTO _prestation (nom_prestation, description) 
+VALUES
+('Dégustation', 'Découvrez et dégustez des spécialités locales, notamment des crêpes, galettes, et cidres bretons.'),
+('Découverte historique', 'Apprenez les histoires et légendes fascinantes racontées par un guide local.'),
+('Observation de la faune', 'Approchez la faune locale dans son habitat naturel et découvrez les oiseaux marins.'),
+('Tissage', 'Initiez-vous aux techniques traditionnelles du tissage breton.'),
+('Atelier de poterie', 'Créez votre propre poterie sous la guidance d’un artisan expérimenté.');
+
 
 -- Insertion dans offre_activite
-INSERT INTO offre_activite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree, age_min)
+ INSERT INTO offre_activite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, age_min)
 VALUES 
-('Excursion Montagne', 'Excursion en montagne dans les Alpes, une aventure inoubliable alliant randonnée, paysages époustouflants et immersion dans la nature.', 'Grenoble', 'Venez vivre une aventure inoubliable lors d’une excursion en montagne dans les Alpes. Cette randonnée vous plonge au cœur d’un environnement naturel exceptionnel, où vous découvrirez des panoramas à couper le souffle : cimes enneigées, vallées profondes, lacs cristallins et forêts verdoyantes. Accompagné par des guides expérimentés, vous emprunterez des sentiers accessibles à tous les niveaux, que ce soit pour une balade tranquille ou un défi plus sportif. L’air pur et l''immersion dans la nature vous offriront une véritable sensation de bien-être. Vous aurez l’opportunité d’observer la faune locale, d’admirer des fleurs alpines rares et de comprendre les spécificités de cet écosystème unique. La randonnée sera également ponctuée de pauses conviviales où vous pourrez déguster des spécialités locales dans des refuges typiques. Une expérience authentique qui allie sport, nature, et découvertes culturelles. Un moment idéal pour se ressourcer et se reconnecter avec la montagne.', 'www.rando.com', 1, 2, 100, 'premium', 480, 12),
-('Atelier Créatif', 'Créez votre propre poterie', 'Paris', 'Un atelier de poterie guidé par des experts', 'www.poterie.com', 2, 1, 50, 'standard',180 , 8);
+('Balade sur la Côte Sauvage', 'Découvrez les paysages magnifiques de la Côte Sauvage à Quiberon, une expérience mêlant nature, air marin et détente.', 'Quiberon', 'Plongez au cœur de la Bretagne lors d’une balade sur la célèbre Côte Sauvage de Quiberon. Ce circuit pédestre vous offre une immersion dans des paysages maritimes spectaculaires, où falaises abruptes, plages secrètes et eaux turquoise s’entremêlent. Accompagné par un guide passionné, vous découvrirez l’histoire et les légendes locales, tout en observant la flore et la faune spécifiques à ce littoral unique. Cette aventure est ponctuée de pauses pour admirer le panorama, prendre des photos et déguster des produits locaux comme les célèbres crêpes bretonnes ou le cidre artisanal. Une activité idéale pour se ressourcer, tout en découvrant le patrimoine naturel et culturel de la Bretagne.', 'www.cotesauvage.bzh', 1, 2, 'premium', 300, 10),
+('Atelier de Tissage Breton', 'Initiez-vous à l’art du tissage traditionnel breton.', 'Vannes', 'Participez à un atelier unique où vous apprendrez les bases du tissage breton avec un artisan local. Découvrez les techniques ancestrales et repartez avec votre création.', 'www.tissagebzh.com', 2, 3, 'standard', 120, 8);
 
 INSERT INTO _offre_activite_propose_prestation (nom_prestation, id_offre_activite) VALUES
 ('Dégustation', 1),
-('Découverte historique', 2),
-('Poterie', 2);
+('Découverte historique', 1),
+('Observation de la faune', 1),
+
+-- Atelier de Tissage Breton
+('Tissage', 2),
+('Dégustation', 2);
 
 
 -- ####################################################################
@@ -86,80 +131,44 @@ INSERT INTO _offre_activite_propose_prestation (nom_prestation, id_offre_activit
 -- ####################################################################
 
 -- Insertion dans offre_visite
-INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree)
+INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree,date_evenement)
 VALUES 
-('Visite du Louvre', 'Le Louvre, musée iconique de Paris, propose une collection exceptionnelle d''œuvres d''art allant de l''Antiquité à l''art moderne.', 'Paris', 'Le Louvre, l''un des musées les plus célèbres du monde, est un véritable trésor d''art et d''histoire. Situé au cœur de Paris, ce musée abrite des milliers d''œuvres allant de l''Antiquité à la période moderne, avec des collections exceptionnelles d''art européen, oriental, islamique et égyptien. Parmi les œuvres incontournables, on trouve la célèbre "Mona Lisa" de Léonard de Vinci, "La Victoire de Samothrace" et "La Vénus de Milo". Le musée est réparti en plusieurs ailes, chacune dédiée à des civilisations et époques spécifiques. La pyramide du Louvre, conçue par l''architecte Ieoh Ming Pei, est un symbole emblématique de l''entrée principale du musée et un incontournable pour les visiteurs. En plus de ses collections permanentes, le Louvre organise régulièrement des expositions temporaires et des événements culturels, offrant ainsi une expérience dynamique et enrichissante. Une visite du Louvre est un voyage à travers le temps et les cultures, idéal pour les passionnés d''art, d''histoire et de patrimoine.', 'www.louvre.com', 1, 1, 20, 'standard', 150),
-('Tour de Bordeaux', 'Le tour de Bordeaux à vélo permet de découvrir la ville et ses environs à travers un itinéraire pittoresque, entre patrimoine historique, quais animés et vignobles.', 'Bordeaux', 'Le tour de Bordeaux à vélo offre une expérience unique pour explorer la ville et ses environs d’une manière active et agréable. Commencez par le centre historique de Bordeaux, classé au patrimoine mondial de l’UNESCO, où vous pourrez admirer ses magnifiques bâtiments, tels que la Place de la Bourse, la Grosse Cloche et la Cathédrale Saint-André. Les pistes cyclables vous guideront le long des quais de la Garonne, avec des vues splendides sur le fleuve et ses ponts emblématiques. Au-delà de la ville, le tour vous emmène dans les vignobles de la région bordelaise, célèbre pour ses crus prestigieux. Vous pourrez pédaler à travers les paysages viticoles, découvrir les châteaux et même visiter quelques caves pour une dégustation de vin. Le parcours inclut aussi des arrêts dans des parcs et des jardins verdoyants, parfaits pour une pause en plein air.', 'www.bordeaux-tour.com', 2, 3, 15, 'gratuite', 300);
+('Visite de la Ville Close', 'Découvrez la Ville Close de Concarneau, un joyau historique entouré de remparts.', 'Concarneau', 'La Ville Close, située au cœur de Concarneau, est une cité médiévale fortifiée entourée par les eaux. Ce site emblématique de Bretagne offre une plongée dans l’histoire avec ses remparts bien préservés et ses ruelles pavées. Vous pourrez visiter le musée de la Pêche, qui retrace l’histoire maritime de la région, et profiter des nombreuses boutiques d’artisans et cafés locaux. Depuis les remparts, admirez une vue imprenable sur le port et les environs. Une promenade incontournable pour les amateurs d’histoire et de paysages pittoresques.', 'www.concarneau-visite.bzh', 1, 2, 'standard', 120,14),
+('Découverte des Alignements de Carnac', 'Explorez les mystérieux alignements de Carnac, un site mégalithique unique en Europe.', 'Carnac', 'Les alignements de Carnac sont une série impressionnante de plus de 3 000 menhirs érigés il y a des milliers d’années. Ce site archéologique, unique au monde, intrigue par son ampleur et son mystère. Accompagné d’un guide, découvrez les théories sur leur origine et leur usage, ainsi que les légendes qui entourent ces pierres. Le parcours inclut une balade à travers les principaux alignements, tels que Le Ménec et Kermario, ainsi que la visite d’un tumulus. Une expérience fascinante pour les passionnés d’histoire, de culture celtique et de patrimoine breton.', 'www.carnac-aligne.bzh', 2, 3, 'standard', 180,15),
+('Balade à Saint-Malo', 'Une immersion dans les remparts de Saint-Malo, avec des panoramas exceptionnels sur la mer.', 'Saint-Malo', 'Découvrez Saint-Malo, la célèbre cité corsaire, en vous promenant sur ses remparts. Cette balade vous offre une vue imprenable sur la mer, les plages et le port. Apprenez l’histoire de cette ville fortifiée, notamment son rôle stratégique dans le commerce et la piraterie. Ne manquez pas la cathédrale Saint-Vincent et explorez les ruelles animées du centre-ville, où vous trouverez des boutiques, des crêperies et des souvenirs locaux. Une visite incontournable pour comprendre le passé maritime de la Bretagne et profiter d’un cadre exceptionnel.', 'www.saintmalo-tourisme.bzh', 2, 4, 'gratuit', 90,16);
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE SPECTACLES
 -- ####################################################################visite
 
 -- Insertion dans offre_spectacle
-INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, duree, capacite)
+INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, capacite, date_evenement)
 VALUES 
-('Concert de Jazz', 'Un concert de jazz qui vous plonge dans un univers musical unique, où l’improvisation et la créativité des musiciens créent une expérience vivante et captivante.', 'Paris', 'Un concert de jazz est une expérience musicale où l’improvisation et la créativité occupent une place centrale. Dans un cadre intimiste ou une grande salle, l’atmosphère est toujours unique, propice à la découverte et à l’évasion. Les musiciens, souvent virtuoses, jouent des standards du jazz tout en apportant leur touche personnelle, créant ainsi une alchimie avec le public. Les instruments emblématiques du genre, tels que le saxophone, la trompette, le piano et la contrebasse, se mélangent pour produire des rythmes dynamiques et des harmonies captivantes. Ce type de concert permet à chaque musicien d’exprimer sa personnalité et ses émotions à travers l’improvisation, offrant une expérience vivante et imprévisible. Chaque performance est un événement unique, un véritable voyage musical où les moments d’interaction entre les musiciens et le public renforcent l’intensité de l’expérience.', 'www.jazzparis.com', 1, 1, 40, 'standard', 60, 100),
-('Théâtre de Rue', 'Le théâtre de rue offre des spectacles vivants en extérieur, mêlant comédie, poésie et performances interactives.', 'Lyon', 'Le théâtre de rue transforme l’espace public en une scène vivante et accessible, permettant aux spectateurs de tous horizons de découvrir des performances variées. Que ce soit dans les parcs, rues ou places publiques, ces spectacles mêlent souvent comédie, poésie, cirque et musique, avec une grande proximité entre les artistes et le public. Les performances sont interactives, les spectateurs peuvent être invités à participer, créant une atmosphère festive et conviviale. Ce type de théâtre se distingue par son caractère spontané et flexible, avec des mises en scène souvent improvisées en fonction du lieu et des réactions du public. Loin des conventions des salles traditionnelles, le théâtre de rue offre une expérience immersive et éphémère, où chaque représentation devient un moment unique et vivant. C’est une célébration de l’art accessible à tous, qui surprend, divertit et connecte les gens au-delà des frontières habituelles du spectacle.', 'www.theatrelyon.com', 2, 2, 30, 'standard', 90, 50);
+('Fest-Noz Traditionnel', 'Plongez dans une soirée bretonne festive, avec danses et musique traditionnelle en live.', 'Quimper', 'Le Fest-Noz, inscrit au patrimoine immatériel de l’UNESCO, est une véritable célébration de la culture bretonne. Lors de cette soirée animée, laissez-vous emporter par les rythmes envoûtants de la musique traditionnelle jouée en live par des groupes locaux, avec des instruments tels que la bombarde, le biniou et l’accordéon. Les danses bretonnes, faciles à apprendre, invitent tout le monde, débutants ou experts, à se joindre à la ronde. Les pauses sont l’occasion de déguster des spécialités bretonnes comme le cidre et les crêpes. Un événement unique pour vivre la convivialité et la richesse culturelle de la Bretagne.', 'www.festnoz-quimper.bzh', 1, 1, 'standard', 180, 200,11),
+('Spectacle Son et Lumière', 'Découvrez l’histoire bretonne à travers un spectacle captivant mêlant projections lumineuses et musique.', 'Saint-Malo', 'Ce spectacle son et lumière, organisé dans les remparts de Saint-Malo, offre une immersion spectaculaire dans l’histoire bretonne. Les projections animées illuminent les vieilles pierres, racontant des récits captivants sur les corsaires, les batailles maritimes et les légendes locales. Accompagné d’une bande-son envoûtante et parfois de performances en direct, ce spectacle est une expérience unique pour petits et grands. Une belle façon de redécouvrir Saint-Malo sous un angle artistique et immersif.', 'www.saintmalo-spectacle.bzh', 2, 2, 'premium', 90, 300,12),
+('Concert de Musique Celtique', 'Un concert vibrant de musique celtique, mêlant instruments traditionnels et modernité.', 'Lorient', 'Plongez dans l’univers de la musique celtique avec ce concert exceptionnel organisé à Lorient, la capitale interceltique. Des artistes renommés vous offrent une performance où se mêlent instruments traditionnels comme la harpe celtique, la cornemuse et le violon, avec des arrangements modernes. Ce concert, empreint d’émotion et d’énergie, célèbre la richesse musicale des pays celtiques, avec des airs entraînants et des ballades nostalgiques. Un événement incontournable pour les amateurs de musique et de culture bretonne.', 'www.celticlorient.bzh', 2, 3, 'standard', 120, 150,13);
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE PARCS D'ATTRACTION
 -- ####################################################################
 
 -- Insertion dans offre_parc_attraction
-INSERT INTO offre_parc_attraction
-(
-    titre,
-    resume, 
-    ville, 
-    description_detaille, 
-    site_web, 
-    id_compte_professionnel, 
-    id_adresse, 
-    prix_offre, 
-    type_offre, 
-    nb_attractions, 
-    age_min, 
-    plan
-)
+INSERT INTO offre_parc_attraction(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, nb_attractions, age_min, plan)
 VALUES 
-(
-    'Parc Astérix', 
-    'Le Parc Astérix offre aventures gauloises, attractions variées, spectacles drôles et un univers immersif pour tous !', 
-    'Paris', 
-    'Le Parc Astérix est une destination unique mêlant humour, aventures et sensations fortes dans l’univers des célèbres Gaulois. Situé près de Paris, il propose une vingtaine d''attractions variées, adaptées à tous les âges : montagnes russes à couper le souffle, manèges aquatiques rafraîchissants et expériences immersives pour les plus jeunes. Des spectacles captivants, comme des cascades ou des aventures gauloises, rythment la journée et plongent les visiteurs dans une ambiance festive. Les décors inspirés des bandes dessinées d’Astérix et Obélix offrent un cadre vivant et coloré, parfait pour l’évasion. Avec une offre de restauration thématique et des hôtels confortables, le Parc Astérix garantit une expérience inoubliable, pleine de rires et d’émotions, pour toute la famille.', 
-    'www.parcasterix.com', 
-    1, 
-    1, 
-    50, 
-    'premium', 
-    20, 
-    5, 
-    'image17.webp'
-),
-(
-    'Disneyland Paris',
-    'À Disneyland Paris, plongez dans un univers magique avec des attractions emblématiques, des spectacles féeriques et des rencontres inoubliables !',
-    'Paris',
-    'Disneyland Paris est un lieu magique composé de deux parcs : Disneyland Park et Walt Disney Studios Park. Le Disneyland Park vous transporte dans cinq royaumes féeriques, avec des attractions emblématiques comme "Pirates of the Caribbean" et "Space Mountain". Les parades, feux d''artifice et spectacles ajoutent à la magie du parc. Le Walt Disney Studios Park offre une immersion dans l''univers du cinéma, avec des attractions à sensations fortes telles que "The Twilight Zone Tower of Terror" et des spectacles interactifs comme "Mickey and the Magician". Les visiteurs peuvent rencontrer leurs héros Disney, vivre des expériences uniques et profiter de nombreuses options de restauration et de shopping. Avec ses hôtels thématiques et une multitude d’animations, Disneyland Paris garantit une expérience inoubliable pour toute la famille !',
-    'www.disneylandparis.com',
-    2,
-    1,
-    70,
-    'premium',
-    30,
-    3,
-    'image18.webp'
-);
+('Parc de l’Armorique', 'Explorez le Parc Naturel Régional d’Armorique : nature, découvertes et aventures pour tous !', 'Brest', 'Le Parc Naturel Régional d’Armorique est un lieu unique où la nature et les activités ludiques se rencontrent. Avec ses sentiers de randonnée, ses circuits thématiques et ses zones dédiées à la faune et la flore bretonnes, le parc est idéal pour les amoureux de la nature. Petits et grands peuvent participer à des ateliers sur l’environnement, explorer des villages traditionnels et découvrir les légendes locales à travers des parcours interactifs. Le parc propose également des aires de jeux, des zones de pique-nique et des attractions éducatives. Une destination parfaite pour une journée en famille, mêlant détente et apprentissage dans un cadre exceptionnel.', 'www.parc-armorique.bzh', 1, 1, 'standard', 10, 3, 'plan-armorique.webp'),
+('La Récré des 3 Curés', 'Venez vivre des sensations fortes et des moments de détente dans ce parc familial breton !', 'Milizac', 'Situé à Milizac, près de Brest, La Récré des 3 Curés est un parc d’attractions familial proposant des activités variées pour tous les âges. Avec ses montagnes russes, ses manèges aquatiques et son célèbre bateau pirate, le parc offre des sensations fortes aux amateurs d’adrénaline. Les plus jeunes profiteront d’espaces adaptés, avec des structures gonflables, des petits trains et des zones de jeux. Entre deux attractions, les visiteurs peuvent se détendre dans les aires de pique-nique ou savourer des spécialités bretonnes dans les restaurants du parc. La Récré des 3 Curés garantit une journée mémorable dans un cadre verdoyant et convivial.', 'www.larecredes3cures.com', 2, 2, 'premium', 15, 5, 'plan-recre.webp'),
+('Océanopolis', 'Partez à la découverte des mondes marins dans ce parc scientifique et ludique.', 'Brest', 'Océanopolis, situé à Brest, est bien plus qu’un aquarium. C’est un parc dédié à l’exploration des océans et à la sensibilisation à leur préservation. Avec ses trois pavillons thématiques (polaire, tropical et tempéré), les visiteurs peuvent admirer une grande variété d’espèces marines, des manchots aux requins, en passant par les méduses. Des animations interactives, des projections et des ateliers pédagogiques enrichissent l’expérience. Océanopolis est un lieu incontournable pour découvrir les merveilles de la vie marine, dans un cadre moderne et immersif, adapté à tous les âges.', 'www.oceanopolis.com', 2, 3, 'standard', 8, 3, 'plan-oceanopolis.webp');
 
 -- ####################################################################
 -- INSERTION D'OFFRES DE RESTAURATION
 -- ####################################################################
 
 -- Insertion dans offre_restauration
-INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, prix_offre, type_offre, gamme_prix, carte)
+INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, gamme_prix, carte)
 VALUES 
-('Dîner gastronomique', 'Découvrez notre restaurant gastronomique offrant une cuisine raffinée, préparée avec des ingrédients d''exception et haut de gamme.', 'Paris', 'Un restaurant gastronomique incarne l’excellence culinaire, combinant créativité, qualité et raffinement. Chaque plat est conçu comme une œuvre d’art, mettant en valeur des produits locaux et de saison sublimés par des techniques innovantes. Le chef, souvent une figure reconnue, propose une expérience gustative unique, mêlant saveurs audacieuses et harmonieuses. Le cadre, élégant et soigné, crée une atmosphère propice à la détente, tandis que le service, attentif et discret, personnalise chaque moment. Sommeliers experts et équipes formées assurent un accueil haut de gamme. Plus qu’un repas, un passage dans un restaurant gastronomique est une expérience sensorielle complète, où se mêlent art de la table, exploration des saveurs et plaisir des sens, offrant une escapade culinaire inoubliable', 'www.gastroparis.com', 1, 1, 150, 'standard', '€€€', 'image19.webp'),
-('Restaurant traditionnel', 'Découvrez notre restaurant traditionnel offrant une cuisine authentique, préparée avec des ingrédients frais et locaux.', 'Lyon', 'Plongez dans l’univers culinaire de notre restaurant traditionnel, où authenticité et saveurs se rencontrent. Chaque plat est soigneusement préparé avec des ingrédients frais et de saison, sélectionnés auprès de producteurs locaux pour garantir une qualité exceptionnelle. Profitez d’une ambiance chaleureuse et conviviale, idéale pour partager un repas en famille, entre amis ou pour célébrer une occasion spéciale. Notre carte variée met à l’honneur des recettes classiques revisitées, des spécialités régionales et des desserts maison savoureux. Laissez-vous séduire par une expérience gastronomique unique, où chaque détail compte.', 'www.cuisinelyon.com', 2, 2, 60, 'standard', '€€', 'image20.webp');
+('Festin Breton', 'Découvrez un festin breton mettant à l’honneur les spécialités locales dans une ambiance chaleureuse et conviviale.', 'Quimper', 'Plongez au cœur des traditions culinaires bretonnes dans notre restaurant. Chaque plat célèbre les richesses de la Bretagne : galettes de sarrasin croustillantes, crêpes sucrées délicates, fruits de mer fraîchement pêchés et cidres artisanaux. Préparée avec soin par notre chef, notre cuisine met en avant des produits locaux et de saison, issus directement des producteurs de la région. Dans un cadre rustique et authentique, savourez une expérience unique où la convivialité est à l’honneur. Que vous veniez pour un repas en famille ou une soirée entre amis, notre établissement promet un moment inoubliable.', 'www.festinbreton.bzh', 1, 1, 'standard', '€€', 'festin-breton.webp'),
+('Restaurant Gastronomique Breton', 'Savourez une cuisine bretonne raffinée dans un cadre élégant, avec des produits de la mer et des terres bretonnes sublimés.', 'Saint-Malo', 'Notre restaurant gastronomique breton vous invite à une expérience culinaire unique, alliant tradition et modernité. À travers une carte imaginée par notre chef étoilé, découvrez des créations mettant en valeur des produits locaux d’exception : homard de Bretagne, coquilles Saint-Jacques, algues marines et légumes de saison. Chaque assiette est un hommage aux saveurs authentiques de la région, sublimées par des techniques culinaires modernes. Dans une salle élégante avec vue sur la mer, profitez d’un service attentif et personnalisé. Une adresse incontournable pour les amateurs de gastronomie et les curieux en quête de nouvelles sensations gustatives.', 'www.gastrobreton.com', 2, 2, 'premium', '€€€', 'gastro-breton.webp'),
+('Crêperie Authentique', 'Découvrez les saveurs des galettes et crêpes bretonnes dans une crêperie traditionnelle.', 'Brest', 'Notre crêperie vous invite à savourer l’authenticité des galettes et crêpes bretonnes, préparées selon les recettes traditionnelles transmises de génération en génération. Accompagnées de cidre local, nos galettes, réalisées avec de la farine de sarrasin breton, se déclinent en une variété de garnitures, des plus classiques aux plus originales. Dans un cadre chaleureux et typiquement breton, vous pourrez également déguster nos crêpes sucrées, garnies de caramel au beurre salé maison ou de confitures artisanales. Que ce soit pour un repas rapide ou un moment convivial, notre crêperie est l’adresse idéale pour découvrir ou redécouvrir les incontournables de la Bretagne.', 'www.creperieauthentique.bzh', 2, 3, 'standard', '€', 'creperie-authentique.webp');
 
 INSERT INTO _tag (nom_tag) 
 VALUES 
@@ -180,23 +189,113 @@ VALUES
 ('Technologie'),
 ('Innovation'),
 ('Eco-responsable'),
+('Nature'),
+('Famille'),
 ('Insolite'),
 ('Groupe'),
+('Musique'),
 ('Solo');
 
+-- ####################################################################
+-- ASSOCIATION DES TAGS AUX OFFRES
+-- ####################################################################
+-- Offres de restauration
 INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
 VALUES 
-(1,'Sport'),
-(1,'Montagne'),
-(2,'Bien-être'),
-(3,'Découverte'),
-(4,'Groupe'),
-(5,'Festif'),
-(6,'Insolite'),
-(7,'Aventure extrême'),
-(8,'Découverte'),
-(9,'Gastronomie'),
-(10,'Tradition');
+-- Festin Breton
+(1, 'Gastronomie'),
+(1, 'Tradition'),
+(1, 'Relaxation'),
+(1, 'Groupe'),
+
+-- Restaurant Gastronomique Breton
+(2, 'Gastronomie'),
+(2, 'Romantique'),
+(2, 'Innovation'),
+(2, 'Eco-responsable'),
+
+-- Crêperie Authentique
+(3, 'Gastronomie'),
+(3, 'Tradition'),
+(3, 'Relaxation'),
+(3, 'Découverte');
+
+-- Offres d'activités
+INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
+VALUES 
+-- Balade sur la Côte Sauvage
+(4, 'Découverte'),
+(4, 'Relaxation'),
+(4, 'Eco-responsable'),
+
+-- Atelier de Tissage Breton
+(5, 'Artisanat'),
+(5, 'Tradition'),
+(5, 'Découverte'),
+(5, 'Relaxation');
+
+-- Offres de visite
+INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
+VALUES 
+-- Visite de la Ville Close
+(6, 'Histoire'),
+(6, 'Découverte'),
+(6, 'Tradition'),
+(6, 'Relaxation'),
+
+-- Découverte des Alignements de Carnac
+(7, 'Histoire'),
+(7, 'Découverte'),
+(7, 'Insolite'),
+(7, 'Eco-responsable'),
+
+-- Balade à Saint-Malo
+(8, 'Histoire'),
+(8, 'Plage'),
+(8, 'Relaxation'),
+(8, 'Groupe');
+
+-- Offres de spectacles
+INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
+VALUES 
+-- Fest-Noz Traditionnel
+(9, 'Festif'),
+(9, 'Tradition'),
+(9, 'Musique'),
+(9, 'Groupe'),
+
+-- Spectacle Son et Lumière
+(10, 'Histoire'),
+(10, 'Innovation'),
+(10, 'Nocturne'),
+(10, 'Insolite'),
+
+-- Concert de Musique Celtique
+(11, 'Musique'),
+(11, 'Tradition'),
+(11, 'Festif'),
+(11, 'Relaxation');
+
+-- Offres de parcs d'attraction
+INSERT INTO _offre_possede_tag(id_offre, nom_tag) 
+VALUES 
+-- Parc de l’Armorique
+(12, 'Nature'),
+(12, 'Découverte'),
+(12, 'Eco-responsable'),
+(12, 'Relaxation'),
+
+-- La Récré des 3 Curés
+(13, 'Famille'),
+(13, 'Aventure extrême'),
+(13, 'Festif'),
+(13, 'Relaxation'),
+
+-- Océanopolis
+(14, 'Nature'),
+(14, 'Découverte'),
+(14, 'Innovation'),
+(14, 'Eco-responsable');
 
 INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
 (1, 'image1.webp'),
@@ -209,6 +308,10 @@ INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
 (8, 'image8.webp'),
 (9, 'image9.webp'),
 (10, 'image10.webp'),
+(11, 'image17.webp'),
+(12, 'image18.webp'),
+(13, 'image19.webp'),
+(14, 'image20.webp'),
 (1, 'image11.webp'),
 (2, 'image12.webp'),
 (3, 'image13.webp'),
@@ -217,6 +320,70 @@ INSERT INTO _offre_contient_image (id_offre, id_image) VALUES
 (6, 'image16.webp');
 
 
+INSERT INTO _horaires_du_jour (nom_jour, id_offre) VALUES
+('Lundi', 1),    
+('Mardi', 2),   
+('Mercredi', 3), 
+('Jeudi', 1),    
+('Vendredi', 2); 
+
+INSERT INTO _horaire (ouverture, fermeture, horaires_du_jour) VALUES
+('08:00', '12:00', 1),
+('13:00', '17:00', 1), 
+('09:00', '13:00', 2), 
+('14:00', '18:00', 3), 
+('08:00', '12:00', 4), 
+('13:00', '17:00', 5); 
+
+INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
+('Tarif Standard Matin', 15, 1), 
+('Tarif Réduit Matin', 10, 1),   
+('Tarif Standard Après-midi', 20, 2), 
+('Tarif Réduit Après-midi', 15, 2),   
+('Tarif Standard Soir', 25, 3), 
+('Tarif Réduit Soir', 18, 3);   
+
+
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren)
+VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 5, 
+'Société Informatique Durand', 'Spécialisée dans le développement de logiciels personnalisés.', 
+'www.durand-informatique.com', '123456789');
+
+
+INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
+VALUES 
+-- Atelier de Tissage Breton
+(3, 2, 5, 'Accueil chaleureux et service au top', 'Le personnel était très accueillant et le service irréprochable.', 1, 0, 'famille', 2, 1),
+
+-- Visite de la ville close
+(4, 3, 3, 'Bonne visite, mais quelques points négatifs', 'Le personnel était sympathique, et les découvertes intéressantes', 3, 0, 'famille', 4, 3),
+
+-- Balade à Saint-Malo
+(4, 5, 4, 'Belle promenade malgré tout', 'La balade était agréable et bien organisée.', 2, 1, 'amis', 7, 6),
+
+-- Fest-Noz
+(4, 6, 2, 'Ambiance mitigée', 'Malgré une bonne ambiance, le service et le personnel m’ont mis mal à l’aise.', 3, 2, 'amis', 8, 7),
+(3, 6, 5, 'Plats savoureux et moment agréable', 'Les crêpes étaient délicieuses, j’ai passé un bon moment.', 1, 0, 'famille', 2, 1),
+
+-- Restauration 
+(4, 12, 2, 'Expérience décevante', 'Le service n était pas à la hauteur de mes attentes. Plusieurs points à améliorer.', 4, 2, 'affaires', 4, 3),
+(3, 13, 5, 'Plats savoureux et moment agréable', 'Les pâtes étaient délicieuses, j’ai passé un très bon moment.', 1, 0, 'solo', 5, 4);
+
+INSERT INTO sae._note_detaillee (nom_note, note, id_avis) VALUES
+('Cuisine', 3, 6),
+('Service', 1, 6),
+('Ambiance', 4, 6),
+('Rapport qualité prix', 3, 6),
+('Cuisine', 5, 7),
+('Service', 4, 7),
+('Ambiance', 5, 7),
+('Rapport qualité prix', 4, 7);
+
+INSERT INTO sae._reponse(id_avis, texte, publie_le)
+VALUES 
+(3, 'Nous avons modifié notre carte.', 9),
+(4, 'Nous sommes désolé du désagrément causé.', 10);
 
 COMMIT;
 
+-- ROLLBACK;
