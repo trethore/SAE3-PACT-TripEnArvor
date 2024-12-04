@@ -58,8 +58,12 @@ if (!$submitted) {
         ?>
         <h1>Détails du compte</h1>
         <h2>Mon entreprise</h2>
+        
         <form action="/back/modifier-compte" method="POST" id="myForm">
+            <label for="test">test : </label>
+            <input type="text" name="test" id="test">
 
+        <!-- <?php /*
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -152,8 +156,8 @@ if (!$submitted) {
             </table> <?php } ?>
             <div>
             <input type="submit" value="Valider les modifications">
-        </div>
-        </form>
+        </div> */?>-->
+        </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">
             <h3>Valider les modifications</h3>
