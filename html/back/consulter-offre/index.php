@@ -424,7 +424,7 @@ try {
 
                 <?php }
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit-reponse']) && !empty($_POST['id_avis'])) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reponse']) && !empty($_POST['id_avis'])) {
                     $id_avis = intval($_POST['id_avis']); // ID de l'avis ciblé
                     $reponse = trim($_POST['reponse']);
                     $publie_le = date('Y-m-d H:i:s'); // Date actuelle
