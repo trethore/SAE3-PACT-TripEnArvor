@@ -97,6 +97,7 @@ input[placeholder = "00"]{
 
 .apropos table, .important table{
   width: 100%;
+  display: inline-block;
 }
 
 /****INFORMATIONS IMPORTANTES****/
@@ -118,6 +119,9 @@ input[placeholder = "00"]{
   width: 10%;
   padding-left: 0;
 } 
+.important img {
+  max-width: 100px;
+}
 
 /***Selects***/
 

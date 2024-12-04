@@ -212,7 +212,7 @@ try {
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                         <td><div>
                             <?php foreach ($images as $image) { ?>
-                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image" >
                             <?php } ?>
                                 <!-- <label for="file-upload">
                                     <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
@@ -268,7 +268,7 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>"> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                                <li><input type="checkbox" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } }
                         
                         ?>
