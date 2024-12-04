@@ -294,8 +294,8 @@ try {
                 <div>
                     <h2>Tarifs : </h2>
                     <table>
-                        <?php if (!empty($tarifs)) {
-                            foreach ($tarifs as $t) { 
+                        <?php foreach ($tarifs as $t) { 
+                             if (!empty($tarifs)) {
                                 if ($t['nom_tarif'] != "nomtarif1") { 
                                     if (!empty($t['nom_tarif'])) {?>
                                         <tr>
@@ -303,13 +303,11 @@ try {
                                             <td><?php echo htmlentities($t['prix']) . " €"?></td>
                                         </tr>
                                 <?  }
-                                } else {
-                                    echo "Pas de tarifs diponibles";
                                 }
+                            } else {
+                                echo "Pas de tarifs diponibles";
                             } 
-                        } else {
-                            echo "Pas de tarifs diponibles";
-                        }?>
+                        } ?>
                     </table>
                 </div>
             </div>
