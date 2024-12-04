@@ -407,47 +407,48 @@ try {
                         </div>
                     <?php } ?>
                 </div>  
+                <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+                    <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
+                        <h2>Répondre à un avis</h2>
+                        <div class="display-ligne-espace">
+                            <textarea id="reponse" name="reponse" required></textarea><br>
+                            <p class="transparent">.</p>
+                        </div>
+                        <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
+                        <button type="submit">Publier</button>
+                        <button type="button" class="cancel-form-btn">Annuler</button>
+                    </form>
 
-                <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
-                    <input type='hidden' name='id_avis' value='<?php echo htmlspecialchars($a['id_avis']); ?>' />
-                    <h2>Répondre à un avis</h2>
-                    <div class="display-ligne-espace">
-                        <textarea id="reponse" name="reponse" required></textarea><br>
-                        <p class="transparent">.</p>
-                    </div>
-                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
-                    <button type="submit">Publier</button>
-                    <button type="button" class="cancel-form-btn">Annuler</button>
-                </form>
+                    <?php if ($submitted) { 
+                        if (isset($_POST['reponse'])) {
+                            $reponse = htmlentities($_POST['reponse']);
+                        } 
+                                    
+                        $publie_le = date('Y-m-d H:i:s');
 
-                <?php if ($submitted) { 
-                    if (isset($_POST['reponse'])) {
-                        $reponse = htmlentities($_POST['reponse']);
-                    } 
-                                
-                    $publie_le = date('Y-m-d H:i:s');
+                        try {
+                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                    try {
-                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+                            $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                            $stmtInsertionDateReponse->execute([$publie_le]);
+                            $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                        $stmtInsertionDateReponse->execute([$publie_le]);
-                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                            $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                            $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
 
-                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
-                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                        $stmtInsertionReponse->execute([$a['id_avis'], $reponse, $idDateReponse]);
-
-                    } catch (PDOException $e) {
-                        echo "Erreur : " . $e->getMessage();
-                        die();
-                    } 
-                } ?>    
-                <?php $compteur++;
+                        } catch (PDOException $e) {
+                            echo "Erreur : " . $e->getMessage();
+                            die();
+                        } 
+                    } ?>    
+                    <?php $compteur++;
+                }
             } ?>  
 
         </section>        
