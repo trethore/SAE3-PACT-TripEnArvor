@@ -189,7 +189,7 @@ try {
                         } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
                             $ouverture = "Ferme bientôt";
                         }
-                    }
+                    } 
                 } ?>
                 <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
