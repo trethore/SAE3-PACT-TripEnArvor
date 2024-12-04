@@ -441,6 +441,122 @@ try {
                         // }
 
 
+
+            const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
+            const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
+            console.log(isIdProPublique);
+
+            if(isIdProPublique){
+                 document.getElementById("divtype").style.display = 'none';
+                 document.getElementById("labeltype").style.display = 'none';
+            }
+
+
+
+
+
+
+            let typecategorie = document.getElementById('categorie');
+            let typerestaurant = ["carte", "labelcarte"];
+            let typevisite = ["labelduree", "duree", "labelduree2"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
+            let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
+
+            obligatoireselontype.forEach(element => {
+                document.getElementById(element).style.display = 'none';
+            });
+
+            document.getElementById("tarifs").style.display = 'none';
+
+
+            categorie.addEventListener('change', function() {
+                const typeselectionne = categorie.value;
+                // Afficher les champs selon la catégorie sélectionnée test
+                switch (typeselectionne) {
+                    case "restaurant":
+                        afficheSelonType(typerestaurant);
+
+                        if (isIdProPrivee) {
+                            document.getElementById("labelgammedeprix").style.display = 'inline';
+                            document.getElementById("gammedeprix").style.display = 'inline';
+                        }
+                        document.getElementById("tarifs").style.display = 'none';
+
+
+                        break;
+
+                    case "activite":
+                        afficheSelonType(typeactivite);
+                        break;
+
+                    case "visite":
+                        afficheSelonType(typevisite);
+                        break;
+
+                    case "spectacle":
+                        afficheSelonType(typespectacle);
+                        break;
+
+                    case "parc":
+                        afficheSelonType(typeparc);
+                        break;
+
+                    default:
+                        console.log("Aucune catégorie sélectionnée.");
+                }
+            });
+
+
+
+            function afficheSelonType(typechoisi) {
+                obligatoireselontype.forEach(element => {
+                    document.getElementById(element).style.display = 'none';
+                });
+                typechoisi.forEach(element => {
+                    document.getElementById(element).style.display = 'inline';
+                });
+                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                    document.getElementById("tarifs").style.display = 'inline';
+                }
+            }
+
+            const boutonValider = document.getElementById("valider");
+            const lacat = categorie.value; // Récupère la valeur de la catégorie
+            
+        
+            boutonValider.addEventListener("click", function (event) {
+                if (typeselectionne === "") {
+                    event.preventDefault(); // Empêche la soumission
+                    let pasDeCat = alert("Selectionner une categorie");
+                }
+            });
+
+            // const tarif = tarif.value; // Récupère la valeur de la tarif
+
+            // if((lacat !== "restaurant")&&(tabtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdeTarif = alert("Remplir au moins 1 tarif");
+            //     });
+            // }
+            // if((lacat !== "restaurant")&&(tabnomtarifjs.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdenomTarif = alert("Remplir au moins 1 nom de tarif");
+            //     });
+            // }
+            // const gammeprix = gammedeprix.value;
+            // if((lacat === "restaurant")&&(gammeprix.isEmpty === true)){
+            //     boutonValider.addEventListener("click", function (event) {
+            //         event.preventDefault(); // Empêche la soumission
+            //         let pasdegammeprix = alert("Remplir la gamme de prix");
+            //     });
+            // }
+
+
+
         </script>
     </body>
 </html>
