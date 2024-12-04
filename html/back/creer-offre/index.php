@@ -346,10 +346,10 @@
 
             // Récupération des données du formulaire avec $_POST
             
+           
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
-                die("Erreur : La date de l'événement est manquante.");
+                die("Erreur : la date de l'événement est obligatoire.");
             }
-            
             $date_event = $_POST['date_event'];
             
 
@@ -451,7 +451,17 @@
                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 
+                if (!isset($titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent)) {
+                    die("Erreur : certains paramètres sont manquants.");
+                }
+                
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+                echo "<pre>";
+print_r([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
+echo "</pre>";
+die();
+
 
 
             
@@ -576,8 +586,10 @@
                         } 
                         
 
-                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
+                        $requete = "INSERT INTO sae.offre_" . $requeteCategorie . " (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        
+                        $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
+                                                $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
