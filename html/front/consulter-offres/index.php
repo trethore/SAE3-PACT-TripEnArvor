@@ -296,7 +296,7 @@ try {
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-vide']").length;
-                        return stars >= selectedNote;
+                        return stars + 1 >= selectedNote;
                     });
                 }
 
