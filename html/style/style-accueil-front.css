@@ -76,15 +76,14 @@ section {
 
 .arrow-left, .arrow-right {
     position: absolute;
-    top: 50%;
+    bottom: 10px;
     transform: translateY(-50%);
     z-index: 1;
 }
 
 .arrow-left > img, .arrow-right > img {
-    background-color: var(--violet-principal);
     border-radius: 90px;
-} 
+}
 
 .arrow-left {
     left: 20px;
@@ -96,8 +95,8 @@ section {
 
 .titre {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 10px;
+    bottom: 10px;
 
     z-index: 1;
 
@@ -118,6 +117,8 @@ section {
     width: auto;
 
     opacity: 90%;
+
+    padding: 10px;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;

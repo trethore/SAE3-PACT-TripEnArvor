@@ -74,7 +74,7 @@ try {
                     <img src="/images/universel/photos/image2.webp" alt="Image">
                     <img src="/images/universel/photos/image3.webp" alt="Image">
                 </div>
-                <div class="display-ligne-espace">
+                <div>
                     <div class="arrow-left">
                         <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
                     </div>
