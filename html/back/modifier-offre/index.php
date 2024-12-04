@@ -211,6 +211,9 @@ try {
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                         <td><div>
+                            <?php foreach ($images as $image) { ?>
+                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                            <?php } ?>
                                 <!-- <label for="file-upload">
                                     <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                                 </label> -->
@@ -317,14 +320,7 @@ try {
                         </div>
 
                     <br>
-                    <table>
-                        <?php foreach ($tarifs as $t) { ?>
-                            <tr>
-                                <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                            </tr>
-                        <?php } ?>
-                    </table>
+                    
 
 
                     <!-- <h3>Ouverture</h3>
@@ -413,6 +409,11 @@ try {
                 </div>
             </footer>
         <?php } else {
+            if (isset($_POST['photo'])) {
+                $photo1 = $_FILE['photo'];
+            }else{
+                $photo1 = $images[0];
+            }
              
              try {
     
