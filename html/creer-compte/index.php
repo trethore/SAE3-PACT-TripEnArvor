@@ -239,21 +239,13 @@ if (!$submitted) {
                 $ok = false;
                 break;
         }
-    
-?>
-    <h1>OK</h1>
-    <a href=".">ok</a>
-<?php
         if (isIdProPrivee($_SESSION['id']) || isIdProPublique($_SESSION['id'])) {
             redirectTo('/back/liste-back/');
         } else if (isIdMember($_SESSION['id'])) {
             redirectTo('/front/consulter-offres/');
         }
     } else {
-?>
-        <h1>Pas OK</h1>
-        <a href=".">ok</a>
-<?php
+        http_response_code(500);
     }
 }
 ?>
