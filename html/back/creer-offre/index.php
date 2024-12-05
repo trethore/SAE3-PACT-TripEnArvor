@@ -229,7 +229,7 @@ try {
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
                 <!-- viste et spectacle -->
                 <br>
-                <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
+                <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label>
                 <input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
@@ -624,7 +624,7 @@ try {
                         break;
 
                     case 'spectacle':
-
+                        try {
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
@@ -632,13 +632,18 @@ try {
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
                             print_r("id de la date " .$idDateEvent);
                         
+                        } catch (PDOException $e) {
+                            // Affichage de l'erreur en cas d'échec
+                            print " Erreur !: " . $e->getMessage() . "<br/>";
+                        }
+                            
                             // Requête pour insérer l'offre dans _offre_spectacle
                             $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                                         VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                        
+                            print("id de la date " .$idDateEvent);
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
             
 
