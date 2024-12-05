@@ -583,7 +583,7 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { 
-                        print_r($noteDetaillee);
+                        print_r($n);
                         foreach ($noteDetaillee as $n) { ?>
                             <div class="display-ligne">
                                 <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
