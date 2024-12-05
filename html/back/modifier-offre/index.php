@@ -3,6 +3,11 @@ session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+
+
 
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
@@ -111,6 +116,8 @@ try {
     <link rel="stylesheet" href="/style/style_HFB.css" />
     <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
     <title>Modifier offre</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
     <body>
         <header id="header">

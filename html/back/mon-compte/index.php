@@ -1,9 +1,16 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+startSession();
+if (!isset($_SESSION["id"])) {
+    header("Location: /se-connecter/");
+}
+$id_compte = $_SESSION["id"];
+redirectToConnexionIfNecessaryPro($id_compte);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -12,9 +19,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-startSession();
-$id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessary($id_compte);
+
 
 
 $typeCompte = getTypeCompte($id_compte);
@@ -34,6 +39,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
     <header>
@@ -69,34 +75,34 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td><?php echo htmlentities($detailCompte["denomination"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["denomination"] ?? '');?></td>
                 </tr>
                 <?php if ($typeCompte == 'proPrive') {?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><?php echo htmlentities($detailCompte["siren"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["siren"] ?? '');?></td>
                 </tr>
                 <?php } ?>
                 <tr>
                     <td>A propos</td>
                     <td>
-                        <div><?php echo htmlentities($detailCompte["a_propos"]);?></div>
+                        <div><?php echo htmlentities($detailCompte["a_propos"] ?? '');?></div>
                     </td>
                 </tr>
                 <tr>
                     <td>Site web</td>
-                    <td><?php echo htmlentities($detailCompte["site_web"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["site_web"] ?? '');?></td>
                 </tr>
             </table>
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
                     <td>Nom</td>
-                    <td><?php echo htmlentities($detailCompte["nom_compte"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["nom_compte"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Prenom</td>
-                    <td><?php echo htmlentities($detailCompte["prenom"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["prenom"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
@@ -104,22 +110,15 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
-                    <td><?php echo htmlentities($detailCompte["tel"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["tel"] ?? '');?></td>
                 </tr>
-                <tr style="display: none;">
-                    <td>N° IBAN</td>
-                    <td><?php echo htmlentities("à implémenter");?></td>
-                </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
-                </tr>
+
             </table>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?></td>
                 </tr>
                 <?php  if (isset($detailCompte["complement_adresse"])) { ?>
                     <tr>
@@ -129,15 +128,15 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 <?php } ?>
                 <tr>
                     <td>Code postal</td>
-                    <td><?php echo htmlentities($detailCompte["code_postal"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["code_postal"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><?php echo htmlentities($detailCompte["ville"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["ville"] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Pays</td>
-                    <td><?php echo htmlentities($detailCompte["pays"]);?></td>
+                    <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
                 </tr>
             </table>
             <div>

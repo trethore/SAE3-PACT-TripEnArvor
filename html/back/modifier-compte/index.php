@@ -1,11 +1,16 @@
 <?php 
-require_once('../../utils/session-utils.php');
+ob_start();
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+
 startSession();
 $id_compte = $_SESSION["id"];
-require_once('../../php/connect_params.php');
-require_once('../../utils/compte-utils.php');
-require_once('../../utils/site-utils.php');
-require_once('../../utils/auth-utils.php');
+
+ob_end_flush();
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -13,7 +18,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-redirectToConnexionIfNecessary($id_compte);
+redirectToConnexionIfNecessaryPro($id_compte);
 
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
@@ -33,6 +38,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
 <?php
@@ -118,7 +125,6 @@ if (!$submitted) {
                     </td>
                 </tr>
             </table>
-            <?php if (isset($detailCompte["id_adresse"])) { ?>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
@@ -145,7 +151,7 @@ if (!$submitted) {
                     <td>Pays</td>
                     <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"]);?>"></td>
                 </tr>
-            </table> <?php } ?>
+            </table>
             <div>
             <input type="submit" value="Valider les modifications">
         </div>
