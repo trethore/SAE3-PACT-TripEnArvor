@@ -639,7 +639,6 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { ?>
-                        <div>
                         <?php foreach ($noteDetaillee as $n) { ?>
                             <div class="display-ligne">
                                 <?php if ($n['id_avis'] == $a['id_avis']) { ?>
@@ -653,7 +652,6 @@ try {
                                 } ?>
                             </div>
                         <?php } ?>
-                        </div>
                     <?php } 
                     $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
