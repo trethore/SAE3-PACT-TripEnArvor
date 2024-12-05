@@ -156,8 +156,9 @@ try {
                         <h3>Date</h3>
                         <div>
                             <div>
-                                <label>Période &nbsp;:</label>
+                                <label>Période &nbsp;: du </label>
                                 <input id="start-date" type="date">
+                                <label> au </label>
                                 <input id="end-date" type="date">
                             </div>
                             <div>
@@ -273,6 +274,23 @@ try {
             const offers = Array.from(document.querySelectorAll(".offre"));
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
+
+            const input1 = document.getElementById('start-date');
+            const input2 = document.getElementById('end-date');
+            const input3 = document.getElementById('open-date');
+
+            input1.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input2.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input3.addEventListener('focus', () => {
+                input1.value = '';
+                input2.value = '';
+            });
 
             const initialOrder = offers.slice();
 
