@@ -88,8 +88,8 @@ try {
                     <div class="disponibilite">
                         <h3>Disponibilité</h3>
                         <div>
-                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
-                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
+                            <label><input type="radio" name="disponibilite"> Ouvert</label>
+                            <label><input type="radio" name="disponibilite"> Fermé</label>
                         </div>
                     </div>
                         
@@ -140,7 +140,7 @@ try {
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <!--<label><input type="radio" name="localisation"> Autour de moi</label>-->
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
                                 <input type="text" name="location" id="search-location" placeholder="Rechercher...">
@@ -156,12 +156,14 @@ try {
                         <h3>Date</h3>
                         <div>
                             <div>
-                                <label>Date de début &nbsp;:</label>
-                                <input type="date">
+                                <label>Période &nbsp;: du </label>
+                                <input id="start-date" type="date">
+                                <label> au </label>
+                                <input id="end-date" type="date">
                             </div>
                             <div>
-                                <label>Date de fin &emsp;&emsp;:</label>
-                                <input type="date">
+                                <label>Date d'ouverture :</label>
+                                <input id="open-date" type="date">
                             </div>
                         </div>
                     </div>
@@ -212,7 +214,11 @@ try {
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
-                                    <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
+                                    <?php if ($tab["categorie"] == "Restauration") { ?>
+                                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
+                                    <?php } else { ?>
+                                        <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -268,6 +274,23 @@ try {
             const offers = Array.from(document.querySelectorAll(".offre"));
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
+
+            const input1 = document.getElementById('start-date');
+            const input2 = document.getElementById('end-date');
+            const input3 = document.getElementById('open-date');
+
+            input1.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input2.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input3.addEventListener('focus', () => {
+                input1.value = '';
+                input2.value = '';
+            });
 
             const initialOrder = offers.slice();
 

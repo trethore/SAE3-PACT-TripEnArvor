@@ -459,6 +459,7 @@ try {
                 </div>
             </footer>
         <?php } else {
+            $id_offre = $id_offre_cible;
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
@@ -572,6 +573,9 @@ try {
             }
             $pays = "France";
             $id_adresse =null;
+            if (isset($_POST['lacat'])) {
+                $categorie = $_POST['lacat'];
+            }
 
 
             if ($categorie !== "restaurant") {
@@ -650,10 +654,10 @@ try {
                            
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_activite
-                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
                             $stmt = $conn->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
 
@@ -785,7 +789,7 @@ try {
                             $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif1, $type, $resume, $descriptionL, $lien]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
