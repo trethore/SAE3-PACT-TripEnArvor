@@ -126,7 +126,7 @@ try {
             </div>
         </section>
 
-        <h1>Découvrir la Liste des Offres Disponibles</h1>
+        <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
         <!--
         <h2>Nouveautés</h2>
