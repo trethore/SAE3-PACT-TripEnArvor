@@ -582,8 +582,7 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { 
-                        foreach ($noteDetaillee as $n) { ?>
-                            <?php print_r($n); ?>
+                        foreach ($noteDetaillee['id_avis'] as $n) { ?>
                             <div class="display-ligne">
                                 <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
                                 <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
