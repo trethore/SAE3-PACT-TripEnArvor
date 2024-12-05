@@ -427,6 +427,16 @@ h3 {
     border-radius: 5px 5px 0px 0px;
 }
 
+.en-relief-offre .image-offre {
+    position: absolute;
+    width: 321px;
+    height: 208px;
+    margin: 0.3em;
+    left: auto;
+    top: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
 .titre-offre {
     position: absolute;
     left: 2%;
