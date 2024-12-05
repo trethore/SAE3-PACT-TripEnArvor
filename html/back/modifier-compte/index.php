@@ -231,7 +231,7 @@ try {
         </div>
         <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
-            <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+            <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
             <div>
                 <button id="boutonReprendre"> Reprendre </button>
                 <button id="boutonQuitter"> Quitter </button>
