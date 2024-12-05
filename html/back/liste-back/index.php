@@ -125,7 +125,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <label style="display: none;"><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
                                 <input type="text" name="location" id="search-location" placeholder="Rechercher...">
@@ -143,7 +143,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     </div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <div class="date" style="display: none;">
                         <h3>Date</h3>
                         <div>
                             <div>
