@@ -1,13 +1,13 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
-
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
-startSession();
-$id_compte = $_SESSION["id"];
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+
+startSession();
+$id_compte = $_SESSION["id"];
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -35,6 +35,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
 <?php

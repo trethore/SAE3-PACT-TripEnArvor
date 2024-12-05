@@ -80,6 +80,9 @@ try {
     // ===== Requête SQL pour récupérer les avis d'une offre ===== //
     $avis = getAvis($id_offre_cible);
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
+    $noteDetaillee = getAvisDetaille($id_offre_cible);
+
     // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
     $membre = getInformationsMembre($id_offre_cible);
 
@@ -386,6 +389,19 @@ try {
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+                    <?php if ($categorie == "Restauration") { 
+                        foreach ($noteDetaillee as $n) { ?>
+                            <div class="display-ligne">
+                                <p><?php echo htmlentities($n['nom_note']) ?></p>
+                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                                <?php } 
+                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                                <?php } ?>
+                            </div>
+                        <?php }
+                    } ?>
                     <!-- <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">

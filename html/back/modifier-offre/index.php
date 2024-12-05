@@ -1,6 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 session_start();
 if (isset($_POST['titre'])) { // les autres svp²
@@ -97,7 +98,7 @@ try {
 
     $categorieBase = $categorie;
 
-    $id_offre = $_GET['id'];
+    
 
 ?>
 
@@ -110,6 +111,8 @@ try {
     <link rel="stylesheet" href="/style/style_HFB.css" />
     <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
     <title>Modifier offre</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
     <body>
         <header id="header">
@@ -389,7 +392,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre ?>'" >
+                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" >
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
