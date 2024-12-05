@@ -30,4 +30,3 @@ const OFFRES_UTILS = '/utils/offres-utils.php';
 const SESSION_UTILS = '/utils/session-utils.php';
 const SITE_UTILS = '/utils/site-utils.php';
 ?>
-
