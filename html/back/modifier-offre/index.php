@@ -1,8 +1,9 @@
 <?php
+session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
-session_start();
+
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
