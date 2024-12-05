@@ -6,7 +6,7 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: var(--noir);
-    background-color: var(--blanc);
+    background: var(--blanc);
 }
 
 h1 {
@@ -510,8 +510,8 @@ h3 {
     color: var(--blanc);
 
     position: absolute;
-    left: 65%;
-    bottom: -30%;
+    left: 70%;
+    bottom: -3em;
 
     font-size: 10px;
     font-weight: 600;
