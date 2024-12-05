@@ -390,7 +390,7 @@ try {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
-                        return offerAvailability === availability;
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
                     });
                 }
 
