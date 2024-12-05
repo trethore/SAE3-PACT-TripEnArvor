@@ -566,7 +566,7 @@ try {
                         $requeteCategorie = 'spectacle';
                         break;
                     case 'visite':
-                        $requeteCategorie = 'visite';
+                        $requeteCategorie = 'visite';     
                         break;
                     case "restaurant":
                             $requeteCategorie = 'restauration';
@@ -579,10 +579,10 @@ try {
                 switch ($categorie) {
                     case 'activite':
                         $dbh->beginTransaction();
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
