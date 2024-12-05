@@ -7,6 +7,29 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
+
+function get_file_extension($type) {
+    $extension = '';
+    switch ($type) {
+        case 'image/png':
+            $extension = '.png';
+            break;
+        case 'image/jpeg':
+            $extension = '.jpg';
+            break;
+        case 'image/webp':
+            $extension = '.webp';
+            break;
+        case 'image/gif':
+            $extension = '.gif';
+            break;
+        default:
+            die("probleme extension image");
+            break;
+    }
+    return $extension;
+}
+
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -165,8 +188,9 @@ try {
             <main>
                 
                 <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
+                <?php print_r($id_offre_cible); ?>
 
-                <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+                <form action="index.php?id=<?php echo $id_offre_cible ?>" method="post" enctype="multipart/form-data" id="dynamicForm">
 
                     <h3>Informations importantes</h3>
 
@@ -395,7 +419,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" > </button>
+                        <input class="valider" type="submit" value="Modifier l'offre">
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
@@ -435,6 +459,7 @@ try {
                 </div>
             </footer>
         <?php } else {
+            $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
             }
@@ -511,7 +536,6 @@ try {
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
                 }
-
             }
 
             if (isset($_POST['photo'])) {
@@ -552,7 +576,7 @@ try {
 
             if ($categorie !== "restaurant") {
                 foreach ($liste_tags as $tag) {
-                    if (isset($_POST[$tag['nom_tag']])) {
+                    if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
                     }
                 }
@@ -560,7 +584,8 @@ try {
            
             $descriptionL = $_POST['descriptionL'];
             
-             
+             print_r($_FILES);
+             print($photo1);
              try {
 
                 // Vérifier si l'id_compte est défini (s'il est connecté)

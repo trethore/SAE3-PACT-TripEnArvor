@@ -128,6 +128,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>
@@ -407,6 +408,40 @@ try {
                                 <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
                                 <p class="transparent">.</p>
                             </div>
+                            <?php if ($categorie == "Restauration") { ?>
+                                <div class="display-ligne-espace">
+                                    <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_service">Saisissez une note pour le service</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                            <?php } ?>
                             <div class="display-ligne-espace">
                                 <label for="date">Saisissez la date de votre visite</label>
                                 <p class="transparent">.</p>
@@ -433,6 +468,20 @@ try {
                             } 
                             if (isset($_POST['note'])) {
                                 $note = intval($_POST['note']);
+                            }
+                            if ($categorie == "Restauration") {
+                                if (isset($_POST['note_cuisine'])) {
+                                    $noteCuisine = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_service'])) {
+                                    $noteService = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_ambiance'])) {
+                                    $noteAmbiance = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_rapport'])) {
+                                    $noteRapport = intval($_POST['note']);
+                                }
                             }
                             if (isset($_POST['date'])) {
                                 $visite_le = explode('T', $_POST['date']);
@@ -471,6 +520,23 @@ try {
                                 $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                                 $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                                $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
+
+                                $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
+                                $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $idAvis]);
+
+                                $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionService = $dbh->prepare($reqInsertionService);
+                                $stmtInsertionService->execute(["Service", $noteService, $idAvis]);
+
+                                $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
+                                $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $idAvis]);
+
+                                $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
+                                $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
                             } catch (PDOException $e) {
                                 echo "Erreur : " . $e->getMessage();
                                 die();
@@ -493,7 +559,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">

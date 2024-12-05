@@ -28,6 +28,7 @@ try {
     <title>Se connecter</title>
     <link rel="stylesheet" href="/style/style-se-connecter.css">
     <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="connecter">
     <!-- Logo -->

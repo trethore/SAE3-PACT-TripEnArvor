@@ -1,9 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +17,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Accueil</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
     <header>
