@@ -227,8 +227,11 @@ try {
                 <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
-
+                <!-- viste et spectacle -->
                 <br>
+                <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
+                <input type="date" id="date_event" name="date_event">
+               
                 <!-- spectacle -->
                 <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
                 <br>
@@ -289,10 +292,7 @@ try {
 
                 
                 <br>
-                <div id="date_evenement">
-                    <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
-                    <input type="date" id="date_event" name="date_event">
-                </div>
+                
 
 
                 <!-- <h3>Ouverture</h3>
