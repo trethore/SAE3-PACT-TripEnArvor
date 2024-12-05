@@ -673,7 +673,6 @@ try {
                                 throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
                             }
                         
-                            print_r("id de la date " . $idDateEvent);
                         
                             // Insertion dans la table offre_spectacle
                             $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
@@ -734,8 +733,8 @@ try {
                                 throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
                             }
                         
-                            print_r("id de la date " . $idDateEvent);
-                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
 
