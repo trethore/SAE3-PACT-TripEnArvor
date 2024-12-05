@@ -648,6 +648,7 @@ try {
                         } catch (PDOException $e) {
                             // Affichage de l'erreur en cas d'échec
                             print " Erreur !: " . $e->getMessage() . "<br/>";
+                            print "erreur insertion";
                         }
                             
                             
