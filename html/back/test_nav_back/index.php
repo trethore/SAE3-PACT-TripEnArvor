@@ -43,7 +43,11 @@ try {
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
-                <?php } ?>
+                <?php } 
+                echo '<pre>';
+                print_r($offres);
+                echo '</pre>';
+                ?>
             </datalist>
 
         </div>

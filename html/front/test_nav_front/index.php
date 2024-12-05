@@ -37,8 +37,7 @@ try {
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php var_dump($offres);
-                    ?>
+                <?php foreach ($offres as $offre) { ?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
@@ -49,21 +48,6 @@ try {
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         <script>
-
-document.addEventListener("DOMContentLoaded", () => {
-    // Sélectionnez le datalist
-    const datalist = document.querySelector("#cont");
-
-    // Parcourez toutes les options du datalist
-    const options = Array.from(datalist.options).map(option => ({
-        value: option.value,
-        id: option.getAttribute("data-id")
-    }));
-
-    // Affichez les options dans la console
-    console.log("Liste des offres dans le datalist :", options);
-});
-
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
                 const datalist = document.querySelector("#cont");
