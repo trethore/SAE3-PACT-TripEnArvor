@@ -470,16 +470,16 @@ try {
                             }
                             if ($categorie == "Restauration") {
                                 if (isset($_POST['note_cuisine'])) {
-                                    $noteCuisine = intval($_POST['note']);
+                                    $noteCuisine = intval($_POST['note_cuisine']);
                                 }
                                 if (isset($_POST['note_service'])) {
-                                    $noteService = intval($_POST['note']);
+                                    $noteService = intval($_POST['note_service']);
                                 }
                                 if (isset($_POST['note_ambiance'])) {
-                                    $noteAmbiance = intval($_POST['note']);
+                                    $noteAmbiance = intval($_POST['note_ambiance']);
                                 }
                                 if (isset($_POST['note_rapport'])) {
-                                    $noteRapport = intval($_POST['note']);
+                                    $noteRapport = intval($_POST['note_rapport']);
                                 }
                             }
                             if (isset($_POST['date'])) {
