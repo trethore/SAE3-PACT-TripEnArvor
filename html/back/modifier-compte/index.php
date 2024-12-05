@@ -73,13 +73,13 @@ if (!$submitted) {
                 </tr>
                 <?php if ($typeCompte == 'proPrive') {
                         // Préparation et exécution de la requête
-                        $stmt = $conn->prepare($reqProPrive);
-                        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                        $stmt->execute();
-                        $proPriveSiren = $stmt->fetch(PDO::FETCH_ASSOC);?>
+                        $stmt2 = $conn->prepare($reqProPrive);
+                        $stmt2->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+                        $stmt2->execute();
+                        $proPriveSiren = $stmt2->fetch(PDO::FETCH_ASSOC);?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($stmt["siren"] ?? '');?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($stmt2["siren"] ?? '');?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
