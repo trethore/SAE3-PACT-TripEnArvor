@@ -158,7 +158,7 @@ try {
                             <div>
                                 <label>Période &nbsp;: du </label>
                                 <input id="start-date" type="date">
-                                <label> au </label>
+                                <label style="margin-left: 10px;"> au </label>
                                 <input id="end-date" type="date">
                             </div>
                             <div>
