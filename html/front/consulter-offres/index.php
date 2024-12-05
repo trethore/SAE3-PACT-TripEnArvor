@@ -87,8 +87,8 @@ try {
                     <div class="disponibilite">
                         <h3>Disponibilité</h3>
                         <div>
-                            <label><input type="radio" name="disponibilite"> Ouvert</label>
-                            <label><input type="radio" name="disponibilite"> Fermé</label>
+                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
+                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
                         </div>
                     </div>
                         
@@ -265,10 +265,10 @@ try {
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const offers = Array.from(document.querySelectorAll(".offre"));
-
             const noOffersMessage = document.querySelector(".no-offers-message");
-
             const locationInput = document.getElementById("search-location");
+
+            const initialOrder = offers.slice();
 
             h2.addEventListener("click", () => {
                 fondFiltres.classList.toggle("hidden");
@@ -353,7 +353,7 @@ try {
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "default") {
-
+                    offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
                 }
             };
 
