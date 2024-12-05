@@ -585,7 +585,7 @@ try {
                         foreach ($noteDetaillee as $n) { ?>
                             <div class="display-ligne">
                                 <p><strong><?php echo htmlentities($n[$compteur]['nom_note']) ?></strong></p>
-                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n[$compteur]['note'] ; $etoileJaune++) { ?>
+                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                 <?php } 
                                 for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
