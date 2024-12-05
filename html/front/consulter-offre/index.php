@@ -142,7 +142,7 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
     $stmt->execute();
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
 } catch (PDOException $e) { 
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
@@ -151,14 +151,14 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
         <datalist id="cont">
-            <?php foreach ($offres as $offre) { ?>
-                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                    <?php echo htmlspecialchars($offre['titre']); ?>
+            <?php foreach ($of as $o) { ?>
+                <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                    <?php echo htmlspecialchars($o['titre']); ?>
                 </option>
             <?php } ?>
         </datalist>
