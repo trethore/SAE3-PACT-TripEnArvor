@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const divEmail = document.getElementById("div-email");
     const inputEmail = document.getElementById("email");
     const divPassword = document.getElementById("div-password");
+    const inputPassword = document.getElementById("password");
     const divConfirmPassword = document.getElementById("div-confirm-password");
+    const inputConfirmPassword = document.getElementById("confirm-password");
     const divNameAndFirstName = document.getElementById("div-name-and-first-name");
     const divName = document.getElementById("div-name");
     const divFirstName = document.getElementById("div-first-name");
@@ -77,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var pseudoExist = false;
     var emailExist = false;
+    var differentPasswords = false;
 
     function setRequired(element, required) {
         element.querySelector("label span").style.display = required ? "inline" : "none";
@@ -117,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function disableSubmitButton() {
-        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist && !emailExist) {
+        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist && !emailExist && !differentPasswords) {
             submitInput.disabled = false;
         } else {
             submitInput.disabled = true;
@@ -211,5 +214,21 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => {
                 console.error('Error:', error);
             });
+    });
+
+    inputConfirmPassword.addEventListener("blur", function() {
+        const differentPasswordsMessage = document.getElementById("different-passwords-message");
+        if (inputConfirmPassword.value !== inputPassword.value) {
+            differentPasswordsMessage.style.display = "inline";
+            differentPasswords = true;
+            divPassword.querySelector("input").style.border = "1px solid red";
+            divConfirmPassword.querySelector("input").style.border = "1px solid red";
+        } else {
+            differentPasswordsMessage.style.display = "none";
+            differentPasswords = false;
+            divPassword.querySelector("input").style.border = "";
+            divConfirmPassword.querySelector("input").style.border = "";
+        }
+        disableSubmitButton();
     });
 });
