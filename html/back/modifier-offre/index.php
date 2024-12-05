@@ -32,6 +32,17 @@ function get_file_extension($type) {
     return $extension;
 }
 
+Function enleveaccents($chaine){
+    $string= strtr($chaine,
+
+    "Ã â¬Ã ÂÃ âÃ Â Ã âÃ â¦Ã Â Ã Â¡Ã Â¢Ã Â Ã Â¤Ã Â¥Ã âÃ âÃ âÃ â¢Ã â" .
+    "Ã ËÃ Â²Ã Â³Ã Â´Ã ÂµÃ Â¶Ã Â¸Ã ËÃ â°Ã Å Ã â¹Ã¨Ã©ÃªÃ Â«Ã â¡Ã Â§Ã ÅÃ" .
+    "ÂÃ Å½Ã ÂÃ Â¬Ã Â­Ã Â®Ã Â¯Ã â¢Ã Å¡Ã âºÃ ÅÃ Â¹Ã ÂºÃ Â»Ã Â¼Ã Â¿Ã âÃ Â±",
+    "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
+
+    return $string;
+} ;
+
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -124,7 +135,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = $categorie;
+    $categorieBase = strtolower(enleveaccents($categorie));
 
     
 
