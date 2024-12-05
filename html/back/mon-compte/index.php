@@ -1,11 +1,14 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 startSession();
+if (!isset($_SESSION["id"])) {
+    header("Location: /se-connecter/");
+}
 $id_compte = $_SESSION["id"];
 redirectToConnexionIfNecessaryPro($id_compte);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 
 try {
