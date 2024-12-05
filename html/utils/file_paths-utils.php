@@ -15,6 +15,7 @@ const BACK_MON_COMPTE = '/back/mon-compte';
 const FRONT_CONSULTER_OFFRE = '/front/consulter-offre';
 const FRONT_CONSULTER_OFFRES = '/front/consulter-offres';
 const FRONT_MON_COMPTE = '/front/mon-compte';
+const FRONT_ACCUEIL = '/front/accueil';
 
 // Routes générales
 const CREER_COMPTE = '/creer-compte';
