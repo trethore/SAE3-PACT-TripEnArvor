@@ -639,8 +639,8 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { ?>
-                        <?php foreach ($noteDetaillee as $n) { ?>
-                            <div class="display-ligne">
+                        <div>
+                            <?php foreach ($noteDetaillee as $n) { ?>
                                 <?php if ($n['id_avis'] == $a['id_avis']) { ?>
                                     <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
@@ -650,8 +650,8 @@ try {
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                     <?php } 
                                 } ?>
-                            </div>
-                        <?php } ?>
+                            <?php } ?>
+                        </div>
                     <?php } 
                     $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
