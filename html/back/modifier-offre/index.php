@@ -73,7 +73,7 @@ try {
 // ===== GESTION DE L'OUVERTURE ===== //
 
     // ===== Requête SQL pour récupérer les jours d'ouverture d'une offre ===== //
-    $jours = getJoursOuverture($id_offre_cible);
+    //$jours = getJoursOuverture($id_offre_cible);
     
     // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     $horaire = getHorairesOuverture($id_offre_cible);
