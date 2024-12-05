@@ -578,6 +578,7 @@ try {
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
+                        $dbh->beginTransaction();
                         $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
@@ -589,6 +590,7 @@ try {
                         break;
 
                     case 'parc':
+                        $dbh->beginTransaction();
                         $file = $_FILES['plan'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -717,14 +719,59 @@ try {
 
 
                     case 'visite':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
+                        $dbh->beginTransaction();
+                        try {
+                            if (!$dbh->inTransaction()) {
+                                $dbh->beginTransaction();
+                            }
+                        
+                            // Insertion de la date dans la table _date
+                            $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                            $stmtInsertionDateEvent->execute([$date_event]);
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        
+                            if (!is_int($idDateEvent)) {
+                                throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
+                            }
+                        
+                            print_r("id de la date " . $idDateEvent);
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
 
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        
+                            // Insertion d'une image liée à l'offre
+                            if (!empty($file_extension)) {
+                                $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                                $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                                $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                            } else {
+                                throw new Exception("L'offre doit contenir au moins une image.");
+                            }
+                        
+                            // Commit de la transaction
+                            $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
+                        
                         break;
 
+
                     case 'restaurant':
+                        $dbh->beginTransaction();
                         $file = $_FILES['carte'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -763,17 +810,19 @@ try {
                     }
                     
 
-                    // if ($file_extension !== '') {
+                    if (($file_extension !== '') && ($categorie !== "visite") && ($categorie !== "spectacle")) {
 
-                    //     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
-                    //     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                    //     $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
-                    //     $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                        $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                        $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                        $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
-                    // }
-                    // // Commit de la transaction
-                    // $dbh->commit();
+
+                         // Commit de la transaction
+                        $dbh->commit();
+                    }
+                   
 
 
                     if (($isIdProPrivee)&&($categorie !== "restaurant")){
