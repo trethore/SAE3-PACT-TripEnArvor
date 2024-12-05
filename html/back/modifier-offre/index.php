@@ -661,7 +661,6 @@ try {
 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
-                    print($id_offre);
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
                         if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
@@ -679,12 +678,20 @@ try {
                     switch ($categorie) {
                         case 'activite':
                            
-                            // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_activite
-                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
-                            $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            SET titre = ?, 
+                                resume = ?, 
+                                ville = ?, 
+                                duree = ?, 
+                                age_min = ?, 
+                                id_compte_professionnel = ?, 
+                                abonnement = ?, 
+                                description_detaille = ?, 
+                                site_web = ?, 
+                                id_adresse = ?
+                            WHERE id_offre = ?;";
+                  $stmt = $dbh->prepare($query);
+                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
 
