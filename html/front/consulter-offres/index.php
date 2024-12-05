@@ -177,8 +177,9 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
-                        <div class="offre">
+                    
+                    <div class="offre">
+                        <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
@@ -222,8 +223,8 @@ try {
                                     <?php } ?>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 <?php
                     }
             ?>
