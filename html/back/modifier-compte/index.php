@@ -9,7 +9,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 startSession();
 $id_compte = $_SESSION["id"];
 
-
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
