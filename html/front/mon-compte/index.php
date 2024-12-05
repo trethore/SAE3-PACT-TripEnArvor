@@ -14,8 +14,10 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
+
+
 if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    redirectTo("https://redden.ventsdouest.dev/se-connecter/");
+    header("Location: /se-connecter/");
 }
 
 $reqCompte = "SELECT * from sae._compte_membre cm 
