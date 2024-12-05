@@ -1,5 +1,7 @@
 <?php 
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
+    require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
     // Quelques fonctions pour avoir les infos des offres
 
     function getTypeOffre($id_offre) {
