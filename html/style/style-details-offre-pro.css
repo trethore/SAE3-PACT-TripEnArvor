@@ -49,6 +49,11 @@ a {
     height: 50px;
 }
 
+.etoile_detail {
+    width: 25px;
+    height: 25px;
+}
+
 .double-blocs {
     display: flex;
 }
