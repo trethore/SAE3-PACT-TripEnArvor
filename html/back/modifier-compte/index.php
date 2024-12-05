@@ -127,10 +127,9 @@ try {
             $stmt->execute();
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
-        <h1>Détails du compte</h1>
-        <h2>Mon entreprise</h2>
-        
+        <h1>Modification du compte</h1>
         <form action="/back/modifier-compte/" method="POST" id="myForm">
+            <h2>Mon entreprise</h2>
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -217,8 +216,9 @@ try {
                 </tr>
             </table>
             <div>
-            <input type="submit" value="Valider les modifications">
-        </div>
+                <a href="/back/mon-compte">Revenir au compte</a>
+                <input type="submit" value="Valider les modifications">
+            </div>
         </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">
