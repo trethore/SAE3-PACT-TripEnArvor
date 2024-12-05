@@ -139,3 +139,7 @@ p > img {
 a {
     color: var(--blanc-leger);
 }
+
+a:hover {
+    color: var(--violet-principal);
+}
