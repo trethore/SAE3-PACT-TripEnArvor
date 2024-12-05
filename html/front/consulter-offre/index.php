@@ -518,7 +518,7 @@ try {
                                 $stmtInsertionDateVisite->execute([$visite_le]);
                                 $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_avis";
                                 $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
                                 $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
