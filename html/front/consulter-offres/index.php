@@ -177,7 +177,7 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    <div class="offre">
+                    <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
                         <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>

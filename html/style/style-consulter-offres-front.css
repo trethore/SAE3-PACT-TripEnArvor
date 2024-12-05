@@ -338,6 +338,32 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
+.en-relief-offre {
+    position: relative;
+    max-width: 379px;
+    min-width: 379px;
+    height: 506px;
+    left: 32px;
+    top: 26px;
+
+    background: var(--blanc-leger);
+    border-radius: 15px;
+
+    margin-right: 4em;
+    margin-bottom: 31px;
+}
+
+.en-relief-offre div {
+    position: absolute;
+    left: 5.28%;
+    right: 5.28%;
+    top: 3.75%;
+    bottom: 5.34%;
+
+    background: var(--blanc-leger);
+    border-radius: 15px 15px 10px 10px;
+}
+
 .sous-offre {
     border: 3px solid var(--violet-principal);
 }
@@ -555,10 +581,8 @@ h3 {
     color: var(--blanc);
 
     position: absolute !important;
-    left: 40% !important;
-    top: 0 !important;
-
-    z-index: 1;
+    left: 70%;
+    bottom: -3em;
 
     font-size: 10px;
     font-weight: 600;
@@ -570,11 +594,12 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    border-radius: 0 !important;
 }
 
 .en-relief span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);
-    margin-top: 16px;
 }
