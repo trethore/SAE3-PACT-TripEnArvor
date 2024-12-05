@@ -87,8 +87,8 @@ try {
                     <div class="disponibilite">
                         <h3>Disponibilité</h3>
                         <div>
-                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
-                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
+                            <label><input type="radio" name="disponibilite"> Ouvert</label>
+                            <label><input type="radio" name="disponibilite"> Fermé</label>
                         </div>
                     </div>
                         
@@ -139,7 +139,7 @@ try {
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <!--<label><input type="radio" name="localisation"> Autour de moi</label>-->
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
                                 <input type="text" name="location" id="search-location" placeholder="Rechercher...">
