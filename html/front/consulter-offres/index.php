@@ -326,7 +326,6 @@ try {
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
                 const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
-                console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
@@ -355,9 +354,9 @@ try {
                     let validCategories = ['Visite', 'Spectacle'];
                     let categoryOK = validCategories.includes(category);
                     if (category == "Visite") {
-                        eventDate = new Date(getDateVisite(id));
+                        let eventDate = new Date(getDateVisite(id));
                     } else if (category == "Spectacle") {
-                        eventDate = new Date(getDateSpectacle(id));
+                        let eventDate = new Date(getDateSpectacle(id));
                     }
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
 
