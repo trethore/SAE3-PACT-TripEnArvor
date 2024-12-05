@@ -30,17 +30,30 @@ function get_file_extension($type) {
     return $extension;
 }
 
-Function enleveaccents($chaine){
-    $string= strtr($chaine,
+function supprimerAccents($chaine) {
+    // Tableau des caractères avec accents et leur équivalent sans accents
+    $accents = [
+        'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'ae',
+        'ç' => 'c',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'í' => 'i',
+        'ñ' => 'n',
+        'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'ó' => 'o', 'õ' => 'o', 'ø' => 'o',
+        'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+        'ý' => 'y', 'ÿ' => 'y',
+        'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'AE',
+        'Ç' => 'C',
+        'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+        'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+        'Ñ' => 'N',
+        'Ò' => 'O', 'Ô' => 'O', 'Ö' => 'O', 'Ó' => 'O', 'Õ' => 'O', 'Ø' => 'O',
+        'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+        'Ý' => 'Y'
+    ];
 
-    "Ã â¬Ã ÂÃ âÃ Â Ã âÃ â¦Ã Â Ã Â¡Ã Â¢Ã Â Ã Â¤Ã Â¥Ã âÃ âÃ âÃ â¢Ã â" .
-    "Ã ËÃ Â²Ã Â³Ã Â´Ã ÂµÃ Â¶Ã Â¸Ã ËÃ â°Ã Å Ã â¹Ã¨Ã©ÃªÃ Â«Ã â¡Ã Â§Ã ÅÃ" .
-    "ÂÃ Å½Ã ÂÃ Â¬Ã Â­Ã Â®Ã Â¯Ã â¢Ã Å¡Ã âºÃ ÅÃ Â¹Ã ÂºÃ Â»Ã Â¼Ã Â¿Ã âÃ Â±",
-    "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
-
-    return $string;
-} ;
-
+    // Remplacement des caractères
+    return strtr($chaine, $accents);
+}
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -133,7 +146,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = strtolower(enleveaccents($categorie));
+    $categorieBase = strtolower(supprimerAccents($categorie));
 
     
 
