@@ -79,7 +79,7 @@ if (!$submitted) {
                         $proPriveSiren = $stmt->fetch(PDO::FETCH_ASSOC);?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($proPriveSiren["siren"] ?? '');?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($stmt["siren"] ?? '');?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
