@@ -22,7 +22,6 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-
 table + div input,
 table + div a {
     text-decoration: none;

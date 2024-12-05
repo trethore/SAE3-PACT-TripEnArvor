@@ -22,17 +22,20 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div > input {
+table + div input,
+table + div a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
     border: 2px solid var(--violet-principal);
+    font-size: 12pt;
     border-radius: 15px;
-    margin: 2em 0 1em;
     padding: 0.2em 1em;
+    margin: 1em;
 }
 
-table + div > input:hover {
+table + div input:hover,
+table + div a:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
