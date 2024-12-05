@@ -168,7 +168,7 @@ try {
                 
                 <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
 
-                <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+                <form action="index.php<?php echo $id_offre_cible ?>" method="post" enctype="multipart/form-data" id="dynamicForm">
 
                     <h3>Informations importantes</h3>
 
