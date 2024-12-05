@@ -22,7 +22,26 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div input,
+table + div {
+    display: inline-flex;
+}
+
+table + div input {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
+    border-radius: 15px;
+    margin: 2em 0 1em;
+    padding: 0.2em 1em;
+}
+
+table + div input:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
+}
+
 table + div a {
     text-decoration: none;
     color: var(--blanc-leger);
@@ -33,7 +52,6 @@ table + div a {
     padding: 0.2em 1em;
 }
 
-table + div input:hover,
 table + div a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
