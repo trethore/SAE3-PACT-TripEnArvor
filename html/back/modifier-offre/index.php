@@ -97,7 +97,7 @@ try {
 
     $categorieBase = $categorie;
 
-    $id_offre = $_GET['id'];
+    
 
 ?>
 
@@ -123,7 +123,7 @@ try {
             <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         </header>
         
-        <?php if (!$submitted) { ?>
+        <?php if (!$submitted) { print($id_offre = $_GET['id']);?>
             <div id="offre">
                 <h1>Valider les modifications</h1>
                 <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
