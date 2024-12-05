@@ -5,39 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
-    $stmt->execute();
-    $offres = $stmt->fetchAll();
-
-    foreach ($offres as &$offre) {
-        $offre['categorie'] = getTypeOffre($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    }
-    
-    foreach ($offres as &$offre) {
-        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
-        if (getPrixPlusPetit($offre['id_offre']) == null) {
-            $offre['prix'] = 0;
-        }
-    }
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -69,6 +36,7 @@ try {
         $ids = getIdALaUne();
         foreach ($ids as $key => $offre) {
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
+            $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
         echo "<pre>";
         print_r($ids);
@@ -80,8 +48,7 @@ try {
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($ids as $offre) {
-                        $note = getNoteMoyenne($offre["id_offre"]); ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?> data-note="<?php echo htmlentities($note); ?>">
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?> data-note="<?php echo htmlentities($offre["note"]); ?>">
                     <?php } ?>
                 </div>
                 <div>
