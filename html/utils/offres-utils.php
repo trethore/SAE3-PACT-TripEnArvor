@@ -412,6 +412,24 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
+    function getAvisDetaille($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisDetaille = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre JOIN _note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _offre.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
+            $stmtAvisDetaille->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAvisDetaille->execute();
+            $avisDetaille = $stmtAvisDetaille->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $avisDetaille;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     function getInformationsMembre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;

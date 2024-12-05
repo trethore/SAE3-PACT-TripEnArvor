@@ -111,6 +111,8 @@ try {
     <link rel="stylesheet" href="/style/style_HFB.css" />
     <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
     <title>Modifier offre</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
     <body>
         <header id="header">

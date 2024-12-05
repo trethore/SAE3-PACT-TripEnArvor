@@ -28,6 +28,7 @@ try {
     <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
     <title>Liste de vos offres</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>

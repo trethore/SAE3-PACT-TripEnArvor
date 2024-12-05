@@ -70,6 +70,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
 
