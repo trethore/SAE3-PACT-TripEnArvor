@@ -20,12 +20,26 @@ redirectToConnexionIfNecessaryPro($id_compte);
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_professionnel cp 
+switch ($typeCompte) {
+    case 'proPublique':
+        $reqCompte = "SELECT * from sae._compte_professionnel cp 
                 join sae._compte c on c.id_compte = cp.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
                 where cp.id_compte = :id_compte;";
+        break;
 
-$reqProPrive = "SELECT siren from sae._compte_professionnel_prive where id_compte = :id_compte;"
+    case 'proPrive':
+        $reqCompte = "SELECT * from sae._compte_professionnel cp 
+        join sae._compte c on c.id_compte = cp.id_compte 
+        join sae._adresse a on c.id_adresse = a.id_adresse
+        join sae._compte_professionnel_prive cpp on c.id_compte = cpp.id_compte
+        where cp.id_compte = :id_compte;";
+        break;
+    
+    default:
+        # code...
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,15 +85,10 @@ if (!$submitted) {
                     <td>Dénomination Sociale</td>
                     <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"] ?? '');?>"></td>
                 </tr>
-                <?php if ($typeCompte == 'proPrive') {
-                        // Préparation et exécution de la requête
-                        $stmt2 = $conn->prepare($reqProPrive);
-                        $stmt2->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                        $stmt2->execute();
-                        $proPriveSiren = $stmt2->fetch(PDO::FETCH_ASSOC);?>
+                <?php if ($typeCompte == 'proPrive') { ?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($stmt2["siren"] ?? '');?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"] ?? '');?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
