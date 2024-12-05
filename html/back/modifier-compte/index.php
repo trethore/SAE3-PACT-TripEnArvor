@@ -1,13 +1,13 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
-
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
-startSession();
-$id_compte = $_SESSION["id"];
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+
+startSession();
+$id_compte = $_SESSION["id"];
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
