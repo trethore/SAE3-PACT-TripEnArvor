@@ -242,6 +242,7 @@ try {
                             }
                         } 
                     } ?>
+                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture)?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
