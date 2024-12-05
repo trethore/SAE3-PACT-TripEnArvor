@@ -507,6 +507,8 @@ try {
                                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
+                                $dbh->prepare("START TRANSACTION;")->execute();
+                                
                                 $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                                 $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
                                 $stmtInsertionDatePublication->execute([$publie_le]);
@@ -517,7 +519,7 @@ try {
                                 $stmtInsertionDateVisite->execute([$visite_le]);
                                 $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_avis";
                                 $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
                                 $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
@@ -537,6 +539,8 @@ try {
                                 $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
                                 $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
                                 $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
+
+                                $dbh->prepare("COMMIT;")->execute();
                             } catch (PDOException $e) {
                                 echo "Erreur : " . $e->getMessage();
                                 die();
