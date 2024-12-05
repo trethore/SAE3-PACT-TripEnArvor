@@ -1,9 +1,11 @@
 <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/debug-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+
+    require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
     session_start();
 
