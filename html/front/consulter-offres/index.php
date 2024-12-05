@@ -236,7 +236,7 @@ try {
                         <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                                <?php $horaire = getHorairesOuverture($tab['id_offre'])
+                                <?php $horaire = getHorairesOuverture($tab['id_offre']);
                                 setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                                 $jour_actuel = $jours[date('w')];
