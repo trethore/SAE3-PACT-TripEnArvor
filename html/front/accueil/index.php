@@ -149,7 +149,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             let starsHTML = '';
             console.log(note);
             if (note == NaN) {
-                starsHTML = 'Pas d'avis disponibles.';
+                starsHTML = "Pas d'avis disponibles.";
             } else {
                 for (let i = 1; i <= 5; i++) {
                     if (i <= note) {
