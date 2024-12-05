@@ -156,7 +156,7 @@ try {
         nextButton.addEventListener('click', () => {
             currentIndex++;
             if (currentIndex >= images.children.length) {
-                currentIndex = 0; // Revenir au début
+                currentIndex = 0;
             }
             updateCarousel();
         });
@@ -165,7 +165,7 @@ try {
         prevButton.addEventListener('click', () => {
             currentIndex--;
             if (currentIndex < 0) {
-                currentIndex = images.children.length - 1; // Revenir à la fin
+                currentIndex = images.children.length - 1;
             }
             updateCarousel();
         });
@@ -179,6 +179,7 @@ try {
             const note = parseFloat(currentImage.dataset.note);
 
             let starsHTML = '';
+            console.log(note);
             for (let i = 1; i <= 5; i++) {
                 if (i <= note) {
                     starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
