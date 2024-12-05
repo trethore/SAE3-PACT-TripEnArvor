@@ -3,8 +3,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
-
-
 date_default_timezone_set('Europe/Paris');
 
 session_start();
@@ -135,61 +133,16 @@ try {
 
 <body>
     
-<?php
-
-?>
-
-<header>
-    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
-    <div class="search-box">
+    <header id="header">
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17">PACT</div>
+        <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
-        <datalist id="cont">
-            <?php foreach ($offres as $offre) { ?>
-                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                    <?php echo htmlspecialchars($offre['titre']); ?>
-                </option>
-            <?php } ?>
-        </datalist>
-
-    </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const inputSearch = document.querySelector(".input-search");
-            const datalist = document.querySelector("#cont");
-
-            // Événement sur le champ de recherche
-            inputSearch.addEventListener("input", () => {
-                // Rechercher l'option correspondante dans le datalist
-                const selectedOption = Array.from(datalist.options).find(
-                    option => option.value === inputSearch.value
-                );
-
-                if (selectedOption) {
-                    const idOffre = selectedOption.getAttribute("data-id");
-
-                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
-                    // Rediriger si un ID valide est trouvé
-                    if (idOffre) {
-                        // TD passer du back au front quand fini
-                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-                    }
-                }
-            });
-
-            // Debugging pour vérifier les options disponibles
-            const options = Array.from(datalist.options).map(option => ({
-                value: option.value,
-                id: option.getAttribute("data-id")
-            }));
-            //console.log("Options disponibles dans le datalist :", options);
-        });
-    </script>
-</header>
+        <input type="text" class="input-search" placeholder="Taper votre recherche...">
+        </div>
+        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    </header>
 
     <main id="body">
 
@@ -631,8 +584,8 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration" && $avis_id_selectionne === $a['id_avis']) { 
-                        foreach ($noteDetaillee as $n) { ?>
-                             
+                        foreach ($noteDetaillee as $n) {
+                            if ($n['id_avis'] === $a['id_avis']) { ?>
                                 <div class="display-ligne">
                                     <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
@@ -642,7 +595,7 @@ try {
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                     <?php } ?>
                                 </div>
-                            <?php 
+                            <?php }
                         }
                     } ?>
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
