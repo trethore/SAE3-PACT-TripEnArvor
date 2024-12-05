@@ -70,25 +70,19 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                 <tr>
                     <td>Pseudo</td>
                     <td>
-                        <input type="text" name="pseudo" id="pseudo" value="<?php 
-                                if (isset($detailCompte["pseudo"])) {
-                                    echo htmlentities($detailCompte["pseudo"]);} ?>">
+                        <input type="text" name="pseudo" id="pseudo" value="<?= htmlentities($detailCompte["pseudo"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Nom</td>
                     <td>
-                        <input type="text" name="nom" id="nom" value="<?php 
-                                if (isset($detailCompte["nom_compte"])) {
-                                    echo htmlentities($detailCompte["nom_compte"]);} ?>">
+                        <input type="text" name="nom" id="nom" value="<?= htmlentities($detailCompte["nom_compte"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Prénom</td>
                     <td>
-                        <input type="text" name="prenom" id="prenom" value="<?php 
-                                    if (isset($detailCompte["prenom"])) {
-                                        echo htmlentities($detailCompte["prenom"]);} ?>"> 
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
                     </td>
                 </tr>
                 <tr>
@@ -98,9 +92,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                 <tr>
                     <td>N° de téléphone</td>
                     <td>
-                        <input type="tel" name="tel" id="tel" value="<?php 
-                                        if (isset($detailCompte["tel"])) {
-                                            echo htmlentities($detailCompte["tel"]);} ?>"> 
+                        <input type="tel" name="tel" id="tel" value="<?= htmlentities($detailCompte["tel"] ?? '');?>"> 
                     </td>
                 </tr>
                 <tr>
@@ -173,7 +165,6 @@ $reqCompte = "SELECT * from sae._compte_membre cm
             </div>
         </div> 
     </main>
-    
     <?php
     } else {
         $ok = true;
