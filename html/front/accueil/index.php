@@ -48,13 +48,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             <div class="carousel">
                 <div class="carousel-images">
                     <?php foreach ($ids as $offre) { 
-                        /*echo "<pre>";
-                        echo $offre["id_offre"];
-                        echo $offre["titre"];
-                        echo $offre["note"];
-                        echo "</pre>";*/ ?>
+                        $id = $offre["id_offre"];
+                        $titre = $offre["titre"];
+                        $note = $offre["note"]; ?>
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo $offre['titre']; ?>" data-note="<?php echo $offre["note"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo $titre; ?>" data-note="<?php echo $note; ?>">
                         </a>
                     <?php } ?>
                 </div>
