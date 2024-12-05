@@ -1,9 +1,12 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+$id_compte = $_SESSION["id"];
+redirectToConnexionIfNecessaryPro($id_compte);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -12,9 +15,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-startSession();
-$id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessary($id_compte);
+
 
 
 $typeCompte = getTypeCompte($id_compte);
