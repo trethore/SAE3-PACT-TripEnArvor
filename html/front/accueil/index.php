@@ -48,8 +48,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) {
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?> data-note="<?php echo htmlentities($offre["note"]); ?>">
+                    <?php foreach ($ids as $offre) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>" data-note="<?php echo htmlentities($offre["note"]); ?>">
                     <?php } ?>
                 </div>
                 <div>
@@ -148,17 +148,21 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
             let starsHTML = '';
             console.log(note);
-            for (let i = 1; i <= 5; i++) {
-                if (i <= note) {
-                    starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
-                } else {
-                    starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+            if (note == NaN) {
+                starsHTML = "Pas d'avis disponibles.";
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= note) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                    } else {
+                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                    }
                 }
             }
 
             titreElement.innerHTML = `
                 ${titre}
-                ${note}
+                ${starsHTML}
             `;
         }
     </script>
