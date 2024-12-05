@@ -152,7 +152,7 @@ try {
                     <div class="typeOffre"></div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <!-- <div class="date">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -166,7 +166,7 @@ try {
                                 <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </article>
@@ -342,7 +342,7 @@ try {
                 });
 
                 // Filter by Date (Visite et Spectacle)
-                const startDateInput = document.getElementById('start-date');
+                /*const startDateInput = document.getElementById('start-date');
                 const endDateInput = document.getElementById('end-date');
 
                 const startDate = new Date(startDateInput.value);
@@ -361,7 +361,7 @@ try {
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
 
                     return categoryOK && dateOK;
-                });
+                });*/
 
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
