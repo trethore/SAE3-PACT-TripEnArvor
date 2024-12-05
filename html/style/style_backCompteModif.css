@@ -22,9 +22,6 @@ input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div {
-    display: inline-flex;
-}
 
 table + div input,
 table + div a {
