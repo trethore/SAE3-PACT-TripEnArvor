@@ -111,7 +111,7 @@ CREATE VIEW compte_professionnel_publique AS
 
 CREATE TABLE _compte_membre (
     id_compte   INTEGER,
-    pseudo      VARCHAR(255) NOT NULL,
+    pseudo      VARCHAR(255) UNIQUE NOT NULL,
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
