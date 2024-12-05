@@ -13,16 +13,15 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
-/*
+
 startSession();
 $id_compte = $_SESSION["id"];
 if (isset($id_compte)) {
-    redirectToListOffreIfNecessary($id_compte);
+    redirectToConnexionIfNecessaryPro($id_compte);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
-*/
-$id_compte= 1;
+
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 ?>
