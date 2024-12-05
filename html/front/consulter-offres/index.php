@@ -355,9 +355,9 @@ try {
                     let validCategories = ['Visite', 'Spectacle'];
                     let categoryOK = validCategories.includes(category);
                     if (category == "Visite") {
-                        eventDate = new Date(getDateVisite(id));
+                        let eventDate = new Date(getDateVisite(id));
                     } else if (category == "Spectacle") {
-                        eventDate = new Date(getDateSpectacle(id));
+                        let eventDate = new Date(getDateSpectacle(id));
                     }
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
 
