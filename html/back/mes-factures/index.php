@@ -1,9 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
 /*try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -14,7 +16,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToListOffreIfNecessary($id_compte);
+redirectToConnexionIfNecessaryPro($id_compte);
 
 $factures = [
     [
@@ -53,6 +55,8 @@ $factures = [
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
     <header>

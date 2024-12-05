@@ -1,6 +1,6 @@
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-    include($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
    
     function getTypeCompte($id_compte) {
         global $driver, $server, $dbname, $user, $pass;
@@ -30,5 +30,28 @@
                 print "Erreur !: " . $e->getMessage() . "<br>";
                 die();
             }
+    }
+
+    function pseudo_exist(string $pseudo) : bool {
+        try {
+            global $driver, $server, $dbname, $user, $pass;
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+
+            $query = "SELECT COUNT(*) FROM sae._compte_membre WHERE pseudo = ?";
+
+            // Préparation et exécution de la requête
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$pseudo]);
+            $result = $stmt->fetch()['count'] > 0;
+
+            $conn = null;
+            return $result;
+        } catch(Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
     }
 ?>

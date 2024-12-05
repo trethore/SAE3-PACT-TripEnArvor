@@ -6,7 +6,7 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: var(--noir);
-    background: var(--blanc-leger);
+    background: var(--blanc);
 }
 
 h1 {
@@ -320,7 +320,7 @@ h3 {
     left: 32px;
     top: 26px;
 
-    background: #ECECEC;
+    background: var(--blanc-leger);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -334,7 +334,7 @@ h3 {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: #EAE2DA;
+    background: var(--blanc-leger);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -355,12 +355,10 @@ h3 {
 
     right: 0;
 
-    color: #000000;
+    color: var(--noir);
 
     height: 37px;
     width: 117px;
-
-    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -378,14 +376,12 @@ h3 {
     justify-content: center;
     left: 75% !important;
 
-    color: var(--noir-noir);
+    color: var(--noir);
 
     height: 37px;
     width: 67.8px;
 
     text-decoration: none;
-
-    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -418,7 +414,7 @@ h3 {
     align-items: center;
     width: 80%;
 
-    color: #000000;
+    color: var(--noir);
 }
 
 .categorie-offre {
@@ -434,7 +430,7 @@ h3 {
     display: flex;
     align-items: center;
 
-    color: #000000;
+    color: var(--noir);
 }
 
 .description-offre {
@@ -448,7 +444,7 @@ h3 {
     font-size: 14px;
     line-height: 21px;
 
-    color: #000000;
+    color: var(--noir);
 }
 
 .nom-offre {
@@ -468,7 +464,7 @@ h3 {
     align-items: center;
     text-align: right;
 
-    color: #000000;
+    color: var(--noir);
 }
 
 .offre span {
@@ -506,6 +502,7 @@ h3 {
 .nombre-notes {
     margin-left: 5px;
     padding-top: 4px;
+    color: var(--noir);
 }
 
 .prix {
@@ -513,8 +510,8 @@ h3 {
     color: var(--blanc);
 
     position: absolute;
-    left: 65%;
-    bottom: -30%;
+    left: 70%;
+    bottom: -3em;
 
     font-size: 10px;
     font-weight: 600;

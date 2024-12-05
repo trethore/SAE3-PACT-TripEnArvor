@@ -4,38 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
-
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
-    $stmt->execute();
-    $offres = $stmt->fetchAll();
-
-    foreach ($offres as &$offre) {
-        $offre['categorie'] = getTypeOffre($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    }
-    
-    foreach ($offres as &$offre) {
-        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
-        if (getPrixPlusPetit($offre['id_offre']) == null) {
-            $offre['prix'] = 0;
-        }
-    }
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
 ?>
 
 <!DOCTYPE html>
@@ -69,18 +37,25 @@ try {
         $ids = getIdALaUne();
         foreach ($ids as $key => $offre) {
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
+            $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
         echo "<pre>";
         print_r($ids);
         echo "</pre>";
-
         ?>
 
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) { ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>">
+                    <?php foreach ($ids as $offre) { 
+                        echo "<pre>";
+                        echo $offre["id_offre"];
+                        echo $offre["titre"];
+                        echo $offre["note"];
+                        echo "</pre>"; ?>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>" data-note="<?php echo htmlentities($offre["note"]); ?>">
+                        </a>
                     <?php } ?>
                 </div>
                 <div>
@@ -155,7 +130,7 @@ try {
         nextButton.addEventListener('click', () => {
             currentIndex++;
             if (currentIndex >= images.children.length) {
-                currentIndex = 0; // Revenir au début
+                currentIndex = 0;
             }
             updateCarousel();
         });
@@ -164,27 +139,35 @@ try {
         prevButton.addEventListener('click', () => {
             currentIndex--;
             if (currentIndex < 0) {
-                currentIndex = images.children.length - 1; // Revenir à la fin
+                currentIndex = images.children.length - 1;
             }
             updateCarousel();
         });
 
-        // Met à jour l'affichage du carrousel
         function updateCarousel() {
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
             const currentImage = images.children[currentIndex];
             const titre = currentImage.dataset.titre;
+            const note = parseFloat(currentImage.dataset.note);
 
-            // Ajoutez le titre avec les étoiles
+            let starsHTML = '';
+            if (note == NaN) {
+                starsHTML = "Pas d'avis disponibles.";
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= note) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                    } else {
+                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                    }
+                }
+            }
+
             titreElement.innerHTML = `
                 ${titre}
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
+                ${starsHTML}
             `;
         }
     </script>

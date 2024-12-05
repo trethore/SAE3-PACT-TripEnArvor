@@ -74,17 +74,18 @@
         }
     }
 
-    function redirectToListOffreIfNecessary($id) {
-        if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
-            redirectTo('/front/consulter-offres/');
+
+    function redirectToConnexionIfNecessaryPro($id) {
+        if (!isset($id) ||$id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
+            header("Location: /se-connecter/");
             return true;
         }     
         return false;   
     }
 
-    function redirectToConnexionIfNecessary($id) {
-        if ($id === null || (!isIdProPublique($id) && !isIdProPrivee($id))) {
-            redirectTo('/se-connecter');
+    function redirectToConnexionIfNecessaryMembre($id) {
+        if (!isset($id) || $id === null || (!isIdMember($id))) {
+            header("Location: /se-connecter/");
             return true;
         }     
         return false;   

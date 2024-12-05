@@ -1,9 +1,18 @@
 <?php
-require_once('../../php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+startSession();
+if (!isset($_SESSION["id"])) {
+    header("Location: /se-connecter/");
+}
+$id_compte = $_SESSION["id"];
+redirectToConnexionIfNecessaryMembre($id_compte);
+
 require_once('../../utils/compte-utils.php');
-require_once('../../utils/auth-utils.php');
 require_once('../../utils/site-utils.php');
-require_once('../../utils/session-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -12,13 +21,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-startSession();
-$id_compte = $_SESSION["id"];
-
-
-if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    header("Location: /se-connecter/");
-}
 
 $reqCompte = "SELECT * from sae._compte_membre cm 
                 join sae._compte c on c.id_compte = cm.id_compte 

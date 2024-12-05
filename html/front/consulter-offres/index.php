@@ -1,9 +1,10 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -188,7 +189,7 @@ try {
                                         <?php
                                             if (empty($tab["note"])) {
                                                 ?>
-                                                    <p>Pas d'avis disponibles.</p>
+                                                    <p style="color: var(--noir);">Pas d'avis disponibles.</p>
                                                 <?php
                                             } else {
                                                 $note = $tab["note"];
