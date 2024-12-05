@@ -665,7 +665,7 @@ try {
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
 
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
-                        if ($comp_adresse === '') {$comp_adresse = null;}
+                        if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
@@ -799,7 +799,7 @@ try {
                     
                 
 
-                    //SWITCH CREATION REQUETE OFFRE
+                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
                         case 'activite':
                             try{
