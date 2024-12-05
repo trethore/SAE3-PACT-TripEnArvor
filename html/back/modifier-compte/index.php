@@ -13,7 +13,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-redirectToConnexionIfNecessary($id_compte);
+redirectToConnexionIfNecessaryPro($id_compte);
 
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);

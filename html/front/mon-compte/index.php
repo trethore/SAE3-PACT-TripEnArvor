@@ -15,10 +15,7 @@ try {
 startSession();
 $id_compte = $_SESSION["id"];
 
-
-if (!isset($id_compte) ||!isIdMember($id_compte)) {
-    header("Location: /se-connecter/");
-}
+redirectToConnexionIfNecessaryMembre($id);
 
 $reqCompte = "SELECT * from sae._compte_membre cm 
                 join sae._compte c on c.id_compte = cm.id_compte 
