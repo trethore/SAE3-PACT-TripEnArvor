@@ -780,6 +780,16 @@ try {
                             } else {
                                 throw new Exception("L'offre doit contenir au moins une image.");
                             }
+
+                            foreach ($tabtarifs as $key => $value) {
+                                $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+    
+                                // Préparation de la requête pour la vue tarif
+                                $stmt_tarif = $dbh->prepare($requete_tarif);
+    
+                                // Exécution de la requête pour insérer dans la vue tarif
+                                $stmt_tarif->execute([$key, $value, $id_offre]);
+                            }
                         
                             // Autres traitements...
                         
