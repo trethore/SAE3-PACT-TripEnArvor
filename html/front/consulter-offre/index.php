@@ -648,8 +648,9 @@ try {
                                     <?php } 
                                     for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php } 
-                                } ?>
+                                    <?php } ?>
+                                    <p><?php echo htmlentities("     ") ?></p>
+                                <?php } ?>
                             <?php } ?>
                         </div>
                     <?php } 
