@@ -188,7 +188,7 @@ try {
                                         <?php
                                             if (empty($tab["note"])) {
                                                 ?>
-                                                    <p>Pas d'avis disponibles.</p>
+                                                    <p style="color: var(--noir);">Pas d'avis disponibles.</p>
                                                 <?php
                                             } else {
                                                 $note = $tab["note"];
