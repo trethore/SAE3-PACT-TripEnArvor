@@ -45,7 +45,7 @@ a:hover {
     text-decoration: underline;
 }
 
-header > div > a {
+header > div > a, header > div > a:hover {
     text-decoration: none;
 }
 
