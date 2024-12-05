@@ -338,7 +338,11 @@ try {
                 const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
                 visibleOffers = visibleOffers.filter(offer => {
                     const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
-                    return price >= minPrice && price <= maxPrice;
+                    if (offer.querySelector(".categorie-offre").textContent.trim() == "Restauration" && minPrice === "0" && maxPrice === "Infinity") {
+                        return true;
+                    } else {
+                        return price >= minPrice && price <= maxPrice;
+                    }
                 });
 
                 // Filter by Date (Visite et Spectacle)
