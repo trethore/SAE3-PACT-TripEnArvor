@@ -110,14 +110,7 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"]);?></td>
                 </tr>
-                <tr style="display: none;">
-                    <td>N° IBAN</td>
-                    <td><?php echo htmlentities("à implémenter");?></td>
-                </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td><?php echo htmlentities($detailCompte["mot_de_passe"]);?></td>
-                </tr>
+
             </table>
             <h2>Mon adresse</h2>
             <table>

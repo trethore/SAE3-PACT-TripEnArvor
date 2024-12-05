@@ -118,7 +118,6 @@ if (!$submitted) {
                     </td>
                 </tr>
             </table>
-            <?php if (isset($detailCompte["id_adresse"])) { ?>
             <h2>Mon adresse</h2>
             <table>
                 <tr>
@@ -145,7 +144,7 @@ if (!$submitted) {
                     <td>Pays</td>
                     <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"]);?>"></td>
                 </tr>
-            </table> <?php } ?>
+            </table>
             <div>
             <input type="submit" value="Valider les modifications">
         </div>
