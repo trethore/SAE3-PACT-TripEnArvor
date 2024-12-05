@@ -3,19 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-    $stmt->execute();
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    $dbh = null;
-} catch (PDOException $e) {
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-}
 
 date_default_timezone_set('Europe/Paris');
 
