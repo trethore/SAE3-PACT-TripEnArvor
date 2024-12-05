@@ -291,7 +291,7 @@ try {
                 <br>
                 <div id="date_evenement">
                     <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
-                    <input type="date" id="date_event" name="date_event" required>
+                    <input type="date" id="date_event" name="date_event">
                 </div>
 
 
