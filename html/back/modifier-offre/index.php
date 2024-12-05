@@ -584,7 +584,8 @@ try {
            
             $descriptionL = $_POST['descriptionL'];
             
-             
+             print_r($_FILES);
+             print($photo1);
              try {
 
                 // Vérifier si l'id_compte est défini (s'il est connecté)
