@@ -560,6 +560,7 @@ try {
             }
 
             $compteur = 0;
+            $avis_id_selectionne = isset($_GET['avis_id']) ? intval($_GET['avis_id']) : null; // Récupérer l'avis sélectionné
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
@@ -582,18 +583,20 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <?php if ($categorie == "Restauration") { 
-                        foreach ($noteDetaillee as $n) { ?>
-                            <div class="display-ligne">
-                                <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
-                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php } 
-                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                <?php } ?>
-                            </div>
-                        <?php }
+                    <?php if ($categorie == "Restauration" && $avis_id_selectionne === $a['id_avis']) { 
+                        foreach ($noteDetaillee as $n) {
+                            if ($n['id_avis'] === $a['id_avis']) { ?>
+                                <div class="display-ligne">
+                                    <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
+                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php } 
+                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php } ?>
+                                </div>
+                            <?php }
+                        }
                     } ?>
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
