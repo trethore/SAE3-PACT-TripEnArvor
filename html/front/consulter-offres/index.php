@@ -177,10 +177,10 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                    
                     <div class="offre">
-                        <div class="sous-offre">
-                                <div class="id" style="display: none;"><?php echo $tab['id_offre']; ?></div>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                            <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
@@ -215,6 +215,7 @@ try {
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
+
                                     <?php if ($tab["categorie"] == "Restauration") { ?>
                                         <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
                                     <?php } else { ?>
@@ -222,8 +223,8 @@ try {
                                     <?php } ?>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 <?php
                     }
             ?>
@@ -338,7 +339,11 @@ try {
                 const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
                 visibleOffers = visibleOffers.filter(offer => {
                     const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
-                    return price >= minPrice && price <= maxPrice;
+                    if (offer.querySelector(".categorie-offre").textContent.trim() == "Restauration" && minPrice == "0" && maxPrice == "Infinity") {
+                        return true;
+                    } else {
+                        return price >= minPrice && price <= maxPrice;
+                    }
                 });
 
                 // Filter by Date (Visite et Spectacle)
@@ -400,9 +405,9 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
-                }
 
-                offers.forEach(offer => offersContainer.appendChild(offer));
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
             };
 
             // Add Event Listeners
