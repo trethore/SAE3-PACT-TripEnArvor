@@ -276,7 +276,7 @@ try {
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
 
-            const input1 = document.getElementById('start-date');
+            /*const input1 = document.getElementById('start-date');
             const input2 = document.getElementById('end-date');
             const input3 = document.getElementById('open-date');
 
@@ -291,7 +291,7 @@ try {
             input3.addEventListener('focus', () => {
                 input1.value = '';
                 input2.value = '';
-            });
+            });*/
 
             const initialOrder = offers.slice();
 
