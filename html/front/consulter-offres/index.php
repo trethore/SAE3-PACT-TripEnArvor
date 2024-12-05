@@ -152,7 +152,7 @@ try {
                     <div class="typeOffre"></div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <!-- <div class="date">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -166,7 +166,7 @@ try {
                                 <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </article>
@@ -326,7 +326,6 @@ try {
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
                 const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
-                console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
@@ -343,7 +342,7 @@ try {
                 });
 
                 // Filter by Date (Visite et Spectacle)
-                const startDateInput = document.getElementById('start-date');
+                /*const startDateInput = document.getElementById('start-date');
                 const endDateInput = document.getElementById('end-date');
 
                 const startDate = new Date(startDateInput.value);
@@ -355,14 +354,14 @@ try {
                     let validCategories = ['Visite', 'Spectacle'];
                     let categoryOK = validCategories.includes(category);
                     if (category == "Visite") {
-                        eventDate = new Date(getDateVisite(id));
+                        let eventDate = new Date(getDateVisite(id));
                     } else if (category == "Spectacle") {
-                        eventDate = new Date(getDateSpectacle(id));
+                        let eventDate = new Date(getDateSpectacle(id));
                     }
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
 
                     return categoryOK && dateOK;
-                });
+                });*/
 
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
