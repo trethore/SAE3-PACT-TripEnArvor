@@ -558,9 +558,9 @@ try {
                 echo "Connexion requise pour publier un avis";
             }
 
-            $compteur = 0;
-            $avis_id_selectionne = isset($_GET['avis_id']) ? intval($_GET['avis_id']) : null; // Récupérer l'avis sélectionné
-            foreach ($avis as $a) { ?>
+            $compteur = 0; 
+            foreach ($avis as $a) { 
+                $avis_id_selectionne = $a['id_avis']; ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
@@ -584,7 +584,6 @@ try {
                     </div>
                     <?php if ($categorie == "Restauration" && $avis_id_selectionne === $a['id_avis']) { 
                         foreach ($noteDetaillee as $n) { ?>
-                             
                                 <div class="display-ligne">
                                     <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
