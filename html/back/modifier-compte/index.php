@@ -88,7 +88,7 @@ if (!$submitted) {
                 <?php if ($typeCompte == 'proPrive') { ?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"] ?? '');?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"]);?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
