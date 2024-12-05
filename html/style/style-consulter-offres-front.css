@@ -354,7 +354,7 @@ h3 {
 }
 
 .en-relief-offre div {
-    position: absolute;
+    position: absolute !important;
     left: 5.28%;
     right: 5.28%;
     top: 3.75%;
@@ -605,8 +605,8 @@ h3 {
     color: var(--blanc);
 
     position: absolute !important;
-    left: 50%;
-    bottom: -3em;
+    left: 50% !important;
+    bottom: -3em !important;
 
     z-index: 1;
 
