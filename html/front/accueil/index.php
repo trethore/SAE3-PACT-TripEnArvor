@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
