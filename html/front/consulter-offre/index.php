@@ -639,7 +639,7 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { ?>
-                        <div class="display-ligne">
+                        <div>
                         <?php foreach ($noteDetaillee as $n) { ?>
                             <?php if ($n['id_avis'] == $a['id_avis']) { ?>
                                 <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
