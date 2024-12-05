@@ -6,7 +6,7 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: var(--noir);
-    background: var(--blanc-leger);
+    background: var(--blanc);
 }
 
 h1 {
@@ -336,7 +336,7 @@ a {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--beige);
+    background: var(--blanc-leger);
     border-radius: 15px 15px 10px 10px;
 }
 
