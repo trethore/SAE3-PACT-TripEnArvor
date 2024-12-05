@@ -44,12 +44,8 @@ try {
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
                 <?php } 
-                echo '<pre>';
-                print_r($offres);
-                echo '</pre>';
                 ?>
             </datalist>
-
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
@@ -88,7 +84,11 @@ try {
         </script>
 
     </header>
-    <main>
+    <main><?php
+    echo '<pre>';
+print_r($offres);
+echo '</pre>'; ?>
+
     </main>
     <footer>
         <div class="footer-top">
