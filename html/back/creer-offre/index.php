@@ -611,7 +611,7 @@ try {
     
     
                         //REQUETE OFFRE PROPOSE PRESTA
-                        $requete_presta_offre = 'INSERT INTO _prestation(nom_prestation, id_offre) VALUES (?, ?)';
+                        $requete_presta_offre = 'INSERT INTO _offre_activite_propose_prestation(nom_prestation, id_offre) VALUES (?, ?)';
     
                         //preparation requete
                         $stmt_presta_offre = $dbh->prepare($requete_presta_offre);
@@ -619,7 +619,6 @@ try {
                         //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                         $stmt_presta_offre->execute([$presta, $id_offre]);
                         
-
 
                         break;
 
