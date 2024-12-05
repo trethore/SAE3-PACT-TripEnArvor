@@ -14,7 +14,7 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessary($id_compte);
+redirectToConnexionIfNecessaryPro($id_compte);
 
 
 $typeCompte = getTypeCompte($id_compte);
