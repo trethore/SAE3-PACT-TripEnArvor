@@ -614,9 +614,9 @@ try {
                     echo "Erreur : " . $e->getMessage();
                     die();
                 }
-            } else {
-                echo "Connexion requise pour publier un avis";
-            }
+            } else { ?>
+                <p><a href="/se-connecter">Connexion</a> requise pour publier un avis</p>
+            <?php }
 
             $compteur = 0;
             foreach ($avis as $a) { ?>
