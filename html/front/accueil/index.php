@@ -148,17 +148,21 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
             let starsHTML = '';
             console.log(note);
-            for (let i = 1; i <= 5; i++) {
-                if (i <= note) {
-                    starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
-                } else {
-                    starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+            if (note == NaN) {
+                starsHTML = 'Pas d'avis disponibles.';
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= note) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                    } else {
+                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                    }
                 }
             }
 
             titreElement.innerHTML = `
                 ${titre}
-                ${note}
+                ${starsHTML}
             `;
         }
     </script>
