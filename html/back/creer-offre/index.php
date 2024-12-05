@@ -403,9 +403,11 @@ try {
             
            
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
-                die("Erreur : la date de l'événement est obligatoire.");
+                $date_event = null;
+            }else {
+                $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
             }
-            $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
+           
             
 
             if (isset($_POST['titre'])) {
