@@ -14,7 +14,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 $id_compte = $_SESSION["id"];
-redirectToListOffreIfNecessary($id_compte);
+redirectToConnexionIfNecessaryPro($id_compte);
 
 $factures = [
     [

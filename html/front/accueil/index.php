@@ -79,8 +79,9 @@ try {
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) { ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>">
+                    <?php foreach ($ids as $offre) {
+                        $note = getNoteMoyenne($offre["id_offre"]); ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?> data-note="<?php echo htmlentities($note); ?>">
                     <?php } ?>
                 </div>
                 <div>
@@ -169,22 +170,26 @@ try {
             updateCarousel();
         });
 
-        // Met à jour l'affichage du carrousel
         function updateCarousel() {
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
             const currentImage = images.children[currentIndex];
             const titre = currentImage.dataset.titre;
+            const note = parseFloat(currentImage.dataset.note);
 
-            // Ajoutez le titre avec les étoiles
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= note) {
+                    starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                } else {
+                    starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                }
+            }
+
             titreElement.innerHTML = `
                 ${titre}
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
+                ${note}
             `;
         }
     </script>
