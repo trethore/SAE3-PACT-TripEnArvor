@@ -682,8 +682,7 @@ try {
                         
                             print("id de l'offre " . $id_offre);
                         
-                            // Commit de la transaction
-                            $dbh->commit();
+                            
                         } catch (PDOException $e) {
                             if ($dbh->inTransaction()) {
                                 $dbh->rollBack();
@@ -762,7 +761,7 @@ try {
                         $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                     }
-
+                    // Commit de la transaction
                     $dbh->commit();
 
 
