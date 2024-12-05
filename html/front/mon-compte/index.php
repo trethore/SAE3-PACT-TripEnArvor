@@ -39,6 +39,7 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
     <header>

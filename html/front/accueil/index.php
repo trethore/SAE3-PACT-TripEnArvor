@@ -15,6 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Accueil</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
     <header>
