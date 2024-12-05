@@ -589,7 +589,7 @@ try {
                                 <?php for ($etoileJaune = 0 ; $etoileJaune != $noteDetaillee[$compteur]['note'] ; $etoileJaune++) { ?>
                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                 <?php } 
-                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteDetaillee[$compteur]['note']) ; $etoileGrise++) { ?>
                                     <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                 <?php } ?>
                             </div>
