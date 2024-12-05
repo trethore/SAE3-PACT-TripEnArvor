@@ -231,7 +231,7 @@ try {
                 <br>
                 <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
                 <input type="date" id="date_event" name="date_event">
-               
+                <br>
                 <!-- spectacle -->
                 <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
                 <br>
@@ -637,19 +637,15 @@ try {
                             echo "Erreur : " . $e->getMessage();
                             die();
                         }
-                        try {
                             // Requête pour insérer l'offre dans _offre_spectacle
-                            $requete = "INSERT INTO sae._offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                                         VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
-                        } catch (PDOException $e) {
-                            echo "Erreur lors de l'insertion de l'offre : " . $e->getMessage();
-                        }
+            
 
 
 
