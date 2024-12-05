@@ -304,12 +304,12 @@ try {
                     <?php if ($row["categorie"] == "Restauration") { ?>
                         <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
                     <?php } else { ?>
-                        <p class="prix">A partir de <span><?php         
-                        $offre['prix'] = getPrixPlusPetit($row['id_offre']);
+                        <p class="prix">A partir de <span><?php
+                        $row['prix'] = getPrixPlusPetit($row['id_offre']);
                         if (getPrixPlusPetit($row['id_offre']) == null) {
-                            $offre['prix'] = 0;
+                            $row['prix'] = 0;
                         }
-                        echo htmlentities($offre['prix']); ?>€</span></p>
+                        echo htmlentities($row['prix']); ?>€</span></p>
                     <?php } ?>
 
                 </a>
