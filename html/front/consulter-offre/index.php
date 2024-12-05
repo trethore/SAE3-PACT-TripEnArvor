@@ -407,6 +407,40 @@ try {
                                 <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
                                 <p class="transparent">.</p>
                             </div>
+                            <?php if ($categorie == "Restauration") { ?>
+                                <div class="display-ligne-espace">
+                                    <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_service">Saisissez une note pour le service</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
+                                    <p class="transparent">.</p>
+                                </div>
+                                <div class="display-ligne-espace">
+                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <p class="transparent">.</p>
+                                </div>
+                            <?php } ?>
                             <div class="display-ligne-espace">
                                 <label for="date">Saisissez la date de votre visite</label>
                                 <p class="transparent">.</p>
@@ -493,7 +527,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
