@@ -44,16 +44,73 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <?php
     if (!$submitted) {
     ?>
-        <header>
-            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-            <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT</a></div>
-            <div class="search-box">
-                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-                <input type="text" class="input-search" placeholder="Taper votre recherche...">
-            </div>
-            <a href="/front/consulter-offres" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-            <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        </header>
+        <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
         <main>
             <?php
             // Préparation et exécution de la requête
@@ -64,157 +121,107 @@ $reqCompte = "SELECT * from sae._compte_membre cm
             ?>
             <h1>Détails du compte</h1>
 
-            <form action="/front/modifier-compte/" method="POST" id="myForm">
-                <h2>Informations personnelles</h2>
-                <table>
-                    <tr>
-                        <td>Pseudo</td>
-                        <td>
-                            <input type="text" name="pseudo" id="pseudo" value="<?php
-                                                                                if (isset($detailCompte["pseudo"])) {
-                                                                                    echo htmlentities($detailCompte["pseudo"]);
-                                                                                } ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Nom</td>
-                        <td>
-                            <input type="text" name="nom" id="nom" value="<?php
-                                                                            if (isset($detailCompte["nom_compte"])) {
-                                                                                echo htmlentities($detailCompte["nom_compte"]);
-                                                                            } ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Prénom</td>
-                        <td>
-                            <input type="text" name="prenom" id="prenom" value="<?php
-                                                                                if (isset($detailCompte["prenom"])) {
-                                                                                    echo htmlentities($detailCompte["prenom"]);
-                                                                                } ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Adresse mail</td>
-                        <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? ''); ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>N° de téléphone</td>
-                        <td>
-                            <input type="tel" name="tel" id="tel" value="<?php
-                                                                            if (isset($detailCompte["tel"])) {
-                                                                                echo htmlentities($detailCompte["tel"]);
-                                                                            } ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mot de passe</td>
-                        <td>
-                            <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
-                            <input type="hidden" name="ancien_mdp" value="<?= htmlentities($detailCompte['mot_de_passe']); ?>">
-                        </td>
-                    </tr>
-                </table>
-                <h2>Mon adresse</h2>
-                <table>
-                    <tr>
-                        <td>Adresse postale</td>
-                        <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"]); ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>Complément d'adresse</td>
-                        <td>
-                            <input type="text" name="compl_adr" id="compl_adr" value="<?php
-                                                                                        if (isset($detailCompte["complement_adresse"])) {
-                                                                                            echo htmlentities($detailCompte["complement_adresse"]);
-                                                                                        } ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Code postal</td>
-                        <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"] ?? ''); ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>Ville</td>
-                        <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"] ?? ''); ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>Pays</td>
-                        <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? ''); ?>"></td>
-                    </tr>
-                    <div>
-                        <input type="submit" value="Valider les modifications">
-                    </div>
-            </form>
-            <div id="popupOverlay" style="display: none;"></div>
-            <div id="validerModifCompte" style="display: none;">
-                <h3>Valider les modifications</h3>
-                <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-                <div>
-                    <button id="boutonAnnuler"> Annuler </button>
-                    <button id="boutonValider"> Valider </button>
-                </div>
+        <form action="/front/modifier-compte/" method="POST" id="myForm">
+            <h2>Informations personnelles</h2>
+            <table>
+                <tr>
+                    <td>Pseudo</td>
+                    <td>
+                        <input type="text" name="pseudo" id="pseudo" value="<?= htmlentities($detailCompte["pseudo"] ?? '');?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nom</td>
+                    <td>
+                        <input type="text" name="nom" id="nom" value="<?= htmlentities($detailCompte["nom_compte"] ?? '');?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prénom</td>
+                    <td>
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Adresse mail</td>
+                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>N° de téléphone</td>
+                    <td>
+                        <input type="tel" name="tel" id="tel" value="<?= htmlentities($detailCompte["tel"] ?? '');?>"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mot de passe</td>
+                    <td>
+                        <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
+                        <input type="hidden" name="ancien_mdp" value="<?= htmlentities($detailCompte['mot_de_passe']); ?>">
+                    </td>
+                </tr>
+            </table>
+            <h2>Mon adresse</h2>
+            <table>
+                <tr>
+                    <td>Adresse postale</td>
+                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>Complément d'adresse</td>
+                    <td>
+                        <input type="text" name="compl_adr" id="compl_adr" value="<?= htmlentities($detailCompte["complement_adresse"] ?? '');?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Code postal</td>
+                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>Ville</td>
+                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>Pays</td>
+                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
+                </tr>
+            <div>
+            <input type="submit" value="Valider les modifications">
+        </div>
+        </form> 
+        <div id="popupOverlay" style="display: none;"></div>
+        <div id="validerModifCompte" style="display: none;">
+            <h3>Valider les modifications</h3>
+            <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
+            <div >
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Valider </button> 
             </div>
-            <div id="annulerModifCompte" style="display: none;">
-                <h3>Annuler les modifications</h3>
-                <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
-                <div>
-                    <button id="boutonReprendre"> Reprendre </button>
-                    <button id="boutonQuitter"> Quitter </button>
-                </div>
+        </div>
+        <div id="annulerModifCompte" style="display: none;">
+            <h3>Annuler les modifications</h3>
+            <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+            <div>
+                <button id="boutonReprendre"> Reprendre </button>
+                <button id="boutonQuitter"> Quitter </button>
             </div>
-            <div id="popupRetourAccueil" style="display: none;">
-                <h3>Annuler les modifications</h3>
-                <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
-                <div>
-                    <button id="boutonReprendreAccueil"> Reprendre </button>
-                    <button id="boutonRetourAccueil"> Quitter </button>
-                </div>
+        </div>
+        <div id="popupRetourAccueil" style="display: none;">
+            <h3>Annuler les modifications</h3>
+            <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
+            <div>
+                <button id="boutonReprendreAccueil"> Reprendre </button>
+                <button id="boutonRetourAccueil"> Quitter </button>
             </div>
-            <div id="popupRetourCompte" style="display: none;">
-                <h3>Annuler les modifications</h3>
-                <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
-                <div>
-                    <button id="boutonReprendreCompte"> Reprendre </button>
-                    <button id="boutonRetourCompte"> Quitter </button>
-                </div>
+        </div> 
+        <div id="popupRetourCompte" style="display: none;">
+            <h3>Annuler les modifications</h3>
+            <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
+            <div>
+                <button id="boutonReprendreCompte"> Reprendre </button>
+                <button id="boutonRetourCompte"> Quitter </button>
             </div>
-        </main>
-        <footer>
-            <div class="footer-top">
-                <div class="footer-top-left">
-                    <span class="footer-subtitle">P.A.C.T</span>
-                    <span class="footer-title">TripEnArmor</span>
-                </div>
-                <div class="footer-top-right">
-                    <span class="footer-connect">Restons connectés !</span>
-                    <div class="social-icons">
-                        <a href="https://x.com/?locale=fr">
-                            <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-                        </a>
-                        <a href="https://www.facebook.com/?locale=fr_FR">
-                            <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-                        </a>
-                        <a href="https://www.youtube.com/">
-                            <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-                        </a>
-                        <a href="https://www.instagram.com/">
-                            <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-                        </a>
-                    </div>
-                </div>
-
-
-                <!-- Barre en bas du footer incluse ici -->
-
-            </div>
-            <div class="footer-bottom">
-                Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-                Conditions générales - ©
-                Redden's, Inc.
-            </div>
-        </footer>
-
+        </div> 
+    </main>
     <?php
     } else {
         $ok = true;
@@ -284,8 +291,6 @@ $reqCompte = "SELECT * from sae._compte_membre cm
         }
         redirectTo("/front/mon-compte");
     } ?>
-    <script src="/scripts/popupCompteFront.js"></script>
-
+<script src="/scripts/popupCompteFront.js"></script>
 </body>
-
 </html>
