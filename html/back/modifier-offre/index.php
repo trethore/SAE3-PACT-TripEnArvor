@@ -683,15 +683,14 @@ try {
                                 resume = ?, 
                                 ville = ?, 
                                 duree = ?, 
-                                age_min = ?, 
-                                id_compte_professionnel = ?, 
+                                age_min = ?,  
                                 abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?
                             WHERE id_offre = ?;";
                   $stmt = $dbh->prepare($query);
-                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
 
