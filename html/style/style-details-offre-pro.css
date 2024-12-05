@@ -85,7 +85,7 @@ header > div > a, header > div > a:hover {
     .bouton-modifier > button {
         color: var(--blanc);
         text-decoration: none;
-        font-size: 60px;
+        font-size: 30px;
         background-color: var(--orange-principale);
         border: 3px solid var(--blanc);
         padding: 10px 80px;
