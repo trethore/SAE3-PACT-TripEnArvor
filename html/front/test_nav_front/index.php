@@ -38,31 +38,6 @@ try {
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php var_dump($offres);
-                 foreach ($offres as $offre) {  
-                    try {
-                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                        $dbh->prepare("SET SCHEMA 'sae';")->execute();
-                        
-                        $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-                        $stmt->execute();
-                        $offres = $stmt->fetchAll();
-                        
-                        // Débug temporaire : afficher les résultats dans une table HTML
-                        echo "<table border='1'>";
-                        echo "<tr><th>Titre</th><th>ID Offre</th></tr>";
-                        foreach ($offres as $offre) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($offre['titre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($offre['id_offre']) . "</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    
-                        $dbh = null;
-                    } catch (PDOException $e) {
-                        echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-                    }
                     ?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
@@ -74,6 +49,21 @@ try {
         <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Sélectionnez le datalist
+    const datalist = document.querySelector("#cont");
+
+    // Parcourez toutes les options du datalist
+    const options = Array.from(datalist.options).map(option => ({
+        value: option.value,
+        id: option.getAttribute("data-id")
+    }));
+
+    // Affichez les options dans la console
+    console.log("Liste des offres dans le datalist :", options);
+});
+
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
                 const datalist = document.querySelector("#cont");
