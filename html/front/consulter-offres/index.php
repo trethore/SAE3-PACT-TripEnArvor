@@ -404,9 +404,9 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
-                }
 
-                offers.forEach(offer => offersContainer.appendChild(offer));
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
             };
 
             // Add Event Listeners
