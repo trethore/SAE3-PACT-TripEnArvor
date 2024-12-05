@@ -7,6 +7,29 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
+
+function get_file_extension($type) {
+    $extension = '';
+    switch ($type) {
+        case 'image/png':
+            $extension = '.png';
+            break;
+        case 'image/jpeg':
+            $extension = '.jpg';
+            break;
+        case 'image/webp':
+            $extension = '.webp';
+            break;
+        case 'image/gif':
+            $extension = '.gif';
+            break;
+        default:
+            die("probleme extension image");
+            break;
+    }
+    return $extension;
+}
+
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
