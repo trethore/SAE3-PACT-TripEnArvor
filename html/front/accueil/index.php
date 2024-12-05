@@ -189,11 +189,7 @@ try {
 
             titreElement.innerHTML = `
                 ${titre}
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
+                ${note}
             `;
         }
     </script>
