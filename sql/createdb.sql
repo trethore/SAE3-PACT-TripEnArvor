@@ -111,7 +111,7 @@ CREATE VIEW compte_professionnel_publique AS
 
 CREATE TABLE _compte_membre (
     id_compte   INTEGER,
-    pseudo      VARCHAR(255) NOT NULL,
+    pseudo      VARCHAR(255) UNIQUE NOT NULL,
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
@@ -252,7 +252,7 @@ CREATE TABLE _option (
 
 
 CREATE TABLE _avis (
-    id_avis         SERIAL,
+    id_avis         SERIAL, -- // TODO Supprimer id_avis et mettre (id_membre, id_offre) comme clé primaire
     id_membre       INTEGER NOT NULL,
     id_offre        INTEGER NOT NULL,
     note            INTEGER NOT NULL,
@@ -264,6 +264,7 @@ CREATE TABLE _avis (
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
     CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
+    -- CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
     CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),

@@ -1,41 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
-    $stmt->execute();
-    $offres = $stmt->fetchAll();
-
-    foreach ($offres as &$offre) {
-        $offre['categorie'] = getTypeOffre($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['note'] = getNoteMoyenne($offre['id_offre']);
-    }
-    
-    foreach ($offres as &$offre) {
-        $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
-    }
-
-    foreach ($offres as &$offre) {
-        $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
-        if (getPrixPlusPetit($offre['id_offre']) == null) {
-            $offre['prix'] = 0;
-        }
-    }
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 ?>
 
 <!DOCTYPE html>
@@ -47,18 +17,75 @@ try {
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Accueil</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
-    <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
-        <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
 
     <!-- Conteneur principal -->
     <main>
@@ -69,18 +96,21 @@ try {
         $ids = getIdALaUne();
         foreach ($ids as $key => $offre) {
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
+            $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
-        echo "<pre>";
-        print_r($ids);
-        echo "</pre>";
 
         ?>
 
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) { ?>
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>">
+                    <?php foreach ($ids as $offre) { 
+                        $id = $offre["id_offre"];
+                        $titre = $offre["titre"];
+                        $note = $offre["note"]; ?>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        </a>
                     <?php } ?>
                 </div>
                 <div>
@@ -95,7 +125,7 @@ try {
             </div>
         </section>
 
-        <h1>Découvrir la Liste des Offres Disponibles</h1>
+        <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
         <!--
         <h2>Nouveautés</h2>
@@ -155,7 +185,7 @@ try {
         nextButton.addEventListener('click', () => {
             currentIndex++;
             if (currentIndex >= images.children.length) {
-                currentIndex = 0; // Revenir au début
+                currentIndex = 0;
             }
             updateCarousel();
         });
@@ -164,27 +194,44 @@ try {
         prevButton.addEventListener('click', () => {
             currentIndex--;
             if (currentIndex < 0) {
-                currentIndex = images.children.length - 1; // Revenir à la fin
+                currentIndex = images.children.length - 1;
             }
             updateCarousel();
         });
 
-        // Met à jour l'affichage du carrousel
         function updateCarousel() {
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
-            const currentImage = images.children[currentIndex];
-            const titre = currentImage.dataset.titre;
+            // Get the current `<a>` element
+            const currentAnchor = images.children[currentIndex];
+            // Find the `<img>` inside the `<a>`
+            const imgElement = currentAnchor.querySelector('img');
 
-            // Ajoutez le titre avec les étoiles
+            // Extract data attributes from the `<img>`
+            const titre = imgElement.dataset.titre || "Titre indisponible";
+            const note = parseFloat(imgElement.dataset.note) || 0;
+
+            console.log(`Titre : ${titre}, Note : ${note}`);
+
+            // Generate the stars HTML
+            let starsHTML = '';
+            if (note === 0) {
+                starsHTML = "Pas d'avis disponibles.";
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= note) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                    } else {
+                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                    }
+                }
+            }
+
+            // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
-                <img src="/images/frontOffice/etoile-pleine.png">
+                ${starsHTML}
             `;
         }
     </script>

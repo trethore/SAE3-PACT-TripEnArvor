@@ -1,5 +1,5 @@
 <script>
     setTimeout(() => {
-        window.location.href = "/front/consulter-offres/";
+        window.location.href = "/front/accueil/";
     }, 100);
 </script>

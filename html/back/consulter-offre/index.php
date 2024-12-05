@@ -1,6 +1,25 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+
+
+date_default_timezone_set('Europe/Paris');
 
 if (isset($_POST['reponse'])) { 
     $submitted = true;
@@ -77,6 +96,9 @@ try {
     // ===== Requête SQL pour récupérer les avis d'une offre ===== //
     $avis = getAvis($id_offre_cible);
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
+    $noteDetaillee = getAvisDetaille($id_offre_cible);
+
     // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
     $membre = getInformationsMembre($id_offre_cible);
 
@@ -118,20 +140,56 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
     
-    <header id="header">
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
 
     <div class="fond-bloc display-ligne-espace">
@@ -179,14 +237,17 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
+                $ouverture = "Fermé";
                 foreach ($horaire as $h) {
                     $ouvert_ferme = date('H:i');
-                    if (($h['ouverture']  < $ouvert_ferme) && ($ouvert_ferme < $h['fermeture']) && ($h['nom_jour'] == $jour_actuel)) {
-                        $ouverture = "Ouvert";
-                    }
-                    else {
-                        $ouverture = "Fermé";
-                    }
+                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                    if ($h['nom_jour'] == $jour_actuel) {
+                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                            $ouverture = "Ouvert";
+                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                            $ouverture = "Ferme bientôt";
+                        }
+                    } 
                 } ?>
                 <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
                 <!-- Affichage de l'adresse de l'offre -->
@@ -300,33 +361,34 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs : </h2>
-                    <br>
+                <h2>Tarifs : </h2>
+                <?php if (!empty($tarifs)) { ?>
                     <table>
                         <?php foreach ($tarifs as $t) { 
-                             if (!empty($tarifs)) {
-                                if ($t['nom_tarif'] != "nomtarif1") { 
-                                    if (!empty($t['nom_tarif'])) {?>
-                                        <tr>
-                                            <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                            <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                        </tr>
-                                <?  }
-                                }
-                            } else {
-                                echo "Pas de tarifs diponibles";
-                            } 
+                            if ($t['nom_tarif'] != "nomtarif1") { 
+                                if (!empty($t['nom_tarif'])) {?>
+                                    <tr>
+                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                    </tr>
+                            <?php  }
+                            }
                         } ?>
                     </table>
-                </div>
+                <?php } else {
+                    echo "Pas de tarifs diponibles";
+                } ?>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture :</h2>
-                <?php foreach ($horaire as $h) { ?>
-                    <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
-                <?php } ?>
+                <?php if (!empty($horaire)) {
+                    foreach ($horaire as $h) { ?>
+                        <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
+                    <?php } 
+                } else {
+                    echo "Pas d'informations sur les jours et les horaires d'ouverture disponibles";
+                } ?>
             </div> 
             
         </section>
@@ -374,6 +436,19 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
+                    <?php if ($categorie == "Restauration") { 
+                        foreach ($noteDetaillee as $n) { ?>
+                            <div class="display-ligne">
+                                <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
+                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                <?php } 
+                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                <?php } ?>
+                            </div>
+                        <?php }
+                    } ?>
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>

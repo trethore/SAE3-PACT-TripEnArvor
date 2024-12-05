@@ -1,9 +1,11 @@
 <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/offres-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/site-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/session-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/auth-utils.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/debug-utils.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
+    require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+    require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
     session_start();
 
@@ -68,19 +70,72 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
 
 <body>
-    <header id="header">
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
     
     <?php if (!$submitted) { ?>
@@ -523,7 +578,7 @@
                         $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -567,37 +622,33 @@
                         break;
 
                     case 'spectacle':
-                        $date_event = $_POST['date_event']; // Exemple : "2022-12-08"
 
                         try {
-                            // 1. Insérer la date dans la table _date
-                            $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            // Insertion de la date dans la table _date
+                            $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
-                            $stmtInsertionDateEvent->execute([$date_event]);  // Insérer la date
-                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];  // Récupérer l'ID de la date
-
-                            if (!$idDateEvent) {
-                                throw new Exception("Erreur lors de la récupération de l'ID de la date.");
-                            }
-
-                            // 2. Insérer les données dans la table offre_spectacle en utilisant l'ID de la date
-                            $requete = "INSERT INTO sae.offre_activite (titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                            
-                            $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-
-                            // Récupérer l'ID de l'offre insérée
-                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-
-                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
-
+                            $stmtInsertionDateEvent->execute([$date_event]);
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            print_r($idDateEvent);
+                            print_r("here");
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
                             die();
-                        } catch (Exception $e) {
-                            echo "Erreur : " . $e->getMessage();
-                            die();
                         }
+                        try {
+                            // Requête pour insérer l'offre dans _offre_spectacle
+                            $requete = "INSERT INTO sae._offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                        
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
+                        
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion de l'offre : " . $e->getMessage();
+                        }
+
 
 
 
@@ -705,11 +756,6 @@
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
-
-
-
-
-
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];

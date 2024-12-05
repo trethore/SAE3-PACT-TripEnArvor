@@ -1,5 +1,6 @@
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+<?
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -25,6 +26,7 @@ try {
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/style_navPhone.css" />
     <title>Liste de vos offres</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>
