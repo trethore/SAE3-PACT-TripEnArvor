@@ -1,5 +1,4 @@
 <?php 
-ob_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
@@ -10,7 +9,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 startSession();
 $id_compte = $_SESSION["id"];
 
-ob_end_flush();
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -27,6 +25,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
                 join sae._compte c on c.id_compte = cp.id_compte 
                 join sae._adresse a on c.id_adresse = a.id_adresse 
                 where cp.id_compte = :id_compte;";
+
+$reqProPrive = "SELECT siren from sae._compte_professionnel_prive where id_compte = :id_compte;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -70,21 +70,26 @@ if (!$submitted) {
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
-                    <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"]);?>"></td>
+                    <td><input type="text" name="denomination" id="denomination" value="<?= htmlentities($detailCompte["denomination"] ?? '');?>"></td>
                 </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
+                <?php if ($typeCompte == 'proPrive') {
+                        // Préparation et exécution de la requête
+                        $stmt = $conn->prepare($reqProPrive);
+                        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+                        $stmt->execute();
+                        $proPriveSiren = $stmt->fetch(PDO::FETCH_ASSOC);?>
                 <tr>
                     <td>N° SIREN</td>
-                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($detailCompte["siren"]);?>"></td>
+                    <td><input type="text" name="siren" id="siren" value="<?= htmlentities($proPriveSiren["siren"] ?? '');?>"></td>
                 </tr>
                 <?php } ?>
                 <tr>
                     <td>A propos</td>
-                    <td><input type="text" name="a_propos" id="a_propos" value="<?= htmlentities($detailCompte["a_propos"]);?>"></td>
+                    <td><input type="text" name="a_propos" id="a_propos" value="<?= htmlentities($detailCompte["a_propos"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Site web</td>
-                    <td><input type="url" name="site" id="site" value="<?= htmlentities($detailCompte["site_web"]);?>"></td>
+                    <td><input type="url" name="site" id="site" value="<?= htmlentities($detailCompte["site_web"] ?? '');?>"></td>
                 </tr>
             </table>
             <h2>Informations personnelles</h2>
