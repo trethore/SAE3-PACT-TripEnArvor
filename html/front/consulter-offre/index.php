@@ -507,7 +507,7 @@ try {
                                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                                //$dbh->prepare("START TRANSACTION;")->execute();
+                                $dbh->prepare("START TRANSACTION;")->execute();
                                 
                                 $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                                 $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
@@ -541,7 +541,7 @@ try {
                                     $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
                                     $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
                                 }
-                                //$dbh->prepare("COMMIT;")->execute();
+                                $dbh->prepare("COMMIT;")->execute();
                             } catch (PDOException $e) {
                                 echo "Erreur : " . $e->getMessage();
                                 die();
@@ -583,6 +583,7 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { 
+                        print_r($noteDetaillee);
                         foreach ($noteDetaillee as $n) { ?>
                             <div class="display-ligne">
                                 <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>

@@ -30,6 +30,30 @@ function get_file_extension($type) {
     return $extension;
 }
 
+function supprimerAccents($chaine) {
+    // Tableau des caractères avec accents et leur équivalent sans accents
+    $accents = [
+        'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'ae',
+        'ç' => 'c',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'í' => 'i',
+        'ñ' => 'n',
+        'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'ó' => 'o', 'õ' => 'o', 'ø' => 'o',
+        'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+        'ý' => 'y', 'ÿ' => 'y',
+        'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'AE',
+        'Ç' => 'C',
+        'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+        'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+        'Ñ' => 'N',
+        'Ò' => 'O', 'Ô' => 'O', 'Ö' => 'O', 'Ó' => 'O', 'Õ' => 'O', 'Ø' => 'O',
+        'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+        'Ý' => 'Y'
+    ];
+
+    // Remplacement des caractères
+    return strtr($chaine, $accents);
+}
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -122,7 +146,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = $categorie;
+    $categorieBase = strtolower(supprimerAccents($categorie));
 
     
 
@@ -639,12 +663,12 @@ try {
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
 
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
-                        if ($comp_adresse === '') {$comp_adresse = null;}
+                        if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
                                         where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
-                        $stmt = $conn->prepare($query);
+                        $stmt = $dbh->prepare($query);
                         $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
@@ -659,7 +683,7 @@ try {
                             $query = "UPDATE sae.offre_activite
                             set ((titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
@@ -691,7 +715,7 @@ try {
                             $query = "UPDATE sae.offre_parc
                             set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -706,7 +730,7 @@ try {
                             $query = "UPDATE sae.offre_spectacle
                             set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -714,7 +738,7 @@ try {
                             $query = "UPDATE sae.offre_visite
                             set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -746,7 +770,7 @@ try {
                             $query = "UPDATE sae.offre_restauration
                             set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -773,7 +797,7 @@ try {
                     
                 
 
-                    //SWITCH CREATION REQUETE OFFRE
+                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
                         case 'activite':
                             try{
