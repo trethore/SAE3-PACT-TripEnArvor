@@ -34,6 +34,8 @@ table + div a {
     border: 2px solid var(--orange-principale);
     font-size: 12pt;
     border-radius: 15px;
+    padding: 0.2em 1em;
+    margin: 1em;
 }
 
 table + div input:hover,
@@ -41,16 +43,6 @@ table + div a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
-}
-
-table + div a {
-    padding: 0.2em 1em;
-    margin: 1em;
-}
-
-table + div input {
-    padding: 0.2em 1em;
-    margin: 1em;
 }
 
 /* Style de la popup */
