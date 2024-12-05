@@ -48,8 +48,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) {
-                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?> data-note="<?php echo htmlentities($offre["note"]); ?>">
+                    <?php foreach ($ids as $offre) { ?>
+                        <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>" data-note="<?php echo htmlentities($offre["note"]); ?>">
                     <?php } ?>
                 </div>
                 <div>
