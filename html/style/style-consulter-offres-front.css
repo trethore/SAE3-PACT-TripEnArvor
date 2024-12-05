@@ -555,10 +555,8 @@ h3 {
     color: var(--blanc);
 
     position: absolute !important;
-    left: 40% !important;
-    top: 0 !important;
-
-    z-index: 1;
+    left: 70%;
+    bottom: -3em;
 
     font-size: 10px;
     font-weight: 600;
@@ -570,11 +568,12 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    border-radius: 0 !important;
 }
 
 .en-relief span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);
-    margin-top: 16px;
 }
