@@ -624,7 +624,7 @@ try {
                         break;
 
                     case 'spectacle':
-
+                        try {
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
@@ -632,6 +632,11 @@ try {
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
                             print_r("id de la date " .$idDateEvent);
                         
+                        } catch (PDOException $e) {
+                            // Affichage de l'erreur en cas d'échec
+                            print " Erreur !: " . $e->getMessage() . "<br/>";
+                        }
+                            
                             // Requête pour insérer l'offre dans _offre_spectacle
                             $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                                         VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
