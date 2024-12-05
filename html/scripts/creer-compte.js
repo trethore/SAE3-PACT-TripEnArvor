@@ -200,11 +200,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data.emailExist) {
                     emailExist = true;
                     emailAlreadyExist.style.display = "inline";
-                    divPseudo.querySelector("input").style.border = "1px solid red";
+                    divEmail.querySelector("input").style.border = "1px solid red";
                 } else {
                     emailExist = false;
                     emailAlreadyExist.style.display = "none";
-                    divPseudo.querySelector("input").style.border = "";
+                    divEmail.querySelector("input").style.border = "";
                 }
                 disableSubmitButton();
             })
