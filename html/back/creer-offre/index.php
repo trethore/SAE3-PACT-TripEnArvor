@@ -637,14 +637,16 @@ try {
                             // Affichage de l'erreur en cas d'échec
                             print " Erreur !: " . $e->getMessage() . "<br/>";
                         }
+
+                        $id_date = $idDateEvent;
                         try {
                            // Requête pour insérer l'offre dans _offre_spectacle
                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                            print("id de la date " .$idDateEvent);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $id_date]);
+                            print("id de la date " .$id_date);
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         } catch (PDOException $e) {
                             // Affichage de l'erreur en cas d'échec
