@@ -113,14 +113,12 @@ if (!$submitted) {
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
+                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Complément d'adresse</td>
                     <td>
-                        <input type="text" name="compl_adr" id="compl_adr" value="<?php
-                            if (isset($detailCompte["complement_adresse"])) {
-                                echo htmlentities($detailCompte["complement_adresse"]);} ?>">
+                        <input type="text" name="compl_adr" id="compl_adr" value="<?= htmlentities($detailCompte["complement_adresse"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
@@ -244,6 +242,7 @@ if (!$submitted) {
         redirectTo("/front/mon-compte");
     } ?>
 <script src="/scripts/popupCompteFront.js"></script>
+<!--
 <footer>
   <div class="footer-top">
     <div class="footer-top-left">
@@ -277,6 +276,6 @@ if (!$submitted) {
     Conditions générales - ©
     Redden's, Inc.
   </div>
-</footer>
+</footer>-->
 </body>
 </html>
