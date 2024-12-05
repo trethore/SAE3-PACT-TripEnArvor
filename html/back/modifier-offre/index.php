@@ -680,7 +680,7 @@ try {
 
                     switch ($categorie) {
                         case 'activite':
-                           print($id_offre);
+                           print($id_offre_cible);
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_activite
                             set ((titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
