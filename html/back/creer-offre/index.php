@@ -229,7 +229,7 @@ try {
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
                 <!-- viste et spectacle -->
                 <br>
-                <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
+                <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label>
                 <input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
