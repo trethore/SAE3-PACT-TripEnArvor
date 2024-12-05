@@ -515,7 +515,6 @@ try {
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
                 }
-
             }
 
             if (isset($_POST['photo'])) {
@@ -556,7 +555,7 @@ try {
 
             if ($categorie !== "restaurant") {
                 foreach ($liste_tags as $tag) {
-                    if (isset($_POST[$tag['nom_tag']])) {
+                    if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
                     }
                 }
