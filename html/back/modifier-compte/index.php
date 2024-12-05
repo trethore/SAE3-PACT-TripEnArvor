@@ -9,8 +9,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
-print_r($_SESSION);
-
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 } catch (PDOException $e) {
