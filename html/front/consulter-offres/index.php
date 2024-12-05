@@ -180,6 +180,7 @@ try {
                     <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                     <div class="offre">
                         <div class="sous-offre">
+                                <div class="id" style="display: none;"><?php echo $tab['id_offre']; ?></div>
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
@@ -350,8 +351,14 @@ try {
 
                 visibleOffers = visibleOffers.filter(offer =>{
                     const category = offer.querySelector(".categorie-offre").textContent.trim();
+                    const id = offer.querySelector(".id").textContent.trim();
                     const validCategories = ['Visite', 'Spectacle'];
                     const categoryOK = validCategories.includes(category);
+                    if (category = "Visite") {
+                        eventDate = new Date(getDateVisite(id));
+                    } else if (category = "Spectacle") {
+                        eventDate = new Date(getDateSpectacle(id));
+                    }
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
 
                     return categoryOK && dateOK;
