@@ -301,7 +301,7 @@ try {
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->
-                    <?php if (getTypeOffre($offre['id_offre']) == "Restauration") { ?>
+                    <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
                     <?php } else { ?>
                             <p class="prix">A partir de <span><?php
