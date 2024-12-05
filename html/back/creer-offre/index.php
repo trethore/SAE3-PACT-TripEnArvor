@@ -401,13 +401,14 @@ try {
         } else {
             $id_compte =  $_SESSION['id'];
 
-            $resume = $_POST['descriptionC'];
+            
             // Inclusion des paramètres de connexion
             include('../../php/connect_params.php');
 
             // Récupération des données du formulaire avec $_POST
             
-           
+            $resume = $_POST['descriptionC'];
+
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
                 $date_event = null;
             }else {
@@ -722,6 +723,18 @@ try {
                             } else {
                                 throw new Exception("L'offre doit contenir au moins une image.");
                             }
+
+                            if ($isIdProPrivee){
+                                foreach ($tabtarifs as $key => $value) {
+                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+        
+                                    // Préparation de la requête pour la vue tarif
+                                    $stmt_tarif = $dbh->prepare($requete_tarif);
+        
+                                    // Exécution de la requête pour insérer dans la vue tarif
+                                    $stmt_tarif->execute([$key, $value, $id_offre]);
+                                }
+                            }
                         
                             // Commit de la transaction
                             $dbh->commit();
@@ -766,6 +779,19 @@ try {
                             } else {
                                 throw new Exception("L'offre doit contenir au moins une image.");
                             }
+
+                            if ($isIdProPrivee){
+                                foreach ($tabtarifs as $key => $value) {
+                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+        
+                                    // Préparation de la requête pour la vue tarif
+                                    $stmt_tarif = $dbh->prepare($requete_tarif);
+        
+                                    // Exécution de la requête pour insérer dans la vue tarif
+                                    $stmt_tarif->execute([$key, $value, $id_offre]);
+                                }
+                            }
+                        
                         
                             // Commit de la transaction
                             $dbh->commit();
@@ -782,6 +808,8 @@ try {
                             print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
                             exit;
                         }
+
+
                         
                         break;
 
@@ -841,7 +869,7 @@ try {
                    
                     print($tarif1);
 
-                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")&&($categorie !== "visite")&&($categorie !== "spectacle")){
                         foreach ($tabtarifs as $key => $value) {
                             $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
