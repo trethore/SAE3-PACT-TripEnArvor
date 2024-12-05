@@ -170,15 +170,17 @@ try {
                                 <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($offre['titre']) ?> " required/></td>
                             </tr>
                             <tr>
-                            <select class="custom-select" id="categorie" name="lacat">
-                                <option value="restaurant" <?php echo ($categorie === "restaurant") ? "selected" : ""; ?>>Restaurant</option>
-                                <option value="parc" <?php echo ($categorie === "parc") ? "selected" : ""; ?>>Parc d'attraction</option>
-                                <option value="spectacle" <?php echo ($categorie === "spectacle") ? "selected" : ""; ?>>Spectacle</option>
-                                <option value="visite" <?php echo ($categorie === "visite") ? "selected" : ""; ?>>Visite</option>
-                                <option value="activite" <?php echo ($categorie === "activite") ? "selected" : ""; ?>>Activité</option>  
-                            </select>
-                        </div>
-                    </td>
+                                <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
+                                <td><div class="custom-select-container">
+                                        <select class="custom-select" id="categorie" name="lacat">
+                                            <option value="restaurant" <?php if($categorie === "restaurant"){ "selected";} ?>> Restaurant</option>
+                                            <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
+                                            <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
+                                            <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
+                                            <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>  
+                                        </select>
+                                
+                                </div></td>
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
@@ -217,7 +219,7 @@ try {
                                 <!-- <label for="file-upload">
                                     <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                                 </label> -->
-                                <input id="photo" type="file" name="photo" value="" required />
+                                <input id="photo" type="file" name="photo" value="" />
                             </div>
                         </td>
                     </tr>
