@@ -165,7 +165,7 @@ try {
 
     </div>
     <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const inputSearch = document.querySelector(".input-search");
@@ -227,15 +227,18 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Fermé";
+                $ouverture = "Pas d'information sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
-                    $ouvert_ferme = date('H:i');
-                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                    if ($h['nom_jour'] == $jour_actuel) {
-                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                            $ouverture = "Ouvert";
-                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                            $ouverture = "Ferme bientôt";
+                    if (!empty($horaire)) {
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                        $ouverture = "Fermé";
+                        if ($h['nom_jour'] == $jour_actuel) {
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                $ouverture = "Ouvert";
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                $ouverture = "Ferme bientôt";
+                            }
                         }
                     } 
                 } ?>
@@ -433,7 +436,7 @@ try {
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="text" id="titre" name="titre" required></input><br>
+                                <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
@@ -455,13 +458,13 @@ try {
                                 <label for="avis">Rédigez votre avis</label>
                                 <p class="transparent">.</p>
                             </div>
-                            <textarea id="avis" name="avis" required></textarea><br>
+                            <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             <div class="display-ligne-espace">
                                 <label for="note">Saisissez la note de votre avis</label>
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 <p class="transparent">.</p>
                             </div>
                             <?php if ($categorie == "Restauration") { ?>
@@ -470,7 +473,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -478,7 +481,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -486,7 +489,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -494,7 +497,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                             <?php } ?>
@@ -611,9 +614,9 @@ try {
                     echo "Erreur : " . $e->getMessage();
                     die();
                 }
-            } else {
-                echo "Connexion requise pour publier un avis";
-            }
+            } else { ?>
+                <p><a href="/se-connecter">Connexion</a> requise pour publier un avis</p>
+            <?php }
 
             $compteur = 0;
             foreach ($avis as $a) { ?>
@@ -639,17 +642,18 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { ?>
-                        <div>
+                        <div class="display-ligne">
                             <?php foreach ($noteDetaillee as $n) { ?>
                                 <?php if ($n['id_avis'] == $a['id_avis']) { ?>
-                                    <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                     <?php } 
                                     for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php } 
-                                } ?>
+                                    <?php } ?>
+                                    <p><?php echo htmlentities("     ") ?></p>
+                                <?php } ?>
                             <?php } ?>
                         </div>
                     <?php } 

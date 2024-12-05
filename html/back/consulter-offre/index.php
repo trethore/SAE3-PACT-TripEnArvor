@@ -12,7 +12,7 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
     $stmt->execute([$_SESSION['id']]);
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
@@ -148,14 +148,14 @@ try {
     
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php foreach ($offres as $offre) { ?>
-                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                        <?php echo htmlspecialchars($offre['titre']); ?>
+                <?php foreach ($of as $o) { ?>
+                    <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                        <?php echo htmlspecialchars($o['titre']); ?>
                     </option>
                 <?php } ?>
             </datalist>
@@ -237,15 +237,18 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Fermé";
+                $ouverture = "Pas d'information sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
-                    $ouvert_ferme = date('H:i');
-                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                    if ($h['nom_jour'] == $jour_actuel) {
-                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                            $ouverture = "Ouvert";
-                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                            $ouverture = "Ferme bientôt";
+                    if (!empty($horaire)) {
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                        $ouverture = "Fermé";
+                        if ($h['nom_jour'] == $jour_actuel) {
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                $ouverture = "Ouvert";
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                $ouverture = "Ferme bientôt";
+                            }
                         }
                     } 
                 } ?>
@@ -418,7 +421,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace"> 
                         <div class="display-ligne">
@@ -436,20 +439,23 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <?php if ($categorie == "Restauration") { 
-                        foreach ($noteDetaillee as $n) { ?>
-                            <div class="display-ligne">
-                                <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
-                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php } 
-                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                    <?php if ($categorie == "Restauration") { ?>
+                        <div class="display-ligne">
+                            <?php foreach ($noteDetaillee as $n) { ?>
+                                <?php if ($n['id_avis'] == $a['id_avis']) { ?>
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
+                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php } 
+                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php } ?>
+                                    <p><?php echo htmlentities("     ") ?></p>
                                 <?php } ?>
-                            </div>
-                        <?php }
-                    } ?>
-                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                            <?php } ?>
+                        </div>
+                    <?php } 
+                    $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>

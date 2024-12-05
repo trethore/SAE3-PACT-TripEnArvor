@@ -62,7 +62,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT Pro</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -75,8 +75,8 @@ try {
         </datalist>
 
     </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const inputSearch = document.querySelector(".input-search");
@@ -110,16 +110,15 @@ try {
         });
     </script>
 </header>
-        <main>
-            <?php
-            // Préparation et exécution de la requête
-            $stmt = $conn->prepare($reqCompte);
-            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-            $stmt->execute();
-            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
-            ?>
-            <h1>Détails du compte</h1>
-
+    <main>
+        <?php
+        // Préparation et exécution de la requête
+        $stmt = $conn->prepare($reqCompte);
+        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+        $stmt->execute();
+        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+        ?>
+        <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
             <table>
@@ -138,7 +137,7 @@ try {
                 <tr>
                     <td>Prénom</td>
                     <td>
-                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>"> 
                     </td>
                 </tr>
                 <tr>

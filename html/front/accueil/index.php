@@ -52,7 +52,7 @@ try {
 
     </div>
     <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const inputSearch = document.querySelector(".input-search");
