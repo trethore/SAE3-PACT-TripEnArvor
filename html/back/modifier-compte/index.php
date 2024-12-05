@@ -216,7 +216,7 @@ try {
                 </tr>
             </table>
             <div>
-                <a href="/back/mon-compte">Revenir au compte</a>
+                <a href="/back/mon-compte" id="retour">Revenir au compte</a>
                 <input type="submit" value="Valider les modifications">
             </div>
         </form> 
