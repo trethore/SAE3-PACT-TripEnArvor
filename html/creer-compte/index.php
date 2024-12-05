@@ -2,9 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
-require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+
 
 startSession();
 
@@ -18,9 +16,7 @@ $submitted = isset($_POST['type-compte']);
     <title>Créer un compte</title>
     <link rel="stylesheet" href="/style/style-creer-compte.css">
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/styleguide.css"/>
     <script src="/scripts/creer-compte.js"></script>
-    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -33,26 +29,17 @@ if (!$submitted) {
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
         </a>
     </header>
-    <header>
-        <a href="/html/front/consulter-offres/">
-            <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
-        </a>
-    </header>
     <form action="/creer-compte/" method="post">
         <h1>Créer un compte</h1>
         <span>Vous avez déjà un compte ? <a href="/se-connecter/">Connexion</a></span>
-        <span>Vous avez déjà un compte ? <a href="/se-connecter/">Connexion</a></span>
         <span><span>*</span> Champs obligatoires</span>
-        <hr>
         <hr>
         <div id="div-type-compte">
             <label for="type-compte">Type de compte<span> *</span></label>
             <select name="type-compte" id="type-compte">
                 <option value="">-- Sélectionnez un type de compte --</option>
-                <option value="">-- Sélectionnez un type de compte --</option>
                 <option value="membre">Compte membre</option>
                 <option value="pro-publique">Compte professionnel publique</option>
-                <option value="pro-privé">Compte professionnel privé</option>
                 <option value="pro-privé">Compte professionnel privé</option>
             </select>
         </div>
@@ -90,21 +77,17 @@ if (!$submitted) {
         </div>
         <div id="div-denomination">
             <label for="denomination">Dénomination sociale<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <label for="denomination">Dénomination sociale<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <input type="text" name="denomination" id="denomination" placeholder="Le nom de votre société/entreprise/association">
         </div>
         <div id="div-a-propos">
-            <label for="a-propos">À propos<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <label for="a-propos">À propos<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <textarea name="a-propos" id="a-propos" placeholder="Description de vos activités"></textarea>
         </div>
         <div id="div-site-web">
             <label for="site-web">Site web<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <label for="site-web">Site web<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <input type="url" name="site-web" id="site-web" placeholder="votre.site-web.fr">
         </div>
         <div id="div-siren">
-            <label for="siren">Numéro de SIREN<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <label for="siren">Numéro de SIREN<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
             <input type="text" name="siren" id="siren" placeholder="Ex : 123456780">
         </div>
@@ -112,34 +95,28 @@ if (!$submitted) {
         <div id="div-adresse">
             <div id="div-street">
                 <label for="street">Numéro et nom de voie<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-                <label for="street">Numéro et nom de voie<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                 <input type="text" name="street" id="street" placeholder="Ex : 1 rue du poisson d'avril">
             </div>
             <div id="div-address-complement">
-                <label for="address-complement">Complément d'adresse<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                 <label for="address-complement">Complément d'adresse<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                 <input type="text" name="address-complement" id="address-complement" placeholder="Village, lieu-dit, bâtiment, etc...">
             </div>
             <div class="row">
                 <div id="div-code-postal">
                     <label for="code-postal">Code postal<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-                    <label for="code-postal">Code postal<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                     <input type="text" name="code-postal" id="code-postal" placeholder="Ex : 22300">
                 </div>
                 <div id="div-city">
                     <label for="city">Ville<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-                    <label for="city">Ville<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                     <input type="text" name="city" id="city" placeholder="Ex : Lannion">
                 </div>
                 <div id="div-country">
-                    <label for="country">Pays<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                     <label for="country">Pays<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
                     <input type="text" name="country" id="country" placeholder="Ex : France">
                 </div>
             </div>
         </div>
         <hr>
-        <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="">conditions générales d'utilisation</a> et la <a href="">politique de confidentialité</a>.</label>
         <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="">conditions générales d'utilisation</a> et la <a href="">politique de confidentialité</a>.</label>
         <input type="submit" value="Créer un compte" disabled>
     </form>
@@ -168,7 +145,6 @@ if (!$submitted) {
             $ok = $ok && isset($_POST['city']);
             $ok = $ok && isset($_POST['country']);
             break;
-        case 'pro-privé':
         case 'pro-privé':
             $ok = $ok && isset($_POST['email']);
             $ok = $ok && isset($_POST['password']);
@@ -276,7 +252,6 @@ if (!$submitted) {
              http_response_code(400);
         }
     } else {
-        http_response_code(500);
         http_response_code(500);
     }
     
