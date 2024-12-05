@@ -350,13 +350,13 @@ try {
                 const endDate = new Date(endDateInput.value);
 
                 visibleOffers = visibleOffers.filter(offer =>{
-                    const category = offer.querySelector(".categorie-offre").textContent.trim();
-                    const id = offer.querySelector(".id").textContent.trim();
-                    const validCategories = ['Visite', 'Spectacle'];
-                    const categoryOK = validCategories.includes(category);
-                    if (category = "Visite") {
+                    let category = offer.querySelector(".categorie-offre").textContent.trim();
+                    let id = offer.querySelector(".id").textContent.trim();
+                    let validCategories = ['Visite', 'Spectacle'];
+                    let categoryOK = validCategories.includes(category);
+                    if (category == "Visite") {
                         eventDate = new Date(getDateVisite(id));
-                    } else if (category = "Spectacle") {
+                    } else if (category == "Spectacle") {
                         eventDate = new Date(getDateSpectacle(id));
                     }
                     const dateOK = eventDate >= startDate && eventDate <= endDate;
