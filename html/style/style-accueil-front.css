@@ -135,17 +135,3 @@ p > img {
     height: 25px;
     width: 25px;
 }
-
-/**********************************
-        INTERACTIONS LIENS                
-**********************************/
-
-.carousel-images a:hover img {
-    filter: brightness(0.9); /* Ajout d'un léger assombrissement au survol */
-    transform: scale(1.02); /* Zoom léger pour effet interactif */
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.carousel-images a:focus {
-    outline: 2px solid var(--violet-principal); /* Ajoute une bordure visible pour l'accessibilité */
-}
