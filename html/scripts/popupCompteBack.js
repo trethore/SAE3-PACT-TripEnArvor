@@ -101,7 +101,6 @@ boutonReprendreCompte.addEventListener("click", function() {
     popupCompte.style.display = "none";
 });
 
-
 declencherPopupAnnuler.addEventListener("click", function(event) {
     event.preventDefault(); // Empêche le changement de page
     popupOverlay.style.display = "block";

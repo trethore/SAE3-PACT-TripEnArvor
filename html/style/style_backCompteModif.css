@@ -15,6 +15,7 @@ input {
     background-color: var(--blanc-leger);
     padding: 0.5em 2em;
     border-radius: 10px;
+    width: 20em;
     border: 1px solid var(--blanc);
 }
 

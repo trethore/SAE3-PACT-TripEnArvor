@@ -183,8 +183,9 @@ try {
                     <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
                 </tr>
             <div>
-            <input type="submit" value="Valider les modifications">
-        </div>
+                <a href="/front/mon-compte" id="retour">Revenir au compte</a>
+                <input type="submit" value="Valider les modifications">
+            </div>
         </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">
