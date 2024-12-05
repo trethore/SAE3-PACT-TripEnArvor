@@ -35,6 +35,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <title>Liste de vos offres</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
     <header>

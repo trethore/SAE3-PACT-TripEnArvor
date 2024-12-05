@@ -35,6 +35,8 @@ $reqCompte = "SELECT * from sae._compte_professionnel cp
     <link rel="stylesheet" href="/style/style_HFB.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
 <?php
