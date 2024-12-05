@@ -36,13 +36,13 @@ h2 {
     padding: 30px;
 }
 
-header > a {
-    text-decoration: none;
-}
-
 a {
     color: var(--noir);
     text-decoration: underline;
+}
+
+header > div > a {
+    text-decoration: none;
 }
 
 .etoile {
