@@ -397,7 +397,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les avis d'une offre ===== //
     function getAvis($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre JOIN _note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _offre.id_offre = :id_offre";
+        $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAvis = $conn->prepare($reqAvis);
