@@ -236,11 +236,27 @@ try {
                         <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                                <?php
-                                if (isOffreEnRelief($tab['id_offre'])) { ?>
-                                    <div class="en-relief">Coup de <span>❤️</span></div>
-                                <?php } ?>
-                                <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                                <?php $horaire = getHorairesOuverture($tab['id_offre'])
+                                setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                $jour_actuel = $jours[date('w')];
+                                $ouverture = "Indéterminé";
+                                foreach ($horaire as $h) {
+                                    if (!empty($horaire)) {
+                                        $ouvert_ferme = date('H:i');
+                                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                        $ouverture = "Fermé";
+                                        if ($h['nom_jour'] == $jour_actuel) {
+                                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                $ouverture = "Ouvert";
+                                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                $ouverture = "Ferme bientôt";
+                                            }
+                                        }
+                                    } 
+                                } ?>
+
+                                <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
                                 <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                                 <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
