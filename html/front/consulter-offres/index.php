@@ -158,7 +158,7 @@ try {
                             <div>
                                 <label>Période &nbsp;: du </label>
                                 <input id="start-date" type="date">
-                                <label> au </label>
+                                <label style="margin-left: 10px;"> au </label>
                                 <input id="end-date" type="date">
                             </div>
                             <div>
@@ -180,6 +180,7 @@ try {
                     <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                     <div class="offre">
                         <div class="sous-offre">
+                                <div class="id" style="display: none;"><?php echo $tab['id_offre']; ?></div>
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
@@ -325,7 +326,6 @@ try {
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
                 const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
-                console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
@@ -339,6 +339,28 @@ try {
                 visibleOffers = visibleOffers.filter(offer => {
                     const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
                     return price >= minPrice && price <= maxPrice;
+                });
+
+                // Filter by Date (Visite et Spectacle)
+                const startDateInput = document.getElementById('start-date');
+                const endDateInput = document.getElementById('end-date');
+
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+
+                visibleOffers = visibleOffers.filter(offer =>{
+                    let category = offer.querySelector(".categorie-offre").textContent.trim();
+                    let id = offer.querySelector(".id").textContent.trim();
+                    let validCategories = ['Visite', 'Spectacle'];
+                    let categoryOK = validCategories.includes(category);
+                    if (category == "Visite") {
+                        let eventDate = new Date(getDateVisite(id));
+                    } else if (category == "Spectacle") {
+                        let eventDate = new Date(getDateSpectacle(id));
+                    }
+                    const dateOK = eventDate >= startDate && eventDate <= endDate;
+
+                    return categoryOK && dateOK;
                 });
 
                 // Filter by Location
