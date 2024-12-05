@@ -214,9 +214,9 @@ try {
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
                                     <?php if ($tab["categorie"] == "Restauration") { ?>
-                                        <p class="prix">Gamme de prix <span><?php echo getRestaurant($tab['id_offre'])["gamme_prix"] ?><span></p>
+                                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
                                     <?php } else { ?>
-                                        <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
+                                        <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
                                     <?php } ?>
                                 </div>
                             </div>
