@@ -48,18 +48,76 @@ try {
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Liste de vos offres</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
-    <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
-        <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
 
     <!-- Conteneur principal -->
     <main>
@@ -139,7 +197,7 @@ try {
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <!--<label><input type="radio" name="localisation"> Autour de moi</label>-->
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
                                 <input type="text" name="location" id="search-location" placeholder="Rechercher...">
@@ -151,19 +209,21 @@ try {
                     <div class="typeOffre"></div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <!-- <div class="date">
                         <h3>Date</h3>
                         <div>
                             <div>
-                                <label>Date de début &nbsp;:</label>
-                                <input type="date">
+                                <label>Période &nbsp;: du </label>
+                                <input id="start-date" type="date">
+                                <label style="margin-left: 10px;"> au </label>
+                                <input id="end-date" type="date">
                             </div>
                             <div>
-                                <label>Date de fin &emsp;&emsp;:</label>
-                                <input type="date">
+                                <label>Date d'ouverture :</label>
+                                <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </article>
@@ -174,9 +234,10 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                    
                     <div class="offre">
-                        <div class="sous-offre">
+                        <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                            <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
@@ -211,11 +272,16 @@ try {
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
-                                    <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
+
+                                    <?php if ($tab["categorie"] == "Restauration") { ?>
+                                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
+                                    <?php } else { ?>
+                                        <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
+                                    <?php } ?>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 <?php
                     }
             ?>
@@ -265,10 +331,27 @@ try {
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
             const offers = Array.from(document.querySelectorAll(".offre"));
-
             const noOffersMessage = document.querySelector(".no-offers-message");
-
             const locationInput = document.getElementById("search-location");
+
+            /*const input1 = document.getElementById('start-date');
+            const input2 = document.getElementById('end-date');
+            const input3 = document.getElementById('open-date');
+
+            input1.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input2.addEventListener('focus', () => {
+                input3.value = '';
+            });
+
+            input3.addEventListener('focus', () => {
+                input1.value = '';
+                input2.value = '';
+            });*/
+
+            const initialOrder = offers.slice();
 
             h2.addEventListener("click", () => {
                 fondFiltres.classList.toggle("hidden");
@@ -301,7 +384,6 @@ try {
                 // Filter by Note
                 const minNoteSelect = document.querySelector(".note");
                 const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
-                console.log("selectedNote : " + selectedNote);
                 if (selectedNote) {
                     visibleOffers = visibleOffers.filter(offer => {
                         const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
@@ -314,8 +396,34 @@ try {
                 const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
                 visibleOffers = visibleOffers.filter(offer => {
                     const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
-                    return price >= minPrice && price <= maxPrice;
+                    if (offer.querySelector(".categorie-offre").textContent.trim() == "Restauration" && minPrice == "0" && maxPrice == "Infinity") {
+                        return true;
+                    } else {
+                        return price >= minPrice && price <= maxPrice;
+                    }
                 });
+
+                // Filter by Date (Visite et Spectacle)
+                /*const startDateInput = document.getElementById('start-date');
+                const endDateInput = document.getElementById('end-date');
+
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+
+                visibleOffers = visibleOffers.filter(offer =>{
+                    let category = offer.querySelector(".categorie-offre").textContent.trim();
+                    let id = offer.querySelector(".id").textContent.trim();
+                    let validCategories = ['Visite', 'Spectacle'];
+                    let categoryOK = validCategories.includes(category);
+                    if (category == "Visite") {
+                        let eventDate = new Date(getDateVisite(id));
+                    } else if (category == "Spectacle") {
+                        let eventDate = new Date(getDateSpectacle(id));
+                    }
+                    const dateOK = eventDate >= startDate && eventDate <= endDate;
+
+                    return categoryOK && dateOK;
+                });*/
 
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
@@ -353,7 +461,9 @@ try {
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "default") {
+                    offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
+                    offers.forEach(offer => offersContainer.appendChild(offer));
                 }
             };
 

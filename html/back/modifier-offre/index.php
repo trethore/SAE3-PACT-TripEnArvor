@@ -5,8 +5,55 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
+$id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
 
+function get_file_extension($type) {
+    $extension = '';
+    switch ($type) {
+        case 'image/png':
+            $extension = '.png';
+            break;
+        case 'image/jpeg':
+            $extension = '.jpg';
+            break;
+        case 'image/webp':
+            $extension = '.webp';
+            break;
+        case 'image/gif':
+            $extension = '.gif';
+            break;
+        default:
+            die("probleme extension image");
+            break;
+    }
+    return $extension;
+}
+
+function supprimerAccents($chaine) {
+    // Tableau des caractères avec accents et leur équivalent sans accents
+    $accents = [
+        'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'ae',
+        'ç' => 'c',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'í' => 'i',
+        'ñ' => 'n',
+        'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'ó' => 'o', 'õ' => 'o', 'ø' => 'o',
+        'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+        'ý' => 'y', 'ÿ' => 'y',
+        'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'AE',
+        'Ç' => 'C',
+        'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+        'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+        'Ñ' => 'N',
+        'Ò' => 'O', 'Ô' => 'O', 'Ö' => 'O', 'Ó' => 'O', 'Õ' => 'O', 'Ø' => 'O',
+        'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+        'Ý' => 'Y'
+    ];
+
+    // Remplacement des caractères
+    return strtr($chaine, $accents);
+}
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -27,7 +74,7 @@ try {
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $id_offre_cible = intval($_GET['id']);
+    
 
 // ===== GESTION DES OFFRES ===== //
 
@@ -99,7 +146,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = $categorie;
+    $categorieBase = strtolower(supprimerAccents($categorie));
 
     
 
@@ -118,16 +165,68 @@ try {
 
 </head>
     <body>
-        <header id="header">
-            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-            <div class="text-wrapper-17">PACT Pro</div>
-            <div class="search-box">
-                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-                <input type="text" class="input-search" placeholder="Taper votre recherche...">
-            </div>
-            <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-            <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        </header>
+    <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="search-box">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
+        </div>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
+    </header>
         
         <?php if (!$submitted) { ?>
             <div id="offre">
@@ -165,8 +264,9 @@ try {
             <main>
                 
                 <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
+                <?php print_r($id_offre_cible); ?>
 
-                <form action="index.php" method="post" enctype="multipart/form-data" id="dynamicForm">
+                <form action="index.php?id=<?php echo $id_offre_cible ?>" method="post" enctype="multipart/form-data" id="dynamicForm">
 
                     <h3>Informations importantes</h3>
 
@@ -395,7 +495,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" > </button>
+                        <input class="valider" type="submit" value="Modifier l'offre">
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
@@ -435,6 +535,8 @@ try {
                 </div>
             </footer>
         <?php } else {
+            $id_offre = $id_offre_cible;
+            $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
             }
@@ -511,7 +613,6 @@ try {
                     $tarif4 = intval($tarif4);
                     $tabtarifs[$_POST['nomtarif4']] = $tarif4;
                 }
-
             }
 
             if (isset($_POST['photo'])) {
@@ -548,11 +649,14 @@ try {
             }
             $pays = "France";
             $id_adresse =null;
+            if (isset($_POST['lacat'])) {
+                $categorie = $_POST['lacat'];
+            }
 
 
             if ($categorie !== "restaurant") {
                 foreach ($liste_tags as $tag) {
-                    if (isset($_POST[$tag['nom_tag']])) {
+                    if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
                     }
                 }
@@ -560,8 +664,13 @@ try {
            
             $descriptionL = $_POST['descriptionL'];
             
-             
+             print_r($_FILES);
+             print($photo1);
+
+             print($categorieBase);
+             print($categorie);
              try {
+
 
                 // Vérifier si l'id_compte est défini (s'il est connecté)
                 if (!$id_compte) {
@@ -574,40 +683,44 @@ try {
                 $dbh->beginTransaction();
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                //INSERTION IMAGE dans _image
-                $time = 'p' . strval(time());
-                $file = $_FILES['photo'];
-                $file_extension = get_file_extension($file['type']);
-
-                if ($file_extension !== '') {
-                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
-                    $fichier_img = $time . $file_extension;
+                if(isset($_POST['photo'])){
+                    //INSERTION IMAGE dans _image
+                    $time = 'p' . strval(time());
+                    $file = $_FILES['photo'];
+                    $file_extension = get_file_extension($file['type']);
 
-                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+                    if ($file_extension !== '') {
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
-                    //preparation requete
-                    $stmt_image = $dbh->prepare($requete_image);
 
-                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                    $stmt_image->execute([$fichier_img]);
+                        $fichier_img = $time . $file_extension;
 
+                        $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                        //preparation requete
+                        $stmt_image = $dbh->prepare($requete_image);
+
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_image->execute([$fichier_img]);
+
+                    }
                 }
+                
 
 
 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
-
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
-                        if ($comp_adresse === '') {$comp_adresse = null;}
+                        if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                        where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
-                        $stmt = $conn->prepare($query);
-                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                                        where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_compte]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
                     }
@@ -617,12 +730,19 @@ try {
                     switch ($categorie) {
                         case 'activite':
                            
-                            // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_activite
-                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            SET titre = ?, 
+                                resume = ?, 
+                                ville = ?, 
+                                duree = ?, 
+                                age_min = ?,  
+                                abonnement = ?, 
+                                description_detaille = ?, 
+                                site_web = ?, 
+                                id_adresse = ?
+                            WHERE id_offre = ?;";
+                  $stmt = $dbh->prepare($query);
+                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
 
@@ -653,7 +773,7 @@ try {
                             $query = "UPDATE sae.offre_parc
                             set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -668,7 +788,7 @@ try {
                             $query = "UPDATE sae.offre_spectacle
                             set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -676,7 +796,7 @@ try {
                             $query = "UPDATE sae.offre_visite
                             set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -708,7 +828,7 @@ try {
                             $query = "UPDATE sae.offre_restauration
                             set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -735,7 +855,7 @@ try {
                     
                 
 
-                    //SWITCH CREATION REQUETE OFFRE
+                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
                         case 'activite':
                             try{
@@ -754,7 +874,7 @@ try {
                             $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif1, $type, $resume, $descriptionL, $lien]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 

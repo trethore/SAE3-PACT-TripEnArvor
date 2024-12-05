@@ -1,9 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/auth-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 ?>
 
 <!DOCTYPE html>
@@ -15,18 +17,76 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Accueil</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
-    <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
-        <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
 
     <!-- Conteneur principal -->
     <main>
@@ -39,9 +99,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
-        echo "<pre>";
-        print_r($ids);
-        echo "</pre>";
+
         ?>
 
         <section>
@@ -52,7 +110,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
                         $titre = $offre["titre"];
                         $note = $offre["note"]; ?>
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo $titre; ?>" data-note="<?php echo $note; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
                         </a>
                     <?php } ?>
                 </div>
@@ -68,7 +126,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             </div>
         </section>
 
-        <h1>Découvrir la Liste des Offres Disponibles</h1>
+        <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
         <!--
         <h2>Nouveautés</h2>
@@ -146,12 +204,20 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
-            const currentImage = images.children[currentIndex];
-            const titre = currentImage.dataset.titre;
-            const note = parseFloat(currentImage.dataset.note);
+            // Get the current `<a>` element
+            const currentAnchor = images.children[currentIndex];
+            // Find the `<img>` inside the `<a>`
+            const imgElement = currentAnchor.querySelector('img');
 
+            // Extract data attributes from the `<img>`
+            const titre = imgElement.dataset.titre || "Titre indisponible";
+            const note = parseFloat(imgElement.dataset.note) || 0;
+
+            console.log(`Titre : ${titre}, Note : ${note}`);
+
+            // Generate the stars HTML
             let starsHTML = '';
-            if (note == NaN) {
+            if (note === 0) {
                 starsHTML = "Pas d'avis disponibles.";
             } else {
                 for (let i = 1; i <= 5; i++) {
@@ -163,6 +229,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
                 }
             }
 
+            // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
