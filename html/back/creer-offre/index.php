@@ -626,27 +626,27 @@ try {
 
                     case 'spectacle':
                         try {
-                            $dbh->beginTransaction();
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
                             print_r("id de la date " .$idDateEvent);
-                            $dbh->commit();
+                            
                         } catch (PDOException $e) {
-                            $dbh->rollBack();
                             // Affichage de l'erreur en cas d'échec
                             print " Erreur !: " . $e->getMessage() . "<br/>";
                         }
+
+                        $id_date = $idDateEvent;
                         try {
                            // Requête pour insérer l'offre dans _offre_spectacle
                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                            print("id de la date " .$idDateEvent);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $id_date]);
+                            print("id de la date " .$id_date);
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         } catch (PDOException $e) {
                             // Affichage de l'erreur en cas d'échec
