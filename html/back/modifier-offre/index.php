@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
-
+$id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
@@ -27,7 +27,7 @@ try {
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $id_offre_cible = intval($_GET['id']);
+    
 
 // ===== GESTION DES OFFRES ===== //
 
