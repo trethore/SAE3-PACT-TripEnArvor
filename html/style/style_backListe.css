@@ -361,7 +361,6 @@ a {
     width: 120px;
     padding: 0.2em;
 
-    opacity: 73%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
@@ -383,8 +382,6 @@ a {
 
     height: 37px;
     width: 90px;
-
-    opacity: 73%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;

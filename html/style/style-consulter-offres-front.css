@@ -360,8 +360,6 @@ h3 {
     height: 37px;
     width: 117px;
 
-    opacity: 90%;
-
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
 }
@@ -384,8 +382,6 @@ h3 {
     width: 67.8px;
 
     text-decoration: none;
-
-    opacity: 90%;
 
     background: var(--fond-bouton) !important;
     border-radius: 20px !important;
