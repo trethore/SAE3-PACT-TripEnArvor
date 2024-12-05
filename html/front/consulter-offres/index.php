@@ -341,6 +341,22 @@ try {
                     return price >= minPrice && price <= maxPrice;
                 });
 
+                // Filter by Date (Visite et Spectacle)
+                const startDateInput = document.getElementById('start-date');
+                const endDateInput = document.getElementById('end-date');
+
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+
+                visibleOffers = visibleOffers.filter(offer =>{
+                    const category = offer.querySelector(".categorie-offre").textContent.trim();
+                    const validCategories = ['Visite', 'Spectacle'];
+                    const categoryOK = validCategories.includes(category);
+                    const dateOK = eventDate >= startDate && eventDate <= endDate;
+
+                    return categoryOK && dateOK;
+                });
+
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
                 if (searchLocation) {
