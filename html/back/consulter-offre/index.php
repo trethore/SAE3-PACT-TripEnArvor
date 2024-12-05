@@ -1,6 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+
+date_default_timezone_set('Europe/Paris');
 
 if (isset($_POST['reponse'])) { 
     $submitted = true;
@@ -118,6 +121,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
@@ -303,26 +307,23 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs : </h2>
-                    <br>
-                    <?php if (!empty($tarifs)) { ?>
-                        <table>
-                            <?php foreach ($tarifs as $t) { 
-                                if ($t['nom_tarif'] != "nomtarif1") { 
-                                    if (!empty($t['nom_tarif'])) {?>
-                                        <tr>
-                                            <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                            <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                        </tr>
-                                <?php  }
-                                }
-                            } ?>
-                        </table>
-                    <?php } else {
-                        echo "Pas de tarifs diponibles";
-                    } ?>
-                </div>
+                <h2>Tarifs : </h2>
+                <?php if (!empty($tarifs)) { ?>
+                    <table>
+                        <?php foreach ($tarifs as $t) { 
+                            if ($t['nom_tarif'] != "nomtarif1") { 
+                                if (!empty($t['nom_tarif'])) {?>
+                                    <tr>
+                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                    </tr>
+                            <?php  }
+                            }
+                        } ?>
+                    </table>
+                <?php } else {
+                    echo "Pas de tarifs diponibles";
+                } ?>
             </div>
 
             <div class="fond-blocs bloc-ouverture">

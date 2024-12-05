@@ -76,14 +76,12 @@ a {
         background-color: var(--orange-principale);
         border: 3px solid var(--blanc-leger);
         padding: 10px 80px;
-        border-radius: 15px;
-        border: 0;
-    }
+        border-radius: 15px;    }
 
     .bouton-modifier > button:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
+        border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -300,13 +298,12 @@ a {
         border: 3px solid var(--blanc-leger);
         padding: 10px 80px;
         border-radius: 15px;
-        border: 0;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
+        border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -326,13 +323,12 @@ a {
         border: 3px solid var(--blanc-leger);
         padding: 10px 20px;
         border-radius: 15px;
-        border: 0;
     }
 
     .bloc-tarif > button:hover {
         color: var(--orange-principale);
         background: var(--blanc-leger);
-        border: 3px solid var(--orange-principale);
+        border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
 
@@ -466,7 +462,8 @@ a {
 
 .navigation > button {
     background: var(--orange-principale);
-    color: var(--blanc);
+    border: 3px solid var(--blanc-leger);
+    color: var(--blanc-leger);
     padding: 10px 20px;
     border: 0;
     text-align: center;
@@ -474,11 +471,11 @@ a {
     width: auto;
     height: auto;
     border-radius: 15px;
-    margin-left: 0;
 }
 
 .navigation > button:hover {
     background: var(--blanc-leger);
+    border-color: var(--orange-principale);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
@@ -487,6 +484,7 @@ a {
     width: 50px;
     height: 50px;
     background: var(--orange-principale);
+    border: 3px solid var(--blanc-leger);
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -494,6 +492,7 @@ a {
 
 #remonte:hover {
     background: var(--blanc-leger);
+    border-color: var(--orange-principale);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     transition: 0.3s ease-in-out;
 }
