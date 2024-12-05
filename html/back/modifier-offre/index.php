@@ -85,18 +85,19 @@ try {
 
 
 
-    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
-    $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
     
-    $categorieBase = $categorie;
-    
-    $id_offre = $_GET['id'];
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
 }
 
+    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
+    $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
+
+    $categorieBase = $categorie;
+
+    $id_offre = $_GET['id'];
 
 ?>
 
@@ -388,7 +389,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <input class="valider" type="submit" value="Modifier l'offre" />
+                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre ?>'" >
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
