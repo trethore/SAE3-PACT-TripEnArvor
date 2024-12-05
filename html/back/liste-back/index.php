@@ -301,10 +301,10 @@ try {
                     <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->
-                    <?php if ($tab["categorie"] == "Restauration") { ?>
+                    <?php if ($row["categorie"] == "Restauration") { ?>
                         <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
                     <?php } else { ?>
-                        <p class="prix">A partir de <span><?php echo htmlentities($row["prix"]); ?>€</span></p>
+                        <p class="prix">A partir de <span><?php echo htmlentities($row['prix']); ?>€</span></p>
                     <?php } ?>
                 </a>
             </article>
