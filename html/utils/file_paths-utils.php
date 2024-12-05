@@ -1,4 +1,7 @@
 <?php
+// Connect params
+const CONNECT_PARAMS = '/php/connect_params.php';
+
 // Routes pour le back-office
 const BACK_CONSULTER_OFFRE = '/back/consulter-offre';
 const BACK_CREER_OFFRE = '/back/creer-offre';

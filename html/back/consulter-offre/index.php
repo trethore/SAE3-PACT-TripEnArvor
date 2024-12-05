@@ -1,6 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 date_default_timezone_set('Europe/Paris');
 
@@ -120,6 +121,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="icon" type="image/jpeg" href="/images/universel/Logo_icone.jpg">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 

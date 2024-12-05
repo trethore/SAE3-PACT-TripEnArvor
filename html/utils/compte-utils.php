@@ -1,6 +1,6 @@
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-    include($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
    
     function getTypeCompte($id_compte) {
         global $driver, $server, $dbname, $user, $pass;
