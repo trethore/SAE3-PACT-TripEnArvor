@@ -267,7 +267,7 @@ if (!$submitted) {
                 redirectTo('/front/consulter-offres/');
             }
         } catch(PDOException $e) {
-             http_response_code(500);
+             http_response_code(400);
         }
     } else {
         http_response_code(500);
