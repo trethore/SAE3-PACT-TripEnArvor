@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/offres-utils.php');
 
+date_default_timezone_set('Europe/Paris');
+
 if (isset($_POST['reponse'])) { 
     $submitted = true;
 } else {
@@ -303,26 +305,23 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <div>
-                    <h2>Tarifs : </h2>
-                    <br>
-                    <?php if (!empty($tarifs)) { ?>
-                        <table>
-                            <?php foreach ($tarifs as $t) { 
-                                if ($t['nom_tarif'] != "nomtarif1") { 
-                                    if (!empty($t['nom_tarif'])) {?>
-                                        <tr>
-                                            <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                            <td><?php echo htmlentities($t['prix']) . " €"?></td>
-                                        </tr>
-                                <?php  }
-                                }
-                            } ?>
-                        </table>
-                    <?php } else {
-                        echo "Pas de tarifs diponibles";
-                    } ?>
-                </div>
+                <h2>Tarifs : </h2>
+                <?php if (!empty($tarifs)) { ?>
+                    <table>
+                        <?php foreach ($tarifs as $t) { 
+                            if ($t['nom_tarif'] != "nomtarif1") { 
+                                if (!empty($t['nom_tarif'])) {?>
+                                    <tr>
+                                        <td><?php echo htmlentities($t['nom_tarif']) ?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                    </tr>
+                            <?php  }
+                            }
+                        } ?>
+                    </table>
+                <?php } else {
+                    echo "Pas de tarifs diponibles";
+                } ?>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
