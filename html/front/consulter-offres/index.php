@@ -338,7 +338,7 @@ try {
                 const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
                 visibleOffers = visibleOffers.filter(offer => {
                     const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
-                    if (offer.querySelector(".categorie-offre").textContent.trim() == "Restauration" && minPrice === "0" && maxPrice === "Infinity") {
+                    if (offer.querySelector(".categorie-offre").textContent.trim() == "Restauration" && minPrice == "0" && maxPrice == "Infinity") {
                         return false;
                     } else {
                         return price >= minPrice && price <= maxPrice;
