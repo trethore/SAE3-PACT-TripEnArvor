@@ -566,7 +566,7 @@ try {
                         $requeteCategorie = 'spectacle';
                         break;
                     case 'visite':
-                        $requeteCategorie = 'visite';
+                        $requeteCategorie = 'visite';     
                         break;
                     case "restaurant":
                             $requeteCategorie = 'restauration';
@@ -579,7 +579,7 @@ try {
                 switch ($categorie) {
                     case 'activite':
                         $dbh->beginTransaction();
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
@@ -786,7 +786,7 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]); 
 
