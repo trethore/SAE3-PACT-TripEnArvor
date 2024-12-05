@@ -551,12 +551,14 @@ h3 {
 }
 
 .en-relief {
-    background: red;
+    background: red !important;
     color: var(--blanc);
 
-    position: absolute;
-    left: 40%;
-    top: 0;
+    position: absolute !important;
+    left: 40% !important;
+    top: 0 !important;
+
+    z-index: 1;
 
     font-size: 10px;
     font-weight: 600;
