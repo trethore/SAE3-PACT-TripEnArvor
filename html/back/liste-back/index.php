@@ -302,14 +302,14 @@ try {
                     Affichage du prix 
                     ---------------------------------------->
                     <?php if (getTypeOffre($offre['id_offre']) == "Restauration") { ?>
-                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
+                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
                     <?php } else { ?>
-                        <p class="prix">A partir de <span><?php
-                        $row['prix'] = getPrixPlusPetit($row['id_offre']);
-                        if (getPrixPlusPetit($row['id_offre']) == null) {
-                            $row['prix'] = 0;
-                        }
-                        echo htmlentities($row['prix']); ?>€</span></p>
+                            <p class="prix">A partir de <span><?php
+                            $prix['prix'] = getPrixPlusPetit($row['id_offre']);
+                            if (getPrixPlusPetit($row['id_offre']) == null) {
+                                $prix['prix'] = 0;
+                            }
+                            echo htmlentities($prix['prix']); ?>€</span></p>
                     <?php } ?>
 
                 </a>
