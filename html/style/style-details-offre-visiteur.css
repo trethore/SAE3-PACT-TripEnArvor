@@ -200,18 +200,18 @@ header > div > a {
     }
 
     .display-ligne-espace > a, .fond-blocs > a {
-        color: var(--blanc-leger);
+        color: var(--blanc);
         text-decoration: none;
         font-size: 24px;
         background-color: var(--violet-principal);
-        border: 3px solid var(--blanc-leger);
+        border: 3px solid var(--blanc);
         padding: 10px 20px;
         border-radius: 15px;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--violet-principal);
-        background: var(--blanc-leger);
+        background: var(--blanc);
         border-color: var(--violet-principal);
         transition: 0.3s ease-in-out;
     }
@@ -225,11 +225,11 @@ header > div > a {
     ***************************/
 
     .bloc-tarif > button {
-        color: var(--blanc-leger);
+        color: var(--blanc);
         text-decoration: none;
         font-size: 24px;
         background-color: var(--violet-principal);
-        border: 3px solid var(--blanc-leger);
+        border: 3px solid var(--blanc);
         padding: 10px 20px;
         border-radius: 15px;
         border: 0;
@@ -237,7 +237,7 @@ header > div > a {
 
     .bloc-tarif > button:hover {
         color: var(--violet-principal);
-        background: var(--blanc-leger);
+        background: var(--blanc);
         border-color: var(--violet-principal);
         transition: 0.3s ease-in-out;
     }
@@ -329,6 +329,7 @@ label {
 
 textarea {
     background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
     border-radius: 5px;
     width: 100%;
     height: 200px;
@@ -338,6 +339,7 @@ textarea {
 
 #titre {
     background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
     border-radius: 5px;
     height: 30px;
     font-size: 20px;
@@ -346,13 +348,14 @@ textarea {
 
 input, select {
     background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
     border-radius: 5px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
 
 .fond-blocs-avis {
-    background: var(--blanc-leger);    
+    background: var(--blanc);    
     margin: 30px 0;
     padding: 30px;
     border-radius: 15px;
@@ -361,11 +364,11 @@ input, select {
 }
 
 #avis > button, #avis > form > button {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-decoration: none;
     font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc-leger);
+    border: 3px solid var(--blanc);
     padding: 10px 20px;
     border-radius: 15px;
     border: 0;
@@ -373,7 +376,7 @@ input, select {
 
 #avis > button:hover, #avis > form > button:hover {
     color: var(--violet-principal);
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-color: var(--violet-principal);
     transition: 0.3s ease-in-out;
 }
@@ -440,8 +443,8 @@ input, select {
 
 .navigation > button {
     background: var(--violet-principal);
-    border: 3px solid var(--blanc-leger);
-    color: var(--blanc-leger);
+    border: 3px solid var(--blanc);
+    color: var(--blanc);
     padding: 10px 20px;
     text-align: center; 
     font-size: 40px;
@@ -452,7 +455,7 @@ input, select {
 }
 
 .navigation > button:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-color: var(--violet-principal);
     color: var(--violet-principal);
     transition: 0.3s ease-in-out;
@@ -462,14 +465,14 @@ input, select {
     width: 50px;
     height: 50px;
     background: var(--violet-principal);
-    border: 3px solid var(--blanc-leger);
+    border: 3px solid var(--blanc);
     border-radius: 15px;
     display: flex;
     justify-content: center;
 }
 
 #remonte:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-color: var(--violet-principal);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     transition: 0.3s ease-in-out;
