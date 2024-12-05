@@ -358,19 +358,18 @@ try {
             };
 
             // Add Event Listeners
-            filterInputs.forEach(input => input.addEventListener("input", () => {
-                applyFilters();
-                sortOffers();
-            }));
-
+            filterInputs.forEach(input => input.addEventListener("input", applyFilters));
             document.querySelector(".tris").addEventListener("change", () => {
                 sortOffers();
-                applyFilters();
+                applyFilters(); // Re-appliquer les filtres après le tri
             });
 
             locationInput.addEventListener("input", () => {
                 applyFilters();
             });
+
+            // Initial Load
+            applyFilters();
         });
     </script>
 </body>
