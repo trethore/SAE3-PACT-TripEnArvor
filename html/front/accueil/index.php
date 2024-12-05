@@ -39,9 +39,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
-        echo "<pre>";
-        print_r($ids);
-        echo "</pre>";
+
         ?>
 
         <section>
