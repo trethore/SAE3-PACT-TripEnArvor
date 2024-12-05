@@ -123,7 +123,7 @@ try {
             <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         </header>
         
-        <?php if (!$submitted) { print($id_offre = $_GET['id']);?>
+        <?php if (!$submitted) { ?>
             <div id="offre">
                 <h1>Valider les modifications</h1>
                 <p>Voulez-vous valider les modifications<br>apporter à votre offre ?</p>
@@ -389,7 +389,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre ?>'" >
+                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" >
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
