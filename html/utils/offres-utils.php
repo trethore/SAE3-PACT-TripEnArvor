@@ -586,4 +586,40 @@
             die();
         }
     }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les dates des offres visites ===== //
+    function getDateVisite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM _date JOIN _offre_visite ON _date.id_date = _offre_visite.date_evenement AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+     // ===== Fonction qui exécute une requête SQL pour récupérer les dates des offres spectacles ===== //
+    function getDateSpectacle($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM _date JOIN _offre_spectacle ON _date.id_date = _offre_spectacle.date_evenement AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>
