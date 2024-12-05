@@ -148,7 +148,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
             const currentImage = images.children[currentIndex];
             const titre = currentImage.dataset.titre;
+            console.log(titre);
             const note = parseFloat(currentImage.dataset.note);
+            console.log(note);
 
             let starsHTML = '';
             if (note == NaN) {
