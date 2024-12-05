@@ -16,6 +16,7 @@ $submitted = isset($_POST['type-compte']);
     <link rel="stylesheet" href="/style/style-creer-compte.css">
     <link rel="stylesheet" href="/style/styleguide.css"/>
     <script src="/scripts/creer-compte.js"></script>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>
