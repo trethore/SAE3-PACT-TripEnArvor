@@ -764,11 +764,12 @@ try {
                                 throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
                             }
                         
+                            // Insertion dans la table offre_visite
                             $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
                                         VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
-
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                        
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
                             // Insertion d'une image liée à l'offre
@@ -779,19 +780,8 @@ try {
                             } else {
                                 throw new Exception("L'offre doit contenir au moins une image.");
                             }
-
-                            if ($isIdProPrivee){
-                                foreach ($tabtarifs as $key => $value) {
-                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
-        
-                                    // Préparation de la requête pour la vue tarif
-                                    $stmt_tarif = $dbh->prepare($requete_tarif);
-        
-                                    // Exécution de la requête pour insérer dans la vue tarif
-                                    $stmt_tarif->execute([$key, $value, $id_offre]);
-                                }
-                            }
                         
+                            // Autres traitements...
                         
                             // Commit de la transaction
                             $dbh->commit();
@@ -808,7 +798,7 @@ try {
                             print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
                             exit;
                         }
-
+                        
 
                         
                         break;
