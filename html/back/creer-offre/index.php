@@ -821,7 +821,7 @@ try {
                         $dbh->commit();
                     }
                    
-
+                    print($tarif1);
 
                     if (($isIdProPrivee)&&($categorie !== "restaurant")){
                         foreach ($tabtarifs as $key => $value) {
