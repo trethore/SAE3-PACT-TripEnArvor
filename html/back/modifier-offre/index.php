@@ -590,6 +590,9 @@ try {
             
              print_r($_FILES);
              print($photo1);
+
+             print($categorieBase);
+             print($categorie);
              try {
 
 
