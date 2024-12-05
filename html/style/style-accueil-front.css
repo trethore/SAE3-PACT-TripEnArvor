@@ -17,7 +17,7 @@ h1 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 55pt;
+    font-size: 45pt;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -134,4 +134,8 @@ section {
 p > img {
     height: 25px;
     width: 25px;
+}
+
+a {
+    color: var(--blanc-leger);
 }
