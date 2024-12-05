@@ -276,7 +276,9 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-            const offers = Array.from(document.querySelectorAll(".offre"));
+            const normalOffers = Array.from(document.querySelectorAll(".offre"));
+            const otherOffers = Array.from(document.querySelectorAll(".en-relief-offre"));
+            const offers = normalOffers.concat(otherOffers);
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
 
