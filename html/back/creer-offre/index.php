@@ -611,7 +611,7 @@ try {
     
     
                         //REQUETE OFFRE PROPOSE PRESTA
-                        $requete_presta_offre = 'INSERT INTO _offre_activite_propose_prestation(nom_prestation, id_offre) VALUES (?, ?)';
+                        $requete_presta_offre = 'INSERT INTO _offre_activite_propose_prestation(nom_prestation, id_offre_activite) VALUES (?, ?)';
     
                         //preparation requete
                         $stmt_presta_offre = $dbh->prepare($requete_presta_offre);
@@ -906,7 +906,7 @@ try {
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
             let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
+            let obligatoireselontype = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
             obligatoireselontype.forEach(element => {
                 document.getElementById(element).style.display = 'none';
