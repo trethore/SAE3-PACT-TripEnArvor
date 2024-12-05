@@ -421,7 +421,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace"> 
                         <div class="display-ligne">
