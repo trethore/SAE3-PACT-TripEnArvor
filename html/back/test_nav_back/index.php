@@ -32,9 +32,9 @@ try {
 </head>
 
 <body>
-    <header>
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -43,29 +43,24 @@ try {
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
-                <?php } 
-                ?>
+                <?php } ?>
             </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
                 const datalist = document.querySelector("#cont");
-
                 // Événement sur le champ de recherche
                 inputSearch.addEventListener("input", () => {
                     // Rechercher l'option correspondante dans le datalist
                     const selectedOption = Array.from(datalist.options).find(
                         option => option.value === inputSearch.value
                     );
-
                     if (selectedOption) {
                         const idOffre = selectedOption.getAttribute("data-id");
-
                         //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
                         // Rediriger si un ID valide est trouvé
                         if (idOffre) {
                             // TD passer du back au front quand fini
@@ -73,7 +68,6 @@ try {
                         }
                     }
                 });
-
                 // Debugging pour vérifier les options disponibles
                 const options = Array.from(datalist.options).map(option => ({
                     value: option.value,
@@ -82,7 +76,6 @@ try {
                 //console.log("Options disponibles dans le datalist :", options);
             });
         </script>
-
     </header>
     <main>
 

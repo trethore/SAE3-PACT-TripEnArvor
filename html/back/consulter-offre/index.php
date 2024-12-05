@@ -129,7 +129,6 @@ try {
 </head>
 
 <body>
-    
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
@@ -146,7 +145,7 @@ try {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
 ?>
-
+    
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
@@ -162,7 +161,7 @@ try {
             </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
