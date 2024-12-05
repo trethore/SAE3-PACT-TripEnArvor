@@ -691,10 +691,8 @@ try {
                         //     print "erreur insertion";
                         // }
 
-                        try {
-                            if (!$dbh->inTransaction()) {
+                        
                                 $dbh->beginTransaction();
-                            }
                         
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
@@ -727,19 +725,6 @@ try {
                         
                             // Commit de la transaction
                             $dbh->commit();
-                        } catch (PDOException $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                            exit;
-                        } catch (Exception $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
-                            exit;
-                        }
                         
                         
                             
