@@ -682,12 +682,22 @@ try {
                         
                             print("id de l'offre " . $id_offre);
                         
-                            
+                            // Insertion d'une image liée à l'offre
+                            if (!empty($file_extension)) {
+                                $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                                $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                                $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                            } else {
+                                throw new Exception("L'offre doit contenir au moins une image.");
+                            }
+                        
+                            // Commit de la transaction
+                            $dbh->commit();
                         } catch (PDOException $e) {
                             if ($dbh->inTransaction()) {
                                 $dbh->rollBack();
                             }
-                            print "Erreur !: " . $e->getMessage() . "<br/>";
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
                             exit;
                         } catch (Exception $e) {
                             if ($dbh->inTransaction()) {
@@ -696,6 +706,7 @@ try {
                             print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
                             exit;
                         }
+                        
                         
                             
                             
@@ -752,17 +763,17 @@ try {
                     }
                     
 
-                    if ($file_extension !== '') {
+                    // if ($file_extension !== '') {
 
-                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
+                    //     //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
-                        $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                        $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
-                        $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                    //     $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                    //     $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                    //     $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
-                    }
-                    // Commit de la transaction
-                    $dbh->commit();
+                    // }
+                    // // Commit de la transaction
+                    // $dbh->commit();
 
 
                     if (($isIdProPrivee)&&($categorie !== "restaurant")){
