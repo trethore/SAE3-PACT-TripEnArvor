@@ -670,7 +670,7 @@ try {
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
                                         where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
-                        $stmt = $conn->prepare($query);
+                        $stmt = $dbh->prepare($query);
                         $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
@@ -685,7 +685,7 @@ try {
                             $query = "UPDATE sae.offre_activite
                             set ((titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
@@ -717,7 +717,7 @@ try {
                             $query = "UPDATE sae.offre_parc
                             set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -732,7 +732,7 @@ try {
                             $query = "UPDATE sae.offre_spectacle
                             set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -740,7 +740,7 @@ try {
                             $query = "UPDATE sae.offre_visite
                             set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -772,7 +772,7 @@ try {
                             $query = "UPDATE sae.offre_restauration
                             set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
