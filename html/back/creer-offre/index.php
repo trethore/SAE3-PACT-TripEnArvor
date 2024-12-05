@@ -492,8 +492,8 @@ try {
                 }
 
             }
-            print_r($_POST);
-            print_r($_FILES);
+            //print_r($_POST);
+            //print_r($_FILES);
             
 
             
@@ -624,19 +624,14 @@ try {
                         break;
 
                     case 'spectacle':
-
-                        try {
+                        
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            print_r($idDateEvent);
-                            print_r("here");
-                        } catch (PDOException $e) {
-                            echo "Erreur : " . $e->getMessage();
-                            die();
-                        }
+                            print_r("id de la date " .$idDateEvent);
+                        
                             // Requête pour insérer l'offre dans _offre_spectacle
                             $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
                                         VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
