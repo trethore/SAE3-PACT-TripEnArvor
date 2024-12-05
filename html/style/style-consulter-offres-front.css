@@ -354,7 +354,7 @@ h3 {
 }
 
 .en-relief-offre div {
-    position: absolute !important;
+    position: absolute;
     left: 5.28%;
     right: 5.28%;
     top: 3.75%;
@@ -365,7 +365,7 @@ h3 {
 }
 
 .en-relief-offre .sous-offre {
-    border: 3px solid red;
+    border: 5px solid red;
 }
 
 .offre .sous-offre {
@@ -560,6 +560,10 @@ h3 {
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
+}
+
+.en-relief-offre .prix {
+    background: red;
 }
 
 .fond-filtres {
