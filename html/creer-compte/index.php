@@ -55,7 +55,7 @@ if (!$submitted) {
         </div>
         <hr>
         <div id="div-pseudo">
-            <label for="pseudo">Pseudo<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
+            <label for="pseudo">Pseudo<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="pseudo-already-exist"> Ce pseudo existe déjà</span></label>
             <input type="text" name="pseudo" id="pseudo" placeholder="MonSuperPseudo22">
         </div>
         <div id="div-name-and-first-name">
