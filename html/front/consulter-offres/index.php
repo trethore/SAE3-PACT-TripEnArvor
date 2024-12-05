@@ -156,12 +156,13 @@ try {
                         <h3>Date</h3>
                         <div>
                             <div>
-                                <label>Date de début &nbsp;:</label>
-                                <input type="date">
+                                <label>Période &nbsp;:</label>
+                                <input id="start-date" type="date">
+                                <input id="end-date" type="date">
                             </div>
                             <div>
-                                <label>Date de fin &emsp;&emsp;:</label>
-                                <input type="date">
+                                <label>Date d'ouverture :</label>
+                                <input id="open-date" type="date">
                             </div>
                         </div>
                     </div>
@@ -212,7 +213,11 @@ try {
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
-                                    <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
+                                    <?php if ($tab["categorie"] == "Restauration") { ?>
+                                        <p class="prix">Gamme de prix <span><?php echo getRestaurant($tab['id_offre'])["gamme_prix"] ?><span></p>
+                                    <?php } else { ?>
+                                        <p class="prix">A partir de <span><?php echo $tab["prix"] ?>€</span></p>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
