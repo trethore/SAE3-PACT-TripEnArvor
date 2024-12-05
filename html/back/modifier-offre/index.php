@@ -294,7 +294,7 @@ try {
                      </ul>   
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
-                        <table border="0">
+                        <table border="0"> 
                             <tr>
                                 <td><label for="descriptionC">Courte Description <span class="required">*</span></label></td>
                                 <td><textarea id="descriptionC" name="descriptionC" placeholder="Ecrire une courte description sur l’offre..." required><?php echo htmlentities($offre['resume']) ?></textarea></td>
@@ -302,7 +302,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="lien">Lien externe</label></td>
-                                <td><input type="url" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php echo htmlentities($offre['site_web']); ?>"/></td>
+                                <td><input type="text" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php echo htmlentities($offre['site_web']); ?>"/></td>
                             </tr>
                             <tr>
                                 <td><label for="tel">Numéro de téléphone</label></td>
