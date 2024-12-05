@@ -39,9 +39,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
-        echo "<pre>";
-        print_r($ids);
-        echo "</pre>";
 
         ?>
 
@@ -147,7 +144,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             const note = parseFloat(currentImage.dataset.note);
 
             let starsHTML = '';
-            console.log(note);
             if (note == NaN) {
                 starsHTML = "Pas d'avis disponibles.";
             } else {
