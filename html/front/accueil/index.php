@@ -52,7 +52,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
                         $titre = $offre["titre"];
                         $note = $offre["note"]; ?>
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo $titre; ?>" data-note="<?php echo $note; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
                         </a>
                     <?php } ?>
                 </div>
@@ -146,14 +146,20 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             const width = images.clientWidth;
             images.style.transform = `translateX(-${currentIndex * width}px)`;
 
-            const currentImage = images.children[currentIndex];
-            const titre = currentImage.dataset.titre;
-            console.log(titre);
-            const note = parseFloat(currentImage.dataset.note);
-            console.log(note);
+            // Get the current `<a>` element
+            const currentAnchor = images.children[currentIndex];
+            // Find the `<img>` inside the `<a>`
+            const imgElement = currentAnchor.querySelector('img');
 
+            // Extract data attributes from the `<img>`
+            const titre = imgElement.dataset.titre || "Titre indisponible";
+            const note = parseFloat(imgElement.dataset.note) || 0;
+
+            console.log(`Titre : ${titre}, Note : ${note}`);
+
+            // Generate the stars HTML
             let starsHTML = '';
-            if (note == NaN) {
+            if (note === 0) {
                 starsHTML = "Pas d'avis disponibles.";
             } else {
                 for (let i = 1; i <= 5; i++) {
@@ -165,6 +171,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
                 }
             }
 
+            // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
