@@ -7,6 +7,17 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
+$isIdProPrivee = isIdProPrivee($id_compte);
+$isIdProPublique = isIdProPublique($id_compte);
+
+
+if ($isIdProPublique !== true) {
+    $isIdProPublique = false;
+
+} else if ($isIdProPublique === true) {
+    $isIdProPrivee = false;
+}
+
 
 function get_file_extension($type) {
     $extension = '';
@@ -331,7 +342,7 @@ try {
                         </td>
                     </tr>
                     <tr>
-                        <td><label id ="labeltype" for="type">Type de l'offre (impossible de modifier le type)<span class="required">*</span></label></td>
+                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -341,6 +352,7 @@ try {
                             </div>
                                     
                         </td>
+                        <td>(impossible de modifier le type)</td>
                     </tr>
                     <tr>
                         <div id="options">
@@ -851,9 +863,6 @@ try {
 
 
                 }else{
-                
-                    
-                
 
                     //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
@@ -1072,7 +1081,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back/'
+                            window.location.href = '/back/consulter-offre/'
                         }
                   </script>";
 
