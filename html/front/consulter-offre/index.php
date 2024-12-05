@@ -468,6 +468,20 @@ try {
                             if (isset($_POST['note'])) {
                                 $note = intval($_POST['note']);
                             }
+                            if ($categorie == "Restauration") {
+                                if (isset($_POST['note_cuisine'])) {
+                                    $noteCuisine = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_service'])) {
+                                    $noteService = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_ambiance'])) {
+                                    $noteAmbiance = intval($_POST['note']);
+                                }
+                                if (isset($_POST['note_rapport'])) {
+                                    $noteRapport = intval($_POST['note']);
+                                }
+                            }
                             if (isset($_POST['date'])) {
                                 $visite_le = explode('T', $_POST['date']);
                                 $dateParts = explode('-', $visite_le[0]);
@@ -505,6 +519,23 @@ try {
                                 $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                                 $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+                                $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
+
+                                $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
+                                $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $idAvis]);
+
+                                $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionService = $dbh->prepare($reqInsertionService);
+                                $stmtInsertionService->execute(["Service", $noteService, $idAvis]);
+
+                                $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
+                                $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $idAvis]);
+
+                                $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
+                                $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
                             } catch (PDOException $e) {
                                 echo "Erreur : " . $e->getMessage();
                                 die();
