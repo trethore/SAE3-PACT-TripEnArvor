@@ -1,9 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+session_start();
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
-session_start();
+
+
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -392,7 +395,7 @@ try {
                         </tr>
                     </table> -->
                     <div class="bt_cree">
-                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" >
+                        <button class="valider" type="submit" value="Modifier l'offre" onclick="location.href='../../back/modifier-offre/index.php?id=<?php echo $id_offre_cible ?>'" > </button>
 
                         <a href="#" id="back-to-top">
                             <img src="/images/backOffice/icones/fleche-vers-le-haut.png" alt="Retour en haut" width="50"
