@@ -2,13 +2,17 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const selectTypeCompte = document.getElementById("type-compte");
     const divEmail = document.getElementById("div-email");
+    const inputEmail = document.getElementById("email");
     const divPassword = document.getElementById("div-password");
+    const inputPassword = document.getElementById("password");
     const divConfirmPassword = document.getElementById("div-confirm-password");
+    const inputConfirmPassword = document.getElementById("confirm-password");
     const divNameAndFirstName = document.getElementById("div-name-and-first-name");
     const divName = document.getElementById("div-name");
     const divFirstName = document.getElementById("div-first-name");
     const divTel = document.getElementById("div-tel");
     const divPseudo = document.getElementById("div-pseudo");
+    const inputPseudo = document.getElementById("pseudo");
     const divDenomination = document.getElementById("div-denomination");
     const divAPropos = document.getElementById("div-a-propos");
     const divSiteWeb = document.getElementById("div-site-web");
@@ -73,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function() {
         divCity,            divCountry
     ];
 
+    var pseudoExist = false;
+    var emailExist = false;
+    var differentPasswords = false;
+
     function setRequired(element, required) {
         element.querySelector("label span").style.display = required ? "inline" : "none";
         element.querySelector("input, textarea").required = required;
@@ -111,6 +119,14 @@ document.addEventListener("DOMContentLoaded", function() {
         return element.querySelector("input, textarea").required
     }
 
+    function disableSubmitButton() {
+        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist && !emailExist && !differentPasswords) {
+            submitInput.disabled = false;
+        } else {
+            submitInput.disabled = true;
+        }
+    }
+
     selectTypeCompte.addEventListener("input", function() {
         switch (selectTypeCompte.value) {
             case "membre":
@@ -145,13 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    inputCgu.addEventListener("change", function() {
-        if (inputCgu.checked && (selectTypeCompte.value !== "")) {
-            submitInput.disabled = false;
-        } else {
-            submitInput.disabled = true;
-        }
-    });
+    inputCgu.addEventListener("change", disableSubmitButton);
 
     for (const divElement of tousLesElements) {
         const element = divElement.querySelector("input, textarea");
@@ -163,4 +173,62 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
     }
+
+    inputPseudo.addEventListener("blur", function() {
+        fetch(`/utils/api.php?pseudo-exist=${encodeURIComponent(inputPseudo.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                const pseudoAlreadyExist = document.getElementById("pseudo-already-exist");
+                if (data.pseudoExist) {
+                    pseudoExist = true;
+                    pseudoAlreadyExist.style.display = "inline";
+                    divPseudo.querySelector("input").style.border = "1px solid red";
+                } else {
+                    pseudoExist = false;
+                    pseudoAlreadyExist.style.display = "none";
+                    divPseudo.querySelector("input").style.border = "";
+                }
+                disableSubmitButton();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    inputEmail.addEventListener("blur", function() {
+        fetch(`/utils/api.php?email-exist=${encodeURIComponent(inputEmail.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                const emailAlreadyExist = document.getElementById("email-already-exist");
+                if (data.emailExist) {
+                    emailExist = true;
+                    emailAlreadyExist.style.display = "inline";
+                    divEmail.querySelector("input").style.border = "1px solid red";
+                } else {
+                    emailExist = false;
+                    emailAlreadyExist.style.display = "none";
+                    divEmail.querySelector("input").style.border = "";
+                }
+                disableSubmitButton();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    inputConfirmPassword.addEventListener("blur", function() {
+        const differentPasswordsMessage = document.getElementById("different-passwords-message");
+        if (inputConfirmPassword.value !== inputPassword.value) {
+            differentPasswordsMessage.style.display = "inline";
+            differentPasswords = true;
+            divPassword.querySelector("input").style.border = "1px solid red";
+            divConfirmPassword.querySelector("input").style.border = "1px solid red";
+        } else {
+            differentPasswordsMessage.style.display = "none";
+            differentPasswords = false;
+            divPassword.querySelector("input").style.border = "";
+            divConfirmPassword.querySelector("input").style.border = "";
+        }
+        disableSubmitButton();
+    });
 });

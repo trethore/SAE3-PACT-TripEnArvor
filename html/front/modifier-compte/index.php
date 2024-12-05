@@ -1,7 +1,8 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
@@ -14,7 +15,7 @@ try {
 
 startSession();
 $id_compte = $_SESSION["id"];
-if (!isset($id_compte) ||!isIdMember($id_compte)) {
+if (!isset($id_compte) || !isIdMember($id_compte)) {
     redirectTo("https://redden.ventsdouest.dev/front/consulter-offres/");
 }
 $submitted = isset($_POST['email']);
@@ -27,6 +28,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,30 +37,89 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <link rel="stylesheet" href="/style/style_HFF.css">
     <link rel="stylesheet" href="/style/styleguide.css">
     <title>Modifier mon compte</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
+
 <body>
-<?php
-if (!$submitted) {
+    <?php
+    if (!$submitted) {
+    ?>
+        <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
 ?>
-    <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT</a></div>
-        <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
-    <main>
-        <?php 
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
+        <main>
+            <?php
             // Préparation et exécution de la requête
             $stmt = $conn->prepare($reqCompte);
             $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
             $stmt->execute();
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
-        ?>
-        <h1>Détails du compte</h1>
+            ?>
+            <h1>Détails du compte</h1>
 
         <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
@@ -66,25 +127,19 @@ if (!$submitted) {
                 <tr>
                     <td>Pseudo</td>
                     <td>
-                        <input type="text" name="pseudo" id="pseudo" value="<?php 
-                                if (isset($detailCompte["pseudo"])) {
-                                    echo htmlentities($detailCompte["pseudo"]);} ?>">
+                        <input type="text" name="pseudo" id="pseudo" value="<?= htmlentities($detailCompte["pseudo"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Nom</td>
                     <td>
-                        <input type="text" name="nom" id="nom" value="<?php 
-                                if (isset($detailCompte["nom_compte"])) {
-                                    echo htmlentities($detailCompte["nom_compte"]);} ?>">
+                        <input type="text" name="nom" id="nom" value="<?= htmlentities($detailCompte["nom_compte"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Prénom</td>
                     <td>
-                        <input type="text" name="prenom" id="prenom" value="<?php 
-                                    if (isset($detailCompte["prenom"])) {
-                                        echo htmlentities($detailCompte["prenom"]);} ?>"> 
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
                     </td>
                 </tr>
                 <tr>
@@ -94,9 +149,7 @@ if (!$submitted) {
                 <tr>
                     <td>N° de téléphone</td>
                     <td>
-                        <input type="tel" name="tel" id="tel" value="<?php 
-                                        if (isset($detailCompte["tel"])) {
-                                            echo htmlentities($detailCompte["tel"]);} ?>"> 
+                        <input type="tel" name="tel" id="tel" value="<?= htmlentities($detailCompte["tel"] ?? '');?>"> 
                     </td>
                 </tr>
                 <tr>
@@ -111,14 +164,12 @@ if (!$submitted) {
             <table>
                 <tr>
                     <td>Adresse postale</td>
-                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"]);?>"></td>
+                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Complément d'adresse</td>
                     <td>
-                        <input type="text" name="compl_adr" id="compl_adr" value="<?php
-                            if (isset($detailCompte["complement_adresse"])) {
-                                echo htmlentities($detailCompte["complement_adresse"]);} ?>">
+                        <input type="text" name="compl_adr" id="compl_adr" value="<?= htmlentities($detailCompte["complement_adresse"] ?? '');?>">
                     </td>
                 </tr>
                 <tr>
@@ -171,58 +222,24 @@ if (!$submitted) {
             </div>
         </div> 
     </main>
-    <footer>
-        <div class="footer-top">
-        <div class="footer-top-left">
-            <span class="footer-subtitle">P.A.C.T</span>
-            <span class="footer-title">TripEnArmor</span>
-        </div>
-        <div class="footer-top-right">
-            <span class="footer-connect">Restons connectés !</span>
-            <div class="social-icons">
-            <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-            </a>
-            <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-            </a>
-            <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-            </a>
-            <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-            </a>
-            </div>
-        </div>
-
-
-        <!-- Barre en bas du footer incluse ici -->
-
-        </div>
-        <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
-        </div>
-    </footer>
     <?php
-} else {
-    $ok = true;
-    switch ($typeCompte) {
-        case 'membre':
-            $ok = $ok && isset($_POST['email']);
-            $ok = $ok && isset($_POST['tel']);
-            $ok = $ok && isset($_POST['pseudo']);
-            break;
+    } else {
+        $ok = true;
+        switch ($typeCompte) {
+            case 'membre':
+                $ok = $ok && isset($_POST['email']);
+                $ok = $ok && isset($_POST['tel']);
+                $ok = $ok && isset($_POST['pseudo']);
+                break;
 
-        default:
-            $ok = false;
-            break;
+            default:
+                $ok = false;
+                break;
         }
         // Récupération des données du formulaire
         $nouveauMotDePasse = $_POST['mdp'] ?? '';
         $ancienMotDePasse = $_POST['ancien_mdp'] ?? '';
-        
+
         // Traitement
         if (!empty($nouveauMotDePasse)) {
             // Si un nouveau mot de passe a été fourni, on le crypte
@@ -230,7 +247,7 @@ if (!$submitted) {
         } else {
             // Sinon, on conserve l'ancien mot de passe
             $motDePasseFinal = $ancienMotDePasse;
-        }  
+        }
 
         $email = $_POST['email'];
         $pseudo = $_POST['pseudo'];
@@ -238,7 +255,7 @@ if (!$submitted) {
         $name = $_POST['nom'];
         $first_name = $_POST['prenom'];
         $tel = $_POST['tel'];
-    
+
         if ($ok) {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
@@ -256,7 +273,7 @@ if (!$submitted) {
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
-    
+
                     // Requete SQL pour modifier la vue compte_professionnel_publique
                     $query = "UPDATE sae.compte_membre 
                                 set (pseudo, nom_compte, prenom, email, tel, mot_de_passe, id_adresse) 
@@ -264,14 +281,14 @@ if (!$submitted) {
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $id_compte]);
-                    
+
                     break;
 
                 default:
                     $ok = false;
                     break;
-                }
-        }   
+            }
+        }
         redirectTo("/front/mon-compte");
     } ?>
 <script src="/scripts/popupCompteFront.js"></script>

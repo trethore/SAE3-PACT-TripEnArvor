@@ -128,20 +128,78 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>
     
-    <header id="header">
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT</div>
-        <div class="search-box">
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        // TD passer du back au front quand fini
+                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
 
     <main id="body">
 
@@ -601,8 +659,6 @@ try {
                                 <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'haut', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
                                 <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'bas', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
                             </div>
-                        </div>
-
                         <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                             <div class="reponse">
                                 <div class="display-ligne-espace">

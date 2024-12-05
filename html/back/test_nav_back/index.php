@@ -9,7 +9,7 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
     $stmt->execute([$_SESSION['id']]);
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
@@ -32,9 +32,9 @@ try {
 </head>
 
 <body>
-    <header>
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -45,27 +45,22 @@ try {
                     </option>
                 <?php } ?>
             </datalist>
-
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
                 const datalist = document.querySelector("#cont");
-
                 // Événement sur le champ de recherche
                 inputSearch.addEventListener("input", () => {
                     // Rechercher l'option correspondante dans le datalist
                     const selectedOption = Array.from(datalist.options).find(
                         option => option.value === inputSearch.value
                     );
-
                     if (selectedOption) {
                         const idOffre = selectedOption.getAttribute("data-id");
-
                         //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
                         // Rediriger si un ID valide est trouvé
                         if (idOffre) {
                             // TD passer du back au front quand fini
@@ -73,7 +68,6 @@ try {
                         }
                     }
                 });
-
                 // Debugging pour vérifier les options disponibles
                 const options = Array.from(datalist.options).map(option => ({
                     value: option.value,
@@ -82,9 +76,9 @@ try {
                 //console.log("Options disponibles dans le datalist :", options);
             });
         </script>
-
     </header>
     <main>
+
     </main>
     <footer>
         <div class="footer-top">

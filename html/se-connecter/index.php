@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . "/utils/file_paths-utils.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
@@ -28,6 +28,7 @@ try {
     <title>Se connecter</title>
     <link rel="stylesheet" href="/style/style-se-connecter.css">
     <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="connecter">
     <!-- Logo -->
