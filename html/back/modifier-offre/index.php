@@ -459,6 +459,7 @@ try {
                 </div>
             </footer>
         <?php } else {
+            $id_offre = $id_offre_cible;
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
