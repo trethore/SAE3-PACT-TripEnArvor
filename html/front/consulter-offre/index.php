@@ -506,7 +506,7 @@ try {
                                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                                $dbh->prepare("START TRANSACTION;")->execute();
+                                //$dbh->prepare("START TRANSACTION;")->execute();
                                 
                                 $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                                 $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
@@ -523,23 +523,24 @@ try {
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
                                 $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
 
-                                $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
-                                $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
-                                $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $idAvis]);
+                                if ($categorie == "Restauration") {
+                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
+                                    $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $idAvis]);
 
-                                $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
-                                $stmtInsertionService = $dbh->prepare($reqInsertionService);
-                                $stmtInsertionService->execute(["Service", $noteService, $idAvis]);
+                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $stmtInsertionService = $dbh->prepare($reqInsertionService);
+                                    $stmtInsertionService->execute(["Service", $noteService, $idAvis]);
 
-                                $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
-                                $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
-                                $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $idAvis]);
+                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
+                                    $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $idAvis]);
 
-                                $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
-                                $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
-                                $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
-
-                                $dbh->prepare("COMMIT;")->execute();
+                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
+                                    $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
+                                }
+                                //$dbh->prepare("COMMIT;")->execute();
                             } catch (PDOException $e) {
                                 echo "Erreur : " . $e->getMessage();
                                 die();
