@@ -51,7 +51,7 @@ if (!$submitted) {
             <input type="password" id="password" name="password" placeholder="Votre mot de passe">
         </div>
         <div id="div-confirm-password">
-            <label for="confirm-password">Confirmer le mot de passe<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
+            <label for="confirm-password">Confirmer le mot de passe<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="different-passwords-message"> Les mots de passe sont différents</span></label>
             <input type="password" id="confirm-password" name="confirm-password" placeholder="Le même mot de passe">
         </div>
         <hr>
