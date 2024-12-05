@@ -639,10 +639,10 @@ try {
                         <p class="transparent">.</p>
                     </div>
                     <?php if ($categorie == "Restauration") { ?>
-                        <div>
+                        <div class="display-ligne">
                             <?php foreach ($noteDetaillee as $n) { ?>
                                 <?php if ($n['id_avis'] == $a['id_avis']) { ?>
-                                    <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                     <?php } 
