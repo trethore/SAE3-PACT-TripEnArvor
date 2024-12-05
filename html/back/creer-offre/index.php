@@ -719,7 +719,6 @@ try {
 
 
                     case 'visite':
-                        $dbh->beginTransaction();
                         try {
                             if (!$dbh->inTransaction()) {
                                 $dbh->beginTransaction();
