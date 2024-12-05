@@ -240,7 +240,7 @@ try {
                                 setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                                 $jour_actuel = $jours[date('w')];
-                                $ouverture = "Indéterminé";
+                                $ouverture = "Indét.";
                                 foreach ($horaire as $h) {
                                     if (!empty($horaire)) {
                                         $ouvert_ferme = date('H:i');
@@ -250,7 +250,7 @@ try {
                                             if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
                                                 $ouverture = "Ouvert";
                                             } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                                $ouverture = "Ferme bientôt";
+                                                $ouverture = "Ferme Bnt.";
                                             }
                                         }
                                     } 
@@ -396,7 +396,7 @@ try {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
-                        return offerAvailability === availability;
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
                     });
                 }
 
