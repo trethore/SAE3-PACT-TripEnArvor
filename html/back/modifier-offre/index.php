@@ -661,15 +661,14 @@ try {
 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
-
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
                         if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                        where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
+                                        where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_compte]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
                     }
@@ -680,20 +679,19 @@ try {
                         case 'activite':
                            
                             $query = "UPDATE sae.offre_activite
-                                    SET titre = ?, 
-                                        resume = ?, 
-                                        ville = ?, 
-                                        duree = ?, 
-                                        age_min = ?, 
-                                        id_compte_professionnel = ?, 
-                                        abonnement = ?, 
-                                        description_detaille = ?, 
-                                        site_web = ?, 
-                                        id_adresse = ?
-                                    WHERE id_offre = ?;";
-                            $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
-
+                            SET titre = ?, 
+                                resume = ?, 
+                                ville = ?, 
+                                duree = ?, 
+                                age_min = ?,  
+                                abonnement = ?, 
+                                description_detaille = ?, 
+                                site_web = ?, 
+                                id_adresse = ?
+                            WHERE id_offre = ?;";
+                  $stmt = $dbh->prepare($query);
+                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            
                             break;
 
                         case 'parc' :

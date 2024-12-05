@@ -9,7 +9,7 @@ try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
     $stmt->execute([$_SESSION['id']]);
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
     $dbh = null;
@@ -43,9 +43,9 @@ try {
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
-                <?php } ?>
+                <?php } 
+                ?>
             </datalist>
-
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
@@ -84,7 +84,11 @@ try {
         </script>
 
     </header>
-    <main>
+    <main><?php
+    echo '<pre>';
+print_r($offres);
+echo '</pre>'; ?>
+
     </main>
     <footer>
         <div class="footer-top">
