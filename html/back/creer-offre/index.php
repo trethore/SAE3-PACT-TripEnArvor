@@ -492,8 +492,8 @@ try {
                 }
 
             }
-            print_r($_POST);
-            print_r($_FILES);
+            //print_r($_POST);
+            //print_r($_FILES);
             
 
             
@@ -631,8 +631,7 @@ try {
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            print_r($idDateEvent);
-                            print_r("here");
+                            print_r("id de la date " .$idDateEvent);
                         } catch (PDOException $e) {
                             echo "Erreur : " . $e->getMessage();
                             die();
