@@ -232,13 +232,12 @@ try {
                     if (!empty($horaire)) {
                         $ouvert_ferme = date('H:i');
                         $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                        $ouverture = "Fermé";
                         if ($h['nom_jour'] == $jour_actuel) {
                             if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
                                 $ouverture = "Ouvert";
                             } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
                                 $ouverture = "Ferme bientôt";
-                            } else {
-                                $ouverture = "Fermé";
                             }
                         }
                     } 
