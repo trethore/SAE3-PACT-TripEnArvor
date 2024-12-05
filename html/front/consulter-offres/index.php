@@ -355,21 +355,24 @@ try {
                 } if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
                 }
+
+                offers.forEach(offer => offersContainer.appendChild(offer));
             };
 
             // Add Event Listeners
-            filterInputs.forEach(input => input.addEventListener("input", applyFilters));
+            filterInputs.forEach(input => input.addEventListener("input", () => {
+                applyFilters();
+                sortOffers();
+            }));
+
             document.querySelector(".tris").addEventListener("change", () => {
                 sortOffers();
-                applyFilters(); // Re-appliquer les filtres après le tri
+                applyFilters();
             });
 
             locationInput.addEventListener("input", () => {
                 applyFilters();
             });
-
-            // Initial Load
-            applyFilters();
         });
     </script>
 </body>
