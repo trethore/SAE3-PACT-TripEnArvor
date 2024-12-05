@@ -590,6 +590,7 @@ try {
              print($photo1);
              try {
 
+
                 // Vérifier si l'id_compte est défini (s'il est connecté)
                 if (!$id_compte) {
                     die("Erreur : utilisateur non connecté.");
@@ -601,26 +602,31 @@ try {
                 $dbh->beginTransaction();
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                //INSERTION IMAGE dans _image
-                $time = 'p' . strval(time());
-                $file = $_FILES['photo'];
-                $file_extension = get_file_extension($file['type']);
-
-                if ($file_extension !== '') {
-                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
-                    $fichier_img = $time . $file_extension;
+                if(isset($_POST['photo'])){
+                    //INSERTION IMAGE dans _image
+                    $time = 'p' . strval(time());
+                    $file = $_FILES['photo'];
+                    $file_extension = get_file_extension($file['type']);
 
-                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+                    if ($file_extension !== '') {
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
-                    //preparation requete
-                    $stmt_image = $dbh->prepare($requete_image);
 
-                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                    $stmt_image->execute([$fichier_img]);
+                        $fichier_img = $time . $file_extension;
 
+                        $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                        //preparation requete
+                        $stmt_image = $dbh->prepare($requete_image);
+
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_image->execute([$fichier_img]);
+
+                    }
                 }
+                
 
 
 
