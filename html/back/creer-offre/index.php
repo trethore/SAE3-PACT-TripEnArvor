@@ -553,7 +553,7 @@ try {
                 //     die("Erreur : Le fichier existe déjà dans le répertoire.");
                 // }
                     
-                $dbh->beginTransaction();
+                
                 // Déterminer la table cible selon la catégorie
                 switch ($categorie) {
                     case 'activite':
@@ -625,34 +625,79 @@ try {
                         break;
 
                     case 'spectacle':
+                        
+                        // try {
+                        //     $dbh->beginTransaction();
+                        //     // Insertion de la date dans la table _date
+                        //     $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                        //     $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                        //     $stmtInsertionDateEvent->execute([$date_event]);
+                        //     $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        //     print_r("id de la date " .$idDateEvent);
+                            
+                        // } catch (PDOException $e) {
+                        //     // Affichage de l'erreur en cas d'échec
+                        //     print " Erreur !: " . $e->getMessage() . "<br/>";
+                        // }
+
+                        // $id_date = $idDateEvent;
+                        // try {
+                        //    // Requête pour insérer l'offre dans _offre_spectacle
+                        //    $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                        //    VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                        
+                        //     $stmt = $dbh->prepare($requete);
+                        //     $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $id_date]);
+                        //     print("id de la date " .$id_date);
+                        //     $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        // } catch (PDOException $e) {
+                        //     // Affichage de l'erreur en cas d'échec
+                        //     print " Erreur !: " . $e->getMessage() . "<br/>";
+                        //     print "erreur insertion";
+                        // }
+
                         try {
+                            if (!$dbh->inTransaction()) {
+                                $dbh->beginTransaction();
+                            }
+                        
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            print_r("id de la date " .$idDateEvent);
-                            
-                        } catch (PDOException $e) {
-                            // Affichage de l'erreur en cas d'échec
-                            print " Erreur !: " . $e->getMessage() . "<br/>";
-                        }
-
-                        $id_date = $idDateEvent;
-                        try {
-                           // Requête pour insérer l'offre dans _offre_spectacle
-                           $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                         
+                            if (!is_int($idDateEvent)) {
+                                throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
+                            }
+                        
+                            print_r("id de la date " . $idDateEvent);
+                        
+                            // Insertion dans la table offre_spectacle
+                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $id_date]);
-                            print("id de la date " .$id_date);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        
+                            print("id de l'offre " . $id_offre);
+                        
+                            // Commit de la transaction
+                            $dbh->commit();
                         } catch (PDOException $e) {
-                            // Affichage de l'erreur en cas d'échec
-                            print " Erreur !: " . $e->getMessage() . "<br/>";
-                            print "erreur insertion";
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur !: " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
                         }
+                        
                             
                             
             
