@@ -436,7 +436,7 @@ try {
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="text" id="titre" name="titre" required></input><br>
+                                <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
@@ -458,7 +458,7 @@ try {
                                 <label for="avis">Rédigez votre avis</label>
                                 <p class="transparent">.</p>
                             </div>
-                            <textarea id="avis" name="avis" required></textarea><br>
+                            <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..."required></textarea><br>
                             <div class="display-ligne-espace">
                                 <label for="note">Saisissez la note de votre avis</label>
                                 <p class="transparent">.</p>
