@@ -39,13 +39,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
             $ids[$key]['titre'] = getOffre($offre["id_offre"])["titre"];
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
-
+        echo "<pre>";
+        print_r($ids);
+        echo "</pre>";
         ?>
 
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids as $offre) { ?>
+                    <?php foreach ($ids as $offre) { 
+                        echo "<pre>";
+                        print_r($offre);
+                        echo "</pre>"; ?>
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
                             <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($offre['titre']); ?>" data-note="<?php echo htmlentities($offre["note"]); ?>">
                         </a>
