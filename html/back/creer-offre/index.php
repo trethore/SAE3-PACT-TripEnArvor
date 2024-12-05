@@ -227,6 +227,12 @@ try {
                 <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
+                <!-- activite -->
+                <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" /> 
+                <br>
+                <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
+                
+
                 <!-- viste et spectacle -->
                 <br>
                 <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label>
@@ -455,6 +461,12 @@ try {
             }else {
                 $type = "gratuit";
             }
+            if (isset($_POST['presta'])) {
+                $presta = $_POST['presta'];
+            }
+            if (isset($_POST['descpresta'])) {
+                $descpresta = $_POST['descpresta'];
+            }
             
 
             if ($categorie !== "restaurant") {
@@ -545,8 +557,7 @@ try {
                 // }
 
 
-                $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
-                $target_file = $target_dir . $time . $file_extension;
+                
 
 
                 // if (file_exists($target_file)) {
@@ -579,12 +590,35 @@ try {
                 switch ($categorie) {
                     case 'activite':
                         $dbh->beginTransaction();
+
+
                         $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+
+                        
+                        //REQUETE PRESTATION
+                        $requete_presta = 'INSERT INTO _prestation(nom_prestation, description) VALUES (?, ?)';
+    
+                        //preparation requete
+                        $stmt_presta = $dbh->prepare($requete_presta);
+    
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_presta->execute([$presta, $descpresta]);
+    
+    
+                        //REQUETE OFFRE PROPOSE PRESTA
+                        $requete_presta_offre = 'INSERT INTO _prestation(nom_prestation, id_offre) VALUES (?, ?)';
+    
+                        //preparation requete
+                        $stmt_presta_offre = $dbh->prepare($requete_presta_offre);
+    
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_presta_offre->execute([$presta, $id_offre]);
+                        
 
 
                         break;
@@ -870,7 +904,7 @@ try {
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
             let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
             let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
