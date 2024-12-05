@@ -54,4 +54,27 @@
             die();
         }
     }
+
+    function email_exist(string $email) : bool {
+        try {
+            global $driver, $server, $dbname, $user, $pass;
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+
+            $query = "SELECT COUNT(*) FROM sae._compte WHERE email = ?";
+
+            // Préparation et exécution de la requête
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$email]);
+            $result = $stmt->fetch()['count'] > 0;
+
+            $conn = null;
+            return $result;
+        } catch(Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>

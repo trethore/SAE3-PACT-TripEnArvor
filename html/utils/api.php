@@ -7,7 +7,11 @@ try {
     $result = array();
 
     if (isset($_GET['pseudo-exist'])) {
-        $result['pseudoExist'] = pseudo_exist($_GET['pseudo-exist']);
+        $result['pseudoExist'] = pseudo_exist(urldecode($_GET['pseudo-exist']));
+    }
+
+    if (isset($_GET['email-exist'])) {
+        $result['emailExist'] = email_exist(urldecode($_GET['email-exist']));
     }
 
     echo(json_encode($result));

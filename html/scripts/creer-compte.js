@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const selectTypeCompte = document.getElementById("type-compte");
     const divEmail = document.getElementById("div-email");
+    const inputEmail = document.getElementById("email");
     const divPassword = document.getElementById("div-password");
     const divConfirmPassword = document.getElementById("div-confirm-password");
     const divNameAndFirstName = document.getElementById("div-name-and-first-name");
@@ -75,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     var pseudoExist = false;
+    var emailExist = false;
 
     function setRequired(element, required) {
         element.querySelector("label span").style.display = required ? "inline" : "none";
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function disableSubmitButton() {
-        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist) {
+        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist && !emailExist) {
             submitInput.disabled = false;
         } else {
             submitInput.disabled = true;
@@ -170,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     inputPseudo.addEventListener("blur", function() {
-        fetch(`/utils/api.php?pseudo-exist=${inputPseudo.value}`)
+        fetch(`/utils/api.php?pseudo-exist=${encodeURIComponent(inputPseudo.value)}`)
             .then(response => response.json())
             .then(data => {
                 const pseudoAlreadyExist = document.getElementById("pseudo-already-exist");
@@ -181,6 +183,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     pseudoExist = false;
                     pseudoAlreadyExist.style.display = "none";
+                    divPseudo.querySelector("input").style.border = "";
+                }
+                disableSubmitButton();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    inputEmail.addEventListener("blur", function() {
+        fetch(`/utils/api.php?email-exist=${encodeURIComponent(inputEmail.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                const emailAlreadyExist = document.getElementById("email-already-exist");
+                if (data.emailExist) {
+                    emailExist = true;
+                    emailAlreadyExist.style.display = "inline";
+                    divPseudo.querySelector("input").style.border = "1px solid red";
+                } else {
+                    emailExist = false;
+                    emailAlreadyExist.style.display = "none";
                     divPseudo.querySelector("input").style.border = "";
                 }
                 disableSubmitButton();

@@ -42,7 +42,7 @@ if (!$submitted) {
         </div>
         <hr>
         <div id="div-email">
-            <label for="email">Votre adresse email<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
+            <label for="email">Votre adresse email<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="email-already-exist"> Un compte avec cette adresse email existe déjà</span></label>
             <input type="email" id="email" name="email" placeholder="votre.adresse@email.fr">
         </div>
         <div id="div-password">
