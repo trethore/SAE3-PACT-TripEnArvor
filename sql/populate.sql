@@ -84,8 +84,8 @@ VALUES
 -- Insertion dans compte_professionnel_publique
 INSERT INTO compte_professionnel_publique(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web)
 VALUES 
-('Dupont', 'Jean', 'jean.dupont@example.com', '0601020304', 'password123', 1, 'Entreprise Dupont', 'Spécialiste des services IT', 'https://www.dupont.com'),
-('Martin', 'Claire', 'claire.martin@example.com', '0605060708', 'password456', 2, 'Consulting Martin', 'Expert en stratégie d''entreprise', 'https://www.martin-consulting.com');
+('Dupont', 'Jean', 'jean.dupont@example.com', '0601020304', '$2y$10$0MSSzyBunt9Z84N/Uj91/.FSyx8eK4RyVdZDROVH035U1pSQIwHyW', 1, 'Entreprise Dupont', 'Spécialiste des services IT', 'https://www.dupont.com'), --password123
+('Martin', 'Claire', 'claire.martin@example.com', '0605060708', '$2y$10$IJCELaVzR4zVFjhbglwcFODJK.N4ZKQ5m1WhPA64WblaOmAw4p9Xa', 2, 'Consulting Martin', 'Expert en stratégie d''entreprise', 'https://www.martin-consulting.com'); --password456
 
 -- ####################################################################
 -- INSERTION DE COMPTES MEMBRES
@@ -94,8 +94,16 @@ VALUES
 -- Insertion dans compte_membre
 INSERT INTO compte_membre(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, pseudo)
 VALUES 
-('Leclerc', 'Antoine', 'antoine.leclerc@example.com', '0708091011', 'password789', 3, 'AntoineL'),
-('Durand', 'Sophie', 'sophie.durand@example.com', '0611223344', 'password321', 4, 'SophieD');
+('Leclerc', 'Antoine', 'antoine.leclerc@example.com', '0708091011', '$2y$10$6lDiPqJbAcacgXfecLdDEuTgLz.L/xGq.IbId41o/ZeskeJTwh1Da', 3, 'AntoineL'), --password789
+('Durand', 'Sophie', 'sophie.durand@example.com', '0611223344', '$2y$10$VQaHqRmTUDhykg3cxdvn1eYibleNDLs23eOFSbhVMrFI6SwTbYb6y', 4, 'SophieD'); --password321
+
+-- ####################################################################
+-- INSERTION DE COMPTES PRO PRIVE
+-- ####################################################################
+INSERT INTO sae.compte_membre(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, pseudo)
+VALUES 
+('Doe', 'John', 'john.doe@example.com', '0123456789', '$2y$10$5r8FbHDqbLm5KI/or207H.Tt/MJyzKurQftAF/Bhoi8SkoS2kl.5O', 5, 'JohnD'); -- password777
+
 
 -- ####################################################################
 -- INSERTION D'OFFRES D'ACTIVITÉS
