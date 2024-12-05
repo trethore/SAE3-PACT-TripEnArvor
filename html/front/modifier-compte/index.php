@@ -62,7 +62,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT Pro</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -75,8 +75,8 @@ try {
         </datalist>
 
     </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const inputSearch = document.querySelector(".input-search");
@@ -138,7 +138,7 @@ try {
                 <tr>
                     <td>Prénom</td>
                     <td>
-                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>"> 
                     </td>
                 </tr>
                 <tr>
