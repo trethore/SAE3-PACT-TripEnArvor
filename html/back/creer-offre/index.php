@@ -638,7 +638,7 @@ try {
                         
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                        
+                            print("id de la date " .$idDateEvent);
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
             
 
