@@ -2,6 +2,10 @@
   display: none;
 }
 
+#presta{
+  width: 75%;
+}
+
 h2 {
   width: 55%;
   text-align: center;
