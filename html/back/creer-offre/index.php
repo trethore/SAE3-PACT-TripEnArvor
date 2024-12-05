@@ -626,16 +626,14 @@ try {
 
                     case 'spectacle':
                         try {
-                            $dbh->beginTransaction();
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
                             print_r("id de la date " .$idDateEvent);
-                            $dbh->commit();
+                            
                         } catch (PDOException $e) {
-                            $dbh->rollBack();
                             // Affichage de l'erreur en cas d'échec
                             print " Erreur !: " . $e->getMessage() . "<br/>";
                         }
