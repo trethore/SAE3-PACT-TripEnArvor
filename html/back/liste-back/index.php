@@ -223,26 +223,7 @@ try {
             <article class="offre">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <?php $horaire = getHorairesOuverture($row['id_offre']);
-                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                    $jour_actuel = $jours[date('w')];
-                    $ouverture = "Indét.";
-                    foreach ($horaire as $h) {
-                        if (!empty($horaire)) {
-                            $ouvert_ferme = date('H:i');
-                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                            $ouverture = "Fermé";
-                            if ($h['nom_jour'] == $jour_actuel) {
-                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                    $ouverture = "Ouvert";
-                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                    $ouverture = "Ferme Bnt.";
-                                }
-                            }
-                        } 
-                    } ?>
-                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture)?></div>
+                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
@@ -323,14 +304,8 @@ try {
                     <?php if ($tab["categorie"] == "Restauration") { ?>
                         <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
                     <?php } else { ?>
-                        <p class="prix">A partir de <span><?php         
-                        $offre['prix'] = getPrixPlusPetit($row['id_offre']);
-                        if (getPrixPlusPetit($row['id_offre']) == null) {
-                            $offre['prix'] = 0;
-                        }
-                        echo htmlentities($offre['prix']); ?>€</span></p>
+                        <p class="prix">A partir de <span><?php echo htmlentities($row["prix"]); ?>€</span></p>
                     <?php } ?>
-
                 </a>
             </article>
             <?php } ?>
