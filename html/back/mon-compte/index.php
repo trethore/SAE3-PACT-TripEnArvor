@@ -33,6 +33,7 @@ try {
     $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+    print_r("ya un probleme");
 }
 
 
@@ -78,7 +79,7 @@ switch ($typeCompte) {
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php foreach ($offres as $offre) { ?>
+                <?php foreach ($offres as $offre) { print_r("une ;;;");?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
                         <?php echo htmlspecialchars($offre['titre']); ?>
                     </option>
