@@ -549,3 +549,30 @@ h3 {
     font-size: 20pt;
     margin: 20px auto;
 }
+
+.en-relief {
+    background: red;
+    color: var(--blanc);
+
+    position: absolute;
+    left: 40%;
+    top: 0;
+
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+
+    width: 66.65px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.en-relief span {
+    font-size: 24px;
+    text-decoration: none;
+    color: var(--blanc);
+    margin-top: 16px;
+}

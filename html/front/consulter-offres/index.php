@@ -177,11 +177,14 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    
                     <div class="offre">
                         <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                                <?php
+                                if (isOffreEnRelief($tab['id_offre'])) { ?>
+                                    <div class="en-relief">Coup de <span>❤️</span></div>
+                                <?php } ?>
                                 <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
                                 <p class="titre-offre"><?php echo $tab["titre"] ?></p>
@@ -226,7 +229,7 @@ try {
                         </a>
                     </div>
                 <?php
-                    }
+                }
             ?>
         </section>        
     </main>
