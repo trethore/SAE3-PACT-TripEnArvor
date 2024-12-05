@@ -230,7 +230,7 @@ try {
                 <!-- viste et spectacle -->
                 <br>
                 <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
-                <input type="date" id="date_event" name="date_event">
+                <input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
                 <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
@@ -624,7 +624,7 @@ try {
                         break;
 
                     case 'spectacle':
-                        
+
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
