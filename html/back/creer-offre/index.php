@@ -405,7 +405,8 @@ try {
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
                 $date_event = null;
             }else {
-                $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
+                $date_event = $_POST['date_event'];
+                $date_event = date('Y-m-d H:i:s'); // La date de l'événement, par exemple '2024-12-19'
             }
            
             
@@ -648,6 +649,7 @@ try {
                         } catch (PDOException $e) {
                             // Affichage de l'erreur en cas d'échec
                             print " Erreur !: " . $e->getMessage() . "<br/>";
+                            print "erreur insertion";
                         }
                             
                             
