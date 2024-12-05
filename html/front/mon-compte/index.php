@@ -94,8 +94,7 @@ try {
 
                     // Rediriger si un ID valide est trouvé
                     if (idOffre) {
-                        // TD passer du back au front quand fini
-                        window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
                     }
                 }
             });
