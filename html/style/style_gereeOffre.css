@@ -115,7 +115,7 @@ input[placeholder = "00"]{
 }
 
 .important td+td{
-  width: 35%;
+  /* width: 35%; */
   padding-left: 5%;
 }
 
