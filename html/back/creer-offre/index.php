@@ -661,8 +661,7 @@ try {
                         break;
 
                     case 'spectacle':
-                        
-                            $dbh->commit();
+                    
                             try {
                                 if (!$dbh->inTransaction()) {
                                     $dbh->beginTransaction();
