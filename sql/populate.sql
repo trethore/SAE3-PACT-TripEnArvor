@@ -100,9 +100,8 @@ VALUES
 -- ####################################################################
 -- INSERTION DE COMPTES PRO PRIVE
 -- ####################################################################
-INSERT INTO sae.compte_membre(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, pseudo)
-VALUES 
-('Doe', 'John', 'john.doe@example.com', '0123456789', '$2y$10$5r8FbHDqbLm5KI/or207H.Tt/MJyzKurQftAF/Bhoi8SkoS2kl.5O', 5, 'JohnD'); -- password777
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 
+VALUES ('Doe', 'John', 'john.doe@example.com', '0612345679', '$2y$10$5r8FbHDqbLm5KI/or207H.Tt/MJyzKurQftAF/Bhoi8SkoS2kl.5O', 5, 'John & Co.', 'Entreprise spécialisée dans le conseil en informatique.','https://www.john-co.fr', '123465789');
 
 
 -- ####################################################################
