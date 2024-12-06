@@ -681,7 +681,7 @@ try {
                                 $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
                                             VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
