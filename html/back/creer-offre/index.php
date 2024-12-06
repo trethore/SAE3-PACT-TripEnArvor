@@ -191,7 +191,7 @@ try {
                     <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
                 </tr>
                 <tr>
-                    <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
+                    <td><label for="photo"> Photo <span class="required">*</span></label></td>
                     <td><div>
                             <!-- <label for="file-upload">
                                 <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
@@ -226,6 +226,7 @@ try {
                 <!-- activite, visite, spectacle -->
                 <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
+                <br>
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
                 <!-- activite -->
                 <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" /> 
@@ -243,6 +244,7 @@ try {
                 <br>
                 <!-- parc -->
                 <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
+                <br>
                 <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
                 <br>
                 <!-- restaurant -->
