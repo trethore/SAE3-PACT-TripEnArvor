@@ -506,7 +506,7 @@ header > div > a, header > div > a:hover {
 #remonte:hover {
     background: var(--blanc);
     border-color: var(--orange-principale);
-    content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
+    color: var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
 
