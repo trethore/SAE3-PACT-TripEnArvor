@@ -499,8 +499,7 @@ header > div > a, header > div > a:hover {
     background: var(--orange-principale);
     border: 3px solid var(--blanc);
     border-radius: 15px;
-    display: flex;
-    justify-content: center;
+    text-align: center;
 }
 
 #remonte:hover {
