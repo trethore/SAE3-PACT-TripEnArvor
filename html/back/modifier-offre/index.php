@@ -12,6 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
+$id_compte = $_SESSION['id'];
 $isIdProPrivee = isIdProPrivee($id_compte);
 $isIdProPublique = isIdProPublique($id_compte);
 
@@ -205,9 +206,9 @@ try {
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
-                <?php foreach ($offres as $offre) { ?>
-                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                        <?php echo htmlspecialchars($offre['titre']); ?>
+                <?php foreach ($offres as $offreT) { ?>
+                    <option value="<?php echo htmlspecialchars($offreT['titre']); ?>" data-id="<?php echo $offreT['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offreT['titre']); ?>
                     </option>
                 <?php } ?>
             </datalist>

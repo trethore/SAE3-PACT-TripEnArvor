@@ -121,12 +121,15 @@ try {
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/style_HFF.css"/>
+    
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
+    <link rel="stylesheet" href="/style/style_HFF.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/style/style_navPhone.css" />
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -872,6 +875,18 @@ try {
         }
 
     </script>
+
+<link rel="stylesheet" href="/style/style_navPhone.css"/>
+    <div class="telephone-nav">
+        <div class="bg"></div>
+        <div class="nav-content">
+        <div class = "btOn">
+            <img src="/images/frontOffice/icones/accueil.png">
+            </div>
+            <img src="/images/frontOffice/icones/chercher.png">
+            <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
+    </div>
 
 </body>
 
