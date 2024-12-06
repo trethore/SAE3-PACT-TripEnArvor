@@ -12,6 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
+$id_compte = $_SESSION['id'];
 $isIdProPrivee = isIdProPrivee($id_compte);
 $isIdProPublique = isIdProPublique($id_compte);
 
