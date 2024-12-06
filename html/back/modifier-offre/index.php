@@ -83,7 +83,7 @@ if (!isset($_SESSION['id'])) {
     echo "Pas connecté";
     exit;
 } else {
-    echo "Connecté  avec id : " . $_SESSION['id'];
+    // echo "Connecté  avec id : " . $_SESSION['id'];
 } 
 
 try {
