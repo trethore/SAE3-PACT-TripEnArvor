@@ -83,7 +83,7 @@ if (!isset($_SESSION['id'])) {
     echo "Pas connecté";
     exit;
 } else {
-    // echo "Connecté  avec id : " . $_SESSION['id'];
+    echo "Connecté  avec id : " . $_SESSION['id'];
 } 
 
 try {
@@ -1092,7 +1092,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back/
+                            window.location.href = '/back/consulter-offre/id'
                         }
                   </script>";
 
