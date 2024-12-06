@@ -57,7 +57,7 @@ try {
 
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -300,13 +300,18 @@ try {
 
                     <!-------------------------------------- 
                     Affichage du prix 
-                    ---------------------------------------->  
-                    <p class="prix">A partir de <span><?php         
-                    $offre['prix'] = getPrixPlusPetit($row['id_offre']);
-                    if (getPrixPlusPetit($row['id_offre']) == null) {
-                        $offre['prix'] = 0;
-                    }
-                    echo htmlentities($offre['prix']); ?>€</span></p>
+                    ---------------------------------------->
+                    <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
+                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
+                    <?php } else { ?>
+                            <p class="prix">A partir de <span><?php
+                            $prix['prix'] = getPrixPlusPetit($row['id_offre']);
+                            if (getPrixPlusPetit($row['id_offre']) == null) {
+                                $prix['prix'] = 0;
+                            }
+                            echo htmlentities($prix['prix']); ?>€</span></p>
+                    <?php } ?>
+
                 </a>
             </article>
             <?php } ?>
@@ -385,7 +390,7 @@ try {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
-                        return offerAvailability === availability;
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
                     });
                 }
 

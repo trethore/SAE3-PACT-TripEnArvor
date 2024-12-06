@@ -1,11 +1,27 @@
 <?php
 session_start();
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
+
+$isIdProPrivee = isIdProPrivee($id_compte);
+$isIdProPublique = isIdProPublique($id_compte);
+
+
+if ($isIdProPublique !== true) {
+    $isIdProPublique = false;
+
+} else if ($isIdProPublique === true) {
+    $isIdProPrivee = false;
+}
 
 
 function get_file_extension($type) {
@@ -184,7 +200,7 @@ try {
 
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -309,11 +325,15 @@ try {
 
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ) ?>"/></td>
+                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
+                        <?php if (($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
+                            echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
-                        <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php echo htmlentities($adresse['code_postal']) ?>"/></td>
+                        <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php 
+                        if ($adresse['code_postal']) {
+                            echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
                         <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php echo htmlentities($adresse['ville'] )?>"required ></td>
                     </tr>
@@ -331,7 +351,7 @@ try {
                         </td>
                     </tr>
                     <tr>
-                        <td><label id ="labeltype" for="type">Type de l'offre (impossible de modifier le type)<span class="required">*</span></label></td>
+                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -341,6 +361,7 @@ try {
                             </div>
                                     
                         </td>
+                        <td>(impossible de modifier le type)</td>
                     </tr>
                     <tr>
                         <div id="options">
@@ -354,29 +375,32 @@ try {
 
                 <div>
                     <!-- activite, visite, spectacle -->
-                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value="<?php echo htmlentities($activite['duree']) ?>"/><label id="labelduree2" for="duree">minutes</label>
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($activite['duree'])){
+                                                                                                                                                                        echo htmlentities($activite['duree']);} ?>"/>
+                    <label id="labelduree2" for="duree">minutes</label>
                     <!-- activité, parc -->
-                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php echo htmlentities($activite['age_min']) ?>"/> <label id="labelage2" for="age">an(s)</label>
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($activite['age_min'])){
+                                                                                                                                                        echo htmlentities($activite['age_min']); }?>"/> 
+                    <label id="labelage2" for="age">an(s)</label>
 
                     <br>
                     <!-- spectacle -->
-                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite'])?? '' ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($activite['capacite'])){
+                                                                                                                                                                                    echo htmlentities($activite['capacite']);} ?>"/>
+                    <label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
-                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
-                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php echo htmlentities($attraction[$plan]) ?>" alt="Plan" ><input type="file" id="plan" name="plan" />
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($attraction['nbAttractions'])){
+                                                                                                                                                                                            echo htmlentities($attraction['nbAttractions']); } ?>">
+                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php if(isset($attraction['plan'])){
+                                                                                                                                                            echo htmlentities($attraction[$plan]); } ?>"  ><input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
-                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php echo htmlentities($restaurant[$carte]) ?>" alt="Carte" > <input type="file" id="carte" name="carte" />
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php if(isset($restaurant[$carte])){
+                                                                                                                                                            echo htmlentities($restaurant[$carte]); }?>" > <input type="file" id="carte" name="carte" />
                     
                 </div>
-                <?php if(isset($activite['duree'])){
-                    echo htmlentities($activite['duree']);
-                }else{
-                    echo "pas dispo";
-                }
-
-                ?>
+                
                     <br>
                     </div>
 
@@ -409,17 +433,16 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="lien">Lien externe</label></td>
-                                <td><input type="text" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php echo htmlentities($offre['site_web']); ?>"/></td>
+                                <td><input type="text" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php if(isset($offre['site_web'])){
+                                                                                                                                        echo htmlentities($offre['site_web']); } ?>"/></td>
                             </tr>
-                            <tr>
-                                <td><label for="tel">Numéro de téléphone</label></td>
-                                <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)" value="<?php echo htmlentities($compte['tel']); ?>"/></td>
-                            </tr>
+                            
                         </table>
                     </div>
 
                         <h3>Description détaillée de l'offre</h3>
-                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
+                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
+                                                                                                                                echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
                         <div id="tarifs">
                             
@@ -851,9 +874,6 @@ try {
 
 
                 }else{
-                
-                    
-                
 
                     //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
@@ -1072,7 +1092,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back/'
+                            window.location.href = '/back/consulter-offre/'
                         }
                   </script>";
 

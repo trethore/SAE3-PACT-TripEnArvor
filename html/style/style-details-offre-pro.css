@@ -18,7 +18,7 @@ body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
     color: var(--noir);
-    background: var(--blanc-leger);
+    background: var(--blanc);
 }
 
 h1 {
@@ -35,13 +35,21 @@ h2 {
 }
 
 .fond-blocs {
-    background: var(--blanc-leger);    
+    background: var(--blanc);    
     margin: 30px 30px 0 30px;
     padding: 30px;}
 
 a {
-    color: var(--noir);
+    color: var(--orange-principale);
+    text-decoration: none;
+}
+    
+a:hover {
     text-decoration: underline;
+}
+    
+header > div > a, header > div > a:hover {
+    text-decoration: none;
 }
 
 .etoile {
@@ -75,17 +83,17 @@ a {
 
 
     .bouton-modifier > button {
-        color: var(--blanc-leger);
+        color: var(--blanc);
         text-decoration: none;
-        font-size: 60px;
+        font-size: 30px;
         background-color: var(--orange-principale);
-        border: 3px solid var(--blanc-leger);
+        border: 3px solid var(--blanc);
         padding: 10px 80px;
         border-radius: 15px;    }
 
     .bouton-modifier > button:hover {
         color: var(--orange-principale);
-        background: var(--blanc-leger);
+        background: var(--blanc);
         border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
@@ -296,18 +304,18 @@ a {
     }
 
     .display-ligne-espace > a, .fond-blocs > a {
-        color: var(--blanc-leger);
+        color: var(--blanc);
         text-decoration: none;
         font-size: 24px;
         background-color: var(--orange-principale);
-        border: 3px solid var(--blanc-leger);
+        border: 3px solid var(--blanc);
         padding: 10px 80px;
         border-radius: 15px;
     }
     
     .display-ligne-espace > a:hover, .fond-blocs > a:hover {
         color: var(--orange-principale);
-        background: var(--blanc-leger);
+        background: var(--blanc);
         border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
@@ -321,18 +329,18 @@ a {
     ***************************/
 
     .bloc-tarif > button {
-        color: var(--blanc-leger);
+        color: var(--blanc);
         text-decoration: none;
         font-size: 24px;
         background-color: var(--orange-principale);
-        border: 3px solid var(--blanc-leger);
+        border: 3px solid var(--blanc);
         padding: 10px 20px;
         border-radius: 15px;
     }
 
     .bloc-tarif > button:hover {
         color: var(--orange-principale);
-        background: var(--blanc-leger);
+        background: var(--blanc);
         border-color: var(--orange-principale);
         transition: 0.3s ease-in-out;
     }
@@ -397,7 +405,7 @@ a {
 *************************/
 
 .fond-blocs-avis {
-    background: var(--blanc-leger);    
+    background: var(--blanc);    
     margin: 30px 0;
     padding: 15px;
     border-radius: 15px;
@@ -467,8 +475,8 @@ a {
 
 .navigation > button {
     background: var(--orange-principale);
-    border: 3px solid var(--blanc-leger);
-    color: var(--blanc-leger);
+    border: 3px solid var(--blanc);
+    color: var(--blanc);
     padding: 10px 20px;
     border: 0;
     text-align: center;
@@ -479,7 +487,7 @@ a {
 }
 
 .navigation > button:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-color: var(--orange-principale);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
@@ -489,14 +497,14 @@ a {
     width: 50px;
     height: 50px;
     background: var(--orange-principale);
-    border: 3px solid var(--blanc-leger);
+    border: 3px solid var(--blanc);
     border-radius: 15px;
     display: flex;
     justify-content: center;
 }
 
 #remonte:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-color: var(--orange-principale);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     transition: 0.3s ease-in-out;

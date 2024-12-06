@@ -244,7 +244,7 @@ a {
     border: none;
     width: 180px;
     height: 40px;
-    border-radius: 25px;
+    border-radius: 10px;
     margin: 0 0 0 1em;
     padding: 0 0 0 10px;
     font-size: 16px;
@@ -294,7 +294,7 @@ a {
 }
 
 .filtre-tri .localisation {
-    flex: 5;
+    flex: 1;
 }
 
 .filtre-tri .typeOffre {

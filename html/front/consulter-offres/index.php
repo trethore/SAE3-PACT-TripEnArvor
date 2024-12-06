@@ -52,15 +52,70 @@ try {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body>
+    <?php
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+        $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+        $stmt->execute();
+        $offresNav = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $dbh = null;
+    } catch (PDOException $e) {
+        echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+    }
+    ?>
+
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT</a></div>
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offresNav as $offreNav) { ?>
+                    <option value="<?php echo htmlspecialchars($offreNav['titre']); ?>" data-id="<?php echo $offreNav['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offreNav['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
+
         </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
 
     <!-- Conteneur principal -->
@@ -178,15 +233,31 @@ try {
                 <?php
                 foreach ($offres as $tab) {
                     ?>
-                    <div class="offre">
+                    <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
                         <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                             <div class="sous-offre">
                                 <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                                <?php
-                                if (isOffreEnRelief($tab['id_offre'])) { ?>
-                                    <div class="en-relief">Coup de <span>❤️</span></div>
-                                <?php } ?>
-                                <div class="ouverture-offre"><?php /*echo $tab["ouvert"]*/ ?>Ouvert</div>
+                                <?php $horaire = getHorairesOuverture($tab['id_offre']);
+                                setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                $jour_actuel = $jours[date('w')];
+                                $ouverture = "Indét.";
+                                foreach ($horaire as $h) {
+                                    if (!empty($horaire)) {
+                                        $ouvert_ferme = date('H:i');
+                                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                        $ouverture = "Fermé";
+                                        if ($h['nom_jour'] == $jour_actuel) {
+                                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                $ouverture = "Ouvert";
+                                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                $ouverture = "Ferme Bnt.";
+                                            }
+                                        }
+                                    } 
+                                } ?>
+
+                                <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
                                 <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
                                 <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                                 <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
@@ -277,7 +348,9 @@ try {
 
             const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
             const offersContainer = document.querySelector(".section-offres");
-            const offers = Array.from(document.querySelectorAll(".offre"));
+            const normalOffers = Array.from(document.querySelectorAll(".offre"));
+            const otherOffers = Array.from(document.querySelectorAll(".en-relief-offre"));
+            const offers = normalOffers.concat(otherOffers);
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
 
@@ -324,7 +397,7 @@ try {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
-                        return offerAvailability === availability;
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
                     });
                 }
 
