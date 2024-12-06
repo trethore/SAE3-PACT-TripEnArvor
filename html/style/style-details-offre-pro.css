@@ -493,22 +493,6 @@ header > div > a, header > div > a:hover {
     transition: 0.3s ease-in-out;
 }
 
-#remonte {
-    width: 50px;
-    height: 50px;
-    background: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    border-radius: 15px;
-    text-align: center;
-}
-
-#remonte:hover {
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
-}
-
 /*********************
         FOOTER                                            
 *********************/
