@@ -185,8 +185,8 @@ try {
                     <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                 </tr>
                 <tr>
-                    <td><!--<label for="cp" id="labelcp">Code Postal </label>--></td>
-                    <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td>
+                    <!-- <td><label for="cp" id="labelcp">Code Postal </label></td>
+                    <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td> -->
                     <td><label for="ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
                 </tr>
