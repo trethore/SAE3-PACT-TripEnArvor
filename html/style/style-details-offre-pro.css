@@ -478,7 +478,6 @@ header > div > a, header > div > a:hover {
     border: 3px solid var(--blanc);
     color: var(--blanc);
     padding: 10px 20px;
-    border: 0;
     text-align: center;
     font-size: 40px;
     width: auto;
@@ -490,23 +489,6 @@ header > div > a, header > div > a:hover {
     background: var(--blanc);
     border-color: var(--orange-principale);
     color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
-}
-
-#remonte {
-    width: 50px;
-    height: 50px;
-    background: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-}
-
-#remonte:hover {
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     transition: 0.3s ease-in-out;
 }
 

@@ -626,7 +626,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace"> 
                         <div class="display-ligne">
@@ -736,7 +736,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
+            <button id="remonte" onclick="location.href='#top'">^</button>
         </div>
 
     </main>
