@@ -229,6 +229,7 @@ try {
                 <br>
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
                 <!-- activite -->
+                <br>
                 <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" /> 
                 <br>
                 <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
@@ -236,8 +237,7 @@ try {
 
                 <!-- viste et spectacle -->
                 <br>
-                <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label>
-                <input type="datetime-local" id="date_event" name="date_event">
+                <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
                 <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
