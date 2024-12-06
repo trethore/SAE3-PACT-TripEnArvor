@@ -478,7 +478,6 @@ header > div > a, header > div > a:hover {
     border: 3px solid var(--blanc);
     color: var(--blanc);
     padding: 10px 20px;
-    border: 0;
     text-align: center;
     font-size: 40px;
     width: auto;
