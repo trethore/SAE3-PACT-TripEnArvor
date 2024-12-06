@@ -281,7 +281,6 @@ try {
             <main>
                 
                 <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
-                <?php print_r($id_offre_cible); ?>
 
                 <form action="index.php?id=<?php echo $id_offre_cible ?>" method="post" enctype="multipart/form-data" id="dynamicForm">
 
@@ -1093,7 +1092,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/'
+                            window.location.href = '/back/consulter-offre/id'
                         }
                   </script>";
 
