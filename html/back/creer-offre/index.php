@@ -679,7 +679,7 @@ try {
                             
                                 // Insertion dans la table offre_spectacle
                                 $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
                                 $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
                             
