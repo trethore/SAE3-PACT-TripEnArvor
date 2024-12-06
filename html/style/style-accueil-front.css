@@ -77,7 +77,7 @@ section {
    
 .carousel-images img {
     width: 1226px;
-    height: 396px;
+    height: 600px;
     flex-shrink: 0;
     pointer-events: none;
 }
