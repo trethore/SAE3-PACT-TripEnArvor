@@ -622,4 +622,21 @@
             die();
         }
     }
+
+    function isOffreEnRelief($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqEnRelief = "SELECT 1 FROM sae._offre_souscrit_option WHERE nom_option = 'En Relief' AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtEnRelief = $conn->prepare($reqEnRelief);
+            $stmtEnRelief->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtEnRelief->execute();
+            $EnRelief = $stmtEnRelief->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $EnRelief !== false;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>

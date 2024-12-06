@@ -17,7 +17,7 @@ h1 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 55pt;
+    font-size: 45pt;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -77,8 +77,7 @@ section {
    
 .carousel-images img {
     width: 1226px;
-    height: 396px;
-    flex-shrink: 0;
+    height: 600px;
     pointer-events: none;
 }
 
@@ -134,4 +133,12 @@ section {
 p > img {
     height: 25px;
     width: 25px;
+}
+
+a {
+    color: var(--blanc-leger);
+}
+
+a:hover {
+    color: var(--violet-principal);
 }

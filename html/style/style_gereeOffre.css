@@ -2,6 +2,10 @@
   display: none;
 }
 
+#descpresta{
+  width: 100%;
+}
+
 h2 {
   width: 55%;
   text-align: center;
@@ -100,6 +104,10 @@ input[placeholder = "00"]{
   display: inline-block;
 }
 
+tbody{
+  width: 1500px;
+}
+
 /****INFORMATIONS IMPORTANTES****/
 
 .important input[id="titre"], .important input[id="adresse"]{
@@ -111,7 +119,7 @@ input[placeholder = "00"]{
 }
 
 .important td+td{
-  width: 35%;
+  /* width: 35%; */
   padding-left: 5%;
 }
 

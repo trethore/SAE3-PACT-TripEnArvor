@@ -44,26 +44,81 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <?php
     if (!$submitted) {
     ?>
-        <header>
-            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-            <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT</a></div>
-            <div class="search-box">
-                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-                <input type="text" class="input-search" placeholder="Taper votre recherche...">
-            </div>
-            <a href="/front/consulter-offres" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-            <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        </header>
-        <main>
-            <?php
-            // Préparation et exécution de la requête
-            $stmt = $conn->prepare($reqCompte);
-            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-            $stmt->execute();
-            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
-            ?>
-            <h1>Détails du compte</h1>
+        <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT Pro</a></div>
+    <div class="search-box">
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($offres as $offre) { ?>
+                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                    <?php echo htmlspecialchars($offre['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
+    <main>
+        <?php
+        // Préparation et exécution de la requête
+        $stmt = $conn->prepare($reqCompte);
+        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+        $stmt->execute();
+        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+        ?>
+        <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
             <table>
@@ -82,7 +137,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                 <tr>
                     <td>Prénom</td>
                     <td>
-                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>>"> 
+                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>"> 
                     </td>
                 </tr>
                 <tr>
@@ -128,8 +183,9 @@ $reqCompte = "SELECT * from sae._compte_membre cm
                     <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
                 </tr>
             <div>
-            <input type="submit" value="Valider les modifications">
-        </div>
+                <a href="/front/mon-compte" id="retour">Revenir au compte</a>
+                <input type="submit" value="Valider les modifications">
+            </div>
         </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">

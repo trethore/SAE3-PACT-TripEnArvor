@@ -121,28 +121,87 @@ try {
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/styleguide.css"/>
-    <link rel="stylesheet" href="/style/style_HFF.css"/>
+    
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
+    <link rel="stylesheet" href="/style/style_HFF.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/style/style_navPhone.css" />
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body>
     
-    <header id="header">
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17">PACT</div>
-        <div class="search-box">
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+    $stmt->execute();
+    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) { 
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <div class="text-wrapper-17"><a href="/front/accueil">PACT</a></div>
+    <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" class="input-search" placeholder="Taper votre recherche...">
-        </div>
-        <a href="/front/consulter-offres"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    </header>
+        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+        <datalist id="cont">
+            <?php foreach ($of as $o) { ?>
+                <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                    <?php echo htmlspecialchars($o['titre']); ?>
+                </option>
+            <?php } ?>
+        </datalist>
+
+    </div>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputSearch = document.querySelector(".input-search");
+            const datalist = document.querySelector("#cont");
+
+            // Événement sur le champ de recherche
+            inputSearch.addEventListener("input", () => {
+                // Rechercher l'option correspondante dans le datalist
+                const selectedOption = Array.from(datalist.options).find(
+                    option => option.value === inputSearch.value
+                );
+
+                if (selectedOption) {
+                    const idOffre = selectedOption.getAttribute("data-id");
+
+                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                    // Rediriger si un ID valide est trouvé
+                    if (idOffre) {
+                        window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
+                    }
+                }
+            });
+
+            // Debugging pour vérifier les options disponibles
+            const options = Array.from(datalist.options).map(option => ({
+                value: option.value,
+                id: option.getAttribute("data-id")
+            }));
+            //console.log("Options disponibles dans le datalist :", options);
+        });
+    </script>
+</header>
 
     <main id="body">
 
@@ -171,15 +230,18 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Fermé";
+                $ouverture = "Pas d'information sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
-                    $ouvert_ferme = date('H:i');
-                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                    if ($h['nom_jour'] == $jour_actuel) {
-                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                            $ouverture = "Ouvert";
-                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                            $ouverture = "Ferme bientôt";
+                    if (!empty($horaire)) {
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                        $ouverture = "Fermé";
+                        if ($h['nom_jour'] == $jour_actuel) {
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                $ouverture = "Ouvert";
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                $ouverture = "Ferme bientôt";
+                            }
                         }
                     } 
                 } ?>
@@ -377,7 +439,7 @@ try {
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="text" id="titre" name="titre" required></input><br>
+                                <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
@@ -399,13 +461,13 @@ try {
                                 <label for="avis">Rédigez votre avis</label>
                                 <p class="transparent">.</p>
                             </div>
-                            <textarea id="avis" name="avis" required></textarea><br>
+                            <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             <div class="display-ligne-espace">
                                 <label for="note">Saisissez la note de votre avis</label>
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 <p class="transparent">.</p>
                             </div>
                             <?php if ($categorie == "Restauration") { ?>
@@ -414,7 +476,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -422,7 +484,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -430,7 +492,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
@@ -438,7 +500,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" required/><br>
+                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                     <p class="transparent">.</p>
                                 </div>
                             <?php } ?>
@@ -555,19 +617,18 @@ try {
                     echo "Erreur : " . $e->getMessage();
                     die();
                 }
-            } else {
-                echo "Connexion requise pour publier un avis";
-            }
+            } else { ?>
+                <p><a href="/se-connecter">Connexion</a> requise pour publier un avis</p>
+            <?php }
 
             $compteur = 0;
-            $avis_id_selectionne = isset($_GET['avis_id']) ? intval($_GET['avis_id']) : null; // Récupérer l'avis sélectionné
             foreach ($avis as $a) { ?>
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <p class="transparent"><strong>⁝</strong></p>
                     </div>
-                    <div class="display-ligne-espace">
+                    <div class="display-ligne-espace"> 
                         <div class="display-ligne">
                             <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
@@ -583,34 +644,35 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <?php if ($categorie == "Restauration" && $avis_id_selectionne === $a['id_avis']) { 
-                        foreach ($noteDetaillee as $n) {
-                            if ($n['id_avis'] === $a['id_avis']) { ?>
-                                <div class="display-ligne">
-                                    <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
+                    <?php if ($categorie == "Restauration") { ?>
+                        <div class="display-ligne">
+                            <?php foreach ($noteDetaillee as $n) { ?>
+                                <?php if ($n['id_avis'] == $a['id_avis']) { ?>
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                     <?php } 
                                     for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                     <?php } ?>
-                                </div>
-                            <?php }
-                        }
-                    } ?>
-                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                    <p><?php echo htmlentities("     ") ?></p>
+                                <?php } ?>
+                            <?php } ?>
+                        </div>
+                    <?php } 
+                    $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     <!-- <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img id="pouce_haut_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'haut', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img id="pouce_bas_<?php //echo $compteur; ?>" onclick="togglePouce(<?php //echo $compteur; ?>, 'bas', <?php //echo $a['id_avis'] ?>)" src="/images/universel/icones/pouce-down.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
+                    <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
                             <div class="display-ligne-espace">
                                 <p class="titre-avis"><?php //echo htmlentities($compte['denomination']) ?></p>
@@ -618,25 +680,63 @@ try {
                             </div>
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
-                                    <?php /*$rep = explode(' ', $dateReponse[$compteur]['date']);
-                                    $dateRep = explode('-', $rep[0]); 
-                                    $heureRep = explode(':', $rep[1]); ?>
-                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); */?></strong></p>
+                                    <?php //$rep = explode(' ', $dateReponse[$compteur]['date']);
+                                    //$dateRep = explode('-', $rep[0]); 
+                                    //$heureRep = explode(':', $rep[1]); ?>
+                                    <p class="indentation"><strong>Répondu le <?php //echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php //echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                                     <p class="transparent">.</p>
                                 </div>
                             </div>
                             <p><?php //echo htmlentities($reponse[$compteur]['texte']) ?></p>
-                        </div> -->
-                    <?php //} ?>
-                </div>      
-            <?php $compteur++;
-            } ?>  
+                        </div>
+                    <?php //} else { ?>
+                        <form id="avisForm-<?php //echo $a['id_avis']; ?>" class="avis-form" action="index.php?id=<?php //echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
+                            <h2>Répondre à <?php //echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
+                            <div class="display-ligne-espace">
+                                <textarea id="reponse-<?php //echo $a['id_avis']; ?>" name="reponse" required></textarea><br>
+                                <p class="transparent">.</p>
+                            </div>
+                            <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
+                            <button type="submit" name="submit-reponse" value="true">Publier</button>
+                        </form>
+                        
+                        <?php /*if (!empty($reponse)) {
+                            if (isset($_POST['reponse'])) {
+                                $reponse = htmlentities($_POST['reponse']);
+                                print_r($reponse);
+                            } 
+                            $id_avis = $a['id_avis']; 
+                            $publie_le = date('Y-m-d H:i:s');                             
+                            try {
+                                // Connexion à la base de données
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+                                // Insérer la date de publication
+                                $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                $stmtInsertionDateReponse->execute([$publie_le]);
+                                $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                // Insérer la réponse liée à l'avis
+                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                                $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
+
+                            } catch (PDOException $e) {
+                                echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+                            }
+                        }
+                    } */?> -->
+                </div>  
+            <?php $compteur++; 
+            } ?>  
         </section>        
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
+            <button id="remonte" onclick="location.href='#top'">^</button>
         </div>
 
     </main>
@@ -775,6 +875,18 @@ try {
         }
 
     </script>
+
+<link rel="stylesheet" href="/style/style_navPhone.css"/>
+    <div class="telephone-nav">
+        <div class="bg"></div>
+        <div class="nav-content">
+        <div class = "btOn">
+            <img src="/images/frontOffice/icones/accueil.png">
+            </div>
+            <img src="/images/frontOffice/icones/chercher.png">
+            <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
+    </div>
 
 </body>
 
