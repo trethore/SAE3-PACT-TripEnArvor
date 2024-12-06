@@ -1,9 +1,14 @@
 <?php
 session_start();
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
 
