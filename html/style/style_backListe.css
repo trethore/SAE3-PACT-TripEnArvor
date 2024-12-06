@@ -408,6 +408,7 @@ a {
     line-height: 25px;
     display: flex;
     align-items: center;
+    width: 80%;
 }
 
 .lesOffres .ouverture-offre + img + p + p {
