@@ -25,7 +25,7 @@ $submitted = isset($_POST['type-compte']);
 if (!$submitted) {
 ?>
     <header>
-        <a href="/html/front/consulter-offres/">
+        <a href="/front/accueil/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
         </a>
     </header>
@@ -59,7 +59,7 @@ if (!$submitted) {
         <hr>
         <div id="div-pseudo">
             <label for="pseudo">Pseudo<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="pseudo-already-exist"> Ce pseudo existe déjà</span></label>
-            <input type="text" name="pseudo" id="pseudo" placeholder="MonSuperPseudo22" maxlength="254">
+            <input type="text" name="pseudo" id="pseudo" placeholder="Votre pseudonyme" maxlength="254">
         </div>
         <div id="div-name-and-first-name">
             <div id="div-name">
@@ -85,7 +85,7 @@ if (!$submitted) {
         </div>
         <div id="div-site-web">
             <label for="site-web">Site web<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <input type="url" name="site-web" id="site-web" placeholder="votre.site-web.fr">
+            <input type="url" name="site-web" id="site-web" placeholder="https://votre.site-web.fr">
         </div>
         <div id="div-siren">
             <label for="siren">Numéro de SIREN<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
