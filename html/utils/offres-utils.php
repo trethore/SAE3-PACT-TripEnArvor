@@ -145,6 +145,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             $stmtNOTE = $conn->prepare($reqNote);
             $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
@@ -179,6 +180,7 @@
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             $stmtNOTE = $conn->prepare($reqNote);
             $stmtNOTE->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
@@ -202,6 +204,7 @@
         $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtOffre = $conn->prepare($reqOffre);
             $stmtOffre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtOffre->execute();
@@ -220,6 +223,7 @@
         $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtActivite = $conn->prepare($reqActivite);
             $stmtActivite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtActivite->execute();
@@ -238,6 +242,7 @@
         $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtVisite = $conn->prepare($reqVisite);
             $stmtVisite->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtVisite->execute();
@@ -256,6 +261,7 @@
         $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtSpectacle = $conn->prepare($reqSpectacle);
             $stmtSpectacle->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtSpectacle->execute();
@@ -274,6 +280,7 @@
         $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtAttraction = $conn->prepare($reqAttraction);
             $stmtAttraction->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtAttraction->execute();
@@ -292,6 +299,7 @@
         $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtRestaurant = $conn->prepare($reqRestaurant);
             $stmtRestaurant->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtRestaurant->execute();
@@ -312,6 +320,7 @@
         $reqAdresse = "SELECT * FROM _offre JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre =  :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtAdresse = $conn->prepare($reqAdresse);
             $stmtAdresse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtAdresse->execute();
@@ -332,6 +341,7 @@
         $reqCompte = "SELECT * FROM _offre JOIN _compte ON  _offre.id_compte_professionnel = _compte.id_compte JOIN _compte_professionnel ON _compte.id_compte = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtCompte = $conn->prepare($reqCompte);
             $stmtCompte->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtCompte->execute();
@@ -353,6 +363,7 @@
         $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtTags = $conn->prepare($reqTags);
             $stmtTags->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtTags->execute();
@@ -373,6 +384,7 @@
         $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtTarifs = $conn->prepare($reqTarifs);
             $stmtTarifs->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtTarifs->execute();
@@ -393,6 +405,7 @@
         $reqHoraire = "SELECT * FROM _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);    
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtHoraire = $conn->prepare($reqHoraire);
             $stmtHoraire->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtHoraire->execute();
@@ -413,6 +426,7 @@
         $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtAvis = $conn->prepare($reqAvis);
             $stmtAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtAvis->execute();
@@ -431,6 +445,7 @@
         $reqAvisDetaille = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre JOIN _note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _avis.id_avis = _note_detaillee.id_avis AND _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
             $stmtAvisDetaille->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtAvisDetaille->execute();
@@ -449,6 +464,7 @@
         $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtMembre = $conn->prepare($reqMembre);
             $stmtMembre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtMembre->execute();
@@ -467,6 +483,7 @@
         $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDatePassage = $conn->prepare($reqDatePassage);
             $stmtDatePassage->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDatePassage->execute();
@@ -485,6 +502,7 @@
         $reqDatePublication = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDatePublication = $conn->prepare($reqDatePublication);
             $stmtDatePublication->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDatePublication->execute();
@@ -505,6 +523,7 @@
         $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtReponse = $conn->prepare($reqReponse);
             $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtReponse->execute();
@@ -522,6 +541,7 @@
         $reqDatePublicationReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDatePublicationReponse = $conn->prepare($reqDatePublicationReponse);
             $stmtDatePublicationReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDatePublicationReponse->execute();
@@ -550,6 +570,7 @@
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
 
             $stmtUpdate = $conn->prepare($reqUpdate);
             $stmtUpdate->bindParam(':id_avis', $id_avis, PDO::PARAM_INT);
@@ -569,6 +590,7 @@
         $reqPrix = "SELECT MIN(prix) FROM _tarif_publique WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtPrix = $conn->prepare($reqPrix);
             $stmtPrix->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtPrix->execute();
@@ -587,6 +609,7 @@
         $reqALaUne = "SELECT id_offre FROM sae._offre_souscrit_option WHERE nom_option = 'À la Une'";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtALaUne = $conn->prepare($reqALaUne);
             $stmtALaUne->execute();
             $ALaUne = $stmtALaUne->fetchAll(PDO::FETCH_ASSOC);
@@ -604,6 +627,7 @@
         $reqDate = "SELECT date FROM _date JOIN _offre_visite ON _date.id_date = _offre_visite.date_evenement AND id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDate = $conn->prepare($reqDate);
             $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDate->execute();
@@ -622,6 +646,7 @@
         $reqDate = "SELECT date FROM _date JOIN _offre_spectacle ON _date.id_date = _offre_spectacle.date_evenement AND id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDate = $conn->prepare($reqDate);
             $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDate->execute();
@@ -639,6 +664,7 @@
         $reqEnRelief = "SELECT 1 FROM sae._offre_souscrit_option WHERE nom_option = 'En Relief' AND id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtEnRelief = $conn->prepare($reqEnRelief);
             $stmtEnRelief->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtEnRelief->execute();

@@ -144,7 +144,7 @@ try {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
-<body>
+<body class="back", class="consulter-offre-back">
     
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
@@ -197,7 +197,7 @@ try {
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
-                    <button onclick="showFinal()">Mettre hors ligne</button>
+                    <form method="post" enctype="multipart/form-data"><button type="submit"onclick="showFinal()">Mettre hors ligne</button></form>
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
