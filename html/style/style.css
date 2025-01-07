@@ -52,27 +52,6 @@
        GENERALISATION
 *****************************/
 
-body {
-    font-family: "Poppins", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    position: relative;
-
-    font-weight: 400;
-    color: var(--noir);
-    background: var(--blanc-leger);
-}
-
-main {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    margin: 1em;
-}
-
 .ici {
     font-weight: bold;
 }
@@ -109,9 +88,6 @@ h3 {
     color: var(--noir);
 }
 
-/*********************
-       POP-UP
-**********************/
 /* Overlay pour le fond */
 #popupOverlay {
   display: none;
@@ -308,117 +284,28 @@ h3 {
     color: var(--violet-principal);
 }
 
-/********************************************************
-                        BACK-OFFICE
-*********************************************************/
+/**************************************************************************************
+                                BACK-OFFICE-COMPTE
+***************************************************************************************/
 
-/***********************
-       POP-UP
-************************/
-#validerModifCompte, 
-#annulerModifCompte, 
-#popupRetourAccueil,
-#popupRetourCompte {
-    position: fixed;
-    z-index: 11;
-    flex-direction: column;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.compte-back body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: var(--noir);
     background: var(--blanc-leger);
-    padding: 0 1em;
-    width: 500px;
-    height: 250px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }
 
-/* Titre de la popup */
-#validerModifCompte h3, 
-#annulerModifCompte h3, 
-#popupRetourAccueil h3,
-#popupRetourCompte h3 {
-    font-weight: var(--semi-bold);
-    margin-bottom: 0;
-    font-size: 24pt;
-    color: var(--noir);
-}
-
-/* Texte de la popup */
-#validerModifCompte p, 
-#annulerModifCompte p, 
-#popupRetourAccueil p,
-#popupRetourCompte p {
-    color: var(--noir);
-    font-size: 14pt;
-    margin-bottom: 20px;
-}
-
-/* Style des boutons */
-.compte-back #validerModifCompte button, 
-.compte-back #annulerModifCompte button, 
-.compte-back #popupRetourAccueil button,
-.compte-back #popupRetourCompte button {
-    background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
-    color: var(--blanc-leger);
-    font-weight: var(--bold);
-    font-size: 12pt;
-    width: 200px;
-    height: 50px;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-.compte-back #validerModifCompte button:hover,
-.compte-back #annulerModifCompte button:hover,
-.compte-back #popupRetourAccueil button:hover,
-.compte-back #popupRetourCompte button:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+.compte-back  main {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 1em;
 }
 
 /********************
-        BOUTON
+        NAV
 *********************/
-.compte-back section a {
-    text-decoration: none;
-    color: var(--blanc-leger);
-    background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
-    border-radius: 15px;
-    margin: 1em 0;
-    padding: 0.2em 1em;
-}
-
-.compte-front section a {
-    background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
-}
-
-.compte-back section a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
-}
-
-.compte-back table + div {
-    text-align: right;
-}
-
-.compte-back table + div > a {
-    display: inline-block;
-}
-
-/***********************
-        NAV-COMPTE
-************************/
 .compte-back nav {
     display: flex;
     flex-direction: column;
@@ -431,8 +318,6 @@ h3 {
     height: 100vh;
     margin-right: 1em;
 }
-
-
 
 .compte-back nav a {
     display: flex;
@@ -451,11 +336,11 @@ h3 {
     height: 3em;
 }
 
-.compte-back nav a:last-child {
+.compte-back  nav a:last-child {
     margin-top: auto;
 }
 
-.compte-back nav a:hover {
+.compte-back  nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
@@ -464,14 +349,6 @@ h3 {
 /********************
     DETAILS COMPTE
 *********************/
-.compte-back main {
-    flex-direction: column;
-    background-color: var(--blanc);
-    border-radius: 15px;
-    padding: 0 4em 1em;
-    width: 50em;
-}
-
 .compte-back section {
     background-color: var(--blanc);
     border-radius: 15px;
@@ -513,7 +390,46 @@ h3 {
     line-height: 1.3;
 }
 
-.compte-back input {
+
+/********************
+        BOUTON
+*********************/
+.compte-back section a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
+    border-radius: 15px;
+    margin: 1em 0;
+    padding: 0.2em 1em;
+}
+
+.compte-back section a:hover {
+    color: var(--orange-principale);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
+}
+
+.compte-back table + div {
+    text-align: right;
+}
+
+.compte-back table + div > a {
+    display: inline-block;
+}
+
+/********************************************
+    CHANGEMENT EN PLUS DE style_backCompte
+*********************************************/
+.compte-back-modif main {
+    flex-direction: column;
+    background-color: var(--blanc);
+    border-radius: 15px;
+    padding: 0 4em 1em;
+    width: 50em;
+}
+
+.compte-back-modif input {
     text-align: center;
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
@@ -523,12 +439,12 @@ h3 {
     border: 1px solid var(--blanc);
 }
 
-.compte-back input::placeholder {
+.compte-back-modif input::placeholder {
     color: var(--gris-etoile);
 }
 
-.compte-back table + div input,
-.compte-back table + div a {
+.compte-back-modif table + div input,
+.compte-back-modif table + div a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
@@ -539,75 +455,79 @@ h3 {
     margin: 1em;
 }
 
-.compte-back table + div input:hover,
-.compte-back table + div a:hover {
+.compte-back-modif table + div input:hover,
+.compte-back-modif table + div a:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
 }
 
-/********************************************************
-                        FRONT-OFFICE
-*********************************************************/
-
-/********************
-        NAV
-*********************/
-.compte-front nav {
-    display: flex;
+/* Style de la popup */
+.compte-back-modif #validerModifCompte, 
+.compte-back-modif #annulerModifCompte, 
+.compte-back-modif #popupRetourAccueil,
+.compte-back-modif #popupRetourCompte {
+    position: fixed;
+    z-index: 11;
     flex-direction: column;
-
-    position: sticky;
-    top: 1em;
-    background-color: var(--violet-principal);
-    border-radius: 15px;
-    width: 15em;
-    height: 100vh;
-    margin-right: 1em;
-}
-
-.compte-front nav a {
-    display: flex;
-    flex-grow: 0;
-    flex-shrink: 0;
-    align-self: stretch;
-    justify-content: center;
-
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc-leger);
+    padding: 0 1em;
+    width: 500px;
+    height: 250px;
+    border-radius: 10px;
     text-align: center;
-    background-color: var(--blanc-leger);
-    color: var(--violet-principal);  
-    margin: 1em 0.5em 1em;
-    padding: 0.5em 1em;
-    border: 2px solid var(--violet-principal);
-    border-radius: 15px;
-    height: 3em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.compte-front nav a:hover {
+/* Titre de la popup */
+.compte-back-modif #validerModifCompte h3, 
+.compte-back-modif #annulerModifCompte h3, 
+.compte-back-modif #popupRetourAccueil h3,
+.compte-back-modif #popupRetourCompte h3 {
+    font-weight: var(--semi-bold);
+    margin-bottom: 0;
+    font-size: 24pt;
+    color: var(--noir);
+}
+
+/* Texte de la popup */
+.compte-back-modif #validerModifCompte p, 
+.compte-back-modif #annulerModifCompte p, 
+.compte-back-modif #popupRetourAccueil p,
+.compte-back-modif #popupRetourCompte p {
+    color: var(--noir);
+    font-size: 14pt;
+    margin-bottom: 20px;
+}
+
+/* Style des boutons */
+.compte-back-modif #validerModifCompte button, 
+.compte-back-modif #annulerModifCompte button, 
+.compte-back-modif #popupRetourAccueil button,
+.compte-back-modif #popupRetourCompte button {
+    background-color: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
-    background-color: var(--violet-principal);
-    border: 2px solid var(--blanc-leger);
+    font-weight: var(--bold);
+    font-size: 12pt;
+    width: 200px;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 }
 
-/********************
-        BOUTON
-*********************/
-.compte-front  main > section a {
-    text-decoration: none;
-    color: var(--blanc-leger);
-    background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
-    border-radius: 15px;
-    margin: 1em 0;
-    padding: 0.2em 1em;
-}
-
-.compte-front main > section a:hover {
-    color: var(--violet-principal);
+.compte-back-modif #validerModifCompte button:hover,
+.compte-back-modif #annulerModifCompte button:hover,
+.compte-back-modif #popupRetourAccueil button:hover,
+.compte-back-modif #popupRetourCompte button:hover {
+    color: var(--orange-principale);
     background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    border: 2px solid var(--orange-principale);
 }
-
-/***********************
-       POP-UP
-************************/

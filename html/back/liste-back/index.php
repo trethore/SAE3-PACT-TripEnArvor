@@ -37,7 +37,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
-<body>
+<body class="back" class="liste-back">
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');

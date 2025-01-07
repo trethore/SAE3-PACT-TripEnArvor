@@ -71,7 +71,7 @@ switch ($typeCompte) {
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
-<body>
+<body class="back" class="compte-back">
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
