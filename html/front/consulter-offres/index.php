@@ -272,18 +272,25 @@ try {
                                                 <?php
                                             } else {
                                                 $note = $tab["note"];
-                                                $etoilesPleines = $note;
-                                                $etoilesVides = 5 - $note;
+                                                $etoilesPleines = floor($note);
+                                                $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                                $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
                                                 for ($i = 0; $i < $etoilesPleines; $i++) {
                                                     ?>
-                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                    <?php
+                                                }
+
+                                                if ($demiEtoile) {
+                                                    ?>
+                                                    <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
                                                     <?php
                                                 }
 
                                                 for ($i = 0; $i < $etoilesVides; $i++) {
                                                     ?>
-                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                                     <?php
                                                 }
                                             }
