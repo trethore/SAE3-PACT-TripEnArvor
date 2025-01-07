@@ -1,0 +1,234 @@
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const selectTypeCompte = document.getElementById("type-compte");
+    const divEmail = document.getElementById("div-email");
+    const inputEmail = document.getElementById("email");
+    const divPassword = document.getElementById("div-password");
+    const inputPassword = document.getElementById("password");
+    const divConfirmPassword = document.getElementById("div-confirm-password");
+    const inputConfirmPassword = document.getElementById("confirm-password");
+    const divNameAndFirstName = document.getElementById("div-name-and-first-name");
+    const divName = document.getElementById("div-name");
+    const divFirstName = document.getElementById("div-first-name");
+    const divTel = document.getElementById("div-tel");
+    const divPseudo = document.getElementById("div-pseudo");
+    const inputPseudo = document.getElementById("pseudo");
+    const divDenomination = document.getElementById("div-denomination");
+    const divAPropos = document.getElementById("div-a-propos");
+    const divSiteWeb = document.getElementById("div-site-web");
+    const divSiren = document.getElementById("div-siren");
+    const divAddress = document.getElementById("div-adresse");
+    const divStreet = document.getElementById("div-street");
+    const divAddressComplement = document.getElementById("div-address-complement");
+    const divCodePostal = document.getElementById("div-code-postal");
+    const divCity = document.getElementById("div-city");
+    const divCountry = document.getElementById("div-country");
+    const inputCgu = document.getElementById("cgu");
+    const submitInput = document.querySelector("input[type=\"submit\"]");
+
+    const tousLesElements = [
+        divEmail,   divPassword,          divConfirmPassword,
+        divName,    divFirstName,         divTel,
+        divPseudo,  divDenomination,      divAPropos,
+        divSiteWeb, divSiren,             divAddress,
+        divStreet,  divAddressComplement, divCodePostal,
+        divCity,    divCountry
+    ];
+
+    const elementMembre = [
+        divEmail,  divPassword, divConfirmPassword,
+        divPseudo, divName,     divFirstName,
+        divTel
+    ];
+    const elementObligatoireMembre = [
+        divEmail, divPassword, divConfirmPassword,
+        divPseudo
+    ];
+
+    const elementProPublique = [
+        divEmail,             divPassword,     divConfirmPassword,
+        divNameAndFirstName,  divName,         divFirstName,
+        divTel,               divDenomination, divAPropos,
+        divSiteWeb,           divAddress,      divStreet,
+        divAddressComplement, divCodePostal,  divCity,
+        divCountry
+    ];
+    const elementObligatoireProPublique = [
+        divEmail,        divPassword,   divConfirmPassword,
+        divName,         divFirstName,  divTel,
+        divDenomination, divAPropos,    divSiteWeb,
+        divStreet,       divCodePostal, divCity,
+        divCountry
+    ];
+
+    const elementProPrive = [
+        divEmail,             divPassword,          divConfirmPassword,
+        divNameAndFirstName,  divName,              divFirstName,
+        divTel,               divDenomination,      divAPropos,
+        divSiteWeb,           divSiren,             divAddress,
+        divStreet,            divAddressComplement, divCodePostal,
+        divCity,divCountry
+    ];
+    const elementObligatoireProPrive = [
+        divEmail,           divPassword,    divConfirmPassword,
+        divName,            divFirstName,   divTel,
+        divDenomination,    divAPropos,     divSiteWeb,
+        divSiren,           divStreet,      divCodePostal,
+        divCity,            divCountry
+    ];
+
+    var pseudoExist = false;
+    var emailExist = false;
+    var differentPasswords = false;
+
+    function setRequired(element, required) {
+        element.querySelector("label span").style.display = required ? "inline" : "none";
+        element.querySelector("input, textarea").required = required;
+        if (!required) {
+            showRequiredMessage(element, false);
+        }
+    }
+
+    function showFieldsAndMakeItRequiredIfNecessary(listOfAllElements, listOfElementToShow, listOfRequiredElements) {
+        for (const element of listOfAllElements) {
+            if (listOfElementToShow.includes(element)) {
+                element.style.display = "flex";
+                if (listOfRequiredElements.includes(element)) {
+                    setRequired(element, true);
+                } else {
+                    setRequired(element, false);
+                }
+            } else {
+                element.style.display = "none";
+                setRequired(element, false);
+            }
+        }
+    }
+
+    function showRequiredMessage(divElement, isRequired) {
+        if (isRequired) {
+            divElement.querySelector(".required-message").style.display = "inline";
+            divElement.querySelector("input, textarea").style.border = "1px solid red";
+        } else {
+            divElement.querySelector(".required-message").style.display = "none";
+            divElement.querySelector("input, textarea").style.border = "";
+        }
+    }
+
+    function isRequired(element) {
+        return element.querySelector("input, textarea").required
+    }
+
+    function disableSubmitButton() {
+        if (inputCgu.checked && (selectTypeCompte.value !== "") && !pseudoExist && !emailExist && !differentPasswords) {
+            submitInput.disabled = false;
+        } else {
+            submitInput.disabled = true;
+        }
+    }
+
+    selectTypeCompte.addEventListener("input", function() {
+        switch (selectTypeCompte.value) {
+            case "membre":
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementMembre, elementObligatoireMembre);
+                if (inputCgu.checked)
+                    submitInput.disabled = false;
+                else
+                    submitInput.disabled = true;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--violet);"
+                break;
+            case "pro-publique":
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPublique, elementObligatoireProPublique);
+                if (inputCgu.checked)
+                    submitInput.disabled = false;
+                else
+                    submitInput.disabled = true;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);";
+                break;
+            case "pro-privé":
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, elementProPrive, elementObligatoireProPrive);
+                if (inputCgu.checked)
+                    submitInput.disabled = false;
+                else
+                    submitInput.disabled = true;
+                submitInput.style = "--couleur-bouton-creer-compte: var(--orange-principale);";
+                break;
+            case "":
+            default:
+                showFieldsAndMakeItRequiredIfNecessary(tousLesElements, [], []);
+                submitInput.disabled = true;
+                break;
+        }
+    });
+
+    inputCgu.addEventListener("change", disableSubmitButton);
+
+    for (const divElement of tousLesElements) {
+        const element = divElement.querySelector("input, textarea");
+        element.addEventListener("blur", function() {
+            if (element.validity.valueMissing) {
+                showRequiredMessage(divElement, isRequired(divElement));
+            } else {
+                showRequiredMessage(divElement, false);
+            }
+        })
+    }
+
+    inputPseudo.addEventListener("blur", function() {
+        fetch(`/utils/api.php?pseudo-exist=${encodeURIComponent(inputPseudo.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                const pseudoAlreadyExist = document.getElementById("pseudo-already-exist");
+                if (data.pseudoExist) {
+                    pseudoExist = true;
+                    pseudoAlreadyExist.style.display = "inline";
+                    divPseudo.querySelector("input").style.border = "1px solid red";
+                } else {
+                    pseudoExist = false;
+                    pseudoAlreadyExist.style.display = "none";
+                    divPseudo.querySelector("input").style.border = "";
+                }
+                disableSubmitButton();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    inputEmail.addEventListener("blur", function() {
+        fetch(`/utils/api.php?email-exist=${encodeURIComponent(inputEmail.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                const emailAlreadyExist = document.getElementById("email-already-exist");
+                if (data.emailExist) {
+                    emailExist = true;
+                    emailAlreadyExist.style.display = "inline";
+                    divEmail.querySelector("input").style.border = "1px solid red";
+                } else {
+                    emailExist = false;
+                    emailAlreadyExist.style.display = "none";
+                    divEmail.querySelector("input").style.border = "";
+                }
+                disableSubmitButton();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    inputConfirmPassword.addEventListener("blur", function() {
+        const differentPasswordsMessage = document.getElementById("different-passwords-message");
+        if (inputConfirmPassword.value !== inputPassword.value) {
+            differentPasswordsMessage.style.display = "inline";
+            differentPasswords = true;
+            divPassword.querySelector("input").style.border = "1px solid red";
+            divConfirmPassword.querySelector("input").style.border = "1px solid red";
+        } else {
+            differentPasswordsMessage.style.display = "none";
+            differentPasswords = false;
+            divPassword.querySelector("input").style.border = "";
+            divConfirmPassword.querySelector("input").style.border = "";
+        }
+        disableSubmitButton();
+    });
+});

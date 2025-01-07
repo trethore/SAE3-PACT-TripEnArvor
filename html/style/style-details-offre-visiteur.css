@@ -1,36 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-  
 /************************
        GENERALISATION
 *************************/
 
+html {
+    scroll-behavior: smooth;
+}
+
+button {
+    font-family: "Poppins", sans-serif ;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-size: 24px;
-    color: var(--blanc-leger);
-    background: var(--blanc-leger);
+    color: var(--noir);
+    background: var(--blanc);
 }
 
 h1 {
     font-size: 64px;
+    font-weight: bold;
     text-align: center;
+    color: var(--violet-principal);
 }
 
 h2 {
+    font-size: 36px;
     font-weight: bold;
+    color: var(--violet-principal);
 }
 
 .fond-blocs {
-    background: var(--gradient-vert);    
+    background: var(--blanc);    
     margin: 30px 30px 0 30px;
     padding: 30px;
-    border-radius: 15px;
 }
 
 a {
-    color: var(--blanc-leger);
+    color: var(--violet-principal);
+    text-decoration: none;
+}
+
+a:hover {
     text-decoration: underline;
+}
+
+header > div > a, header > div > a:hover {
+    text-decoration: none;
 }
 
 .etoile {
@@ -38,8 +54,17 @@ a {
     height: 50px;
 }
 
+.etoile_detail {
+    width: 25px;
+    height: 25px;
+}
+
 .double-blocs {
     display: flex;
+}
+
+.bordure {
+    border-bottom: 3px solid var(--violet-principal);
 }
 
 /********************************
@@ -48,6 +73,11 @@ a {
 
 .bloc-presentation > div > p {
     font-size: 32px;
+}
+
+.information-offre {
+    font-size: 32px;
+    margin-top: 30px;
 }
 
 .display-ligne-espace {
@@ -70,73 +100,49 @@ a {
     margin: 0 10px;
 }
 
-.display-ligne-espace > button {
-    color: var(--vert-principale);
-    text-decoration: none;
-    font-size: 40px;
-    background-color: var(--blanc-leger);
-    padding: 10px 80px;
-    border-radius: 15px;
-}
-
-.display-ligne-espace > button:hover {
-    color: var(--blanc-leger);
-    background: var(--vert-principale);
-    border: 1px solid var(--blanc-leger);
-}
-
     /**********************************
             IMAGES PRÉSENTATION                
     **********************************/
 
-    .image-avis {
+    .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .carousel-images {
         display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
     }
-
-    .image-avis > p {
-        margin: 0 0 0 15px;
-    }
-
-    .galerie-images-presentation {
-        display: grid;
-        grid-template-areas: "image1 image2 image3" "image1 image4 image5";
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 10px; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 0;
-    }
-
-    .galerie-images-presentation img:nth-child(1) {
-        grid-area: image1;
-        height: 100%;
+      
+    .carousel-images img {
         width: 100%;
+        height: 900px;
+        flex-shrink: 0;
     }
 
-    .galerie-images-presentation img:nth-child(2) {
-        grid-area: image2;
-        height: 100%;
-        width: 100%;
+    .arrow-left, .arrow-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
     }
 
-    .galerie-images-presentation img:nth-child(3) {
-        grid-area: image3;
-        height: 100%;
-        width: 100%;
-    }
+    .arrow-left > img, .arrow-right > img {
+        background-color: var(--violet-principal);
+        border-radius: 90px;
+    } 
 
-    .galerie-images-presentation img:nth-child(4) {
-        grid-area: image4;
-        height: 100%;
-        width: 100%;
+    .arrow-left {
+        left: 20px;
     }
-
-    .galerie-images-presentation img:nth-child(5) {
-        grid-area: image5;
-        height: 100%;
-        width: 100%;
+      
+    .arrow-right {
+        right: 20px;
     }
+      
 
 /**********************************
         PREMIER DOUBLE BLOC                               
@@ -151,9 +157,14 @@ a {
     }
 
     .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 5px solid var(--violet-principal);
+        font-size: 40px;
         list-style: none;
         display: flex;
         align-items: center;
+        margin-bottom: 1em;
+        padding-left: 10px ;
     }
 
     .liste-caracteristique > li > img {
@@ -174,11 +185,35 @@ a {
 
     .bloc-a-propos {
         flex: 2.5; 
+        border-left: 3px solid var(--violet-principal);
     }
 
     .epingle {
         width: 20px;
         height: 20px;
+    }
+
+    .display-ligne-espace > button {
+        font-size: 60px;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .display-ligne-espace > a, .fond-blocs > a {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--violet-principal);
+        border: 3px solid var(--blanc);
+        padding: 10px 20px;
+        border-radius: 15px;
+    }
+    
+    .display-ligne-espace > a:hover, .fond-blocs > a:hover {
+        color: var(--violet-principal);
+        background: var(--blanc);
+        border-color: var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
 /***********************************
@@ -190,18 +225,21 @@ a {
     ***************************/
 
     .bloc-tarif > button {
-        color: var(--vert-principale);
+        color: var(--blanc);
         text-decoration: none;
-        font-size: 20px;
-        background-color: var(--blanc-leger);
+        font-size: 24px;
+        background-color: var(--violet-principal);
+        border: 3px solid var(--blanc);
         padding: 10px 20px;
         border-radius: 15px;
+        border: 0;
     }
 
     .bloc-tarif > button:hover {
-        color: var(--blanc-leger);
-        background: var(--vert-principale);
-        border: 1px solid var(--blanc-leger);
+        color: var(--violet-principal);
+        background: var(--blanc);
+        border-color: var(--violet-principal);
+        transition: 0.3s ease-in-out;
     }
 
     .bloc-tarif {
@@ -222,7 +260,7 @@ a {
     td {
         padding: 20px;
         text-align: center;
-        border: 1px solid var(--blanc-leger);  
+        border: 3px solid var(--noir);  
         font-weight: 600;
     }
 
@@ -242,7 +280,6 @@ a {
 
     .bloc-ouverture {
         flex: 1; 
-        margin-left: 0;
     }
 
     .bloc-ouverture > ul > li {
@@ -263,35 +300,113 @@ a {
         BLOCS AVIS                                                   
 *************************/
 
+form {
+    background: var(--blanc);
+    border: 3px solid var(--violet-principal);
+    border-radius: 15px;
+    text-align: center;
+    align-items: center;
+    padding: 30px;
+}
+
+form > h2 {
+    margin-bottom: 0;
+}
+
+form > p {
+    padding: 0;
+}
+
+::placeholder{   /*guidage*/
+    font-style: italic;
+    color: var(--gris-etoile);
+  }
+
+label {
+    text-align: start;
+    color: var(--violet-principal);
+}
+
+textarea {
+    background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
+    border-radius: 5px;
+    width: 100%;
+    height: 200px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+#titre {
+    background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
+    border-radius: 5px;
+    height: 30px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;  
+}
+
+input, select {
+    background: var(--blanc-leger);
+    border: 1px solid var(--blanc-leger);
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
 .fond-blocs-avis {
-    background: var(--blanc-leger);    
+    background: var(--blanc);    
     margin: 30px 0;
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
+    border: 3px solid var(--violet-principal);
+}
+
+#avis > button, #avis > form > button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
+}
+
+#avis > button:hover, #avis > form > button:hover {
+    color: var(--violet-principal);
+    background: var(--blanc);
+    border-color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
+
+.titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.reponse {
+    margin-left: 60px;
+}
+
+.indentation {
+    padding-left: 3px;
+}
+
+.reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
 }
 
 .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
 
-.galerie-images-avis {
-    margin: 0 0 0 75px;
-}
-
-.fond-blocs-avis
-
-.reponse {
-    margin: 0 0 0 75px;
-}
-
-.reponse > p {
-    margin: 0 0 0 75px;
-}
-
-.avatar {
-    width: 64px;
-    height: 64px;
+.bordure-top {
+    border-top: 3px solid var(--violet-principal);
 }
 
 .pouce {
@@ -312,48 +427,11 @@ a {
     margin-left: 15px;
 }
 
-    /**************************
-            IMAGES AVIS                       
-    **************************/
-
-    .galerie-images-avis {
-        display: grid;
-        grid-template-areas: "image1 image2" "image1 image3" "image1 image4";
-        grid-template-columns: 2fr 1fr; 
-        grid-template-rows: 1fr 1fr 1fr; 
-        gap: 5px; 
-        justify-content: center; 
-        align-items: center; 
-        padding: 0;
-    }
-
-    .galerie-images-avis img:nth-child(1) {
-        grid-area: image1;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    .galerie-images-avis img:nth-child(2) {
-        grid-area: image2;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    .galerie-images-avis img:nth-child(3) {
-        grid-area: image3;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    .galerie-images-avis img:nth-child(4) {
-        grid-area: image4;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
+.display-notation > a {
+    color: var(--orange-principale);
+    text-decoration: none;
+    margin-right: 15px;
+}
 
 /*************************
         NAVIGATION                                            
@@ -364,19 +442,25 @@ a {
 }
 
 .navigation > button {
-    color: var(--blanc-leger);
-    text-decoration: none;
+    background: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    color: var(--blanc);
+    padding: 10px 20px;
+    text-align: center; 
     font-size: 40px;
-    background: var(--gradient-vert);
-    padding: 10px auto;
+    width: auto;
+    height: auto;
     border-radius: 15px;
+    margin-left: 0;
 }
 
 .navigation > button:hover {
-    color: var(--vert-principale);
-    background: var(--blanc-leger);
-    border: 1px solid var(--vert-principale);
+    background: var(--blanc);
+    border-color: var(--violet-principal);
+    color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
 }
+
 
 /*********************
         FOOTER                                            
@@ -386,14 +470,14 @@ footer > div > a {
     text-decoration: none;
 }
 
-#avis {
-    display: none;
-}
-
 #carte {
     display: none;
 }
 
-#caracteristiques {
-    display: none;
+.pouce_haut:hover {
+    background-image: ('/images/universel/icones/pouce-up-hover.png');
+}
+
+.pouce_bas:hover {
+    background-image: ('/images/universel/icones/pouce-down-hover.png');
 }

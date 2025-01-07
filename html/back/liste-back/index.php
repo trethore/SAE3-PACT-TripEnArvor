@@ -1,56 +1,28 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 
-include('../../connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $conn->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-/*******************
-Requete SQL préfaite
-********************/
-$reqOffre = "SELECT * FROM _offre where id_compte_professionnel = $_SESSION['id']";
-/*
-$reqIMG = "SELECT img.lien_fichier 
-            FROM _image img
-            JOIN _offre_contient_image oci 
-            ON img.lien_fichier = oci.id_image
-            WHERE oci.id_offre = $id_offre_cible
-            LIMIT 1;";*/
-$reqTypeOffre = $sql = "SELECT 
-                        CASE
-                            WHEN EXISTS (SELECT 1 FROM _offre_restauration r WHERE r.id_offre = o.id_offre) THEN 'Restauration'
-                            WHEN EXISTS (SELECT 1 FROM _offre_parc_attraction p WHERE p.id_offre = o.id_offre) THEN 'Parc d\'attraction'
-                            WHEN EXISTS (SELECT 1 FROM _offre_spectacle s WHERE s.id_offre = o.id_offre) THEN 'Spectacle'
-                            WHEN EXISTS (SELECT 1 FROM _offre_visite v WHERE v.id_offre = o.id_offre) THEN 'Visite'
-                            WHEN EXISTS (SELECT 1 FROM _offre_activite a WHERE a.id_offre = o.id_offre) THEN 'Activité'
-                            ELSE 'Inconnu'
-                        END AS offreSpe
-                        FROM _offre o
-                        WHERE o.id_offre = ?";
-
-$result = $conn->query($reqOffre); 
-
-function checkCompteProfessionnel($conn, $id_compte) {
-    $sql = "SELECT 1 FROM _compte_professionnel WHERE id_compte = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$id_compte]);
-    return $stmt->fetch() ? true : false;
-}
-
-
-if (isset($_SESSION['id'])) {
-    $id_compte = $_SESSION['id'];
-    
-    if (checkCompteProfessionnel($conn, $id_compte)) {
-        echo "L'id_compte $id_compte est un compte professionnel.";
-    } else {
-        echo "L'id_compte $id_compte n'est pas un compte professionnel.";
-    }
+startSession();
+$id_compte = $_SESSION["id"];
+if (isset($id_compte)) {
+    redirectToConnexionIfNecessaryPro($id_compte);
 } else {
-    checkCompteProfessionnel($conn, 1);
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
+
+$reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 ?>
 <!DOCTYPE html>
@@ -59,36 +31,90 @@ if (isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/styles.css">
     <link rel="stylesheet" href="/style/style_HFB.css">
+    <link rel="stylesheet" href="/style/styleguide.css"/>
     <title>Liste de vos offres</title>
+    <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body>
-    <header>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <a href="/front/consulter-offres"><div class="text-wrapper-17">PACT Pro</div></a>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/se-connecter"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
     <main>
-        <h1>Liste de vos offre</h1>
+        <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
         ----------------->
         <article class="filtre-tri">
-            <h2>Une Recherche en Particulier ? Filtrez !</h2>
-            <div>
+            <h2>Filtres et tris</h2>
+            <div class="fond-filtres hidden">
                 <div>
                     <!-- Catégorie -->
                     <div class="categorie">
                         <h3>Catégorie</h3>
                         <div>
-                            <label><input type="checkbox"> Parc d'Attraction</label>
-                            <label><input type="checkbox"> Restaurant</label>
+                            <label><input type="checkbox"> Parc attraction</label>
+                            <label><input type="checkbox"> Restauration</label>
                             <label><input type="checkbox"> Visite</label>
                             <label><input type="checkbox"> Spectacle</label>
                             <label><input type="checkbox"> Activité</label>
@@ -106,17 +132,17 @@ if (isset($_SESSION['id'])) {
                         
                     <!-- Trier -->
                     <div class="trier">
-                        <h3>Trier</h3>
+                        <h3>Note et prix</h3>
                         <div>
                             <div>
                                 <label>Note minimum :</label>
-                                <select>
+                                <select class="note">
                                     <option></option>
-                                    <option>★★★★★</option>
-                                    <option>★★★★</option>
-                                    <option>★★★</option>
-                                    <option>★★</option>
                                     <option>★</option>
+                                    <option>★★</option>
+                                    <option>★★★</option>
+                                    <option>★★★★</option>
+                                    <option>★★★★★</option>
                                 </select>
                             </div>
                             
@@ -124,22 +150,25 @@ if (isset($_SESSION['id'])) {
                                 <div>
                                     <div>
                                         <label>Prix minimum &nbsp;:</label>
-                                        <input type="number" min="0">
+                                        <input class="min" type="number" min="0">
                                     </div>
                                     <div>
                                         <label>Prix maximum :</label>
-                                        <input type="number" min="0">
+                                        <input class="max" type="number" min="0">
                                     </div>
                                 </div>
-                                <div>
-                                    <select>
-                                        <option>Trier par :</option>
-                                        <option>Date</option>
-                                        <option>Prix</option>
-                                        <option>Popularité</option>
-                                    </select>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="trier2">
+                        <h3>Trier</h3>
+                        <div>
+                            <select class="tris">
+                                <option value="default">Trier par :</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -148,10 +177,10 @@ if (isset($_SESSION['id'])) {
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <label style="display: none;"><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
-                                <label><input type="radio" name="localisation"> Rechercher</label>
-                                <input type="text" placeholder="Rechercher...">
+                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                             </div>
                         </div>
                     </div>
@@ -160,13 +189,13 @@ if (isset($_SESSION['id'])) {
                     <div class="typeOffre">
                         <h3>Type d'offre</h3>
                         <div>
-                            <label><input type="radio" name="typeOffre"> Payante</label>
+                            <label><input type="radio" name="typeOffre"> Standard</label>
                             <label><input type="radio" name="typeOffre"> Premium</label>
                         </div>
                     </div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <div class="date" style="display: none;">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -177,119 +206,117 @@ if (isset($_SESSION['id'])) {
                                 <label>Date de fin &emsp;&emsp;:</label>
                                 <input type="date">
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </article>
+
         <section class="lesOffres">
+            <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
             <?php
-            /* -----------------Gestion de la pagination -----------------------
-            $offers_per_page = 9;
-            $total_offers = count($offres);
-            $total_pages = ceil($total_offers / $offers_per_page);
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $offset = ($current_page - 1) * $offers_per_page;
-            $offres_for_page = array_slice($offres, $offset, $offers_per_page);
-            ------------------------------------------------------------------ */
-            
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            ?>
-            <article>
-            <div onclick="location.href='/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>'">
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
+            <article class="offre">
+                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo htmlentities($row["type_offre"])?></div>
-                    <!--------------------------------------- 
-                    Récuperer la premère image liée à l'offre 
-                    ----------------------------------------->
-                    <img src="
-                    <?php
-                        // ID de l'offre pour récupérer la première image
-                        $id_offre_cible = $row["id_offre"];
+                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
 
-                        // Exécuter la requête
-                        $resIMG = $conn->query($reqIMG);
+                    <!---------------------------------------
+                    Récuperer la premère image liée à l'offre
+                    ---------------------------------------->
+                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
-                        // Récupérer la première image et l'afficher
-                        if ($resIMG->num_rows > 0) {
-                            $image = $resIMG->fetch(PDO::FETCH_ASSOC);
-                            echo htmlentities($image['lien_fichier']);
-                        } else {
-                            echo htmlentities('/images/universel/photos/default-image.jpg'); // une image par défaut si aucune n'est trouvée
-                        }
-                    ?>
-                    ">
-                    <p><?php echo htmlentities($row["titre"]) ?></p>
-                    <!---------------------------------------------------------------------------- 
-                    Choix de l'icone pour ecrire le type de l'activité (Restaurant, parc, etc...)
-                    ------------------------------------------------------------------------------>
-                    <p><?php 
-                    // Préparation et exécution de la requête
-                    $stmt2 = $con->prepare($sql);
-                    $stmt2->bind_param('i', $id_offre); // Lié à l'ID de l'offre
-                    $stmt2->execute();
-                    $res2 = $stmt2->get_result();
+                    <!---------------------------------------
+                    Récuperer le titre liée à l'offre
+                    ---------------------------------------->
+                    <p class="titre-offre"><?php echo htmlentities($row["titre"]) ?></p>
 
-                    // Vérification et récupération du résultat
-                    $offreSpe = 'Inconnu'; // Valeur par défaut si aucun résultat n'est trouvé
-                    if ($row_type = $res2->fetch(PDO::FETCH_ASSOC)) {
-                        $offreSpe = $row_type['type_offre'];
-                    }
-                    echo htmlentities($type_offre); ?></p>
+                    <!--------------------------------------------------------
+                    Choix du type de l'activité (Restaurant, parc, etc...
+                    --------------------------------------------------------->
+                    <p class="categorie-offre"> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
 
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src="
-                    <?php
-                    switch ($row["type_offre"]) {
+                    <img src=" <?php
+                    switch ($row["abonnement"]) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
                         
-                        case 'payant':
-                            echo htmlentities("/images/backffice/icones/payant.png");
+                        case 'standard':
+                            echo htmlentities("/images/backOffice/icones/payant.png");
                             break;
                             
                         case 'premium':
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
-                    }
-                    ?>">
+                    } ?>">
+
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
                     <div class="etoiles">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <img src="/images/universel/icones/etoile-pleine.png">
-                        <p>49</p>
+                        <?php 
+                            $note = getNoteMoyenne($row['id_offre']);
+                            $etoilesPleines = $note;
+                            $etoilesVides = 5 - $note;
+
+                            for ($i = 0; $i < $etoilesPleines; $i++) {
+                                ?>
+                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <?php
+                            }
+
+                            for ($i = 0; $i < $etoilesVides; $i++) {
+                                ?>
+                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <?php
+                            }
+                        ?>
+                        <p><?php echo getNombreNotes($row['id_offre']) ?></p>
                     </div>
-                    <div>
-                        <p>Avis non lues : <span><b>4</b></span></p>
-                        <p>Avis non répondues : <span><b>1</b></span></p>
+                    <div style="display: none;">
+                        <!-------------------------------------- 
+                        Affichage des avis non lues
+                        ---------------------------------------->
+                        <p>Avis non lus : <span><b>4</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis non répondues
+                        ---------------------------------------->
+                        <p>Avis non répondus : <span><b>1</b></span></p>
+
+                        <!-------------------------------------- 
+                        Affichage des avis blacklistés 
+                        ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
-                    <p>A partir de <span><?php echo htmlentities($row["prix_offre"]) ?></span></p>
-                </div>
+
+                    <!-------------------------------------- 
+                    Affichage du prix 
+                    ---------------------------------------->
+                    <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
+                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
+                    <?php } else { ?>
+                            <p class="prix">A partir de <span><?php
+                            $prix['prix'] = getPrixPlusPetit($row['id_offre']);
+                            if (getPrixPlusPetit($row['id_offre']) == null) {
+                                $prix['prix'] = 0;
+                            }
+                            echo htmlentities($prix['prix']); ?>€</span></p>
+                    <?php } ?>
+
+                </a>
             </article>
             <?php } ?>
-            <!-------------------------------------- 
-            Pagination
-            ---------------------------------------->
-            <div class="pagination">
-            <?php if ($current_page > 1) { ?>
-                <a href="?page=<?php echo $current_page - 1; ?>" class="pagination-btn">Page Précédente</a>
-            <?php } ?>
-            
-            <?php if ($current_page < $total_pages) { ?>
-                <a href="?page=<?php echo $current_page + 1; ?>" class="pagination-btn">Page suivante</a>
-            <?php } ?>
-        </div>
         </section>
+        <a href="/back/creer-offre/">Créer une offre</a>
     </main>
     <footer>
         <div class="footer-top">
@@ -325,5 +352,131 @@ if (isset($_SESSION['id'])) {
         Redden's, Inc.
         </div>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
+
+            const filterInputs = document.querySelectorAll(".fond-filtres input, .fond-filtres select");
+            const offersContainer = document.querySelector(".lesOffres");
+            const offers = Array.from(document.querySelectorAll(".offre"));
+
+            const noOffersMessage = document.querySelector(".no-offers-message");
+
+            const locationInput = document.getElementById("search-location");
+
+            h2.addEventListener("click", () => {
+                fondFiltres.classList.toggle("hidden");
+            });
+
+            // Function to filter offers based on active inputs
+            const applyFilters = () => {
+                let visibleOffers = offers;
+
+                // Filter by Category
+                const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
+                const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
+                if (selectedCategories.length > 0) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const category = offer.querySelector(".categorie-offre").textContent.trim();
+                        return selectedCategories.includes(category);
+                    });
+                }
+
+                // Filter by Availability
+                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                if (availabilityInput) {
+                    const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
+                    });
+                }
+
+                // Filter by Type
+                const typeInput = document.querySelector(".typeOffre input[type='radio']:checked");
+                if (typeInput) {
+                    const type = typeInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const typeAvailability = offer.querySelector(".type-offre").textContent.trim().toLowerCase();
+                        return typeAvailability === type;
+                    });
+                }
+
+                // Filter by Note
+                const minNoteSelect = document.querySelector(".note");
+                const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+                if (selectedNote) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const stars = offer.querySelectorAll(".etoiles .etoile[src*='etoile-pleine']").length;
+                        return stars >= selectedNote;
+                    });
+                }
+
+                // Filter by Price Range
+                const minPrice = parseFloat(document.querySelector(".min").value || "0");
+                const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+                visibleOffers = visibleOffers.filter(offer => {
+                    const price = parseFloat(offer.querySelector(".prix span").textContent.replace('€', '').trim());
+                    return price >= minPrice && price <= maxPrice;
+                });
+
+                // Filter by Location
+                const searchLocation = locationInput.value.trim().toLowerCase();
+                if (searchLocation) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const location = offer.querySelector(".lieu-offre").textContent.trim().toLowerCase();
+                        return location.includes(searchLocation);
+                    });
+                }
+
+                // Update Visibility
+                offers.forEach(offer => {
+                    if (visibleOffers.includes(offer)) {
+                        offer.style.display = "";
+                    } else {
+                        offer.style.display = "none";
+                    }
+                });
+
+                console.log(visibleOffers);
+
+                // Show/Hide "No Offers" Message
+                noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+            };
+
+            // Sort Offers
+            const sortOffers = () => {
+                const selectElement = document.querySelector(".tris");
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === "price-asc" || selectedValue === "price-desc") {
+                    offers.sort((a, b) => {
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                }
+            };
+
+            // Add Event Listeners
+            filterInputs.forEach(input => input.addEventListener("input", () => {
+                applyFilters();
+                sortOffers();
+            }));
+
+            document.querySelector(".tris").addEventListener("change", () => {
+                sortOffers();
+                applyFilters();
+            });
+
+            locationInput.addEventListener("input", () => {
+                applyFilters();
+            });
+        });
+    </script>
 </body>
 </html>

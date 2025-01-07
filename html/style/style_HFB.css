@@ -17,30 +17,27 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	min-height: 100vh;
 	width: 100%;
 	min-width: 900px;
+	min-height: 100vh;
 	padding: 0;
 	margin: 0;
 }
 
 header {
-	background: var(--gradient-orange);
+	background: var(--orange-principale);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: end;
 	width: 100%;
-	/* Chaque élément prend toute la largeur disponible */
-	min-height: auto;
-	/* La hauteur minimale dépend du contenu */
-	box-shadow: 0px 5px 10px #000000bf;
 	padding: 0 30px;
 }
 
 .logo {
-	width: 72px;
-	height: 105px;
+	width: auto;
+	height: 75px;
+	margin: 0.5em 0;
 }
 
 .text-wrapper-17 {
@@ -56,10 +53,23 @@ header {
 	margin-right: auto;
 }
 
+.text-wrapper-17 > a {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+	margin-right: auto;
+}
+
 
 .ICON-utilisateur {
 	margin-left: 15px;
-	width: 53px;
+	width: auto;
 	height: 60px;
 	object-fit: cover;
 
@@ -67,7 +77,7 @@ header {
 
 .ICON-accueil {
 	margin: 0 15px 0 50px;
-	width: 65px;
+	width: auto;
 	height: 60px;
 	object-fit: cover;
 }
@@ -75,11 +85,8 @@ header {
 /* Footer principal */
 /* Footer principal */
 footer {
-	background: var(--gradient-orange);
+	background: var(--orange-principale);
 	width: 100%;
-	/* Chaque élément prend toute la largeur disponible */
-	min-height: auto;
-	/* La hauteur minimale dépend du contenu */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
