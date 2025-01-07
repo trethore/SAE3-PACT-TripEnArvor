@@ -197,7 +197,7 @@ try {
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
-                    <button onclick="showFinal()">Mettre hors ligne</button>
+                    <form method="post" enctype="multipart/form-data"><button type="submit"onclick="showFinal()">Mettre hors ligne</button></form>
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
@@ -205,7 +205,7 @@ try {
                 <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
-            <form method="post" enctype="multipart/form-data"><button type="submit" id="bouton1" onclick="showConfirm()">Mettre hors ligne</button></form>
+            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
