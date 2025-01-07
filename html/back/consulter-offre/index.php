@@ -205,7 +205,7 @@ try {
                 <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
-            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <form method="post" enctype="multipart/form-data"><button type="submit" id="bouton1" onclick="showConfirm()">Mettre hors ligne</button></form>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
