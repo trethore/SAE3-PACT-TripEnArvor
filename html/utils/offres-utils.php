@@ -152,8 +152,19 @@
 
             $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
-            $conn = null;
-            return $moyenne["round"];
+            if ($moyenne) {
+                $moyenneBrute = $moyenne["round"];
+                
+                // Arrondi personnalisé
+                $arrondi = round($moyenneBrute * 2) / 2;
+    
+                $conn = null;
+                return $arrondi;
+            } else {
+                $conn = null;
+                return null; // Pas de note trouvée
+            }
+
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
