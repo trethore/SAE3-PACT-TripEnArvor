@@ -74,7 +74,7 @@
 
 </head>
 
-<body>
+<body class="back" class="creer-offre">
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
