@@ -851,6 +851,11 @@ try {
 
                     print($date_en_ligne);
 
+                    try {
+                        if (!$dbh->inTransaction()) {
+                            $dbh->beginTransaction();
+                        }
+
                     $requete_date= "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
                     $stmt_date = $dbh->prepare($reqInsertionDateEvent);
                     $stmt_date->execute([$requete_date]);
@@ -871,10 +876,22 @@ try {
                         $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
                         $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
-
-                         // Commit de la transaction
-                        $dbh->commit();
                     }
+                         // Commit de la transaction
+                         $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
                    
                     
                     
