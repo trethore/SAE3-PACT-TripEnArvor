@@ -294,7 +294,7 @@ try {
                                                     <?php
                                                 }
 
-                                                echo $demiEtoile;
+                                                echo $note;
                                             }
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
