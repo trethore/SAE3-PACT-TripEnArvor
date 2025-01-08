@@ -1,8 +1,4 @@
-/************************
-       GENERALISATION
-*************************/
-
-body {
+.factures {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: var(--noir);
@@ -10,30 +6,7 @@ body {
 
 }
 
-h1 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--bold);
-    color: var(--noir);
-    margin: 0.5em 0.2em;
-    text-align: center;
-    font-size: 30pt;
-}
-
-h2 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--medium);
-    font-size: 23pt;
-    color: var(--noir);
-}
-
-h3 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--medium);
-    font-size: 20pt;
-    color: var(--noir);
-}
-
-main {
+.factures main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -41,15 +14,10 @@ main {
     width: 60%;
 }
 
-a {
-    cursor: pointer;
-    text-decoration: none;
-}
-
 /********************
         NAV
 *********************/
-nav {
+.factures nav {
     display: flex;
     flex-direction: column;
 
@@ -62,7 +30,7 @@ nav {
     margin-right: 1em;
 }
 
-nav a {
+.factures nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -79,46 +47,41 @@ nav a {
     height: 3em;
 }
 
-nav a:last-child {
+.factures nav a:last-child {
     margin-top: auto;
 }
 
-nav a:hover {
+.factures nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
 }
-
-.ici {
-    font-weight: bold;
-}
-
 /********************
        FACTURES
 *********************/
-section {
+.factures section {
     background-color: var(--blanc);
     border-radius: 15px;
     padding: 0 1em 1em;
     width: 90%;
 }
 
-p {
+.factures p {
     text-align: left;
     border-bottom: var(--noir) solid 1px;
     border-spacing: 0.5em;
     margin-bottom: 1.5em;
 }
 
-ul {
+.factures ul {
     inline-size: 90%;
 }
 
-li {
+.factures li {
     list-style: none;
     text-decoration: none;
 }
 
-li > p {
+.factures li > p {
     color: var(--noir);
 }
