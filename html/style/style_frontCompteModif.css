@@ -1,7 +1,7 @@
 /********************************************
     CHANGEMENT EN PLUS DE style_frontCompte
 *********************************************/
-main {
+.compte-front-modif main {
     flex-direction: column;
     background-color: var(--blanc);
     border-radius: 15px;
@@ -9,7 +9,7 @@ main {
     width: 50em;
 }
 
-input {
+.compte-front-modif input {
     text-align: center;
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
@@ -19,12 +19,12 @@ input {
     border: 1px solid var(--blanc);
 }
 
-input::placeholder {
+.compte-front-modif input::placeholder {
     color: var(--gris-etoile);
 }
 
-table + div input,
-table + div a {
+.compte-front-modif table + div input,
+.compte-front-modif table + div a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
@@ -35,18 +35,18 @@ table + div a {
     margin: 1em;
 }
 
-table + div input:hover,
-table + div a:hover {
+.compte-front-modif table + div input:hover,
+.compte-front-modif table + div a:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
 }
 
 /* Style de la popup */
-#validerModifCompte, 
-#annulerModifCompte, 
-#popupRetourAccueil,
-#popupRetourCompte {
+.compte-front-modif #validerModifCompte, 
+.compte-front-modif #annulerModifCompte, 
+.compte-front-modif #popupRetourAccueil,
+.compte-front-modif #popupRetourCompte {
     position: fixed;
     z-index: 11;
     flex-direction: column;
@@ -63,10 +63,10 @@ table + div a:hover {
 }
 
 /* Titre de la popup */
-#validerModifCompte h3, 
-#annulerModifCompte h3, 
-#popupRetourAccueil h3,
-#popupRetourCompte h3 {
+.compte-front-modif #validerModifCompte h3, 
+.compte-front-modif #annulerModifCompte h3, 
+.compte-front-modif #popupRetourAccueil h3,
+.compte-front-modif #popupRetourCompte h3 {
     font-weight: var(--semi-bold);
     margin-bottom: 0;
     font-size: 24pt;
