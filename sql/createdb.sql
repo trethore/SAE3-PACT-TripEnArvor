@@ -252,9 +252,8 @@ CREATE TABLE _option (
 
 
 CREATE TABLE _avis (
-    id_avis         SERIAL, -- // TODO Supprimer id_avis et mettre (id_membre, id_offre) comme clé primaire
-    id_membre       INTEGER NOT NULL,
-    id_offre        INTEGER NOT NULL,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     note            INTEGER NOT NULL,
     titre           VARCHAR(128) NOT NULL,
     commentaire     VARCHAR(1024) NOT NULL,
@@ -263,8 +262,7 @@ CREATE TABLE _avis (
     contexte_visite contexte_visite_t NOT NULL,
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
-    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
-    -- CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
     CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
@@ -273,11 +271,12 @@ CREATE TABLE _avis (
 
 
 CREATE TABLE _reponse (
-    id_avis     INTEGER,
+    id_membre   INTEGER,
+    id_offre    INTEGER,
     texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
-    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
 
@@ -287,9 +286,10 @@ CREATE TABLE _note_detaillee (
     id_note   SERIAL,  
     nom_note  VARCHAR(30) NOT NULL,
     note      INTEGER NOT NULL,
-    id_avis   INTEGER NOT NULL,
+    id_membre   INTEGER NOT NULL,
+    id_offre    INTEGER NOT NULL,
     CONSTRAINT _note_pk PRIMARY KEY (id_note),
-    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
 
@@ -513,13 +513,14 @@ CREATE TABLE _offre_possede_tag (
 /* ======================== AVIS CONTIENT IMAGE ======================== */
 
 CREATE TABLE _avis_contient_image (
-    id_avis         INTEGER,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     lien_fichier    VARCHAR(255),
     CONSTRAINT _avis_contient_image_pk
-        PRIMARY KEY (id_avis, lien_fichier),
+        PRIMARY KEY (id_membre, id_offre, lien_fichier),
     CONSTRAINT _avis_contient_image_fk_avis
-        FOREIGN KEY (id_avis)
-        REFERENCES _avis(id_avis),
+        FOREIGN KEY (id_membre, id_offre)
+        REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _avis_contient_image_fk_image
         FOREIGN KEY (lien_fichier)
         REFERENCES _image(lien_fichier)
