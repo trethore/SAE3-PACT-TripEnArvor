@@ -856,7 +856,7 @@ try {
                             $dbh->beginTransaction();
                         }
 
-                    $requete_date= "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                    $requete_date= "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                     $stmt_date = $dbh->prepare($reqInsertionDateEvent);
                     $stmt_date->execute([$requete_date]);
                     $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
@@ -866,7 +866,7 @@ try {
                     //insertion dans la date mise en ligne
                     $requete_date_en_ligne = "INSERT INTO sae.__offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
                     $stmt_date_en_ligne = $dbh->prepare($requete_date_en_ligne);
-                    $stmt_tarif->execute([$id_offre, $id_date_en_ligne]);
+                    $stmt_date_en_ligne->execute([$id_offre, $id_date_en_ligne]);
 
                     if (($file_extension !== '') && ($categorie !== "visite") && ($categorie !== "spectacle")) {
 
