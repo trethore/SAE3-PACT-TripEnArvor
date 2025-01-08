@@ -845,7 +845,7 @@ try {
                         default:
                         die("Erreur de categorie!");
                     }
-                    
+
                     //insertion la date de mise en ligne de date
                     $date_en_ligne = date('Y-m-d H:i:s');
 
@@ -856,7 +856,8 @@ try {
                     $stmt_date->execute([$date_event]);
                     $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-
+                    print($id_date_en_ligne);
+                    
                     //insertion dans la date mise en ligne
                     $requete_date_en_ligne = "INSERT INTO sae.__offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
                     $stmt_date_en_ligne = $dbh->prepare($requete_date_en_ligne);
