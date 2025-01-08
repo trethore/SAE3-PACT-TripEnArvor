@@ -13,9 +13,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style-accueil-front.css">
-    <link rel="stylesheet" href="/style/style_HFF.css">
-    <link rel="stylesheet" href="/style/styleguide.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Accueil</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
