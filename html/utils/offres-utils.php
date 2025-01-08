@@ -199,7 +199,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
     function getOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+        $reqOffre = "SELECT * FROM sae._offre WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtOffre = $conn->prepare($reqOffre);
@@ -289,7 +289,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
     function getRestaurant($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+        $reqRestaurant = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_restauration WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtRestaurant = $conn->prepare($reqRestaurant);
@@ -390,7 +390,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     function getHorairesOuverture($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqHoraire = "SELECT * FROM _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
+        $reqHoraire = "SELECT * FROM sae._horaires_du_jour JOIN sae._horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);    
             $stmtHoraire = $conn->prepare($reqHoraire);
@@ -566,7 +566,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer le prix le plus petit sur une offre ===== //
     function getPrixPlusPetit($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqPrix = "SELECT MIN(prix) FROM _tarif_publique WHERE id_offre = :id_offre";
+        $reqPrix = "SELECT MIN(prix) FROM sae._tarif_publique WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtPrix = $conn->prepare($reqPrix);
