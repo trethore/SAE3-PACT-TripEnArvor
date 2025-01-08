@@ -858,7 +858,7 @@ try {
 
                     $requete_date= 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
                     $stmt_date = $dbh->prepare($requete_date);
-                    $stmt_date->execute([$requete_date]);
+                    $stmt_date->execute([$date_en_ligne]);
                     $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
 
                     print($id_date_en_ligne);
