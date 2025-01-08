@@ -909,7 +909,7 @@ h3 {
 /***************************
     LES FILTRES ET TRIS
 ****************************/
-.back .filtre-tri {
+.liste-back .filtre-tri {
     position: relative;
     margin: 1em 2.5em;
     padding: 3em 2em 1em;
@@ -922,7 +922,7 @@ h3 {
     border:3px solid var(--orange-principale);
 }
 
-.back .filtre-tri > h2 {
+.liste-back .filtre-tri > h2 {
     color: var(--blanc-leger);
     text-align: center;
     background-color: var(--orange-principale);
@@ -936,7 +936,7 @@ h3 {
     cursor: pointer;
 }
 
-.back .filtre-tri h2 + div{
+.liste-back .filtre-tri h2 + div{
     display: flex;
     flex-direction: column;
     color: var(--blanc);
@@ -949,7 +949,7 @@ h3 {
     INPUT
 **************/
 
-.back .filtre-tri input[type="radio"] {
+.liste-back .filtre-tri input[type="radio"] {
     appearance: none;
     margin: 0;
     font: inherit;
@@ -962,12 +962,12 @@ h3 {
     transform: translateY(0.15em);
 }
 
-.back .filtre-tri input[type="radio"]:not(:disabled):checked {
+.liste-back .filtre-tri input[type="radio"]:not(:disabled):checked {
     border-color: var(--blanc);
     background-color: var(--blanc);
 }
 
-.back .filtre-tri input[type="checkbox"] {
+.liste-back .filtre-tri input[type="checkbox"] {
     appearance: none;
     margin: 0;
     font: inherit;
@@ -980,49 +980,49 @@ h3 {
     transform: translateY(0.15em);
 }
 
-.back .filtre-tri input[type="checkbox"]:not(:disabled):checked {
+.liste-back .filtre-tri input[type="checkbox"]:not(:disabled):checked {
     border-color: var(--blanc);
     background-color: var(--blanc);
 }
 
-.back .filtre-tri .categorie, 
-.back .filtre-tri .localisation, 
-.back .filtre-tri .disponibilite, 
-.back .filtre-tri .trier,
-.back .filtre-tri .typeOffre, 
-.back .filtre-tri .date,
-.back .filtre-tri .trier2 {
+.liste-back .filtre-tri .categorie, 
+.liste-back .filtre-tri .localisation, 
+.liste-back .filtre-tri .disponibilite, 
+.liste-back .filtre-tri .trier,
+.liste-back .filtre-tri .typeOffre, 
+.liste-back .filtre-tri .date,
+.liste-back .filtre-tri .trier2 {
     margin: 0 1em;
     border-radius: 10px;
 }
 
-.back .filtre-tri .disponibilite div,
-.back .filtre-tri .localisation div,
-.back .filtre-tri .typeOffre div,
-.back .filtre-tri .date div {
+.liste-back .filtre-tri .disponibilite div,
+.liste-back .filtre-tri .localisation div,
+.liste-back .filtre-tri .typeOffre div,
+.liste-back .filtre-tri .date div {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
 }
 
-.back .filtre-tri h2 + div > div,
-.back .filtre-tri h2 + div > div + div{
+.liste-back .filtre-tri h2 + div > div,
+.liste-back .filtre-tri h2 + div > div + div{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0;
 }
 
-.back .filtre-tri h2 + div > div {
+.liste-back .filtre-tri h2 + div > div {
     padding-top: 0.5em 0 0 0;
 }
 
-.back .filtre-tri h2 + div > div + div {
+.liste-back .filtre-tri h2 + div > div + div {
     padding: 0 0 1em 0;
     
 }
 
-.back .filtre-tri h3 + div {
+.liste-back .filtre-tri h3 + div {
     background: var(--orange-principale);
     border-radius: 15px;
     padding: 0.5em;
@@ -1033,62 +1033,62 @@ h3 {
     align-content: space-around;
 }
 
-.back .filtre-tri h3 {
+.liste-back .filtre-tri h3 {
     margin: 0 0 0.1em;
     color: var(--orange-principale);
 }
 
-.back .filtre-tri label {
+.liste-back .filtre-tri label {
     margin: 0.4em 0.4em 0.4em 0;
 }
 
 /************
     TRIER
 *************/
-.back .filtre-tri .trier > div {
+.liste-back .filtre-tri .trier > div {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     padding: 1em;
 }
 
-.back .filtre-tri .trier > div > div {
+.liste-back .filtre-tri .trier > div > div {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 0 1em 0 0;
 }
 
-.back .filtre-tri .trier > div > div > div,
-.back .filtre-tri .trier > div > div > div + div{
+.liste-back .filtre-tri .trier > div > div > div,
+.liste-back .filtre-tri .trier > div > div > div + div{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.back .filtre-tri .trier > div > div > div + div {
+.liste-back .filtre-tri .trier > div > div > div + div {
     padding: 0 0 0 2em;
     font-size: 20px;
     font-weight: 500;
     color: var(--orange-principale);
 }
 
-.back .filtre-tri .trier > div  div div div {
+.liste-back .filtre-tri .trier > div  div div div {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: nowrap;
 }
 
-.back .filtre-tri select {
+.liste-back .filtre-tri select {
     width: 110px;
     height: 31px;
     border: none;
     border-radius: 10px;
 }
 
-.back .filtre-tri .trier input[type="text"],
-.back .filtre-tri .trier [type="number"] {
+.liste-back .filtre-tri .trier input[type="text"],
+.liste-back .filtre-tri .trier [type="number"] {
     width: 50px;
     height: 19px;
     margin: 0.2em 0.4em;
@@ -1101,13 +1101,13 @@ h3 {
 /*****************
    LOCALISATION
 ******************/
-.back .filtre-tri .localisation div div {
+.liste-back .filtre-tri .localisation div div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
 }
 
-.back .filtre-tri .localisation input[type="text"] {
+.liste-back .filtre-tri .localisation input[type="text"] {
     border: none;
     width: 180px;
     height: 40px;
@@ -1121,11 +1121,11 @@ h3 {
 /**************
       DATE
 ***************/
-.back .filtre-tri .date > div {
+.liste-back .filtre-tri .date > div {
     display: flex;
 }
 
-.back .filtre-tri .date > div div {
+.liste-back .filtre-tri .date > div div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -1134,7 +1134,7 @@ h3 {
     padding: 0.4em;
 }
 
-.back .filtre-tri input[type="date"] {
+.liste-back .filtre-tri input[type="date"] {
     border: none;
     border-radius: 5px;
     width: 148px;
@@ -1144,31 +1144,31 @@ h3 {
 }
 
 
-.back .filtre-tri .categorie {
+.liste-back .filtre-tri .categorie {
     flex: 5;
 }
 
-.back .filtre-tri .disponibilite {
+.liste-back .filtre-tri .disponibilite {
     flex: 2;
 }
 
-.back .filtre-tri .trier {
+.liste-back .filtre-tri .trier {
     flex: 6;
 }
 
-.back .filtre-tri .trier2 {
+.liste-back .filtre-tri .trier2 {
     flex: 2;
 }
 
-.back .filtre-tri .localisation {
+.liste-back .filtre-tri .localisation {
     flex: 1;
 }
 
-.back .filtre-tri .typeOffre {
+.liste-back .filtre-tri .typeOffre {
     flex: 2.2;
 }
 
-.back .filtre-tri .date {
+.liste-back .filtre-tri .date {
     flex: 6;
 }
 
@@ -1176,7 +1176,7 @@ h3 {
 /*********************************
         LISTES DES OFFRES
 **********************************/
-.back .lesOffres {
+.liste-back .lesOffres {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -1185,7 +1185,7 @@ h3 {
     border-radius: 15px;
 }
 
-.back .lesOffres article {
+.liste-back .lesOffres article {
     position: relative;
     max-width: 379px;
     min-width: 379px;
@@ -1195,8 +1195,8 @@ h3 {
     margin-right: 4em;
 }
 
-.back .lesOffres article a,
-.back .lesOffres article div {
+.liste-back .lesOffres article a,
+.liste-back .lesOffres article div {
     position: absolute;
     left: 5.28%;
     right: 5.28%;
@@ -1207,11 +1207,11 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
-.back .lesOffres article > a {
+.liste-back .lesOffres article > a {
     border: 3px solid var(--orange-principale);
 }
 
-.back .lieu-offre {
+.liste-back .lieu-offre {
     z-index: 1;
 
     font-style: normal;
@@ -1233,7 +1233,7 @@ h3 {
     border-radius: 20px !important;
 }
 
-.back .ouverture-offre {
+.liste-back .ouverture-offre {
     z-index: 1;
 
     font-style: normal;
@@ -1254,7 +1254,7 @@ h3 {
     border-radius: 20px !important;
 }
 
-.back .lesOffres article > a div + img {
+.liste-back .lesOffres article > a div + img {
     position: absolute;
     width: 321px;
     height: 208px;
@@ -1264,7 +1264,7 @@ h3 {
     border-radius: 5px 5px 0px 0px;
 }
 
-.back .lesOffres .ouverture-offre + img + p {
+.liste-back .lesOffres .ouverture-offre + img + p {
     position: absolute;
     left: 2%;
     right: 36%;
@@ -1278,7 +1278,7 @@ h3 {
     width: 80%;
 }
 
-.back .lesOffres .ouverture-offre + img + p + p {
+.liste-back .lesOffres .ouverture-offre + img + p + p {
     position: absolute;
     left: 2%;
     top: 56%;
@@ -1291,13 +1291,13 @@ h3 {
     align-items: center;
 }
 
-.back .lesOffres article p + p + img {
+.liste-back .lesOffres article p + p + img {
     position: absolute;
     top: 50%;
     right: 5%;
 }
 
-.back .lesOffres .etoiles + div {
+.liste-back .lesOffres .etoiles + div {
     position: absolute;
     left: 5%;
     top: 72%;
@@ -1307,12 +1307,12 @@ h3 {
     background: none;
 }
 
-.back .lesOffres span {
+.liste-back .lesOffres span {
     font-weight: 500;
     font-size: 16px;
 }
 
-.back .etoiles {
+.liste-back .etoiles {
     position: absolute !important;
     display: flex;
     flex-direction: row;
@@ -1325,22 +1325,22 @@ h3 {
     top: 40%!important;
 }
 
-.back .lesOffres article > a p + img {
+.liste-back .lesOffres article > a p + img {
     width: 35px;
     height: 35px;
 }
 
-.back .lesOffres .etoiles img {
+.liste-back .lesOffres .etoiles img {
     height: 30px;
     width: 30px;
 }
 
-.back .lesOffres .etoiles p {
+.liste-back .lesOffres .etoiles p {
     margin-left: 5px;
     padding-top: 4px;
 }
 
-.back .lesOffres .etoiles + div + p {
+.liste-back .lesOffres .etoiles + div + p {
     background: var(--orange-principale);
     color: var(--blanc);
 
@@ -1360,32 +1360,32 @@ h3 {
     flex-direction: column;
 }
 
-.back .lesOffres .etoiles + div + p span {
+.liste-back .lesOffres .etoiles + div + p span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
 }
 
-.back .fond-filtres {
+.liste-back .fond-filtres {
     overflow: hidden; /* Permet l'effet de rétractation */
     max-height: 1000px; /* Grande valeur initiale */
     transition: max-height 0.5s ease-out; /* Animation fluide */
 }
 
-.back .fond-filtres.hidden {
+.liste-back .fond-filtres.hidden {
     max-height: 0; /* Rétractation */
     transition: max-height 0.5s ease-out;
 }
 
-.back .no-offers-message {
+.liste-back .no-offers-message {
     text-align: center; 
     color: var(--orange-principale);
     font-size: 20pt;
     margin: 20px auto;
 }
 
-.back section + a {
+.liste-back section + a {
     display: block;
     background: var(--orange-principale);
     color: var(--blanc);
@@ -1398,8 +1398,136 @@ h3 {
     margin: 0.5em 2em 1em auto;
 }
 
-.back section + a:hover {
+.liste-back section + a:hover {
     background: var(--blanc-leger);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
+}
+
+/**************************************************************************************
+                                    COMPTE FRONT
+***************************************************************************************/
+
+.compte-front {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: var(--noir);
+    background: var(--blanc-leger);
+}
+
+/********************
+        NAV
+*********************/
+.compte-front nav {
+    display: flex;
+    flex-direction: column;
+
+    position: sticky;
+    top: 1em;
+    background-color: var(--violet-principal);
+    border-radius: 15px;
+    width: 15em;
+    height: 100vh;
+    margin-right: 1em;
+}
+
+.compte-front nav a {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: stretch;
+    justify-content: center;
+
+    text-align: center;
+    background-color: var(--blanc-leger);
+    color: var(--violet-principal);  
+    margin: 1em 0.5em 1em;
+    padding: 0.5em 1em;
+    border: 2px solid var(--violet-principal);
+    border-radius: 15px;
+    height: 3em;
+}
+
+.compte-front nav a:last-child {
+    margin-top: auto;
+}
+
+.compte-front nav a:hover {
+    color: var(--blanc-leger);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--blanc-leger);
+}
+
+
+/********************
+    DETAILS COMPTE
+*********************/
+.compte-front section {
+    background-color: var(--blanc);
+    border-radius: 15px;
+    padding: 0 1em 1em;
+}
+
+.compte-front section h3 {
+    font-weight: var(--medium);
+}
+
+.compte-front section > h1 + article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.compte-front table {
+    width: 40em;
+    border-spacing: 2em 0.5em;
+}
+
+.compte-front table tr {
+    margin: 1em 0;
+}
+
+.compte-front tr > td {
+    vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
+    width: 15em;
+}
+
+.compte-front table td + td {
+    text-align: right;
+    width: 28em;
+    color: var(--violet-principal);
+}
+
+.compte-front td > div {
+    text-align: justify; /* Justifie uniquement le contenu interne */
+    display: inline-block;
+    line-height: 1.3;
+}
+
+
+/********************
+        BOUTON
+*********************/
+.compte-front main > section a {
+    text-decoration: none;
+    color: var(--blanc-leger);
+    background-color: var(--violet-principal);
+    border: 2px solid var(--violet-principal);
+    border-radius: 15px;
+    margin: 1em 0;
+    padding: 0.2em 1em;
+}
+
+.compte-front main > section a:hover {
+    color: var(--violet-principal);
+    background-color: var(--blanc-leger);
+    border: 2px solid var(--violet-principal);
+}
+
+.compte-front table + div {
+    text-align: right;
+}
+
+.compte-front table + div > a {
+    display: inline-block;
 }

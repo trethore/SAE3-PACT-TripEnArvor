@@ -2,57 +2,17 @@
        GENERALISATION
 *************************/
 
-body {
+.compte-front {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     color: var(--noir);
     background: var(--blanc-leger);
-
-}
-
-h1 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--bold);
-    color: var(--noir);
-    margin: 0.5em 0.2em;
-    text-align: center;
-    font-size: 40pt;
-}
-
-h2 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--medium);
-    font-size: 23pt;
-    color: var(--noir);
-}
-
-h3 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--medium);
-    font-size: 20pt;
-    color: var(--noir);
-}
-
-main {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    margin: 1em;
-}
-
-a {
-    cursor: pointer;
-    text-decoration: none;
-}
-
-input {
-    font-family: "Poppins", sans-serif;
 }
 
 /********************
         NAV
 *********************/
-nav {
+.compte-front nav {
     display: flex;
     flex-direction: column;
 
@@ -65,7 +25,7 @@ nav {
     margin-right: 1em;
 }
 
-nav a {
+.compte-front nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -82,60 +42,57 @@ nav a {
     height: 3em;
 }
 
-nav a:last-child {
+.compte-front nav a:last-child {
     margin-top: auto;
 }
 
-nav a:hover {
+.compte-front nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
     border: 2px solid var(--blanc-leger);
 }
 
-.ici {
-    font-weight: bold;
-}
 
 /********************
     DETAILS COMPTE
 *********************/
-section {
+.compte-front section {
     background-color: var(--blanc);
     border-radius: 15px;
     padding: 0 1em 1em;
 }
 
-section h3 {
+.compte-front section h3 {
     font-weight: var(--medium);
 }
 
-section > h1 + article {
+.compte-front section > h1 + article {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-table {
+.compte-front table {
     width: 40em;
     border-spacing: 2em 0.5em;
 }
 
-table tr {
+.compte-front table tr {
     margin: 1em 0;
 }
 
-tr > td {
+.compte-front tr > td {
     vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
     width: 15em;
 }
 
-table td + td {
+.compte-front table td + td {
     text-align: right;
     width: 28em;
     color: var(--violet-principal);
 }
 
-td > div {
+.compte-front td > div {
     text-align: justify; /* Justifie uniquement le contenu interne */
     display: inline-block;
     line-height: 1.3;
@@ -145,7 +102,7 @@ td > div {
 /********************
         BOUTON
 *********************/
-main > section a {
+.compte-front main > section a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
@@ -155,16 +112,16 @@ main > section a {
     padding: 0.2em 1em;
 }
 
-main > section a:hover {
+.compte-front main > section a:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
 }
 
-table + div {
+.compte-front table + div {
     text-align: right;
 }
 
-table + div > a {
+.compte-front table + div > a {
     display: inline-block;
 }
