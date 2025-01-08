@@ -224,7 +224,7 @@ try {
                             //Suppression de la date de mise en ligne
                             $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
                             $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
-                            $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+                            $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
                             $stmtSuppressionDateMEL->execute();
         
                         } catch (PDOException $e) {
