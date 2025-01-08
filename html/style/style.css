@@ -672,7 +672,7 @@ h3 {
 /********************
         NAV
 *********************/
-.compte-back nav {
+nav {
     display: flex;
     flex-direction: column;
 
@@ -685,7 +685,7 @@ h3 {
     margin-right: 1em;
 }
 
-.compte-back nav a {
+nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -702,11 +702,11 @@ h3 {
     height: 3em;
 }
 
-.compte-back nav a:last-child {
+nav a:last-child {
     margin-top: auto;
 }
 
-.compte-back nav a:hover {
+nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
