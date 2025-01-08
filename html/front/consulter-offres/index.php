@@ -45,8 +45,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
-    <link rel="stylesheet" href="/style/style_HFF.css">
-    <link rel="stylesheet" href="/style/styleguide.css">
+    <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/style_navPhone.css" />
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
