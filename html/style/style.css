@@ -1667,6 +1667,14 @@ h3 {
     background: var(--blanc-leger);
 }
 
+.compte-front main,
+.compte-front-modif main {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 1em;
+}
+
 /********************
         NAV
 *********************/
