@@ -197,7 +197,7 @@ try {
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit" name="" onclick="showFinal()">Mettre hors ligne</button></form>
+                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
 
                     <?php $mise_hors_ligne = date('Y-m-d H:i:s'); 
                     if (isset($_POST['mettre_hors_ligne'])) {
