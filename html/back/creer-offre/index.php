@@ -7,21 +7,6 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
     require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
-    session_start();
-
-    if (isset($_POST['titre'])) { // les autres svp²
-        $submitted = true;
-    } else {
-        $submitted = false;
-    }
-    $photosDir = "../../images/universel/photos/";
-    if (!is_dir($photosDir)) {
-        if (mkdir($photosDir,0755,true)) {
-            printInConsole("Dossier photo crée !");
-        }
-    }
-
-
     function get_file_extension($type) {
         $extension = '';
         switch ($type) {
@@ -44,6 +29,24 @@
         return $extension;
     }
 
+
+    session_start();
+
+    if (isset($_POST['titre'])) { // les autres svp
+        $submitted = true;
+    } else {
+        $submitted = false;
+    }
+    $photosDir = "../../images/universel/photos/";
+    if (!is_dir($photosDir)) {
+        if (mkdir($photosDir,0755,true)) {
+            printInConsole("Dossier photo crée !");
+        }
+    }
+
+
+    
+    //recuperer id pro ou publique
     $id_compte = $_SESSION['id'];
     $isIdProPrivee = isIdProPrivee($id_compte);
     $isIdProPublique = isIdProPublique($id_compte);
@@ -79,6 +82,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 startSession();
+
+//connection bdd
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -137,7 +142,7 @@ try {
             });
         </script>
     </header>
-    
+    <!-- affichage formulaire si pas soumis -->
     <?php if (!$submitted) { ?>
         <main>
             <h2> Création d'une offre</h2>
@@ -213,11 +218,11 @@ try {
                     </td>
                 </tr>
                 <tr>
-                    <!-- <div id="options">
+                     <div id="options">
                         <td><label>Options</label></td>
-                        <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
-                        <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
-                    </div> -->
+                        <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
+                        <input type="radio" id="aLaUne" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                    </div>
                 </tr>
             </table>
 
@@ -470,7 +475,14 @@ try {
             if (isset($_POST['descpresta'])) {
                 $descpresta = $_POST['descpresta'];
             }
+            if(isset($_POST['optionPayante'])){
+                $optionP = $_POST['optionPayante'];
+            }else {
+                $optionP = null;
+            }
             
+
+
 
             if ($categorie !== "restaurant") {
                     
@@ -486,9 +498,7 @@ try {
 
                 }
                
-                $tabtarifs = array(
-                $nomtarif1 => $tarif1
-                );
+                $tabtarifs = array($nomtarif1 => $tarif1);
               
 
                 if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2'])) && $_POST['tarif2'] !== "") {
@@ -508,8 +518,6 @@ try {
                 }
 
             }
-            //print_r($_POST);
-            //print_r($_FILES);
             
 
             
@@ -670,7 +678,7 @@ try {
                                 }
                             
                                 // Insertion de la date dans la table _date
-                                $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                                $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
                                 $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                                 $stmtInsertionDateEvent->execute([$date_event]);
                                 $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
@@ -739,7 +747,7 @@ try {
                             }
                         
                             // Insertion de la date dans la table _date
-                            $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                            $reqInsertionDateEvent = "INSERT INTO sae._date ($date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
@@ -851,7 +859,9 @@ try {
                     }
                    
                     print($tarif1);
-
+                    
+                    
+                    //insertion dans la tarif si c'est pas un restaurant
                     if (($isIdProPrivee)&&($categorie !== "restaurant")&&($categorie !== "visite")&&($categorie !== "spectacle")){
                         foreach ($tabtarifs as $key => $value) {
                             $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
@@ -863,18 +873,34 @@ try {
                             $stmt_tarif->execute([$key, $value, $id_offre]);
                         }
                     }
+                    
+                    //insertion la date de mise en ligne de date
+                    $date_en_ligne = date('Y-m-d H:i:s');
 
-                    
-                    
+                    print($date_en_ligne);
+
+                    $requete_date= "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                    $stmt_date = $dbh->prepare($reqInsertionDateEvent);
+                    $stmt_date->execute([$date_event]);
+                    $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+
+                    //insertion dans la date mise en ligne
+                    $requete_date_en_ligne = "INSERT INTO sae.__offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
+                    $stmt_date_en_ligne = $dbh->prepare($requete_date_en_ligne);
+                    $stmt_tarif->execute([$id_offre, $id_date_en_ligne]);
+
                     // Fermeture de la connexion
                     $dbh = null;
+
 
                 echo "<script>
                         const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
                             window.location.href = '/back/liste-back/'
                         }
-                  </script>"; //if premium afficher a changer si il faut voir les erreurs
+                </script>"; //if premium afficher a changer si il faut voir les erreurs
+
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
