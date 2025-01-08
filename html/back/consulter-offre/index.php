@@ -215,6 +215,9 @@ try {
                             $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
                             $stmtInsertionReponse->execute([$id_offre_cible, $idDateMHL]);
 
+                            print_r($idDateMHL);
+                            print_r($id_offre_cible);
+
                         } catch (PDOException $e) {
                             echo "Erreur lors de l'insertion : " . $e->getMessage();
                         }
