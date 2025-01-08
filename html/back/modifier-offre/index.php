@@ -181,7 +181,7 @@ try {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
-    <body class="back" class="modifier-offre">
+    <body class="back modifier-offre">
     <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');

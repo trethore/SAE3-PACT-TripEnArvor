@@ -41,7 +41,7 @@ $reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
-<body>
+<body class="front compte-front">
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 

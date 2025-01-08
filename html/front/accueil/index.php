@@ -19,7 +19,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
     <title>Accueil</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
-<body>
+<body class="front accueil">
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 

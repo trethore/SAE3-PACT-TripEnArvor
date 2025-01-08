@@ -51,7 +51,7 @@ try {
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
-<body>
+<body class="front liste-front">
     <?php
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);

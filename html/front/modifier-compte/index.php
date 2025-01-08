@@ -40,7 +40,7 @@ $reqCompte = "SELECT * from sae._compte_membre cm
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body>
+<body class="front compte-front-modif">
     <?php
     if (!$submitted) {
     ?>
