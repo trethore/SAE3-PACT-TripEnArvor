@@ -1424,8 +1424,10 @@ BEGIN
     nb := (SELECT COUNT(*)
             FROM _avis
             INNER JOIN _note_detaillee
-            ON _avis.id_avis = _note_detaillee.id_avis
-            WHERE _avis.id_avis = NEW.id_avis);
+            ON _avis.id_membre = _note_detaillee.id_membre
+            AND _avis.id_offre = _note_detaillee.id_offre
+            WHERE _avis.id_membre = NEW.id_membre
+            AND _avis.id_offre = NEW.id_offre);
     
     PERFORM *
     FROM _offre_restauration
