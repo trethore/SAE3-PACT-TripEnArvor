@@ -360,36 +360,43 @@ VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse
 INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le)
 VALUES 
 -- Atelier de Tissage Breton
+-- 1
 (3, 2, 5, 'Accueil chaleureux et service au top', 'Le personnel était très accueillant et le service irréprochable.', 1, 0, 'famille', 2, 1),
 
 -- Visite de la ville close
+-- 2
 (4, 3, 3, 'Bonne visite, mais quelques points négatifs', 'Le personnel était sympathique, et les découvertes intéressantes', 3, 0, 'famille', 4, 3),
 
 -- Balade à Saint-Malo
+-- 3
 (4, 5, 4, 'Belle promenade malgré tout', 'La balade était agréable et bien organisée.', 2, 1, 'amis', 7, 6),
 
 -- Fest-Noz
+-- 4
 (4, 6, 2, 'Ambiance mitigée', 'Malgré une bonne ambiance, le service et le personnel m’ont mis mal à l’aise.', 3, 2, 'amis', 8, 7),
+-- 5
 (3, 6, 5, 'Plats savoureux et moment agréable', 'Les crêpes étaient délicieuses, j’ai passé un bon moment.', 1, 0, 'famille', 2, 1),
 
 -- Restauration 
+-- 6
 (4, 12, 2, 'Expérience décevante', 'Le service n était pas à la hauteur de mes attentes. Plusieurs points à améliorer.', 4, 2, 'affaires', 4, 3),
+-- 7
 (3, 13, 5, 'Plats savoureux et moment agréable', 'Les pâtes étaient délicieuses, j’ai passé un très bon moment.', 1, 0, 'solo', 5, 4);
 
-INSERT INTO sae._note_detaillee (nom_note, note, id_avis) VALUES
-('Cuisine', 3, 6),
-('Service', 1, 6),
-('Ambiance', 4, 6),
-('Rapport qualité prix', 3, 6),
-('Cuisine', 5, 7),
-('Service', 4, 7),
-('Ambiance', 5, 7),
-('Rapport qualité prix', 4, 7);
+INSERT INTO sae._note_detaillee (nom_note, note, id_membre, id_offre) VALUES
+('Cuisine', 3, 4, 12),
+('Service', 1, 4, 12),
+('Ambiance', 4, 4, 12),
+('Rapport qualité prix', 3, 4, 12),
+('Cuisine', 5, 3, 13),
+('Service', 4, 3, 13),
+('Ambiance', 5, 3, 13),
+('Rapport qualité prix', 4, 3, 13);
 
-INSERT INTO sae._reponse(id_avis, texte, publie_le)
+INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le)
 VALUES 
-(3, 'Nous avons modifié notre carte.', 9),
-(4, 'Nous sommes désolé du désagrément causé.', 10);
+(4, 12, 'Nous avons modifié notre carte.', 9),
+(4, 6, 'Nous sommes désolé du désagrément causé.', 10);
 
 -- 'En Relief', 'À la Une'
 INSERT INTO sae._option(nom_option, id_prix)
