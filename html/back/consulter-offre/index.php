@@ -199,9 +199,22 @@ try {
                 <div class="close">
                     <form method="post" enctype="multipart/form-data"><button type="submit" name="" onclick="showFinal()">Mettre hors ligne</button></form>
 
-                    <?php if (isset($_POST['mettre_hors_ligne'])) {
+                    <?php $mise_hors_ligne = date('Y-m-d H:i:s'); 
+                    if (isset($_POST['mettre_hors_ligne'])) {
                         try {
-                            echo "Le clic fonctionne";
+                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+                            $stmtInsertionDateMHL->execute([$mise_hors_ligne]);
+                            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                            $reqInsertionReponse = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?, ?)";
+                            $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                            $stmtInsertionReponse->execute([$id_offre_cible, $idDateMHL]);
+
                         } catch (PDOException $e) {
                             echo "Erreur lors de l'insertion : " . $e->getMessage();
                         }
@@ -300,7 +313,7 @@ try {
                     <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
                 <? } else {
                     echo "Pas d'information sur le propriétaire de l'offre";
-                }?>            
+                } ?>            
             </div>
 
         </section>
