@@ -211,7 +211,7 @@ try {
                             $stmtInsertionDateMHL->execute([$mise_hors_ligne]);
                             $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                            $reqInsertionReponse = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?, ?)";
+                            $reqInsertionReponse = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
                             $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
                             $stmtInsertionReponse->execute([$id_offre_cible, $idDateMHL]);
 
