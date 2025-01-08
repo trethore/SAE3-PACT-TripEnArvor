@@ -52,7 +52,7 @@ switch ($typeCompte) {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
-<body class="back" class="compte-back-modif">
+<body class="back compte-back-modif">
 <?php
 if (!$submitted) {
 ?>

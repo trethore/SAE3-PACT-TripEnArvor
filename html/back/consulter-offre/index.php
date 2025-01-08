@@ -144,7 +144,7 @@ try {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
-<body class="back", class="consulter-offre-back">
+<body class="back consulter-offre-back">
     
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
