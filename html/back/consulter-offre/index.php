@@ -197,7 +197,16 @@ try {
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit"onclick="showFinal()">Mettre hors ligne</button></form>
+                    <form method="post" enctype="multipart/form-data"><button type="submit" name="" onclick="showFinal()">Mettre hors ligne</button></form>
+
+                    <?php if (isset($_POST['mettre_hors_ligne'])) {
+                        try {
+                            echo "Le clic fonctionne";
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion : " . $e->getMessage();
+                        }
+                    } ?>
+
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
