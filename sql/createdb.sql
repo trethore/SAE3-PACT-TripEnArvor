@@ -262,6 +262,7 @@ CREATE TABLE _avis (
     contexte_visite contexte_visite_t NOT NULL,
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
+    lu              BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
