@@ -33,7 +33,7 @@ h3 {
     color: var(--noir);
 }
 
-main {
+.compte-back main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

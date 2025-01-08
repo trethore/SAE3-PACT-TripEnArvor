@@ -662,7 +662,7 @@ h3 {
 
 }
 
-.compte-back  main {
+.compte-back main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -702,14 +702,18 @@ h3 {
     height: 3em;
 }
 
-.compte-back  nav a:last-child {
+.compte-back nav a:last-child {
     margin-top: auto;
 }
 
-.compte-back  nav a:hover {
+.compte-back nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
+}
+
+.ici {
+    font-weight: bold;
 }
 
 /********************
