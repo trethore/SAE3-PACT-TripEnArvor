@@ -199,7 +199,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
     function getOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+        $reqOffre = "SELECT * FROM sae._offre WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtOffre = $conn->prepare($reqOffre);
