@@ -14,13 +14,12 @@ $submitted = isset($_POST['type-compte']);
 <head>
     <meta charset="UTF-8">
     <title>Créer un compte</title>
-    <link rel="stylesheet" href="/style/style-creer-compte.css">
-    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/style.css">
     <script src="/scripts/creer-compte.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body>
+<body class="creer-compte">
 <?php
 if (!$submitted) {
 ?>
