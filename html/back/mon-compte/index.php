@@ -65,9 +65,7 @@ switch ($typeCompte) {
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backCompte.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/styleguide.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>

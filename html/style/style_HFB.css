@@ -1,14 +1,4 @@
-* {
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-}
-
-a {
-	text-decoration: none;
-}
-
-
-body {
+.back {
 	font-family: "Poppins", sans-serif;
 	font-weight: 400;
 	color: var(--noir);
@@ -23,7 +13,7 @@ body {
 	margin: 0;
 }
 
-header {
+.back header {
 	background: var(--orange-principale);
 	display: flex;
 	flex-direction: row;
@@ -83,7 +73,7 @@ header {
 
 /* Footer principal */
 /* Footer principal */
-footer {
+.back  footer {
 	background: var(--orange-principale);
 	width: 100%;
 	display: flex;
@@ -159,7 +149,7 @@ footer {
 }
 
 /* Barre en bas du footer */
-.footer-bottom {
+.back  .footer-bottom {
 	background-color: white;
 	border-radius: 15px;
 	width: 100%;
@@ -173,7 +163,7 @@ footer {
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
-.footer-bottom>a {
+.back  .footer-bottom>a {
 	color: var(--orange-principale);
 }
 
@@ -273,12 +263,12 @@ footer {
     border: none;
 }
 
-.bouton1 {
+.back  .bouton1 {
     color: var(--orange-principale);
     background-color: var(--blanc);
 }
 
-.bouton2 {
+.back  .bouton2 {
     background-color: var(--orange-principale);
     color: var(--blanc);
     box-shadow: 1px 1px 1px var(--gris-etoile);
