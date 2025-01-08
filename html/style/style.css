@@ -65,7 +65,8 @@ a {
 input,
 label,
 span,
-input::placeholder {
+input::placeholder,
+select {
     font-family: "Poppins", sans-serif;
 }
 
