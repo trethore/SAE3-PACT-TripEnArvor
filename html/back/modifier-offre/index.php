@@ -366,8 +366,8 @@ try {
                     <tr>
                         <div id="options">
                             <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
+                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
                         </div>
                     </tr>
                 </table>
@@ -666,7 +666,7 @@ try {
                 $lien = null;
             }
             if(isset($_POST['tel'])){
-                $option = $_POST['tel'];
+                $tel = $_POST['tel'];
             }else {
                 $tel = null;
             }
