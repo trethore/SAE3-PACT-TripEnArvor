@@ -674,7 +674,7 @@ h3 {
 /********************
         NAV
 *********************/
-.back nav {
+.compte-back  nav {
     display: flex;
     flex-direction: column;
 
@@ -687,7 +687,7 @@ h3 {
     margin-right: 1em;
 }
 
-.back nav a {
+.compte-back  nav a {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -704,11 +704,11 @@ h3 {
     height: 3em;
 }
 
-.back nav a:last-child {
+.compte-back  nav a:last-child {
     margin-top: auto;
 }
 
-.back nav a:hover {
+.compte-back  nav a:hover {
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
     border: 2px solid var(--blanc-leger);
@@ -1755,7 +1755,7 @@ h3 {
 .compte-front tr > td,
 .compte-front-modif tr > td {
     vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
-    width: 15em;
+    width: 16em;
 }
 
 .compte-front table td + td,
