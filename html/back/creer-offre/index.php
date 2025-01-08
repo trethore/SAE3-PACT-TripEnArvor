@@ -535,7 +535,7 @@ try {
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();          
 
 
-
+                
 
             
                 //INSERTION IMAGE dans _image
@@ -676,6 +676,18 @@ try {
                                 if (!$dbh->inTransaction()) {
                                     $dbh->beginTransaction();
                                 }
+
+                                //insertion la date de mise en ligne de date
+                                $date_en_ligne = date('Y-m-d H:i:s');
+
+                                print($date_en_ligne);
+
+                                $requete_date= "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
+                                $stmt_date = $dbh->prepare($reqInsertionDateEvent);
+                                $stmt_date->execute([$date_event]);
+                                $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                $print($id_date);
                             
                                 // Insertion de la date dans la table _date
                                 $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
@@ -858,7 +870,6 @@ try {
                         $dbh->commit();
                     }
                    
-                    print($tarif1);
                     
                     
                     //insertion dans la tarif si c'est pas un restaurant
