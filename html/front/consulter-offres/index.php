@@ -293,8 +293,6 @@ try {
                                                     <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                                     <?php
                                                 }
-
-                                                echo $note;
                                             }
                                         ?>
                                         <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
