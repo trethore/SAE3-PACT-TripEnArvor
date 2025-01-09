@@ -21,10 +21,9 @@ if (!isset($id_compte) || !isIdMember($id_compte)) {
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_membre cm 
-                join sae._compte c on c.id_compte = cm.id_compte 
-                join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cm.id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre cm
+	    join sae._adresse a on cm.id_adresse = a.id_adresse 
+        where cm.id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
