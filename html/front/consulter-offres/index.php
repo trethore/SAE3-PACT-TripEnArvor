@@ -399,7 +399,7 @@ try {
                 }
 
                 // Filter by Availability
-                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
