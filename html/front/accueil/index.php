@@ -233,13 +233,13 @@ try {
                     starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
                 }
             }
-        }
 
             // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
             `;
+        }
     </script>
 </body>
 </html>
