@@ -519,7 +519,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
     function getDatePublicationReponse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDatePublicationReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
+        $reqDatePublicationReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre JOIN sae._date ON _reponse.publie_le = _date.id_date WHERE _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtDatePublicationReponse = $conn->prepare($reqDatePublicationReponse);
