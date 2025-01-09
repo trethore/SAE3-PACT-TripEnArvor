@@ -502,7 +502,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
     function getReponse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
+        $reqReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre WHERE _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtReponse = $conn->prepare($reqReponse);
