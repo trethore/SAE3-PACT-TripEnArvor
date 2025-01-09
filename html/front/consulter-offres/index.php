@@ -144,11 +144,11 @@ try {
                     <div class="disponibilite">
                         <h3>Disponibilité</h3>
                         <div>
-                            <label><input type="radio" name="disponibilite"> Ouvert</label>
-                            <label><input type="radio" name="disponibilite"> Fermé</label>
+                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
+                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
                         </div>
                     </div>
-                        
+
                     <!-- Trier -->
                     <div class="trier">
                         <h3>Note et prix</h3>
