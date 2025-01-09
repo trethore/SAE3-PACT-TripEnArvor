@@ -221,7 +221,7 @@ try {
                 demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
                 etoilesVides = 5 - etoilesPleines - demiEtoile;
 
-                for (i = 0; i < $etoilesPleines; i++) {
+                for (i = 0; i < etoilesPleines; i++) {
                     starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
                 }
 
