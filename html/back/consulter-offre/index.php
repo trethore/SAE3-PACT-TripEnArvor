@@ -126,6 +126,14 @@ try {
     // ===== Requête SQL pour vérifier si une offre est hors ligne ===== //
     $dateMiseHorsLigne = isOffreHorsLigne($id_offre_cible);
 
+// ===== GESTION DU NOMBRE DE DATE (EN LIGNE / HORS LIGNE) ===== //
+
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    $countDateMHL = countDatesOffreHorsLigne($id_offre_cible);
+
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
+    $countDateMEL = countDatesOffreEnLigne($id_offre_cible);
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -206,54 +214,58 @@ try {
 
                     <?php $date = date('Y-m-d H:i:s'); 
                     if (isset($_POST['mettre_hors_ligne'])) {
-                        try {
-                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        if ($countDateMHL == 0) {
+                            try {
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                            //Insertion de la date de mise hors ligne
-                            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                            $stmtInsertionDateMHL->execute([$date]);
-                            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                        
-                            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
-                            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
+                                //Insertion de la date de mise hors ligne
+                                $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+                                $stmtInsertionDateMHL->execute([$date]);
+                                $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            
+                                $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
+                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+                                $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
 
-                            //Suppression de la date de mise en ligne
-                            $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_en_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                            $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
-                            $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                            $stmtSuppressionDateMEL->execute();
-        
-                        } catch (PDOException $e) {
-                            echo "Erreur lors de l'insertion : " . $e->getMessage();
+                                //Suppression de la date de mise en ligne
+                                $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_en_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
+                                $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
+                                $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+                                $stmtSuppressionDateMEL->execute();
+            
+                            } catch (PDOException $e) {
+                                echo "Erreur lors de l'insertion : " . $e->getMessage();
+                            }
                         }
                     } else {
-                        try {
-                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        if ($countDateMEL == 0) {
+                            try {
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                            //Insertion de la date de mise en ligne
-                            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                            $stmtInsertionDateMEL->execute([$date]);
-                            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                        
-                            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
-                            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
+                                //Insertion de la date de mise en ligne
+                                $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+                                $stmtInsertionDateMEL->execute([$date]);
+                                $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            
+                                $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
+                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+                                $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
 
-                            //Suppression de la date de mise hors ligne
-                            $reqSuppressionDateMHL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                            $stmtSuppressionDateMHL = $dbh->prepare($reqSuppressionDateMHL);
-                            $stmtSuppressionDateMHL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                            $stmtSuppressionDateMHL->execute();
-        
-                        } catch (PDOException $e) {
-                            echo "Erreur lors de l'insertion : " . $e->getMessage();
+                                //Suppression de la date de mise hors ligne
+                                $reqSuppressionDateMHL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
+                                $stmtSuppressionDateMHL = $dbh->prepare($reqSuppressionDateMHL);
+                                $stmtSuppressionDateMHL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+                                $stmtSuppressionDateMHL->execute();
+            
+                            } catch (PDOException $e) {
+                                echo "Erreur lors de l'insertion : " . $e->getMessage();
+                            }
                         }
                     } ?>
 

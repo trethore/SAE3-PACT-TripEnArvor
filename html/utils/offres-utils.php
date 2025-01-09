@@ -719,7 +719,7 @@
         }
     }
 
-    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
     function countDatesOffreEnLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqDate = "SELECT COUNT(*) AS date_count FROM sae._date NATURAL JOIN sae._offre_dates_mise_en_ligne  WHERE id_offre = :id_offre";
