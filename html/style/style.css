@@ -1686,7 +1686,7 @@ h3 {
 /**************************************************************************************
                                     HEADER FOOTER BACK
 ***************************************************************************************/
-
+/*
 .back {
 	font-family: "Poppins", sans-serif;
 	font-weight: 400;
@@ -1967,7 +1967,7 @@ h3 {
 /* Animation lors du survol */
 .back .bouton2:hover {
     box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
-}
+} */
 
 /**************************************************************************************
                                     HEADER FOOTER FRONT
