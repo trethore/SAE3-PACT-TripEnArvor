@@ -2264,7 +2264,6 @@ h3 {
 
     .connecter h1 {
         margin-top: 30px;
-        background-color: red;
     }
 }
 
@@ -2324,7 +2323,6 @@ h3 {
 
     .connecter h1 {
         margin-top: 70px;
-        background-color: blue;
     }
 }
 
@@ -2333,6 +2331,15 @@ h3 {
     .creer-compte #div-adresse .row div {
         width: 75%;
     }
+}
+
+@media screen and (max-width: 380px) {
+
+    .connecter h1 {
+        margin-top: 150px;
+    }
+
+    
 }
 
 @media screen and (max-width: 330px) {
