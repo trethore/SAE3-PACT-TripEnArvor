@@ -662,7 +662,7 @@
     }
 
 
-
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une offre est en relief ===== //
     function isOffreEnRelief($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqEnRelief = "SELECT 1 FROM sae._offre_souscrit_option WHERE nom_option = 'En Relief' AND id_offre = :id_offre";
@@ -681,6 +681,7 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
     function isOffreHorsLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqDate = "SELECT 1 FROM sae._offre_dates_mise_hors_ligne WHERE id_offre = :id_offre";
@@ -693,6 +694,44 @@
             $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $date !== false;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    function countDatesOffreHorsLigne($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT COUNT(*) AS date_count FROM sae._date NATURAL JOIN sae._offre_dates_mise_hors_ligne  WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC)['date_count'];
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    function countDatesOffreEnLigne($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT COUNT(*) AS date_count FROM sae._date NATURAL JOIN sae._offre_dates_mise_en_ligne  WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC)['date_count'];
+            $conn = null;
+            return $date;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
