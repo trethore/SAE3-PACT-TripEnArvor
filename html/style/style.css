@@ -2263,12 +2263,31 @@ h3 {
 	.front footer {
 		display: none;
 	}
-    .compte-front nav {
+
+    .compte-front {
+        color: none;
+        background-color: none;
     }
+    
     .compte-front main,
     .compte-front-modif main {
-    flex-direction: column;
-}
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        margin: 1em;
+    }
+    .compte-front nav {
+        display: flex;
+        flex-direction: column;
+    
+        position: relative;
+        top: 0;
+        background-color: none;
+        border-radius: 15px;
+        width: 0;
+        height: 0;
+        margin-right: none;
+    }
 
 
     .connecter h1 {
