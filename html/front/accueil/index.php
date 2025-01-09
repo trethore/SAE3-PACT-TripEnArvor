@@ -97,7 +97,7 @@ try {
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
 
-        $ids_nouv = getIdNouveau();
+        $ids_nouv = getIdOffresRecentes();
         foreach ($ids_nouv as $key => $offre_nouv) {
             $ids_nouv[$key]['titre'] = getOffre($offre_nouv["id_offre"])["titre"];
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);

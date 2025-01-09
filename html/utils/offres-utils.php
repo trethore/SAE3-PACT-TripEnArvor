@@ -709,4 +709,22 @@
             die();
         }
     }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les ids des offres crées récemment ===== //
+    function getIdOffresRecentes() {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqALaUne = "SELECT sae._offre.id_offre FROM sae._offre JOIN sae._offre_dates_mise_en_ligne ON sae._offre.id_offre = sae._offre_dates_mise_en_ligne.id_offre JOIN sae._date ON sae._offre_dates_mise_en_ligne.id_date = sae._date.id_date ORDER BY sae._date.date ASC LIMIT 3";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtALaUne = $conn->prepare($reqALaUne);
+            $stmtALaUne->execute();
+            $ALaUne = $stmtALaUne->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $ALaUne;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 ?>
