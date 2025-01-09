@@ -428,7 +428,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
     function getAvisDetaille($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAvisDetaille = "SELECT * FROM sae._offre JOIN sae._avis ON _offre.id_offre = _avis.id_offre JOIN sae._note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _avis.id_avis = _note_detaillee.id_avis AND _offre.id_offre = :id_offre";
+        $reqAvisDetaille = "SELECT * FROM sae._offre INNER JOIN sae._avis ON _offre.id_offre = _avis.id_offre INNER JOIN sae._note_detaillee ON _avis.id_membre = _note_detaillee.id_membre AND _avis.id_offre = _note_detaillee.id_offre WHERE _avis.id_membre = _note_detaillee.id_membre AND _avis.id_offre = _note_detaillee.id_offre AND _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
