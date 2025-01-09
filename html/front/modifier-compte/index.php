@@ -262,6 +262,17 @@ try {
                     $city = $_POST['ville'];
                     $country = $_POST['pays'];
                     if ($address_complement === '') $address_complement = null;
+
+                    // Vérification de l'existence d'un email
+                    $queryCheckEmail = "SELECT id_compte FROM sae._compte WHERE email = :email AND id_compte != :id_compte";
+                    $stmtCheckEmail = $conn->prepare($queryCheckEmail);
+                    $stmtCheckEmail->execute(['email' => $email, 'id_compte' => $id_compte]);
+                    $existingAccount = $stmtCheckEmail->fetch();
+
+                    if ($existingAccount) {
+                        die("Erreur : cet email est déjà utilisé par un autre compte.");
+                    }
+
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
