@@ -229,17 +229,17 @@ try {
                     starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
                 }
                     
-                for (i = 0; $i < etoilesVides; i++) {
+                for (i = 0; i < etoilesVides; i++) {
                     starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
                 }
             }
-        }
 
             // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
             `;
+        }
     </script>
 </body>
 </html>
