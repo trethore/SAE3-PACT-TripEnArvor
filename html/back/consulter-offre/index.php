@@ -238,9 +238,9 @@ try {
                             } catch (PDOException $e) {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
                             }
-                        }
-                    } else {
-                        if ($countDateMEL == 0) {
+                        
+                        } else if ($countDateMEL == 0) {
+                        
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
