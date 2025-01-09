@@ -143,11 +143,11 @@ try {
                     <div class="disponibilite">
                         <h3>Disponibilité</h3>
                         <div>
-                            <label><input type="radio" name="disponibilite"> Ouvert</label>
-                            <label><input type="radio" name="disponibilite"> Fermé</label>
+                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
+                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
                         </div>
                     </div>
-                        
+
                     <!-- Trier -->
                     <div class="trier">
                         <h3>Note et prix</h3>
@@ -398,7 +398,7 @@ try {
                 }
 
                 // Filter by Availability
-                const availabilityInput = document.querySelector(".disponibilite input[type='radio']:checked");
+                const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {

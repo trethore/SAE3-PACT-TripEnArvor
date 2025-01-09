@@ -748,7 +748,7 @@ try {
                             }
                         
                             // Insertion de la date dans la table _date
-                            $reqInsertionDateEvent = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $reqInsertionDateEvent = 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
                             $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                             $stmtInsertionDateEvent->execute([$date_event]);
                             $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
@@ -850,17 +850,22 @@ try {
 
                     print($date_en_ligne);
 
-                    $requete_date= "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
-                    $stmt_date = $dbh->prepare($reqInsertionDateEvent);
-                    $stmt_date->execute([$requete_date]);
+                    try {
+                        if (!$dbh->inTransaction()) {
+                            $dbh->beginTransaction();
+                        }
+
+                    $requete_date= 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
+                    $stmt_date = $dbh->prepare($requete_date);
+                    $stmt_date->execute([$date_en_ligne]);
                     $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
 
                     print($id_date_en_ligne);
 
                     //insertion dans la date mise en ligne
-                    $requete_date_en_ligne = "INSERT INTO sae.__offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
+                    $requete_date_en_ligne = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
                     $stmt_date_en_ligne = $dbh->prepare($requete_date_en_ligne);
-                    $stmt_tarif->execute([$id_offre, $id_date_en_ligne]);
+                    $stmt_date_en_ligne->execute([$id_offre, $id_date_en_ligne]);
 
                     if (($file_extension !== '') && ($categorie !== "visite") && ($categorie !== "spectacle")) {
 
@@ -870,10 +875,22 @@ try {
                         $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
                         $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
-
-                         // Commit de la transaction
-                        $dbh->commit();
                     }
+                         // Commit de la transaction
+                         $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
                    
                     
                     

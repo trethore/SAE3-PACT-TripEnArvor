@@ -121,6 +121,11 @@ try {
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
+// ===== GESTION DES MISES HORS LIGNE ET EN LIGNE ===== //
+
+    // ===== Requête SQL pour vérifier si une offre est hors ligne ===== //
+    $dateMiseHorsLigne = isOffreHorsLigne($id_offre_cible);
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -205,18 +210,22 @@ try {
                             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            //Insertion de la date de mise hors ligne
+                            /*$reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
                             $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
                             $stmtInsertionDateMHL->execute([$mise_hors_ligne]);
                             $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-
+                        
                             $reqInsertionReponse = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
                             $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                            $stmtInsertionReponse->execute([$id_offre_cible, $idDateMHL]);
+                            $stmtInsertionReponse->execute([$id_offre_cible, $idDateMHL]);*/
 
-                            print_r($idDateMHL);
-                            print_r($id_offre_cible);
-
+                            //Suppression de la date de mise en ligne
+                            $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
+                            $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
+                            $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+                            $stmtSuppressionDateMEL->execute();
+        
                         } catch (PDOException $e) {
                             echo "Erreur lors de l'insertion : " . $e->getMessage();
                         }
@@ -229,7 +238,12 @@ try {
                 <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
-            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+
+            <?php if ($dateMiseHorsLigne != True) { ?>
+                <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <?php } else { ?>
+                <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
+            <?php } ?>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
