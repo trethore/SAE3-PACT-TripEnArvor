@@ -2263,13 +2263,6 @@ h3 {
 	}
 
     .connecter h1 {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 32px;
-    
-        color: var(--noir);
-    
-        margin: 0;
         margin-top: 30px;
         background-color: red;
     }
@@ -2328,6 +2321,11 @@ h3 {
     .creer-compte #div-name-and-first-name div {
         width: 100%;
     }
+
+    .connecter h1 {
+        margin-top: 70px;
+        background-color: blue;
+    }
 }
 
 @media screen and (max-width: 460px) {
@@ -2342,6 +2340,8 @@ h3 {
     .creer-compte #div-adresse .row div {
         width: 100%;
     }
+
+    
 }
 
 @media screen and (orientation: portrait) {
