@@ -2324,6 +2324,10 @@ h3 {
     .connecter h1 {
         margin-top: 70px;
     }
+
+    .connecter input[type="submit"]{
+        font-size: 30px;
+    }
 }
 
 @media screen and (max-width: 460px) {
@@ -2336,7 +2340,7 @@ h3 {
 @media screen and (max-width: 380px) {
 
     .connecter h1 {
-        margin-top: 150px;
+        margin-top: 130px;
     }
 
     
