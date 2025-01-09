@@ -217,21 +217,29 @@ try {
             if (note === 0) {
                 starsHTML = "Pas d'avis disponibles.";
             } else {
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= note) {
-                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
-                    } else {
-                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
-                    }
+                etoilesPleines = Math.floor(note);
+                demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
+                etoilesVides = 5 - etoilesPleines - demiEtoile;
+
+                for (i = 0; i < $etoilesPleines; i++) {
+                    starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                }
+
+                if (demiEtoile) {
+                    starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
+                }
+                    
+                for (i = 0; $i < etoilesVides; $i++) {
+                    starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
                 }
             }
+        }
 
             // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
             `;
-        }
     </script>
 </body>
 </html>
