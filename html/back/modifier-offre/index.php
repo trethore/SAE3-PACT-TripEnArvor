@@ -152,7 +152,28 @@ try {
     $categorie = getTypeOffre($id_offre_cible);
 
 
-
+    
+    function bon_get_selon_categorie($id_offre_cible, $categorie){
+        switch ($categorie) {
+            case 'activite':
+                $offre_bonne_cat = getActivite($id_offre_cible);
+                break;
+            case 'parcattraction':
+                $offre_bonne_cat = getParcAttraction($id_offre_cible);
+                break;
+            case 'restauration':
+                $offre_bonne_cat = getRestaurant($id_offre_cible);
+                break;
+            case 'spectacle':
+                $offre_bonne_cat = getSpectacle($id_offre_cible);
+                break;
+            case 'visite':
+                $offre_bonne_cat = getVisite($id_offre_cible);
+                break;
+            default:
+                die("Erreur de categorie!");
+        }
+    }
     
 
 } catch (PDOException $e) {
@@ -161,9 +182,12 @@ try {
 }
 
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
-    $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
+    $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = strtolower(supprimerAccents($categorie));
+    $categorie = trim(strtolower(supprimerAccents($categorie)));
+    $categorieBase = $categorie;
+
+    $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
 
     
 
@@ -295,8 +319,8 @@ try {
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restaurant" <?php if($categorie === "restaurant"){ "selected";} ?>> Restaurant</option>
-                                            <option value="parc" <?php if($categorie === "parc"){echo "selected";} ?>> Parc d'attraction</option>
+                                            <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restaurant</option>
+                                            <option value="parcattraction" <?php if($categorie === "parcattraction"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
                                             <option value="activite" <?php if($categorie === "activite"){print("selected");} ?>> Activité</option>  
@@ -374,29 +398,37 @@ try {
 
                 <div>
                     <!-- activite, visite, spectacle -->
-                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($activite['duree'])){
-                                                                                                                                                                        echo htmlentities($activite['duree']);} ?>"/>
-                    <label id="labelduree2" for="duree">minutes</label>
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($offre_bonne_cat['duree'])){
+                                                                                                                                                                        echo htmlentities($offre_bonne_cat['duree']);} ?>"/> <label id="labelduree2" for="duree">minutes</label><br>
+                    
                     <!-- activité, parc -->
-                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($activite['age_min'])){
-                                                                                                                                                        echo htmlentities($activite['age_min']); }?>"/> 
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
                     <label id="labelage2" for="age">an(s)</label>
-
+                    
+                    <!-- activite -->
+                    <br>
+                    <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value=" <?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
+                    <br>
+                    <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
+                
+                    <!-- viste et spectacle -->
+                    <br>
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event">
                     <br>
                     <!-- spectacle -->
-                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($activite['capacite'])){
-                                                                                                                                                                                    echo htmlentities($activite['capacite']);} ?>"/>
-                    <label id="labelcapacite2" for="capacite">personnes</label>
+                    <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
+                                                                                                                                                                                    echo htmlentities($offre_bonne_cat['nbattraction']);} ?>"/>
+                    <label id="labelnbattractions2" for="nbattraction">personnes</label>
                     <br>
                     <!-- parc -->
-                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($attraction['nbAttractions'])){
-                                                                                                                                                                                            echo htmlentities($attraction['nbAttractions']); } ?>">
-                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php if(isset($attraction['plan'])){
-                                                                                                                                                            echo htmlentities($attraction['plan']); } ?>"  ><input type="file" id="plan" name="plan" />
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbAttractions'])){
+                                                                                                                                                                                            echo htmlentities($offre_bonne_cat['nbAttractions']); } ?>">
+                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
+                                                                                                                                                            echo htmlentities($offre_bonne_cat['plan']); } ?>"  ><input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
-                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php if(isset($restaurant[$carte])){
-                                                                                                                                                            echo htmlentities($restaurant[$carte]); }?>" > <input type="file" id="carte" name="carte" />
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php
+                                                                                                                                                            echo htmlentities($offre_bonne_cat['carte']); }?>" > <input type="file" id="carte" name="carte" />
                     
                 </div>
                 
@@ -587,9 +619,9 @@ try {
                 $age = intval($age);
             }
 
-            if (isset($_POST['capacite'])) {
-                $capacite = $_POST['capacite'];
-                $capacite = intval($capacite);
+            if (isset($_POST['nbattraction'])) {
+                $nbattraction = $_POST['nbattraction'];
+                $nbattraction = intval($nbattraction);
             }
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
@@ -768,7 +800,7 @@ try {
                             
                             break;
 
-                        case 'parc' :
+                        case 'parcattraction' :
                             if(isset( $_FILES['plan'])){
                                 $file = $_FILES['plan'];
                                 $file_extension = get_file_extension($file['type']);
@@ -808,10 +840,10 @@ try {
                         case 'spectacle':
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_spectacle
-                            set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            set (titre, resume, ville, duree, nbattraction, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $nbattraction, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
                         case 'visite' :
@@ -900,7 +932,7 @@ try {
 
                             break;
 
-                        case 'parc':
+                        case 'parcattraction':
                             $file = $_FILES['plan'];
                             $file_extension = get_file_extension($file['type']);
                             $time = 'p' . strval(time());
@@ -962,9 +994,9 @@ try {
                             } catch (PDOException $e) {
                                 echo "Erreur !: " . $e->getMessage();
                             }
-                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, nbattraction, id_compte_professionnel, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $descriptionL, $lien]);
+                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($nbattraction), $id_compte, $type, $descriptionL, $lien]);
 
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -1133,9 +1165,9 @@ try {
             let typerestaurant = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelnbattractions2"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2"];
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2"];
 
             obligatoireselontype.forEach(element => {
                 document.getElementById(element).style.display = 'none';
@@ -1148,7 +1180,7 @@ try {
                 const typeselectionne = categorie.value;
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (typeselectionne) {
-                    case "restaurant":
+                    case "restauration":
                         afficheSelonType(typerestaurant);
 
                         if (isIdProPrivee) {
@@ -1172,7 +1204,7 @@ try {
                         afficheSelonType(typespectacle);
                         break;
 
-                    case "parc":
+                    case "parcattraction":
                         afficheSelonType(typeparc);
                         afficherTags(typeparc);
                         break;
