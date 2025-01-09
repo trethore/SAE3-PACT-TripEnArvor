@@ -115,9 +115,6 @@ try {
         $stmt->execute();
         $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$detailCompte) {
-            die("Erreur : Impossible de récupérer les informations du compte.");
-        }
         ?>
         <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
