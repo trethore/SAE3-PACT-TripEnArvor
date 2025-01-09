@@ -2263,6 +2263,13 @@ h3 {
 	.front footer {
 		display: none;
 	}
+    .compte-front nav {
+    }
+    .compte-front main,
+    .compte-front-modif main {
+    flex-direction: column;
+}
+
 
     .connecter h1 {
         margin-top: 30px;
