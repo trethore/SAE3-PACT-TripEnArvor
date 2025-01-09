@@ -392,7 +392,7 @@ try {
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($attraction['nbAttractions'])){
                                                                                                                                                                                             echo htmlentities($attraction['nbAttractions']); } ?>">
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php if(isset($attraction['plan'])){
-                                                                                                                                                            echo htmlentities($attraction[$plan]); } ?>"  ><input type="file" id="plan" name="plan" />
+                                                                                                                                                            echo htmlentities($attraction['plan']); } ?>"  ><input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
                     <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php if(isset($restaurant[$carte])){
