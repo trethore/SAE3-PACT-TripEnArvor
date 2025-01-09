@@ -2275,6 +2275,10 @@ h3 {
         flex-direction: column;
         gap: 0;
     }
+
+    .liste-back .lesOffres {
+        justify-content: center;
+    }
 }
 
 @media screen and (max-width: 675px) {
