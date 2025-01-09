@@ -114,6 +114,10 @@ try {
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
         $stmt->execute();
         $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$detailCompte) {
+            die("Erreur : Impossible de récupérer les informations du compte.");
+        }
         ?>
         <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
