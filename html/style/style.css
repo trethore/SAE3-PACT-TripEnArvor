@@ -52,6 +52,11 @@
        GENERALISATION
 *****************************/
 
+* {
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+}
+
 .ici {
     font-weight: bold;
 }
@@ -1748,7 +1753,7 @@ h3 {
 
 }
 
-.ICON-accueil {
+.back .ICON-accueil {
 	margin: 0 15px 0 50px;
 	width: auto;
 	height: 60px;
@@ -1757,7 +1762,7 @@ h3 {
 
 /* Footer principal */
 /* Footer principal */
-.back  footer {
+.back footer {
 	background: var(--orange-principale);
 	width: 100%;
 	display: flex;
@@ -1768,7 +1773,7 @@ h3 {
 }
 
 /* Section supérieure avec le gradient */
-.footer-top {
+.back .footer-top {
 	width: 100%;
 	padding: 0 10px;
 	display: flex;
@@ -1777,7 +1782,7 @@ h3 {
 	position: relative;
 }
 
-.footer-top-left {
+.back .footer-top-left {
 	display: flex;
 	flex-direction: column;
 	align-items: end;
@@ -1785,13 +1790,13 @@ h3 {
 	border-right: solid var(--blanc);
 }
 
-.footer-top-right {
+.back .footer-top-right {
 	display: flex;
 	flex-direction: column;
 	align-items: end;
 }
 
-.footer-logo {
+.back .footer-logo {
 	width: 75px;
 	height: 75px;
 	background-repeat: no-repeat;
@@ -1799,20 +1804,20 @@ h3 {
 	margin-right: 20px;
 }
 
-.footer-title {
+.back .footer-title {
 	font-family: 'Seymour One', sans-serif;
 	font-size: 48px;
 	color: white;
 }
 
-.footer-subtitle {
+.back .footer-subtitle {
 	font-family: 'SeoulNamsan', sans-serif;
 	font-size: 48px;
 	color: white;
 	margin-left: 20px;
 }
 
-.footer-connect {
+.back .footer-connect {
 	font-family: 'SeoulNamsan', sans-serif;
 	font-size: 32px;
 	color: white;
@@ -1820,12 +1825,12 @@ h3 {
 }
 
 /* Section des icônes sociales */
-.social-icons {
+.back .social-icons {
 	display: flex;
 	gap: 15px;
 }
 
-.social-icon {
+.back .social-icon {
 	width: 73px;
 	height: 73px;
 	background-repeat: no-repeat;
@@ -1833,7 +1838,7 @@ h3 {
 }
 
 /* Barre en bas du footer */
-.back  .footer-bottom {
+.back .footer-bottom {
 	background-color: white;
 	border-radius: 15px;
 	width: 100%;
@@ -1847,19 +1852,19 @@ h3 {
 	border: 1px solid rgba(0, 0, 0, 1);
 }
 
-.back  .footer-bottom>a {
+.back .footer-bottom>a {
 	color: var(--orange-principale);
 }
 
 /* search component in header*/
-.search-box {
+.back .search-box {
 	margin-top: 5px;
 	width: fit-content;
 	height: fit-content;
 	position: relative;
 }
 
-.input-search {
+.back .input-search {
 	height: 60px;
 	width: 50px;
 	border-style: none;
@@ -1874,14 +1879,14 @@ h3 {
 	color: #fff;
 }
 
-.input-search::placeholder {
+.back .input-search::placeholder {
 	color: var(--semi-trans);
 	font-size: 18px;
 	letter-spacing: 2px;
 	font-weight: 100;
 }
 
-.btn-search {
+.back .btn-search {
 	width: 50px;
 	height: 50px;
 	border-style: none;
@@ -1897,7 +1902,7 @@ h3 {
 	pointer-events: painted;
 }
 
-.btn-search:focus~.input-search {
+.back .btn-search:focus~.input-search {
 	width: 350px;
 	border-radius: 0px;
 	background-color: transparent;
@@ -1905,7 +1910,7 @@ h3 {
 	transition: all 500ms;
 }
 
-.input-search:focus {
+.back .input-search:focus {
 	width: 350px;
 	border-radius: 0px;
 	background-color: transparent;
@@ -1913,13 +1918,13 @@ h3 {
 	transition: all 500ms;
 }
 
-.cherchero {
+.back .cherchero {
 	height: 60px;
 	width: 60px;
 }
 
 
-#offre, #modif, #annuler, #quitter {
+.back #offre, .back #modif, .back #annuler, .back #quitter {
     background-color: var(--blanc);
     display: none;
     border: 1px solid;
@@ -1932,7 +1937,7 @@ h3 {
     border-radius: 5px;
 }
 
-.close>button {
+.back .close>button {
     border-radius: 50px;
     text-align: center;
     font-size: 25px;
@@ -1941,18 +1946,18 @@ h3 {
     padding: 5px 35px 5px 35px;
 }
 
-.close {
+.back .close {
     display: flex;
     justify-content: space-around;
     border: none;
 }
 
-.back  .bouton1 {
+.back .bouton1 {
     color: var(--orange-principale);
     background-color: var(--blanc);
 }
 
-.back  .bouton2 {
+.back .bouton2 {
     background-color: var(--orange-principale);
     color: var(--blanc);
     box-shadow: 1px 1px 1px var(--gris-etoile);
@@ -1960,7 +1965,7 @@ h3 {
 }
 
 /* Animation lors du survol */
-.bouton2:hover {
+.back .bouton2:hover {
     box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
 }
 
@@ -1992,6 +1997,55 @@ h3 {
 	padding: 0 30px;
 }
 
+.front .logo {
+	width: auto;
+	height: 75px;
+	margin: 0.5em 0;
+}
+
+.front .text-wrapper-17 {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+	margin-right: auto;
+}
+
+.front .text-wrapper-17 > a {
+	font-family: "Inter", Helvetica;
+	font-weight: 400;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: 0;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 0 10px;
+	margin-right: auto;
+}
+
+
+.front .ICON-utilisateur {
+	margin-left: 15px;
+	width: auto;
+	height: 60px;
+	object-fit: cover;
+
+}
+
+.front .ICON-accueil {
+	margin: 0 15px 0 50px;
+	width: auto;
+	height: 60px;
+	object-fit: cover;
+}
+
+/* Footer principal */
 /* Footer principal */
 .front footer {
 	background: var(--violet-principal);
@@ -2001,6 +2055,71 @@ h3 {
 	justify-content: space-between;
 	align-items: center;
 	padding: 20px;
+}
+
+/* Section supérieure avec le gradient */
+.front .footer-top {
+	width: 100%;
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+
+.front .footer-top-left {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	padding-right: 20px;
+	border-right: solid var(--blanc);
+}
+
+.front .footer-top-right {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+
+.front .footer-logo {
+	width: 75px;
+	height: 75px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-right: 20px;
+}
+
+.front .footer-title {
+	font-family: 'Seymour One', sans-serif;
+	font-size: 48px;
+	color: white;
+}
+
+.front .footer-subtitle {
+	font-family: 'SeoulNamsan', sans-serif;
+	font-size: 48px;
+	color: white;
+	margin-left: 20px;
+}
+
+.front .footer-connect {
+	font-family: 'SeoulNamsan', sans-serif;
+	font-size: 32px;
+	color: white;
+	margin-bottom: 10px;
+}
+
+/* Section des icônes sociales */
+.front .social-icons {
+	display: flex;
+	gap: 15px;
+}
+
+.front .social-icon {
+	width: 73px;
+	height: 73px;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 /* Barre en bas du footer */
@@ -2022,6 +2141,102 @@ h3 {
 	color: var(--violet-principal);
 }
 
+/* search component in header*/
+.front .search-box {
+	margin-top: 5px;
+	width: fit-content;
+	height: fit-content;
+	position: relative;
+}
+
+.front .input-search {
+	height: 60px;
+	width: 50px;
+	border-style: none;
+	padding: 20px;
+	font-size: 18px;
+	letter-spacing: 2px;
+	outline: none;
+	border-radius: 25px;
+	transition: all .5s ease-in-out;
+	background-color: var(--transparent);
+	padding-right: 40px;
+	color: #fff;
+}
+
+.front .input-search::placeholder {
+	color: var(--semi-trans);
+	font-size: 18px;
+	letter-spacing: 2px;
+	font-weight: 100;
+}
+
+.front .btn-search {
+	width: 50px;
+	height: 50px;
+	border-style: none;
+	font-size: 20px;
+	font-weight: bold;
+	outline: none;
+	cursor: pointer;
+	border-radius: 50%;
+	position: absolute;
+	right: 0px;
+	color: #ffffff;
+	background-color: transparent;
+	pointer-events: painted;
+}
+
+.front .btn-search:focus~.input-search {
+	width: 350px;
+	border-radius: 0px;
+	background-color: transparent;
+	border-bottom: 1px solid var(--semi-trans);
+	transition: all 500ms;
+}
+
+.front .input-search:focus {
+	width: 350px;
+	border-radius: 0px;
+	background-color: transparent;
+	border-bottom: 1px solid var(--semi-trans);
+	transition: all 500ms;
+}
+
+.front .cherchero {
+	height: 60px;
+	width: 60px;
+}
+
+
+.front #offre, .front #modif, .front #annuler, .front #quitter {
+    background-color: var(--blanc);
+    display: none;
+    border: 1px solid;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.front .close>button {
+    border-radius: 50px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+    border: none;
+    padding: 5px 35px 5px 35px;
+}
+
+.front .close {
+    display: flex;
+    justify-content: space-around;
+    border: none;
+}
+
 .front .bouton1 {
     color: var(--violet-principal);
     background-color: var(--blanc);
@@ -2032,6 +2247,11 @@ h3 {
     color: var(--blanc);
     box-shadow: 1px 1px 1px var(--gris-etoile);
     transition: box-shadow 0.3s ease; /* Ajout de la transition */
+}
+
+/* Animation lors du survol */
+.bouton2:hover {
+    box-shadow: 3px 4px 6px var(--gris-etoile); /* Augmente l'ombre lors du survol */
 }
 
 @media only screen and (max-width: 900px) {
