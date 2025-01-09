@@ -217,6 +217,7 @@ try {
             if (note === 0) {
                 starsHTML = "Pas d'avis disponibles.";
             } else {
+                etoilesPleines = floor(note);
                 demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
                 etoilesVides = 5 - etoilesPleines - demiEtoile;
 
