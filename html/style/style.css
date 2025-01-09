@@ -214,7 +214,7 @@ h3 {
 
     color: var(--noir);
 
-    padding-left: 20%;
+    padding-left: 1.5em;
 }
 
 .connecter input[type="email"] {
@@ -229,7 +229,8 @@ h3 {
     background: var(--violet-principal);
 
     margin: 2em;
-    padding: 5px;
+
+
 
     border-radius: 30px;
     border: none;
@@ -2168,10 +2169,8 @@ h3 {
 }
 
 .front .input-search::placeholder {
-	color: var(--semi-trans);
+	color: var(--blanc);
 	font-size: 18px;
-	letter-spacing: 2px;
-	font-weight: 100;
 }
 
 .front .btn-search {
