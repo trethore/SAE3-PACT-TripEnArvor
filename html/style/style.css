@@ -2329,13 +2329,9 @@ h3 {
 .genFacture .totals {
     margin: 1em 0;
     text-align: right;
-    display: flex;
-    flex-direction: column;
 }
 
-.genFacture .totals article {
-    width: 75px;
-}
+
 
 .genFacture .totals article > span {
     text-align: left;
