@@ -2267,6 +2267,7 @@ h3 {
 }
 
 .genFacture img {
+    position: relative;
     width: 200px;
     left: 50%;
     transform: translateX(-50%);
@@ -2291,6 +2292,7 @@ h3 {
 
 .genFacture .delivre + article {
     text-align: right;
+    margin-bottom: 0;
 }
 
 .genFacture table {
