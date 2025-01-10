@@ -67,32 +67,47 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             <thead>
                 <tr>
                     <th>Nom offre</th>
-                    <th>Type d'option</th>
                     <th>Nb Jour</th>
                     <th>% TVA</th>
-                    <th>Prix HT</th>
-                    <th>Prix Journalier</th>
-                    <th>Prix TTC</th>
+                    <th>Prix HT Journalier</th>
+                    <th>Total TTC</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Restaurant coté plage</td>
-                    <td>Option relief</td>
                     <td>2</td>
                     <td>20%</td>
                     <td>5.10€</td>
-                    <td>6.50€</td>
                     <td>22.30€</td>
                 </tr>
                 <tr>
                     <td>Parc d'attraction vraiment wahou</td>
-                    <td>Offre premium</td>
                     <td>1</td>
                     <td>20%</td>
                     <td>24.75€</td>
-                    <td>24.75€</td>
                     <td>5.10€</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom Option</th>
+                    <th>Nb semaines</th>
+                    <th>% TVA</th>
+                    <th>Prix HT Hebdomadaire</th>
+                    <th>Total TTC</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>A la Une</td>
+                <td>1</td>
+                <td>20%</td>
+                <td>12.00€</td>
+                <td>18.00€</td>
                 </tr>
             </tbody>
         </table>
