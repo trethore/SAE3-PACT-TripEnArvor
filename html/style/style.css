@@ -2325,11 +2325,16 @@ h3 {
 .genFacture .totals {
     margin: 1em 0;
     text-align: right;
-    width: 100px;
+    width: 200px;
+}
+
+.genFacture .totals tr {
+    margin: 0.2em;
 }
 
 .genFacture .totals tr > td {
     text-align: left;
+    padding: 0.25em;
 }
 
 .genFacture .totals tr > td + td {
