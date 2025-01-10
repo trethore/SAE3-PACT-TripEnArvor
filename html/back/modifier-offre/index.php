@@ -195,10 +195,8 @@ try {
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
-        $date_evenement = date("Y-m-d\TH:i", strtotime($date_evenement));
     }elseif ($categorie == 'visite') {
         $date_evenement = getDateVisite($id_offre_cible);
-        $date_evenement = date("Y-m-d\TH:i", strtotime($date_evenement));
     }else {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
