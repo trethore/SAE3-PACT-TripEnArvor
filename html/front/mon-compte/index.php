@@ -23,7 +23,7 @@ try {
 
 
 $reqCompte = "SELECT * from sae.compte_membre
-                where .id_compte = :id_compte;";
+                where id_compte = :id_compte;";
 
 
 ?>
