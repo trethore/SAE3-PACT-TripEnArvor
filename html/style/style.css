@@ -2330,6 +2330,7 @@ h3 {
     margin: 1em 0;
     text-align: right;
     display: flex;
+    flex-direction: column;
 }
 
 .genFacture .totals article {
