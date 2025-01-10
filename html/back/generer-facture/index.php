@@ -1,3 +1,36 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+
+try {
+    $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $conn->prepare("SET SCHEMA 'sae';")->execute();
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+
+startSession();
+$id_compte = $_SESSION["id"]; 
+if (isset($id_compte)) {
+    redirectToConnexionIfNecessaryPro($id_compte);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
+
+$reqCompte = "SELECT * from sae.compte_professionnel_prive where id_compte = :id_compte;";
+$reqFacture = "";
+
+// Préparation et exécution de la requête
+$stmt = $conn->prepare($reqCompte);
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->execute();
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,9 +45,15 @@
         <article class="delivre">
             <h3>Délivré à</h3>
             <p>
-                {Nom} {Prénom}<br>
-                {Dénomination sociale}<br>
-                mail@example.com
+                <!-- Nom -->
+                <?php echo htmlentities($detailCompte["nom_compte"] ?? '');?> 
+                <!-- Prenom -->
+                <?php echo htmlentities($detailCompte["prenom"] ?? '');?><br>
+                <!-- Dénomination Sociale -->
+                <?php echo htmlentities($detailCompte["denomination"] ?? '');?><br>
+                <br>
+                <!-- Prenom -->
+                <?php echo htmlentities($detailCompte["email"] ?? '');?><br>
             </p>
         </article>
         <article>
@@ -27,7 +66,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Description</th>
+                    <th>Nom offre</th>
+                    <th>Type d'option</th>
                     <th>Date</th>
                     <th>Qté</th>
                     <th>% TVA</th>
@@ -38,6 +78,7 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>Restaurant coté plage</td>
                     <td>Option relief</td>
                     <td>15/04/2024</td>
                     <td>2</td>
@@ -47,6 +88,7 @@
                     <td>22.30€</td>
                 </tr>
                 <tr>
+                    <td>Parc d'attraction vraiment wahou</td>
                     <td>Offre premium</td>
                     <td>17/04/2024</td>
                     <td>1</td>
@@ -77,8 +119,8 @@
         <h3>Conditions et modalités de paiement</h3>
         <p>Le paiement est dû dans les 15 jours</p>
         <p>
-            Nom Banque<br>
-            Nom du compte: Nom<br>
+            Banque PACT<br>
+            Nom du compte: Trip en armor<br>
             Numéro de compte : 123-456-7890
         </p>
     </article>
