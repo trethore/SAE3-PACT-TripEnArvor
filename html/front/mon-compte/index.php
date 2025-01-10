@@ -184,8 +184,7 @@ try {
         Redden's, Inc.
         </div>
     </footer>
-</body>
-<div class="telephone-nav">
+    <div class="telephone-nav">
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
@@ -195,5 +194,7 @@ try {
         </div></a>
     </div>
 </div>
+</body>
+
 
 </html>

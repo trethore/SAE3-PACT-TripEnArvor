@@ -269,7 +269,7 @@ try {
         redirectTo("/front/mon-compte");
     } ?>
 <script src="/scripts/popupCompteFront.js"></script>
-</body>
+
 <div class="telephone-nav">
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
@@ -280,4 +280,6 @@ try {
         </div></a>
     </div>
 </div>
+</body>
+
 </html>

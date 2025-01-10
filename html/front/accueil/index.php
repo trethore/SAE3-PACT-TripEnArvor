@@ -260,8 +260,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
             updateCarousel();
         });
     </script>
-</body>
-<div class="telephone-nav">
+    <div class="telephone-nav">
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
@@ -271,6 +270,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
         </div></a>
     </div>
 </div>
+</body>
+
 
 </html>
 
