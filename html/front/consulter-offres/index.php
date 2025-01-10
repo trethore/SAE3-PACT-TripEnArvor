@@ -49,7 +49,6 @@ try {
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/style_navPhone.css" />
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -542,7 +541,6 @@ try {
     </script>
 </body>
 <div class="telephone-nav">
-    <div class="bg"></div>
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><div class = "btOn"><img src="/images/frontOffice/icones/chercher.png"></div></a>

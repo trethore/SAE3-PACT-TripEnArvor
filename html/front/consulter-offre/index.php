@@ -224,7 +224,6 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="/style/style_navPhone.css" />
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -922,7 +921,6 @@ try {
     </script>
 </body>
 <div class="telephone-nav">
-    <div class="bg"></div>
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
