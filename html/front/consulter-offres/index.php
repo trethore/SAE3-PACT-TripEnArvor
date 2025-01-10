@@ -202,12 +202,9 @@ try {
                             </div>
                         </div>
                     </div>
-
-                    <!-- Type d'offre -->
-                    <div class="typeOffre"></div>
         
                     <!-- Date -->
-                    <!-- <div class="date">
+                    <div class="date">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -221,7 +218,15 @@ try {
                                 <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>-->
+                    </div>
+
+                    <!-- Contient avis -->
+                    <div class="contient_avis">
+                        <h3>Contient un de vos avis</h3>
+                        <div>
+                            <label><input type="checkbox" name="oui_avis"> Oui</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>

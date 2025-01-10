@@ -306,6 +306,10 @@ h3 {
     flex: 6;
 }
 
+.filtre-tri .contient_avis {
+    flex: 2;
+}
+
 .section-offres {
     display: flex;
     flex-wrap: wrap;

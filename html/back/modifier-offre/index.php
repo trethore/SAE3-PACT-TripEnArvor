@@ -111,7 +111,7 @@ try {
     $attraction = getParcAttraction($id_offre_cible);
 
     // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
-    $restaurant = getRestaurant($id_offre_cible);
+    $restauration = getRestaurant($id_offre_cible);
 
 // ===== GESTION DES ADRESSES ===== //
 
@@ -337,7 +337,7 @@ try {
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restaurant</option>
+                                            <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restauration</option>
                                             <option value="parcattraction" <?php if($categorie === "parcattraction"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
@@ -445,7 +445,7 @@ try {
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
                                                                                                                                                             echo htmlentities($offre_bonne_cat['plan']);  ?>"  > <?php } ?> <input type="file" id="plan" name="plan" />
                     <br>
-                    <!-- restaurant -->
+                    <!-- restauration -->
                     <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php 
                                                                                                                                                                     echo htmlentities($offre_bonne_cat['carte']); ?>"> <?php } ?> <input type="file" id="carte" name="carte" />
                     
@@ -655,7 +655,7 @@ try {
             }
             
 
-            if ($categorie !== "restaurant") {
+            if ($categorie !== "restauration") {
                     
                 if ((isset($_POST['tarif1'])) && (isset($_POST['nomtarif1'])) && $_POST['tarif1'] !== "") {
                     $tarif1 = $_POST['tarif1'];
@@ -730,7 +730,7 @@ try {
             }
 
 
-            if ($categorie !== "restaurant") {
+            if ($categorie !== "restauration") {
                 foreach ($liste_tags as $tag) {
                     if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
@@ -876,7 +876,7 @@ try {
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
-                        case 'restaurant':
+                        case 'restauration':
 
                             if(isset( $_FILES['carte'])){
                                 $file = $_FILES['carte'];
@@ -897,7 +897,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_carte = $restaurant(['carte']);
+                                $fichier_carte = $restauration(['carte']);
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -1044,7 +1044,7 @@ try {
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             break;
 
-                        case 'restaurant':
+                        case 'restauration':
                             
                             $file = $_FILES['carte'];
                             $file_extension = get_file_extension($file['type']);
@@ -1070,7 +1070,7 @@ try {
                             }
                             try{
                                 // Requête SQL pour supprimer une visite
-                                $requete_supprimer = "DELETE FROM sae.offre_restaurant WHERE id_offre = ?";
+                                $requete_supprimer = "DELETE FROM sae.offre_restauration WHERE id_offre = ?";
                             
                                 // Préparation et exécution
                                 $stmt = $dbh->prepare($requete_supprimer);
@@ -1116,7 +1116,7 @@ try {
 
 
                     //INSERTION DANS TARIF
-                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                    if (($isIdProPrivee)&&($categorie !== "restauration")){
                          // Requête SQL pour supprimer une visite
                          $requete_supprimer = "DELETE FROM sae.offre_tarif_publique WHERE id_offre = ?";
                             
@@ -1180,11 +1180,11 @@ try {
             }
 
             const liste_tags = "<?php echo json_encode($liste_tags) ?>";
-            const liste_tags_restaurant = "<?php echo json_encode($liste_tags_restaurant) ?>";
+            const liste_tags_restauration = "<?php echo json_encode($liste_tags_restauration) ?>";
             const $tags = "<?php echo json_encode($tags) ?>"
 
             let typecategorie = document.getElementById('categorie');
-            let typerestaurant = ["carte", "labelcarte"];
+            let typerestauration = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
             let typespectacle = ["labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelnbattractions2"];
@@ -1203,7 +1203,7 @@ try {
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (typeselectionne) {
                     case "restauration":
-                        afficheSelonType(typerestaurant);
+                        afficheSelonType(typerestauration);
 
                         if (isIdProPrivee) {
                             document.getElementById("labelgammedeprix").style.display = 'inline';
@@ -1245,20 +1245,20 @@ try {
                 typechoisi.forEach(element => {
                     document.getElementById(element).style.display = 'inline';
                 });
-                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                if ((typechoisi !== "restauration") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
                 }
             }
 
             function afficherTags(typechoisi){
-                if (typeselectionne === "restaurant"){
+                if (typeselectionne === "restauration"){
                     liste_tags.forEach(tag => {
                         if(!tags.includes(tag)){
                             document.getElementById(tag).style.display ='none';
                         }
                     });
                 }else{
-                    liste_tags_restaurant.forEach(tag => {
+                    liste_tags_restauration.forEach(tag => {
                         if(!tags.includes(tag)){
                             document.getElementById(tag).style.display ='none';
                         }
