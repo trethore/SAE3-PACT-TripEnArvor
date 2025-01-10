@@ -301,7 +301,7 @@ try {
 
     <main id="body">
 
-        <section id="top" class="fond-blocs bordure">
+        <section class="fond-blocs bordure">
             <!-- Affichage du titre de l'offre -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
             <div class="carousel">
@@ -792,7 +792,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'">^</button>
+            <button id="remonte" onclick="location.href='#'">^</button>
         </div>
 
     </main>
