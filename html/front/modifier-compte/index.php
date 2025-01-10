@@ -245,7 +245,7 @@ try {
 
 
                     if ($existingAccount) {
-                        $emailError = "Cet email est déjà utilisé par un autre compte.";
+                        echo "<script>alert('Cet email est déjà utilisé par un autre compte.');</script>";
                     } else {
                         // Mise à jour des informations si l'email est unique
                         // Requete SQL pour modifier la vue compte_membre
