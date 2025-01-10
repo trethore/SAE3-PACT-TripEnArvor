@@ -103,6 +103,8 @@ try {
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
         }
 
+        console.log($ids_nouv);
+
         ?>
 
         <section>
@@ -136,18 +138,18 @@ try {
         <section>
             <div class="carousel">
                 <div class="carousel-images">
-                    <?php foreach ($ids_nouv as $offre) { 
-                        $id = $offre["id_offre"];
-                        $titre = $offre["titre"];
-                        $note = $offre["note"]; 
+                    <?php foreach ($ids_nouv as $offre_nouv) { 
+                        $id = $offre_nouv["id_offre"];
+                        $titre = $offre_nouv["titre"];
+                        $note = $offre_nouv["note"]; 
                         
                         echo $titre;
                         echo $note;
                         
                         ?>
 
-                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
                         </a>
                     <?php } ?>
                 </div>
