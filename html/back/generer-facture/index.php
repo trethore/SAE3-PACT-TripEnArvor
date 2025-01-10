@@ -60,10 +60,11 @@
     </section>
     <hr>
     <article class="totals">
-        <p>Total HT: 31.25€</p>
-        <p>Total TVA: 10€</p>
-        <p>Total TTC: 34.38€</p>
-    </article>
+        <span>Total HT : </span>
+        <span>31.25€</span>
+        <p>Total TVA : 10€</p>
+        <p>Total TTC : 34.38€</p>
+    </article>!
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
         <p>Le paiement est dû dans les 15 jours</p>
