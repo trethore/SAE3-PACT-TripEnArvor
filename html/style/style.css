@@ -2283,7 +2283,7 @@ h3 {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
-        margin: 1em;
+        margin: 0;
     }
 
     /********************
