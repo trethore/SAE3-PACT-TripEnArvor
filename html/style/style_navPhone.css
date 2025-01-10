@@ -26,13 +26,13 @@
     margin: 20% auto 3% auto;
 }
 
-.nav-content > div > img {
+.nav-content > a > div > img {
     width: 4em;
     height: 4em;
     margin: 1em 1em 0em 1em;
 }
 
-.nav-content > img {
+.nav-content > a > img {
     width: 4em;
     height: 4em;
    
