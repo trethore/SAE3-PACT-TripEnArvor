@@ -264,6 +264,7 @@ try {
                     <div class="etoiles">
                         <?php 
                             $note = getNoteMoyenne($row['id_offre']);
+                            print_r($note);
                             $etoilesPleines = floor($note);
                             $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
                             $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
