@@ -606,7 +606,7 @@ try {
                 
                             <!-- CHAMP DE RÉDACTION DE L'AVIS -->
                             <div>
-                                <label for="avis">Décrivez votre expérience</label>
+                                <label for="avis">Décrivez votre expérience <span>*</span></label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                             
@@ -616,22 +616,22 @@ try {
                             <?php if ($categorie == "Restauration") { ?>
 
                                 <div>
-                                    <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                    <label for="note_cuisine">Saisissez une note pour la cuisine <span>*</span></label>
                                     <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
                                 <div>
-                                    <label for="note_service">Saisissez une note pour le service</label>
+                                    <label for="note_service">Saisissez une note pour le service <span>*</span></label>
                                     <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
                                 <div>
-                                    <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
+                                    <label for="note_ambiance">Saisissez une note pour l'ambiance <span>*</span></label>
                                     <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
                                 <div>
-                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
+                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix <span>*</span></label>
                                     <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
@@ -639,7 +639,7 @@ try {
 
                             <!-- CHAMP DE SÉLECTION DE LA DATE VISITE DE L'AVIS -->
                             <div>
-                                <label for="date">Saisissez la date de votre visite</label>
+                                <label for="date">Saisissez la date de votre visite <span>*</span></label>
                                 <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                             </div>
 

@@ -343,16 +343,26 @@ textarea {
     font-family: "Poppins", sans-serif;
 }
 
-#photo {
-    color: var(--blanc);
-    text-decoration: none;
-    font-size: 24px;
-    background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
+input[type="file"] {
+    display: none;
+  }
+
+  /* Style pour le label qui remplace le bouton */
+  label[for="photo"] {
+    display: inline-block;
     padding: 10px 20px;
-    border-radius: 15px;
-    border: 0;
-}
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  /* Effet de survol */
+  label[for="photo"]:hover {
+    background-color: #0056b3;
+  }
 
 span {
     color: var(--violet-principal);
