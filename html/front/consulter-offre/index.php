@@ -608,7 +608,7 @@ try {
                             <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS POUR UNE OFFRE DE RESTAURATION -->
                             <?php if ($categorie == "Restauration") { ?>
                                 
-                                <div class="display-ligne-espace">
+                                <div class="display-ligne">
                                     <div>
                                         <label for="note_cuisine">Saisissez une note pour la cuisine <span>*</span></label>
                                         <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
@@ -620,7 +620,7 @@ try {
                                     </div>
                                 </div>
 
-                                <div class="display-ligne-espace">
+                                <div class="display-ligne">
                                     <div>
                                         <label for="note_ambiance">Saisissez une note pour l'ambiance <span>*</span></label>
                                         <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>

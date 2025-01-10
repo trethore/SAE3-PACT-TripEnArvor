@@ -356,8 +356,6 @@ input::file-selector-button {
     color: var(--blanc);
     width: 200px;
     height: 50px;
-    margin-top: 10px;
-    margin-bottom: 5px;
 }
   
 input::file-selector-button:hover {
@@ -376,7 +374,7 @@ input, select {
     border: 1px solid var(--gris);
     border-radius: 12px;
     height: 50px;
-    margin-left: 10px;
+    margin: 10px 0 10px 0;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
