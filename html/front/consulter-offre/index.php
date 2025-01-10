@@ -548,11 +548,17 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
+
+            <!-- GESTION DE LA PUBLICTION D'UN AVIS -->
+
+            <!-- VÉRIFICATION DU COMPTE -->
             <?php if (isset($_SESSION['id']) && isset($_GET['id'])) {
+
                 $id_membre = intval($_SESSION['id']);
                 $id_offre = intval($_GET['id']);
 
                 try {
+
                     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -562,30 +568,26 @@ try {
                     $reqCheckAvis = "SELECT COUNT(*) AS avis_count FROM sae._avis WHERE id_membre = ? AND id_offre = ?";
                     $stmtCheckAvis = $dbh->prepare($reqCheckAvis);
                     $stmtCheckAvis->execute([$id_membre, $id_offre]);
-                    $avisCount = $stmtCheckAvis->fetch(PDO::FETCH_ASSOC)['avis_count'];
+                    $avisCount = $stmtCheckAvis->fetch(PDO::FETCH_ASSOC)['avis_count']; ?>
 
-                    if ($avisCount == 0) {
-                        // L'utilisateur n'a pas encore publié d'avis pour cette offre
-                        ?>
+                    <!-- VÉRIFICATION POUR LA PUBLICATION D'UN AVIS -->
+                    <?php if ($avisCount == 0) { ?>
+
                         <button id="showFormButton">Publier un avis</button>
-
-                        <!-- Formulaire d'avis -->
                         <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
+
+                            <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
                             <div class="display-ligne-espace">
                                 <label for="titre">Saisissez le titre de votre avis</label>
-                                <p class="transparent">.</p>
-                            </div>
-                            <div class="display-ligne-espace">
                                 <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 <p class="transparent">.</p>
                             </div>
-                            <div class="display-ligne-espace">
-                                <label for="contexte">Contexte de visite :</label>
-                                <p class="transparent">.</p>
-                            </div>
+
+                            <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
                             <div class="display-ligne-espace">
                                 <div>
+                                    <label for="contexte">Contexte de visite :</label>
                                     <select id="contexte" name="contexte" required>
                                         <option value="" disabled selected>Choisissez un contexte</option>
                                         <option value="affaires">Affaires</option>
@@ -594,11 +596,20 @@ try {
                                         <option value="amis">Amis</option>
                                         <option value="solo">Solo</option>
                                     </select><br>
-                                    <label for="avis">Rédigez votre avis</label>
                                 </div>
                                 <p class="transparent">.</p>
                             </div>
-                            <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
+
+                            <!-- CHAMP DE RÉDACTION DE L'AVIS -->
+                            <div class="display-ligne-espace">
+                                <div>
+                                    <label for="avis">Rédigez votre avis</label>
+                                    <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
+                                </div>
+                                <p class="transparent">.</p>
+                            </div>
+                            
+                            <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS -->
                             <div class="display-ligne-espace">
                                 <div>
                                     <label for="note">Saisissez la note de votre avis</label>
@@ -606,7 +617,10 @@ try {
                                 </div>
                                 <p class="transparent">.</p>
                             </div>
+
+                            <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS POUR UNE OFFRE DE RESTAURATION -->
                             <?php if ($categorie == "Restauration") { ?>
+
                                 <div class="display-ligne-espace">
                                     <div>
                                         <label for="note_cuisine">Saisissez une note pour la cuisine</label>
@@ -614,6 +628,7 @@ try {
                                     </div>
                                     <p class="transparent">.</p>
                                 </div>
+
                                 <div class="display-ligne-espace">
                                     <div>
                                         <label for="note_service">Saisissez une note pour le service</label>
@@ -621,6 +636,7 @@ try {
                                     </div>
                                     <p class="transparent">.</p>
                                 </div>
+
                                 <div class="display-ligne-espace">
                                     <div>
                                         <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
@@ -628,6 +644,7 @@ try {
                                     </div>
                                     <p class="transparent">.</p>
                                 </div>
+
                                 <div class="display-ligne-espace">
                                     <div>
                                         <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
@@ -635,7 +652,10 @@ try {
                                     </div>
                                     <p class="transparent">.</p>
                                 </div>
+
                             <?php } ?>
+
+                            <!-- CHAMP DE SÉLECTION DE LA DATE VISITE DE L'AVIS -->
                             <div class="display-ligne-espace">
                                 <div>
                                     <label for="date">Saisissez la date de votre visite</label>
@@ -644,6 +664,7 @@ try {
                                 <p class="transparent">.</p>
                             </div>
 
+                            <!-- CHAMP D'IMPORTATION DE LA PHOTO DE L'AVIS -->
                             <div class="display-ligne-espace">
                                 <div>
                                     <label id="photo" for="photo">Importez une photo</label> 
@@ -657,17 +678,22 @@ try {
                             <button type="button" id="cancelFormButton">Annuler</button>
                         </form>
 
-                        <? 
-                    } else {
-                        // Message informant que l'utilisateur a déjà publié un avis
-                        echo "<p>Vous avez déjà publié un avis pour cette offre.</p>";
-                    }
+                    <? } else { ?>
+
+                        <p>Vous avez déjà publié un avis pour cette offre.</p>
+
+                    <? } 
+
                 } catch (PDOException $e) {
+
                     echo "Erreur : " . $e->getMessage();
                     die();
                 }
+
             } else { ?>
+
                 <p><a href="/se-connecter">Connexion</a> requise pour publier un avis</p>
+
             <?php }
 
             $compteur = 0;
