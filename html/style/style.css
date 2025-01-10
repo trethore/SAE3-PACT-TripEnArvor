@@ -2343,12 +2343,6 @@ h3 {
     text-align: right;
 }
 
-.genFacture .totals > tr + tr + tr td {
-    font-weight: var(--semi-bold);
-    margin: 5px 0;
-}
-
-
 @media only screen and (max-width: 900px) {
     .front {
         padding-bottom: 120px;

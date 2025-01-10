@@ -69,8 +69,8 @@
             <td>10€</td>
         </tr>
         <tr>
-            <td>Total TTC</td>
-            <td>34.38€</td>
+            <td><b>Total TTC</b></td>
+            <td><b>34.38€</b></td>
         </tr>
     </table>
     <article class="payment-terms">
