@@ -578,7 +578,7 @@ try {
                         <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
-                            <div class="display-ligne">
+                            <div class="display-ligne-espace">
                                 <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
                                 <label for="titre">Saisissez un titre</label>
                                 <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
