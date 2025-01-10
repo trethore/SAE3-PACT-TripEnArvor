@@ -195,6 +195,7 @@ print_r($tags);
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
     $categorie = trim(strtolower(supprimerAccents($categorie)));
+    print($categorie);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
