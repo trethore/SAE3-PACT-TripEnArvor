@@ -2331,6 +2331,23 @@ h3 {
         margin-top: 30px;
     }
 
+    .connecter input[type="email"], .connecter input[type="password"], .connecter form input[type="text"] {
+        box-sizing: border-box;
+        width: 715px;
+        height: 56px;
+        border: 1px solid var(--gris);
+        border-radius: 12px;
+        text-align: left;
+        width: 80%;
+        margin-top: 5px;
+        margin-left: 5px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        color: var(--noir);
+        padding-left: 1.5em;
+      }
+
     /**************************************************************************************
                                     COMPTE FRONT
     ***************************************************************************************/
@@ -2359,8 +2376,7 @@ h3 {
         flex-direction: column;
     }
 
-    .compte-front main,
-    .compte-front-modif main {
+    .compte-front main {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column-reverse;
