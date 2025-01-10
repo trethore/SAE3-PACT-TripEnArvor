@@ -578,7 +578,7 @@ try {
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
-                            <div>
+                            <div class="display-ligne">
                                 <label for="titre">Saisissez le titre de votre avis</label>
                                 <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
 
