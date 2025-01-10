@@ -2269,7 +2269,7 @@ h3 {
 .genFacture img {
     width: 200px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
 }
 
 .genFacture h3 ,
