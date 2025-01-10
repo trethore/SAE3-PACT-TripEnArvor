@@ -2287,9 +2287,9 @@ h3 {
     .compte-front main,
     .compte-front-modif main {
         display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        margin: 1em;
+        flex-wrap: wrap;
+        flex-direction: column;
+        margin: 0;
     }
 
     /********************
