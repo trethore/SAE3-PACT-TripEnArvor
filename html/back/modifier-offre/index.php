@@ -212,6 +212,8 @@ print_r($tags);
 
     print_r (getDateSpectacle($id_offre_cible));
     echo ($date_evenement);
+
+    print_r($adresse);
     
 
     
