@@ -420,7 +420,7 @@ try {
                                                                                                                                                                         echo htmlentities($offre_bonne_cat['duree']);} ?>"/> <label id="labelduree2" for="duree">minutes</label><br>
                     
                     <!-- activité, parc -->
-                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
                     <label id="labelage2" for="age">an(s)</label>
                     
                     <!-- activite -->
@@ -431,13 +431,13 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php 
-                                                                                                                                                                                                                    echo $date_evenement;  ?>">
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" <?php if($date_evenement =! null){ ?> value=" <?php   
+                                                                                                                                                                                                                    echo $date_evenement;  ?>" <?php } ?> >
                     <br>
                     <!-- spectacle -->
-                    <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
-                                                                                                                                                                                    echo htmlentities($offre_bonne_cat['nbattraction']);} ?>"/>
-                    <label id="labelnbattractions2" for="nbattraction">personnes</label>
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($offre_bonne_cat['capacite'])){
+                                                                                                                                                                                    echo htmlentities($offre_bonne_cat['capacite']);} ?>"/>
+                    <label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbAttractions'])){
@@ -500,12 +500,15 @@ try {
                             <?php  
                             $i = 0; // Compteur pour les champs
                             // Boucle pour afficher les tarifs existants
-                            foreach ($tarifs as $t) { 
-                                $i++; ?>
+                            
+                            foreach ($tarifs as $t) {
+                                if(!($t['nom_tarif'] == "nomtarif1")){ //n'affiche pas nomtarif1 qui est la valeur par defeaut si aucun tarif n'est rentré lors de la creation de l'offre
+                                    $i++; ?>
                                 <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']); ?>" />
                                 <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']); ?>" /><span>€</span> 
                                 <br>
                             <?php 
+                                }
                             }
                             // Complète les champs vides si moins de 4
                             while ($i < 4) { 
