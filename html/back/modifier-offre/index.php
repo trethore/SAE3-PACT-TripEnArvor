@@ -431,7 +431,7 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" <?php if($date_evenement =! null){ ?> value=" <?php   
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" <?php if($date_evenement != null){ ?> value=" <?php   
                                                                                                                                                                                                                     echo $date_evenement;  ?>" <?php } ?> >
                     <br>
                     <!-- spectacle -->
