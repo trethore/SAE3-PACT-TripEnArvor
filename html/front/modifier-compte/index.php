@@ -255,7 +255,7 @@ try {
                                     where id_compte = ?;";
                         $stmt = $conn->prepare($query);
                         $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_compte]);
-                        header("Location: /front/mon-compte"); // Redirection en cas de succès
+                        redirectTo("/front/mon-compte"); // Redirection en cas de succès
                         exit;
                     }
                     break;
