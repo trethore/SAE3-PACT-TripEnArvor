@@ -2331,7 +2331,7 @@ h3 {
     text-align: right;
 }
 
-.genFacture article {
+.genFacture .totals article {
     width: 75px;
 }
 
