@@ -173,7 +173,7 @@ try {
                 $offre_bonne_cat = getVisite($id_offre_cible);
                 break;
             default:
-                die("Erreur de categorie!");
+                die("Erreur de function bon get selon categorie!");
         }
         return $offre_bonne_cat;
     }
@@ -469,8 +469,7 @@ try {
                     <ul>
                     <?php 
                         if (!empty($tags)) {
-                            foreach ($tags as $tag) { 
-                                echo($tag['nom_tag']);?>
+                            foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } } 
                     foreach($liste_tags as $tag){ 
