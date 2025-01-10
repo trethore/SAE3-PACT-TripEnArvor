@@ -139,7 +139,7 @@
 
     function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT ROUND(AVG(note))
+        $reqNote = "SELECT AVG(note)
             FROM sae._avis
             WHERE id_offre = :id_offre";
         
@@ -154,7 +154,7 @@
             $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
             $conn = null;
-            return $moyenne["round"];
+            return $moyenne["avg"];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
