@@ -582,10 +582,8 @@ try {
                             <div>
                                 <label for="titre">Saisissez le titre de votre avis</label>
                                 <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
-                            </div>
 
                             <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
-                            <div>
                                 <label for="contexte">Contexte de visite</label>
                                 <select id="contexte" name="contexte" required>
                                     <option value="" disabled selected>Choisissez un contexte</option>
