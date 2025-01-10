@@ -2288,7 +2288,7 @@ h3 {
     .compte-front-modif main {
         display: flex;
         flex-wrap: wrap;
-        flex-direction: column;
+        flex-direction: column-reverse;
         margin: 0;
     }
 
