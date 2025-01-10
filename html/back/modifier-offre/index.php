@@ -376,8 +376,11 @@ try {
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
                         <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (isset($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
-                            echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
+                        <?php if (isset($adresse['num_et_nom_de_voie'])) {
+                            echo htmlentities($adresse['num_et_nom_de_voie']);
+                            if (isset($adresse['complement_adresse'] )){
+                                echo htmlentities($adresse['complement_adresse']);
+                            }; } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
