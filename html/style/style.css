@@ -2352,6 +2352,7 @@ h3 {
 ***************************************************************************************/
 
 .telephone-nav {
+    display: none;
     position: fixed;
     z-index: 99;
     background-color: var(--violet-principal);
@@ -2372,7 +2373,7 @@ h3 {
 
 @media only screen and (max-width: 900px) {
     .telephone-nav {
-        display: none;
+        display: inline;
     }
 
     .front {
