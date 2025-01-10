@@ -194,7 +194,7 @@ print_r($tags);
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie)));
+    $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
     print($categorie);
     $categorieBase = $categorie;
@@ -860,11 +860,11 @@ try {
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc
-                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
+                            $query = "UPDATE sae.offre_parc    id_offre, nb_attractions, age_min, plan, titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement
+                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = ($titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse)
+                            where id_offre = $id_offre;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute();
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
