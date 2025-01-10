@@ -104,12 +104,12 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>A la Une</td>
-                <td>1</td>
-                <td>20%</td>
-                <td>12.00€</td>
-                <td>18.00€</td>
+                <tr>
+                    <td>A la Une</td>
+                    <td>1</td>
+                    <td>20%</td>
+                    <td>12.00€</td>
+                    <td>18.00€</td>
                 </tr>
             </tbody>
         </table>

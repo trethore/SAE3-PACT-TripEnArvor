@@ -2324,6 +2324,10 @@ h3 {
     text-align: center;
 }
 
+.genFacture .facture-details tr:first-child {
+    text-align: left;
+}
+
 .genFacture .totals {
     margin: 1em 0;
     text-align: right;
