@@ -265,8 +265,8 @@ try {
         <a href="/front/accueil"><div class = "btOn"><img src="/images/frontOffice/icones/accueil.png"></div></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
         <a href="/front/mon-compte">
-            <img src="/images/frontOffice/icones/utilisateur.png"></a>
-    </div>
+            <img src="/images/frontOffice/icones/utilisateur.png"></div></a>
+    
 </div>
 </html>
 
