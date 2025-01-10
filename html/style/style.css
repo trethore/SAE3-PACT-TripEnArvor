@@ -2325,11 +2325,10 @@ h3 {
 .genFacture .totals {
     margin: 1em 0;
     text-align: right;
+    width: 100px;
 }
 
-
-
-.genFacture .totals article > span {
+.genFacture .totals tr > td {
     text-align: left;
 }
 
