@@ -272,6 +272,9 @@ try {
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <p style="display: none;" class="contientavisspot">
                                         <?php
+                                            echo "<pre>";
+                                            print_r($_SESSION);
+                                            echo "</pre>";
                                             if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
                                                 echo "Oui";
                                             }
