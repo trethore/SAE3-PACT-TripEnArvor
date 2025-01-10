@@ -578,24 +578,30 @@ try {
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <div class="display-ligne-espace">
-                                <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
-                                <label for="titre">Saisissez un titre</label>
-                                <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                <div>
+                                    <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
+                                    <label for="titre">Saisissez un titre <span>*</span></label>
+                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                </div>
 
                                 <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
-                                <label for="contexte">Saisissez un contexte</label>
-                                <select id="contexte" name="contexte" required>
-                                    <option value="" disabled selected>Choisissez un contexte</option>
-                                    <option value="affaires">Affaires</option>
-                                    <option value="couple">Couple</option>
-                                    <option value="famille">Famille</option>
-                                    <option value="amis">Amis</option>
-                                    <option value="solo">Solo</option>
-                                </select><br>
+                                <div>
+                                    <label for="contexte">Saisissez un contexte <span>*</span></label>
+                                    <select id="contexte" name="contexte" required>
+                                        <option value="" disabled selected>Choisissez un contexte</option>
+                                        <option value="affaires">Affaires</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="famille">Famille</option>
+                                        <option value="amis">Amis</option>
+                                        <option value="solo">Solo</option>
+                                    </select><br>
+                                </div>
 
                                 <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS -->
-                                <label for="note">Saisissez une note générale</label>
-                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                <div>
+                                    <label for="note">Saisissez une note générale <span>*</span></label>
+                                    <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                </div>
                             </div>
                 
                             <!-- CHAMP DE RÉDACTION DE L'AVIS -->

@@ -351,6 +351,10 @@ textarea {
     font-family: "Poppins", sans-serif;  
 }
 
+span {
+    color: var(--violet-principal);
+}
+
 input, select {
     background: var(--blanc);
     color: var(--gris);
