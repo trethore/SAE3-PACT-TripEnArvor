@@ -62,7 +62,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             <p>{date_emission}</p>
         </article>
     </section>
-    <section class="facture-details">
+    <article class="facture-details">
         <table>
             <thead>
                 <tr>
@@ -90,7 +90,9 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 </tr>
             </tbody>
         </table>
-        <hr>
+    </article>
+    <hr>
+    <article>
         <table>
             <thead>
                 <tr>
@@ -111,7 +113,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 </tr>
             </tbody>
         </table>
-    </section>
+    </article>
     <hr>
     <table class="totals">
         <tr>
