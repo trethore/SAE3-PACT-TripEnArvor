@@ -414,7 +414,7 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event">
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php if(isset($offre_bonne_cat['date_evenement'])){ echo htmlentities($offre_bonne_cat['date_evenement']); } ?>">
                     <br>
                     <!-- spectacle -->
                     <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
@@ -425,11 +425,11 @@ try {
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbAttractions'])){
                                                                                                                                                                                             echo htmlentities($offre_bonne_cat['nbAttractions']); } ?>">
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
-                                                                                                                                                            echo htmlentities($offre_bonne_cat['plan']); } ?>"  ><input type="file" id="plan" name="plan" />
+                                                                                                                                                            echo htmlentities($offre_bonne_cat['plan']);  ?>"  > <?php } ?> <input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
-                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php
-                                                                                                                                                            echo htmlentities($offre_bonne_cat['carte']); }?>" > <input type="file" id="carte" name="carte" />
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php 
+                                                                                                                                                                    echo htmlentities($offre_bonne_cat['carte']); ?>"> <?php } ?> <input type="file" id="carte" name="carte" />
                     
                 </div>
                 
