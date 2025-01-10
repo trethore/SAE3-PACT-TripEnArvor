@@ -744,7 +744,7 @@
     function getIdOffresContientAvis() {
         // SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = 9;
         global $driver, $server, $dbname, $user, $pass;
-        $reqContientAvis = "SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre WHERE id_offre = :id_offre";
+        $reqContientAvis = "SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
