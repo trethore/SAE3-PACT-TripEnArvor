@@ -366,26 +366,28 @@ try {
             <div class="display-ligne-espace">
                 <div class="display-ligne">
                     <?php 
-                    $etoilesPleines = floor($noteMoyenne);
-                    $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-                    
-                    for ($i = 0; $i < $etoilesPleines; $i++) {
-                        ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                        <?php
-                    }
+                    if ($noteMoyenne !== null) {
+                        $etoilesPleines = floor($noteMoyenne);
+                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                        
+                        for ($i = 0; $i < $etoilesPleines; $i++) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <?php
+                        }
 
-                    if ($demiEtoile) {
-                        ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                        <?php
-                    }
+                        if ($demiEtoile) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                            <?php
+                        }
 
-                    for ($i = 0; $i < $etoilesVides; $i++) {
-                        ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                        <?php
+                        for ($i = 0; $i < $etoilesVides; $i++) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                            <?php
+                        }
                     }
                     ?>
                     <!-- Affichage du nombre d'avis de l'offre -->
@@ -512,8 +514,11 @@ try {
         <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
+                <?php
+                if ($noteMoyenne !== null) {
+                ?>
                 <h2>Note moyenne : </h2>
-                    <?php
+                <?php
                     $etoilesPleines = floor($noteMoyenne);
                     $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                     $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
@@ -535,7 +540,8 @@ try {
                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                         <?php
                     }
-                    ?>
+                }
+                ?>
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
