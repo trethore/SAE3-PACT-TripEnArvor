@@ -2264,6 +2264,7 @@ h3 {
     border-radius: 5px;
     max-width: 800px;
     color: var(--noir);
+    margin: auto;
 }
 
 .genFacture img {
@@ -2271,9 +2272,14 @@ h3 {
     width: 200px;
     left: 50%;
     transform: translateX(-50%);
+    margin: auto;
 }
 
-.genFacture h3 ,
+.genFacture h3 {
+    margin: 5px 0;
+}
+
+.genFacture h3,
 .genFacture thead {
     text-transform: capitalize;
     font-weight: var(--semi-bold);
