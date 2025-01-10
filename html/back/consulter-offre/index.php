@@ -390,7 +390,9 @@ try {
                     <!-- Affichage le titre de l'offre -->
                     <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
-                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <?php if (isset($offre['site_web'])) { ?>
+                        <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <?php } ?>
                 </div>
                 <!-- Affichage du résumé de l'offre -->
                 <p><?php echo htmlentities($offre['resume']) ?? "Pas de resumé disponible"; ?></p>
@@ -645,9 +647,9 @@ try {
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden’s, Inc.
+        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
+        Redden's, Inc.
         </div>
         
     </footer>

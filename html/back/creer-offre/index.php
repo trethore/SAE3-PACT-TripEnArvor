@@ -396,10 +396,9 @@ try {
 
             </div>
             <div class="footer-bottom">
-                Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du
-                site -
-                Conditions générales - ©
-                Redden’s, Inc.
+                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
+                Redden's, Inc.
             </div>
         </footer>
 
@@ -654,9 +653,30 @@ try {
 
                         }
 
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type]);
+                        try {
+                            $requete = "INSERT INTO sae.offre_parc_attraction(
+                                titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([
+                                $titre,
+                                $resume,
+                                $ville,
+                                intval($age),
+                                intval($nbattraction),
+                                $fichier_img,
+                                intval($id_compte),
+                                $type
+                            ]);
+                        
+                            $id_offre = $stmt->fetchColumn();
+                            echo "Nouvelle offre créée avec l'ID : " . $id_offre;
+                        } catch (Exception $e) {
+                            echo "Erreur !: " . $e->getMessage() . "<br>";
+                        }
+                        
+                        
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 

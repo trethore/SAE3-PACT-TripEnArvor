@@ -276,7 +276,7 @@ try {
                                             print_r(getIdOffresContientAvis($tab['id_offre']));
                                             print_r(intval($_SESSION['id']));
                                             echo "</pre>";
-                                            if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
+                                            if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
                                                 echo "Oui";
                                             }
                                         ?>
@@ -361,8 +361,8 @@ try {
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
+        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
         Redden's, Inc.
         </div>
     </footer>

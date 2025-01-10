@@ -139,7 +139,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/images/universel/facture.pdf" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/back/generer-facture/" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
                     </li>
                 <?php
                 }
@@ -175,11 +175,11 @@ try {
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
-        <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
-        </div>
+            <div class="footer-bottom">
+                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
+                Redden's, Inc.
+            </div>
     </footer>
 </body>
 </html>
