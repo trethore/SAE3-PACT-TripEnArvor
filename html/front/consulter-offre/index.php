@@ -224,7 +224,6 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="/style/style_navPhone.css" />
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -431,15 +430,18 @@ try {
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
-                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
                     <?php case "Visite": ?>
-                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"?></p>
                         <?php break; ?>
                     <?php case "Spectacle": ?>
-                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                        <?php $event = explode(' ', $spectacle['date']);
+                        $dateEvent = explode('-', $event[0]); ?>
+                        <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
@@ -641,13 +643,21 @@ try {
                                 </div>
                             <?php } ?>
                             <div class="display-ligne-espace">
-                                <label for="date">Saisissez la date de votre visite</label>
+                                <div>
+                                    <label for="date">Saisissez la date de votre visite</label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                </div>
                                 <p class="transparent">.</p>
                             </div>
+
                             <div class="display-ligne-espace">
-                                <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                <div>
+                                    <label id="photo" for="photo">Importez une photo</label> 
+                                    <input type="file" id="photo" name="photo"/><br>
+                                </div>
                                 <p class="transparent">.</p>
                             </div>
+
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
                             <button type="submit">Publier</button>
                             <button type="button" id="cancelFormButton">Annuler</button>
@@ -683,9 +693,8 @@ try {
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php }
                             $publication = explode(' ', $dateAvis[$compteur]['date']);
-                            $datePub = explode('-', $publication[0]); 
-                            $heurePub = explode(':', $publication[1]); ?>
-                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
+                            $datePub = explode('-', $publication[0]); ?>
+                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
                         </div>
                         <p class="transparent">.</p>
                     </div>
@@ -709,13 +718,14 @@ try {
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
-                    <!-- <div class="display-ligne-espace">
+
+                    <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
@@ -815,9 +825,9 @@ try {
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden’s, Inc.
+        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
+        Redden's, Inc.
         </div>
         
     </footer>
@@ -920,13 +930,13 @@ try {
         }
 
     </script>
-</body>
-<div class="telephone-nav">
-    <div class="bg"></div>
+    <div class="telephone-nav">
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
         <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
     </div>
 </div>
+</body>
+
 </html>

@@ -34,7 +34,6 @@ $reqCompte = "SELECT * from sae.compte_membre
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -180,14 +179,12 @@ try {
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
+        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
         Redden's, Inc.
         </div>
     </footer>
-</body>
-<div class="telephone-nav">
-    <div class="bg"></div>
+    <div class="telephone-nav">
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
         <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
@@ -197,5 +194,7 @@ try {
         </div></a>
     </div>
 </div>
+</body>
+
 
 </html>

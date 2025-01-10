@@ -16,7 +16,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Accueil</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -200,8 +199,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
         </div>
         <div class="footer-bottom">
-            Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-            Conditions générales - ©
+            <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
+            <a href="/cgu/" target="_blank">Conditions générales</a> - ©
             Redden's, Inc.
         </div>
     </footer>
@@ -261,16 +260,19 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
             updateCarousel();
         });
     </script>
-</body>
-<div class="telephone-nav">
-    <div class="bg"></div>
-    <div class="nav-content">
-        <a href="/front/accueil"><div class = "btOn"><img src="/images/frontOffice/icones/accueil.png"></div></a>
-        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
-        
-        <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
+    <div class="telephone-nav">
+        <div class="nav-content">
+            <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
+            <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
+            <a href="/front/mon-compte">
+                <div class="btOn">
+                    <img src="/images/frontOffice/icones/utilisateur.png">
+                </div>
+            </a>
+        </div>
     </div>
-</div>
+</body>
+
 
 </html>
 

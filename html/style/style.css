@@ -2345,7 +2345,36 @@ h3 {
     text-align: right;
 }
 
+
+
+/**************************************************************************************
+                                    Nav Phone
+***************************************************************************************/
+
+.telephone-nav {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    background-color: var(--violet-principal);
+}
+
+.telephone-nav img {
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+/**************************************************************************************
+                                    Media Query
+***************************************************************************************/
+
 @media only screen and (max-width: 900px) {
+    .telephone-nav {
+        display: inline;
+    }
+
     .front {
         padding-bottom: 120px;
     }
