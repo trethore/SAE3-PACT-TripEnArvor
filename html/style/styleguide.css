@@ -258,15 +258,16 @@ Telephone nav pour le front a mettre en dessous le body
 /*
 <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <div class="telephone-nav">
-        <div class="bg"></div>
-        <div class="nav-content">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
+        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
+        <a href="/front/mon-compte">
         <div class = "btOn">
-            <img src="/images/frontOffice/icones/accueil.png">
-            </div>
-            <img src="/images/frontOffice/icones/chercher.png">
             <img src="/images/frontOffice/icones/utilisateur.png">
-        </div>
+        </div></a>
     </div>
+</div>
 */
 
 
