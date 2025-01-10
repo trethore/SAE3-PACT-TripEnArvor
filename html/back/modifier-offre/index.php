@@ -191,9 +191,7 @@ try {
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
     print_r($offre_bonne_cat);
 
-
-    $date_bon_format = date("yyyy-MM-ddThh:mm:ss", strtotime($offre_bonne_cat['date_evenement']));//date de la bdd mise dans le bon format pour etre afficher
-    echo $date_bon_format;
+    $date_bon_format = date("Y-m-d\TH:i", strtotime($offre_bonne_cat['date_evenement']));
 
     
 
@@ -419,8 +417,7 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php 
-                                                                                                                                                                                                                if(isset($offre_bonne_cat['date_evenement'])){ 
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php  if(isset($offre_bonne_cat['date_evenement'])){ 
                                                                                                                                                                                                                     echo htmlentities($date_bon_format); } ?>">
                     <br>
                     <!-- spectacle -->
@@ -454,7 +451,7 @@ try {
                             if(!in_array($tag, $tags)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         <?php }}
-                        foreach ($liste_tags_restaurant as $tag) { 
+                        foreach ($liste_tags_restauration as $tag) { 
                             if(!in_array($tag, $tags)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                    
