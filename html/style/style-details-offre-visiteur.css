@@ -321,9 +321,10 @@ form > p {
     padding: 0;
 }
 
-::placeholder{   /*guidage*/
+::placeholder {  
     font-style: italic;
     color: var(--gris);
+    text-align: center;
   }
 
 label {
@@ -346,7 +347,7 @@ textarea {
     background: var(--blanc);
     border: 1px solid var(--gris);
     border-radius: 5px;
-    height: 30px;
+    height: 50px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;  
 }
@@ -361,7 +362,7 @@ input, select {
     border: 1px solid var(--gris);
     border-radius: 12px;
     height: 50px;
-    margin-left: 20px;
+    margin-left: 10px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
