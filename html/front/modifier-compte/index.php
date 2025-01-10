@@ -6,7 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
-
 $emailError = ''; // Message d'erreur par défaut
 
 try {
@@ -160,7 +159,7 @@ try {
                     </td>
                 </tr>
             </table>
-            <div>
+            <div> 
                 <a href="/front/mon-compte" id="retour">Revenir au compte</a>
                 <input type="submit" value="Valider les modifications">
             </div>
