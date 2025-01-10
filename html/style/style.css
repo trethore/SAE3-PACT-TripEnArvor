@@ -1179,12 +1179,12 @@ h3 {
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 45pt;
+    border: 2px var(--violet-principal) solid;
 }
 
 .accueil h1:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
-    border: 2px var(--violet-principal) solid;
 }
 
 .accueil main {
