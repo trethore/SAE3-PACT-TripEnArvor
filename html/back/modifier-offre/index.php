@@ -173,7 +173,7 @@ try {
                 $offre_bonne_cat = getVisite($id_offre_cible);
                 break;
             default:
-                die("Erreur de categorie!");
+                die("Erreur de function bon get selon categorie!");
         }
         return $offre_bonne_cat;
     }
@@ -195,6 +195,7 @@ print_r($tags);
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
     $categorie = trim(strtolower(supprimerAccents($categorie)));
+    print($categorie);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
@@ -376,8 +377,11 @@ try {
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
                         <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (isset($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
-                            echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
+                        <?php if (isset($adresse['num_et_nom_de_voie'])) {
+                            echo htmlentities($adresse['num_et_nom_de_voie']);
+                            if (isset($adresse['complement_adresse'] )){
+                                echo htmlentities($adresse['complement_adresse']);
+                            }; } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
@@ -466,8 +470,7 @@ try {
                     <ul>
                     <?php 
                         if (!empty($tags)) {
-                            foreach ($tags as $tag) { 
-                                echo($tag['nom_tag']);?>
+                            foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } } 
                     foreach($liste_tags as $tag){ 
