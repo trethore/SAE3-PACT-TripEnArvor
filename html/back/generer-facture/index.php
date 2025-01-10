@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="genFacture">
-    <img src="/images/universel/logo/Logo_couleurs.png" alt="">
+    <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
     <section>
         <article class="delivre">
             <h3>Délivré à</h3>
@@ -58,12 +58,11 @@
             </tbody>
         </table>
     </section>
+    <hr>
     <article class="totals">
-        <hr>
         <p>Total HT: 31.25€</p>
         <p>Total TVA: 10€</p>
         <p>Total TTC: 34.38€</p>
-        <hr>
     </article>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>

@@ -2322,7 +2322,12 @@ h3 {
     background-color: var(--blanc);
 }
 
-.genFacture .totals p {
+.genFacture .totals {
+    margin: 1em 0;
+    text-align: right;
+}
+
+.genFacture .totals p > p > p {
     font-weight: bold;
     margin: 5px 0;
 }
