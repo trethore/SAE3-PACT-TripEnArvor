@@ -21,10 +21,8 @@ if (!isset($id_compte) || !isIdMember($id_compte)) {
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_membre cm 
-                join sae._compte c on c.id_compte = cm.id_compte 
-                join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cm.id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre
+        where id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -156,30 +154,6 @@ try {
                     </td>
                 </tr>
             </table>
-            <h2>Mon adresse</h2>
-            <table>
-                <tr>
-                    <td>Adresse postale</td>
-                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Complément d'adresse</td>
-                    <td>
-                        <input type="text" name="compl_adr" id="compl_adr" value="<?= htmlentities($detailCompte["complement_adresse"] ?? '');?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Code postal</td>
-                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Ville</td>
-                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Pays</td>
-                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
-                </tr>
             <div>
                 <a href="/front/mon-compte" id="retour">Revenir au compte</a>
                 <input type="submit" value="Valider les modifications">
@@ -257,13 +231,6 @@ try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
                 case 'membre':
-                    $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'] ?? '';
-                    $code_postal = $_POST['cp'];
-                    $city = $_POST['ville'];
-                    $country = $_POST['pays'];
-                    if ($address_complement === '') $address_complement = null;
-
                     // Vérification de l'existence d'un email
                     $queryCheckEmail = "SELECT id_compte FROM sae._compte WHERE email = :email AND id_compte != :id_compte";
                     $stmtCheckEmail = $conn->prepare($queryCheckEmail);
@@ -274,21 +241,13 @@ try {
                         die("Erreur : cet email est déjà utilisé par un autre compte.");
                     }
 
-                    // Requete SQL pour modifier la table adresse
-                    $query = "UPDATE sae._adresse 
-                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                    $id_adresse = $stmt->fetch()['id_adresse'];
-
-                    // Requete SQL pour modifier la vue compte_professionnel_publique
+                    // Requete SQL pour modifier la vue compte_membre
                     $query = "UPDATE sae.compte_membre 
-                                set (pseudo, nom_compte, prenom, email, tel, mot_de_passe, id_adresse) 
+                                set (pseudo, nom_compte, prenom, email, tel, mot_de_passe) 
                                     = (?, ?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
-                    $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $id_compte]);
+                    $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_compte]);
 
                     break;
 
