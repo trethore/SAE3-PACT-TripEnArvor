@@ -62,7 +62,7 @@
     <section class="totals">
         <article>
             <span>Total HT : </span>
-            <p>31.25€</p>
+            <span>31.25€</span>
         </article>
         <article>
             <span>Total TVA : </span>
