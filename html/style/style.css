@@ -2324,7 +2324,7 @@ h3 {
     text-align: center;
 }
 
-.genFacture .facture-details tr:first-child {
+.genFacture .facture-details td:first-child {
     text-align: left;
 }
 
