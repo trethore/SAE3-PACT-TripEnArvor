@@ -414,7 +414,6 @@ try {
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                            <?php print_r($attraction['plan']); ?>
                             <a href="/images/universel/photo/<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         </div>
                         <?php break; ?>
