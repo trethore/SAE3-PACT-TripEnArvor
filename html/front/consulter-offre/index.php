@@ -579,27 +579,26 @@ try {
                                 $stmtInsertionDateVisite->execute([$visite_le]);
                                 $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_avis";
+                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                                 $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
-                                $idAvis = $stmtInsertionAvis->fetch(PDO::FETCH_ASSOC)['id_avis'];
 
                                 if ($categorie == "Restauration") {
-                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
                                     $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
-                                    $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $idAvis]);
+                                    $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $id_membre, $id_offre]);
 
-                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
                                     $stmtInsertionService = $dbh->prepare($reqInsertionService);
-                                    $stmtInsertionService->execute(["Service", $noteService, $idAvis]);
+                                    $stmtInsertionService->execute(["Service", $noteService, $id_membre, $id_offre]);
 
-                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
                                     $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
-                                    $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $idAvis]);
+                                    $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $id_membre, $id_offre]);
 
-                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_avis) VALUES (?, ?, ?)";
+                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
                                     $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
-                                    $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $idAvis]);
+                                    $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
                                 }
                                 $dbh->prepare("COMMIT;")->execute();
                             } catch (PDOException $e) {
@@ -645,7 +644,7 @@ try {
                     <?php if ($categorie == "Restauration") { ?>
                         <div class="display-ligne">
                             <?php foreach ($noteDetaillee as $n) { ?>
-                                <?php if ($n['id_avis'] == $a['id_avis']) { ?>
+                                <?php if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
                                     <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">

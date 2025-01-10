@@ -231,82 +231,84 @@ try {
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
+                    if (!isOffreHorsLigne($tab['id_offre'])) {
                     ?>
-                    <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
-                        <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
-                            <div class="sous-offre">
-                                <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                                <?php $horaire = getHorairesOuverture($tab['id_offre']);
-                                setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                                $jour_actuel = $jours[date('w')];
-                                $ouverture = "Indét.";
-                                foreach ($horaire as $h) {
-                                    if (!empty($horaire)) {
-                                        $ouvert_ferme = date('H:i');
-                                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                                        $ouverture = "Fermé";
-                                        if ($h['nom_jour'] == $jour_actuel) {
-                                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                                $ouverture = "Ouvert";
-                                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                                $ouverture = "Ferme Bnt.";
-                                            }
-                                        }
-                                    } 
-                                } ?>
-
-                                <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
-                                <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
-                                <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                                <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                                <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                                <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                                <div class="bas-offre">
-                                    <div class="etoiles">
-                                        <?php
-                                            if (empty($tab["note"])) {
-                                                ?>
-                                                    <p style="color: var(--noir);">Pas d'avis disponibles.</p>
-                                                <?php
-                                            } else {
-                                                $note = $tab["note"];
-                                                $etoilesPleines = floor($note);
-                                                $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
-                                                $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-
-                                                for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                    ?>
-                                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                                    <?php
-                                                }
-
-                                                if ($demiEtoile) {
-                                                    ?>
-                                                    <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                                                    <?php
-                                                }
-
-                                                for ($i = 0; $i < $etoilesVides; $i++) {
-                                                    ?>
-                                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                                    <?php
+                        <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
+                            <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                                <div class="sous-offre">
+                                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                                    <?php $horaire = getHorairesOuverture($tab['id_offre']);
+                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                    $jour_actuel = $jours[date('w')];
+                                    $ouverture = "Indét.";
+                                    foreach ($horaire as $h) {
+                                        if (!empty($horaire)) {
+                                            $ouvert_ferme = date('H:i');
+                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                            $ouverture = "Fermé";
+                                            if ($h['nom_jour'] == $jour_actuel) {
+                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                    $ouverture = "Ouvert";
+                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                    $ouverture = "Ferme Bnt.";
                                                 }
                                             }
-                                        ?>
-                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
+                                        } 
+                                    } ?>
+
+                                    <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
+                                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
+                                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                    <div class="bas-offre">
+                                        <div class="etoiles">
+                                            <?php
+                                                if (empty($tab["note"])) {
+                                                    ?>
+                                                        <p style="color: var(--noir);">Pas d'avis disponibles.</p>
+                                                    <?php
+                                                } else {
+                                                    $note = $tab["note"];
+                                                    $etoilesPleines = floor($note);
+                                                    $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+
+                                                    for ($i = 0; $i < $etoilesPleines; $i++) {
+                                                        ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                                        <?php
+                                                    }
+
+                                                    if ($demiEtoile) {
+                                                        ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                                        <?php
+                                                    }
+
+                                                    for ($i = 0; $i < $etoilesVides; $i++) {
+                                                        ?>
+                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                                        <?php
+                                                    }
+                                                }
+                                            ?>
+                                            <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
+                                        </div>
+
+                                        <?php if ($tab["categorie"] == "Restauration") { ?>
+                                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
+                                        <?php } else { ?>
+                                            <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
+                                        <?php } ?>
                                     </div>
-
-                                    <?php if ($tab["categorie"] == "Restauration") { ?>
-                                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
-                                    <?php } else { ?>
-                                        <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
-                                    <?php } ?>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
                 <?php
+                    }
                 }
             ?>
         </section>        
