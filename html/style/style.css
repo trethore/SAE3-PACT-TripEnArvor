@@ -494,6 +494,13 @@ h3 {
     border: 2px solid var(--orange-principale);
 }
 
+.compte-back-modif .error {
+    color: red;
+}
+.compte-back-modif input.error {
+    border: 2px solid red;
+}
+
 /* Style de la popup */
 #validerModifCompte, 
 #annulerModifCompte, 
