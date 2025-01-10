@@ -56,9 +56,9 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+                    redirectTo('/front/consulter-offres/');
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                    redirectTo('https://redden.ventsdouest.dev/back/liste-back/');
+                    redirectTo('/back/liste-back/');
                 }
             } else {
                 unset($_POST["email"]);
