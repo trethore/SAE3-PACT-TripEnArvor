@@ -112,7 +112,7 @@ try {
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
         $stmt->execute();
         $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);?>
-        
+
         <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
@@ -243,7 +243,7 @@ try {
                     // Requete SQL pour modifier la vue compte_membre
                     $query = "UPDATE sae.compte_membre 
                                 set (pseudo, nom_compte, prenom, email, tel, mot_de_passe) 
-                                    = (?, ?, ?, ?, ?, ?, ?)
+                                    = (?, ?, ?, ?, ?, ?)
                                 where id_compte = ?;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_compte]);
