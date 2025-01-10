@@ -192,6 +192,7 @@ try {
     print_r($offre_bonne_cat);
 
     $date_bon_format = date("Y-m-d\TH:i", strtotime($offre_bonne_cat['date_evenement']));
+    echo $date_bon_format;
 
     
 
@@ -418,7 +419,7 @@ try {
                     <!-- viste et spectacle -->
                     <br>
                     <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php  if(isset($offre_bonne_cat['date_evenement'])){ 
-                                                                                                                                                                                                                    echo htmlentities($date_bon_format); } ?>">
+                                                                                                                                                                                                                    echo $date_bon_format; } ?>">
                     <br>
                     <!-- spectacle -->
                     <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
