@@ -2279,6 +2279,10 @@ h3 {
                                     COMPTE FRONT
     ***************************************************************************************/
 
+    :root {
+        font-size: 100%; 
+    }
+
     .compte-front {
         display: flex;
         flex-wrap: wrap;
@@ -2342,7 +2346,6 @@ h3 {
     .compte-front-modif section {
         background-color: var(--blanc);
         border-radius: 15px;
-        padding: 0;
     }
 
     .compte-front section h3 ,
