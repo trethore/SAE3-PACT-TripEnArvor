@@ -217,9 +217,9 @@ try {
 
 <head>
     <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link rel="stylesheet" href="/style/style.css"/>
-    <meta name="viewport" content="width=device-width"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -925,9 +925,8 @@ try {
     <div class="bg"></div>
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
-        <a href="/front/consulter-offres"><div class = "btOn"><img src="/images/frontOffice/icones/chercher.png"></div></a>
-        <a href="/front/mon-compte">
-            <img src="/images/frontOffice/icones/utilisateur.png"></a>
+        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
+        <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
     </div>
 </div>
 </html>
