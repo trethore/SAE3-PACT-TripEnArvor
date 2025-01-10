@@ -245,7 +245,7 @@ try {
 
 
                     if ($existingAccount) {
-                        $emailError = "Cet email est déjà utilisé par un autre compte.";
+                        echo "<script>alert('Cet email est déjà utilisé par un autre compte.');</script>";
                     } else {
                         // Mise à jour des informations si l'email est unique
                         // Requete SQL pour modifier la vue compte_membre
@@ -255,7 +255,7 @@ try {
                                     where id_compte = ?;";
                         $stmt = $conn->prepare($query);
                         $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_compte]);
-                        header("Location: /front/mon-compte"); // Redirection en cas de succès
+                        redirectTo("/front/mon-compte"); // Redirection en cas de succès
                         exit;
                     }
                     break;
