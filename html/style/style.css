@@ -2358,11 +2358,16 @@ h3 {
     background-color: var(--violet-principal);
 }
 
-.telephone-nav img {
-    width: 40px;
+.telephone-nav a {
+    display: block;
+    width: 40px;  /* Taille de l'image parent */
     height: 40px;
-    max-width: 100%;
-    height: auto;  /* Assure que le ratio de l'image est conservé */
+}
+
+.telephone-nav img {
+    width: 100%;  /* L'image prend la taille de son parent */
+    height: 100%;
+    object-fit: contain;  /* Assure que l'image reste proportionnelle */
 }
 
 
