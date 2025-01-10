@@ -2360,6 +2360,8 @@ h3 {
 .telephone-nav img {
     width: 40px;
     height: 40px;
+    max-width: 100%;
+    height: auto;  /* Assure que le ratio de l'image est conservé */
 }
 
 
@@ -2369,6 +2371,10 @@ h3 {
 ***************************************************************************************/
 
 @media only screen and (max-width: 900px) {
+    .telephone-nav {
+        display: none;
+    }
+
     .front {
         padding-bottom: 120px;
     }
