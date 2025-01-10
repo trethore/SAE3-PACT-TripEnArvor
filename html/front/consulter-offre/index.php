@@ -585,60 +585,54 @@ try {
                                 <p class="transparent">.</p>
                             </div>
                             <div class="display-ligne-espace">
-                                <select id="contexte" name="contexte" required>
-                                    <option value="" disabled selected>Choisissez un contexte</option>
-                                    <option value="affaires">Affaires</option>
-                                    <option value="couple">Couple</option>
-                                    <option value="famille">Famille</option>
-                                    <option value="amis">Amis</option>
-                                    <option value="solo">Solo</option>
-                                </select><br>
-                                <p class="transparent">.</p>
-                            </div>
-                            <div class="display-ligne-espace">
-                                <label for="avis">Rédigez votre avis</label>
+                                <div>
+                                    <select id="contexte" name="contexte" required>
+                                        <option value="" disabled selected>Choisissez un contexte</option>
+                                        <option value="affaires">Affaires</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="famille">Famille</option>
+                                        <option value="amis">Amis</option>
+                                        <option value="solo">Solo</option>
+                                    </select><br>
+                                    <label for="avis">Rédigez votre avis</label>
+                                </div>
                                 <p class="transparent">.</p>
                             </div>
                             <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             <div class="display-ligne-espace">
-                                <label for="note">Saisissez la note de votre avis</label>
-                                <p class="transparent">.</p>
-                            </div>
-                            <div class="display-ligne-espace">
-                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                <div>
+                                    <label for="note">Saisissez la note de votre avis</label>
+                                    <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                </div>
                                 <p class="transparent">.</p>
                             </div>
                             <?php if ($categorie == "Restauration") { ?>
                                 <div class="display-ligne-espace">
-                                    <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                    <div>
+                                        <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                        <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    </div>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    <div>
+                                        <label for="note_service">Saisissez une note pour le service</label>
+                                        <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    </div>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <label for="note_service">Saisissez une note pour le service</label>
+                                    <div>
+                                        <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
+                                        <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    </div>
                                     <p class="transparent">.</p>
                                 </div>
                                 <div class="display-ligne-espace">
-                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    <p class="transparent">.</p>
-                                </div>
-                                <div class="display-ligne-espace">
-                                    <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
-                                    <p class="transparent">.</p>
-                                </div>
-                                <div class="display-ligne-espace">
-                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    <p class="transparent">.</p>
-                                </div>
-                                <div class="display-ligne-espace">
-                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
-                                    <p class="transparent">.</p>
-                                </div>
-                                <div class="display-ligne-espace">
-                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    <div>
+                                        <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
+                                        <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                    </div>
                                     <p class="transparent">.</p>
                                 </div>
                             <?php } ?>
