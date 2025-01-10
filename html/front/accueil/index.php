@@ -143,12 +143,7 @@ try {
                     <?php foreach ($ids_nouv as $offre_nouv) { 
                         $id = $offre_nouv["id_offre"];
                         $titre = $offre_nouv["titre"];
-                        $note = $offre_nouv["note"]; 
-                        
-                        echo $titre;
-                        echo $note;
-                        
-                        ?>
+                        $note = $offre_nouv["note"]; ?>
 
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
                             <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
@@ -197,7 +192,6 @@ try {
             </div>
         </div>
 
-
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
@@ -209,76 +203,59 @@ try {
     </footer>
 
     <script>
-        const images = document.querySelector('.carousel-images');
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
-        const titreElement = document.querySelector('#carousel-titre');
+        document.querySelectorAll('.carousel').forEach(carousel => {
+            const images = carousel.querySelector('.carousel-images');
+            const prevButton = carousel.querySelector('.prev');
+            const nextButton = carousel.querySelector('.next');
+            const titreElement = carousel.querySelector('.titre');
 
-        let currentIndex = 0;
+            let currentIndex = 0;
 
-        updateCarousel();
+            function updateCarousel() {
+                const width = images.clientWidth;
+                images.style.transform = `translateX(-${currentIndex * width}px)`;
 
-        // Gestion du clic sur le bouton "Suivant"
-        nextButton.addEventListener('click', () => {
-            currentIndex++;
-            if (currentIndex >= images.children.length) {
-                currentIndex = 0;
+                const currentAnchor = images.children[currentIndex];
+                const imgElement = currentAnchor.querySelector('img');
+                const titre = imgElement.dataset.titre || "Titre indisponible";
+                const note = parseFloat(imgElement.dataset.note) || 0;
+
+                let starsHTML = '';
+                if (note === 0) {
+                    starsHTML = "Pas d'avis disponibles.";
+                } else {
+                    etoilesPleines = Math.floor(note);
+                    demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
+                    etoilesVides = 5 - etoilesPleines - demiEtoile;
+
+                    for (i = 0; i < etoilesPleines; i++) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
+                    }
+
+                    if (demiEtoile) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
+                    }
+                        
+                    for (i = 0; i < etoilesVides; i++) {
+                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
+                    }
+                }
+
+                titreElement.innerHTML = `${titre} ${starsHTML}`;
             }
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.children.length - 1;
+                updateCarousel();
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % images.children.length;
+                updateCarousel();
+            });
+
             updateCarousel();
         });
-
-        // Gestion du clic sur le bouton "Précédent"
-        prevButton.addEventListener('click', () => {
-            currentIndex--;
-            if (currentIndex < 0) {
-                currentIndex = images.children.length - 1;
-            }
-            updateCarousel();
-        });
-
-        function updateCarousel() {
-            const width = images.clientWidth;
-            images.style.transform = `translateX(-${currentIndex * width}px)`;
-
-            // Get the current `<a>` element
-            const currentAnchor = images.children[currentIndex];
-            // Find the `<img>` inside the `<a>`
-            const imgElement = currentAnchor.querySelector('img');
-
-            // Extract data attributes from the `<img>`
-            const titre = imgElement.dataset.titre || "Titre indisponible";
-            const note = parseFloat(imgElement.dataset.note) || 0;
-
-            console.log(`Titre : ${titre}, Note : ${note}`);
-
-            // Generate the stars HTML
-            let starsHTML = '';
-            if (note === 0) {
-                starsHTML = "Pas d'avis disponibles.";
-            } else {
-                etoilesPleines = Math.floor(note);
-                demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
-                etoilesVides = 5 - etoilesPleines - demiEtoile;
-
-                for (i = 0; i < etoilesPleines; i++) {
-                    starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
-                }
-
-                if (demiEtoile) {
-                    starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
-                }
-                    
-                for (i = 0; i < etoilesVides; i++) {
-                    starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
-                }
-            }
-
-            // Update the carousel title and stars
-            titreElement.innerHTML = `
-                ${titre}
-                ${starsHTML}
-            `;
-        }
     </script>
 </body>
 </html>
