@@ -585,92 +585,65 @@ try {
                             </div>
 
                             <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label for="contexte">Contexte de visite :</label>
-                                    <select id="contexte" name="contexte" required>
-                                        <option value="" disabled selected>Choisissez un contexte</option>
-                                        <option value="affaires">Affaires</option>
-                                        <option value="couple">Couple</option>
-                                        <option value="famille">Famille</option>
-                                        <option value="amis">Amis</option>
-                                        <option value="solo">Solo</option>
-                                    </select><br>
-                                </div>
-                                <p class="transparent">.</p>
+                            <div>
+                                <label for="contexte">Contexte de visite :</label>
+                                <select id="contexte" name="contexte" required>
+                                    <option value="" disabled selected>Choisissez un contexte</option>
+                                    <option value="affaires">Affaires</option>
+                                    <option value="couple">Couple</option>
+                                    <option value="famille">Famille</option>
+                                    <option value="amis">Amis</option>
+                                    <option value="solo">Solo</option>
+                                </select><br>
                             </div>
-
+                
                             <!-- CHAMP DE RÉDACTION DE L'AVIS -->
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label for="avis">Rédigez votre avis</label>
-                                    <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
-                                </div>
-                                <p class="transparent">.</p>
+                            <div>
+                                <label for="avis">Rédigez votre avis</label>
+                                <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                             
                             <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS -->
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label for="note">Saisissez la note de votre avis</label>
-                                    <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                </div>
-                                <p class="transparent">.</p>
+                            <div>
+                                <label for="note">Saisissez la note de votre avis</label>
+                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                             </div>
 
                             <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS POUR UNE OFFRE DE RESTAURATION -->
                             <?php if ($categorie == "Restauration") { ?>
 
-                                <div class="display-ligne-espace">
-                                    <div>
-                                        <label for="note_cuisine">Saisissez une note pour la cuisine</label>
-                                        <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    </div>
-                                    <p class="transparent">.</p>
+                                <div>
+                                    <label for="note_cuisine">Saisissez une note pour la cuisine</label>
+                                    <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
-                                <div class="display-ligne-espace">
-                                    <div>
-                                        <label for="note_service">Saisissez une note pour le service</label>
-                                        <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    </div>
-                                    <p class="transparent">.</p>
+                                <div>
+                                    <label for="note_service">Saisissez une note pour le service</label>
+                                    <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
-                                <div class="display-ligne-espace">
-                                    <div>
-                                        <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
-                                        <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    </div>
-                                    <p class="transparent">.</p>
+                                <div>
+                                    <label for="note_ambiance">Saisissez une note pour l'ambiance</label>
+                                    <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
-                                <div class="display-ligne-espace">
-                                    <div>
-                                        <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
-                                        <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                                    </div>
-                                    <p class="transparent">.</p>
+                                <div>
+                                    <label for="note_rapport">Saisissez une note pour le rapport qualité prix</label>
+                                    <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                                 </div>
 
                             <?php } ?>
 
                             <!-- CHAMP DE SÉLECTION DE LA DATE VISITE DE L'AVIS -->
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label for="date">Saisissez la date de votre visite</label>
-                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
-                                </div>
-                                <p class="transparent">.</p>
+                            <div>
+                                <label for="date">Saisissez la date de votre visite</label>
+                                <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                             </div>
 
                             <!-- CHAMP D'IMPORTATION DE LA PHOTO DE L'AVIS -->
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label id="photo" for="photo">Importez une photo</label> 
-                                    <input type="file" id="photo" name="photo"/><br>
-                                </div>
-                                <p class="transparent">.</p>
+                            <div>
+                                <label id="photo" for="photo">Importez une photo</label> 
+                                <input type="file" id="photo" name="photo"/><br>
                             </div>
 
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
