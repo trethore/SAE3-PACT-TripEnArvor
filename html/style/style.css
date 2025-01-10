@@ -230,6 +230,8 @@ h3 {
 
     margin: 2em;
 
+
+
     border-radius: 30px;
     border: none;
 
@@ -237,6 +239,8 @@ h3 {
     font-weight: 600;
     font-size: 40px;
     line-height: 50px;
+
+    text-align: center;
 
     display: flex;
     align-items: center;
@@ -2172,10 +2176,8 @@ h3 {
 }
 
 .front .input-search::placeholder {
-	color: var(--semi-trans);
+	color: var(--blanc);
 	font-size: 18px;
-	letter-spacing: 2px;
-	font-weight: 100;
 }
 
 .front .btn-search {
@@ -2269,14 +2271,33 @@ h3 {
 		display: none;
 	}
 
+    .compte-front {
+        color: none;
+        background-color: none;
+    }
+    
+    .compte-front main,
+    .compte-front-modif main {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        margin: 1em;
+    }
+    .compte-front nav {
+        display: flex;
+        flex-direction: column;
+    
+        position: relative;
+        top: 0;
+        background-color: none;
+        border-radius: 15px;
+        width: 0;
+        height: 0;
+        margin-right: none;
+    }
+
+
     .connecter h1 {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 32px;
-    
-        color: var(--noir);
-    
-        margin: 0;
         margin-top: 30px;
     }
 }
@@ -2334,6 +2355,14 @@ h3 {
     .creer-compte #div-name-and-first-name div {
         width: 100%;
     }
+
+    .connecter h1 {
+        margin-top: 70px;
+    }
+
+    .connecter input[type="submit"]{
+        font-size: 30px;
+    }
 }
 
 @media screen and (max-width: 460px) {
@@ -2343,11 +2372,22 @@ h3 {
     }
 }
 
+@media screen and (max-width: 380px) {
+
+    .connecter h1 {
+        margin-top: 130px;
+    }
+
+    
+}
+
 @media screen and (max-width: 330px) {
 
     .creer-compte #div-adresse .row div {
         width: 100%;
     }
+
+    
 }
 
 @media screen and (orientation: portrait) {
