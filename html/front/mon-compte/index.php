@@ -189,11 +189,12 @@ try {
 <div class="telephone-nav">
         <div class="bg"></div>
         <div class="nav-content">
-        <div class = "btOn">
+        
             <img src="/images/frontOffice/icones/accueil.png">
-            </div>
             <img src="/images/frontOffice/icones/chercher.png">
+            <div class = "btOn">
             <img src="/images/frontOffice/icones/utilisateur.png">
+            </div>
         </div>
     </div>
 </html>

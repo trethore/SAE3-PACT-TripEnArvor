@@ -274,11 +274,12 @@ try {
 <div class="telephone-nav">
         <div class="bg"></div>
         <div class="nav-content">
-        <div class = "btOn">
+        
             <img src="/images/frontOffice/icones/accueil.png">
-            </div>
+            
             <img src="/images/frontOffice/icones/chercher.png">
-            <img src="/images/frontOffice/icones/utilisateur.png">
+            <div class = "btOn"></div>
+            <img src="/images/frontOffice/icones/utilisateur.png"></div>
         </div>
     </div>
 </html>
