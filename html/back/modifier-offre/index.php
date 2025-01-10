@@ -459,19 +459,12 @@ try {
                     <ul>
                     <?php 
                         if (!empty($tags)) {
-                            foreach ($tags as $tag) { ?>
+                            foreach ($tags as $tag) { 
+                                echo($tags[0]['nom_tag']);?>
                                 <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } }
-                        foreach($liste_tags as $tag){ 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }}
-                        foreach ($liste_tags_restauration as $tag) { 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                   
-                   <?php }}
-                         ?>
+                    <?php } } ?>
+                        
+                         
                         
                      </ul>   
                     <h3>A propos de l'offre</h3>
