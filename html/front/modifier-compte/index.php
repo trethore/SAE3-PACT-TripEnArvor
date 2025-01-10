@@ -6,7 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
-
 $emailError = ''; // Message d'erreur par défaut
 
 try {
@@ -163,30 +162,6 @@ try {
                     </td>
                 </tr>
             </table>
-            <h2>Mon adresse</h2>
-            <table>
-                <tr>
-                    <td>Adresse postale</td>
-                    <td><input type="text" name="rue" id="rue" value="<?= htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Complément d'adresse</td>
-                    <td>
-                        <input type="text" name="compl_adr" id="compl_adr" value="<?= htmlentities($detailCompte["complement_adresse"] ?? '');?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Code postal</td>
-                    <td><input type="text" name="cp" id="cp" value="<?= htmlentities($detailCompte["code_postal"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Ville</td>
-                    <td><input type="text" name="ville" id="ville" value="<?= htmlentities($detailCompte["ville"] ?? '');?>"></td>
-                </tr>
-                <tr>
-                    <td>Pays</td>
-                    <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"] ?? '');?>"></td>
-                </tr>
             <div>
                 <a href="/front/mon-compte" id="retour">Revenir au compte</a>
                 <input type="submit" value="Valider les modifications">
