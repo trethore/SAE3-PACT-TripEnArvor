@@ -259,6 +259,15 @@ try {
         });
     </script>
 </body>
+<div class="telephone-nav">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <a href="/front/accueil"><div class = "btOn"><img src="/images/frontOffice/icones/accueil.png"></div></a>
+        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
+        <a href="/front/mon-compte">
+            <img src="/images/frontOffice/icones/utilisateur.png"></a>
+    </div>
+</div>
 </html>
 
 <?php $dbh = null; ?>
