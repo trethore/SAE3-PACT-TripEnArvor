@@ -195,14 +195,16 @@ try {
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
+        $date_evenement = $date_evenement['date'];
     }elseif ($categorie == 'visite') {
         $date_evenement = getDateVisite($id_offre_cible);
+        $date_evenement = $date_evenement['date'];
     }else {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
     print_r (getDateSpectacle($id_offre_cible));
-    print_r (getDateSpectacle($id_offre_cible));
+    print_r (getDateVisite($id_offre_cible));
     print_r( $date_evenement);
     
 
