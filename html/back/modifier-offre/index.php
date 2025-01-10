@@ -367,16 +367,16 @@ try {
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
                         <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
+                        <?php if (isset($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
                             echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
                         <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php 
-                        if ($adresse['code_postal']) {
+                        if (isset($adresse['code_postal'])) {
                             echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
-                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php echo htmlentities($adresse['ville'] )?>"required ></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($adresse['ville'])) {echo htmlentities($adresse['ville']); } ?>"required ></td>
                     </tr>
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
