@@ -633,7 +633,11 @@ try {
                         break;
 
                     case 'parc':
-                        $dbh->beginTransaction();
+                        try {
+                            if (!$dbh->inTransaction()) {
+                                $dbh->beginTransaction();
+                            }
+
                         $file = $_FILES['plan'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -652,8 +656,6 @@ try {
                             $stmt_plan->execute([$fichier_plan]);
 
                         }
-
-                        try {
                             $requete = "INSERT INTO sae.offre_parc_attraction(
                                 titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
                             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
@@ -671,11 +673,7 @@ try {
                             ]);
                         
                             $id_offre = $stmt->fetchColumn();
-                            echo "Nouvelle offre créée avec l'ID : " . $id_offre;
-                        } catch (Exception $e) {
-                            echo "Erreur !: " . $e->getMessage() . "<br>";
-                        }
-                        
+                           
                         
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -685,7 +683,14 @@ try {
                         $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                         $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
-
+                        // Commit de la transaction
+                        $dbh->commit();
+                    } catch (PDOException $e) {
+                        if ($dbh->inTransaction()) {
+                            $dbh->rollBack();
+                        }
+                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                        exit;
                         
 
                         break;
