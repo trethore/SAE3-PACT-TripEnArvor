@@ -376,7 +376,7 @@ try {
                         if (isset($adresse['code_postal'])) {
                             echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
-                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($adresse['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td>
                     </tr>
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
