@@ -58,8 +58,8 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         </article>
         <article>
             <h3>Numéro de facture</h3>
-            <h3>#012345</h3>
-            <p>{jj/mm/aaaa}</p>
+            <h3>{#id_facture}</h3>
+            <p>{date_emission}</p>
         </article>
     </section>
     <section class="facture-details">
@@ -69,10 +69,10 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                     <th>Nom offre</th>
                     <th>Type d'option</th>
                     <th>Date</th>
-                    <th>Qté</th>
+                    <th>Nb Jour</th>
                     <th>% TVA</th>
                     <th>Prix HT</th>
-                    <th>Prix Unitaire</th>
+                    <th>Prix Journalier</th>
                     <th>Prix TTC</th>
                 </tr>
             </thead>
