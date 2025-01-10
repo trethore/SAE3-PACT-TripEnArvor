@@ -22,13 +22,10 @@ try {
 }
 
 
-$reqCompte = "SELECT * from sae._compte_membre cm 
-                join sae._compte c on c.id_compte = cm.id_compte 
-                where cm.id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre
+                where id_compte = :id_compte;";
 
-$reqAdresse = "SELECT num_et_nom_de_voie, complement_adresse, code_postal, ville, pays from sae._adresse a 
-                    join sae._compte c on c.id_adresse = a.id_adresse 
-                    where c.id_compte = :id_compte;"
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -145,38 +142,6 @@ try {
                 <tr>
                     <td>N° de téléphone</td>
                     <td><?php echo htmlentities($detailCompte["tel"] ?? '');?></td>
-                </tr>
-            </table>
-            <h2>Mon adresse</h2>
-            <table>
-                <?php 
-                    // Préparation et exécution de la requête
-                    $stmt = $conn->prepare($reqAdresse);
-                    $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                    $stmt->execute();
-                    $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
-                ?>
-                <tr>
-                    <td>Adresse postale</td>
-                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?></td>
-                </tr>
-                <?php  if (isset($detailCompte["complement_adresse"])) { ?>
-                    <tr>
-                        <td>Complément d'adresse</td>
-                        <td><?php echo htmlentities($detailCompte["complement_adresse"] ?? ''); ?></td>
-                    </tr> 
-                <?php } ?>
-                <tr>
-                    <td>Code postal</td>
-                    <td><?php echo htmlentities($detailCompte["code_postal"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Ville</td>
-                    <td><?php echo htmlentities($detailCompte["ville"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Pays</td>
-                    <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
                 </tr>
             </table>
             <div>
