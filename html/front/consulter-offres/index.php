@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
+startSession();
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
@@ -271,9 +273,8 @@ try {
                                     <p style="display: none;" class="contientavisspot">
                                         <?php
                                             echo "<pre>";
-                                            print_r(getIdOffresContientAvis($tab['id_offre']));
-                                            print_r(intval($_SESSION['id']));
-                                            echo "</pre>"; 
+                                            print_r($_SESSION);
+                                            echo "</pre>";
                                             if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
                                                 echo "Oui";
                                             }

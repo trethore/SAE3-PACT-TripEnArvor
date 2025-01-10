@@ -4,6 +4,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    z-index: 99;
 }
 
 .bg {
@@ -12,7 +13,7 @@
     left: 0;
     width: 100%;
     height: 80px;
-    transform: rotate(-3deg) scale(200%);
+    transform: scale(150%);
     background-color: var(--violet-secondaire);
     z-index: -1;
 }
