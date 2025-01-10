@@ -68,7 +68,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <tr>
                     <th>Nom offre</th>
                     <th>Type d'option</th>
-                    <th>Date</th>
                     <th>Nb Jour</th>
                     <th>% TVA</th>
                     <th>Prix HT</th>
@@ -80,7 +79,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <tr>
                     <td>Restaurant coté plage</td>
                     <td>Option relief</td>
-                    <td>15/04/2024</td>
                     <td>2</td>
                     <td>20%</td>
                     <td>5.10€</td>
@@ -90,7 +88,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <tr>
                     <td>Parc d'attraction vraiment wahou</td>
                     <td>Offre premium</td>
-                    <td>17/04/2024</td>
                     <td>1</td>
                     <td>20%</td>
                     <td>24.75€</td>
