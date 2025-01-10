@@ -59,20 +59,20 @@
         </table>
     </section>
     <hr>
-    <section class="totals">
-        <article>
-            <span>Total HT : </span>
-            <span>31.25€</span>
-        </article>
-        <article>
-            <span>Total TVA : </span>
-            <span>10€</span>
-        </article>
-        <article>
-            <span>Total TTC : </span>
-            <span>34.38€</span>
-        </article>
-    </section>
+    <table class="totals">
+        <tr>
+            <td>Total HT : </td>
+            <td>31.25€</td>
+        </tr>
+        <tr>
+            <td>Total TVA : </td>
+            <td>10€</td>
+        </tr>
+        <tr>
+            <td>Total TTC : </td>
+            <td>34.38€</td>
+        </tr>
+    </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
         <p>Le paiement est dû dans les 15 jours</p>
