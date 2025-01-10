@@ -253,7 +253,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
     function getSpectacle($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqSpectacle = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_spectacle WHERE id_offre = :id_offre";
+        $reqSpectacle = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_spectacle JOIN sae._date ON sae._offre_spectacle.date_evenement = sae._date.id_date WHERE id_offre= :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtSpectacle = $conn->prepare($reqSpectacle);
