@@ -343,19 +343,22 @@ textarea {
     font-family: "Poppins", sans-serif;
 }
 
-input[name="photo"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  input[name="photo"]:hover {
-    background-color: #0056b3;
-  }
+input::file-selector-button{
+    border: 0;
+    border-radius: 12px;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    width: 200px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+  
+input::file-selector-button:hover{
+    background: var(--blanc);
+    color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
 
 span {
     color: var(--violet-principal);
