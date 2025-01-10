@@ -12,7 +12,6 @@
     left: 0;
     width: 100%;
     height: 80px;
-    transform: rotate(-3deg) scale(200%);
     background-color: var(--violet-secondaire);
     z-index: -1;
 }
