@@ -359,7 +359,7 @@ input::file-selector-button {
 }
   
 input::file-selector-button:hover {
-    background: rgb(48, 13, 77);
+    background: rgb(26, 4, 44);
 }
 
 span {
@@ -390,17 +390,12 @@ input, select {
     text-decoration: none;
     font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0;
 }
 
 #avis > button:hover, #avis > form > button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    background: rgb(26, 4, 44);
 }
 
 .titre-avis {
