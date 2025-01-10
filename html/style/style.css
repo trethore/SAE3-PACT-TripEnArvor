@@ -2274,7 +2274,7 @@ h3 {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
-        margin: 1em;
+        margin: none;
     }
     .compte-front nav {
         display: flex;
