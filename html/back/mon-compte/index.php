@@ -118,7 +118,9 @@ switch ($typeCompte) {
     <main>
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
+            <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
+            <?php } ?>
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>

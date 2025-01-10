@@ -52,7 +52,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <!-- Dénomination Sociale -->
                 <?php echo htmlentities($detailCompte["denomination"] ?? '');?><br>
                 <br>
-                <!-- Prenom -->
+                <!-- Email -->
                 <?php echo htmlentities($detailCompte["email"] ?? '');?><br>
             </p>
         </article>
