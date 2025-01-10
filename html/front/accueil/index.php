@@ -104,7 +104,7 @@ try {
         }
 
         echo "<pre>";
-        echo $ids_nouv;
+        print_r($ids_nouv);
         echo "</pre>";
 
         ?>
