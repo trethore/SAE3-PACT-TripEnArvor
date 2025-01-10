@@ -2276,6 +2276,10 @@ h3 {
     color: var(--noir);
 }
 
+.genFacture img {
+    width: 200px;
+}
+
 .genFacture h3 ,
 .genFacture thead {
     text-transform: capitalize;
