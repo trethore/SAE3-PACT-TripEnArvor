@@ -739,5 +739,24 @@
             die();
         }
     }
- 
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les ids des offres crées récemment ===== //
+    function getIdOffresContientAvis() {
+        // SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = 9;
+        global $driver, $server, $dbname, $user, $pass;
+        $reqContientAvis = "SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtContientAvis = $conn->prepare($reqContientAvis);
+            $stmtContientAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtContientAvis->execute();
+            $contientAvis = $stmtContientAvis->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $contientAvis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
 ?>

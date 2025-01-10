@@ -515,9 +515,9 @@ try {
                             <button type="button" id="cancelFormButton">Annuler</button>
                         </form>
 
-                        <? if ($submitted) { ?>
+                        <? if ($submitted) {
 
-                            <?php if (isset($_POST['titre'])) {
+                            if (isset($_POST['titre'])) {
                                 $titre = htmlspecialchars($_POST['titre']);
                             }
                             if (isset($_POST['contexte'])) {
@@ -584,19 +584,19 @@ try {
                                 $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
 
                                 if ($categorie == "Restauration") {
-                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
+                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
                                     $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
                                     $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $id_membre, $id_offre]);
 
-                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
+                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
                                     $stmtInsertionService = $dbh->prepare($reqInsertionService);
                                     $stmtInsertionService->execute(["Service", $noteService, $id_membre, $id_offre]);
 
-                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
+                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
                                     $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
                                     $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $id_membre, $id_offre]);
 
-                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
+                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
                                     $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
                                     $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
                                 }

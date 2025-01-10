@@ -467,6 +467,15 @@ try {
                     });
                 }
 
+                // Filtre par avis
+                const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                if (avisInput) {
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
+                    });
+                }
+
                 // Update Visibility
                 offers.forEach(offer => {
                     if (visibleOffers.includes(offer)) {

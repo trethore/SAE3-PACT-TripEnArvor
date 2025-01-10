@@ -2504,8 +2504,23 @@ h3 {
     *****************************************************/
 
     .compte-front-modif main, .compte-front-modif {
-        width: 100%;
+        width: fit-content;
       }
+
+      .compte-front-modif h1 {
+        font-size: 60pt;
+      }
+
+      .compte-front-modif h2 {
+        font-size: 40pt;
+    }
+
+    .compte-front-modif td {
+        font-size: 30pt;
+        padding-bottom: 1.5em;
+    }
+
+    
 }
 
 @media screen and (max-width: 1100px) {
