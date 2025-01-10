@@ -309,6 +309,10 @@ form {
     padding: 30px;
 }
 
+form > div {
+    text-align: left;
+}
+
 form > h2 {
     margin-bottom: 0;
 }
