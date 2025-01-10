@@ -2338,6 +2338,10 @@ h3 {
 
 
 @media only screen and (max-width: 900px) {
+    .front {
+        padding-bottom: 120px;
+    }
+
 	.front header {
 	  display: none;
 	}
@@ -2519,6 +2523,15 @@ h3 {
         font-size: 30pt;
         padding-bottom: 1.5em;
     }
+
+    .compte-front-modif input {
+        font-size: 20pt;
+    }
+
+    .compte-front-modif table + div input, .compte-front-modif table + div a {
+        font-size: 28pt;
+      }
+
 
     
 }

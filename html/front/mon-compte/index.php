@@ -34,6 +34,7 @@ $reqCompte = "SELECT * from sae.compte_membre
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/style_navPhone.css"/>
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -185,4 +186,15 @@ try {
         </div>
     </footer>
 </body>
+<div class="telephone-nav">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <img src="/images/frontOffice/icones/accueil.png">
+        <img src="/images/frontOffice/icones/chercher.png">
+        <div class = "btOn">
+            <img src="/images/frontOffice/icones/utilisateur.png">
+        </div>
+    </div>
+</div>
+
 </html>

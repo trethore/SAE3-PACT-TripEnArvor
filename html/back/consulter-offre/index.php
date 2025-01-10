@@ -401,10 +401,10 @@ try {
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
                     <?php case "Visite": ?>
-                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"?></p>
                         <?php break; ?>
                     <?php case "Spectacle": ?>
-                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
                         <?php $event = explode(' ', $spectacle['date']);
                         $dateEvent = explode('-', $event[0]); ?>
@@ -414,6 +414,7 @@ try {
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                            <?php print_r($attraction['plan']); ?>
                             <a href="/images/universel/photo/<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         </div>
                         <?php break; ?>
@@ -537,13 +538,13 @@ try {
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
-                    <!-- <div class="display-ligne-espace">
+                    <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
