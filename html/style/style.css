@@ -2285,10 +2285,6 @@ h3 {
     font-weight: var(--semi-bold);
 }
 
-.genFacture table {
-    text-align: center;
-}
-
 .genFacture > section {
     display: flex;
     flex-direction: row;
@@ -2314,6 +2310,7 @@ h3 {
 .genFacture th, 
 .genFacture td {
     border: 1px solid var(--blanc);
+    text-align: center;
 }
 
 .genFacture th, 
