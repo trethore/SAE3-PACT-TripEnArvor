@@ -155,7 +155,7 @@ h3 {
 }
 
 /* Lien */
-.connecter a {
+.connecter a, .creer-compte a {
     color: var(--violet-principal);
     width: 100%;
     transform: translateX(25%);
@@ -2338,9 +2338,9 @@ h3 {
       .connecter section {
         width: 90%;
       }
-    /**************************************************************************************
-                                    COMPTE FRONT
-    ***************************************************************************************/
+    /****************************************************
+                       COMPTE FRONT
+    *****************************************************/
 
     :root {
         font-size: 100%; 
@@ -2476,6 +2476,14 @@ h3 {
     .ici {
         display: none;
     }
+
+    /****************************************************
+                       Modif COMPTE FRONT
+    *****************************************************/
+
+    .compte-front-modif main {
+        width: 100%;
+      }
 }
 
 @media screen and (max-width: 1100px) {
@@ -2567,10 +2575,6 @@ h3 {
 }
 
 @media screen and (orientation: portrait) {
-    
-    :root {
-        font-size: 200%;
-    }
 
     .creer-compte header {
         position: static;
