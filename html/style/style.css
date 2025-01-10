@@ -2279,7 +2279,7 @@ h3 {
 .genFacture h3 ,
 .genFacture thead {
     text-transform: capitalize;
-    font-weight: var(--bold);
+    font-weight: var(--semi-bold);
 }
 
 .genFacture > section {
@@ -2291,6 +2291,10 @@ h3 {
 .genFacture .delivre, 
 .genFacture .payment-terms {
     margin-bottom: 20px;
+}
+
+.genFacture .delivre + article {
+    text-align: right;
 }
 
 .genFacture table {
