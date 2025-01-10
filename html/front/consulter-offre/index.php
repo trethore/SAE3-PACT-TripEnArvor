@@ -7,18 +7,115 @@ date_default_timezone_set('Europe/Paris');
 
 session_start();
 
+$id_offre_cible = intval($_GET['id']);
+$categorie;
+
 if (isset($_POST['titre'])) { 
     $submitted = true;
 } else {
     $submitted = false;
 }
+if ($submitted) {
+
+    if (isset($_POST['titre'])) {
+        $titre = htmlspecialchars($_POST['titre']);
+    }
+    if (isset($_POST['contexte'])) {
+        $contexte_visite = htmlspecialchars($_POST['contexte']);
+    }
+    if (isset($_POST['avis'])) {
+        $commentaire = htmlspecialchars($_POST['avis']);
+    } 
+    if (isset($_POST['note'])) {
+        $note = intval($_POST['note']);
+    }
+
+    $categorie = getTypeOffre($id_offre_cible);
+
+    if ($categorie == "Restauration") {
+        if (isset($_POST['note_cuisine'])) {
+            $noteCuisine = intval($_POST['note_cuisine']);
+        }
+        if (isset($_POST['note_service'])) {
+            $noteService = intval($_POST['note_service']);
+        }
+        if (isset($_POST['note_ambiance'])) {
+            $noteAmbiance = intval($_POST['note_ambiance']);
+        }
+        if (isset($_POST['note_rapport'])) {
+            $noteRapport = intval($_POST['note_rapport']);
+        }
+    }
+    if (isset($_POST['date'])) {
+        $visite_le = explode('T', $_POST['date']);
+        $dateParts = explode('-', $visite_le[0]);
+        $anneeUpdate = $dateParts[0]; 
+        $moisUpdate = $dateParts[1]; 
+        $jourUpdate = $dateParts[2]; 
+        $heureMinute = $visite_le[1]; 
+        $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
+    }
+    if (isset($_SESSION['id'])) {
+        $id_membre = intval($_SESSION['id']);
+    }
+    if (isset($_GET['id'])) {
+        $id_offre = intval($_GET['id']);
+    }
+
+    $publie_le = date('Y-m-d H:i:s');
+
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+        $dbh->prepare("START TRANSACTION;")->execute();
+        
+        $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+        $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
+        $stmtInsertionDatePublication->execute([$publie_le]);
+        $idDatePublication = $stmtInsertionDatePublication->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+        $reqInsertionDateVisite = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+        $stmtInsertionDateVisite = $dbh->prepare($reqInsertionDateVisite);
+        $stmtInsertionDateVisite->execute([$visite_le]);
+        $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+        $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
+        $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
+
+        if ($categorie == "Restauration") {
+            $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
+            $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
+            $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $id_membre, $id_offre]);
+
+            $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
+            $stmtInsertionService = $dbh->prepare($reqInsertionService);
+            $stmtInsertionService->execute(["Service", $noteService, $id_membre, $id_offre]);
+
+            $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
+            $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
+            $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $id_membre, $id_offre]);
+
+            $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?, ?)";
+            $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
+            $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
+        }
+        $dbh->prepare("COMMIT;")->execute();
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
+        die();
+    } 
+}
+
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $id_offre_cible = intval($_GET['id']);
 
 // ===== GESTION DES OFFRES ===== //
 
@@ -120,6 +217,7 @@ try {
 
 <head>
     <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link rel="stylesheet" href="/style/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
@@ -268,12 +366,31 @@ try {
                 
             <div class="display-ligne-espace">
                 <div class="display-ligne">
-                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <?php } 
-                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                    <?php } ?>
+                    <?php 
+                    if ($noteMoyenne !== null) {
+                        $etoilesPleines = floor($noteMoyenne);
+                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                        
+                        for ($i = 0; $i < $etoilesPleines; $i++) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                            <?php
+                        }
+
+                        if ($demiEtoile) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                            <?php
+                        }
+
+                        for ($i = 0; $i < $etoilesVides; $i++) {
+                            ?>
+                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                            <?php
+                        }
+                    }
+                    ?>
                     <!-- Affichage du nombre d'avis de l'offre -->
                     <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
                     <a href="#avis">Voir les avis</a>
@@ -398,13 +515,34 @@ try {
         <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
+                <?php
+                if ($noteMoyenne !== null) {
+                ?>
                 <h2>Note moyenne : </h2>
-                <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <?php } 
-                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <?php } ?>
+                <?php
+                    $etoilesPleines = floor($noteMoyenne);
+                    $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                    
+                    for ($i = 0; $i < $etoilesPleines; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                        <?php
+                    }
+
+                    if ($demiEtoile) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                        <?php
+                    }
+
+                    for ($i = 0; $i < $etoilesVides; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                        <?php
+                    }
+                }
+                ?>
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
@@ -515,97 +653,7 @@ try {
                             <button type="button" id="cancelFormButton">Annuler</button>
                         </form>
 
-                        <? if ($submitted) { ?>
-
-                            <?php if (isset($_POST['titre'])) {
-                                $titre = htmlspecialchars($_POST['titre']);
-                            }
-                            if (isset($_POST['contexte'])) {
-                                $contexte_visite = htmlspecialchars($_POST['contexte']);
-                            }
-                            if (isset($_POST['avis'])) {
-                                $commentaire = htmlspecialchars($_POST['avis']);
-                            } 
-                            if (isset($_POST['note'])) {
-                                $note = intval($_POST['note']);
-                            }
-                            if ($categorie == "Restauration") {
-                                if (isset($_POST['note_cuisine'])) {
-                                    $noteCuisine = intval($_POST['note_cuisine']);
-                                }
-                                if (isset($_POST['note_service'])) {
-                                    $noteService = intval($_POST['note_service']);
-                                }
-                                if (isset($_POST['note_ambiance'])) {
-                                    $noteAmbiance = intval($_POST['note_ambiance']);
-                                }
-                                if (isset($_POST['note_rapport'])) {
-                                    $noteRapport = intval($_POST['note_rapport']);
-                                }
-                            }
-                            if (isset($_POST['date'])) {
-                                $visite_le = explode('T', $_POST['date']);
-                                $dateParts = explode('-', $visite_le[0]);
-                                $anneeUpdate = $dateParts[0]; 
-                                $moisUpdate = $dateParts[1]; 
-                                $jourUpdate = $dateParts[2]; 
-                                $heureMinute = $visite_le[1]; 
-                                $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
-                            }
-                            if (isset($_SESSION['id'])) {
-                                $id_membre = intval($_SESSION['id']);
-                            }
-                            if (isset($_GET['id'])) {
-                                $id_offre = intval($_GET['id']);
-                            }
-
-                            $publie_le = date('Y-m-d H:i:s');
-
-                            try {
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $dbh->prepare("SET SCHEMA 'sae';")->execute();
-
-                                $dbh->prepare("START TRANSACTION;")->execute();
-                                
-                                $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
-                                $stmtInsertionDatePublication->execute([$publie_le]);
-                                $idDatePublication = $stmtInsertionDatePublication->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                                $reqInsertionDateVisite = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateVisite = $dbh->prepare($reqInsertionDateVisite);
-                                $stmtInsertionDateVisite->execute([$visite_le]);
-                                $idDateVisite = $stmtInsertionDateVisite->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                                $reqInsertionAvis = "INSERT INTO sae._avis(id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                                $stmtInsertionAvis = $dbh->prepare($reqInsertionAvis);
-                                $stmtInsertionAvis->execute([$id_membre, $id_offre, $note, $titre, $commentaire, 0, 0, $contexte_visite, $idDatePublication, $idDateVisite]);
-
-                                if ($categorie == "Restauration") {
-                                    $reqInsertionCuisine = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
-                                    $stmtInsertionCuisine = $dbh->prepare($reqInsertionCuisine);
-                                    $stmtInsertionCuisine->execute(["Cuisine", $noteCuisine, $id_membre, $id_offre]);
-
-                                    $reqInsertionService = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
-                                    $stmtInsertionService = $dbh->prepare($reqInsertionService);
-                                    $stmtInsertionService->execute(["Service", $noteService, $id_membre, $id_offre]);
-
-                                    $reqInsertionAmbiance = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
-                                    $stmtInsertionAmbiance = $dbh->prepare($reqInsertionAmbiance);
-                                    $stmtInsertionAmbiance->execute(["Ambiance", $noteAmbiance, $id_membre, $id_offre]);
-
-                                    $reqInsertionRapport = "INSERT INTO sae._note_detaillee(nom_note, note, id_membre, id_offre) VALUES (?, ?, ?)";
-                                    $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
-                                    $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
-                                }
-                                $dbh->prepare("COMMIT;")->execute();
-                            } catch (PDOException $e) {
-                                echo "Erreur : " . $e->getMessage();
-                                die();
-                            } 
-                        }
+                        <? 
                     } else {
                         // Message informant que l'utilisateur a déjà publié un avis
                         echo "<p>Vous avez déjà publié un avis pour cette offre.</p>";
@@ -872,19 +920,13 @@ try {
         }
 
     </script>
-
-<link rel="stylesheet" href="/style/style_navPhone.css"/>
-    <div class="telephone-nav">
-        <div class="bg"></div>
-        <div class="nav-content">
-        <div class = "btOn">
-            <img src="/images/frontOffice/icones/accueil.png">
-            </div>
-            <img src="/images/frontOffice/icones/chercher.png">
-            <img src="/images/frontOffice/icones/utilisateur.png">
-        </div>
-    </div>
-
 </body>
-
+<div class="telephone-nav">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
+        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
+        <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
+    </div>
+</div>
 </html>

@@ -111,7 +111,7 @@ try {
     $attraction = getParcAttraction($id_offre_cible);
 
     // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
-    $restaurant = getRestaurant($id_offre_cible);
+    $restauration = getRestaurant($id_offre_cible);
 
 // ===== GESTION DES ADRESSES ===== //
 
@@ -173,7 +173,7 @@ try {
                 $offre_bonne_cat = getVisite($id_offre_cible);
                 break;
             default:
-                die("Erreur de categorie!");
+                die("Erreur de function bon get selon categorie!");
         }
         return $offre_bonne_cat;
     }
@@ -184,10 +184,19 @@ try {
     die();
 }
 
+print_r($tags);
+
+    // Extraire les noms des tags
+    $tag_names = array_map(function($tag) {
+        return $tag['nom_tag'];
+    }, $tags);
+
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorie = trim(strtolower(supprimerAccents($categorie)));
+    $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
+
+    print($categorie);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
@@ -195,17 +204,18 @@ try {
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
-        $date_evenement = $date_evenement['date'];
+        $date_evenement = $date_evenement[0]['date'];
     }elseif ($categorie == 'visite') {
         $date_evenement = getDateVisite($id_offre_cible);
-        $date_evenement = $date_evenement['date'];
+        $date_evenement = $date_evenement[0]['date'];
     }else {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
     print_r (getDateSpectacle($id_offre_cible));
-    print_r (getDateVisite($id_offre_cible));
     echo ($date_evenement);
+
+    print_r($adresse);
     
 
     
@@ -338,7 +348,7 @@ try {
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
                                         <select class="custom-select" id="categorie" name="lacat">
-                                            <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restaurant</option>
+                                            <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restauration</option>
                                             <option value="parcattraction" <?php if($categorie === "parcattraction"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
                                             <option value="visite" <?php if($categorie === "visite"){echo "selected";} ?>> Visite</option>
@@ -368,16 +378,19 @@ try {
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
                         <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
-                            echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
+                        <?php if (isset($adresse['num_et_nom_de_voie'])) {
+                            echo htmlentities($adresse['num_et_nom_de_voie']);
+                            if (isset($adresse['complement_adresse'] )){
+                                echo htmlentities($adresse['complement_adresse']);
+                            }; } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
                         <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php 
-                        if ($adresse['code_postal']) {
+                        if (isset($adresse['code_postal'])) {
                             echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
-                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php echo htmlentities($adresse['ville'] )?>"required ></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td>
                     </tr>
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
@@ -421,7 +434,7 @@ try {
                                                                                                                                                                         echo htmlentities($offre_bonne_cat['duree']);} ?>"/> <label id="labelduree2" for="duree">minutes</label><br>
                     
                     <!-- activité, parc -->
-                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
                     <label id="labelage2" for="age">an(s)</label>
                     
                     <!-- activite -->
@@ -432,13 +445,12 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php  if($date_evenement =! null){ 
-                                                                                                                                                                                                                    echo $date_evenement; } ?>">
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" <?php if($date_evenement != null){ ?> value="<?php echo $date_evenement; ?>" <?php } ?>>
                     <br>
                     <!-- spectacle -->
-                    <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
-                                                                                                                                                                                    echo htmlentities($offre_bonne_cat['nbattraction']);} ?>"/>
-                    <label id="labelnbattractions2" for="nbattraction">personnes</label>
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($offre_bonne_cat['capacite'])){
+                                                                                                                                                                                    echo htmlentities($offre_bonne_cat['capacite']);} ?>"/>
+                    <label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbAttractions'])){
@@ -446,7 +458,7 @@ try {
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
                                                                                                                                                             echo htmlentities($offre_bonne_cat['plan']);  ?>"  > <?php } ?> <input type="file" id="plan" name="plan" />
                     <br>
-                    <!-- restaurant -->
+                    <!-- restauration -->
                     <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php 
                                                                                                                                                                     echo htmlentities($offre_bonne_cat['carte']); ?>"> <?php } ?> <input type="file" id="carte" name="carte" />
                     
@@ -460,18 +472,19 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } }
-                        foreach($liste_tags as $tag){ 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                    <?php } } 
+                    foreach($liste_tags as $tag){ 
+                            if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         <?php }}
                         foreach ($liste_tags_restauration as $tag) { 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                            if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                    
-                   <?php }}
-                         ?>
+                   <?php } 
+                    } ?>
+                         
                         
                      </ul>   
                     <h3>A propos de l'offre</h3>
@@ -501,12 +514,15 @@ try {
                             <?php  
                             $i = 0; // Compteur pour les champs
                             // Boucle pour afficher les tarifs existants
-                            foreach ($tarifs as $t) { 
-                                $i++; ?>
+                            
+                            foreach ($tarifs as $t) {
+                                if(!($t['nom_tarif'] == "nomtarif1")){ //n'affiche pas nomtarif1 qui est la valeur par defeaut si aucun tarif n'est rentré lors de la creation de l'offre
+                                    $i++; ?>
                                 <input type="text" id="nomtarif<?php echo $i; ?>" name="nomtarif<?php echo $i; ?>" placeholder="Nom du tarif" value="<?php echo htmlentities($t['nom_tarif']); ?>" />
                                 <input type="number" id="tarif<?php echo $i; ?>" name="tarif<?php echo $i; ?>" min="0" placeholder="prix" value="<?php echo htmlentities($t['prix']); ?>" /><span>€</span> 
                                 <br>
                             <?php 
+                                }
                             }
                             // Complète les champs vides si moins de 4
                             while ($i < 4) { 
@@ -653,7 +669,7 @@ try {
             }
             
 
-            if ($categorie !== "restaurant") {
+            if ($categorie !== "restauration") {
                     
                 if ((isset($_POST['tarif1'])) && (isset($_POST['nomtarif1'])) && $_POST['tarif1'] !== "") {
                     $tarif1 = $_POST['tarif1'];
@@ -728,7 +744,7 @@ try {
             }
 
 
-            if ($categorie !== "restaurant") {
+            if ($categorie !== "restauration") {
                 foreach ($liste_tags as $tag) {
                     if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
@@ -844,11 +860,11 @@ try {
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc
-                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
+                            $query = "UPDATE sae.offre_parc    id_offre, nb_attractions, age_min, plan, titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement
+                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = ($titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse)
+                            where id_offre = $id_offre;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute();
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
@@ -874,7 +890,7 @@ try {
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
-                        case 'restaurant':
+                        case 'restauration':
 
                             if(isset( $_FILES['carte'])){
                                 $file = $_FILES['carte'];
@@ -895,7 +911,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_carte = $restaurant(['carte']);
+                                $fichier_carte = $restauration(['carte']);
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -1042,7 +1058,7 @@ try {
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             break;
 
-                        case 'restaurant':
+                        case 'restauration':
                             
                             $file = $_FILES['carte'];
                             $file_extension = get_file_extension($file['type']);
@@ -1068,7 +1084,7 @@ try {
                             }
                             try{
                                 // Requête SQL pour supprimer une visite
-                                $requete_supprimer = "DELETE FROM sae.offre_restaurant WHERE id_offre = ?";
+                                $requete_supprimer = "DELETE FROM sae.offre_restauration WHERE id_offre = ?";
                             
                                 // Préparation et exécution
                                 $stmt = $dbh->prepare($requete_supprimer);
@@ -1114,7 +1130,7 @@ try {
 
 
                     //INSERTION DANS TARIF
-                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                    if (($isIdProPrivee)&&($categorie !== "restauration")){
                          // Requête SQL pour supprimer une visite
                          $requete_supprimer = "DELETE FROM sae.offre_tarif_publique WHERE id_offre = ?";
                             
@@ -1178,11 +1194,11 @@ try {
             }
 
             const liste_tags = "<?php echo json_encode($liste_tags) ?>";
-            const liste_tags_restaurant = "<?php echo json_encode($liste_tags_restaurant) ?>";
+            const liste_tags_restauration = "<?php echo json_encode($liste_tags_restauration) ?>";
             const $tags = "<?php echo json_encode($tags) ?>"
 
             let typecategorie = document.getElementById('categorie');
-            let typerestaurant = ["carte", "labelcarte"];
+            let typerestauration = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
             let typespectacle = ["labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelnbattractions2"];
@@ -1201,7 +1217,7 @@ try {
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (typeselectionne) {
                     case "restauration":
-                        afficheSelonType(typerestaurant);
+                        afficheSelonType(typerestauration);
 
                         if (isIdProPrivee) {
                             document.getElementById("labelgammedeprix").style.display = 'inline';
@@ -1243,20 +1259,20 @@ try {
                 typechoisi.forEach(element => {
                     document.getElementById(element).style.display = 'inline';
                 });
-                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                if ((typechoisi !== "restauration") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
                 }
             }
 
             function afficherTags(typechoisi){
-                if (typeselectionne === "restaurant"){
+                if (typeselectionne === "restauration"){
                     liste_tags.forEach(tag => {
                         if(!tags.includes(tag)){
                             document.getElementById(tag).style.display ='none';
                         }
                     });
                 }else{
-                    liste_tags_restaurant.forEach(tag => {
+                    liste_tags_restauration.forEach(tag => {
                         if(!tags.includes(tag)){
                             document.getElementById(tag).style.display ='none';
                         }

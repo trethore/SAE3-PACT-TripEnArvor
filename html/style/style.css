@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/garet');
 
 :root {
   /****************
@@ -154,7 +155,7 @@ h3 {
 }
 
 /* Lien */
-.connecter a {
+.connecter a, .creer-compte a {
     color: var(--violet-principal);
     width: 100%;
     transform: translateX(25%);
@@ -166,14 +167,6 @@ h3 {
     align-items: center;
     justify-content: center;
     width: 100%;
-}
-
-.connecter form label, 
-.connecter form input[type="email"],
-.connecter form input[type="password"],
-.connecter form input[type="submit"],
-.connecter form input[type="text"] {
-    width: 50%; /* Conserver la largeur des éléments */
 }
 
 /* Label */
@@ -1186,14 +1179,12 @@ h3 {
     margin: 0.5em 0.2em;
     text-align: center;
     font-size: 45pt;
-    padding-left: 10px;
-    padding-right: 10px;
+    border: 2px var(--violet-principal) solid;
 }
 
 .accueil h1:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
-    border: 2px var(--violet-principal) solid;
 }
 
 .accueil main {
@@ -1304,7 +1295,11 @@ h3 {
 }
 
 .accueil a {
-    color: var(--blanc-leger);
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
 }
 
 .accueil a:hover {
@@ -2265,30 +2260,51 @@ h3 {
 }
 
 .genFacture {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: var(--blanc);
-}
-
-.genFacture .invoice {
+    font-family: 'Garet', sans-serif;
     background-color: var(--blanc);
     padding: 20px;
     border-radius: 5px;
     max-width: 800px;
-    margin: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.genFacture h1, 
-.genFacture h2 {
-    text-align: center;
     color: var(--noir);
+    margin: auto;
 }
 
-.genFacture .issued-to, 
-.genFacture .payment-terms, 
-.genFacture .invoice-number {
+.genFacture img {
+    position: relative;
+    width: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+}
+
+.genFacture h3 {
+    margin: 5px 0;
+}
+
+.genFacture hr {
+    height: 2px;
+}
+
+.genFacture h3,
+.genFacture thead {
+    text-transform: capitalize;
+    font-weight: var(--semi-bold);
+}
+
+.genFacture > section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.genFacture .delivre, 
+.genFacture .payment-terms {
     margin-bottom: 20px;
+}
+
+.genFacture .delivre + article {
+    text-align: right;
+    margin-bottom: 0;
 }
 
 .genFacture table {
@@ -2299,26 +2315,41 @@ h3 {
 .genFacture table, 
 .genFacture th, 
 .genFacture td {
-    border: 1px solid var(--blanc);
+    border: none;
 }
 
-.genFacture th, 
-.genFacture td {
+.genFacture .facture-details th, 
+.genFacture .facture-details td {
     padding: 8px;
+    text-align: center;
+}
+
+.genFacture .totals {
+    margin: 1em 0;
+    text-align: right;
+    width: 200px;
+    position: relative;
+    right: -70%;
+}
+
+.genFacture .totals tr {
+    margin: 0.2em;
+}
+
+.genFacture .totals tr > td {
     text-align: left;
+    padding: 0.25em;
 }
 
-.genFacture th {
-    background-color: var(--blanc);
+.genFacture .totals tr > td + td {
+    text-align: right;
 }
-
-.genFacture .totals p {
-    font-weight: bold;
-    margin: 5px 0;
-}
-
 
 @media only screen and (max-width: 900px) {
+    .front {
+        padding-bottom: 120px;
+    }
+
 	.front header {
 	  display: none;
 	}
@@ -2329,9 +2360,20 @@ h3 {
         margin-top: 30px;
     }
 
-    /**************************************************************************************
-                                    COMPTE FRONT
-    ***************************************************************************************/
+    .connecter input[type="email"], .connecter input[type="password"], .connecter form input[type="text"] {
+        width: 80%;
+      }
+
+    .connecter label {
+        width: 90%;
+      }
+
+      .connecter section {
+        width: 90%;
+      }
+    /****************************************************
+                       COMPTE FRONT
+    *****************************************************/
 
     :root {
         font-size: 100%; 
@@ -2347,6 +2389,7 @@ h3 {
 
     .compte-front td {
         font-size: 30pt;
+        padding-bottom: 1.5em;
     }
 
 
@@ -2356,8 +2399,7 @@ h3 {
         flex-direction: column;
     }
 
-    .compte-front main,
-    .compte-front-modif main {
+    .compte-front main {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column-reverse;
@@ -2370,6 +2412,7 @@ h3 {
     .compte-front nav {
         display: flex;
         flex-direction: column;
+        top: 0;
 
         position: relative;
         top: none;
@@ -2382,20 +2425,10 @@ h3 {
 
     .compte-front nav a {
         display: flex;
-        flex-grow: 0;
-        flex-shrink: 0;
-        align-self: stretch;
-        justify-content: center;
-
-        text-align: center;
-        background-color: var(--blanc-leger);
-        color: var(--violet-principal);  
-        margin: 1em 0.5em 1em;
-        padding: 0.5em 1em;
-        border: 2px solid var(--violet-principal);
-        border-radius: 15px;
-        height: 3em;
+        font-size: 30pt;
     }
+
+    
 
     .compte-front nav a:last-child {
         margin-top: auto;
@@ -2465,6 +2498,7 @@ h3 {
     .compte-front main > section a,
     .compte-front-modif main > section a {
         padding: 0.4em 1em;
+        font-size: 30pt;
     }
     /********************************************
         CHANGEMENT EN PLUS DE style_frontCompte
@@ -2476,6 +2510,38 @@ h3 {
     .ici {
         display: none;
     }
+
+    /****************************************************
+                       Modif COMPTE FRONT
+    *****************************************************/
+
+    .compte-front-modif main, .compte-front-modif {
+        width: fit-content;
+      }
+
+      .compte-front-modif h1 {
+        font-size: 60pt;
+      }
+
+      .compte-front-modif h2 {
+        font-size: 40pt;
+    }
+
+    .compte-front-modif td {
+        font-size: 30pt;
+        padding-bottom: 1.5em;
+    }
+
+    .compte-front-modif input {
+        font-size: 20pt;
+    }
+
+    .compte-front-modif table + div input, .compte-front-modif table + div a {
+        font-size: 28pt;
+      }
+
+
+    
 }
 
 @media screen and (max-width: 1100px) {
@@ -2567,10 +2633,6 @@ h3 {
 }
 
 @media screen and (orientation: portrait) {
-    
-    :root {
-        font-size: 200%;
-    }
 
     .creer-compte header {
         position: static;

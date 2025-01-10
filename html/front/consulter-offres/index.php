@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
+startSession();
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
@@ -44,6 +46,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/style_navPhone.css" />
@@ -202,12 +205,9 @@ try {
                             </div>
                         </div>
                     </div>
-
-                    <!-- Type d'offre -->
-                    <div class="typeOffre"></div>
         
                     <!-- Date -->
-                    <!-- <div class="date">
+                    <div class="date">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -221,7 +221,15 @@ try {
                                 <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>-->
+                    </div>
+
+                    <!-- Contient avis -->
+                    <div class="contient_avis">
+                        <h3>Contient un de vos avis</h3>
+                        <div>
+                            <label><input type="checkbox" name="oui_avis"> Oui</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>
@@ -263,6 +271,17 @@ try {
                                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                    <p style="display: none;" class="contientavisspot">
+                                        <?php
+                                            echo "<pre>";
+                                            print_r(getIdOffresContientAvis($tab['id_offre']));
+                                            print_r(intval($_SESSION['id']));
+                                            echo "</pre>";
+                                            if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
+                                                echo "Oui";
+                                            }
+                                        ?>
+                                    </p>
                                     <div class="bas-offre">
                                         <div class="etoiles">
                                             <?php
@@ -462,6 +481,16 @@ try {
                     });
                 }
 
+                // Filtre par offre contient avis
+                const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                if (avisInput) {
+                    const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
+                    visibleOffers = visibleOffers.filter(offer => {
+                        const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
+                        return offerContientAvis === contientAvis;
+                    });
+                }
+
                 // Update Visibility
                 offers.forEach(offer => {
                     if (visibleOffers.includes(offer)) {
@@ -512,17 +541,13 @@ try {
         });
     </script>
 </body>
-<link rel="stylesheet" href="/style/style_navPhone.css"/>
-    <div class="telephone-nav">
-        <div class="bg"></div>
-        <div class="nav-content">
-        <div class = "btOn">
-            <img src="/images/frontOffice/icones/accueil.png">
-            </div>
-            <img src="/images/frontOffice/icones/chercher.png">
-            <img src="/images/frontOffice/icones/utilisateur.png">
-        </div>
+<div class="telephone-nav">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
+        <a href="/front/consulter-offres"><div class = "btOn"><img src="/images/frontOffice/icones/chercher.png"></div></a>
+        <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
     </div>
-</html>
+</div>
 
 <?php $dbh = null; ?>
