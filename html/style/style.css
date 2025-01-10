@@ -2270,35 +2270,63 @@ h3 {
 	.front footer {
 		display: none;
 	}
-
-    .compte-front {
-        color: none;
-        background-color: none;
+    .connecter h1 {
+        margin-top: 30px;
     }
+
+    /**************************************************************************************
+                                    COMPTE FRONT
+    ***************************************************************************************/
     
     .compte-front main,
     .compte-front-modif main {
         display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        margin: none;
+        flex-wrap: wrap;
+        flex-direction: column;
+        margin: 1em;
     }
+
+    /********************
+            NAV
+    *********************/
     .compte-front nav {
         display: flex;
         flex-direction: column;
-    
-        position: relative;
-        top: 0;
-        background-color: none;
+
+        position: sticky;
+        top: 1em;
+        background-color: var(--violet-principal);
         border-radius: 15px;
-        width: 0;
-        height: 0;
-        margin-right: none;
+        width: 15em;
+        height: 100vh;
+        margin-right: 1em;
     }
 
+    .compte-front nav a {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-self: stretch;
+        justify-content: center;
 
-    .connecter h1 {
-        margin-top: 30px;
+        text-align: center;
+        background-color: var(--blanc-leger);
+        color: var(--violet-principal);  
+        margin: 1em 0.5em 1em;
+        padding: 0.5em 1em;
+        border: 2px solid var(--violet-principal);
+        border-radius: 15px;
+        height: 3em;
+    }
+
+    .compte-front nav a:last-child {
+        margin-top: auto;
+    }
+
+    .compte-front nav a:hover {
+        color: var(--blanc-leger);
+        background-color: var(--violet-principal);
+        border: 2px solid var(--blanc-leger);
     }
 }
 
