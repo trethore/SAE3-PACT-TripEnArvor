@@ -365,12 +365,29 @@ try {
                 
             <div class="display-ligne-espace">
                 <div class="display-ligne">
-                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <?php } 
-                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                    <?php } ?>
+                    <?php 
+                    $etoilesPleines = floor($noteMoyenne);
+                    $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                    
+                    for ($i = 0; $i < $etoilesPleines; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                        <?php
+                    }
+
+                    if ($demiEtoile) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                        <?php
+                    }
+
+                    for ($i = 0; $i < $etoilesVides; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                        <?php
+                    }
+                    ?>
                     <!-- Affichage du nombre d'avis de l'offre -->
                     <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
                     <a href="#avis">Voir les avis</a>
@@ -496,12 +513,29 @@ try {
 
             <div class="display-ligne">
                 <h2>Note moyenne : </h2>
-                <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <?php } 
-                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <?php } ?>
+                    <?php
+                    $etoilesPleines = floor($noteMoyenne);
+                    $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                    
+                    for ($i = 0; $i < $etoilesPleines; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                        <?php
+                    }
+
+                    if ($demiEtoile) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                        <?php
+                    }
+
+                    for ($i = 0; $i < $etoilesVides; $i++) {
+                        ?>
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                        <?php
+                    }
+                    ?>
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
             
