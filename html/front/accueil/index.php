@@ -142,7 +142,7 @@ try {
                         $note = $offre["note"]; 
                         
                         echo $titre;
-                        echo $note
+                        echo $note;
                         
                         ?>
 
