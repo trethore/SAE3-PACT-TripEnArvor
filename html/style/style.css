@@ -2282,7 +2282,7 @@ h3 {
 }
 
 .genFacture hr {
-    height: 2px;
+    height: 1px;
     background-color: var(--noir);
 }
 
