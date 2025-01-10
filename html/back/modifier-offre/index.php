@@ -186,6 +186,11 @@ try {
 
 print_r($tags);
 
+    // Extraire les noms des tags
+    $tag_names = array_map(function($tag) {
+        return $tag['nom_tag'];
+    }, $tags);
+
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
@@ -460,19 +465,19 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { 
-                                echo($tags['nom_tag']);?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="<?php echo htmlentities($tag['nom_tag']); ?>" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
+                                echo($tag['nom_tag']);?>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } } 
                     foreach($liste_tags as $tag){ 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php  echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                            if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         <?php }else {
                             echo "deja dans la liste " . $tag . "<br> <br>";
                         }
                         }
                         foreach ($liste_tags_restauration as $tag) { 
-                            if(!in_array($tag, $tags)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                            if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                    
                    <?php } else {
                             echo "deja dans la liste " . $tag . "<br> <br>";
