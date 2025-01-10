@@ -91,7 +91,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             </tbody>
         </table>
     </article>
-    <hr>
     <article class="facture-details">
         <table>
             <thead>
