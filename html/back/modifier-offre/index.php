@@ -191,7 +191,8 @@ try {
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
     print_r($offre_bonne_cat);
 
-    $date_bon_format = date_format(($offre_bonne_cat['date_evenement']), "yyyy-MM-ddThh:mm:ss"); //date de la bdd mise dans le bon format pour etre afficher
+
+    $date_bon_format = date("yyyy-MM-ddThh:mm:ss", strtotime($offre_bonne_cat['date_evenement']));//date de la bdd mise dans le bon format pour etre afficher
     echo $date_bon_format;
 
     
