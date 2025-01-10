@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="genFacture">
+    <img src="/html/images/universel/logo/Logo_couleurs.png" alt="">
     <section>
         <article class="delivre">
             <h3>Délivré à</h3>
