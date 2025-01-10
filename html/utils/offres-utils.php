@@ -751,7 +751,7 @@
             $stmtContientAvis = $conn->prepare($reqContientAvis);
             $stmtContientAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtContientAvis->execute();
-            $contientAvis = $stmtContientAvis->fetch(PDO::FETCH_ASSOC);
+            $contientAvis = $stmtContientAvis->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $contientAvis;
         } catch (Exception $e) {
