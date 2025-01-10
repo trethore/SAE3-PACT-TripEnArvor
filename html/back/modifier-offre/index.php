@@ -173,6 +173,7 @@ try {
             default:
                 die("Erreur de categorie!");
         }
+        return $offre_bonne_cat;
     }
     
 
@@ -188,6 +189,7 @@ try {
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
+    print_r($offre_bonne_cat);
 
     
 
