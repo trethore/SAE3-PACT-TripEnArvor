@@ -644,18 +644,19 @@ try {
                                 </div>
                             <?php } ?>
                             <div class="display-ligne-espace">
-                                <label for="date">Saisissez la date de votre visite</label>
-                                <p class="transparent">.</p>
-                            </div>
-                            <div class="display-ligne-espace">
-                                <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                <div>
+                                    <label for="date">Saisissez la date de votre visite</label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                </div>
                                 <p class="transparent">.</p>
                             </div>
 
-                            <div>
-                    
-                                <label id="photo" for="photo">Importez une photo</label> 
-                                <input type="file" id="photo" name="photo"/><br>
+                            <div class="display-ligne-espace">
+                                <div>
+                                    <label id="photo" for="photo">Importez une photo</label> 
+                                    <input type="file" id="photo" name="photo"/><br>
+                                </div>
+                                <p class="transparent">.</p>
                             </div>
 
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
