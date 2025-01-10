@@ -319,12 +319,12 @@ form > p {
 
 ::placeholder{   /*guidage*/
     font-style: italic;
-    color: var(--gris-etoile);
+    color: var(--gris);
   }
 
 label {
     text-align: start;
-    color: var(--violet-principal);
+    color: var(--noir);
 }
 
 textarea {
@@ -348,7 +348,7 @@ textarea {
 
 input, select {
     background: var(--blanc-leger);
-    border: 1px solid var(--blanc-leger);
+    border: 1px solid var(--gris);
     border-radius: 5px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
