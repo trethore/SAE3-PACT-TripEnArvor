@@ -312,7 +312,7 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                $ouverture = "Pas d'informations sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
                     if (!empty($horaire)) {
                         $ouvert_ferme = date('H:i');
@@ -406,7 +406,9 @@ try {
                     <?php case "Spectacle": ?>
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
-                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['date']) ?> personnes</p>
+                        <?php $event = explode(' ', $spectacle['date']);
+                        $dateEvent = explode('-', $event[0]); ?>
+                        <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
