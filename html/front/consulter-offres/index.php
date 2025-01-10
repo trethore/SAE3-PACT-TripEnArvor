@@ -475,14 +475,14 @@ try {
                 }
 
                 // Filtre par offre contient avis
-                const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                /*const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
                         return offerContientAvis === contientAvis;
                     });
-                }
+                }*/
 
                 // Update Visibility
                 offers.forEach(offer => {
