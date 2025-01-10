@@ -431,15 +431,18 @@ try {
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
-                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
                     <?php case "Visite": ?>
-                        <p>Durée de la visite : <?php echo htmlentities($visite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"?></p>
                         <?php break; ?>
                     <?php case "Spectacle": ?>
-                        <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
+                        <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                        <?php $event = explode(' ', $spectacle['date']);
+                        $dateEvent = explode('-', $event[0]); ?>
+                        <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
@@ -648,6 +651,13 @@ try {
                                 <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                                 <p class="transparent">.</p>
                             </div>
+
+                            <div>
+                    
+                                <label id="photo" for="photo">Importez une photo</label> 
+                                <input type="file" id="photo" name="photo"/><br>
+                            </div>
+
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
                             <button type="submit">Publier</button>
                             <button type="button" id="cancelFormButton">Annuler</button>
@@ -683,9 +693,8 @@ try {
                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile">
                             <?php }
                             $publication = explode(' ', $dateAvis[$compteur]['date']);
-                            $datePub = explode('-', $publication[0]); 
-                            $heurePub = explode(':', $publication[1]); ?>
-                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
+                            $datePub = explode('-', $publication[0]); ?>
+                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
                         </div>
                         <p class="transparent">.</p>
                     </div>
@@ -709,13 +718,14 @@ try {
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
-                    <!-- <div class="display-ligne-espace">
+
+                    <div class="display-ligne-espace">
                         <p class="transparent">.</p>
                         <div class="display-notation">
-                            <p><?php //echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php //echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
                         <div class="reponse">
