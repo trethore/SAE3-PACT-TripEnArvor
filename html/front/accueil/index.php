@@ -36,7 +36,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -97,6 +97,16 @@ try {
             $ids[$key]['note'] = getNoteMoyenne($offre["id_offre"]);
         }
 
+        $ids_nouv = getIdOffresRecentes();
+        foreach ($ids_nouv as $key => $offre_nouv) {
+            $ids_nouv[$key]['titre'] = getOffre($offre_nouv["id_offre"])["titre"];
+            $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
+        }
+
+        echo "<pre>";
+        echo $ids_nouv;
+        echo "</pre>";
+
         ?>
 
         <section>
@@ -125,10 +135,39 @@ try {
 
         <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
-        <!--
         <h2>Nouveautés</h2>
-        <article></article>
 
+        <section>
+            <div class="carousel">
+                <div class="carousel-images">
+                    <?php foreach ($ids_nouv as $offre_nouv) { 
+                        $id = $offre_nouv["id_offre"];
+                        $titre = $offre_nouv["titre"];
+                        $note = $offre_nouv["note"]; 
+                        
+                        echo $titre;
+                        echo $note;
+                        
+                        ?>
+
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        </a>
+                    <?php } ?>
+                </div>
+                <div>
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
+                <p class="titre" id="carousel-titre"></p>
+            </div>
+        </section>
+
+        <!--
         <h2>Consultés Récemment</h2>
         <article></article>
         -->
@@ -229,17 +268,17 @@ try {
                     starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
                 }
                     
-                for (i = 0; $i < etoilesVides; $i++) {
+                for (i = 0; i < etoilesVides; i++) {
                     starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
                 }
             }
-        }
 
             // Update the carousel title and stars
             titreElement.innerHTML = `
                 ${titre}
                 ${starsHTML}
             `;
+        }
     </script>
 </body>
 </html>
