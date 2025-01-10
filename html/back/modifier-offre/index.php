@@ -471,18 +471,13 @@ try {
                     foreach($liste_tags as $tag){ 
                             if(!in_array($tag, $tag_names)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }else {
-                            echo "deja dans la liste " . $tag . "<br> <br>";
-                        }
-                        }
+                        <?php }}
                         foreach ($liste_tags_restauration as $tag) { 
                             if(!in_array($tag, $tag_names)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                    
-                   <?php } else {
-                            echo "deja dans la liste " . $tag . "<br> <br>";
-                        }
-                } ?>
+                   <?php } 
+                    } ?>
                          
                         
                      </ul>   
