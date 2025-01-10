@@ -10,7 +10,7 @@
     <div class="invoice">
         <section>
             <article class="issued-to">
-                <h2>Délivré à</h2>
+                <h3>Délivré à</h3>
                 <p>
                     {Nom} {Prénom}<br>
                     {Dénomination sociale}<br>
@@ -18,14 +18,13 @@
                 </p>
             </article>
             <article>
-                <h2>Numéro de facture</h2>
-                <h2>#012345</h2>
+                <h3>Numéro de facture</h3>
+                <h3>#012345</h3>
                 <p>{jj/mm/aaaa}</p>
             </article>
         </section>
         <section class="invoice-details">
             <table>
-                <hr>
                 <thead>
                     <tr>
                         <th>Description</th>
@@ -37,7 +36,6 @@
                         <th>Date</th>
                     </tr>
                 </thead>
-                <hr>
                 <tbody>
                     <tr>
                         <td>Option relief</td>
@@ -69,7 +67,7 @@
         </article>
 
         <article class="payment-terms">
-            <h2>Conditions et modalités de paiement</h2>
+            <h3>Conditions et modalités de paiement</h3>
             <p>Le paiement est dû dans les 15 jours</p>
             <p>
                 Nom Banque<br>
