@@ -134,7 +134,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         <p>Le paiement est dû dans les 15 jours</p>
         <p>
             Banque PACT<br>
-            Nom du compte: Trip en armor<br>
+            Nom du compte: Trip en arvor<br>
             Numéro de compte : 123-456-7890
         </p>
     </article>
