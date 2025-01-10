@@ -103,7 +103,9 @@ try {
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
         }
 
-        console.log($ids_nouv);
+        echo "<pre>";
+        echo $ids_nouv;
+        echo "</pre>";
 
         ?>
 
