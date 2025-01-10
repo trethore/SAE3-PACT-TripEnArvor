@@ -6,16 +6,26 @@
     <title>Facture</title>
     <link rel="stylesheet" href="/style/style.css">
 </head>
-<body>
+<body class="genFacture">
     <div class="invoice">
-        <h1>Facture</h1>
-        <section class="issued-to">
-            <h2>Délivré à</h2>
-            <p>Nom Prénom<br>Dénomination sociale<br>mail@example.com</p>
+        <section>
+            <article class="issued-to">
+                <h2>Délivré à</h2>
+                <p>
+                    {Nom} {Prénom}<br>
+                    {Dénomination sociale}<br>
+                    mail@example.com
+                </p>
+            </article>
+            <article>
+                <h2>Numéro de facture</h2>
+                <h2>#012345</h2>
+                <p>{jj/mm/aaaa}</p>
+            </article>
         </section>
-
         <section class="invoice-details">
             <table>
+                <hr>
                 <thead>
                     <tr>
                         <th>Description</th>
@@ -27,6 +37,7 @@
                         <th>Date</th>
                     </tr>
                 </thead>
+                <hr>
                 <tbody>
                     <tr>
                         <td>Option relief</td>
@@ -49,23 +60,23 @@
                 </tbody>
             </table>
         </section>
-
-        <section class="totals">
+        <article class="totals">
+            <hr>
             <p>Total HT: 31.25€</p>
             <p>Total TVA: 10€</p>
             <p>Total TTC: 34.38€</p>
-        </section>
+            <hr>
+        </article>
 
-        <section class="payment-terms">
+        <article class="payment-terms">
             <h2>Conditions et modalités de paiement</h2>
             <p>Le paiement est dû dans les 15 jours</p>
-            <p>Nom Banque<br>Nom du compte: Nom<br>Numéro de compte : 123-456-7890</p>
-        </section>
-
-        <section class="invoice-number">
-            <p>Numéro de facture: #012345</p>
-            <p>Date: 5.12.2024</p>
-        </section>
+            <p>
+                Nom Banque<br>
+                Nom du compte: Nom<br>
+                Numéro de compte : 123-456-7890
+            </p>
+        </article>
     </div>
 </body>
 </html>
