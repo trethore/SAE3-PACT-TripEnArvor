@@ -2338,8 +2338,8 @@ h3 {
 
 
 @media only screen and (max-width: 900px) {
-    .front main{
-        padding-bottom: 10px;
+    .front {
+        padding-bottom: 120px;
     }
 
 	.front header {
