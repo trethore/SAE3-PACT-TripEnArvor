@@ -201,7 +201,8 @@ try {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
-    $date_evenement = date("Y-m-d\TH:i", strtotime($date_evenement));
+    echo (getDateSpectacle($id_offre_cible));
+    echo (getDateSpectacle($id_offre_cible));
     echo $date_evenement;
 
     

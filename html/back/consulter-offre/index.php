@@ -406,6 +406,7 @@ try {
                     <?php case "Spectacle": ?>
                         <p>Durée du spectacle : <?php echo htmlentities($spectacle['duree']/60) ?> heure(s)</p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                        <p>Capacité de la salle : <?php echo htmlentities($spectacle['date']) ?> personnes</p>
                         <?php break; ?>
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
