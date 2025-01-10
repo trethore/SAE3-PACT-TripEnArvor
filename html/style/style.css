@@ -2331,7 +2331,15 @@ h3 {
     text-align: right;
 }
 
-.genFacture .totals > p + p + p {
+.genFacture article {
+    width: 75px;
+}
+
+.genFacture .totals article > span {
+    text-align: left;
+}
+
+.genFacture .totals > article + article + article {
     font-weight: var(--semi-bold);
     margin: 5px 0;
 }
