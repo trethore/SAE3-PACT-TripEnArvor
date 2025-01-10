@@ -640,17 +640,18 @@ try {
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                             
+                            <div class="display-ligne-espace">
+                                <!-- CHAMP DE SÉLECTION DE LA DATE VISITE DE L'AVIS -->
+                                <div> 
+                                    <label for="date">Saisissez la date de votre visite <span>*</span></label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                </div>
 
-                            <!-- CHAMP DE SÉLECTION DE LA DATE VISITE DE L'AVIS -->
-                            <div>
-                                <label for="date">Saisissez la date de votre visite <span>*</span></label>
-                                <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
-                            </div>
-
-                            <!-- CHAMP D'IMPORTATION DE LA PHOTO DE L'AVIS -->
-                            <div>
-                                <label id="photo" for="photo">Importez une photo</label> 
-                                <input type="file" id="photo" name="photo"/><br>
+                                <!-- CHAMP D'IMPORTATION DE LA PHOTO DE L'AVIS -->
+                                <div>
+                                    <label id="photo" for="photo">Importez une photo</label> 
+                                    <input type="file" id="photo" name="photo"/><br>
+                                </div>
                             </div>
 
                             <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
