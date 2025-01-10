@@ -2310,13 +2310,12 @@ h3 {
 .genFacture th, 
 .genFacture td {
     border: 1px solid var(--blanc);
-    text-align: center;
 }
 
 .genFacture th, 
 .genFacture td {
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
 .genFacture th {
