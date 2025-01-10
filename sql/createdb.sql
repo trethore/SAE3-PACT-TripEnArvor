@@ -57,7 +57,6 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
-    id_adresse      INTEGER,
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
 
@@ -69,6 +68,7 @@ CREATE TABLE _compte_professionnel (
     denomination    VARCHAR(255) NOT NULL,
     a_propos         VARCHAR(255) NOT NULL,
     site_web         VARCHAR(255) NOT NULL,
+    id_adresse      INTEGER NOT NULL,
     CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
@@ -252,9 +252,8 @@ CREATE TABLE _option (
 
 
 CREATE TABLE _avis (
-    id_avis         SERIAL, -- // TODO Supprimer id_avis et mettre (id_membre, id_offre) comme clé primaire
-    id_membre       INTEGER NOT NULL,
-    id_offre        INTEGER NOT NULL,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     note            INTEGER NOT NULL,
     titre           VARCHAR(128) NOT NULL,
     commentaire     VARCHAR(1024) NOT NULL,
@@ -263,8 +262,8 @@ CREATE TABLE _avis (
     contexte_visite contexte_visite_t NOT NULL,
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
-    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
-    -- CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
+    lu              BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
     CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
@@ -273,11 +272,12 @@ CREATE TABLE _avis (
 
 
 CREATE TABLE _reponse (
-    id_avis     INTEGER,
+    id_membre   INTEGER,
+    id_offre    INTEGER,
     texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
-    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
 
@@ -287,9 +287,10 @@ CREATE TABLE _note_detaillee (
     id_note   SERIAL,  
     nom_note  VARCHAR(30) NOT NULL,
     note      INTEGER NOT NULL,
-    id_avis   INTEGER NOT NULL,
+    id_membre   INTEGER NOT NULL,
+    id_offre    INTEGER NOT NULL,
     CONSTRAINT _note_pk PRIMARY KEY (id_note),
-    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
 
@@ -401,7 +402,7 @@ CREATE TABLE _facture(
 
 /* ======================= COMPTE HABITE ADRESSE ======================= */
 
-ALTER TABLE _compte
+ALTER TABLE _compte_professionnel
     ADD CONSTRAINT _compte_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
@@ -513,13 +514,14 @@ CREATE TABLE _offre_possede_tag (
 /* ======================== AVIS CONTIENT IMAGE ======================== */
 
 CREATE TABLE _avis_contient_image (
-    id_avis         INTEGER,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     lien_fichier    VARCHAR(255),
     CONSTRAINT _avis_contient_image_pk
-        PRIMARY KEY (id_avis, lien_fichier),
+        PRIMARY KEY (id_membre, id_offre, lien_fichier),
     CONSTRAINT _avis_contient_image_fk_avis
-        FOREIGN KEY (id_avis)
-        REFERENCES _avis(id_avis),
+        FOREIGN KEY (id_membre, id_offre)
+        REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _avis_contient_image_fk_image
         FOREIGN KEY (lien_fichier)
         REFERENCES _image(lien_fichier)
@@ -642,14 +644,14 @@ CREATE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
-        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_prive(id_compte, siren)
         VALUES (id_compte_temp, NEW.siren);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.siren);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse, NEW.siren);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -677,14 +679,14 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
     SET denomination = NEW.denomination,
         a_propos = NEW.a_propos,
-        site_web = NEW.site_web
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel_prive
@@ -734,14 +736,14 @@ CREATE FUNCTION create_compte_professionnel_publique() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
-        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_publique(id_compte)
         VALUES (id_compte_temp);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -769,14 +771,14 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
     SET denomination = NEW.denomination,
         a_propos = NEW.a_propos,
-        site_web = NEW.site_web
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
     WHERE id_compte = NEW.id_compte;
 
     RETURN NEW;
@@ -822,12 +824,12 @@ CREATE FUNCTION create_compte_membre() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
     INSERT INTO _compte_membre(id_compte, pseudo)
         VALUES (id_compte_temp, NEW.pseudo);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.pseudo);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.pseudo);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -855,8 +857,7 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_membre
@@ -1422,8 +1423,10 @@ BEGIN
     nb := (SELECT COUNT(*)
             FROM _avis
             INNER JOIN _note_detaillee
-            ON _avis.id_avis = _note_detaillee.id_avis
-            WHERE _avis.id_avis = NEW.id_avis);
+            ON _avis.id_membre = _note_detaillee.id_membre
+            AND _avis.id_offre = _note_detaillee.id_offre
+            WHERE _avis.id_membre = NEW.id_membre
+            AND _avis.id_offre = NEW.id_offre);
     
     PERFORM *
     FROM _offre_restauration

@@ -230,6 +230,8 @@ h3 {
 
     margin: 2em;
 
+
+
     border-radius: 30px;
     border: none;
 
@@ -237,6 +239,8 @@ h3 {
     font-weight: 600;
     font-size: 40px;
     line-height: 50px;
+
+    text-align: center;
 
     display: flex;
     align-items: center;
@@ -488,6 +492,13 @@ h3 {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
+}
+
+.compte-back-modif .error {
+    color: red;
+}
+.compte-back-modif input.error {
+    border: 2px solid red;
 }
 
 /* Style de la popup */
@@ -1983,6 +1994,7 @@ h3 {
 	justify-content: space-between;
 	width: 100%;
 	min-height: 100vh;
+    min-width: 320px;
 	padding: 0;
 	margin: 0;
 }
@@ -2165,10 +2177,8 @@ h3 {
 }
 
 .front .input-search::placeholder {
-	color: var(--semi-trans);
+	color: var(--blanc);
 	font-size: 18px;
-	letter-spacing: 2px;
-	font-weight: 100;
 }
 
 .front .btn-search {
@@ -2315,6 +2325,144 @@ h3 {
 	.front footer {
 		display: none;
 	}
+    .connecter h1 {
+        margin-top: 30px;
+    }
+
+    /**************************************************************************************
+                                    COMPTE FRONT
+    ***************************************************************************************/
+
+    :root {
+        font-size: 100%; 
+    }
+
+    .compte-front {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .compte-front main,
+    .compte-front-modif main {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin: 0;
+    }
+
+    /********************
+            NAV
+    *********************/
+    .compte-front nav {
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+        top: none;
+        background-color: var(--violet-principal);
+        border-radius: 0;
+        width: auto;
+        height: auto;
+        margin-right: 0;
+    }
+
+    .compte-front nav a {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-self: stretch;
+        justify-content: center;
+
+        text-align: center;
+        background-color: var(--blanc-leger);
+        color: var(--violet-principal);  
+        margin: 1em 0.5em 1em;
+        padding: 0.5em 1em;
+        border: 2px solid var(--violet-principal);
+        border-radius: 15px;
+        height: 3em;
+    }
+
+    .compte-front nav a:last-child {
+        margin-top: auto;
+    }
+
+    .compte-front nav a:hover {
+        color: var(--blanc-leger);
+        background-color: var(--violet-principal);
+        border: 2px solid var(--blanc-leger);
+    }
+    /********************
+    DETAILS COMPTE
+    *********************/
+    .compte-front section,
+    .compte-front-modif section {
+        background-color: var(--blanc);
+        border-radius: 15px;
+    }
+
+    .compte-front section h3 ,
+    .compte-front-modif section h3{
+        font-weight: var(--medium);
+    }
+
+    .compte-front section > h1 + article,
+    .compte-front-modif section > h1 + article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .compte-front table,
+    .compte-front-modif table {
+        width: 40em;
+        border-spacing: 2em 0.5em;
+    }
+
+    .compte-front table tr,
+    .compte-front-modif table tr {
+        margin: 1em 0;
+    }
+
+    .compte-front tr > td,
+    .compte-front-modif tr > td {
+        vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
+        width: 16em;
+    }
+
+    .compte-front table td + td,
+    .compte-front-modif table td + td {
+        text-align: right;
+        width: 28em;
+        color: var(--violet-principal);
+    }
+
+    .compte-front td > div,
+    .compte-front-modif td > div {
+        text-align: justify; /* Justifie uniquement le contenu interne */
+        display: inline-block;
+        line-height: 1.3;
+    }
+
+
+    /********************
+            BOUTON
+    *********************/
+    .compte-front main > section a,
+    .compte-front-modif main > section a {
+        padding: 0.4em 1em;
+    }
+    /********************************************
+        CHANGEMENT EN PLUS DE style_frontCompte
+    *********************************************/
+    .compte-front-modif table + div input,
+    .compte-front-modif table + div a {
+        font-size: 22pt;
+    }
+    .ici {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 1100px) {
@@ -2370,6 +2518,14 @@ h3 {
     .creer-compte #div-name-and-first-name div {
         width: 100%;
     }
+
+    .connecter h1 {
+        margin-top: 70px;
+    }
+
+    .connecter input[type="submit"]{
+        font-size: 30px;
+    }
 }
 
 @media screen and (max-width: 460px) {
@@ -2379,11 +2535,22 @@ h3 {
     }
 }
 
+@media screen and (max-width: 380px) {
+
+    .connecter h1 {
+        margin-top: 130px;
+    }
+
+    
+}
+
 @media screen and (max-width: 330px) {
 
     .creer-compte #div-adresse .row div {
         width: 100%;
     }
+
+    
 }
 
 @media screen and (orientation: portrait) {
