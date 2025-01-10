@@ -638,47 +638,57 @@ try {
                             if (!$dbh->inTransaction()) {
                                 $dbh->beginTransaction();
                             }
-
-                        $file = $_FILES['plan'];
-                        $file_extension = get_file_extension($file['type']);
-                        $time = 'p' . strval(time());
-
-                        if ($file_extension !== '') {
-                            move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
-                            $fichier_plan = 'plan_' . $time . $file_extension;
-
-                            $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
-                            //preparation requete
-                            $stmt_plan = $dbh->prepare($requete_plan);
-                            //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                            $stmt_plan->execute([$fichier_plan]);
-
+                        
+                            $file = $_FILES['plan'];
+                            $file_extension = get_file_extension($file['type']);
+                            $time = 'p' . strval(time());
+                        
+                            if ($file_extension !== '') {
+                                move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
+                                $fichier_plan = 'plan_' . $time . $file_extension;
+                        
+                                // Insertion dans la table _image
+                                $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+                                $stmt_plan = $dbh->prepare($requete_plan);
+                                $stmt_plan->execute([$fichier_plan]);
+                        
+                                // Récupérer l'ID de l'image insérée
+                                $id_image = $dbh->lastInsertId();
+                            }
+                        
+                            $requete = "INSERT INTO sae.offre_parc_attraction(
+                                titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([
+                                $titre,
+                                $resume,
+                                $ville,
+                                intval($age),
+                                intval($nbattraction),
+                                $fichier_img,
+                                intval($id_compte),
+                                $type
+                            ]);
+                        
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        
+                            // Insertion dans la table _offre_contient_image
+                            $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                            $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
+                            $stmt_plan_offre->execute([$id_offre, $id_image]);
+                        
+                            // Commit de la transaction
+                            $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
                         }
-                        $requete = "INSERT INTO sae.offre_parc_attraction(
-                            titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                    
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $type]);
-                           
-
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-
-                        //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
-                        $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                        $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
-                        $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
-
-                        // Commit de la transaction
-                        $dbh->commit();
-                    } catch (PDOException $e) {
-                        if ($dbh->inTransaction()) {
-                            $dbh->rollBack();
-                        }
-                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                        exit;
-                    }
-
+                        
                         break;
 
                     case 'spectacle':
