@@ -333,6 +333,11 @@ label {
     margin: 10px 0;
 }
 
+input[id='photo'] {
+    border: none;
+    margin: 10px 0 0 0;
+}
+
 textarea {
     background: var(--blanc);
     border: 1px solid var(--gris);
@@ -349,7 +354,7 @@ input::file-selector-button{
     background: var(--violet-principal);
     color: var(--blanc);
     width: 200px;
-    height: 40px;
+    height: 50px;
     margin-top: 10px;
     margin-bottom: 5px;
 }
