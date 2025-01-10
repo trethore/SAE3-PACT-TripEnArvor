@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
+
 $emailError = ''; // Message d'erreur par défaut
 
 try {
@@ -23,10 +24,8 @@ if (!isset($id_compte) || !isIdMember($id_compte)) {
 $submitted = isset($_POST['email']);
 $typeCompte = getTypeCompte($id_compte);
 
-$reqCompte = "SELECT * from sae._compte_membre cm 
-                join sae._compte c on c.id_compte = cm.id_compte 
-                join sae._adresse a on c.id_adresse = a.id_adresse 
-                where cm.id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre
+        where id_compte = :id_compte;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -115,9 +114,8 @@ try {
         $stmt = $conn->prepare($reqCompte);
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
         $stmt->execute();
-        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);?>
 
-        ?>
         <h1>Modification du compte</h1>
         <form action="/front/modifier-compte/" method="POST" id="myForm">
             <h2>Informations personnelles</h2>
@@ -239,13 +237,6 @@ try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             switch ($typeCompte) {
                 case 'membre':
-                    $street = $_POST['rue'];
-                    $address_complement = $_POST['compl_adr'] ?? '';
-                    $code_postal = $_POST['cp'];
-                    $city = $_POST['ville'];
-                    $country = $_POST['pays'];
-                    if ($address_complement === '') $address_complement = null;
-
                     // Vérification de l'existence d'un email
                     $queryCheckEmail = "SELECT id_compte FROM sae._compte WHERE email = :email AND id_compte != :id_compte";
                     $stmtCheckEmail = $conn->prepare($queryCheckEmail);
