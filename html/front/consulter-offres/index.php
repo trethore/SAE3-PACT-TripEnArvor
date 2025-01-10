@@ -544,11 +544,8 @@ try {
     <div class="bg"></div>
     <div class="nav-content">
         <a href="/front/accueil"><img src="/images/frontOffice/icones/accueil.png"></a>
-        <a href="/front/consulter-offres"><img src="/images/frontOffice/icones/chercher.png"></a>
-        <a href="/front/mon-compte">
-        <div class = "btOn">
-            <img src="/images/frontOffice/icones/utilisateur.png">
-        </div></a>
+        <a href="/front/consulter-offres"><div class = "btOn"><img src="/images/frontOffice/icones/chercher.png"></div></a>
+        <a href="/front/mon-compte"><img src="/images/frontOffice/icones/utilisateur.png"></a>
     </div>
 </div>
 
