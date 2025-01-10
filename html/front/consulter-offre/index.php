@@ -578,13 +578,13 @@ try {
                         <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
-                            <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
                             <div class="display-ligne">
-                                <label for="titre">Saisissez le titre de votre avis</label>
+                                <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
+                                <label for="titre">Saisissez un titre</label>
                                 <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
 
-                            <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
-                                <label for="contexte">Contexte de visite</label>
+                                <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
+                                <label for="contexte">Saisissez un contexte</label>
                                 <select id="contexte" name="contexte" required>
                                     <option value="" disabled selected>Choisissez un contexte</option>
                                     <option value="affaires">Affaires</option>
@@ -593,19 +593,19 @@ try {
                                     <option value="amis">Amis</option>
                                     <option value="solo">Solo</option>
                                 </select><br>
+
+                                <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS -->
+                                <label for="note">Saisissez une note générale</label>
+                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
                             </div>
                 
                             <!-- CHAMP DE RÉDACTION DE L'AVIS -->
                             <div>
-                                <label for="avis">Rédigez votre avis</label>
+                                <label for="avis">Décrivez votre expérience</label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                             
-                            <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS -->
-                            <div>
-                                <label for="note">Saisissez la note de votre avis</label>
-                                <input type="number" id="note" name="note" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
-                            </div>
+                            
 
                             <!-- CHAMP DE SÉLECTION DE LA NOTE DE L'AVIS POUR UNE OFFRE DE RESTAURATION -->
                             <?php if ($categorie == "Restauration") { ?>
