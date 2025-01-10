@@ -277,7 +277,7 @@ try {
                                             print_r(getIdOffresContientAvis($tab['id_offre']));
                                             print_r(intval($_SESSION['id']));
                                             echo "</pre>";
-                                            if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
+                                            if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
                                                 echo "Oui";
                                             }
                                         ?>
