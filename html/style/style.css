@@ -169,14 +169,6 @@ h3 {
     width: 100%;
 }
 
-.connecter form label, 
-.connecter form input[type="email"],
-.connecter form input[type="password"],
-.connecter form input[type="submit"],
-.connecter form input[type="text"] {
-    width: 50%; /* Conserver la largeur des éléments */
-}
-
 /* Label */
 .connecter label {
     font-style: normal;
@@ -2343,6 +2335,13 @@ h3 {
         width: 80%;
       }
 
+    .connecter label {
+        width: 90%;
+      }
+
+      .connecter section {
+        width: 90%;
+      }
     /**************************************************************************************
                                     COMPTE FRONT
     ***************************************************************************************/
