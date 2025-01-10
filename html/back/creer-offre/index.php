@@ -924,7 +924,6 @@ try {
                     // Fermeture de la connexion
                     $dbh = null;
 
-                    print_r(getSpectacle($offre));
 
 
                 echo "<script>
