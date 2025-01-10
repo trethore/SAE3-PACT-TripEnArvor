@@ -654,10 +654,29 @@ try {
 
                         }
 
-                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, $id_compte, $type]);
-
+                        try {
+                            $requete = "INSERT INTO sae.offre_parc_attraction(
+                                titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([
+                                $titre,
+                                $resume,
+                                $ville,
+                                intval($age),
+                                intval($nbattraction),
+                                $fichier_img,
+                                intval($id_compte),
+                                $type
+                            ]);
+                        
+                            $id_offre = $stmt->fetchColumn();
+                            echo "Nouvelle offre créée avec l'ID : " . $id_offre;
+                        } catch (Exception $e) {
+                            echo "Erreur !: " . $e->getMessage() . "<br>";
+                        }
+                        
                         
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
