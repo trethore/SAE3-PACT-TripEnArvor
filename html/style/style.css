@@ -2329,10 +2329,10 @@ h3 {
 .genFacture .totals {
     margin: 1em 0;
     text-align: right;
+    display: flex;
 }
 
 .genFacture .totals article {
-    display: block;
     width: 75px;
 }
 
