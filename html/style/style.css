@@ -2332,6 +2332,7 @@ h3 {
 }
 
 .genFacture .totals article {
+    display: block;
     width: 75px;
 }
 
