@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
+startSession();
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
