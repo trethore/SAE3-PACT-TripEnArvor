@@ -2303,7 +2303,7 @@ h3 {
         position: relative;
         top: none;
         background-color: var(--violet-principal);
-        border-radius: none;
+        border-radius: 0;
         width: auto;
         height: auto;
         margin-right: 0;
@@ -2342,7 +2342,7 @@ h3 {
     .compte-front-modif section {
         background-color: var(--blanc);
         border-radius: 15px;
-        padding: 0 1em 1em;
+        padding: 0;
     }
 
     .compte-front section h3 ,
@@ -2394,102 +2394,17 @@ h3 {
     *********************/
     .compte-front main > section a,
     .compte-front-modif main > section a {
-        text-decoration: none;
-        color: var(--blanc-leger);
-        background-color: var(--violet-principal);
-        border: 2px solid var(--violet-principal);
-        border-radius: 15px;
-        margin: 1em 0;
-        padding: 0.2em 1em;
-    }
-
-    .compte-front main > section a:hover,
-    .compte-front-modif main > section a:hover {
-        color: var(--violet-principal);
-        background-color: var(--blanc-leger);
-        border: 2px solid var(--violet-principal);
-    }
-
-    .compte-front table + div,
-    .compte-front-modif table + div {
-        text-align: right;
-    }
-
-    .compte-front table + div > a,
-    .compte-front-modif table + div > a {
-        display: inline-block;
+        padding: 0.4em 1em;
     }
     /********************************************
         CHANGEMENT EN PLUS DE style_frontCompte
     *********************************************/
-    .compte-front-modif main {
-        flex-direction: column;
-        background-color: var(--blanc);
-        border-radius: 15px;
-        padding: 0;
-        width: auto;
-    }
-
-    .compte-front-modif input {
-        text-align: center;
-        color: var(--violet-principal);
-        background-color: var(--blanc-leger);
-        padding: 0.5em 2em;
-        width: auto;
-        border-radius: 10px;
-        border: 1px solid var(--blanc);
-    }
-
-    .compte-front-modif input::placeholder {
-        color: var(--gris-etoile);
-    }
-
     .compte-front-modif table + div input,
     .compte-front-modif table + div a {
-        text-decoration: none;
-        color: var(--blanc-leger);
-        background-color: var(--violet-principal);
-        border: 2px solid var(--violet-principal);
-        font-size: 12pt;
-        border-radius: 15px;
-        padding: 0.2em 1em;
-        margin: 1em;
+        font-size: 22pt;
     }
-
-    .compte-front-modif table + div input:hover,
-    .compte-front-modif table + div a:hover {
-        color: var(--violet-principal);
-        background-color: var(--blanc-leger);
-        border: 2px solid var(--violet-principal);
-    }
-
-    /* Style des boutons */
-    .compte-front-modif #validerModifCompte button, 
-    .compte-front-modif #annulerModifCompte button, 
-    .compte-front-modif #popupRetourAccueil button,
-    .compte-front-modif #popupRetourCompte button {
-        background-color: var(--violet-principal);
-        border: 2px solid var(--violet-principal);
-        color: var(--blanc-leger);
-        font-weight: var(--bold);
-        font-size: 12pt;
-        width: 200px;
-        height: 50px;
-        padding: 10px 20px;
-        margin: 0 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s ease;
-    }
-
-    .compte-front-modif #validerModifCompte button:hover,
-    .compte-front-modif #annulerModifCompte button:hover,
-    .compte-front-modif #popupRetourAccueil button:hover,
-    .compte-front-modif #popupRetourCompte button:hover {
-        color: var(--violet-principal);
-        background-color: var(--blanc-leger);
-        border: 2px solid var(--violet-principal);
+    .ici {
+        display: none;
     }
 }
 
