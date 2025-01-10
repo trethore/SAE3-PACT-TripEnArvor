@@ -397,7 +397,7 @@ try {
                 <!-- Affichage des informations spécifiques à un type d'offre -->
                 <?php switch ($categorie) {
                     case "Activité": ?>
-                        <p>Durée de l'activité : <?php echo htmlentities($activite['duree']/60) ?> heure(s)</p>
+                        <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
                     <?php case "Visite": ?>
