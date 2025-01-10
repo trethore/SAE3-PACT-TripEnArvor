@@ -7,21 +7,6 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
     require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
-    session_start();
-
-    if (isset($_POST['titre'])) { // les autres svp²
-        $submitted = true;
-    } else {
-        $submitted = false;
-    }
-    $photosDir = "../../images/universel/photos/";
-    if (!is_dir($photosDir)) {
-        if (mkdir($photosDir,0755,true)) {
-            printInConsole("Dossier photo crée !");
-        }
-    }
-
-
     function get_file_extension($type) {
         $extension = '';
         switch ($type) {
@@ -44,6 +29,24 @@
         return $extension;
     }
 
+
+    session_start();
+
+    if (isset($_POST['titre'])) { // les autres svp
+        $submitted = true;
+    } else {
+        $submitted = false;
+    }
+    $photosDir = "../../images/universel/photos/";
+    if (!is_dir($photosDir)) {
+        if (mkdir($photosDir,0755,true)) {
+            printInConsole("Dossier photo crée !");
+        }
+    }
+
+
+    
+    //recuperer id pro ou publique
     $id_compte = $_SESSION['id'];
     $isIdProPrivee = isIdProPrivee($id_compte);
     $isIdProPublique = isIdProPublique($id_compte);
@@ -64,8 +67,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
-    <link rel="stylesheet" href="../../style/styleguide.css" />
-    <link rel="stylesheet" href="/style/style_HFB.css" />
+    <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="../../style/style_gereeOffre.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
@@ -74,18 +76,72 @@
 
 </head>
 
-<body>
-    <header id="header">
+<body class="back creer-offre">
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+
+//connection bdd
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
-    
+    <!-- affichage formulaire si pas soumis -->
     <?php if (!$submitted) { ?>
         <main>
             <h2> Création d'une offre</h2>
@@ -133,13 +189,13 @@
                     <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                 </tr>
                 <tr>
-                    <td><!--<label for="cp" id="labelcp">Code Postal </label>--></td>
-                    <td><!-- <input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /> --></td>
+                    <!-- <td><label for="cp" id="labelcp">Code Postal </label></td>
+                    <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td> -->
                     <td><label for="ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
                 </tr>
                 <tr>
-                    <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
+                    <td><label for="photo"> Photo <span class="required">*</span></label></td>
                     <td><div>
                             <!-- <label for="file-upload">
                                 <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
@@ -161,11 +217,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <div id="options">
+                     <div id="options">
                         <td><label>Options</label></td>
-                        <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
-                        <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
-                    </div> -->
+                        <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
+                        <input type="radio" id="aLaUne" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                    </div>
                 </tr>
             </table>
 
@@ -174,14 +230,25 @@
                 <!-- activite, visite, spectacle -->
                 <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
+                <br>
                 <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
+                <!-- activite -->
+                <br>
+                <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" /> 
+                <br>
+                <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
+                
 
+                <!-- viste et spectacle -->
+                <br>
+                <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
                 <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
                 <br>
                 <!-- parc -->
                 <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
+                <br>
                 <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
                 <br>
                 <!-- restaurant -->
@@ -237,10 +304,7 @@
 
                 
                 <br>
-                <div id="date_evenement">
-                    <label id="labeldate_event" for="date_event">Date de l'événement <span class="required">*</span></label>
-                    <input type="date" id="date_event" name="date_event" required>
-                </div>
+                
 
 
                 <!-- <h3>Ouverture</h3>
@@ -343,17 +407,21 @@
         } else {
             $id_compte =  $_SESSION['id'];
 
-            $resume = $_POST['descriptionC'];
+            
             // Inclusion des paramètres de connexion
             include('../../php/connect_params.php');
 
             // Récupération des données du formulaire avec $_POST
             
-           
+            $resume = $_POST['descriptionC'];
+
             if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
-                die("Erreur : la date de l'événement est obligatoire.");
+                $date_event = null;
+            }else {
+                $date_event = $_POST['date_event'];
+                $date_event = date('Y-m-d H:i:s'); // La date de l'événement, par exemple '2024-12-19'
             }
-            $date_event = $_POST['date_event']; // La date de l'événement, par exemple '2024-12-19'
+           
             
 
             if (isset($_POST['titre'])) {
@@ -400,7 +468,20 @@
             }else {
                 $type = "gratuit";
             }
+            if (isset($_POST['presta'])) {
+                $presta = $_POST['presta'];
+            }
+            if (isset($_POST['descpresta'])) {
+                $descpresta = $_POST['descpresta'];
+            }
+            if(isset($_POST['optionPayante'])){
+                $optionP = $_POST['optionPayante'];
+            }else {
+                $optionP = null;
+            }
             
+
+
 
             if ($categorie !== "restaurant") {
                     
@@ -416,9 +497,7 @@
 
                 }
                
-                $tabtarifs = array(
-                $nomtarif1 => $tarif1
-                );
+                $tabtarifs = array($nomtarif1 => $tarif1);
               
 
                 if ((isset($_POST['tarif2'])) && (isset($_POST['nomtarif2'])) && $_POST['tarif2'] !== "") {
@@ -438,8 +517,6 @@
                 }
 
             }
-            print_r($_POST);
-            print_r($_FILES);
             
 
             
@@ -457,7 +534,7 @@
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();          
 
 
-
+                
 
             
                 //INSERTION IMAGE dans _image
@@ -490,15 +567,14 @@
                 // }
 
 
-                $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/';
-                $target_file = $target_dir . $time . $file_extension;
+                
 
 
                 // if (file_exists($target_file)) {
                 //     die("Erreur : Le fichier existe déjà dans le répertoire.");
                 // }
                     
-                $dbh->beginTransaction();
+                
                 // Déterminer la table cible selon la catégorie
                 switch ($categorie) {
                     case 'activite':
@@ -511,7 +587,7 @@
                         $requeteCategorie = 'spectacle';
                         break;
                     case 'visite':
-                        $requeteCategorie = 'visite';
+                        $requeteCategorie = 'visite';     
                         break;
                     case "restaurant":
                             $requeteCategorie = 'restauration';
@@ -523,17 +599,41 @@
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $dbh->beginTransaction();
+
+
+                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
+                        
+                        //REQUETE PRESTATION
+                        $requete_presta = 'INSERT INTO _prestation(nom_prestation, description) VALUES (?, ?)';
+    
+                        //preparation requete
+                        $stmt_presta = $dbh->prepare($requete_presta);
+    
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_presta->execute([$presta, $descpresta]);
+    
+    
+                        //REQUETE OFFRE PROPOSE PRESTA
+                        $requete_presta_offre = 'INSERT INTO _offre_activite_propose_prestation(nom_prestation, id_offre_activite) VALUES (?, ?)';
+    
+                        //preparation requete
+                        $stmt_presta_offre = $dbh->prepare($requete_presta_offre);
+    
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_presta_offre->execute([$presta, $id_offre]);
+                        
 
                         break;
 
                     case 'parc':
+                        $dbh->beginTransaction();
                         $file = $_FILES['plan'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -570,46 +670,144 @@
                         break;
 
                     case 'spectacle':
+                    
+                            try {
+                                if (!$dbh->inTransaction()) {
+                                    $dbh->beginTransaction();
+                                }
 
-                        try {
-                            // Insertion de la date dans la table _date
-                            $reqInsertionDateEvent = "INSERT INTO sae._date (date) VALUES (?) RETURNING id_date";
-                            $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
-                            $stmtInsertionDateEvent->execute([$date_event]);
-                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            print_r($idDateEvent);
-                            print_r("here");
-                        } catch (PDOException $e) {
-                            echo "Erreur : " . $e->getMessage();
-                            die();
-                        }
-                        try {
-                            // Requête pour insérer l'offre dans _offre_spectacle
-                            $requete = "INSERT INTO sae._offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement) 
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_offre";
+                                
+                            
+                                // Insertion de la date dans la table _date
+                                $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                                $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                                $stmtInsertionDateEvent->execute([$date_event]);
+                                $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            
+                                if (!is_int($idDateEvent)) {
+                                    throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
+                                }
+                            
+                                // Insertion dans la table offre_spectacle
+                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                $stmt = $dbh->prepare($requete);
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                            
+                                $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            
+                                // Insertion d'une image liée à l'offre
+                                if (!empty($file_extension)) {
+                                    $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                                    $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                                    $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                                } else {
+                                    throw new Exception("L'offre doit contenir au moins une image.");
+                                }
+    
+                                foreach ($tabtarifs as $key => $value) {
+                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+        
+                                    // Préparation de la requête pour la vue tarif
+                                    $stmt_tarif = $dbh->prepare($requete_tarif);
+        
+                                    // Exécution de la requête pour insérer dans la vue tarif
+                                    $stmt_tarif->execute([$key, $value, $id_offre]);
+                                }
+                            
+                            
+                                // Commit de la transaction
+                                $dbh->commit();
+                            } catch (PDOException $e) {
+                                if ($dbh->inTransaction()) {
+                                    $dbh->rollBack();
+                                }
+                                print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                                exit;
+                            } catch (Exception $e) {
+                                if ($dbh->inTransaction()) {
+                                    $dbh->rollBack();
+                                }
+                                print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                                exit;
+                            }
                         
-                            $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, intval($duree), intval($capacite), $id_compte, $type, $idDateEvent]);
-                        
-                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
-                            echo "L'offre a été insérée avec succès. ID de l'offre : " . $id_offre;
-                        } catch (PDOException $e) {
-                            echo "Erreur lors de l'insertion de l'offre : " . $e->getMessage();
-                        }
+                            break;
+                            
+                            
+            
 
 
 
 
 
                     case 'visite':
-                        $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $date_event]);
+                        try {
+                            if (!$dbh->inTransaction()) {
+                                $dbh->beginTransaction();
+                            }
+                        
+                            // Insertion de la date dans la table _date
+                            $reqInsertionDateEvent = 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
+                            $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                            $stmtInsertionDateEvent->execute([$date_event]);
+                            $idDateEvent = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        
+                            if (!is_int($idDateEvent)) {
+                                throw new Exception("L'insertion de la date a renvoyé un id_date non entier.");
+                            }
+                        
+                            // Insertion dans la table offre_visite
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $stmt = $dbh->prepare($requete);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                        
+                            $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                        
+                            // Insertion d'une image liée à l'offre
+                            if (!empty($file_extension)) {
+                                $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
+                                $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
+                                $stmt_image_offre->execute([$id_offre, $fichier_img]);
+                            } else {
+                                throw new Exception("L'offre doit contenir au moins une image.");
+                            }
 
-                        $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
+                            foreach ($tabtarifs as $key => $value) {
+                                $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+    
+                                // Préparation de la requête pour la vue tarif
+                                $stmt_tarif = $dbh->prepare($requete_tarif);
+    
+                                // Exécution de la requête pour insérer dans la vue tarif
+                                $stmt_tarif->execute([$key, $value, $id_offre]);
+                            }
+                        
+                        
+                            // Commit de la transaction
+                            $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
+                        
+
+                        
                         break;
 
+
                     case 'restaurant':
+                        $dbh->beginTransaction();
                         $file = $_FILES['carte'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -646,9 +844,30 @@
                         default:
                         die("Erreur de categorie!");
                     }
-                    
 
-                    if ($file_extension !== '') {
+                    //insertion la date de mise en ligne de date
+                    $date_en_ligne = date('Y-m-d H:i:s');
+
+                    print($date_en_ligne);
+
+                    try {
+                        if (!$dbh->inTransaction()) {
+                            $dbh->beginTransaction();
+                        }
+
+                    $requete_date= 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
+                    $stmt_date = $dbh->prepare($requete_date);
+                    $stmt_date->execute([$date_en_ligne]);
+                    $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                    print($id_date_en_ligne);
+
+                    //insertion dans la date mise en ligne
+                    $requete_date_en_ligne = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
+                    $stmt_date_en_ligne = $dbh->prepare($requete_date_en_ligne);
+                    $stmt_date_en_ligne->execute([$id_offre, $id_date_en_ligne]);
+
+                    if (($file_extension !== '') && ($categorie !== "visite") && ($categorie !== "spectacle")) {
 
                         //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
 
@@ -657,11 +876,26 @@
                         $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                     }
-
-                    $dbh->commit();
-
-
-                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                         // Commit de la transaction
+                         $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
+                   
+                    
+                    
+                    //insertion dans la tarif si c'est pas un restaurant
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")&&($categorie !== "visite")&&($categorie !== "spectacle")){
                         foreach ($tabtarifs as $key => $value) {
                             $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
@@ -672,18 +906,20 @@
                             $stmt_tarif->execute([$key, $value, $id_offre]);
                         }
                     }
+                    
+                    
 
-                    
-                    
                     // Fermeture de la connexion
                     $dbh = null;
+
 
                 echo "<script>
                         const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
                             window.location.href = '/back/liste-back/'
                         }
-                  </script>"; //if premium afficher a changer si il faut voir les erreurs
+                </script>"; //if premium afficher a changer si il faut voir les erreurs
+
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -700,18 +936,18 @@
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
 
-            if(isIdProPublique){
+            if(isIdProPublique === true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
 
             let typecategorie = document.getElementById('categorie');
             let typerestaurant = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event"];
+            let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event"];
+            let obligatoireselontype = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
             obligatoireselontype.forEach(element => {
                 document.getElementById(element).style.display = 'none';

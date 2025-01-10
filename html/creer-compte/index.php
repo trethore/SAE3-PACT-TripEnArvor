@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
+
 startSession();
 
 $submitted = isset($_POST['type-compte']);
@@ -13,18 +14,17 @@ $submitted = isset($_POST['type-compte']);
 <head>
     <meta charset="UTF-8">
     <title>Créer un compte</title>
-    <link rel="stylesheet" href="/style/style-creer-compte.css">
-    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/style.css">
     <script src="/scripts/creer-compte.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body>
+<body class="creer-compte">
 <?php
 if (!$submitted) {
 ?>
     <header>
-        <a href="/html/front/consulter-offres/">
+        <a href="/front/accueil/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
         </a>
     </header>
@@ -45,34 +45,34 @@ if (!$submitted) {
         <hr>
         <div id="div-email">
             <label for="email">Votre adresse email<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="email-already-exist"> Un compte avec cette adresse email existe déjà</span></label>
-            <input type="email" id="email" name="email" placeholder="votre.adresse@email.fr">
+            <input type="email" id="email" name="email" placeholder="votre.adresse@email.fr" maxlength="319">
         </div>
         <div id="div-password">
             <label for="password">Mot de passe<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <input type="password" id="password" name="password" placeholder="Votre mot de passe">
+            <input type="password" id="password" name="password" placeholder="Votre mot de passe" maxlength="254">
         </div>
         <div id="div-confirm-password">
             <label for="confirm-password">Confirmer le mot de passe<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="different-passwords-message"> Les mots de passe sont différents</span></label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Le même mot de passe">
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Le même mot de passe" maxlength="254">
         </div>
         <hr>
         <div id="div-pseudo">
             <label for="pseudo">Pseudo<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="pseudo-already-exist"> Ce pseudo existe déjà</span></label>
-            <input type="text" name="pseudo" id="pseudo" placeholder="MonSuperPseudo22">
+            <input type="text" name="pseudo" id="pseudo" placeholder="Votre pseudonyme" maxlength="254">
         </div>
         <div id="div-name-and-first-name">
             <div id="div-name">
                 <label for="name">Nom<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-                <input type="text" id="name" name="name" placeholder="Ex : DUPONT">
+                <input type="text" id="name" name="name" placeholder="Ex : DUPONT" maxlength="29">
             </div>
             <div id="div-first-name">
                 <label for="first-name">Prénom<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-                <input type="text" name="first-name" id="first-name" placeholder="Ex : Jean">
+                <input type="text" name="first-name" id="first-name" placeholder="Ex : Jean" maxlength="29">
             </div>
         </div>
         <div id="div-tel">
             <label for="tel">Téléphone<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <input type="tel" name="tel" id="tel" placeholder="Ex : +33606060606">
+            <input type="tel" name="tel" id="tel" placeholder="Ex : +33606060606" maxlength="12">
         </div>
         <div id="div-denomination">
             <label for="denomination">Dénomination sociale<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
@@ -84,7 +84,7 @@ if (!$submitted) {
         </div>
         <div id="div-site-web">
             <label for="site-web">Site web<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <input type="url" name="site-web" id="site-web" placeholder="votre.site-web.fr">
+            <input type="url" name="site-web" id="site-web" placeholder="https://votre.site-web.fr">
         </div>
         <div id="div-siren">
             <label for="siren">Numéro de SIREN<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
@@ -186,68 +186,74 @@ if (!$submitted) {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
-        switch ($_POST['type-compte']) {
-            case 'membre':
-                $pseudo = $_POST['pseudo'];
-                if ($name === '') $name = null;
-                if ($first_name === '') $first_name = null;
-                if ($tel === '') $tel = null;
-                $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?) RETURNING id_compte;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
-                $_SESSION['id'] = $stmt->fetch()['id_compte'];
-                break;
-            case 'pro-publique':
-                $denomination = $_POST['denomination'];
-                $a_propos = $_POST['a-propos'];
-                $site_web = $_POST['site-web'];
-                $street = $_POST['street'];
-                $address_complement = $_POST['address-complement'];
-                $code_postal = $_POST['code-postal'];
-                $city = $_POST['city'];
-                $country = $_POST['country'];
-                if ($address_complement === '') $address_complement = null;
-                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
-                $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
-                $_SESSION['id'] = $stmt->fetch()['id_compte'];
-                break;
-            case 'pro-privé':
-                $denomination = $_POST['denomination'];
-                $a_propos = $_POST['a-propos'];
-                $site_web = $_POST['site-web'];
-                $siren = $_POST['siren'];
-                $street = $_POST['street'];
-                $address_complement = $_POST['address-complement'];
-                $code_postal = $_POST['code-postal'];
-                $city = $_POST['city'];
-                $country = $_POST['country'];
-                if ($address_complement === '') $address_complement = null;
-                $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
-                $id_adresse = $stmt->fetch()['id_adresse'];
-                $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
-                $_SESSION['id'] = $stmt->fetch()['id_compte'];
-                break;
-            default:
-                $ok = false;
-                break;
-        }
-        if (isIdProPrivee($_SESSION['id']) || isIdProPublique($_SESSION['id'])) {
-            redirectTo('/back/liste-back/');
-        } else if (isIdMember($_SESSION['id'])) {
-            redirectTo('/front/consulter-offres/');
+        try{
+            switch ($_POST['type-compte']) {
+                case 'membre':
+                    $pseudo = $_POST['pseudo'];
+                    if ($name === '') $name = null;
+                    if ($first_name === '') $first_name = null;
+                    if ($tel === '') $tel = null;
+                    $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
+                    $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                    break;
+                case 'pro-publique':
+                    $denomination = $_POST['denomination'];
+                    $a_propos = $_POST['a-propos'];
+                    $site_web = $_POST['site-web'];
+                    $street = $_POST['street'];
+                    $address_complement = $_POST['address-complement'];
+                    $code_postal = $_POST['code-postal'];
+                    $city = $_POST['city'];
+                    $country = $_POST['country'];
+                    if ($address_complement === '') $address_complement = null;
+                    $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                    $id_adresse = $stmt->fetch()['id_adresse'];
+                    $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                    $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                    break;
+                case 'pro-privé':
+                    $denomination = $_POST['denomination'];
+                    $a_propos = $_POST['a-propos'];
+                    $site_web = $_POST['site-web'];
+                    $siren = $_POST['siren'];
+                    $street = $_POST['street'];
+                    $address_complement = $_POST['address-complement'];
+                    $code_postal = $_POST['code-postal'];
+                    $city = $_POST['city'];
+                    $country = $_POST['country'];
+                    if ($address_complement === '') $address_complement = null;
+                    $query = "INSERT INTO sae._adresse (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?, ?, ?, ?, ?) RETURNING id_adresse;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
+                    $id_adresse = $stmt->fetch()['id_adresse'];
+                    $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $stmt = $dbh->prepare($query);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                    $_SESSION['id'] = $stmt->fetch()['id_compte'];
+                    break;
+                default:
+                    $ok = false;
+                    break;
+            }
+        
+            if (isIdProPrivee($_SESSION['id']) || isIdProPublique($_SESSION['id'])) {
+                redirectTo('/back/liste-back/');
+            } else if (isIdMember($_SESSION['id'])) {
+                redirectTo('/front/consulter-offres/');
+            }
+        } catch(PDOException $e) {
+             http_response_code(400);
         }
     } else {
         http_response_code(500);
     }
+    
 }
 ?>
 </body>

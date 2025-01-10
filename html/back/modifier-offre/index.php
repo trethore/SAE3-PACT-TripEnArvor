@@ -1,11 +1,28 @@
 <?php
 session_start();
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
+
 
 $id_offre_cible = intval($_SESSION['id_offre'] = $_GET['id']);
+
+$id_compte = $_SESSION['id'];
+$isIdProPrivee = isIdProPrivee($id_compte);
+$isIdProPublique = isIdProPublique($id_compte);
+
+
+if ($isIdProPublique !== true) {
+    $isIdProPublique = false;
+
+} else if ($isIdProPublique === true) {
+    $isIdProPrivee = false;
+}
 
 
 function get_file_extension($type) {
@@ -30,6 +47,30 @@ function get_file_extension($type) {
     return $extension;
 }
 
+function supprimerAccents($chaine) {
+    // Tableau des caractères avec accents et leur équivalent sans accents
+    $accents = [
+        'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'ae',
+        'ç' => 'c',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'í' => 'i',
+        'ñ' => 'n',
+        'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'ó' => 'o', 'õ' => 'o', 'ø' => 'o',
+        'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+        'ý' => 'y', 'ÿ' => 'y',
+        'À' => 'A', 'Â' => 'A', 'Ä' => 'A', 'Á' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'AE',
+        'Ç' => 'C',
+        'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+        'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Í' => 'I',
+        'Ñ' => 'N',
+        'Ò' => 'O', 'Ô' => 'O', 'Ö' => 'O', 'Ó' => 'O', 'Õ' => 'O', 'Ø' => 'O',
+        'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ú' => 'U',
+        'Ý' => 'Y'
+    ];
+
+    // Remplacement des caractères
+    return strtr($chaine, $accents);
+}
 if (isset($_POST['titre'])) { // les autres svp²
     $submitted = true;
 } else {
@@ -122,7 +163,7 @@ try {
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restaurant = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorieBase = $categorie;
+    $categorieBase = strtolower(supprimerAccents($categorie));
 
     
 
@@ -133,24 +174,75 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../style/styleguide.css" />
-    <link rel="stylesheet" href="/style/style_HFB.css" />
+    <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
     <title>Modifier offre</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
-    <body>
-        <header id="header">
-            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-            <div class="text-wrapper-17">PACT Pro</div>
-            <div class="search-box">
-                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-                <input type="text" class="input-search" placeholder="Taper votre recherche...">
-            </div>
-            <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-            <a href="/back/mon-compte">><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        </header>
+    <body class="back modifier-offre">
+    <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
+<header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+        <div class="search-box">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offreT) { ?>
+                    <option value="<?php echo htmlspecialchars($offreT['titre']); ?>" data-id="<?php echo $offreT['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offreT['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
+        </div>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
+    </header>
         
         <?php if (!$submitted) { ?>
             <div id="offre">
@@ -188,7 +280,6 @@ try {
             <main>
                 
                 <h2> Modifier <?php echo htmlentities($offre['titre']) ?> </h2>
-                <?php print_r($id_offre_cible); ?>
 
                 <form action="index.php?id=<?php echo $id_offre_cible ?>" method="post" enctype="multipart/form-data" id="dynamicForm">
 
@@ -233,11 +324,15 @@ try {
 
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ) ?>"/></td>
+                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
+                        <?php if (($adresse['num_et_nom_de_voie'])&& $adresse['complement_adresse']) {
+                            echo htmlentities($adresse['num_et_nom_de_voie'] . $adresse['complement_adresse'] ); } ?>"/></td>
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
-                        <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php echo htmlentities($adresse['code_postal']) ?>"/></td>
+                        <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" value="<?php 
+                        if ($adresse['code_postal']) {
+                            echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
                         <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php echo htmlentities($adresse['ville'] )?>"required ></td>
                     </tr>
@@ -255,7 +350,7 @@ try {
                         </td>
                     </tr>
                     <tr>
-                        <td><label id ="labeltype" for="type">Type de l'offre (impossible de modifier le type)<span class="required">*</span></label></td>
+                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -265,12 +360,13 @@ try {
                             </div>
                                     
                         </td>
+                        <td>(impossible de modifier le type)</td>
                     </tr>
                     <tr>
                         <div id="options">
                             <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="option" value="enRelief"/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="option" value="alaune"/><label for="alaune">A la une</label></td>
+                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
                         </div>
                     </tr>
                 </table>
@@ -278,29 +374,32 @@ try {
 
                 <div>
                     <!-- activite, visite, spectacle -->
-                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value="<?php echo htmlentities($activite['duree']) ?>"/><label id="labelduree2" for="duree">minutes</label>
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($activite['duree'])){
+                                                                                                                                                                        echo htmlentities($activite['duree']);} ?>"/>
+                    <label id="labelduree2" for="duree">minutes</label>
                     <!-- activité, parc -->
-                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php echo htmlentities($activite['age_min']) ?>"/> <label id="labelage2" for="age">an(s)</label>
+                    <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age"value="<?php if(isset($activite['age_min'])){
+                                                                                                                                                        echo htmlentities($activite['age_min']); }?>"/> 
+                    <label id="labelage2" for="age">an(s)</label>
 
                     <br>
                     <!-- spectacle -->
-                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($activite['capacite'])?? '' ?>"/><label id="labelcapacite2" for="capacite">personnes</label>
+                    <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($activite['capacite'])){
+                                                                                                                                                                                    echo htmlentities($activite['capacite']);} ?>"/>
+                    <label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
-                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php echo htmlentities($attraction['nbAttractions'] ?? ''); ?>">
-                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php echo htmlentities($attraction[$plan]) ?>" alt="Plan" ><input type="file" id="plan" name="plan" />
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" value="<?php if(isset($attraction['nbAttractions'])){
+                                                                                                                                                                                            echo htmlentities($attraction['nbAttractions']); } ?>">
+                    <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <img src="/images/universel/photos/<?php if(isset($attraction['plan'])){
+                                                                                                                                                            echo htmlentities($attraction['plan']); } ?>"  ><input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restaurant -->
-                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php echo htmlentities($restaurant[$carte]) ?>" alt="Carte" > <input type="file" id="carte" name="carte" />
+                    <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <img src="/images/universel/photos/<?php if(isset($restaurant[$carte])){
+                                                                                                                                                            echo htmlentities($restaurant[$carte]); }?>" > <input type="file" id="carte" name="carte" />
                     
                 </div>
-                <?php if(isset($activite['duree'])){
-                    echo htmlentities($activite['duree']);
-                }else{
-                    echo "pas dispo";
-                }
-
-                ?>
+                
                     <br>
                     </div>
 
@@ -333,17 +432,16 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="lien">Lien externe</label></td>
-                                <td><input type="text" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php echo htmlentities($offre['site_web']); ?>"/></td>
+                                <td><input type="text" id="lien" name="lien" placeholder="Insérer un lien vers un site internet" value="<?php if(isset($offre['site_web'])){
+                                                                                                                                        echo htmlentities($offre['site_web']); } ?>"/></td>
                             </tr>
-                            <tr>
-                                <td><label for="tel">Numéro de téléphone</label></td>
-                                <td><input type="tel" id="tel" name="mobile" pattern="[0-9]{10}" placeholder="(ex : 01 23 45 67 89)" value="<?php echo htmlentities($compte['tel']); ?>"/></td>
-                            </tr>
+                            
                         </table>
                     </div>
 
                         <h3>Description détaillée de l'offre</h3>
-                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php echo nl2br(htmlentities($offre['description_detaille'] ?? " ")); ?></textarea>
+                        <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
+                                                                                                                                echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
                         <div id="tarifs">
                             
@@ -459,6 +557,7 @@ try {
                 </div>
             </footer>
         <?php } else {
+            $id_offre = $id_offre_cible;
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
@@ -566,12 +665,15 @@ try {
                 $lien = null;
             }
             if(isset($_POST['tel'])){
-                $option = $_POST['tel'];
+                $tel = $_POST['tel'];
             }else {
                 $tel = null;
             }
             $pays = "France";
             $id_adresse =null;
+            if (isset($_POST['lacat'])) {
+                $categorie = $_POST['lacat'];
+            }
 
 
             if ($categorie !== "restaurant") {
@@ -586,7 +688,11 @@ try {
             
              print_r($_FILES);
              print($photo1);
+
+             print($categorieBase);
+             print($categorie);
              try {
+
 
                 // Vérifier si l'id_compte est défini (s'il est connecté)
                 if (!$id_compte) {
@@ -599,40 +705,44 @@ try {
                 $dbh->beginTransaction();
                 $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
-                //INSERTION IMAGE dans _image
-                $time = 'p' . strval(time());
-                $file = $_FILES['photo'];
-                $file_extension = get_file_extension($file['type']);
-
-                if ($file_extension !== '') {
-                    move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
 
-                    $fichier_img = $time . $file_extension;
+                if(isset($_POST['photo'])){
+                    //INSERTION IMAGE dans _image
+                    $time = 'p' . strval(time());
+                    $file = $_FILES['photo'];
+                    $file_extension = get_file_extension($file['type']);
 
-                    $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+                    if ($file_extension !== '') {
+                        move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $time . $file_extension);
 
-                    //preparation requete
-                    $stmt_image = $dbh->prepare($requete_image);
 
-                    //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
-                    $stmt_image->execute([$fichier_img]);
+                        $fichier_img = $time . $file_extension;
 
+                        $requete_image = 'INSERT INTO _image(lien_fichier) VALUES (?)';
+
+                        //preparation requete
+                        $stmt_image = $dbh->prepare($requete_image);
+
+                        //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
+                        $stmt_image->execute([$fichier_img]);
+
+                    }
                 }
+                
 
 
 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
-
                     if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
-                        if ($comp_adresse === '') {$comp_adresse = null;}
+                        if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
                                     set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                        where id_adresse = (select id_adresse from sae._compte where id_offre = ?) returning id_adresse;";
-                        $stmt = $conn->prepare($query);
-                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                                        where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_compte]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
                     }
@@ -642,12 +752,19 @@ try {
                     switch ($categorie) {
                         case 'activite':
                            
-                            // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_activite
-                            set ((titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web, id_adressse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            SET titre = ?, 
+                                resume = ?, 
+                                ville = ?, 
+                                duree = ?, 
+                                age_min = ?,  
+                                abonnement = ?, 
+                                description_detaille = ?, 
+                                site_web = ?, 
+                                id_adresse = ?
+                            WHERE id_offre = ?;";
+                  $stmt = $dbh->prepare($query);
+                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             break;
 
@@ -678,7 +795,7 @@ try {
                             $query = "UPDATE sae.offre_parc
                             set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -693,7 +810,7 @@ try {
                             $query = "UPDATE sae.offre_spectacle
                             set (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -701,7 +818,7 @@ try {
                             $query = "UPDATE sae.offre_visite
                             set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             break;
                         
@@ -733,7 +850,7 @@ try {
                             $query = "UPDATE sae.offre_restauration
                             set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             where id_offre = ?;";
-                            $stmt = $conn->prepare($query);
+                            $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
@@ -756,11 +873,8 @@ try {
 
 
                 }else{
-                
-                    
-                
 
-                    //SWITCH CREATION REQUETE OFFRE
+                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
                     switch ($categorie) {
                         case 'activite':
                             try{
@@ -779,7 +893,7 @@ try {
                             $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, prix_offre, abonnement, description_detaille, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif_min, $type, $resume, $descriptionL, $lien]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $tarif1, $type, $resume, $descriptionL, $lien]);
 
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -977,7 +1091,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back/'
+                            window.location.href = '/back/consulter-offre/id'
                         }
                   </script>";
 

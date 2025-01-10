@@ -3,6 +3,22 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+
+
 date_default_timezone_set('Europe/Paris');
 
 if (isset($_POST['reponse'])) { 
@@ -105,6 +121,11 @@ try {
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
+// ===== GESTION DES MISES HORS LIGNE ET EN LIGNE ===== //
+
+    // ===== Requête SQL pour vérifier si une offre est hors ligne ===== //
+    $dateMiseHorsLigne = isOffreHorsLigne($id_offre_cible);
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -117,8 +138,7 @@ try {
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../style/styleguide.css" />
-    <link rel="stylesheet" href="/style/style_HFB.css" />
+    <link rel="stylesheet" href="/style/style.css" />
     <link rel="stylesheet" href="../../style/style-details-offre-pro.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
@@ -128,17 +148,52 @@ try {
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
-<body>
+<body class="back consulter-offre-back">
     
-    <header id="header">
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($of as $o) { ?>
+                    <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                        <?php echo htmlspecialchars($o['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
 
     <div class="fond-bloc display-ligne-espace">
@@ -146,7 +201,61 @@ try {
             <div id="confirm">
                 <p>Voulez-vous mettre votre offre hors ligne ?</p>
                 <div class="close">
-                    <button onclick="showFinal()">Mettre hors ligne</button>
+                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
+
+                    <?php $date = date('Y-m-d H:i:s'); 
+                    if (isset($_POST['mettre_hors_ligne'])) {
+                        try {
+                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                            //Insertion de la date de mise hors ligne
+                            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+                            $stmtInsertionDateMHL->execute([$date]);
+                            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        
+                            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
+                            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+                            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
+
+                            //Suppression de la date de mise en ligne
+                            $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_en_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
+                            $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
+                            $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+                            $stmtSuppressionDateMEL->execute();
+        
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion : " . $e->getMessage();
+                        }
+                    } else {
+                        try {
+                            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                            //Insertion de la date de mise en ligne
+                            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+                            $stmtInsertionDateMEL->execute([$date]);
+                            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
+                        
+                            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
+                            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+                            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
+
+                            //Suppression de la date de mise hors ligne
+                            $reqSuppressionDateMHL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
+                            $stmtSuppressionDateMHL = $dbh->prepare($reqSuppressionDateMHL);
+                            $stmtSuppressionDateMHL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
+                            $stmtSuppressionDateMHL->execute();
+        
+                        } catch (PDOException $e) {
+                            echo "Erreur lors de l'insertion : " . $e->getMessage();
+                        }
+                    } ?>
+
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
@@ -154,7 +263,12 @@ try {
                 <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
-            <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+
+            <?php if ($dateMiseHorsLigne != True) { ?>
+                <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+            <?php } else { ?>
+                <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
+            <?php } ?>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
@@ -186,15 +300,18 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Fermé";
+                $ouverture = "Pas d'information sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
-                    $ouvert_ferme = date('H:i');
-                    $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                    if ($h['nom_jour'] == $jour_actuel) {
-                        if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                            $ouverture = "Ouvert";
-                        } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                            $ouverture = "Ferme bientôt";
+                    if (!empty($horaire)) {
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                        $ouverture = "Fermé";
+                        if ($h['nom_jour'] == $jour_actuel) {
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                $ouverture = "Ouvert";
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                $ouverture = "Ferme bientôt";
+                            }
                         }
                     } 
                 } ?>
@@ -237,7 +354,7 @@ try {
                     <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
                 <? } else {
                     echo "Pas d'information sur le propriétaire de l'offre";
-                }?>            
+                } ?>            
             </div>
 
         </section>
@@ -367,7 +484,7 @@ try {
                 <div class="fond-blocs-avis">
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p><strong>⁝</strong></p>
+                        <p class="transparent"><strong>⁝</strong></p>
                     </div>
                     <div class="display-ligne-espace"> 
                         <div class="display-ligne">
@@ -385,20 +502,23 @@ try {
                         </div>
                         <p class="transparent">.</p>
                     </div>
-                    <?php if ($categorie == "Restauration") { 
-                        foreach ($noteDetaillee as $n) { ?>
-                            <div class="display-ligne">
-                                <p><strong><?php echo htmlentities($n['nom_note']) ?></strong></p>
-                                <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php } 
-                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                    <?php if ($categorie == "Restauration") { ?>
+                        <div class="display-ligne">
+                            <?php foreach ($noteDetaillee as $n) { ?>
+                                <?php if ($n['id_avis'] == $a['id_avis']) { ?>
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
+                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php } 
+                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php } ?>
+                                    <p><?php echo htmlentities("     ") ?></p>
                                 <?php } ?>
-                            </div>
-                        <?php }
-                    } ?>
-                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                            <?php } ?>
+                        </div>
+                    <?php } 
+                    $passage = explode(' ', $datePassage[$compteur]['date']);
                     $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
@@ -476,7 +596,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'"><img src="/images/backOffice/icones/fleche-vers-le-haut.png" width="50" height="50"></button>
+            <button id="remonte" onclick="location.href='#top'">^</button>
         </div>
 
     </main>

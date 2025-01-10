@@ -245,7 +245,7 @@ h3 {
     border: none;
     width: 180px;
     height: 40px;
-    border-radius: 25px;
+    border-radius: 10px;
     margin: 0 0 0 1em;
     padding: 0 0 0 10px;
     font-size: 16px;
@@ -295,7 +295,7 @@ h3 {
 }
 
 .filtre-tri .localisation {
-    flex: 5;
+    flex: 1;
 }
 
 .filtre-tri .typeOffre {
@@ -338,7 +338,37 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
-.sous-offre {
+.en-relief-offre {
+    position: relative;
+    max-width: 379px;
+    min-width: 379px;
+    height: 506px;
+    left: 32px;
+    top: 26px;
+
+    background: var(--blanc-leger);
+    border-radius: 15px;
+
+    margin-right: 4em;
+    margin-bottom: 31px;
+}
+
+.en-relief-offre div {
+    position: absolute;
+    left: 5.28%;
+    right: 5.28%;
+    top: 3.75%;
+    bottom: 5.34%;
+
+    background: var(--blanc-leger);
+    border-radius: 15px 15px 10px 10px;
+}
+
+.en-relief-offre .sous-offre {
+    border: 5px solid red;
+}
+
+.offre .sous-offre {
     border: 3px solid var(--violet-principal);
 }
 
@@ -392,6 +422,16 @@ h3 {
     width: 321px;
     height: 208px;
     margin: 0.5em;
+    left: auto;
+    top: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.en-relief-offre .image-offre {
+    position: absolute;
+    width: 321px;
+    height: 208px;
+    margin: 0.3em;
     left: auto;
     top: auto;
     border-radius: 5px 5px 0px 0px;
@@ -530,6 +570,10 @@ h3 {
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
+}
+
+.en-relief-offre .prix {
+    background: red;
 }
 
 .fond-filtres {

@@ -139,7 +139,7 @@
 
     function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT ROUND(AVG(note))
+        $reqNote = "SELECT AVG(note)
             FROM sae._avis
             WHERE id_offre = :id_offre";
         
@@ -152,8 +152,19 @@
 
             $moyenne = $stmtNOTE->fetch(PDO::FETCH_ASSOC);
 
-            $conn = null;
-            return $moyenne["round"];
+            if ($moyenne) {
+                $moyenneBrute = $moyenne["avg"];
+                
+                // Arrondi personnalisé
+                $arrondi = round($moyenneBrute * 2) / 2;
+    
+                $conn = null;
+                return $arrondi;
+            } else {
+                $conn = null;
+                return null; // Pas de note trouvée
+            }
+
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
@@ -188,7 +199,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
     function getOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqOffre = "SELECT * FROM _offre WHERE id_offre = :id_offre";
+        $reqOffre = "SELECT * FROM sae._offre WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtOffre = $conn->prepare($reqOffre);
@@ -206,7 +217,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une activité ===== //
     function getActivite($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqActivite = "SELECT * FROM _offre NATURAL JOIN _offre_activite WHERE id_offre = :id_offre";
+        $reqActivite = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_activite WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtActivite = $conn->prepare($reqActivite);
@@ -224,7 +235,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est une visite ===== //
     function getVisite($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqVisite = "SELECT * FROM _offre NATURAL JOIN _offre_visite WHERE id_offre = :id_offre";
+        $reqVisite = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_visite WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtVisite = $conn->prepare($reqVisite);
@@ -242,7 +253,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un spectacle ===== //
     function getSpectacle($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqSpectacle = "SELECT * FROM _offre NATURAL JOIN _offre_spectacle WHERE id_offre = :id_offre";
+        $reqSpectacle = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_spectacle WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtSpectacle = $conn->prepare($reqSpectacle);
@@ -260,7 +271,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un parc d'attractions ===== //
     function getParcAttraction($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAttraction = "SELECT * FROM _offre NATURAL JOIN _offre_parc_attraction WHERE id_offre = :id_offre";
+        $reqAttraction = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_parc_attraction WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAttraction = $conn->prepare($reqAttraction);
@@ -278,7 +289,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
     function getRestaurant($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqRestaurant = "SELECT * FROM _offre NATURAL JOIN _offre_restauration WHERE id_offre = :id_offre";
+        $reqRestaurant = "SELECT * FROM sae._offre NATURAL JOIN sae._offre_restauration WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtRestaurant = $conn->prepare($reqRestaurant);
@@ -298,7 +309,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
     function getAdresse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAdresse = "SELECT * FROM _offre JOIN _adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre =  :id_offre";
+        $reqAdresse = "SELECT * FROM sae._offre JOIN sae._adresse ON _offre.id_adresse = _adresse.id_adresse WHERE _offre.id_offre =  :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAdresse = $conn->prepare($reqAdresse);
@@ -318,7 +329,7 @@
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
     function getCompte($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqCompte = "SELECT * FROM _offre JOIN _compte ON  _offre.id_compte_professionnel = _compte.id_compte JOIN _compte_professionnel ON _compte.id_compte = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
+        $reqCompte = "SELECT * FROM sae._offre JOIN sae._compte ON  _offre.id_compte_professionnel = _compte.id_compte JOIN sae._compte_professionnel ON _compte.id_compte = _compte_professionnel.id_compte WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtCompte = $conn->prepare($reqCompte);
@@ -339,7 +350,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les tags d'une offre ===== //
     function getTags($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqTags = "SELECT nom_tag FROM _offre_possede_tag NATURAL JOIN _tag WHERE id_offre = :id_offre";
+        $reqTags = "SELECT nom_tag FROM sae._offre_possede_tag NATURAL JOIN sae._tag WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtTags = $conn->prepare($reqTags);
@@ -359,7 +370,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les différents tarifs d'une offre ===== //
     function getTarifs($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqTarifs = "SELECT * FROM _offre NATURAL JOIN _tarif_publique WHERE _offre.id_offre = :id_offre";
+        $reqTarifs = "SELECT * FROM sae._offre NATURAL JOIN sae._tarif_publique WHERE _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtTarifs = $conn->prepare($reqTarifs);
@@ -379,7 +390,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     function getHorairesOuverture($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqHoraire = "SELECT * FROM _horaires_du_jour JOIN _horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
+        $reqHoraire = "SELECT * FROM sae._horaires_du_jour JOIN sae._horaire ON _horaires_du_jour.id_horaires_du_jour = _horaire.horaires_du_jour WHERE _horaires_du_jour.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);    
             $stmtHoraire = $conn->prepare($reqHoraire);
@@ -399,7 +410,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les avis d'une offre ===== //
     function getAvis($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAvis = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
+        $reqAvis = "SELECT * FROM sae._offre JOIN sae._avis ON _offre.id_offre = _avis.id_offre WHERE _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAvis = $conn->prepare($reqAvis);
@@ -417,7 +428,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
     function getAvisDetaille($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAvisDetaille = "SELECT * FROM _offre JOIN _avis ON _offre.id_offre = _avis.id_offre JOIN _note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _offre.id_offre = :id_offre";
+        $reqAvisDetaille = "SELECT * FROM sae._offre JOIN sae._avis ON _offre.id_offre = _avis.id_offre JOIN sae._note_detaillee ON _avis.id_avis = _note_detaillee.id_avis WHERE _avis.id_avis = _note_detaillee.id_avis AND _offre.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
@@ -435,7 +446,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     function getInformationsMembre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqMembre = "SELECT * FROM _avis NATURAL JOIN compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
+        $reqMembre = "SELECT * FROM sae._avis NATURAL JOIN sae.compte_membre WHERE _avis.id_membre = compte_membre.id_compte AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtMembre = $conn->prepare($reqMembre);
@@ -453,7 +464,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     function getDatePassage($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDatePassage = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
+        $reqDatePassage = "SELECT * FROM sae._avis NATURAL JOIN sae._date WHERE _avis.visite_le = _date.id_date AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtDatePassage = $conn->prepare($reqDatePassage);
@@ -471,7 +482,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
     function getDatePublication($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDatePublication = "SELECT * FROM _avis NATURAL JOIN _date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
+        $reqDatePublication = "SELECT * FROM sae._avis NATURAL JOIN sae._date WHERE _avis.publie_le = _date.id_date AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtDatePublication = $conn->prepare($reqDatePublication);
@@ -491,7 +502,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
     function getReponse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
+        $reqReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_avis = _reponse.id_avis WHERE _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtReponse = $conn->prepare($reqReponse);
@@ -508,7 +519,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
     function getDatePublicationReponse($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDatePublicationReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
+        $reqDatePublicationReponse = "SELECT * FROM sae._avis JOIN sae._reponse ON _avis.id_avis = _reponse.id_avis JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_avis = _reponse.id_avis AND _avis.id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtDatePublicationReponse = $conn->prepare($reqDatePublicationReponse);
@@ -534,7 +545,7 @@
         $increment = $action === 'add' ? '+ 1' : '- 1';
 
         // SQL query to modify the count
-        $reqUpdate = "UPDATE _avis SET $column = $column $increment WHERE id_avis = :id_avis";
+        $reqUpdate = "UPDATE sae._avis SET $column = $column $increment WHERE id_avis = :id_avis";
 
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -555,7 +566,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer le prix le plus petit sur une offre ===== //
     function getPrixPlusPetit($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqPrix = "SELECT MIN(prix) FROM _tarif_publique WHERE id_offre = :id_offre";
+        $reqPrix = "SELECT MIN(prix) FROM sae._tarif_publique WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtPrix = $conn->prepare($reqPrix);
@@ -581,6 +592,79 @@
             $ALaUne = $stmtALaUne->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $ALaUne;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les dates des offres visites ===== //
+    function getDateVisite($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM sae._date JOIN sae._offre_visite ON _date.id_date = _offre_visite.date_evenement AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+     // ===== Fonction qui exécute une requête SQL pour récupérer les dates des offres spectacles ===== //
+    function getDateSpectacle($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM sae._date JOIN sae._offre_spectacle ON _date.id_date = _offre_spectacle.date_evenement AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+
+
+    function isOffreEnRelief($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqEnRelief = "SELECT 1 FROM sae._offre_souscrit_option WHERE nom_option = 'En Relief' AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtEnRelief = $conn->prepare($reqEnRelief);
+            $stmtEnRelief->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtEnRelief->execute();
+            $EnRelief = $stmtEnRelief->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $EnRelief !== false;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function isOffreHorsLigne($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT 1 FROM sae._offre_dates_mise_hors_ligne WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date !== false;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
