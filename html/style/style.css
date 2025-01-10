@@ -2283,6 +2283,19 @@ h3 {
         font-size: 100%; 
     }
 
+    .compte-front h1 {
+        font-size: 80pt;
+    }
+
+    .compte-front h2 {
+        font-size: 40pt;
+    }
+
+    .compte-front td {
+        font-size: 30pt;
+    }
+
+
     .compte-front {
         display: flex;
         flex-wrap: wrap;
