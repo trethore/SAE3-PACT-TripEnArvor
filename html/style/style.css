@@ -494,6 +494,13 @@ h3 {
     border: 2px solid var(--orange-principale);
 }
 
+.compte-back-modif .error {
+    color: red;
+}
+.compte-back-modif input.error {
+    border: 2px solid red;
+}
+
 /* Style de la popup */
 #validerModifCompte, 
 #annulerModifCompte, 
@@ -1987,6 +1994,7 @@ h3 {
 	justify-content: space-between;
 	width: 100%;
 	min-height: 100vh;
+    min-width: 320px;
 	padding: 0;
 	margin: 0;
 }
@@ -2263,35 +2271,140 @@ h3 {
 	.front footer {
 		display: none;
 	}
+    .connecter h1 {
+        margin-top: 30px;
+    }
+
+    /**************************************************************************************
+                                    COMPTE FRONT
+    ***************************************************************************************/
 
     .compte-front {
-        color: none;
-        background-color: none;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
     }
-    
+
     .compte-front main,
     .compte-front-modif main {
         display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        margin: 1em;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin: 0;
     }
+
+    /********************
+            NAV
+    *********************/
     .compte-front nav {
         display: flex;
         flex-direction: column;
-    
+
         position: relative;
-        top: 0;
-        background-color: none;
+        top: none;
+        background-color: var(--violet-principal);
+        border-radius: 0;
+        width: auto;
+        height: auto;
+        margin-right: 0;
+    }
+
+    .compte-front nav a {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-self: stretch;
+        justify-content: center;
+
+        text-align: center;
+        background-color: var(--blanc-leger);
+        color: var(--violet-principal);  
+        margin: 1em 0.5em 1em;
+        padding: 0.5em 1em;
+        border: 2px solid var(--violet-principal);
         border-radius: 15px;
-        width: 0;
-        height: 0;
-        margin-right: none;
+        height: 3em;
+    }
+
+    .compte-front nav a:last-child {
+        margin-top: auto;
+    }
+
+    .compte-front nav a:hover {
+        color: var(--blanc-leger);
+        background-color: var(--violet-principal);
+        border: 2px solid var(--blanc-leger);
+    }
+    /********************
+    DETAILS COMPTE
+    *********************/
+    .compte-front section,
+    .compte-front-modif section {
+        background-color: var(--blanc);
+        border-radius: 15px;
+        padding: 0;
+    }
+
+    .compte-front section h3 ,
+    .compte-front-modif section h3{
+        font-weight: var(--medium);
+    }
+
+    .compte-front section > h1 + article,
+    .compte-front-modif section > h1 + article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .compte-front table,
+    .compte-front-modif table {
+        width: 40em;
+        border-spacing: 2em 0.5em;
+    }
+
+    .compte-front table tr,
+    .compte-front-modif table tr {
+        margin: 1em 0;
+    }
+
+    .compte-front tr > td,
+    .compte-front-modif tr > td {
+        vertical-align: top; /* Alignement vertical en haut pour chaque cellule */
+        width: 16em;
+    }
+
+    .compte-front table td + td,
+    .compte-front-modif table td + td {
+        text-align: right;
+        width: 28em;
+        color: var(--violet-principal);
+    }
+
+    .compte-front td > div,
+    .compte-front-modif td > div {
+        text-align: justify; /* Justifie uniquement le contenu interne */
+        display: inline-block;
+        line-height: 1.3;
     }
 
 
-    .connecter h1 {
-        margin-top: 30px;
+    /********************
+            BOUTON
+    *********************/
+    .compte-front main > section a,
+    .compte-front-modif main > section a {
+        padding: 0.4em 1em;
+    }
+    /********************************************
+        CHANGEMENT EN PLUS DE style_frontCompte
+    *********************************************/
+    .compte-front-modif table + div input,
+    .compte-front-modif table + div a {
+        font-size: 22pt;
+    }
+    .ici {
+        display: none;
     }
 }
 

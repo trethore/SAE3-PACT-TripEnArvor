@@ -151,7 +151,8 @@ try {
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
 
-
+   
+    
     
     function bon_get_selon_categorie($id_offre_cible, $categorie){
         switch ($categorie) {
@@ -166,6 +167,7 @@ try {
                 break;
             case 'spectacle':
                 $offre_bonne_cat = getSpectacle($id_offre_cible);
+                
                 break;
             case 'visite':
                 $offre_bonne_cat = getVisite($id_offre_cible);
@@ -173,6 +175,7 @@ try {
             default:
                 die("Erreur de categorie!");
         }
+        return $offre_bonne_cat;
     }
     
 
@@ -188,6 +191,20 @@ try {
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
+    print_r($offre_bonne_cat);
+
+    if (($categorie == 'spectacle')) {
+        $date_evenement = getDateSpectacle($id_offre_cible);
+    }elseif ($categorie == 'visite') {
+        $date_evenement = getDateVisite($id_offre_cible);
+    }else {
+        $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
+    }
+
+    print_r (getDateSpectacle($id_offre_cible));
+    print_r (getDateSpectacle($id_offre_cible));
+    print_r( $date_evenement);
+    
 
     
 
@@ -413,9 +430,8 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php $date_bon_format = date_format(($offre_bonne_cat['date_evenement']), "yyyy-MM-ddThh:mm:ss"); //date de la bdd mise dans le bon format pour etre afficher
-                                                                                                                                                                                                                if(isset($offre_bonne_cat['date_evenement'])){ 
-                                                                                                                                                                                                                    echo htmlentities($date_bon_format); } ?>">
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php  if($date_evenement =! null){ 
+                                                                                                                                                                                                                    echo $date_evenement; } ?>">
                     <br>
                     <!-- spectacle -->
                     <label id="labelnbattractions" for="nbattraction">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbattraction'])){
@@ -448,7 +464,7 @@ try {
                             if(!in_array($tag, $tags)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         <?php }}
-                        foreach ($liste_tags_restaurant as $tag) { 
+                        foreach ($liste_tags_restauration as $tag) { 
                             if(!in_array($tag, $tags)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="<?php echo htmlentities($tag); ?>" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                    
