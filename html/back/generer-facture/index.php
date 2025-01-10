@@ -6,14 +6,23 @@
     <title>Facture</title>
     <link rel="stylesheet" href="/style/style.css">
 </head>
-<body>
+<body class="genFacture">
     <div class="invoice">
-        <h1>Facture</h1>
-        <section class="issued-to">
-            <h2>Délivré à</h2>
-            <p>Nom Prénom<br>Dénomination sociale<br>mail@example.com</p>
+        <section>
+            <article class="issued-to">
+                <h3>Délivré à</h3>
+                <p>
+                    {Nom} {Prénom}<br>
+                    {Dénomination sociale}<br>
+                    mail@example.com
+                </p>
+            </article>
+            <article>
+                <h3>Numéro de facture</h3>
+                <h3>#012345</h3>
+                <p>{jj/mm/aaaa}</p>
+            </article>
         </section>
-
         <section class="invoice-details">
             <table>
                 <thead>
@@ -49,23 +58,23 @@
                 </tbody>
             </table>
         </section>
-
-        <section class="totals">
+        <article class="totals">
+            <hr>
             <p>Total HT: 31.25€</p>
             <p>Total TVA: 10€</p>
             <p>Total TTC: 34.38€</p>
-        </section>
+            <hr>
+        </article>
 
-        <section class="payment-terms">
-            <h2>Conditions et modalités de paiement</h2>
+        <article class="payment-terms">
+            <h3>Conditions et modalités de paiement</h3>
             <p>Le paiement est dû dans les 15 jours</p>
-            <p>Nom Banque<br>Nom du compte: Nom<br>Numéro de compte : 123-456-7890</p>
-        </section>
-
-        <section class="invoice-number">
-            <p>Numéro de facture: #012345</p>
-            <p>Date: 5.12.2024</p>
-        </section>
+            <p>
+                Nom Banque<br>
+                Nom du compte: Nom<br>
+                Numéro de compte : 123-456-7890
+            </p>
+        </article>
     </div>
 </body>
 </html>
