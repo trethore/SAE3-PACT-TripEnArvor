@@ -36,7 +36,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT Pro</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -131,9 +131,7 @@ try {
 
         <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
-        
         <h2>Nouveautés</h2>
-        <article></article>
 
         <section>
             <div class="carousel">
@@ -141,7 +139,13 @@ try {
                     <?php foreach ($ids_nouv as $offre) { 
                         $id = $offre["id_offre"];
                         $titre = $offre["titre"];
-                        $note = $offre["note"]; ?>
+                        $note = $offre["note"]; 
+                        
+                        echo $titre;
+                        echo $note
+                        
+                        ?>
+
                         <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
                             <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
                         </a>
