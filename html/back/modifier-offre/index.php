@@ -194,7 +194,7 @@ print_r($tags);
     $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
     $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
-    $categorie = trim(strtolower(supprimerAccents($categorie)));
+    $categorie = trim(strtolower(supprimerAccents($categorie), " "));
     print($categorie);
     $categorieBase = $categorie;
 
