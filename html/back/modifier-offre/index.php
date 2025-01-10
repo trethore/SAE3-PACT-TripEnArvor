@@ -201,7 +201,8 @@ try {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
-    
+    echo (getDateSpectacle($id_offre_cible));
+    echo (getDateSpectacle($id_offre_cible));
     echo $date_evenement;
 
     
