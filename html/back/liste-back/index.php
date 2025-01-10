@@ -268,7 +268,7 @@ try {
                             print_r($row["id_offre"]);
                             print_r($note);
                             echo "</pre>";
-                            /*$etoilesPleines = floor($note);
+                            $etoilesPleines = floor($note);
                             $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
                             $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
@@ -288,7 +288,7 @@ try {
                                 ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                 <?php
-                            }*/
+                            }
                         ?>
                         <p><?php echo getNombreNotes($row['id_offre']) ?></p>
                     </div>
