@@ -343,7 +343,7 @@ textarea {
     font-family: "Poppins", sans-serif;
 }
 
-input[type="file"] {
+input[name="photo"] {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -353,7 +353,7 @@ input[type="file"] {
     font-size: 16px;
   }
 
-  input[type="file"]:hover {
+  input[name="photo"]:hover {
     background-color: #0056b3;
   }
 
