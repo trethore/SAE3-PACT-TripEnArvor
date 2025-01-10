@@ -6,6 +6,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
+
+$emailError = ''; // Message d'erreur par défaut
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -140,7 +143,11 @@ try {
                 </tr>
                 <tr>
                     <td>Adresse mail</td>
-                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? '');?>"></td>
+                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? '');?>" class="<?= $emailError ? 'error' : ''; ?>">
+                    <?php if ($emailError): ?>
+                        <p class="error"><?= $emailError; ?></p>
+                    <?php endif; ?>
+                    </td>
                 </tr>
                 <tr>
                     <td>N° de téléphone</td>
@@ -270,26 +277,21 @@ try {
                     $stmtCheckEmail->execute(['email' => $email, 'id_compte' => $id_compte]);
                     $existingAccount = $stmtCheckEmail->fetch();
 
+
                     if ($existingAccount) {
-                        die("Erreur : cet email est déjà utilisé par un autre compte.");
+                        $emailError = "Cet email est déjà utilisé par un autre compte.";
+                    } else {
+                        // Mise à jour des informations si l'email est unique
+                        // Requete SQL pour modifier la vue compte_membre
+                        $query = "UPDATE sae.compte_membre 
+                                    set (pseudo, nom_compte, prenom, email, tel, mot_de_passe) 
+                                        = (?, ?, ?, ?, ?, ?)
+                                    where id_compte = ?;";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_compte]);
+                        header("Location: /front/mon-compte"); // Redirection en cas de succès
+                        exit;
                     }
-
-                    // Requete SQL pour modifier la table adresse
-                    $query = "UPDATE sae._adresse 
-                                set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
-                    $id_adresse = $stmt->fetch()['id_adresse'];
-
-                    // Requete SQL pour modifier la vue compte_professionnel_publique
-                    $query = "UPDATE sae.compte_membre 
-                                set (pseudo, nom_compte, prenom, email, tel, mot_de_passe, id_adresse) 
-                                    = (?, ?, ?, ?, ?, ?, ?)
-                                where id_compte = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute([$pseudo, $name, $first_name, $email, $tel, $motDePasseFinal, $id_adresse, $id_compte]);
-
                     break;
 
                 default:
