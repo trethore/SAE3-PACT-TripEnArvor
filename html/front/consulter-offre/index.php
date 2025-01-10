@@ -421,7 +421,7 @@ try {
             <div class="fond-blocs bloc-a-propos">
                 <div class="display-ligne-espace">
                     <!-- Affichage le titre de l'offre -->
-                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
+                    <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
                     <!-- Affichage du lien du site du propriétaire de l'offre -->
                     <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
@@ -466,7 +466,7 @@ try {
 
         <section class="fond-blocs bordure">
 
-            <h2>Description détaillée de l'offre :</h2>
+            <h2>Description détaillée de l'offre</h2>
             <!-- Affichage de la description détaillée de l'offre -->
             <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
@@ -475,7 +475,7 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-tarif">
-                <h2>Tarifs : </h2>
+                <h2>Tarifs</h2>
                 <?php if (!empty($tarifs)) { ?>
                     <table>
                         <?php foreach ($tarifs as $t) { 
@@ -495,7 +495,7 @@ try {
             </div>
 
             <div class="fond-blocs bloc-ouverture">
-                <h2>Ouverture :</h2>
+                <h2>Ouverture</h2>
                 <?php if (!empty($horaire)) {
                     foreach ($horaire as $h) { ?>
                         <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
@@ -585,7 +585,7 @@ try {
 
                             <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
                             <div>
-                                <label for="contexte">Contexte de visite :</label>
+                                <label for="contexte">Contexte de visite</label>
                                 <select id="contexte" name="contexte" required>
                                     <option value="" disabled selected>Choisissez un contexte</option>
                                     <option value="affaires">Affaires</option>
