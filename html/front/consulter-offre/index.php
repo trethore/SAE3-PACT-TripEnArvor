@@ -578,12 +578,9 @@ try {
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <!-- CHAMP DE RÉDACTION DU TITRE DE L'AVIS --> 
-                            <div class="display-ligne-espace">
-                                <div>
-                                    <label for="titre">Saisissez le titre de votre avis</label>
-                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
-                                </div>    
-                                <p class="transparent">.</p>
+                            <div>
+                                <label for="titre">Saisissez le titre de votre avis</label>
+                                <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                             </div>
 
                             <!-- CHAMP DE SÉLECTION DU CONTEXTE DE L'AVIS -->
