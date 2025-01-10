@@ -2409,6 +2409,7 @@ h3 {
 
     .compte-front nav a {
         display: flex;
+        font-size: 30pt;
     }
 
     
@@ -2498,7 +2499,7 @@ h3 {
                        Modif COMPTE FRONT
     *****************************************************/
 
-    .compte-front-modif main {
+    .compte-front-modif main, .compte-front-modif {
         width: 100%;
       }
 }
