@@ -191,6 +191,9 @@ try {
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
     print_r($offre_bonne_cat);
 
+    $date_bon_format = date_format(($offre_bonne_cat['date_evenement']), "yyyy-MM-ddThh:mm:ss"); //date de la bdd mise dans le bon format pour etre afficher
+    echo $date_bon_format;
+
     
 
 ?>
@@ -415,7 +418,7 @@ try {
                 
                     <!-- viste et spectacle -->
                     <br>
-                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php $date_bon_format = date_format(($offre_bonne_cat['date_evenement']), "yyyy-MM-ddThh:mm:ss"); //date de la bdd mise dans le bon format pour etre afficher
+                    <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event" value=" <?php 
                                                                                                                                                                                                                 if(isset($offre_bonne_cat['date_evenement'])){ 
                                                                                                                                                                                                                     echo htmlentities($date_bon_format); } ?>">
                     <br>
