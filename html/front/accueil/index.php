@@ -103,10 +103,6 @@ try {
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
         }
 
-        echo "<pre>";
-        print_r($ids_nouv);
-        echo "</pre>";
-
         ?>
 
         <section>
