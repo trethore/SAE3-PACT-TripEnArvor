@@ -187,14 +187,14 @@ try {
     </footer>
 </body>
 <div class="telephone-nav">
-        <div class="bg"></div>
-        <div class="nav-content">
-        
-            <img src="/images/frontOffice/icones/accueil.png">
-            <img src="/images/frontOffice/icones/chercher.png">
-            <div class = "btOn">
+    <div class="bg"></div>
+    <div class="nav-content">
+        <img src="/images/frontOffice/icones/accueil.png">
+        <img src="/images/frontOffice/icones/chercher.png">
+        <div class = "btOn">
             <img src="/images/frontOffice/icones/utilisateur.png">
-            </div>
         </div>
     </div>
+</div>
+
 </html>
