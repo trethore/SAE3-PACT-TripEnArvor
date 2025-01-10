@@ -2326,6 +2326,8 @@ h3 {
     margin: 1em 0;
     text-align: right;
     width: 200px;
+    position: relative;
+    right: -70%;
 }
 
 .genFacture .totals tr {
@@ -2341,7 +2343,7 @@ h3 {
     text-align: right;
 }
 
-.genFacture .totals > tr + tr + tr {
+.genFacture .totals > tr + tr + tr td {
     font-weight: var(--semi-bold);
     margin: 5px 0;
 }
