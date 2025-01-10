@@ -61,15 +61,15 @@
     <hr>
     <table class="totals">
         <tr>
-            <td>Total HT : </td>
+            <td>Total HT</td>
             <td>31.25€</td>
         </tr>
         <tr>
-            <td>Total TVA : </td>
+            <td>Total TVA</td>
             <td>10€</td>
         </tr>
         <tr>
-            <td>Total TTC : </td>
+            <td>Total TTC</td>
             <td>34.38€</td>
         </tr>
     </table>
