@@ -2349,7 +2349,7 @@ h3 {
 
     .compte-front td {
         font-size: 30pt;
-        margin-bottom: 1em;
+        padding-bottom: 1.5em;
     }
 
 
@@ -2373,6 +2373,7 @@ h3 {
     .compte-front nav {
         display: flex;
         flex-direction: column;
+        top: 0;
 
         position: relative;
         top: none;
@@ -2385,20 +2386,9 @@ h3 {
 
     .compte-front nav a {
         display: flex;
-        flex-grow: 0;
-        flex-shrink: 0;
-        align-self: stretch;
-        justify-content: center;
-
-        text-align: center;
-        background-color: var(--blanc-leger);
-        color: var(--violet-principal);  
-        margin: 1em 0.5em 1em;
-        padding: 0.5em 1em;
-        border: 2px solid var(--violet-principal);
-        border-radius: 15px;
-        height: 3em;
     }
+
+    
 
     .compte-front nav a:last-child {
         margin-top: auto;
@@ -2468,6 +2458,7 @@ h3 {
     .compte-front main > section a,
     .compte-front-modif main > section a {
         padding: 0.4em 1em;
+        font-size: 30pt;
     }
     /********************************************
         CHANGEMENT EN PLUS DE style_frontCompte
