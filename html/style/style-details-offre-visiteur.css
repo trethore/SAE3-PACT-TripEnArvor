@@ -343,13 +343,15 @@ textarea {
     font-family: "Poppins", sans-serif;
 }
 
-#titre {
-    background: var(--blanc);
-    border: 1px solid var(--gris);
-    border-radius: 5px;
-    height: 50px;
-    font-size: 20px;
-    font-family: "Poppins", sans-serif;  
+#photo {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
 }
 
 span {
