@@ -205,7 +205,7 @@ try {
 
     print_r (getDateSpectacle($id_offre_cible));
     print_r (getDateVisite($id_offre_cible));
-    print_r( $date_evenement);
+    echo ($date_evenement);
     
 
     
