@@ -2318,6 +2318,11 @@ h3 {
     border: none;
 }
 
+.genFacture thead {
+    border-top: var(--noir) 1px solid;
+    border-bottom: var(--noir) 1px solid;
+}
+
 .genFacture .facture-details th, 
 .genFacture .facture-details td {
     padding: 8px;
