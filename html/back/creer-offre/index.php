@@ -647,34 +647,19 @@ try {
                             $fichier_plan = 'plan_' . $time . $file_extension;
 
                             $requete_plan = 'INSERT INTO _image(lien_fichier) VALUES (?)';
-
-
                             //preparation requete
                             $stmt_plan = $dbh->prepare($requete_plan);
-
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_plan->execute([$fichier_plan]);
 
                         }
-                            $requete = "INSERT INTO sae.offre_parc_attraction(
-                                titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
-                        
-                            $stmt = $dbh->prepare($requete);
-                            $stmt->execute([
-                                $titre,
-                                $resume,
-                                $ville,
-                                intval($age),
-                                intval($nbattraction),
-                                $fichier_img,
-                                intval($id_compte),
-                                $type
-                            ]);
-                        
-                            $id_offre = $stmt->fetchColumn();
+                        $requete = "INSERT INTO sae.offre_parc_attraction(
+                            titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                    
+                        $stmt = $dbh->prepare($requete);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $type]);
                            
-                        
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -691,7 +676,7 @@ try {
                         }
                         print "Erreur PDO : " . $e->getMessage() . "<br/>";
                         exit;
-                        
+                    }
 
                         break;
 
@@ -938,7 +923,6 @@ try {
                     // Fermeture de la connexion
                     $dbh = null;
 
-                    print_r(getSpectacle($offre));
 
 
                 echo "<script>
