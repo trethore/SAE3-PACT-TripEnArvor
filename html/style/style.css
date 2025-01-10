@@ -2334,6 +2334,7 @@ h3 {
 
 .genFacture .totals tr > td {
     text-align: left;
+    padding: 0.25em;
 }
 
 .genFacture .totals tr > td + td {
