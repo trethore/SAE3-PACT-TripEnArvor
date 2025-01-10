@@ -270,6 +270,10 @@ try {
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <p style="display: none;" class="contientavisspot">
                                         <?php
+                                            echo "<pre>";
+                                            print_r(getIdOffresContientAvis($tab['id_offre']));
+                                            print_r(intval($_SESSION['id']));
+                                            echo "</pre>"; 
                                             if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
                                                 echo "Oui";
                                             }
@@ -475,14 +479,14 @@ try {
                 }
 
                 // Filtre par offre contient avis
-                /*const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
                         return offerContientAvis === contientAvis;
                     });
-                }*/
+                }
 
                 // Update Visibility
                 offers.forEach(offer => {
