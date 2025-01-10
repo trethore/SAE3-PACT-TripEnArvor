@@ -274,7 +274,8 @@ try {
                                     <p style="display: none;" class="contientavisspot">
                                         <?php
                                             echo "<pre>";
-                                            print_r($_SESSION);
+                                            print_r(getIdOffresContientAvis($tab['id_offre']));
+                                            print_r(intval($_SESSION['id']));
                                             echo "</pre>";
                                             if (getIdOffresContientAvis($tab['id_offre']) == intval($_SESSION['id'])) {
                                                 echo "Oui";
