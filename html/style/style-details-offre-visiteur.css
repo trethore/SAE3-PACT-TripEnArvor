@@ -356,6 +356,8 @@ input, select {
     color: var(--gris);
     border: 1px solid var(--gris);
     border-radius: 12px;
+    height: 50px;
+    margin-left: 20px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
