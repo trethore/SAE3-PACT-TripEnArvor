@@ -2313,17 +2313,13 @@ h3 {
 .genFacture table, 
 .genFacture th, 
 .genFacture td {
-    border: 1px solid var(--blanc);
+    border: none;
 }
 
-.genFacture th, 
-.genFacture td {
+.genFacture .facture-details th, 
+.genFacture .facture-details td {
     padding: 8px;
     text-align: center;
-}
-
-.genFacture th {
-    background-color: var(--blanc);
 }
 
 .genFacture .totals {
