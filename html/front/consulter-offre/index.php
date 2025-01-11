@@ -15,6 +15,31 @@ if (isset($_POST['titre'])) {
 } else {
     $submitted = false;
 }
+
+// ===== GESTION DES EXTENSIONS DES FICHIERS ===== //
+function get_file_extension($type) {
+    $extension = '';
+    switch ($type) {
+        case 'image/png':
+            $extension = '.png';
+            break;
+        case 'image/jpeg':
+            $extension = '.jpg';
+            break;
+        case 'image/webp':
+            $extension = '.webp';
+            break;
+        case 'image/gif':
+            $extension = '.gif';
+            break;
+        default:
+            die("probleme extension image");
+            break;
+    }
+    return $extension;
+}
+
+// ===== GESTION DES INSERTION DES AVIS ===== //
 if ($submitted) {
 
     if (isset($_POST['titre'])) {
@@ -55,6 +80,7 @@ if ($submitted) {
         $heureMinute = $visite_le[1]; 
         $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
     }
+    if (isset($_POST))
     if (isset($_SESSION['id'])) {
         $id_membre = intval($_SESSION['id']);
     }
@@ -103,6 +129,23 @@ if ($submitted) {
             $stmtInsertionRapport = $dbh->prepare($reqInsertionRapport);
             $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
         }
+
+        $nomFichier = 'Image_Avis_' . strval(time());
+        $fichier = $_FILES['photo'];
+        $extension = get_file_extension($fichier['type']);
+        if ($file_extension !== '') {
+            move_uploaded_file($fichier['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $nomFichier . $extension);
+            $fichierImage = $nomFichier . $extension;
+
+            $reqInsertionImage = "INSERT INTO sae._image(lien_fichier) VALUES (?)";
+            $stmtInsertionImage = $dbh->prepare($reqInsertionImage);
+            $stmtInsertionImage->execute([$fichierImage]);
+
+            $reqInsertionImageAvis = "INSERT INTO sae._avis_contient_image(id_membre, id_offre, lien_fichier) VALUES (?, ?, ?)";
+            $stmtInsertionImageAvis = $dbh->prepare($reqInsertionImageAvis);
+            $stmtInsertionImageAvis->execute([$id_membre, $id_offre_cible, $fichierImage]);
+        }
+
         $dbh->prepare("COMMIT;")->execute();
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
