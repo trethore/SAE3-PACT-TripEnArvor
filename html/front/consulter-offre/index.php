@@ -881,7 +881,8 @@ try {
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
 
 
-                    <?php print_r(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]) ?>
+                    <?php echo " Test : " . (getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]) ;
+                    ?>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                     <div class="display-ligne-espace">
