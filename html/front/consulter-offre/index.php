@@ -129,7 +129,7 @@ if ($submitted) {
             $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
         }
 
-        if (isset($_POST['photo'])) {
+        if (isset($_FILES['photo'])) {
             $nomFichier = 'Image_Avis_' . strval(time());
             $fichier = $_FILES['photo'];
             $extension = get_file_extension($fichier['type']);
