@@ -881,6 +881,9 @@ try {
 
                     <img src="<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])) ?>">
 
+                    <?php echo "test :" ?>
+                    <?php print_r(getImageAvis($id_offre_cible, $a['id_membre'])) ?>
+
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                     <div class="display-ligne-espace">
                         <p class="transparent">.</p>
