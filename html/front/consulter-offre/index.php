@@ -80,7 +80,6 @@ if ($submitted) {
         $heureMinute = $visite_le[1]; 
         $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
     }
-    if (isset($_POST))
     if (isset($_SESSION['id'])) {
         $id_membre = intval($_SESSION['id']);
     }
@@ -130,20 +129,22 @@ if ($submitted) {
             $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
         }
 
-        $nomFichier = 'Image_Avis_' . strval(time());
-        $fichier = $_FILES['photo'];
-        $extension = get_file_extension($fichier['type']);
-        if ($file_extension !== '') {
-            move_uploaded_file($fichier['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $nomFichier . $extension);
-            $fichierImage = $nomFichier . $extension;
+        if (isset($_FILES['photo'])) {
+            $nomFichier = 'Image_Avis_' . strval(time());
+            $fichier = $_FILES['photo'];
+            $extension = get_file_extension($fichier['type']);
+            if ($file_extension !== '') {
+                move_uploaded_file($fichier['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $nomFichier . $extension);
+                $fichierImage = $nomFichier . $extension;
 
-            $reqInsertionImage = "INSERT INTO sae._image(lien_fichier) VALUES (?)";
-            $stmtInsertionImage = $dbh->prepare($reqInsertionImage);
-            $stmtInsertionImage->execute([$fichierImage]);
+                $reqInsertionImage = "INSERT INTO sae._image(lien_fichier) VALUES (?)";
+                $stmtInsertionImage = $dbh->prepare($reqInsertionImage);
+                $stmtInsertionImage->execute([$fichierImage]);
 
-            $reqInsertionImageAvis = "INSERT INTO sae._avis_contient_image(id_membre, id_offre, lien_fichier) VALUES (?, ?, ?)";
-            $stmtInsertionImageAvis = $dbh->prepare($reqInsertionImageAvis);
-            $stmtInsertionImageAvis->execute([$id_membre, $id_offre_cible, $fichierImage]);
+                $reqInsertionImageAvis = "INSERT INTO sae._avis_contient_image(id_membre, id_offre, lien_fichier) VALUES (?, ?, ?)";
+                $stmtInsertionImageAvis = $dbh->prepare($reqInsertionImageAvis);
+                $stmtInsertionImageAvis->execute([$id_membre, $id_offre_cible, $fichierImage]);
+            }
         }
 
         $dbh->prepare("COMMIT;")->execute();
