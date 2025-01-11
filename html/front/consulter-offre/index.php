@@ -133,7 +133,7 @@ if ($submitted) {
             $nomFichier = 'Image_Avis_' . strval(time());
             $fichier = $_FILES['photo'];
             $extension = get_file_extension($fichier['type']);
-            if ($file_extension !== '') {
+            if ($extension !== '') {
                 move_uploaded_file($fichier['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . $nomFichier . $extension);
                 $fichierImage = $nomFichier . $extension;
 
