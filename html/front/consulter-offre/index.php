@@ -878,9 +878,16 @@ try {
                     <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                           $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
-                    <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
 
-                    <img src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier']) ?>">
+                    <div class="display-ligne">                        
+                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+
+                        <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier'])) { ?>
+
+                            <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier']); ?>">
+
+                        <?php } ?>
+                    </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                     <div class="display-ligne-espace">

@@ -402,6 +402,11 @@ input, select {
     background: var(--violet-secondaire);
 }
 
+.image-avis {
+    width: 250px;
+    height: auto;
+}
+
 .titre-avis {
     font-size: 32px;
     font-weight: bold;
