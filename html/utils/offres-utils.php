@@ -487,7 +487,7 @@
 
     function getImageAvis($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqImageAvis = "SELECT * FROM _avis_contient_image WHERE _avis_contient_image.id_offre = :id_offre AND _avis_contient_image.id_membre = :id_membre";
+        $reqImageAvis = "SELECT lien_fichier FROM _avis_contient_image WHERE _avis_contient_image.id_offre = :id_offre AND _avis_contient_image.id_membre = :id_membre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -495,7 +495,7 @@
             $stmtImageAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtImageAvis->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
             $stmtImageAvis->execute();
-            $imageAvis = $stmtImageAvis->fetchAll(PDO::FETCH_ASSOC);
+            $imageAvis = $stmtImageAvis->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $imageAvis;
         } catch (Exception $e) {

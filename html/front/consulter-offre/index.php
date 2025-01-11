@@ -879,9 +879,8 @@ try {
                           $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
-                    
-                    <?php echo "test :" ?>
-                    <?php print_r(getImageAvis($id_offre_cible, $a['id_membre'])) ?>
+
+                    <img src="/images/universel/photo/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])) ?>">
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                     <div class="display-ligne-espace">
