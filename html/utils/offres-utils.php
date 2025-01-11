@@ -495,7 +495,7 @@
             $stmtImageAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtImageAvis->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
             $stmtImageAvis->execute();
-            $imageAvis = $stmtImageAvis->fetch(PDO::FETCH_ASSOC);
+            $imageAvis = $stmtImageAvis->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $imageAvis;
         } catch (Exception $e) {
