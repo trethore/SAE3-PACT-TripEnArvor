@@ -879,13 +879,14 @@ try {
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
 
                     <div class="display-ligne">                        
-                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
 
                         <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier'])) { ?>
 
                             <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier']); ?>">
 
                         <?php } ?>
+
+                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
