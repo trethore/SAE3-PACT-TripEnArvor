@@ -333,10 +333,6 @@ label {
     margin: 10px 0;
 }
 
-input[id='photo'] {
-    border: none;
-    margin: 10px 0 0 0;
-}
 
 textarea {
     background: var(--blanc);
@@ -346,6 +342,12 @@ textarea {
     height: 200px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
+    padding: 5px;
+}
+
+input[id='photo'] {
+    border: none;
+    margin: 10px 0 0 0;
 }
 
 input::file-selector-button {
@@ -367,6 +369,7 @@ span {
 }
 
 input, select {
+    padding: 5px;
     background: var(--blanc);
     border: 1px solid var(--gris);
     border-radius: 12px;
