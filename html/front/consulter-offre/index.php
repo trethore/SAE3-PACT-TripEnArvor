@@ -8,6 +8,8 @@ date_default_timezone_set('Europe/Paris');
 session_start();
 
 $id_offre_cible = intval($_GET['id']);
+$id_membre_cible = intval($_SESSION['id']);
+
 $categorie;
 
 if (isset($_POST['titre'])) { 
@@ -235,6 +237,8 @@ try {
 
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
+
+    $imageAvis = getImageAvis($id_offre_cible, $id_membre_cible);
 
 // ===== GESTION DES RÉPONSES ===== //
 
@@ -879,6 +883,8 @@ try {
                           $datePass = explode('-', $passage[0]); ?>
                     <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
                     <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+
+                    <img src="<?php echo htmlentities($imageAvis['lien_fichier']) ?>">
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                     <div class="display-ligne-espace">
