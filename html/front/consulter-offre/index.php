@@ -876,7 +876,7 @@ try {
                     <?php } ?>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
-                    <div>
+                    <div class="display-ligne">
                         <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                             $datePass = explode('-', $passage[0]); ?>
                         <p>Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></p>
