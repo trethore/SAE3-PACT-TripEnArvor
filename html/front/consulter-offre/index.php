@@ -348,30 +348,7 @@ try {
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
-
-            <div class="carousel">
-                <div class="carousel-images">
-
-                    <?php foreach ($images as $image) { ?>
-
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-
-                    <?php } ?>
-
-                </div>
-
-                <div class="display-ligne-espace">
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="display-ligne-espace information-offre">
+            <div class="display-ligne-espace">
 
                 <div class="display-ligne">
                     <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
@@ -405,15 +382,14 @@ try {
                         } ?>
 
                         <!-- AFFICHAGE DU NOMBRE D'AVIS DES OFFRES -->
-                        <p><?php echo htmlentities($nombreNote) . ' avis' ?></p>
-                        <a href="#avis">Voir les avis</a>
+                        <p><a href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
                     </div>
                 </div>
 
                 <!-- AFFICHAGE DES INFORMATIONS DES PROPRIÉTAIRES DES OFFRES -->
                 <?php if (!empty($compte['denomination'])) { ?>
 
-                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
+                    <p class="information-offre">Proposée par <?php echo htmlentities($compte['denomination']); ?></p>
 
                 <?php } else { ?>
 
@@ -422,7 +398,7 @@ try {
                 <?php } ?> 
 
             </div>
-                
+
             <div class="display-ligne">
 
                 <!-- AFFICHAGE DES ADRESSES DES OFFRES -->
@@ -464,9 +440,9 @@ try {
 
                 <!-- AFFICHAGE DES CATÉGORIES ET DES INFORMATIONS DES CRÉNEAUX D'OUVERTURE --> 
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                      $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                      $jour_actuel = $jours[date('w')];
-                      $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                    $jour_actuel = $jours[date('w')];
+                    $ouverture = "Pas d'information sur les créneaux d'ouverture";
 
                 foreach ($horaire as $h) {
 
@@ -497,6 +473,30 @@ try {
                 <p><?php echo htmlentities($ouverture); ?></p>
 
             </div>
+
+            <div class="carousel">
+                <div class="carousel-images">
+
+                    <?php foreach ($images as $image) { ?>
+
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+
+                    <?php } ?>
+
+                </div>
+
+                <div class="display-ligne-espace">
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
+
+            </div>
+
+            
 
         </section>  
 
