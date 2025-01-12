@@ -348,6 +348,8 @@ try {
         <section class="fond-blocs bordure">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
+
+
             <div class="carousel">
                 <div class="carousel-images">
 
@@ -403,7 +405,42 @@ try {
 
                 } ?>
 
-                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
+                <div class="display-ligne">
+                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
+
+                    <div class="display-ligne">
+
+                        <?php if ($noteMoyenne !== null) {
+
+                            $etoilesPleines = floor($noteMoyenne);
+                            $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                            $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            
+                            for ($i = 0; $i < $etoilesPleines; $i++) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+
+                            <?php }
+
+                            if ($demiEtoile) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+
+                            <?php }
+
+                            for ($i = 0; $i < $etoilesVides; $i++) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+
+                            <?php }
+
+                        } ?>
+
+                        <!-- AFFICHAGE DU NOMBRE D'AVIS DES OFFRES -->
+                        <p><?php echo htmlentities($nombreNote) . ' avis' ?></p>
+                        <a href="#avis">Voir les avis</a>
+                    </div>
+                </div>
 
                 <!-- AFFICHAGE DES ADRESSES DES OFFRES -->
                 <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) {
