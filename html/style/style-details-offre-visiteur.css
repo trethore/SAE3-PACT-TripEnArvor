@@ -385,7 +385,7 @@ input, select {
     padding: 30px;
     border-radius: 15px;
     color: var(--noir);
-    border: 3px solid var(--violet-principal);
+    border-top: 3px solid var(--violet-principal);
 }
 
 #avis > button, #avis > form > button {
@@ -406,7 +406,6 @@ input, select {
     width: 250px;
     height: auto;
     border-radius: 12px;
-    margin-left: 5px;
 }
 
 .titre-avis {

@@ -821,28 +821,25 @@ try {
                         </div>
                     </div>
 
-                    <div class="display-ligne-espace"> 
-                        <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
-                        <div class="display-ligne">
-                            <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
+                    <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                    <div class="display-ligne">
+                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
 
-                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                        <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
 
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
 
-                            <?php } 
+                        <?php } 
 
-                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                        for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
 
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                            <img src="/images/universel/icones/etoile-grise.png" class="etoile">
 
-                            <?php }
+                        <?php }
 
-                            $publication = explode(' ', $dateAvis[$compteur]['date']);
-                            $datePub = explode('-', $publication[0]); ?>
-                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
-                        </div>
-                        <p class="transparent">.</p>
+                        $publication = explode(' ', $dateAvis[$compteur]['date']);
+                        $datePub = explode('-', $publication[0]); ?>
+                        <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
