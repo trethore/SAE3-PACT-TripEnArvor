@@ -489,7 +489,7 @@ try {
 
                 </div>
 
-                <div class="fond-blocs bloc-a-propos">
+                <div>
                     <!-- AFFICHAGE DES TITRES ET DES LIENS VERS LES SITES DES OFFRES -->
                     <div class="display-ligne-espace">
                         <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
