@@ -117,26 +117,6 @@ header > div > a, header > div > a:hover {
         height: auto;
         flex-shrink: 0;
     }
-
-    .arrow-left, .arrow-right {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-    }
-
-    .arrow-left > img, .arrow-right > img {
-        background-color: var(--violet-principal);
-        border-radius: 90px;
-    } 
-
-    .arrow-left {
-        left: 20px;
-    }
-      
-    .arrow-right {
-        right: 20px;
-    }
       
 
 /**********************************
