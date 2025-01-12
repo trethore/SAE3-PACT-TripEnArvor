@@ -346,6 +346,9 @@ try {
 
         <section class="fond-blocs bordure">
             
+            <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
+
             <div class="carousel">
                 <div class="carousel-images">
 
@@ -357,9 +360,6 @@ try {
 
                 </div>
             </div>  
-
-            <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
-            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="display-ligne-espace">
 
