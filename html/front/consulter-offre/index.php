@@ -346,6 +346,19 @@ try {
     <main id="body">
 
         <section class="fond-blocs bordure">
+            
+            <div class="carousel">
+                <div class="carousel-images">
+
+                    <?php foreach ($images as $image) { ?>
+
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+
+                    <?php } ?>
+
+                </div>
+            </div>  
+
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
@@ -474,18 +487,6 @@ try {
                 <p><?php echo htmlentities($ouverture); ?></p>
 
             </div>
-
-            <div class="carousel">
-                <div class="carousel-images">
-
-                    <?php foreach ($images as $image) { ?>
-
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-
-                    <?php } ?>
-
-                </div>
-            </div>  
 
         </section>  
 
