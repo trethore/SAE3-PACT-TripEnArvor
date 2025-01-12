@@ -474,29 +474,52 @@ try {
 
             </div>
 
-            <div class="carousel">
-                <div class="carousel-images">
+            <div class="display-ligne">
 
-                    <?php foreach ($images as $image) { ?>
+                <div class="carousel">
+                    <div class="carousel-images">
 
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+                        <?php foreach ($images as $image) { ?>
 
-                    <?php } ?>
+                            <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+
+                        <?php } ?>
+
+                    </div>
+
+                    <div class="display-ligne-espace">
+                        <div class="arrow-left">
+                            <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                        </div>
+                        <div class="arrow-right">
+                            <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                        </div>
+                    </div>
 
                 </div>
 
-                <div class="display-ligne-espace">
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
+                <!-- AFFICHAGE DES TAGS DES OFFRES -->
+                <div class="fond-blocs bloc-caracteristique">
+                    <ul class="liste-caracteristique">
 
-            </div>
+                        <?php if (!empty($tags)) {
 
-            
+                            foreach ($tags as $tag) { ?>
+
+                                <li><?php echo htmlentities($tag['nom_tag']) ?></li>
+
+                            <?php }
+
+                        } else { ?>
+
+                            <p>Pas de tags disponibles</p>
+
+                        <?php } ?>
+
+                    </ul>
+                </div> 
+
+            </div>  
 
         </section>  
 
