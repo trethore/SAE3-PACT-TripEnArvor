@@ -405,6 +405,8 @@ input, select {
 .image-avis {
     width: 250px;
     height: auto;
+    border-radius: 12px;
+    margin-left: 5px;
 }
 
 .titre-avis {
