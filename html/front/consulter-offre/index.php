@@ -490,26 +490,56 @@ try {
 
                 </div>
 
-                <!-- AFFICHAGE DES TAGS DES OFFRES -->
-                <div class="fond-blocs bloc-caracteristique">
-                    <ul class="liste-caracteristique">
+                <div class="fond-blocs bloc-a-propos">
+                    <!-- AFFICHAGE DES TITRES ET DES LIENS VERS LES SITES DES OFFRES -->
+                    <div class="display-ligne-espace">
+                        <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
+                        <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    </div>
 
-                        <?php if (!empty($tags)) {
+                    <!-- Affichage du résumé de l'offre -->
+                    <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
 
-                            foreach ($tags as $tag) { ?>
+                    <!-- AFFICHAGE DES INFORMTIONS SPÉCIFIQUES AU TYPE DES OFFRES -->
+                    <?php switch ($categorie) {
 
-                                <li><?php echo htmlentities($tag['nom_tag']) ?></li>
+                        case "Activité": ?>
+                            <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"?></p>
+                            <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
+                            <?php break; ?>
 
-                            <?php }
+                        <?php case "Visite": ?>
+                            <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"?></p>
+                            <?php break; ?>
+                        <?php case "Spectacle": ?>
 
-                        } else { ?>
+                            <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"?></p>
+                            <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
+                            <?php $event = explode(' ', $spectacle['date']);
+                            $dateEvent = explode('-', $event[0]); ?>
+                            <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
+                            <?php break; ?>
 
-                            <p>Pas de tags disponibles</p>
+                        <?php case "Parc attraction": ?>
+                            <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
+                            <div class="display-ligne-espace">
+                                <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
+                                <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            </div>
+                            <?php break; ?>
 
-                        <?php } ?>
+                        <?php case "Restauration": ?>
+                            <div class="display-ligne-espace">
+                                <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
+                                <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            </div>
+                            <?php break;
 
-                    </ul>
-                </div> 
+                    } ?>
+                    
+                    <!-- AFFICHAGE DES NUMÉROS DE TÉLÉPHONE DES OFFRES -->
+                    <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
+                </div>
 
             </div>  
 
