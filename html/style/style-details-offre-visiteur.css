@@ -20,7 +20,7 @@ body {
 h1 {
     font-size: 64px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     color: var(--violet-principal);
 }
 
@@ -113,8 +113,8 @@ header > div > a, header > div > a:hover {
     }
       
     .carousel-images img {
-        width: 100%;
-        height: 900px;
+        width: 1000px;
+        height: auto;
         flex-shrink: 0;
     }
 
