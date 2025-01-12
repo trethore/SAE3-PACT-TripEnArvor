@@ -883,7 +883,7 @@ try {
 
                     <div class="display-ligne">                        
 
-                        <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[$compteur]['lien_fichier'])) { ?>
+                        <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
 
                             <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier']); ?>">
 
