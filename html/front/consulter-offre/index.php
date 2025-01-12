@@ -372,37 +372,6 @@ try {
             </div>
 
             <div class="display-ligne-espace information-offre">
-                <!-- AFFICHAGE DES CATÉGORIES ET DES INFORMATIONS DES CRÉNEAUX D'OUVERTURE --> 
-                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                      $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                      $jour_actuel = $jours[date('w')];
-                      $ouverture = "Pas d'information sur les créneaux d'ouverture";
-
-                foreach ($horaire as $h) {
-
-                    if (!empty($horaire)) {
-
-                        $ouvert_ferme = date('H:i');
-                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
-                        $ouverture = "Fermé";
-
-                        if ($h['nom_jour'] == $jour_actuel) {
-
-                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-
-                                $ouverture = "Ouvert";
-
-                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-
-                                $ouverture = "Ferme bientôt";
-
-                            }
-
-                        }
-
-                    } 
-
-                } ?>
 
                 <div class="display-ligne">
                     <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
@@ -441,80 +410,6 @@ try {
                     </div>
                 </div>
 
-                <!-- AFFICHAGE DES ADRESSES DES OFFRES -->
-                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) {
-
-                        $adresseComplete = [];
-
-                        if (!empty($adresse['num_et_nom_de_voie'])) {
-
-                            $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
-
-                        }
-
-                        if (!empty($adresse['complement_adresse'])) {
-
-                            $adresseComplete[] = htmlentities($adresse['complement_adresse']);
-
-                        }
-
-                        if (!empty($adresse['code_postal'])) {
-
-                            $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
-
-                        }
-
-                        if (!empty($offre['ville'])) {
-
-                            $adresseComplete[] = htmlentities($offre['ville']);
-
-                        } ?>
-
-                        <p><?php echo implode(' ', $adresseComplete); ?>
-
-                    <?php } else { ?>
-
-                        <p>Pas d'adresse disponible</p>
-
-                    <?php } ?>
-
-            </div>
-                
-            <div class="display-ligne-espace">
-                <!-- AFFICHAGE DE LA NOTE MOYENNE DES AVIS -->
-                <div class="display-ligne">
-
-                    <?php if ($noteMoyenne !== null) {
-
-                        $etoilesPleines = floor($noteMoyenne);
-                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-                        
-                        for ($i = 0; $i < $etoilesPleines; $i++) { ?>
-
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-
-                        <?php }
-
-                        if ($demiEtoile) { ?>
-
-                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-
-                        <?php }
-
-                        for ($i = 0; $i < $etoilesVides; $i++) { ?>
-
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-
-                        <?php }
-
-                    } ?>
-
-                    <!-- AFFICHAGE DU NOMBRE D'AVIS DES OFFRES -->
-                    <p><?php echo htmlentities($nombreNote) . ' avis' ?></p>
-                    <a href="#avis">Voir les avis</a>
-                </div>
-
                 <!-- AFFICHAGE DES INFORMATIONS DES PROPRIÉTAIRES DES OFFRES -->
                 <?php if (!empty($compte['denomination'])) { ?>
 
@@ -523,7 +418,83 @@ try {
                 <?php } else { ?>
 
                     <p>Pas d'information sur le propriétaire de l'offre</p>
+
                 <?php } ?> 
+
+            </div>
+                
+            <div class="display-ligne">
+
+                <!-- AFFICHAGE DES ADRESSES DES OFFRES -->
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) {
+
+                    $adresseComplete = [];
+
+                    if (!empty($adresse['num_et_nom_de_voie'])) {
+
+                        $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
+
+                    }
+
+                    if (!empty($adresse['complement_adresse'])) {
+
+                        $adresseComplete[] = htmlentities($adresse['complement_adresse']);
+
+                    }
+
+                    if (!empty($adresse['code_postal'])) {
+
+                        $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
+
+                    }
+
+                    if (!empty($offre['ville'])) {
+
+                        $adresseComplete[] = htmlentities($offre['ville']);
+
+                    } ?>
+
+                    <p><?php echo implode(' ', $adresseComplete) . " - "; ?>
+
+                <?php } else { ?>
+
+                    <p>Pas d'adresse disponible</p>
+
+                <?php } ?>
+
+                <!-- AFFICHAGE DES CATÉGORIES ET DES INFORMATIONS DES CRÉNEAUX D'OUVERTURE --> 
+                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                      $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                      $jour_actuel = $jours[date('w')];
+                      $ouverture = "Pas d'information sur les créneaux d'ouverture";
+
+                foreach ($horaire as $h) {
+
+                    if (!empty($horaire)) {
+
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
+                        $ouverture = "Fermé";
+
+                        if ($h['nom_jour'] == $jour_actuel) {
+
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+
+                                $ouverture = "Ouvert";
+
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+
+                                $ouverture = "Ferme bientôt";
+
+                            }
+
+                        }
+
+                    } 
+
+                } ?>
+
+                <p><?php echo htmlentities($ouverture); ?></p>
 
             </div>
 
