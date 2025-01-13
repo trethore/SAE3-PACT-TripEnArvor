@@ -3602,7 +3602,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .titre-avis {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
     padding-left: 10px;
 }
@@ -3615,6 +3615,8 @@ header>div>a:hover {
     border-top: 3px solid var(--orange-principale);
 }
 
+/* Pouces avis */
+
 .consulter-offre-back .pouce {
     width: 35px;
     height: 35px;
@@ -3625,26 +3627,26 @@ header>div>a:hover {
     align-items: center;
 }
 
-.consulter-offre-back .display-notation > img {
+.consulter-offre-back .display-notation > p {
     display: flex;
     align-items: end;
     margin: 0 2px 0 0;
 }
 
-/** Style réponse avis **/
+/* Style réponse avis */
 
 .consulter-offre-back .reponse > p {
-    margin-left: 70px;
+    margin: 5px 0 5px 55px;
 }
 
 .consulter-offre-back .titre-reponse {
     margin: 0;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
 }
 
 .consulter-offre-back .marge-reponse {
-    margin-left: 65px;
+    margin-left: 45px;
 }
 
 .consulter-offre-back .reponse > div > img {
