@@ -3625,6 +3625,12 @@ header>div>a:hover {
     align-items: center;
 }
 
+.consulter-offre-back .display-notation > img {
+    display: flex;
+    align-items: end;
+    margin: 0 2px 0 0;
+}
+
 /** Style réponse avis **/
 
 .consulter-offre-back .reponse > p {
@@ -3637,17 +3643,14 @@ header>div>a:hover {
     font-weight: bold;
 }
 
-.consulter-offre-back .reponse:first-child {
-    margin-left: 5px;
-}
-
 .consulter-offre-back .marge-reponse {
     margin-left: 65px;
 }
 
 .consulter-offre-back .reponse > div > img {
-    width: 32px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
 }
 
 .consulter-offre-back .transparent {
