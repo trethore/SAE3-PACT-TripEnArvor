@@ -40,7 +40,15 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="genFacture">
-    <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
+    <div class="infoFacture">
+        <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
+        <article>
+            <h3>Numéro de facture</h3>
+            <h3>{#id_facture}</h3>
+            <p>{date_emission}</p>
+        </article>
+    </div>
+    
     <section>
         <article class="delivre">
             <h3>Délivré à</h3>
@@ -55,11 +63,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <!-- Email -->
                 <?php echo htmlentities($detailCompte["email"] ?? '');?><br>
             </p>
-        </article>
-        <article>
-            <h3>Numéro de facture</h3>
-            <h3>{#id_facture}</h3>
-            <p>{date_emission}</p>
         </article>
     </section>
     <article class="facture-details">
