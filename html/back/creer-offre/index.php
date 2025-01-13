@@ -515,7 +515,7 @@ try {
                 }
 
             }
-            
+            print_r($tabtarifs);
             print_r($_POST);
 
             
@@ -893,6 +893,9 @@ try {
 
                             // Exécution de la requête pour insérer dans la vue tarif
                             $stmt_tarif->execute([$key, $value, $id_offre]);
+                            echo "<br>";
+                            print($key);
+                            print($value);
                         }
                     }
                     
