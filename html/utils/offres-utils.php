@@ -820,11 +820,21 @@
             $stmt->execute($_SESSION['recent_offers']);
             $offers = $stmt->fetchAll();
     
+            // Sort offers to match the order in $_SESSION['recent_offers']
+            $offerMap = [];
+            foreach ($offers as $offer) {
+                $offerMap[$offer['id_offre']] = $offer;
+            }
+            $sortedOffers = array_map(function ($id) use ($offerMap) {
+                return $offerMap[$id] ?? null; // Handle cases where an ID may not exist in the database
+            }, $_SESSION['recent_offers']);
+    
             $dbh = null;
-            return $offers;
+            return array_filter($sortedOffers); // Remove any null values
         } catch (PDOException $e) {
             echo "Erreur lors de la récupération des offres : " . $e->getMessage();
             return [];
         }
     }
+    
 ?>
