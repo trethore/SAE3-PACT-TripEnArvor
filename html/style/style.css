@@ -3604,7 +3604,6 @@ header>div>a:hover {
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
-    padding-left: 10px;
 }
 
 .consulter-offre-back .fond-blocs-avis>p {
@@ -3623,8 +3622,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .display-notation {
-    display: flex;
-    align-items: right;
+    text-align: right;
 }
 
 /* Style réponse avis */
