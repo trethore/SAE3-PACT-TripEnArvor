@@ -21,11 +21,8 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-
 $reqCompte = "SELECT * from sae.compte_membre
                 where id_compte = :id_compte;";
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">

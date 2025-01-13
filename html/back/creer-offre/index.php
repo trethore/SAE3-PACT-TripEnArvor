@@ -68,7 +68,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
     <link rel="stylesheet" href="/style/style.css" />
-    <link rel="stylesheet" href="../../style/style_gereeOffre.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">

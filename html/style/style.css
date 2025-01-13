@@ -3681,6 +3681,347 @@ h3 {
 }
 
 /**************************************************************************************
+                                    Créer offre
+***************************************************************************************/
+
+.creer-offre #labeldispo, 
+.creer-offre #dispo, 
+.creer-offre #labeladresse, 
+.creer-offre #adresse, 
+.creer-offre #cp, 
+.creer-offre div[id = "options"], 
+.creer-offre #labelcp{
+  display: none;
+}
+
+.creer-offre #descpresta{
+  width: 100%;
+}
+
+.creer-offre h2 {
+  width: 55%;
+  text-align: center;
+  margin: 20px auto 20px auto;
+  border-radius: 15px;
+  font-size: 48px;
+}
+
+.creer-offre h3 {
+    padding-top: 5px;
+    width: 55%;
+    /* margin: 20px auto 20px auto; */
+    border-radius: 15px;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.creer-offre label, 
+.creer-offre input, 
+.creer-offre p{
+  font-size: 24px;
+  margin:5px 5px 0 0;
+  font-weight: 400;
+}
+
+.creer-offre p{
+    color: var(--gris-etoile);
+    text-align: center;
+}
+
+.creer-offre table{
+  font-size: 24px;
+}
+
+.creer-offre .required{  /* asterisques en rouge*/
+  color: red;
+}
+
+
+.creer-offre main {
+    background-color: var(--blanc);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 95%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+
+
+
+/***Inputs Textuels (avec url,...)***/
+
+.creer-offre main input[type="text"], 
+.creer-offre input[type="url"], 
+.creer-offre input[type="number"], 
+.creer-offre input[type="tel"], 
+.creer-offre textarea{
+    background-color: var(--blanc-leger);
+    color: black;
+    border: 0;
+    border-radius: 10px;
+    resize: vertical;
+    height: 50px;
+    font-style: normal;
+    text-align: center;
+    font-size: 24px;
+}
+
+.creer-offre input[name='tarif1'],
+.creer-offre input[name='tarif2'], 
+.creer-offre input[name='tarif3'], 
+.creer-offre input[name='tarif4']{
+    width: 100px;
+}
+
+.creer-offre textarea{
+  min-height: 150px;
+  height: fit-content;
+  word-wrap: break-word;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  font-family: "Poppins"
+}
+
+
+/*HORAIRES*/
+.creer-offre input[placeholder = "00"]{
+  width: 50px;
+}
+
+.creer-offre  ::placeholder{   /*guidage*/
+  font-style: italic;
+  text-align: center;
+  color: var(--gris-etoile);
+}
+
+/***Tableaux**/
+
+.creer-offre .apropos table, 
+.creer-offre .important table{
+  width: 100%;
+  display: inline-block;
+}
+
+.creer-offre tbody{
+  width: 1500px;
+}
+
+/****INFORMATIONS IMPORTANTES****/
+
+.creer-offre .important input[id="titre"], 
+.creer-offre .important input[id="adresse"]{
+  width: 100%;
+}
+
+.creer-offre .important td {
+  padding: 5px;
+}
+
+.creer-offre .important td + td{
+  /* width: 35%; */
+  padding-left: 5%;
+}
+
+.creer-offre .important table :nth-child(5) td + td + td{ /*"ville *" */
+  width: 10%;
+  padding-left: 0;
+} 
+.creer-offre .important img {
+  max-width: 200px;
+}
+
+/***Selects***/
+
+.creer-offre .custom-select-container {
+  display: inline-block;
+  position: relative;
+  width: 75%;
+}
+
+.creer-offre .custom-select {
+  appearance: none; /* Remove default select styling */
+  background-color: var(--blanc-leger);
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 24px;
+  width: 100%; 
+  border-radius: 5px;
+  color: var(--gris-etoile);
+  cursor: pointer;
+  
+}
+
+/* Adding a custom dropdown arrow */
+.creer-offre .custom-select-container::after {
+  content: '▼'; /* Add arrow symbol */
+  font-size: 24px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--gris-etoile); /* Arrow color */
+}
+
+/* Optional: Hover effect for the dropdown */
+/* .custom-select:hover {
+  cursor: pointer;
+  border-color: var(--orange-principale);
+  border: 10px solid var(--orange-principale);
+} *//*marche pô*/
+
+/***Importer une image***/
+
+/* .custom-file-input {
+  position: relative;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 170px;
+  height: 170px;
+  display: grid;
+  place-items: center;
+}
+
+.upload-image {
+  cursor: pointer; 
+  width: 50px;
+  height: auto; 
+  height: auto;
+}
+
+/* Masquer le vrai input file */
+/*#file-upload {
+  position: absolute;
+  opacity: 100%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+} */
+
+
+
+
+/****A PROPOS DE L'OFFRE****/
+.creer-offre .apropos tr + td, 
+.creer-offre .important tr+td{
+  width: auto;
+  padding: 5% 5px;
+}
+
+.creer-offre .apropos td + td{
+    padding: 5px 0 5px 0;
+    width: 75%;
+}
+
+.creer-offre .apropos textarea{
+  width: 100%;
+  min-height: 150px;
+  height: fit-content;
+}
+
+.creer-offre input[type="url"], input[type="tel"]{
+  width: 65%;
+}
+
+/****Tarif****/
+
+
+
+/* #options{
+  display: none;
+} */
+
+
+
+
+/***Boutons***/
+.creer-offre input::file-selector-button{
+  border: 0;
+  border-radius: 10px;
+  background: var(--orange-principale);
+  color: var(--blanc);
+  width: 200px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.creer-offre input::file-selector-button:hover{
+  background: #fff;
+  color: var(--orange-principale);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  transition: 0.3s ease-in-out;
+}
+
+
+
+
+
+
+/****AVANT LE FOOTER****/
+
+.creer-offre .bt_cree{
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.creer-offre .valider{
+  background: var(--orange-principale);
+  color: var(--blanc);
+  padding: 10px 20px;
+  border: 0;
+  text-align: center;
+  font-size: 40px;
+  width: 517px;
+  height: 97px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  margin-left: 0;
+}
+
+.creer-offre .valider:hover{
+  background: var(--blanc-leger);
+  color: var(--orange-principale);
+  transition: 0.3s ease-in-out;
+}
+
+.creer-offre .valider + a{
+  width: 50px;
+  height: 50px;
+  background: var(--orange-principale);
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+}
+
+.creer-offre .valider + a :hover{
+  background: var(--blanc-leger);
+  content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.creer-offre .valider + a img {
+  width: 90%;
+  height: 90%;
+  transition: 0.3s ease-in-out; /* Ajoute une transition fluide au changement d'image */
+}
+
+/**************************************************************************************
                                     Nav Phone
 ***************************************************************************************/
 
