@@ -2397,6 +2397,7 @@ h3 {
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 25%;
     z-index: 99;
     background-color: var(--violet-principal);
     padding: 15px 25px;
@@ -2404,8 +2405,8 @@ h3 {
 
 .nav-content a {
     color: inherit;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     padding: 0;
 }
 
@@ -2413,13 +2414,19 @@ h3 {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    height: 100%;
     /*padding: 0 10% 10px 10%;
     margin: 20% auto 3% auto;*/
 }
 
+.nav-content div {
+    width: 100%;
+    height: 100%;
+}
+
 .nav-content>a>div>img {
     display: block;
-    width: 7vw;
+    width: 35%;
     height: auto;
     margin: auto;
 }
