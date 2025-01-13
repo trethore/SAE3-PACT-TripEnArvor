@@ -1510,5 +1510,36 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
 
+CREATE TABLE _message (
+    id_message  SERIAL,
+    id_emeteur  INTEGER NOT NULL,
+    id_receveur INTEGER NOT NULL,
+    date_envoi  DATE NOT NULL,
+    date_modif  DATE,
+    contenu     VARCHAR(1000),
+    lu          BOOLEAN DEFAULT FALSE,
+    CONSTRAINT _message_pk 
+        PRIMARY KEY (id_message),
+    CONSTRAINT _message_fk_id_emeteur 
+        FOREIGN KEY (id_emeteur) 
+        REFERENCES _compte (id_compte),
+    CONSTRAINT _message_fk_id_receveur 
+        FOREIGN KEY (id_receveur) 
+        REFERENCES _compte (id_compte)
+);
+
+CREATE FUNCTION read_messages() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE _message
+    SET lu = TRUE
+    WHERE id_message = NEW.id_message;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER read_messages_tg
+AFTER SELECT ON _message
+FOR EACH ROW EXECUTE PROCEDURE read_message();
+
 
 COMMIT;
