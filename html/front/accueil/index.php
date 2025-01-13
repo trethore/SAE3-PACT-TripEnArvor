@@ -6,6 +6,48 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+function addConsultedOffer($idOffre) {
+    if (!isset($_SESSION['recent_offers'])) {
+        $_SESSION['recent_offers'] = [];
+    }
+
+    if (!in_array($idOffre, $_SESSION['recent_offers'])) {
+        $_SESSION['recent_offers'][] = $idOffre;
+        if (count($_SESSION['recent_offers']) > 10) {
+            array_shift($_SESSION['recent_offers']);
+        }
+    }
+}
+
+function getConsultedOffers() {
+    if (!isset($_SESSION['recent_offers']) || empty($_SESSION['recent_offers'])) {
+        return [];
+    }
+
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        $placeholders = implode(',', array_fill(0, count($_SESSION['recent_offers']), '?'));
+        $query = "SELECT id_offre, titre, note FROM sae._offre WHERE id_offre IN ($placeholders)";
+        $stmt = $dbh->prepare($query);
+        $stmt->execute($_SESSION['recent_offers']);
+        $offers = $stmt->fetchAll();
+
+        $dbh = null;
+        return $offers;
+    } catch (PDOException $e) {
+        echo "Erreur lors de la récupération des offres : " . $e->getMessage();
+        return [];
+    }
+}
+
+$recentOffers = getConsultedOffers();
 ?>
 
 <!DOCTYPE html>
@@ -158,10 +200,35 @@ try {
             </div>
         </section>
 
-        <!--
         <h2>Consultés Récemment</h2>
-        <article></article>
-        -->
+
+        <section>
+            <?php if (empty($recentOffers)) : ?>
+                <p>Aucune offre récemment consultée.</p>
+            <?php else : ?>
+                <div class="carousel">
+                    <div class="carousel-images">
+                        <?php foreach ($recentOffers as $offer) : ?>
+                            <a href="/front/consulter-offre/index.php?id=<?php echo $offer['id_offre']; ?>">
+                                <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offer['id_offre'])); ?>" 
+                                     alt="Image"
+                                     data-titre="<?php echo htmlentities($offer['titre']); ?>" 
+                                     data-note="<?php echo htmlentities($offer['note']); ?>">
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <div>
+                        <div class="arrow-left">
+                            <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                        </div>
+                        <div class="arrow-right">
+                            <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                        </div>
+                    </div>
+                    <p class="titre" id="carousel-titre"></p>
+                </div>
+            <?php endif; ?>
+        </section>
     </main>
 
     <footer>
