@@ -179,8 +179,8 @@ $recentOffers = getConsultedOffers();
                             <a href="/front/consulter-offre/index.php?id=<?php echo $offer['id_offre']; ?>">
                                 <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offer['id_offre'])); ?>" 
                                      alt="Image"
-                                     data-titre="<?php echo htmlentities($offer['titre']); ?>" 
-                                     data-note="<?php echo htmlentities($offer['note']); ?>">
+                                     data-titre="<?php echo htmlentities(getNoteMoyenne($offer['id_offre'])); ?>"
+                                     data-note="<?php echo htmlentities(getOffre($offer['id_offre']))['titre']; ?>">
                             </a>
                         <?php endforeach; ?>
                     </div>
