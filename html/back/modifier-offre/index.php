@@ -857,14 +857,13 @@ try {
                                         resume = ?, 
                                         ville = ?, 
                                         duree = ?, 
-                                        age_min = ?,  
-                                        abonnement = ?, 
+                                        age_min = ?,
                                         description_detaille = ?, 
                                         site_web = ?, 
                                         id_adresse = ?
                                     WHERE id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $descriptionL, $lien, $id_adresse, $id_offre]);
                                         
                             break;
 
@@ -899,14 +898,13 @@ try {
                                 age_min = ?,
                                 nb_attractions = ?, 
                                 plan = ?, 
-                                id_compte_professionnel = ?, 
-                                abonnement = ?, 
+                                id_compte_professionnel = ?,
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
@@ -924,14 +922,13 @@ try {
                                     duree = ?,
                                     capacite = ?,
                                     id_compte_professionnel = ?, 
-                                    abonnement = ?, 
                                     description_detaille = ?, 
                                     site_web = ?, 
                                     id_adresse = ?,
                                     date_evenement = ?
                                 WHERE id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
 
                             break;
                         
@@ -942,14 +939,13 @@ try {
                                 ville = ?, 
                                 duree = ?, 
                                 id_compte_professionnel = ?, 
-                                abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?,
                                 date_evenement = ? 
                                 where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
                             break;
                         
                         case 'restauration':
@@ -984,13 +980,12 @@ try {
                                 gamme_prix = ?, 
                                 carte = ?, 
                                 id_compte_professionnel = ?, 
-                                abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?
                                 where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';

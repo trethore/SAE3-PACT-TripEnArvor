@@ -757,9 +757,9 @@ try {
                                 $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
 
                                 // Insérer la réponse liée à l'avis
-                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
+                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?)";
                                 $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
+                                $stmtInsertionReponse->execute([$id_membre,$id_offre_cible, $reponse, $idDateReponse]);
 
                             } catch (PDOException $e) {
 

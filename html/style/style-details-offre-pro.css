@@ -200,7 +200,7 @@ header > div > a, header > div > a:hover {
 .display-ligne {
     display: flex;
     align-items: center;
-    margin: 15px 0;
+    margin: 5px 0;
 }
 
 .display-ligne > p {
