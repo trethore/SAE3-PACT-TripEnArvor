@@ -939,7 +939,7 @@ try {
             }
 
             let lacategorie = document.getElementById('categorie');
-            let catRestaurant = ["carte", "labelcarte"];
+            let catRestauration = ["carte", "labelcarte"];
             let catVisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
             let catActivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
             let catSpectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
@@ -958,7 +958,7 @@ try {
                 // Afficher les champs selon la catégorie sélectionnée test
                 switch (catSelectionne) {
                     case "restaurant":
-                        afficheSelonCat(typerestaurant);
+                        afficheSelonCat(catRestauration);
 
                         if (isIdProPrivee) {
                             document.getElementById("labelgammedeprix").style.display = 'inline';
