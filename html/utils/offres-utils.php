@@ -815,7 +815,6 @@
     
             // Préparation de la requête
             $placeholders = implode(',', array_fill(0, count($_SESSION['recent_offers']), '?'));
-            echo $placeholders;
             $query = "SELECT id_offre FROM sae._offre WHERE id_offre IN ($placeholders)";
             $stmt = $dbh->prepare($query);
             $stmt->execute($_SESSION['recent_offers']);
@@ -828,5 +827,4 @@
             return [];
         }
     }
-    
 ?>
