@@ -575,27 +575,6 @@ try {
                 //     die("Erreur : Le fichier existe déjà dans le répertoire.");
                 // }
                     
-                
-                // Déterminer la table cible selon la catégorie
-                switch ($categorie) {
-                    case 'activite':
-                        $requeteCategorie = 'activite';
-                        break;
-                    case 'parc':
-                        $requeteCategorie = 'parc_attraction';
-                        break;
-                    case 'spectacle':
-                        $requeteCategorie = 'spectacle';
-                        break;
-                    case 'visite':
-                        $requeteCategorie = 'visite';     
-                        break;
-                    case "restaurant":
-                            $requeteCategorie = 'restauration';
-                            break;
-                    default:
-                        die("Erreur de categorie!");
-                }
 
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
@@ -603,7 +582,7 @@ try {
                         $dbh->beginTransaction();
 
 
-                        $requete = "INSERT INTO sae.offre_". $requeteCategorie ."(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
                         $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
@@ -836,7 +815,7 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_".$requeteCategorie."(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]); 
 
