@@ -167,10 +167,10 @@ $recentOffers = getConsultedOffers();
             </div>
         </section>
 
-        <h2>Consultés Récemment</h2>
+        <!-- <h2>Consultés Récemment</h2>
 
         <section>
-            <?php if (empty($recentOffers)) : ?>
+            <?php /* if (empty($recentOffers)) : ?>
                 <p>Aucune offre récemment consultée.</p>
             <?php else : ?>
                 <div class="carousel">
@@ -194,9 +194,9 @@ $recentOffers = getConsultedOffers();
                     </div>
                     <p class="titre" id="carousel-titre"></p>
                 </div>
-            <?php endif; ?>
+            <?php endif; */ ?>
         </section>
-    </main>
+    </main> -->
 
     <footer>
         <div class="footer-top">
