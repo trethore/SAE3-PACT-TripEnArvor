@@ -929,7 +929,7 @@ try {
                                     date_evenement = ?,
                                 WHERE id_offre = ?;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $id_date_event]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
 
                             break;
                         
