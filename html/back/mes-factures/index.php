@@ -109,7 +109,7 @@ try {
                 $stmt = $conn->prepare($reqFacture);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
+                $factures = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Mes factures</h1>
             <ul>
