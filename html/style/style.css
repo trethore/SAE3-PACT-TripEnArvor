@@ -2298,12 +2298,15 @@ h3 {
     margin: auto;
 }
 
-.genFacture img {
+.genFacture .infoFacture img {
     position: relative;
-    width: 200px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100px;
     margin: auto;
+}
+
+.genFacture .infoFacture article {
+    text-align: right;
+    margin-bottom: 0;
 }
 
 .genFacture h3 {
@@ -2332,10 +2335,6 @@ h3 {
     margin-bottom: 20px;
 }
 
-.genFacture .delivre+article {
-    text-align: right;
-    margin-bottom: 0;
-}
 
 .genFacture table {
     width: 100%;
