@@ -1528,18 +1528,5 @@ CREATE TABLE _message (
         REFERENCES _compte (id_compte)
 );
 
-CREATE FUNCTION read_messages() RETURNS TRIGGER AS $$
-BEGIN
-    UPDATE _message
-    SET lu = TRUE
-    WHERE id_message = NEW.id_message;
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER read_messages_tg
-AFTER SELECT ON _message
-FOR EACH ROW EXECUTE PROCEDURE read_message();
-
 
 COMMIT;
