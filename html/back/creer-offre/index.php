@@ -474,6 +474,11 @@ try {
             }
             if(isset($_POST['optionPayante'])){
                 $optionP = $_POST['optionPayante'];
+                if($optionP == "enRelief"){
+                    $optionP == "En Relief";
+                }elseif ($optionP == "aLaUne") {
+                    $optionP = "À la Une";
+                }
             }else {
                 $optionP = null;
             }
@@ -899,9 +904,16 @@ try {
                         }
                     }
 
+
+                    //options payantes
                     if ($optionPayante != null) {
-                        //insert into offre_souscrit_option(?)
-                    }
+                        $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
+                        $stmt_option = $dbh->prepare($requete_option);
+                        $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
+                        print("option payante mise dans la bdd");
+                    } 
+                    //faut il rentré un nombre de semaine a la souscription ?
+                    // il faut aussi resumé le prix de l'abonnement a la création 
                     
                     
                     if ($dbh->inTransaction()) {
