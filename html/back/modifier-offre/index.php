@@ -627,6 +627,7 @@ try {
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
+                print("titre = ". $titre);
             }
 
             if (isset($_POST['presta'])) {

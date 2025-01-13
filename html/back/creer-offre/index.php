@@ -899,8 +899,8 @@ try {
                         }
                     }
 
-                    if ($optionP) {
-                        # code...
+                    if ($optionPayante != null) {
+                        //insert into offre_souscrit_option(?)
                     }
                     
                     
@@ -965,11 +965,7 @@ try {
                             document.getElementById("gammedeprix").style.display = 'inline';
                         }
                         document.getElementById("tarifs").style.display = 'none';
-
-
                         break;
-
-            
 
                     case "activite":
                         afficheSelonCat(catActivite);
