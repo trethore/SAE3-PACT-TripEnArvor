@@ -3613,7 +3613,7 @@ h3 {
     align-items: center;
 }
 
-.consulter-offre-back .reponse {
+.consulter-offre-back .reponse > p {
     margin-left: 10px;
 }
 .consulter-offre-back .transparent {
