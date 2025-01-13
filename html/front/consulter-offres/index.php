@@ -330,7 +330,6 @@ try {
                         </div>
                 <?php
                     }
-                }
             ?>
         </section>        
     </main>
