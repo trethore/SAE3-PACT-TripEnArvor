@@ -745,7 +745,7 @@ try {
                                 <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                             </div>
 
-                            <p class="marge-reponse"><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
+                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
                         </div>
 
                     <?php } else { ?>
