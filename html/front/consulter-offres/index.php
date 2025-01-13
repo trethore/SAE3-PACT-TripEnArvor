@@ -272,18 +272,18 @@ try {
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
                                     if ($_SESSION['id']) {
-                                        echo '<p style="display: none;" class="contientavisspot">';
                                         echo "<pre>";
                                         print_r(getIdOffresContientAvis($tab['id_offre']));
                                         print_r(intval($_SESSION['id']));
                                         echo "</pre>";
+                                        echo '<p style="display: none;" class="contientavisspot">';
                                         if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
                                             echo "Oui";
                                             }
                                         }
+                                        echo "</p>";
                                     }
                                     ?>
-                                    </p>
                                     <div class="bas-offre">
                                         <div class="etoiles">
                                             <?php
