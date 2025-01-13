@@ -276,16 +276,19 @@ try {
                                         $userId = intval($_SESSION['id']);
 
                                         echo "<pre>";
-                                        echo $tab['id_offre'];
-                                        echo 'ID de tout les membres : ';
+                                        echo 'ID de l\'offre : ' . $tab['id_offre'] . "\n";
+                                        echo 'ID de tous les membres : ';
                                         print_r($idMembres);
                                         echo "\n";
                                         echo 'ID membre : ' . $userId . "\n";
                                         echo "</pre>";
 
-                                        // Hidden paragraph with a conditional "Oui" output
+                                        // Extraire uniquement les valeurs de 'id_membre' dans un tableau simple
+                                        $idMembresSimplified = array_column($idMembres, 'id_membre');
+
+                                        // Paragraphe caché avec un affichage conditionnel
                                         echo '<p style="display: none;" class="contientavisspot">';
-                                        if (in_array($userId, $idMembres)) {
+                                        if (in_array($userId, $idMembresSimplified)) {
                                             echo "Oui";
                                         }
                                         echo "</p>";
