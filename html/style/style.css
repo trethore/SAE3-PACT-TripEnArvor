@@ -4025,6 +4025,600 @@ h3 {
                                     Nav Phone
 ***************************************************************************************/
 
+
+.liste-front h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--violet-principal);
+    background: var(--blanc-leger);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
+}
+
+.liste-front h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 23pt;
+    color: var(--noir);
+}
+
+.liste-front h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20pt;
+    color: var(--noir);
+}
+
+/***************************
+    LES FILTRES ET TRIS
+****************************/
+.liste-front .filtre-tri {
+    position: relative;
+    margin: 1em 2.5em;
+    padding: 3em 2em 1em;
+
+    width: 95vw;
+    box-sizing: border-box;
+    
+    background: var(--blanc-leger);
+    border-radius: 15px;
+    border:3px solid var(--violet-principal);
+}
+
+.liste-front .filtre-tri > h2 {
+    color: var(--blanc-leger);
+    text-align: center;
+    background-color: var(--violet-principal);
+    border-radius: 15px;
+    padding: 0.3em;
+    position: absolute;
+    left: 2%;
+    transform: translate(0, -3.5em);
+    min-width: auto;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.liste-front .filtre-tri > h2:hover {
+    background-color: var(--blanc-leger);
+    border: solid 2px var(--violet-principal);
+    color: var(--violet-principal);
+}
+
+.liste-front .filtre-tri h2 + div {
+    display: flex;
+    flex-direction: column;
+    color: var(--blanc);
+    background-color: var(--blanc-leger);
+    border-radius: 15px;
+}
+
+
+/*************
+    INPUT
+**************/
+
+.liste-front .filtre-tri input[type="radio"] {
+    appearance: none;
+    margin: 0;
+    font: inherit;
+    color: var(--blanc);
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    margin-right: 0.2em;
+    transform: translateY(0.15em);
+}
+
+.liste-front .filtre-tri input[type="radio"]:not(:disabled):checked {
+    border-color: var(--blanc);
+    background-color: var(--blanc);
+}
+
+.liste-front .filtre-tri input[type="checkbox"] {
+    appearance: none;
+    margin: 0;
+    font: inherit;
+    color: var(--blanc);
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 5px;
+    margin-right: 0.2em;
+    transform: translateY(0.15em);
+}
+
+.liste-front .filtre-tri input[type="checkbox"]:not(:disabled):checked {
+    border-color: var(--blanc);
+    background-color: var(--blanc);
+}
+
+.liste-front .filtre-tri .categorie, 
+.liste-front .filtre-tri .localisation, 
+.liste-front .filtre-tri .disponibilite, 
+.liste-front .filtre-tri .trier,
+.liste-front .filtre-tri .typeOffre, 
+.liste-front .filtre-tri .date,
+.liste-front .filtre-tri .trier2 {
+    margin: 0 1em;
+    border-radius: 10px;
+}
+
+.liste-front .filtre-tri .disponibilite div,
+.liste-front .filtre-tri .localisation div,
+.liste-front .filtre-tri .typeOffre div,
+.liste-front .filtre-tri .date div {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.liste-front .filtre-tri h2 + div > div,
+.liste-front .filtre-tri h2 + div > div + div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.liste-front .filtre-tri h2 + div > div {
+    padding-top: 0.5em 0 0 0;
+}
+
+.liste-front .filtre-tri h2 + div > div + div {
+    padding: 0 0 1em 0;
+    
+}
+
+.liste-front .filtre-tri h3 + div {
+    background: var(--violet-principal);
+    border-radius: 15px;
+    padding: 0.5em;
+    padding-left: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+.liste-front .filtre-tri h3 {
+    margin: 0 0 0.1em;
+    color: var(--violet-principal);
+}
+
+.liste-front .filtre-tri label {
+    margin: 0.4em 0.4em 0.4em 0;
+}
+
+/************
+    TRIER
+*************/
+.liste-front .filtre-tri .trier > div {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.liste-front .filtre-tri .trier > div > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 1em 0 0;
+}
+
+.liste-front .filtre-tri .trier > div > div > div,
+.liste-front .filtre-tri .trier > div > div > div + div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.liste-front .filtre-tri .trier > div > div > div + div {
+    padding: 0 0 0 2em;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--violet-principal);
+}
+
+.liste-front .filtre-tri .trier > div  div div div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+.liste-front .filtre-tri select {
+    width: 110px;
+    height: 31px;
+    border: none;
+    border-radius: 10px;
+}
+
+.liste-front .filtre-tri .trier input[type="text"],
+.liste-front .filtre-tri .trier [type="number"] {
+    width: 50px;
+    height: 19px;
+    margin: 0.2em 0.4em;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+}
+
+
+/*****************
+   LOCALISATION
+******************/
+.liste-front .filtre-tri .localisation div div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.liste-front .filtre-tri .localisation input[type="text"] {
+    border: none;
+    width: 180px;
+    height: 40px;
+    border-radius: 10px;
+    margin: 0 0 0 1em;
+    padding: 0 0 0 10px;
+    font-size: 16px;
+}
+
+
+/**************
+      DATE
+***************/
+.liste-front .filtre-tri .date > div {
+    display: flex;
+}
+
+.liste-front .filtre-tri .date > div div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.4em;
+}
+
+.liste-front .filtre-tri input[type="date"] {
+    border: none;
+    border-radius: 5px;
+    width: 148px;
+    height: 23px;
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.liste-front .filtre-tri .categorie {
+    flex: 5;
+}
+
+.filtre-tri .disponibilite {
+    flex: 2;
+}
+
+.liste-front .filtre-tri .trier {
+    flex: 3;
+}
+
+.liste-front .filtre-tri .trier2 {
+    flex: 2;
+}
+
+.liste-front .filtre-tri .localisation {
+    flex: 1;
+}
+
+.liste-front .filtre-tri .typeOffre {
+    flex: 2.2;
+}
+
+.liste-front .filtre-tri .date {
+    flex: 6;
+}
+
+.liste-front .filtre-tri .contient_avis {
+    flex: 2;
+}
+
+.liste-front .section-offres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.liste-front .offre {
+    position: relative;
+    max-width: 379px;
+    min-width: 379px;
+    height: 506px;
+    left: 32px;
+    top: 26px;
+
+    background: var(--blanc-leger);
+    border-radius: 15px;
+
+    margin-right: 4em;
+    margin-bottom: 31px;
+}
+
+.liste-front .offre div {
+    position: absolute;
+    left: 5.28%;
+    right: 5.28%;
+    top: 3.75%;
+    bottom: 5.34%;
+
+    background: var(--blanc-leger);
+    border-radius: 15px 15px 10px 10px;
+}
+
+.liste-front .en-relief-offre {
+    position: relative;
+    max-width: 379px;
+    min-width: 379px;
+    height: 506px;
+    left: 32px;
+    top: 26px;
+
+    background: var(--blanc-leger);
+    border-radius: 15px;
+
+    margin-right: 4em;
+    margin-bottom: 31px;
+}
+
+.liste-front .en-relief-offre div {
+    position: absolute;
+    left: 5.28%;
+    right: 5.28%;
+    top: 3.75%;
+    bottom: 5.34%;
+
+    background: var(--blanc-leger);
+    border-radius: 15px 15px 10px 10px;
+}
+
+.liste-front .en-relief-offre .sous-offre {
+    border: 5px solid red;
+}
+
+.liste-front .offre .sous-offre {
+    border: 3px solid var(--violet-principal);
+}
+
+.liste-front .lieu-offre {
+    z-index: 1;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    right: 0;
+
+    color: var(--noir);
+
+    height: 37px;
+    width: 117px;
+
+    background: var(--fond-bouton) !important;
+    border-radius: 20px !important;
+}
+
+.liste-front .ouverture-offre {
+    z-index: 1;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 75% !important;
+
+    color: var(--noir);
+
+    height: 37px;
+    width: 67.8px;
+
+    text-decoration: none;
+
+    background: var(--fond-bouton) !important;
+    border-radius: 20px !important;
+}
+
+.liste-front .image-offre {
+    position: absolute;
+    width: 321px;
+    height: 208px;
+    margin: 0.5em;
+    left: auto;
+    top: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.liste-front .en-relief-offre .image-offre {
+    position: absolute;
+    width: 321px;
+    height: 208px;
+    margin: 0.3em;
+    left: auto;
+    top: auto;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.liste-front .titre-offre {
+    position: absolute;
+    left: 2%;
+    right: 36%;
+    top: 44%;
+
+    margin-top: 1em;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+
+    color: var(--noir);
+}
+
+.liste-front .categorie-offre {
+    position: absolute;
+    left: 2%;
+    top: 56%;
+
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+
+    color: var(--noir);
+}
+
+.liste-front .description-offre {
+    position: absolute;
+    left: 2%;
+    top: 62%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: var(--noir);
+}
+
+.liste-front .nom-offre {
+    position: absolute;
+    left: 73%;
+    top: 45%;
+
+    margin-top: 1em;
+    margin-right: 1em;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: var(--noir);
+}
+
+.liste-front .offre span {
+    color: var(--violet-principal);
+    text-decoration: underline;
+}
+
+.liste-front .bas-offre {
+    background-color: transparent !important;
+    top: unset !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 1rem;
+}
+
+.liste-front .etoiles {
+    position: relative !important;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: left;
+    align-items: center;
+    background-color: transparent !important;
+
+    left: 0 !important;
+    top: -1em !important;
+}
+
+.liste-front .etoiles img {
+    height: 30px;
+    width: 30px;
+}
+
+.liste-front .nombre-notes {
+    margin-left: 5px;
+    padding-top: 4px;
+    color: var(--noir);
+}
+
+.liste-front .prix {
+    background: var(--violet-principal);
+    color: var(--blanc);
+
+    position: absolute;
+    left: 70%;
+    bottom: -3em;
+
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+
+    width: 66.65px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.liste-front .prix span {
+    font-size: 24px;
+    text-decoration: none;
+    color: var(--blanc);
+    margin-top: 16px;
+}
+
+.liste-front .en-relief-offre .prix {
+    background: red;
+}
+
+.liste-front .fond-filtres {
+    overflow: hidden; /* Permet l'effet de rétractation */
+    max-height: 1000px; /* Grande valeur initiale */
+    transition: max-height 0.5s ease-out; /* Animation fluide */
+}
+
+.liste-front .fond-filtres.hidden {
+    max-height: 0; /* Rétractation */
+    transition: max-height 0.5s ease-out;
+}
+
+.liste-front .no-offers-message {
+    text-align: center; 
+    color: var(--violet-principal);
+    font-size: 20pt;
+    margin: 20px auto;
+}
+
+/**************************************************************************************
+                                    Nav Phone
+***************************************************************************************/
+
 .telephone-nav {
     display: none;
     overflow: hidden;
