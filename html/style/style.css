@@ -3595,20 +3595,6 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-back .reponse {
-    margin-left: 60px;
-}
-
-.consulter-offre-back .indentation {
-    padding-left: 3px;
-}
-
-.consulter-offre-back .reponse > p {
-    padding-left: 10px;
-    margin-left: 75px;
-    margin-top: 0;
-}
-
 .consulter-offre-back .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
@@ -4712,6 +4698,10 @@ h3 {
         width: 90%;
     }
 
+    .creer-compte a {
+        transform: none;
+    }
+
     /****************************************************
                        Pop Up
     *****************************************************/
@@ -4890,6 +4880,7 @@ h3 {
     .compte-front-modif main,
     .compte-front-modif {
         width: fit-content;
+        padding: 1%;
     }
 
     .compte-front-modif h1 {
@@ -4903,6 +4894,10 @@ h3 {
     .compte-front-modif td {
         font-size: 30pt;
         padding-bottom: 1.5em;
+    }
+
+    .compte-front tr>td, .compte-front-modif tr>td {
+        vertical-align: middle;
     }
 
     .compte-front-modif input {

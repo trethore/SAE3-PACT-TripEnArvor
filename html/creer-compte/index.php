@@ -13,6 +13,7 @@ $submitted = isset($_POST['type-compte']);
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
     <title>Créer un compte</title>
     <link rel="stylesheet" href="/style/style.css">
     <script src="/scripts/creer-compte.js"></script>
