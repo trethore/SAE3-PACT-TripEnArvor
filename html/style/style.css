@@ -4805,17 +4805,45 @@ input[type="tel"] {
     }
 
 
-    .compte-front {
+    .creer-compte header {
+        position: static;
         display: flex;
-        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding-bottom: 0;
+    }
+
+    .creer-compte #div-type-compte {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .creer-compte form {
+        max-width: 100vw;
+    }
+
+    .creer-compte #div-name-and-first-name {
         flex-direction: column;
     }
 
-    .compte-front main {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column-reverse;
-        margin: 0;
+    .creer-compte #div-name-and-first-name div {
+        width: 100%;
+    }
+
+    .creer-compte #div-adresse .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .creer-compte #div-adresse .row div {
+        width: 100%;
+    }
+
+    .creer-compte form>label {
+        text-align: center;
+        width: 100%;
     }
 
     /********************
@@ -5059,44 +5087,5 @@ input[type="tel"] {
 
 @media screen and (orientation: portrait) {
 
-    .creer-compte header {
-        position: static;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        padding-bottom: 0;
-    }
-
-    .creer-compte #div-type-compte {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .creer-compte form {
-        max-width: 100vw;
-    }
-
-    .creer-compte #div-name-and-first-name {
-        flex-direction: column;
-    }
-
-    .creer-compte #div-name-and-first-name div {
-        width: 100%;
-    }
-
-    .creer-compte #div-adresse .row {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .creer-compte #div-adresse .row div {
-        width: 100%;
-    }
-
-    .creer-compte form>label {
-        text-align: center;
-        width: 100%;
-    }
+    
 }
