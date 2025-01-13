@@ -48,7 +48,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             <p>{date_emission}</p>
         </article>
     </div>
-    
     <section>
         <article class="delivre">
             <h3>Délivré à</h3>
@@ -62,6 +61,16 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <br>
                 <!-- Email -->
                 <?php echo htmlentities($detailCompte["email"] ?? '');?><br>
+            </p>
+        </article>
+        <article class="emetteur">
+            <h3>Emetteur</h3>
+            <p>
+                Trip en Arvor <br>
+                Rue Édouard Branly, <br>
+                22300 Lannion <br>
+                Tél : 02 96 46 93 00
+                Email : tripenarvor@gmail.com
             </p>
         </article>
     </section>

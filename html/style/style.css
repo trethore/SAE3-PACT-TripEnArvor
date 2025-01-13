@@ -2298,8 +2298,12 @@ h3 {
     margin: auto;
 }
 
+.genFacture .infoFacture {
+    display: flex;
+    flex-direction: row;
+}
+
 .genFacture .infoFacture img {
-    position: relative;
     width: 100px;
     margin: auto;
 }
