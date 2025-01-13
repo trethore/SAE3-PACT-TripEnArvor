@@ -3627,6 +3627,13 @@ header>div>a:hover {
 .consulter-offre-back .reponse > p {
     margin-left: 10px;
 }
+
+.consulter-offre-back .reponse > .display-ligne > p {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
 .consulter-offre-back .transparent {
     color: var(--transparent);
 }
