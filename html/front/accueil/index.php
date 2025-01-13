@@ -11,7 +11,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$recentOffers = getConsultedOffers();
 ?>
 
 <!DOCTYPE html>
@@ -112,6 +111,12 @@ $recentOffers = getConsultedOffers();
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
         }
 
+        $ids_consulte = getConsultedOffers();
+        foreach ($ids_consulte as $key => $offre_consulte) {
+            $ids_consulte[$key]['titre'] = getOffre($offre_consulte["id_offre"])["titre"];
+            $ids_consulte[$key]['note'] = getNoteMoyenne($offre_consulte["id_offre"]);
+        }
+
         ?>
 
         <section>
@@ -167,36 +172,33 @@ $recentOffers = getConsultedOffers();
             </div>
         </section>
 
-        <!-- <h2>Consultés Récemment</h2>
+        <h2>Consultés Récemment</h2>
 
         <section>
-            <?php /* if (empty($recentOffers)) : ?>
-                <p>Aucune offre récemment consultée.</p>
-            <?php else : ?>
-                <div class="carousel">
-                    <div class="carousel-images">
-                        <?php foreach ($recentOffers as $offer) : ?>
-                            <a href="/front/consulter-offre/index.php?id=<?php echo $offer['id_offre']; ?>">
-                                <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offer['id_offre'])); ?>" 
-                                     alt="Image"
-                                     data-titre="<?php echo htmlentities(getNoteMoyenne($offer['id_offre'])); ?>"
-                                     data-note="<?php echo htmlentities(getOffre($offer['id_offre']))['titre']; ?>">
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                    <div>
-                        <div class="arrow-left">
-                            <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                        </div>
-                        <div class="arrow-right">
-                            <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                        </div>
-                    </div>
-                    <p class="titre" id="carousel-titre"></p>
+            <div class="carousel">
+                <div class="carousel-images">
+                <?php foreach ($ids_consulte as $offre_consulte) {
+                        $id = $offre_consulte["id_offre"];
+                        $titre = $offre_consulte["titre"];
+                        $note = $offre_consulte["note"]; ?>
+
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        </a>
+                    <?php } ?>
                 </div>
-            <?php endif; */ ?>
+                <div>
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
+                <p class="titre" id="carousel-titre"></p>
+            </div>
         </section>
-    </main> -->
+    </main>
 
     <footer>
         <div class="footer-top">
