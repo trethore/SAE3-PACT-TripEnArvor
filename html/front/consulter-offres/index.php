@@ -271,7 +271,7 @@ try {
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
-                                    if ($_SESSION['id'] != null) {
+                                    if ($_SESSION['id']) {
                                         echo '<p style="display: none;" class="contientavisspot">';
                                         echo "<pre>";
                                         print_r(getIdOffresContientAvis($tab['id_offre']));
