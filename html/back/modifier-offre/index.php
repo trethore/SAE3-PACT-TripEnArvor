@@ -173,7 +173,7 @@ try {
                 $offre_bonne_cat = getVisite($id_offre_cible);
                 break;
             default:
-                die("Erreur de function bon get selon categorie!");
+                die("Erreur dans la fonction bon get selon categorie!");
         }
         return $offre_bonne_cat;
     }
@@ -1004,10 +1004,15 @@ try {
 
                 }
 
+                //upddate tarifs
+                //
+                
+                    $dbh->commit();
+
                     // Fermeture de la connexion
                     $dbh = null;
 
-
+                    
 
 
 
