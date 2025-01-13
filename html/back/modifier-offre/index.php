@@ -1015,6 +1015,7 @@ try {
                          $stmt_tarif = $dbh->prepare($requete_tarif);    
                          $stmt_tarif -> execute([$key, $value]);
 
+                    }
                 }
                 //
                 
