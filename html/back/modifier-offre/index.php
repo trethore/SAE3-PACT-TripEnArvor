@@ -656,7 +656,7 @@ try {
                 $date_event = null;
             }else {
                 $date_event = $_POST['date_event'];
-                $date_event = date('Y-m-d H:i:s'); // La date de l'événement, par exemple '2024-12-19'
+                $date_event = date('Y-m-d H:i:s'); 
             }
 
             if (isset($_POST['capacite'])) {
@@ -712,7 +712,7 @@ try {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                }else
+                }
                 if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3'])) && $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
