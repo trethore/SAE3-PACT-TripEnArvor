@@ -735,7 +735,7 @@ try {
                         <div class="reponse">
                             <div class="display-ligne">
                                 <img src="/images/universel/icones/reponse-orange.png">
-                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
                             <div class="display-ligne">
@@ -744,7 +744,7 @@ try {
                                       $heureRep = explode(':', $rep[1]); ?>
                                 <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                             </div>
-                            
+
                             <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
                         </div>
 

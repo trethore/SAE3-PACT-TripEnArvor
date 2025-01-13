@@ -3631,6 +3631,13 @@ header>div>a:hover {
 .consulter-offre-back .reponse > p {
     margin-left: 10px;
 }
+
+.consulter-offre-back .reponse > .display-ligne > p {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
 .consulter-offre-back .transparent {
     color: var(--transparent);
 }
@@ -4787,12 +4794,11 @@ input[type="tel"] {
     .compte-front-modif #annulerModifCompte button,
     .compte-front-modif #popupRetourAccueil button,
     .compte-front-modif #popupRetourCompte button {
-        font-size: 24pt;
-        width: 45%;
+        font-size: 20pt;
+        width: 44%;
         height: 100%;
         border-radius: 28px;
     }
-
     /****************************************************
                        COMPTE FRONT
     *****************************************************/
@@ -4977,7 +4983,7 @@ input[type="tel"] {
     .compte-front-modif main,
     .compte-front-modif {
         width: fit-content;
-        padding: 1%;
+        padding: 1% 1% 10% 1%;
     }
 
     .compte-front-modif h1 {
