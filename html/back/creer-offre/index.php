@@ -942,7 +942,7 @@ try {
             let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
             let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
-            obligatoireselontype.forEach(element => {
+            obligatoireSelonCat.forEach(element => {
                 document.getElementById(element).style.display = 'none';
             });
 
@@ -1002,7 +1002,7 @@ try {
                 }
             }
 
-            
+
             let type =  document.getElementById('selectype');
  
             document.getElementById('options').style.display = 'none';
