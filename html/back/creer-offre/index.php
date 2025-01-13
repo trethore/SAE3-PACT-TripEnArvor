@@ -934,13 +934,13 @@ try {
                  document.getElementById("labeltype").style.display = 'none';
             }
 
-            let typecategorie = document.getElementById('categorie');
-            let typerestaurant = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
-            let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
+            let lacategorie = document.getElementById('categorie');
+            let catRestaurant = ["carte", "labelcarte"];
+            let catVisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
+            let catActivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
+            let catSpectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
+            let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+            let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
             obligatoireselontype.forEach(element => {
                 document.getElementById(element).style.display = 'none';
@@ -950,11 +950,11 @@ try {
 
 
             categorie.addEventListener('change', function() {
-                const typeselectionne = categorie.value;
+                const catSelectionne = categorie.value;
                 // Afficher les champs selon la catégorie sélectionnée test
-                switch (typeselectionne) {
+                switch (catSelectionne) {
                     case "restaurant":
-                        afficheSelonType(typerestaurant);
+                        afficheSelonCat(typerestaurant);
 
                         if (isIdProPrivee) {
                             document.getElementById("labelgammedeprix").style.display = 'inline';
@@ -965,20 +965,22 @@ try {
 
                         break;
 
+            
+
                     case "activite":
-                        afficheSelonType(typeactivite);
+                        afficheSelonCat(typeactivite);
                         break;
 
                     case "visite":
-                        afficheSelonType(typevisite);
+                        afficheSelonCat(typevisite);
                         break;
 
                     case "spectacle":
-                        afficheSelonType(typespectacle);
+                        afficheSelonCat(typespectacle);
                         break;
 
                     case "parc":
-                        afficheSelonType(typeparc);
+                        afficheSelonCat(typeparc);
                         break;
 
                     default:
@@ -986,24 +988,42 @@ try {
                 }
             });
 
+            
 
-
-            function afficheSelonType(typechoisi) {
-                obligatoireselontype.forEach(element => {
+            function afficheSelonCat(catChoisie) {
+                obligatoireSelonCat.forEach(element => {
                     document.getElementById(element).style.display = 'none';
                 });
-                typechoisi.forEach(element => {
+                catChoisie.forEach(element => {
                     document.getElementById(element).style.display = 'inline';
                 });
-                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                if ((catChoisie !== "restaurant") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
                 }
             }
 
+            
+            let type =  document.getElementById('selectype');
+ 
+            document.getElementById('options').style.display = 'none';
+            
+            selectype.addEventListener('change', function(){
+                const typeChoisi = type.value;
+            
+            if(typeChoisi === "premium"){
+                document.getElementById('options').style.display = 'inline';
+            }else{
+                document.getElementById('options').style.display = 'none';
+            }
+            });
+ 
+ 
+
+
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
-            
-        
+
+
             boutonValider.addEventListener("click", function (event) {
                 if (typeselectionne === "") {
                     event.preventDefault(); // Empêche la soumission
