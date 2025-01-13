@@ -3595,20 +3595,6 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-back .reponse {
-    margin-left: 60px;
-}
-
-.consulter-offre-back .indentation {
-    padding-left: 3px;
-}
-
-.consulter-offre-back .reponse > p {
-    padding-left: 10px;
-    margin-left: 75px;
-    margin-top: 0;
-}
-
 .consulter-offre-back .fond-blocs-avis > p {
     margin: 0 0 0 75px ;
 }
