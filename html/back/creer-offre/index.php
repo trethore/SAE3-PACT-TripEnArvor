@@ -474,9 +474,9 @@ try {
             }
             if(isset($_POST['optionPayante'])){
                 $optionP = $_POST['optionPayante'];
-                if($optionP == "enRelief"){
+                if($optionP === "enRelief"){
                     $optionP == "En Relief";
-                }elseif ($optionP == "aLaUne") {
+                }elseif ($optionP === "aLaUne") {
                     $optionP = "À la Une";
                 }
             }else {
