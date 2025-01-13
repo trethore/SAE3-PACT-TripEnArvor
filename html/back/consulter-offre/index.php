@@ -702,42 +702,49 @@ try {
                         <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     </div>
 
-                    <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+
                         <div class="reponse">
-                            <div class="display-ligne-espace">
-                                <p class="titre-avis"><?php //echo htmlentities($compte['denomination']) ?></p>
-                                <p><strong>⁝</strong></p>
+                            <div class="display-ligne">
+                                <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
+
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
-                                    <?php //$rep = explode(' ', $dateReponse[$compteur]['date']);
-                                    //$dateRep = explode('-', $rep[0]); 
-                                    //$heureRep = explode(':', $rep[1]); ?>
-                                    <p class="indentation"><strong>Répondu le <?php //echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php //echo htmlentities($heureRep[0] . "H"); ?></strong></p>
+                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                          $dateRep = explode('-', $rep[0]); 
+                                          $heureRep = explode(':', $rep[1]); ?>
+                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                                     <p class="transparent">.</p>
                                 </div>
                             </div>
-                            <p><?php //echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
                         </div>
-                    <?php //} else { ?>
-                        <form id="avisForm-<?php //echo $a['id_avis']; ?>" class="avis-form" action="index.php?id=<?php //echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
-                            <h2>Répondre à <?php //echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
-                            <div class="display-ligne-espace">
-                                <textarea id="reponse-<?php //echo $a['id_avis']; ?>" name="reponse" required></textarea><br>
-                                <p class="transparent">.</p>
+
+                    <?php } else { ?>
+
+                        <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data">
+                            <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
+                            <div class="display-ligne">
+                                <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                             </div>
-                            <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
-                            <button type="submit" name="submit-reponse" value="true">Publier</button>
+                            <button type="submit" name="submit-reponse" value="true">Répondre</button>
                         </form>
                         
-                        <?php /*if (!empty($reponse)) {
+                        <?php if (!empty($reponse)) {
+
                             if (isset($_POST['reponse'])) {
+
                                 $reponse = htmlentities($_POST['reponse']);
                                 print_r($reponse);
+
                             } 
+
                             $id_avis = $a['id_avis']; 
-                            $publie_le = date('Y-m-d H:i:s');                             
+                            $publie_le = date('Y-m-d H:i:s');  
+
                             try {
+
                                 // Connexion à la base de données
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -755,10 +762,15 @@ try {
                                 $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
 
                             } catch (PDOException $e) {
+
                                 echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+
                             }
+
                         }
-                    } */?> -->
+
+                    } ?> 
+
                 </div>  
             <?php $compteur++; 
             } 
