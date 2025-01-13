@@ -3438,6 +3438,7 @@ h3 {
 
     .consulter-offre-back .liste-caracteristique {
         align-items: center;
+        padding-right: 0;
     }
 
     .consulter-offre-back .liste-caracteristique > li {
@@ -3459,16 +3460,13 @@ h3 {
         border-radius: 5px; 
     }   
 
-    .consulter-offre-back .bloc-caracteristique {
-        flex: 1.75; 
-    }
 
     /****************************
             BLOC À PROPOS                               
     ****************************/
 
     .consulter-offre-back .bloc-a-propos {
-        flex: 2.5; 
+        flex: 5; 
         border-left: 3px solid var(--orange-principale);
     }
 
