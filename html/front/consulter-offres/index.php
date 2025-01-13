@@ -276,7 +276,8 @@ try {
                                         $userId = intval($_SESSION['id']);
 
                                         echo "<pre>";
-                                        echo 'ID de tout les membres :';
+                                        echo $tab['id_offre'];
+                                        echo 'ID de tout les membres : ';
                                         print_r($idMembres);
                                         echo "\n";
                                         echo 'ID membre : ' . $userId . "\n";
