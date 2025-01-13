@@ -359,7 +359,8 @@ input, select {
     margin: 30px 0;
     padding: 30px;
     color: var(--noir);
-    border-top: 2px solid var(--violet-principal);
+    border-radius: 15px;
+    border: 3px solid var(--violet-principal);
 }
 
 #avis > button, #avis > form > button {
