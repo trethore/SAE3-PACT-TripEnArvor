@@ -2399,6 +2399,7 @@ h3 {
     width: 100%;
     z-index: 99;
     background-color: var(--violet-principal);
+    padding: 1em;
 }
 
 .nav-content {
@@ -2411,7 +2412,7 @@ h3 {
 
 .nav-content>a>div>img {
     display: block;
-    width: 40px;
+    width: 3em;
     height: auto;
     margin: auto;
 }
