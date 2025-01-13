@@ -491,6 +491,8 @@ try {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
+                        console.log(contientAvis);
+                        console.log(offerContientAvis);
                         return offerContientAvis === contientAvis;
                     });
                 }
