@@ -4119,6 +4119,32 @@ h3 {
     }
 
     /****************************************************
+                       Pop Up
+    *****************************************************/
+
+    #validerModifCompte, #annulerModifCompte, #popupRetourAccueil, #popupRetourCompte {
+        width: fit-content;
+        height: fit-content;
+        border-radius: 10px;
+        padding: 2%;
+    }
+    #validerModifCompte h3, #annulerModifCompte h3, #popupRetourAccueil h3, #popupRetourCompte h3 {
+        margin: 1%;
+        font-size: 41pt;
+      }
+      #validerModifCompte p, #annulerModifCompte p, #popupRetourAccueil p, #popupRetourCompte p {
+       
+        font-size: 26pt;
+        margin: 2%;
+      }
+
+      .compte-front-modif #validerModifCompte button, .compte-front-modif #annulerModifCompte button, .compte-front-modif #popupRetourAccueil button, .compte-front-modif #popupRetourCompte button {
+        font-size: 24pt;
+  width: 45%;
+  height: 100%;
+  border-radius: 28px;
+      }
+    /****************************************************
                        COMPTE FRONT
     *****************************************************/
 
