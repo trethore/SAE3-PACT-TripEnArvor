@@ -734,7 +734,7 @@ try {
 
                         <div class="reponse">
                             <div class="display-ligne">
-                                <img src="/image/universel/icones/reponse-orange.png">
+                                <img src="/images/universel/icones/reponse-orange.png">
                                 <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
