@@ -972,19 +972,19 @@ try {
             
 
                     case "activite":
-                        afficheSelonCat(typeactivite);
+                        afficheSelonCat(catActivite);
                         break;
 
                     case "visite":
-                        afficheSelonCat(typevisite);
+                        afficheSelonCat(catVisite);
                         break;
 
                     case "spectacle":
-                        afficheSelonCat(typespectacle);
+                        afficheSelonCat(catSpectacle);
                         break;
 
                     case "parc":
-                        afficheSelonCat(typeparc);
+                        afficheSelonCat(catParc);
                         break;
 
                     default:
