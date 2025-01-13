@@ -5,7 +5,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
 startSession();
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -147,7 +149,6 @@ try {
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/style/style.css" />
-    <link rel="stylesheet" href="../../style/style-details-offre-pro.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -754,7 +755,7 @@ try {
                                 // Insérer la réponse liée à l'avis
                                 $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
                                 $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                $stmtInsertionReponse->execute([$id_membre,$id_offre_cible, $reponse, $idDateReponse]);
+                                $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
 
                             } catch (PDOException $e) {
 
