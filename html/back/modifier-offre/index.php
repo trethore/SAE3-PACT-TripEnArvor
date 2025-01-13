@@ -836,7 +836,15 @@ try {
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
                     }
+                    if ($date_evenement != null) {
+                        // Insertion de la date dans la table _date
+                        $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                        $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                        $stmtInsertionDateEvent->execute([$date_event]);
+                        $id_date_event = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
 
+                    }
+                    
 
 
                     switch ($categorie) {
@@ -851,7 +859,7 @@ try {
                                 abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
-                                id_adresse = ?
+                                id_adresse = ?,
                             WHERE id_offre = ?;";
                   $stmt = $dbh->prepare($query);
                   $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
@@ -921,7 +929,7 @@ try {
                                     date_evenement = ?,
                                 WHERE id_offre = ?;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $date_evenement]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $id_date_event]);
 
                             break;
                         
@@ -939,7 +947,7 @@ try {
                             date_evenement = ? 
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
                             break;
                         
                         case 'restauration':
