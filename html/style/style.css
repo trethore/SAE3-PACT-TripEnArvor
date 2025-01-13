@@ -2400,7 +2400,7 @@ h3 {
     height: 25%;
     z-index: 99;
     background-color: var(--violet-principal);
-    padding: 15px 25px;
+    /*padding: 15px 25px;*/
 }
 
 .nav-content a {
