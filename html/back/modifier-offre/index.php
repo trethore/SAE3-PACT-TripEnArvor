@@ -437,7 +437,7 @@ try {
                     <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); }?>"/> 
                     <label id="labelage2" for="age">an(s)</label>
                     
-                    <!-- activite -->
+                    <!-- activite CHANGER POUR PRESTATION -->
                     <br>
                     <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value=" <?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
                     <br>
@@ -453,8 +453,8 @@ try {
                     <label id="labelcapacite2" for="capacite">personnes</label>
                     <br>
                     <!-- parc -->
-                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nbAttractions'])){
-                                                                                                                                                                                            echo htmlentities($offre_bonne_cat['nbAttractions']); } ?>">
+                    <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nb_attractions'])){
+                                                                                                                                                                                            echo htmlentities($offre_bonne_cat['nb_attractions']); } ?>">
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
                                                                                                                                                             echo htmlentities($offre_bonne_cat['plan']);  ?>"  > <?php } ?> <input type="file" id="plan" name="plan" />
                     <br>
@@ -661,10 +661,11 @@ try {
                 $date_event = date('Y-m-d H:i:s'); // La date de l'événement, par exemple '2024-12-19'
             }
 
-            if (isset($_POST['attractions'])) {
-                $nbattraction = $_POST['attractions'];
-                $nbattraction = intval($nbattraction);
+            if (isset($_POST['capacite'])) {
+                $capacite = $_POST['capacite'];
+                $capacite = intval($capacite);
             }
+
             if (isset($_POST['age'])) {
                 $age = $_POST['age'];
                 $age = intval($age);
@@ -835,7 +836,15 @@ try {
                         $id_adresse = $stmt->fetch()['id_adresse'];
                         
                     }
+                    if ($date_evenement != null) {
+                        // Insertion de la date dans la table _date
+                        $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                        $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                        $stmtInsertionDateEvent->execute([$date_event]);
+                        $id_date_event = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
 
+                    }
+                    
 
 
                     switch ($categorie) {
@@ -850,7 +859,7 @@ try {
                                 abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
-                                id_adresse = ?
+                                id_adresse = ?,
                             WHERE id_offre = ?;";
                   $stmt = $dbh->prepare($query);
                   $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
@@ -920,7 +929,7 @@ try {
                                     date_evenement = ?,
                                 WHERE id_offre = ?;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $date_evenement]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $id_date_event]);
 
                             break;
                         
@@ -938,7 +947,7 @@ try {
                             date_evenement = ? 
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
                             break;
                         
                         case 'restauration':
