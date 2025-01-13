@@ -279,8 +279,7 @@ try {
                                         echo '<p style="display: none;" class="contientavisspot">';
                                         if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
                                             echo "Oui";
-                                            }
-                                        }
+                                        } 
                                         echo "</p>";
                                     }
                                     ?>
@@ -330,6 +329,7 @@ try {
                         </div>
                 <?php
                     }
+                }
             ?>
         </section>        
     </main>
