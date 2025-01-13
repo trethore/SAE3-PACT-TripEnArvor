@@ -41,11 +41,15 @@ $typeCompte = getTypeCompte($id_compte);
 
 switch ($typeCompte) {
     case 'proPublique':
-        $reqCompte = "SELECT * from sae.compte_professionnel_publique where id_compte = :id_compte;";
+        $reqCompte = "SELECT * from sae.compte_professionnel_publique c
+            join sae._adresse a on c.id_adresse = a.id_adresse
+            where id_compte = :id_compte";
         break;
 
     case 'proPrive':
-        $reqCompte = "SELECT * from sae.compte_professionnel_prive where id_compte = :id_compte;";
+        $reqCompte = "SELECT * from sae.compte_professionnel_prive c
+            join sae._adresse a on c.id_adresse = a.id_adresse
+            where id_compte = :id_compte";
         break;
     
     default:
