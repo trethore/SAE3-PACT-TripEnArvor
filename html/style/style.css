@@ -3175,6 +3175,512 @@ h3 {
 }
 
 /**************************************************************************************
+                                    Consulter Offre Back
+***************************************************************************************/
+
+.consulter-offre-back header {
+    text-decoration: none;
+}
+
+.consulter-offre-back button {
+    font-family: "Poppins", sans-serif;
+}
+
+.consulter-offre-back body {
+    font-family: "Poppins", sans-serif;
+    font-size: 24px;
+    color: var(--noir);
+    background: var(--blanc);
+}
+
+.consulter-offre-back h1 {
+    font-size: 64px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--orange-principale);
+}
+
+.consulter-offre-back h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--orange-principale);
+}
+
+.consulter-offre-back .fond-blocs {
+    background: var(--blanc);    
+    margin: 30px 30px 0 30px;
+    padding: 30px;}
+
+    .consulter-offre-back a {
+    color: var(--orange-principale);
+    text-decoration: none;
+}
+    
+.consulter-offre-back a:hover {
+    text-decoration: underline;
+}
+    
+.consulter-offre-back header > div > a, header > div > a:hover {
+    text-decoration: none;
+}
+
+.consulter-offre-back .etoile {
+    width: 50px;
+    height: 50px;
+}
+
+.consulter-offre-back .etoile_detail {
+    width: 25px;
+    height: 25px;
+}
+
+.consulter-offre-back .double-blocs {
+    display: flex;
+}
+
+.consulter-offre-back .bordure {
+    border-bottom: 3px solid var(--orange-principale);
+}
+
+/********************************
+        BLOC PRÉSENTATION                
+********************************/
+
+    /******************************
+            BOUTONS POP-UP                
+    ******************************/
+    .consulter-offre-back .bouton-modifier {
+        margin: 30px 30px 0 30px;
+    }
+
+
+    .consulter-offre-back .bouton-modifier > button {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 30px;
+        background-color: var(--orange-principale);
+        border: 3px solid var(--blanc);
+        padding: 10px 80px;
+        border-radius: 15px;    }
+
+        .consulter-offre-back .bouton-modifier > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc);
+        border-color: var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+    .consulter-offre-back #confirm {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 20px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .consulter-offre-back #final {
+        background: var(--blanc-leger);
+        border: 3px solid var(--noir);
+        color: var(--noir);
+        font-size: 32px;
+        display: none;
+        border-radius: 15px;
+        text-align: center;
+        width: fit-content;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        top: 40%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .consulter-offre-back .close {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .consulter-offre-back .close button:first-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .consulter-offre-back #final button {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 15px;
+        margin-bottom: 12px;
+        background: var(--noir);
+        color: var(--blanc-leger);
+        font-size: 32px;
+        width: fit-content;
+    }
+
+    .consulter-offre-back .close button:last-child {
+        border: 1px solid;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 60px;
+        margin-bottom: 12px;
+        background: var(--gris);
+        color: var(--blanc-leger);
+        font-size: 20px;
+        width: fit-content;
+    }
+
+    .consulter-offre-back .bloc-presentation > div > p {
+    font-size: 32px;
+}
+
+.consulter-offre-back .information-offre {
+    font-size: 32px;
+    margin-top: 30px;
+}
+
+.consulter-offre-back .display-ligne-espace {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consulter-offre-back .display-ligne-espace > p {
+    margin: 0;
+}
+
+.consulter-offre-back .display-ligne {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.consulter-offre-back .display-ligne > p {
+    margin: 0 10px;
+}
+
+    /**********************************
+            IMAGES PRÉSENTATION                
+    **********************************/
+ 
+    .consulter-offre-back .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .consulter-offre-back .carousel-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+    }
+      
+    .consulter-offre-back .carousel-images img {
+        width: 100%;
+        height: 900px;
+        flex-shrink: 0;
+    }
+
+    .consulter-offre-back .arrow-left, 
+    .consulter-offre-back .arrow-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+
+    .consulter-offre-back .arrow-left > img, 
+    .consulter-offre-back .arrow-right > img {
+        background-color: var(--orange-principale);
+        border-radius: 90px;
+    } 
+
+    .consulter-offre-back .arrow-left {
+        left: 20px;
+    }
+      
+    .consulter-offre-back .arrow-right {
+        right: 20px;
+    }
+      
+
+/**********************************
+        PREMIER DOUBLE BLOC                               
+**********************************/
+
+    /***********************************
+            BLOC CARACTÉRISTIQUE                       
+    ***********************************/
+
+    .consulter-offre-back .liste-caracteristique {
+        align-items: center;
+    }
+
+    .consulter-offre-back .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 5px solid var(--orange-principale);
+        font-size: 40px;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+        padding-left: 10px ;
+    }
+
+    .consulter-offre-back .liste-caracteristique > li > img {
+        min-width: 50px;
+        max-width: 50px;
+        height: auto;
+        margin-right: 5px;
+        border-radius: 5px; 
+    }   
+
+    .consulter-offre-back .bloc-caracteristique {
+        flex: 1.75; 
+    }
+
+    /****************************
+            BLOC À PROPOS                               
+    ****************************/
+
+    .consulter-offre-back .bloc-a-propos {
+        flex: 2.5; 
+        border-left: 3px solid var(--orange-principale);
+    }
+
+    .consulter-offre-back .epingle {
+        width: 20px;
+        height: 20px;
+    }
+
+    .consulter-offre-back .display-ligne-espace > button {
+        font-size: 60px;
+    }
+
+    .consulter-offre-back .display-ligne-espace > a, 
+    .consulter-offre-back .fond-blocs > a {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--orange-principale);
+        border: 3px solid var(--blanc);
+        padding: 10px 80px;
+        border-radius: 15px;
+    }
+    
+    .consulter-offre-back .display-ligne-espace > a:hover, 
+    .consulter-offre-back .fond-blocs > a:hover {
+        color: var(--orange-principale);
+        background: var(--blanc);
+        border-color: var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+/***********************************
+        DEUXIÈME DOUBLE BLOC                                       
+***********************************/
+
+    /***************************
+            BLOC TARIFS                             
+    ***************************/
+
+    .consulter-offre-back .bloc-tarif > button {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--orange-principale);
+        border: 3px solid var(--blanc);
+        padding: 10px 20px;
+        border-radius: 15px;
+    }
+
+    .consulter-offre-back .bloc-tarif > button:hover {
+        color: var(--orange-principale);
+        background: var(--blanc);
+        border-color: var(--orange-principale);
+        transition: 0.3s ease-in-out;
+    }
+
+    .consulter-offre-back .bloc-tarif {
+        flex: 2.5; 
+    }
+
+    .consulter-offre-back .bloc-tarif > div {
+        display: flex;
+    }
+
+    .consulter-offre-back table {
+        width: 80%;
+        margin: 10px 0;
+        border-collapse: separate;
+        border-spacing: 9px;
+    }
+
+    .consulter-offre-back td {
+        padding: 20px;
+        text-align: center;
+        border: 3px solid var(--noir);  
+        font-weight: 600;
+    }
+
+    /*****************************
+            BLOC OUVERTURE                                       
+    *****************************/
+
+    .consulter-offre-back .liste-ouverture {
+        align-items: center;
+    }
+
+    .consulter-offre-back .liste-ouverture > li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .consulter-offre-back .bloc-ouverture {
+        flex: 1; 
+        margin-left: 0;
+    }
+
+    .consulter-offre-back .bloc-ouverture > ul > li {
+        list-style: none;
+    }
+
+/**************************
+        BLOCS CARTE                                                   
+**************************/
+
+.consulter-offre-back .carte {
+    width: 1000px; 
+    height: 750px;
+    margin: auto; 
+}
+
+/*************************
+        BLOCS AVIS                                                   
+*************************/
+
+.consulter-offre-back .fond-blocs-avis {
+    background: var(--blanc);    
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 15px;
+    color: var(--noir);
+    border: 3px solid var(--orange-principale);
+}
+
+.consulter-offre-back .titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.consulter-offre-back .reponse {
+    margin-left: 60px;
+}
+
+.consulter-offre-back .indentation {
+    padding-left: 3px;
+}
+
+.consulter-offre-back .reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
+}
+
+.consulter-offre-back .fond-blocs-avis > p {
+    margin: 0 0 0 75px ;
+}
+
+.consulter-offre-back .bordure-top {
+    border-top: 3px solid var(--orange-principale);
+}
+
+.consulter-offre-back .pouce {
+    width: 35px;
+    height: 35px;
+}
+
+.consulter-offre-back .display-notation {
+    display: flex;
+    align-items: center;
+}
+
+.consulter-offre-back .transparent {
+    color: var(--transparent);
+}
+
+.consulter-offre-back .display-notation > p {
+    margin-left: 15px;
+}
+
+.consulter-offre-back .display-notation > a {
+    color: var(--orange-principale);
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+/*************************
+        NAVIGATION                                            
+*************************/
+
+.consulter-offre-back .navigation {
+    margin: 30px;
+}
+
+.consulter-offre-back .navigation > button {
+    background: var(--orange-principale);
+    border: 3px solid var(--blanc);
+    color: var(--blanc);
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+}
+
+.consulter-offre-back .navigation > button:hover {
+    background: var(--blanc);
+    border-color: var(--orange-principale);
+    color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
+
+/*********************
+        FOOTER                                            
+*********************/
+
+.consulter-offre-back footer > div > a {
+    text-decoration: none;
+}
+
+.consulter-offre-back #carte {
+    display: none;
+}
+
+/**************************************************************************************
                                     Nav Phone
 ***************************************************************************************/
 
