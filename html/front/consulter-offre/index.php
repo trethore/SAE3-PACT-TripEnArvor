@@ -262,7 +262,6 @@ try {
 <head>
     <meta charset="utf-8" />    
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-details-offre-visiteur.css"/>
     <link rel="stylesheet" href="/style/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">

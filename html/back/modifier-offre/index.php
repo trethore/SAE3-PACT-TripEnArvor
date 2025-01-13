@@ -228,10 +228,8 @@ print_r($tags);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css" />
-    <link rel="stylesheet" href="../../style/style_modifierOffre.css" />
     <title>Modifier offre</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-
 </head>
     <body class="back modifier-offre">
     <?php
@@ -377,8 +375,8 @@ try {
 
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (isset($adresse['num_et_nom_de_voie'])) {
+                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php if (isset($adresse['num_et_nom_de_voie'])) {
+                        
                             echo htmlentities($adresse['num_et_nom_de_voie']);
                             if (isset($adresse['complement_adresse'] )){
                                 echo htmlentities($adresse['complement_adresse']);
@@ -430,7 +428,7 @@ try {
 
                 <div>
                     <!-- activite, visite, spectacle -->
-                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($offre_bonne_cat['duree'])){
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value="<?php if(isset($offre_bonne_cat['duree'])){
                                                                                                                                                                         echo htmlentities($offre_bonne_cat['duree']);} ?>"/> <label id="labelduree2" for="duree">minutes</label><br>
                     
                     <!-- activité, parc -->
@@ -439,7 +437,7 @@ try {
                     
                     <!-- activite CHANGER POUR PRESTATION -->
                     <br>
-                    <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value=" <?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
+                    <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
                     <br>
                     <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
                 
@@ -859,14 +857,13 @@ try {
                                         resume = ?, 
                                         ville = ?, 
                                         duree = ?, 
-                                        age_min = ?,  
-                                        abonnement = ?, 
+                                        age_min = ?,
                                         description_detaille = ?, 
                                         site_web = ?, 
                                         id_adresse = ?
                                     WHERE id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $descriptionL, $lien, $id_adresse, $id_offre]);
                                         
                             break;
 
@@ -901,14 +898,13 @@ try {
                                 age_min = ?,
                                 nb_attractions = ?, 
                                 plan = ?, 
-                                id_compte_professionnel = ?, 
-                                abonnement = ?, 
+                                id_compte_professionnel = ?,
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
@@ -926,14 +922,13 @@ try {
                                     duree = ?,
                                     capacite = ?,
                                     id_compte_professionnel = ?, 
-                                    abonnement = ?, 
                                     description_detaille = ?, 
                                     site_web = ?, 
                                     id_adresse = ?,
                                     date_evenement = ?
                                 WHERE id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
 
                             break;
                         
@@ -944,14 +939,13 @@ try {
                                 ville = ?, 
                                 duree = ?, 
                                 id_compte_professionnel = ?, 
-                                abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?,
                                 date_evenement = ? 
                                 where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
                             break;
                         
                         case 'restauration':
@@ -986,13 +980,12 @@ try {
                                 gamme_prix = ?, 
                                 carte = ?, 
                                 id_compte_professionnel = ?, 
-                                abonnement = ?, 
                                 description_detaille = ?, 
                                 site_web = ?, 
                                 id_adresse = ?
                                 where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';

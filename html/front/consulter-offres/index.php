@@ -275,21 +275,13 @@ try {
                                         $idMembres = getIdMembresContientAvis($tab['id_offre']);
                                         $userId = intval($_SESSION['id']);
 
-                                        echo "<pre>";
-                                        echo 'ID de l\'offre : ' . $tab['id_offre'] . "\n";
-                                        echo 'ID de tous les membres : ';
-                                        print_r($idMembres);
-                                        echo "\n";
-                                        echo 'ID membre : ' . $userId . "\n";
-                                        echo "</pre>";
-
-                                        // Extraire uniquement les valeurs de 'id_membre' dans un tableau simple
                                         $idMembresSimplified = array_column($idMembres, 'id_membre');
 
-                                        // Paragraphe caché avec un affichage conditionnel
                                         echo '<p style="display: none;" class="contientavisspot">';
                                         if (in_array($userId, $idMembresSimplified)) {
                                             echo "Oui";
+                                        } else {
+                                            echo "Non";
                                         }
                                         echo "</p>";
                                     }
@@ -499,6 +491,8 @@ try {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
+                        console.log(contientAvis);
+                        console.log(offerContientAvis);
                         return offerContientAvis === contientAvis;
                     });
                 }

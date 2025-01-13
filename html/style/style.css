@@ -58,6 +58,10 @@
     box-sizing: border-box;
 }
 
+button {
+    font-family: "Poppins", sans-serif ;
+}
+
 .ici {
     font-weight: bold;
 }
@@ -2382,6 +2386,792 @@ h3 {
 
 .genFacture .facture-details td:first-child {
     text-align: left;
+}
+
+/**************************************************************************************
+                                    Modifier Offre
+***************************************************************************************/
+
+.modifier-offre h2 {
+    width: 55%;
+    text-align: center;
+    margin: 20px auto 20px auto;
+    border-radius: 15px;
+    font-size: 48px;
+  }
+  
+  .modifier-offre h3 {
+      padding-top: 5px;
+      width: 55%;
+      /* margin: 20px auto 20px auto; */
+      border-radius: 15px;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 15px;
+  }
+  
+  .modifier-offre label, 
+  .modifier-offre input, 
+  .modifier-offre p{
+    font-size: 24px;
+    margin:5px 5px 0 0;
+    font-weight: 400;
+  }
+  
+  .modifier-offre p{
+      color: var(--gris-etoile);
+      text-align: center;
+  }
+  
+  .modifier-offre table{
+    font-size: 24px;
+  }
+  
+  .modifier-offre .required{  /* asterisques en rouge*/
+    color: red;
+  }
+  
+  
+  .modifier-offre main {
+      background-color: var(--blanc);
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      width: 95%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 30px;
+      border-radius: 15px;
+  }
+  
+  
+  
+  
+  /***Inputs Textuels (avec url,...)***/
+  
+  .modifier-offre main input[type="text"], 
+  .modifier-offre input[type="url"], 
+  .modifier-offre input[type="number"], 
+  .modifier-offre input[type="tel"], 
+  .modifier-offre textarea{
+      background-color: var(--blanc-leger);
+      color: black;
+      border: 0;
+      border-radius: 10px;
+      resize: vertical;
+      height: 50px;
+      font-style: normal;
+      text-align: center;
+      font-size: 24px;
+  }
+  
+  .modifier-offre input[name='tarif1'],
+  .modifier-offre input[name='tarif2'], 
+  .modifier-offre input[name='tarif3'], 
+  .modifier-offre input[name='tarif4']{
+      width: 100px;
+  }
+  
+  .modifier-offre textarea{
+    min-height: 150px;
+    height: fit-content;
+    word-wrap: break-word;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    font-family: "Poppins"
+  }
+  
+  
+  /*HORAIRES*/
+  .modifier-offre input[placeholder = "00"]{
+    width: 50px;
+  }
+  
+  .modifier-offre ::placeholder{   /*guidage*/
+    font-style: italic;
+    text-align: center;
+    color: var(--gris-etoile);
+  }
+  
+  /***Tableaux**/
+  
+  .modifier-offre .apropos table, 
+  .modifier-offre .important table{
+    width: 100%;
+    display: inline-block;
+  }
+  
+  /****INFORMATIONS IMPORTANTES****/
+  
+  .modifier-offre .important input[id="titre"], 
+  .modifier-offre .important input[id="adresse"]{
+    width: 100%;
+  }
+  
+  .modifier-offre .important td {
+    padding: 5px;
+  }
+  
+  .modifier-offre .important td+td{
+    width: 35%;
+    padding-left: 5%;
+  }
+  
+  .modifier-offre .important table :nth-child(5) td + td + td{ /*"ville *" */
+    width: 10%;
+    padding-left: 0;
+  } 
+  .modifier-offre .important img {
+    max-width: 200px;
+  }
+  
+  /***Selects***/
+  
+  .modifier-offre .custom-select-container {
+    display: inline-block;
+    position: relative;
+    width: 75%;
+  }
+  
+  .modifier-offre .custom-select {
+    appearance: none; /* Remove default select styling */
+    background-color: var(--blanc-leger);
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 24px;
+    width: 100%; 
+    border-radius: 5px;
+    color: var(--gris-etoile);
+    cursor: pointer;
+    
+  }
+  
+  /* Adding a custom dropdown arrow */
+  .modifier-offre .custom-select-container::after {
+    content: '▼'; /* Add arrow symbol */
+    font-size: 24px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--gris-etoile); /* Arrow color */
+  }
+  
+  /* Optional: Hover effect for the dropdown */
+  /* .custom-select:hover {
+    cursor: pointer;
+    border-color: var(--orange-principale);
+    border: 10px solid var(--orange-principale);
+  } *//*marche pô*/
+  
+  /***Importer une image***/
+  
+  /* .custom-file-input {
+    position: relative;
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 170px;
+    height: 170px;
+    display: grid;
+    place-items: center;
+  }
+  
+  .upload-image {
+    cursor: pointer; 
+    width: 50px;
+    height: auto; 
+    height: auto;
+  }
+  
+  /* Masquer le vrai input file */
+  /*#file-upload {
+    position: absolute;
+    opacity: 100%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  } */
+  
+  /****A PROPOS DE L'OFFRE****/
+  .modifier-offre .apropos tr + td, 
+  .modifier-offre .important tr + td{
+    width: auto;
+    padding: 5% 5px;
+  }
+  
+  .modifier-offre .apropos td + td{
+      padding: 5px 0 5px 0;
+      width: 75%;
+  }
+  
+  .modifier-offre .apropos textarea{
+    width: 100%;
+    min-height: 150px;
+    height: fit-content;
+  }
+  
+  .modifier-offre input[type="url"], 
+  .modifier-offre input[type="tel"]{
+    width: 65%;
+  }
+  
+  /****Tarif****/
+  
+  
+  
+  /* #options{
+    display: none;
+  } */
+  
+  /***Boutons***/
+  .modifier-offre input::file-selector-button{
+    border: 0;
+    border-radius: 10px;
+    background: var(--orange-principale);
+    color: var(--blanc);
+    width: 200px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .modifier-offre input::file-selector-button:hover{
+    background: #fff;
+    color: var(--orange-principale);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease-in-out;
+  }
+  
+  
+  /****AVANT LE FOOTER****/
+  
+  .modifier-offre .bt_cree{
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+  }
+  
+  .modifier-offre .valider{
+    background: var(--orange-principale);
+    color: var(--blanc);
+    padding: 10px 20px;
+    border: 0;
+    text-align: center;
+    font-size: 40px;
+    width: 517px;
+    height: 97px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    margin-left: 0;
+  }
+  
+  .modifier-offre .valider:hover{
+    background: var(--blanc-leger);
+    color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+  }
+  
+  .modifier-offre .valider + a{
+    width: 50px;
+    height: 50px;
+    background: var(--orange-principale);
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .modifier-offre .valider + a :hover{
+    background: var(--blanc-leger);
+    content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+  
+  .modifier-offre .valider+a img {
+    width: 90%;
+    height: 90%;
+    transition: 0.3s ease-in-out; /* Ajoute une transition fluide au changement d'image */
+  }
+
+/**************************************************************************************
+                                    Consulter Offre Front
+***************************************************************************************/
+.consulter-offre-front h1 {
+    font-size: 64px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--violet-principal);
+}
+
+.consulter-offre-front h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--violet-principal);
+}
+
+.consulter-offre-front .fond-blocs {
+    background: var(--blanc);    
+    margin: 30px 30px 0 30px;
+    padding: 30px;
+}
+
+.consulter-offre-front a:hover {
+    text-decoration: underline;
+}
+
+.consulter-offre-front header > div > a, header > div > a:hover {
+    text-decoration: none;
+}
+
+.consulter-offre-front .etoile {
+    width: 50px;
+    height: 50px;
+}
+
+.consulter-offre-front .etoile_detail {
+    width: 25px;
+    height: 25px;
+}
+
+.consulter-offre-front .double-blocs {
+    display: flex;
+}
+
+.consulter-offre-front .bordure {
+    border-bottom: 3px solid var(--violet-principal);
+}
+
+/********************************
+        BLOC PRÉSENTATION                
+********************************/
+
+.consulter-offre-front .bloc-presentation > div > p {
+    font-size: 32px;
+}
+
+.consulter-offre-front .display-ligne-espace {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consulter-offre-front .display-ligne-espace > p {
+    margin: 0;
+}
+
+.consulter-offre-front .display-ligne {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.consulter-offre-front .display-ligne > p {
+    margin: 0 10px;
+}
+
+    /**********************************
+            IMAGES PRÉSENTATION                
+    **********************************/
+
+    .consulter-offre-front .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .consulter-offre-front .carousel-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: auto;
+    }
+      
+    .consulter-offre-front .carousel-images img {
+        width: 1100px;
+        height: auto;
+        flex-shrink: 0;
+    }
+      
+
+/**********************************
+        PREMIER DOUBLE BLOC                               
+**********************************/
+
+    /***********************************
+            BLOC CARACTÉRISTIQUE                       
+    ***********************************/
+
+    .consulter-offre-front .liste-caracteristique {
+        align-items: center;
+    }
+
+    .consulter-offre-front .liste-caracteristique > li {
+        color: var(--noir);
+        border-left: 5px solid var(--violet-principal);
+        font-size: 40px;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+        padding-left: 10px ;
+    }
+
+    .consulter-offre-front .liste-caracteristique > li > img {
+        min-width: 50px;
+        max-width: 50px;
+        height: auto;
+        margin-right: 5px;
+        border-radius: 5px; 
+    }   
+
+    .consulter-offre-front .bloc-caracteristique {
+        flex: 1.75; 
+    }
+
+    /****************************
+            BLOC À PROPOS                               
+    ****************************/
+
+    .consulter-offre-front .bloc-a-propos {
+        flex: 2.5; 
+        border-left: 3px solid var(--violet-principal);
+    }
+
+    .consulter-offre-front .epingle {
+        width: 20px;
+        height: 20px;
+    }
+
+    .consulter-offre-front .display-ligne-espace > button {
+        font-size: 60px;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .consulter-offre-front .display-ligne-espace > a, 
+    .consulter-offre-front .fond-blocs > a {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--violet-principal);
+        border: 3px solid var(--blanc);
+        padding: 10px 20px;
+        border-radius: 15px;
+    }
+    
+    .consulter-offre-front .display-ligne-espace > a:hover, 
+    .consulter-offre-front .fond-blocs > a:hover {
+        color: var(--violet-principal);
+        background: var(--blanc);
+        border-color: var(--violet-principal);
+        transition: 0.3s ease-in-out;
+    }
+
+/***********************************
+        DEUXIÈME DOUBLE BLOC                                       
+***********************************/
+
+    /***************************
+            BLOC TARIFS                             
+    ***************************/
+
+    .consulter-offre-front .bloc-tarif > button {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 24px;
+        background-color: var(--violet-principal);
+        border: 3px solid var(--blanc);
+        padding: 10px 20px;
+        border-radius: 15px;
+        border: 0;
+    }
+
+    .consulter-offre-front .bloc-tarif > button:hover {
+        color: var(--violet-principal);
+        background: var(--blanc);
+        border-color: var(--violet-principal);
+        transition: 0.3s ease-in-out;
+    }
+
+    .consulter-offre-front .bloc-tarif {
+        flex: 2.5; 
+    }
+
+    .consulter-offre-front .bloc-tarif > div {
+        display: flex;
+    }
+
+    .consulter-offre-front table {
+        width: 80%;
+        margin: 10px 0;
+        border-collapse: separate;
+        border-spacing: 9px;
+    }
+
+    .consulter-offre-front td {
+        padding: 20px;
+        text-align: center;
+        border: 3px solid var(--noir);  
+        font-weight: 600;
+    }
+
+    /*****************************
+            BLOC OUVERTURE                                       
+    *****************************/
+
+    .consulter-offre-front .liste-ouverture {
+        align-items: center;
+    }
+
+    .consulter-offre-front .liste-ouverture > li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .consulter-offre-front .bloc-ouverture {
+        flex: 1; 
+    }
+
+    .consulter-offre-front .bloc-ouverture > ul > li {
+        list-style: none;
+    }
+
+/**************************
+        BLOCS CARTE                                                   
+**************************/
+
+.consulter-offre-front .carte {
+    width: 1000px; 
+    height: 750px;
+    margin: auto; 
+}
+
+/*************************
+        BLOCS AVIS                                                   
+*************************/
+
+.consulter-offre-front form {
+    background: var(--blanc);
+    border: 3px solid var(--violet-principal);
+    border-radius: 15px;
+    text-align: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.consulter-offre-front form > div {
+    text-align: left;
+}
+
+.consulter-offre-front form > h2 {
+    margin-bottom: 0;
+}
+
+.consulter-offre-front form > p {
+    padding: 0;
+}
+
+.consulter-offre-front ::placeholder {  
+    font-style: italic;
+    color: var(--gris);
+    text-align: center;
+  }
+
+.consulter-offre-front label {
+    text-align: start;
+    color: var(--noir);
+    margin: 10px 0;
+}
+
+
+.consulter-offre-front textarea {
+    background: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+    width: 100%;
+    height: 200px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+}
+
+.consulter-offre-front input[id='photo'] {
+    border: none;
+    margin: 10px 0 0 0;
+}
+
+.consulter-offre-front input::file-selector-button {
+    text-align: center;
+    border: 0;
+    border-radius: 12px;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    width: 200px;
+    height: 50px;
+}
+  
+.consulter-offre-front input::file-selector-button:hover {
+    background: rgb(26, 4, 44);
+}
+
+.consulter-offre-front span {
+    color: var(--violet-principal);
+}
+
+.consulter-offre-front input, 
+.consulter-offre-front select {
+    padding: 5px;
+    background: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+    height: 50px;
+    margin: 10px 30px 10px 0;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.consulter-offre-front .fond-blocs-avis {
+    background: var(--blanc);    
+    margin: 30px 0;
+    padding: 30px;
+    color: var(--noir);
+    border-radius: 15px;
+    border: 3px solid var(--violet-principal);
+}
+
+.consulter-offre-front #avis > button, 
+.consulter-offre-front #avis > form > button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
+}
+
+.consulter-offre-front #avis > button:hover, 
+.consulter-offre-front #avis > form > button:hover {
+    background: var(--violet-secondaire);
+}
+
+.consulter-offre-front 
+.image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+
+.consulter-offre-front .titre-avis {
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.consulter-offre-front .reponse {
+    margin-left: 60px;
+}
+
+.consulter-offre-front .indentation {
+    padding-left: 3px;
+}
+
+.consulter-offre-front .reponse > p {
+    padding-left: 10px;
+    margin-left: 75px;
+    margin-top: 0;
+}
+
+.consulter-offre-front .fond-blocs-avis > p {
+    margin: 0 0 0 75px ;
+}
+
+.consulter-offre-front .bordure-top {
+    border-top: 3px solid var(--violet-principal);
+}
+
+.consulter-offre-front .pouce {
+    width: 35px;
+    height: 35px;
+}
+
+.consulter-offre-front .display-notation {
+    display: flex;
+    align-items: center;
+}
+
+.consulter-offre-front .transparent {
+    color: var(--transparent);
+}
+
+.consulter-offre-front .display-notation > p {
+    margin-left: 15px;
+}
+
+.consulter-offre-front .display-notation > a {
+    color: var(--orange-principale);
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+/*************************
+        NAVIGATION                                            
+*************************/
+
+.consulter-offre-front .navigation {
+    margin: 30px;
+}
+
+.consulter-offre-front .navigation > button {
+    background: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    color: var(--blanc);
+    padding: 10px 20px;
+    text-align: center; 
+    font-size: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+    margin-left: 0;
+}
+
+.consulter-offre-front .navigation > button:hover {
+    background: var(--blanc);
+    border-color: var(--violet-principal);
+    color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
+
+
+/*********************
+        FOOTER                                            
+*********************/
+
+.consulter-offre-front footer > div > a {
+    text-decoration: none;
+}
+
+.consulter-offre-front #carte {
+    display: none;
+}
+
+.consulter-offre-front .pouce_haut:hover {
+    background-image: ('/images/universel/icones/pouce-up-hover.png');
+}
+
+.consulter-offre-front .pouce_bas:hover {
+    background-image: ('/images/universel/icones/pouce-down-hover.png');
 }
 
 /**************************************************************************************
