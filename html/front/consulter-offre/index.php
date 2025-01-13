@@ -20,6 +20,8 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $id_offre_cible = intval($_GET['id']);
 
+    addConsultedOffer($id_offre_cible);
+
 // ===== GESTION DES OFFRES ===== //
 
     // ===== Requête SQL pour récupérer les informations d'une offre ===== //
