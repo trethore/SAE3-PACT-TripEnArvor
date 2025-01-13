@@ -1146,8 +1146,8 @@ BEGIN
         description_detaille = NEW.description_detaille,
         site_web = NEW.site_web,
         id_adresse = NEW.id_adresse,
-        prix_offre = prix_offre,
-        type_offre = type_offre,
+        prix_offre = NEW.prix_offre,
+        type_offre = NEW.type_offre,
         abonnement = NEW.abonnement
     WHERE id_offre = NEW.id_offre;
 
