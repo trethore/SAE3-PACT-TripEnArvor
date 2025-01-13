@@ -672,11 +672,8 @@ try {
 
                             <img src="/images/universel/icones/etoile-grise.png" class="etoile">
 
-                        <?php }
+                        <?php } ?>
 
-                        $publication = explode(' ', $dateAvis[$compteur]['date']);
-                        $datePub = explode('-', $publication[0]); ?>
-                        <p>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -729,6 +726,22 @@ try {
 
                         <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     </div>
+
+                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
+                    <div class="display-notation">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                        </div>
+                    </div>
+
+                    <div class="petite-mention">
+                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                              $datePub = explode('-', $publication[0]); ?>
+                        <e><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                        <p><em>Cet avis est l'opinion subjective d'un membre de la PACT et non l'avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+                    </div>
+
+                    
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
 
