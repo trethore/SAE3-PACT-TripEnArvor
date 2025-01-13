@@ -4810,7 +4810,7 @@ input[type="tel"] {
 
     .creer-compte header {
         position: static;
-        display: flex;
+        display: grid;
         width: 100%;
         justify-content: center;
         align-items: center;
