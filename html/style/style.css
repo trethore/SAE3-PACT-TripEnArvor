@@ -2364,6 +2364,7 @@ h3 {
 ***************************************************************************************/
 
 .telephone-nav {
+    display: none;
     overflow: hidden;
     position: fixed;
     bottom: 0;
