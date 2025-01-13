@@ -855,19 +855,19 @@ try {
                         case 'activite':
                            
                             $query = "UPDATE sae.offre_activite
-                            SET titre = ?, 
-                                resume = ?, 
-                                ville = ?, 
-                                duree = ?, 
-                                age_min = ?,  
-                                abonnement = ?, 
-                                description_detaille = ?, 
-                                site_web = ?, 
-                                id_adresse = ?,
-                            WHERE id_offre = ?;";
-                  $stmt = $dbh->prepare($query);
-                  $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
-                            
+                                    SET titre = ?, 
+                                        resume = ?, 
+                                        ville = ?, 
+                                        duree = ?, 
+                                        age_min = ?,  
+                                        abonnement = ?, 
+                                        description_detaille = ?, 
+                                        site_web = ?, 
+                                        id_adresse = ?,
+                                    WHERE id_offre = ?;";
+                            $stmt = $dbh->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                                        
                             break;
 
                         case 'parcattraction' :
@@ -930,7 +930,7 @@ try {
                                     description_detaille = ?, 
                                     site_web = ?, 
                                     id_adresse = ?
-                                    date_evenement = ?,
+                                    date_evenement = ?
                                 WHERE id_offre = ?;";
                         $stmt = $dbh->prepare($query);
                         $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
