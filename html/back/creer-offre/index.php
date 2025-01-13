@@ -502,7 +502,7 @@ try {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                }else
+                }
                 if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3'])) && $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
@@ -515,7 +515,7 @@ try {
                 }
 
             }
-            
+            print_r($tabtarifs);
             print_r($_POST);
 
             
@@ -893,6 +893,9 @@ try {
 
                             // Exécution de la requête pour insérer dans la vue tarif
                             $stmt_tarif->execute([$key, $value, $id_offre]);
+                            echo "<br>";
+                            print($key);
+                            print($value);
                         }
                     }
                     
