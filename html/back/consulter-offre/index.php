@@ -1,4 +1,4 @@
-<?php
+<p?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
@@ -724,7 +724,7 @@ try {
                     <?php } else { ?>
 
                         <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data">
-                            <h2>Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
+                            <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
                             <div class="display-ligne">
                                 <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                             </div>
