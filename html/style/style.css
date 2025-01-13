@@ -3444,22 +3444,13 @@ h3 {
     .consulter-offre-back .liste-caracteristique > li {
         color: var(--noir);
         border-left: 5px solid var(--orange-principale);
-        font-size: 40px;
+        font-size: 24px;
         list-style: none;
         display: flex;
         align-items: center;
-        margin-bottom: 1em;
+        margin-bottom: 10px;
         padding-left: 10px ;
     }
-
-    .consulter-offre-back .liste-caracteristique > li > img {
-        min-width: 50px;
-        max-width: 50px;
-        height: auto;
-        margin-right: 5px;
-        border-radius: 5px; 
-    }   
-
 
     /****************************
             BLOC À PROPOS                               
