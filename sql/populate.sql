@@ -3,9 +3,6 @@ SET SCHEMA 'sae';
 
 START TRANSACTION;
 
-/* INSERT INTO sae._prix (prix_ht) VALUES // TODO màj options
-(0), (167), (334), (1668), (834); */
-
 INSERT INTO sae._abonnement (nom_abonnement) VALUES
 ('gratuit'),
 ('standard'),
