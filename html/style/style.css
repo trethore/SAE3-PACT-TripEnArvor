@@ -3209,6 +3209,10 @@ header>div>a:hover {
     background: var(--blanc);
 }
 
+.consulter-offre-back p {
+    font-size: 24px;
+}
+
 .consulter-offre-back h1 {
     font-size: 64px;
     font-weight: bold;
@@ -3653,7 +3657,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .reponse > div > img {
-    width: 50px;
+    width: 32px;
     height: 50px;
 }
 
