@@ -69,7 +69,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 Trip en Arvor <br>
                 Rue Édouard Branly, <br>
                 22300 Lannion <br>
-                Tél : 02 96 46 93 00
+                Tél : 02 96 46 93 00 <br>
                 Email : tripenarvor@gmail.com
             </p>
         </article>
