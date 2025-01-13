@@ -23,10 +23,37 @@ try {
 
 date_default_timezone_set('Europe/Paris');
 
-if (isset($_POST['reponse'])) { 
-    $submitted = true;
-} else {
-    $submitted = false;
+if (isset($_POST['reponse'])) {
+
+    $reponse = htmlentities($_POST['reponse']);
+    print_r($reponse); 
+
+    $publie_le = date('Y-m-d H:i:s');  
+
+    try {
+
+        // Connexion à la base de données
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Insérer la date de publication
+        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+        $stmtInsertionDateReponse->execute([$publie_le]);
+        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+        // Insérer la réponse liée à l'avis
+        $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
+        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+        $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
+
+    } catch (PDOException $e) {
+
+        echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+
+    }
+
 }
 
 try {
@@ -708,6 +735,7 @@ try {
 
                         <div class="reponse">
                             <div class="display-ligne">
+                                <img src="/image/universel/icones/reponse-orange.png">
                                 <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
@@ -720,7 +748,7 @@ try {
                                     <p class="transparent">.</p>
                                 </div>
                             </div>
-                            <p><?php echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
                         </div>
 
                     <?php } else { ?>
@@ -733,40 +761,7 @@ try {
                             <button type="submit" name="submit-reponse" value="true">Répondre</button>
                         </form>
 
-                        <?php if (isset($_POST['reponse'])) {
-
-                            $reponse = htmlentities($_POST['reponse']);
-                            print_r($reponse); 
-
-                            $publie_le = date('Y-m-d H:i:s');  
-
-                            try {
-
-                                // Connexion à la base de données
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                // Insérer la date de publication
-                                $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                                $stmtInsertionDateReponse->execute([$publie_le]);
-                                $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                                // Insérer la réponse liée à l'avis
-                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
-                                $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
-
-                            } catch (PDOException $e) {
-
-                                echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
-
-                            }
-
-                        }
-
-                    } ?> 
+                    <?php } ?> 
 
                 </div>  
             <?php $compteur++; 
