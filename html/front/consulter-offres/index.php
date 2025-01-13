@@ -273,7 +273,8 @@ try {
                                     <?php
                                     if ($_SESSION) {
                                         echo "<pre>";
-                                        echo 'ID de tout les membres : ' . implode(', ', getIdMembresContientAvis($tab['id_offre'])) . "\n";
+                                        echo 'ID de tout les membres : \n';
+                                        print_r(getIdMembresContientAvis($tab['id_offre']));
                                         echo 'ID membre : ' . intval($_SESSION['id']) . "\n";
                                         echo "</pre>";
                                         echo '<p style="display: none;" class="contientavisspot">';
