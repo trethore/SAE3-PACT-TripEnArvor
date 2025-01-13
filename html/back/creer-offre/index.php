@@ -503,7 +503,7 @@ try {
                     $tarif2 = $_POST['tarif2'];
                     $tarif2 = intval($tarif2);
                     $tabtarifs[$_POST['nomtarif2']] = $tarif2;
-                }else
+                }
                 if ((isset($_POST['tarif3'])) && (isset($_POST['nomtarif3'])) && $_POST['tarif3'] !== "") {
                     $tarif3 = $_POST['tarif3'];
                     $tarif3 = intval($tarif3);
