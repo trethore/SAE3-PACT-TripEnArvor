@@ -735,17 +735,17 @@ try {
                         <div class="reponse">
                             <div class="display-ligne">
                                 <img src="/images/universel/icones/reponse-orange.png">
-                                <p><?php echo htmlentities($compte['denomination']) ?></p>
+                                <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
-                            <div class="display-ligne">
+                            <div class="display-ligne marge-reponse">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
                                       $dateRep = explode('-', $rep[0]); 
                                       $heureRep = explode(':', $rep[1]); ?>
                                 <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                             </div>
 
-                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
+                            <p class="marge-reponse"><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
                         </div>
 
                     <?php } else { ?>

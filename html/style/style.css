@@ -3613,14 +3613,20 @@ h3 {
     align-items: center;
 }
 
+/** Style réponse avis **/
+
 .consulter-offre-back .reponse > p {
     margin-left: 10px;
 }
 
-.consulter-offre-back .reponse > .display-ligne > p {
+.consulter-offre-back .titre-reponse {
     margin: 0;
     font-size: 32px;
     font-weight: bold;
+}
+
+.consulter-offre-back .marge-reponse {
+    margin-left: 64px;
 }
 
 .consulter-offre-back .transparent {
