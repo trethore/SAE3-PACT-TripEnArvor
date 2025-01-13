@@ -375,8 +375,8 @@ try {
 
                     <tr>
                         <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="
-                        <?php if (isset($adresse['num_et_nom_de_voie'])) {
+                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php if (isset($adresse['num_et_nom_de_voie'])) {
+                        
                             echo htmlentities($adresse['num_et_nom_de_voie']);
                             if (isset($adresse['complement_adresse'] )){
                                 echo htmlentities($adresse['complement_adresse']);
@@ -428,7 +428,7 @@ try {
 
                 <div>
                     <!-- activite, visite, spectacle -->
-                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value=" <?php if(isset($offre_bonne_cat['duree'])){
+                    <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" value="<?php if(isset($offre_bonne_cat['duree'])){
                                                                                                                                                                         echo htmlentities($offre_bonne_cat['duree']);} ?>"/> <label id="labelduree2" for="duree">minutes</label><br>
                     
                     <!-- activité, parc -->
@@ -437,7 +437,7 @@ try {
                     
                     <!-- activite CHANGER POUR PRESTATION -->
                     <br>
-                    <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value=" <?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
+                    <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" value="<?php if(isset($offre_bonne_cat['age_min'])){ echo htmlentities($offre_bonne_cat['age_min']); } ?>"/> 
                     <br>
                     <label id="labeldescpresta" for="descpresta">Description de la prestation  <span class="required">*</span></label> <input type="text" id="descpresta" name="descpresta" /> 
                 
