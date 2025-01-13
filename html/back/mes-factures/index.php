@@ -7,43 +7,23 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
-/*try {
+try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
-}*/
+}
 
 startSession();
-$id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessaryPro($id_compte);
+$id_compte = $_SESSION["id"]; 
+if (isset($id_compte)) {
+    redirectToConnexionIfNecessaryPro($id_compte);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
 
-$factures = [
-    [
-        "date" => "12/09/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/09/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-    [
-        "date" => "15/08/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/08/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-    [
-        "date" => "15/07/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/07/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-]
+$reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture f
+	            join sae._offre o on f.id_offre = o.id_offre;"
 
 ?>
 <!DOCTYPE html> 
@@ -58,9 +38,6 @@ $factures = [
 </head>
 <body class="back factures">
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
-startSession();
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -74,7 +51,7 @@ try {
 }
 ?>
 
-<header>
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -128,10 +105,10 @@ try {
         <section>
             <?php 
                 // Préparation et exécution de la requête
-                /*$stmt = $conn->prepare($reqCompte);
+                $stmt = $conn->prepare($reqFacture);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)*/
+                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Mes factures</h1>
             <ul>
@@ -139,7 +116,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/back/generer-facture/" target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?> - Abonnement de "<?php echo $facture["titre"] ?>"</p></a>
                     </li>
                 <?php
                 }
