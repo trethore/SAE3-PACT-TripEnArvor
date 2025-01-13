@@ -2392,6 +2392,8 @@ h3 {
     display: none;
     overflow: hidden;
     position: fixed;
+    max-width: 100%;
+    max-height: 100%;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -2437,7 +2439,7 @@ h3 {
 
 @media only screen and (max-width: 900px) {
     .telephone-nav {
-        display: inline;
+        display: block;
     }
 
     .front {
