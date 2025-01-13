@@ -288,146 +288,220 @@ try {
     <main id="body">
 
         <section id="top" class="fond-blocs bordure">
-            <!-- Affichage du titre de l'offre -->
-            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h1>
+            <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
+            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
+
             <div class="carousel">
                 <div class="carousel-images">
+
                     <?php foreach ($images as $image) { ?>
+
                         <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
+
                     <?php } ?>
-                </div>
-                <div class="display-ligne-espace">
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
-            </div>
 
+                </div>
+            </div>  
 
-            <div class="display-ligne-espace information-offre">
-                <!-- Affichage de la catégorie de l'offre et si cette offre est ouverte ou fermée -->
-                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                $jour_actuel = $jours[date('w')];
-                $ouverture = "Pas d'informations sur les créneaux d'ouverture";
-                foreach ($horaire as $h) {
-                    if (!empty($horaire)) {
-                        $ouvert_ferme = date('H:i');
-                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                        $ouverture = "Fermé";
-                        if ($h['nom_jour'] == $jour_actuel) {
-                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                $ouverture = "Ouvert";
-                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                $ouverture = "Ferme bientôt";
-                            }
-                        }
-                    } 
-                } ?>
-                <p><em><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' . $ouverture; ?></em></p>
-                <!-- Affichage de l'adresse de l'offre -->
-                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) { 
-                        $adresseComplete = [];
-                        if (!empty($adresse['num_et_nom_de_voie'])) {
-                            $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
-                        }
-                        if (!empty($adresse['complement_adresse'])) {
-                            $adresseComplete[] = htmlentities($adresse['complement_adresse']);
-                        }
-                        if (!empty($adresse['code_postal'])) {
-                            $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
-                        }
-                        if (!empty($offre['ville'])) {
-                            $adresseComplete[] = htmlentities($offre['ville']);
-                        } ?>
-                        <p><?php echo implode(' ', $adresseComplete); ?>
-                    <?php } else {
-                        echo "Pas d'adresse disponible";
-                    }?>            
-            </div>
-                
             <div class="display-ligne-espace">
+
                 <div class="display-ligne">
-                    <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                    <?php } 
-                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                        <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                    <?php } ?>
-                    <!-- Affichage du nombre d'avis de l'offre -->
-                    <p><?php echo htmlentities($nombreNote) . ' avis'; ?></p>
-                    <a href="#avis">Voir les avis</a>
+                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
+
+                    <div class="display-ligne">
+
+                        <?php if ($noteMoyenne !== null) {
+
+                            $etoilesPleines = floor($noteMoyenne);
+                            $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                            $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            
+                            for ($i = 0; $i < $etoilesPleines; $i++) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+
+                            <?php }
+
+                            if ($demiEtoile) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+
+                            <?php }
+
+                            for ($i = 0; $i < $etoilesVides; $i++) { ?>
+
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+
+                            <?php }
+
+                        } ?>
+
+                        <!-- AFFICHAGE DU NOMBRE D'AVIS DES OFFRES -->
+                        <p><a href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
+                    </div>
                 </div>
-                <!-- Affichage du nom et du prénom du propriétaire de l'offre -->
+
+                <!-- AFFICHAGE DES INFORMATIONS DES PROPRIÉTAIRES DES OFFRES -->
                 <?php if (!empty($compte['denomination'])) { ?>
-                    <p class="information-offre">Proposée par : <?php echo htmlentities($compte['denomination']); ?></p>
-                <? } else {
-                    echo "Pas d'information sur le propriétaire de l'offre";
-                } ?>            
+
+                    <p class="information-offre">Proposée par <?php echo htmlentities($compte['denomination']); ?></p>
+
+                <?php } else { ?>
+
+                    <p>Pas d'information sur le propriétaire de l'offre</p>
+
+                <?php } ?> 
+
+            </div>
+
+            <div class="display-ligne">
+
+                <!-- AFFICHAGE DES ADRESSES DES OFFRES -->
+                <?php if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) {
+
+                    $adresseComplete = [];
+
+                    if (!empty($adresse['num_et_nom_de_voie'])) {
+
+                        $adresseComplete[] = htmlentities($adresse['num_et_nom_de_voie']);
+
+                    }
+
+                    if (!empty($adresse['complement_adresse'])) {
+
+                        $adresseComplete[] = htmlentities($adresse['complement_adresse']);
+
+                    }
+
+                    if (!empty($adresse['code_postal'])) {
+
+                        $adresseComplete[] = htmlentities(trim($adresse['code_postal']));
+
+                    }
+
+                    if (!empty($offre['ville'])) {
+
+                        $adresseComplete[] = htmlentities($offre['ville']);
+
+                    } ?>
+
+                    <p><?php echo implode(' ', $adresseComplete) . " - "; ?>
+
+                <?php } else { ?>
+
+                    <p>Pas d'adresse disponible</p>
+
+                <?php } ?>
+
+                <!-- AFFICHAGE DES CATÉGORIES ET DES INFORMATIONS DES CRÉNEAUX D'OUVERTURE --> 
+                <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                    $jour_actuel = $jours[date('w')];
+                    $ouverture = "Pas d'information sur les créneaux d'ouverture";
+
+                foreach ($horaire as $h) {
+
+                    if (!empty($horaire)) {
+
+                        $ouvert_ferme = date('H:i');
+                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
+                        $ouverture = "Fermé";
+
+                        if ($h['nom_jour'] == $jour_actuel) {
+
+                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+
+                                $ouverture = "Ouvert";
+
+                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+
+                                $ouverture = "Ferme bientôt";
+
+                            }
+
+                        }
+
+                    } 
+
+                } ?>
+
+                <p><?php echo htmlentities($ouverture); ?></p>
+
             </div>
 
         </section>
 
         <section class="double-blocs">
 
+            <!-- AFFICHAGE DES TAGS DES OFFRES -->
             <div class="fond-blocs bloc-caracteristique">
                 <ul class="liste-caracteristique">
+
                     <?php if (!empty($tags)) {
+
                         foreach ($tags as $tag) { ?>
-                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+
+                            <li><?php echo htmlentities($tag['nom_tag']) ?></li>
+
                         <?php }
-                    } else {
-                        echo "Pas de tags disponibles";
-                    } ?>
+
+                    } else { ?>
+
+                        <p>Pas de tags disponibles</p>
+
+                    <?php } ?>
+
                 </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
+                <!-- AFFICHAGE DES TITRES ET DES LIENS VERS LES SITES DES OFFRES -->
                 <div class="display-ligne-espace">
-                    <!-- Affichage le titre de l'offre -->
-                    <h2>À propos de : <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
-                    <!-- Affichage du lien du site du propriétaire de l'offre -->
-                    <?php if (isset($offre['site_web'])) { ?>
-                        <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
-                    <?php } ?>
+                    <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
+                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
+
                 <!-- Affichage du résumé de l'offre -->
-                <p><?php echo htmlentities($offre['resume']) ?? "Pas de resumé disponible"; ?></p>
-                <!-- Affichage des informations spécifiques à un type d'offre -->
+                <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
+
+                <!-- AFFICHAGE DES INFORMTIONS SPÉCIFIQUES AU TYPE DES OFFRES -->
                 <?php switch ($categorie) {
+
                     case "Activité": ?>
                         <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']) ?> ans</p>
                         <?php break; ?>
+
                     <?php case "Visite": ?>
                         <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"?></p>
-                        <?php break; ?>
+                     <?php break; ?>
                     <?php case "Spectacle": ?>
+
                         <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']) ?> personnes</p>
                         <?php $event = explode(' ', $spectacle['date']);
                         $dateEvent = explode('-', $event[0]); ?>
                         <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
                         <?php break; ?>
+
                     <?php case "Parc attraction": ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']) ?></p>
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                            <a href="/images/universel/photo/<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
                         </div>
                         <?php break; ?>
+
                     <?php case "Restauration": ?>
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="/images/universel/photo/<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
                         </div>
                         <?php break;
+
                 } ?>
                 
-                <!-- Affichage du numéro de téléphone du propriétaire de l'offre -->
+                <!-- AFFICHAGE DES NUMÉROS DE TÉLÉPHONE DES OFFRES -->
                 <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
     
@@ -436,42 +510,66 @@ try {
         <section class="fond-blocs bordure">
 
             <h2>Description détaillée de l'offre :</h2>
-            <!-- Affichage de la description détaillée de l'offre -->
+            <!-- AFFICHAGE DES INFORMATIONS DÉTAILLÉS DES OFFRES -->
             <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
         </section>
 
         <section class="double-blocs">
 
+            <!-- AFFICHAGE DES TARIFS DES OFFRES -->
             <div class="fond-blocs bloc-tarif">
-                <h2>Tarifs : </h2>
+                <h2>Tarifs</h2>
+
                 <?php if (!empty($tarifs)) { ?>
+
                     <table>
+
                         <?php foreach ($tarifs as $t) { 
+
                             if ($t['nom_tarif'] != "nomtarif1") { 
+
                                 if (!empty($t['nom_tarif'])) {?>
+
                                     <tr>
                                         <td><?php echo htmlentities($t['nom_tarif']) ?></td>
                                         <td><?php echo htmlentities($t['prix']) . " €"?></td>
                                     </tr>
+
                             <?php  }
+
                             }
+
                         } ?>
+
                     </table>
-                <?php } else {
-                    echo "Pas de tarifs diponibles";
-                } ?>
+
+                <?php } else { ?>
+
+                    <p>Pas de tarifs diponibles</p>
+
+                <?php } ?>
+
             </div>
 
+            <!-- AFFICHAGE DES INFORMATIONS D'OUVERTURE DES OFFRES -->
             <div class="fond-blocs bloc-ouverture">
-                <h2>Ouverture :</h2>
+                <h2>Ouverture</h2>
+
                 <?php if (!empty($horaire)) {
+
                     foreach ($horaire as $h) { ?>
-                        <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
+
+                        <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t") ?></p>
+
                     <?php } 
-                } else {
-                    echo "Pas d'informations sur les jours et les horaires d'ouverture disponibles";
-                } ?>
+
+                } else { ?>
+
+                    <p>Pas d'informations sur les jours et les horaires d'ouverture disponibles</p>
+
+                <?php } ?>
+
             </div> 
             
         </section>
@@ -484,67 +582,124 @@ try {
         </section>
 
         <section id="avis" class="fond-blocs bordure-top">
+            <!-- AFFICHAGE DE LA NOTE MOYENNE DES AVIS -->
             <div class="display-ligne">
-                <h2>Note moyenne : </h2>
-                <?php for ($etoileJaune = 0 ; $etoileJaune != $noteMoyenne ; $etoileJaune++) { ?>
-                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                <?php } 
-                for ($etoileGrise = 0 ; $etoileGrise != (5 - $noteMoyenne) ; $etoileGrise++) { ?>
-                    <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                <?php } ?>
+
+                <?php if ($noteMoyenne !== null) { ?>
+
+                    <h2>Note moyenne : </h2>
+                    <?php $etoilesPleines = floor($noteMoyenne);
+                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                        
+                    for ($i = 0; $i < $etoilesPleines; $i++) { ?>
+
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+
+                    <?php }
+
+                    if ($demiEtoile) { ?>
+
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+
+                    <?php }
+
+                    for ($i = 0; $i < $etoilesVides; $i++) { ?>
+
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+
+                    <?php }
+
+                } ?>
+
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <?php 
-            $compteur = 0;
+            <?php $compteur = 0;
+
             foreach ($avis as $a) { ?>
+
                 <div class="fond-blocs-avis">
+                    <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                     <div class="display-ligne-espace">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <p class="transparent"><strong>⁝</strong></p>
-                    </div>
-                    <div class="display-ligne-espace"> 
-                        <div class="display-ligne">
-                            <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
-                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-                            <?php } 
-                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-                            <?php }
-                            $publication = explode(' ', $dateAvis[$compteur]['date']);
-                            $datePub = explode('-', $publication[0]); 
-                            $heurePub = explode(':', $publication[1]); ?>
-                            <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?> à <?php echo htmlentities($heurePub[0] . "H"); ?></strong></p>
-                        </div>
-                        <p class="transparent">.</p>
-                    </div>
-                    <?php if ($categorie == "Restauration") { ?>
-                        <div class="display-ligne">
-                            <?php foreach ($noteDetaillee as $n) { ?>
-                                <?php if ($n['id_avis'] == $a['id_avis']) { ?>
-                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
-                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
-                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                    <?php } 
-                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
-                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php } ?>
-                                    <p><?php echo htmlentities("     ") ?></p>
-                                <?php } ?>
-                            <?php } ?>
-                        </div>
-                    <?php } 
-                    $passage = explode(' ', $datePassage[$compteur]['date']);
-                    $datePass = explode('-', $passage[0]); ?>
-                    <p>Visité le : <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> Contexte : <?php echo htmlentities($a['contexte_visite']); ?></p>
-                    <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
-                    <div class="display-ligne-espace">
-                        <p class="transparent">.</p>
+                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
                         <div class="display-notation">
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
+                    </div>
+
+                    <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                    <div class="display-ligne">
+                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
+
+                        <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+
+                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+
+                        <?php } 
+
+                        for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+
+                            <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+
+                        <?php }
+
+                        $publication = explode(' ', $dateAvis[$compteur]['date']);
+                        $datePub = explode('-', $publication[0]); ?>
+                        <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
+                    </div>
+
+                    <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
+                    <?php if ($categorie == "Restauration") { ?>
+
+                        <div class="display-ligne">
+
+                            <?php foreach ($noteDetaillee as $n) { ?>
+
+                                <?php if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
+
+                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
+
+                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+
+                                    <?php } 
+
+                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+
+                                    <?php } ?>
+
+                                    <p><?php echo htmlentities("     ") ?></p>
+
+                                <?php } ?>
+
+                            <?php } ?>
+
+                        </div>
+
+                    <?php } ?>
+
+                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
+                    <div class="display-ligne">
+                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                            $datePass = explode('-', $passage[0]); ?>
+                        <p>Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></p>
+                    </div>
+
+                    <div class="display-ligne">                        
+
+                        <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
+
+                            <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier']); ?>">
+
+                        <?php } ?>
+
+                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     </div>
 
                     <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
