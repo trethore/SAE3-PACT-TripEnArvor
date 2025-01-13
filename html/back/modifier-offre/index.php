@@ -775,7 +775,7 @@ try {
            
             $descriptionL = $_POST['descriptionL'];
             
-             print_r($_FILES);
+             print_r($_POST);
              print($photo1);
 
              print($categorieBase);
