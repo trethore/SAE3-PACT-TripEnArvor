@@ -5001,17 +5001,9 @@ input[type="tel"] {
 }
 
 @media screen and (max-width: 1100px) {
-
-    .creer-compte form {
-        max-width: 75vw;
-    }
 }
 
 @media screen and (max-width: 750px) {
-    .creer-compte #div-type-compte {
-        flex-direction: column;
-        gap: 0;
-    }
 
     .liste-back .lesOffres {
         justify-content: center;
@@ -5019,16 +5011,6 @@ input[type="tel"] {
 }
 
 @media screen and (max-width: 675px) {
-
-    .creer-compte header {
-        position: static;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        padding-bottom: 0;
-    }
 
     .creer-compte #div-adresse .row {
         flex-direction: column;
