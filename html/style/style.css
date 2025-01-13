@@ -3625,6 +3625,9 @@ header>div>a:hover {
     align-items: center;
 }
 
+.consulter-offre-back .reponse {
+    margin-left: 10px;
+}
 .consulter-offre-back .transparent {
     color: var(--transparent);
 }

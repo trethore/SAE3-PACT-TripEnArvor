@@ -738,15 +738,13 @@ try {
                                 <p class="titre-avis"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
-                            <div class="display-ligne-espace">
-                                <div class="display-ligne">
-                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
-                                          $dateRep = explode('-', $rep[0]); 
-                                          $heureRep = explode(':', $rep[1]); ?>
-                                    <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
-                                    <p class="transparent">.</p>
-                                </div>
+                            <div class="display-ligne">
+                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                      $dateRep = explode('-', $rep[0]); 
+                                      $heureRep = explode(':', $rep[1]); ?>
+                                <p class="indentation"><strong>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php echo htmlentities($heureRep[0] . "H"); ?></strong></p>
                             </div>
+                            
                             <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
                         </div>
 
