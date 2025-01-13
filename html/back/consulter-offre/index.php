@@ -610,7 +610,9 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <p class="petite-mention"><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+            <div class="petite-mention">
+                <p><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+            </div>
 
             <?php $compteur = 0;
 
@@ -690,18 +692,20 @@ try {
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                    <div class="display-notation">
+                    <div class="display-ligne-espace">
+                        <div class="petite-mention">
+                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                $datePub = explode('-', $publication[0]); ?>
+                            <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                        </div>
+
                         <div class="display-ligne">
                             <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
                     </div>
 
-                    <div class="petite-mention">
-                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                              $datePub = explode('-', $publication[0]); ?>
-                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                    </div>
+                    
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
 

@@ -3591,7 +3591,7 @@ header>div>a:hover {
 /*************************
         BLOCS AVIS                                                   
 *************************/
-.consulter-offre-back #avis > h2 {
+.consulter-offre-back #avis > div > h2 {
     margin-bottom: 0;
 }
 
@@ -3624,11 +3624,6 @@ header>div>a:hover {
     height: 20px;
 }
 
-.consulter-offre-back .display-notation {
-    display: flex;
-    justify-content: flex-end;
-}
-
 /* Style réponse avis */
 
 .consulter-offre-back .reponse > p {
@@ -3656,22 +3651,6 @@ header>div>a:hover {
 .consulter-offre-back .petite-mention > p{
     font-size: 14px;
     margin: 5px 0 5px 10px;
-}
-
-/**/
-
-.consulter-offre-back .transparent {
-    color: var(--transparent);
-}
-
-.consulter-offre-back .display-notation>p {
-    margin-left: 15px;
-}
-
-.consulter-offre-back .display-notation>a {
-    color: var(--orange-principale);
-    text-decoration: none;
-    margin-right: 15px;
 }
 
 /*************************
