@@ -721,9 +721,11 @@ try {
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                    <div class="display-notation display-ligne">
-                        <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                    <div class="display-notation">
+                        <div class="display-ligne">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                        </div>
                     </div>
 
                     <div class="petite-mention">
