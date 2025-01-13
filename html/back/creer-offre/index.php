@@ -965,11 +965,7 @@ try {
                             document.getElementById("gammedeprix").style.display = 'inline';
                         }
                         document.getElementById("tarifs").style.display = 'none';
-
-
                         break;
-
-            
 
                     case "activite":
                         afficheSelonCat(catActivite);
