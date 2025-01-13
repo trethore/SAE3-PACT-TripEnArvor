@@ -3617,8 +3617,8 @@ header>div>a:hover {
 /* Pouces avis */
 
 .consulter-offre-back .pouce {
-    width: 35px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .display-notation {
@@ -3651,7 +3651,7 @@ header>div>a:hover {
 
 .consulter-offre-back .petite-mention > p{
     font-size: 14px;
-    margin: 5px 0 5px 15px;
+    margin: 5px 0 5px 10px;
 }
 
 /**/
