@@ -4701,6 +4701,10 @@ input[type="tel"] {
         padding-bottom: 120px;
     }
 
+    .front main {
+        padding-bottom: 10%;
+    }
+
     .front header {
         display: none;
     }
@@ -4849,6 +4853,10 @@ input[type="tel"] {
         width: 100%;
     }
 
+    .creer-offre input[type="url"],
+input[type="tel"] {
+    width: 100%;
+}
     /********************
             NAV
     *********************/
