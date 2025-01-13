@@ -865,21 +865,21 @@ try {
                         $stmt_image_offre->execute([$id_offre, $fichier_img]);
 
                     }
-                         // Commit de la transaction
-                         $dbh->commit();
-                        } catch (PDOException $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                            exit;
-                        } catch (Exception $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
-                            exit;
+                        // Commit de la transaction
+                        $dbh->commit();
+                    } catch (PDOException $e) {
+                        if ($dbh->inTransaction()) {
+                            $dbh->rollBack();
                         }
+                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                        exit;
+                    } catch (Exception $e) {
+                        if ($dbh->inTransaction()) {
+                            $dbh->rollBack();
+                        }
+                        print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                        exit;
+                    }
                    
                     
                     
@@ -904,7 +904,9 @@ try {
                     }
                     
                     
-
+                    if ($dbh->inTransaction()) {
+                        $dbh->commit();
+                    }
                     // Fermeture de la connexion
                     $dbh = null;
 
