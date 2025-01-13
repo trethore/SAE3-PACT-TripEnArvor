@@ -270,17 +270,20 @@ try {
                                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                                    <p style="display: none;" class="contientavisspot">
-                                        <?php
-                                            echo "<pre>";
-                                            print_r(getIdOffresContientAvis($tab['id_offre']));
-                                            print_r(intval($_SESSION['id']));
-                                            echo "</pre>";
-                                            if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
-                                                echo "Oui";
+                                    <?php
+                                    if ($_SESSION['id']) {
+                                        echo "<pre>";
+                                        print_r('ID de tout les membres : ' . getIdMembresContientAvis($tab['id_offre']));
+                                        print_r('ID membre : ' . intval($_SESSION['id']));
+                                        echo "</pre>";
+                                        echo '<p style="display: none;" class="contientavisspot">';
+                                        if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
+                                            echo "Oui";
                                             }
-                                        ?>
-                                    </p>
+                                        }
+                                        echo "</p>";
+                                    }
+                                    ?>
                                     <div class="bas-offre">
                                         <div class="etoiles">
                                             <?php

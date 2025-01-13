@@ -20,7 +20,7 @@ body {
 h1 {
     font-size: 64px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     color: var(--violet-principal);
 }
 
@@ -75,11 +75,6 @@ header > div > a, header > div > a:hover {
     font-size: 32px;
 }
 
-.information-offre {
-    font-size: 32px;
-    margin-top: 30px;
-}
-
 .display-ligne-espace {
     display: flex;
     justify-content: space-between;
@@ -93,7 +88,7 @@ header > div > a, header > div > a:hover {
 .display-ligne {
     display: flex;
     align-items: center;
-    margin: 15px 0;
+    margin: 5px 0;
 }
 
 .display-ligne > p {
@@ -118,29 +113,9 @@ header > div > a, header > div > a:hover {
     }
       
     .carousel-images img {
-        width: 100%;
-        height: 900px;
+        width: 1100px;
+        height: auto;
         flex-shrink: 0;
-    }
-
-    .arrow-left, .arrow-right {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-    }
-
-    .arrow-left > img, .arrow-right > img {
-        background-color: var(--violet-principal);
-        border-radius: 90px;
-    } 
-
-    .arrow-left {
-        left: 20px;
-    }
-      
-    .arrow-right {
-        right: 20px;
     }
       
 
@@ -309,6 +284,10 @@ form {
     padding: 30px;
 }
 
+form > div {
+    text-align: left;
+}
+
 form > h2 {
     margin-bottom: 0;
 }
@@ -317,39 +296,60 @@ form > p {
     padding: 0;
 }
 
-::placeholder{   /*guidage*/
+::placeholder {  
     font-style: italic;
-    color: var(--gris-etoile);
+    color: var(--gris);
+    text-align: center;
   }
 
 label {
     text-align: start;
-    color: var(--violet-principal);
+    color: var(--noir);
+    margin: 10px 0;
 }
 
+
 textarea {
-    background: var(--blanc-leger);
-    border: 1px solid var(--blanc-leger);
-    border-radius: 5px;
+    background: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 12px;
     width: 100%;
     height: 200px;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
+    padding: 5px;
 }
 
-#titre {
-    background: var(--blanc-leger);
-    border: 1px solid var(--blanc-leger);
-    border-radius: 5px;
-    height: 30px;
-    font-size: 20px;
-    font-family: "Poppins", sans-serif;  
+input[id='photo'] {
+    border: none;
+    margin: 10px 0 0 0;
+}
+
+input::file-selector-button {
+    text-align: center;
+    border: 0;
+    border-radius: 12px;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    width: 200px;
+    height: 50px;
+}
+  
+input::file-selector-button:hover {
+    background: rgb(26, 4, 44);
+}
+
+span {
+    color: var(--violet-principal);
 }
 
 input, select {
-    background: var(--blanc-leger);
-    border: 1px solid var(--blanc-leger);
-    border-radius: 5px;
+    padding: 5px;
+    background: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+    height: 50px;
+    margin: 10px 30px 10px 0;
     font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
@@ -358,9 +358,8 @@ input, select {
     background: var(--blanc);    
     margin: 30px 0;
     padding: 30px;
-    border-radius: 15px;
     color: var(--noir);
-    border: 3px solid var(--violet-principal);
+    border-top: 2px solid var(--violet-principal);
 }
 
 #avis > button, #avis > form > button {
@@ -368,17 +367,20 @@ input, select {
     text-decoration: none;
     font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
     padding: 10px 20px;
     border-radius: 15px;
     border: 0;
 }
 
 #avis > button:hover, #avis > form > button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    background: var(--violet-secondaire);
+}
+
+.image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 10px;
 }
 
 .titre-avis {

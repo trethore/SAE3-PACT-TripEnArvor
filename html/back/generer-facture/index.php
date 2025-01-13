@@ -58,48 +58,61 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         </article>
         <article>
             <h3>Numéro de facture</h3>
-            <h3>#012345</h3>
-            <p>{jj/mm/aaaa}</p>
+            <h3>{#id_facture}</h3>
+            <p>{date_emission}</p>
         </article>
     </section>
-    <section class="facture-details">
+    <article class="facture-details">
         <table>
             <thead>
                 <tr>
                     <th>Nom offre</th>
-                    <th>Type d'option</th>
-                    <th>Date</th>
-                    <th>Qté</th>
+                    <th>Nb Jour</th>
                     <th>% TVA</th>
-                    <th>Prix HT</th>
-                    <th>Prix Unitaire</th>
-                    <th>Prix TTC</th>
+                    <th>Prix HT Journalier</th>
+                    <th>Total TTC</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Restaurant coté plage</td>
-                    <td>Option relief</td>
-                    <td>15/04/2024</td>
                     <td>2</td>
                     <td>20%</td>
                     <td>5.10€</td>
-                    <td>6.50€</td>
                     <td>22.30€</td>
                 </tr>
                 <tr>
                     <td>Parc d'attraction vraiment wahou</td>
-                    <td>Offre premium</td>
-                    <td>17/04/2024</td>
                     <td>1</td>
                     <td>20%</td>
-                    <td>24.75€</td>
                     <td>24.75€</td>
                     <td>5.10€</td>
                 </tr>
             </tbody>
         </table>
-    </section>
+    </article>
+    <article class="facture-details">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom Option</th>
+                    <th>Nb semaines</th>
+                    <th>% TVA</th>
+                    <th>Prix HT Hebdomadaire</th>
+                    <th>Total TTC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A la Une</td>
+                    <td>1</td>
+                    <td>20%</td>
+                    <td>12.00€</td>
+                    <td>18.00€</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
     <hr>
     <table class="totals">
         <tr>
@@ -120,7 +133,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         <p>Le paiement est dû dans les 15 jours</p>
         <p>
             Banque PACT<br>
-            Nom du compte: Trip en armor<br>
+            Nom du compte: Trip en arvor<br>
             Numéro de compte : 123-456-7890
         </p>
     </article>

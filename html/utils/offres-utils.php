@@ -485,6 +485,25 @@
         }
     }
 
+    function getImageAvis($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqImageAvis = "SELECT lien_fichier FROM _avis_contient_image WHERE _avis_contient_image.id_offre = :id_offre AND _avis_contient_image.id_membre = :id_membre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtImageAvis = $conn->prepare($reqImageAvis);
+            $stmtImageAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtImageAvis->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtImageAvis->execute();
+            $imageAvis = $stmtImageAvis->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $imageAvis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
     function getDatePublication($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -741,7 +760,7 @@
     }
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les ids des offres crées récemment ===== //
-    function getIdOffresContientAvis() {
+    function getIdMembresContientAvis() {
         // SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = 9;
         global $driver, $server, $dbname, $user, $pass;
         $reqContientAvis = "SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = :id_offre";

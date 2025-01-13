@@ -204,6 +204,26 @@ switch ($typeCompte) {
                     <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
                 </tr>
             </table>
+            <h2>Informations bancaires</h2>
+            <table>
+                <tr>
+                    <td>Nom du compte</td>
+                    <td><?php //echo htmlentities($detailCompte[""] ?? '');?></td>
+                </tr>
+                <tr>
+                    <td>code IBAN</td>
+                    <td><?php //echo htmlentities($detailCompte["prenom"] ?? '');?></td>
+                </tr>
+                <tr>
+                    <td>Adresse mail</td>
+                    <td><?php //echo htmlentities($detailCompte["email"]);?></td>
+                </tr>
+                <tr>
+                    <td>N° de téléphone</td>
+                    <td><?php //echo htmlentities($detailCompte["tel"] ?? '');?></td>
+                </tr>
+
+            </table>
             <div>
                 <a href="/back/modifier-compte">Modifier les informations</a>
             </div>

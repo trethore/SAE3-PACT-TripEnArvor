@@ -2282,7 +2282,8 @@ h3 {
 }
 
 .genFacture hr {
-    height: 2px;
+    height: 1px;
+    background-color: var(--noir);
 }
 
 .genFacture h3,
@@ -2318,6 +2319,15 @@ h3 {
     border: none;
 }
 
+.genFacture table {
+    margin-bottom: 2em;
+}
+
+.genFacture thead {
+    border-top: var(--noir) 1px solid;
+    border-bottom: var(--noir) 1px solid;
+}
+
 .genFacture .facture-details th, 
 .genFacture .facture-details td {
     padding: 8px;
@@ -2345,7 +2355,9 @@ h3 {
     text-align: right;
 }
 
-
+.genFacture .facture-details td:first-child {
+    text-align: left;
+}
 
 /**************************************************************************************
                                     Nav Phone
