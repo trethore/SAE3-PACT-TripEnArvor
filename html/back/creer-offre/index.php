@@ -898,6 +898,10 @@ try {
                             print($value);
                         }
                     }
+
+                    if ($optionP) {
+                        # code...
+                    }
                     
                     
 
@@ -1016,10 +1020,12 @@ try {
                     document.getElementById('options').style.display = 'none';
                 }
             });
- 
+
+
+            //pop up si pas de categorie selectionée
+
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
-
 
             boutonValider.addEventListener("click", function (event) {
                 if (typeselectionne === "") {
@@ -1027,6 +1033,7 @@ try {
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
 
             // const tarif = tarif.value; // Récupère la valeur de la tarif
 
