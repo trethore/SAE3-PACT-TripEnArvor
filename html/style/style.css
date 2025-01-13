@@ -3652,7 +3652,7 @@ header>div>a:hover {
     margin-left: 65px;
 }
 
-.consulter-offre-back .reponse > img {
+.consulter-offre-back .reponse > div > img {
     width: 50px;
     height: 50px;
 }
