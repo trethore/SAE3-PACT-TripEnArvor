@@ -761,7 +761,6 @@
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les ids des offres crées récemment ===== //
     function getIdMembresContientAvis() {
-        // SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = 9;
         global $driver, $server, $dbname, $user, $pass;
         $reqContientAvis = "SELECT sae._avis.id_membre from sae._avis WHERE sae._avis.id_offre = :id_offre";
         try {
