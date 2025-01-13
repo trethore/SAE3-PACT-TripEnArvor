@@ -610,7 +610,7 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <p><em>Cet avis est l'opinion subjective d'un membre de la PACT et non l'avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+            <p class="petite-mention"><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
 
             <?php $compteur = 0;
 
@@ -711,7 +711,6 @@ try {
                                 <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
-                            <?php print_r($reponse); ?>
                             <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
 
                             <div class="display-ligne marge-reponse petite-mention">
