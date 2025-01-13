@@ -3644,8 +3644,12 @@ header>div>a:hover {
     font-weight: bold;
 }
 
+.consulter-offre-back .reponse:first-child {
+    margin-left: 5px;
+}
+
 .consulter-offre-back .marge-reponse {
-    margin-left: 64px;
+    margin-left: 69px;
 }
 
 .consulter-offre-back .transparent {
