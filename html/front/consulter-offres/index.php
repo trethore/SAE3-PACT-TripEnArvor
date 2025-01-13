@@ -271,7 +271,7 @@ try {
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
-                                    if ($_SESSION['id']) {
+                                    if ($_SESSION) {
                                         echo "<pre>";
                                         print_r('ID de tout les membres : ' . getIdMembresContientAvis($tab['id_offre']));
                                         print_r('ID membre : ' . intval($_SESSION['id']));
