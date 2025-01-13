@@ -272,15 +272,21 @@ try {
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
                                     if ($_SESSION) {
+                                        $idMembres = getIdMembresContientAvis($tab['id_offre']);
+                                        $userId = intval($_SESSION['id']);
+
                                         echo "<pre>";
-                                        echo 'ID de tout les membres : \n';
-                                        print_r(getIdMembresContientAvis($tab['id_offre']));
-                                        echo 'ID membre : ' . intval($_SESSION['id']) . "\n";
+                                        echo 'ID de tout les membres :';
+                                        print_r($idMembres);
+                                        echo "\n";
+                                        echo 'ID membre : ' . $userId . "\n";
                                         echo "</pre>";
+
+                                        // Hidden paragraph with a conditional "Oui" output
                                         echo '<p style="display: none;" class="contientavisspot">';
-                                        if (in_array(intval($_SESSION['id']), getIdMembresContientAvis($tab['id_offre']))) {
+                                        if (in_array($userId, $idMembres)) {
                                             echo "Oui";
-                                        } 
+                                        }
                                         echo "</p>";
                                     }
                                     ?>
