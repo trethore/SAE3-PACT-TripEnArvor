@@ -227,10 +227,10 @@ try {
 
             <div>
                 <!-- activite, visite, spectacle -->
-                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" name="duree" /><label id="labelduree2" for="duree">minutes</label>
+                <label id="labelduree" for="duree">Durée <span class="required">*</span> </label> <input type="text" id="duree" pattern="\d*" min="0" name="duree" /><label id="labelduree2" for="duree">minutes</label>
                 <!-- activité, parc -->
                 <br>
-                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" name="age" /> <label id="labelage2" for="age">an(s)</label>
+                <label id="labelage" for="age">Age Minimum <span class="required">*</span> </label> <input type="number" id="age" min="0" name="age" /> <label id="labelage2" for="age">an(s)</label>
                 <!-- activite -->
                 <br>
                 <label id="labelpresta" for="presta">Prestation proposée  <span class="required">*</span></label> <input type="text" id="presta" name="presta" /> 
@@ -243,10 +243,10 @@ try {
                 <label id="labeldate_event" for="date_event">Date et heure de l'événement<span class="required">*</span></label><input type="datetime-local" id="date_event" name="date_event">
                 <br>
                 <!-- spectacle -->
-                <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
+                <label id="labelcapacite" for="capacite">Capacité de la salle <span class="required">*</span> </label> <input type="number" id="capacite"  min="0" name="capacite" /><label id="labelcapacite2" for="capacite">personnes</label>
                 <br>
                 <!-- parc -->
-                <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="attractions" />
+                <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number"  min="0" id="nbattraction" name="attractions" />
                 <br>
                 <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
                 <br>
@@ -898,6 +898,10 @@ try {
                             print($value);
                         }
                     }
+
+                    if ($optionP) {
+                        # code...
+                    }
                     
                     
 
@@ -934,15 +938,15 @@ try {
                  document.getElementById("labeltype").style.display = 'none';
             }
 
-            let typecategorie = document.getElementById('categorie');
-            let typerestaurant = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
-            let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
+            let lacategorie = document.getElementById('categorie');
+            let catRestaurant = ["carte", "labelcarte"];
+            let catVisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
+            let catActivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
+            let catSpectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
+            let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
+            let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
-            obligatoireselontype.forEach(element => {
+            obligatoireSelonCat.forEach(element => {
                 document.getElementById(element).style.display = 'none';
             });
 
@@ -950,11 +954,11 @@ try {
 
 
             categorie.addEventListener('change', function() {
-                const typeselectionne = categorie.value;
+                const catSelectionne = categorie.value;
                 // Afficher les champs selon la catégorie sélectionnée test
-                switch (typeselectionne) {
+                switch (catSelectionne) {
                     case "restaurant":
-                        afficheSelonType(typerestaurant);
+                        afficheSelonCat(typerestaurant);
 
                         if (isIdProPrivee) {
                             document.getElementById("labelgammedeprix").style.display = 'inline';
@@ -965,20 +969,22 @@ try {
 
                         break;
 
+            
+
                     case "activite":
-                        afficheSelonType(typeactivite);
+                        afficheSelonCat(typeactivite);
                         break;
 
                     case "visite":
-                        afficheSelonType(typevisite);
+                        afficheSelonCat(typevisite);
                         break;
 
                     case "spectacle":
-                        afficheSelonType(typespectacle);
+                        afficheSelonCat(typespectacle);
                         break;
 
                     case "parc":
-                        afficheSelonType(typeparc);
+                        afficheSelonCat(typeparc);
                         break;
 
                     default:
@@ -986,30 +992,48 @@ try {
                 }
             });
 
+            
 
-
-            function afficheSelonType(typechoisi) {
-                obligatoireselontype.forEach(element => {
+            function afficheSelonCat(catChoisie) {
+                obligatoireSelonCat.forEach(element => {
                     document.getElementById(element).style.display = 'none';
                 });
-                typechoisi.forEach(element => {
+                catChoisie.forEach(element => {
                     document.getElementById(element).style.display = 'inline';
                 });
-                if ((typechoisi !== "restaurant") && (isIdProPrivee)) {
+                if ((catChoisie !== "restaurant") && (isIdProPrivee)) {
                     document.getElementById("tarifs").style.display = 'inline';
                 }
             }
 
+
+            //cacher les options si le type est standard
+ 
+            document.getElementById('options').style.display = 'none';
+            
+            selectype.addEventListener('change', function(){
+                const typeChoisi = selectype.value;
+            
+                if(typeChoisi === "premium"){
+                    document.getElementById('options').style.display = 'inline';
+                }else{
+                    document.getElementById('options').style.display = 'none';
+                }
+            });
+
+
+            //pop up si pas de categorie selectionée
+
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
-            
-        
+
             boutonValider.addEventListener("click", function (event) {
                 if (typeselectionne === "") {
                     event.preventDefault(); // Empêche la soumission
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
 
             // const tarif = tarif.value; // Récupère la valeur de la tarif
 

@@ -6,6 +6,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -106,9 +111,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
             $ids_nouv[$key]['note'] = getNoteMoyenne($offre_nouv["id_offre"]);
         }
 
-        echo "<pre>";
-        print_r($ids_nouv);
-        echo "</pre>";
+        $ids_consulte = getConsultedOffers();
+        foreach ($ids_consulte as $key => $offre_consulte) {
+            $ids_consulte[$key]['titre'] = getOffre($offre_consulte["id_offre"])["titre"];
+            $ids_consulte[$key]['note'] = getNoteMoyenne($offre_consulte["id_offre"]);
+        }
 
         ?>
 
@@ -165,10 +172,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
             </div>
         </section>
 
-        <!--
         <h2>Consultés Récemment</h2>
-        <article></article>
-        -->
+
+        <section>
+            <div class="carousel">
+                <div class="carousel-images">
+                <?php foreach ($ids_consulte as $offre_consulte) {
+                        $id = $offre_consulte["id_offre"];
+                        $titre = $offre_consulte["titre"];
+                        $note = $offre_consulte["note"]; ?>
+
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_consulte["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_consulte["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        </a>
+                    <?php } ?>
+                </div>
+                <div>
+                    <div class="arrow-left">
+                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
+                    </div>
+                    <div class="arrow-right">
+                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
+                    </div>
+                </div>
+                <p class="titre" id="carousel-titre"></p>
+            </div>
+        </section>
     </main>
 
     <footer>

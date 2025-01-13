@@ -59,7 +59,7 @@
 }
 
 button {
-    font-family: "Poppins", sans-serif ;
+    font-family: "Poppins", sans-serif;
 }
 
 .ici {
@@ -2298,12 +2298,23 @@ h3 {
     margin: auto;
 }
 
-.genFacture img {
-    position: relative;
-    width: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: auto;
+.genFacture .infoFacture {
+    display: flex;
+    flex-direction: row;
+}
+
+.genFacture .infoFacture img {
+    width: 100px;
+    margin: 1em auto 1em 1em;
+}
+
+.genFacture .infoFacture article {
+    text-align: right;
+    margin-bottom: 0;
+}
+
+.genFacture .emetteur {
+    text-align: right;
 }
 
 .genFacture h3 {
@@ -2332,10 +2343,6 @@ h3 {
     margin-bottom: 20px;
 }
 
-.genFacture .delivre+article {
-    text-align: right;
-    margin-bottom: 0;
-}
 
 .genFacture table {
     width: 100%;
@@ -2398,79 +2405,80 @@ h3 {
     margin: 20px auto 20px auto;
     border-radius: 15px;
     font-size: 48px;
-  }
-  
-  .modifier-offre h3 {
-      padding-top: 5px;
-      width: 55%;
-      /* margin: 20px auto 20px auto; */
-      border-radius: 15px;
-      font-size: 32px;
-      font-weight: 500;
-      margin-bottom: 15px;
-  }
-  
-  .modifier-offre label, 
-  .modifier-offre input, 
-  .modifier-offre p{
+}
+
+.modifier-offre h3 {
+    padding-top: 5px;
+    width: 55%;
+    /* margin: 20px auto 20px auto; */
+    border-radius: 15px;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.modifier-offre label,
+.modifier-offre input,
+.modifier-offre p {
     font-size: 24px;
-    margin:5px 5px 0 0;
+    margin: 5px 5px 0 0;
     font-weight: 400;
-  }
-  
-  .modifier-offre p{
-      color: var(--gris-etoile);
-      text-align: center;
-  }
-  
-  .modifier-offre table{
+}
+
+.modifier-offre p {
+    color: var(--gris-etoile);
+    text-align: center;
+}
+
+.modifier-offre table {
     font-size: 24px;
-  }
-  
-  .modifier-offre .required{  /* asterisques en rouge*/
+}
+
+.modifier-offre .required {
+    /* asterisques en rouge*/
     color: red;
-  }
-  
-  
-  .modifier-offre main {
-      background-color: var(--blanc);
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      width: 95%;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      padding: 30px;
-      border-radius: 15px;
-  }
-  
-  
-  
-  
-  /***Inputs Textuels (avec url,...)***/
-  
-  .modifier-offre main input[type="text"], 
-  .modifier-offre input[type="url"], 
-  .modifier-offre input[type="number"], 
-  .modifier-offre input[type="tel"], 
-  .modifier-offre textarea{
-      background-color: var(--blanc-leger);
-      color: black;
-      border: 0;
-      border-radius: 10px;
-      resize: vertical;
-      height: 50px;
-      font-style: normal;
-      text-align: center;
-      font-size: 24px;
-  }
-  
-  .modifier-offre input[name='tarif1'],
-  .modifier-offre input[name='tarif2'], 
-  .modifier-offre input[name='tarif3'], 
-  .modifier-offre input[name='tarif4']{
-      width: 100px;
-  }
-  
-  .modifier-offre textarea{
+}
+
+
+.modifier-offre main {
+    background-color: var(--blanc);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 95%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+
+
+
+/***Inputs Textuels (avec url,...)***/
+
+.modifier-offre main input[type="text"],
+.modifier-offre input[type="url"],
+.modifier-offre input[type="number"],
+.modifier-offre input[type="tel"],
+.modifier-offre textarea {
+    background-color: var(--blanc-leger);
+    color: black;
+    border: 0;
+    border-radius: 10px;
+    resize: vertical;
+    height: 50px;
+    font-style: normal;
+    text-align: center;
+    font-size: 24px;
+}
+
+.modifier-offre input[name='tarif1'],
+.modifier-offre input[name='tarif2'],
+.modifier-offre input[name='tarif3'],
+.modifier-offre input[name='tarif4'] {
+    width: 100px;
+}
+
+.modifier-offre textarea {
     min-height: 150px;
     height: fit-content;
     word-wrap: break-word;
@@ -2478,95 +2486,102 @@ h3 {
     width: 100%;
     text-align: left;
     font-family: "Poppins"
-  }
-  
-  
-  /*HORAIRES*/
-  .modifier-offre input[placeholder = "00"]{
+}
+
+
+/*HORAIRES*/
+.modifier-offre input[placeholder="00"] {
     width: 50px;
-  }
-  
-  .modifier-offre ::placeholder{   /*guidage*/
+}
+
+.modifier-offre ::placeholder {
+    /*guidage*/
     font-style: italic;
     text-align: center;
     color: var(--gris-etoile);
-  }
-  
-  /***Tableaux**/
-  
-  .modifier-offre .apropos table, 
-  .modifier-offre .important table{
+}
+
+/***Tableaux**/
+
+.modifier-offre .apropos table,
+.modifier-offre .important table {
     width: 100%;
     display: inline-block;
-  }
-  
-  /****INFORMATIONS IMPORTANTES****/
-  
-  .modifier-offre .important input[id="titre"], 
-  .modifier-offre .important input[id="adresse"]{
+}
+
+/****INFORMATIONS IMPORTANTES****/
+
+.modifier-offre .important input[id="titre"],
+.modifier-offre .important input[id="adresse"] {
     width: 100%;
-  }
-  
-  .modifier-offre .important td {
+}
+
+.modifier-offre .important td {
     padding: 5px;
-  }
-  
-  .modifier-offre .important td+td{
+}
+
+.modifier-offre .important td+td {
     width: 35%;
     padding-left: 5%;
-  }
-  
-  .modifier-offre .important table :nth-child(5) td + td + td{ /*"ville *" */
+}
+
+.modifier-offre .important table :nth-child(5) td+td+td {
+    /*"ville *" */
     width: 10%;
     padding-left: 0;
-  } 
-  .modifier-offre .important img {
+}
+
+.modifier-offre .important img {
     max-width: 200px;
-  }
-  
-  /***Selects***/
-  
-  .modifier-offre .custom-select-container {
+}
+
+/***Selects***/
+
+.modifier-offre .custom-select-container {
     display: inline-block;
     position: relative;
     width: 75%;
-  }
-  
-  .modifier-offre .custom-select {
-    appearance: none; /* Remove default select styling */
+}
+
+.modifier-offre .custom-select {
+    appearance: none;
+    /* Remove default select styling */
     background-color: var(--blanc-leger);
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 24px;
-    width: 100%; 
+    width: 100%;
     border-radius: 5px;
     color: var(--gris-etoile);
     cursor: pointer;
-    
-  }
-  
-  /* Adding a custom dropdown arrow */
-  .modifier-offre .custom-select-container::after {
-    content: '▼'; /* Add arrow symbol */
+
+}
+
+/* Adding a custom dropdown arrow */
+.modifier-offre .custom-select-container::after {
+    content: '▼';
+    /* Add arrow symbol */
     font-size: 24px;
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--gris-etoile); /* Arrow color */
-  }
-  
-  /* Optional: Hover effect for the dropdown */
-  /* .custom-select:hover {
+    color: var(--gris-etoile);
+    /* Arrow color */
+}
+
+/* Optional: Hover effect for the dropdown */
+/* .custom-select:hover {
     cursor: pointer;
     border-color: var(--orange-principale);
     border: 10px solid var(--orange-principale);
-  } *//*marche pô*/
-  
-  /***Importer une image***/
-  
-  /* .custom-file-input {
+  } */
+/*marche pô*/
+
+/***Importer une image***/
+
+/* .custom-file-input {
     position: relative;
     display: inline-block;
     border: 2px solid black;
@@ -2585,7 +2600,7 @@ h3 {
   }
   
   /* Masquer le vrai input file */
-  /*#file-upload {
+/*#file-upload {
     position: absolute;
     opacity: 100%;
     width: 100%;
@@ -2594,40 +2609,40 @@ h3 {
     left: 0;
     cursor: pointer;
   } */
-  
-  /****A PROPOS DE L'OFFRE****/
-  .modifier-offre .apropos tr + td, 
-  .modifier-offre .important tr + td{
+
+/****A PROPOS DE L'OFFRE****/
+.modifier-offre .apropos tr+td,
+.modifier-offre .important tr+td {
     width: auto;
     padding: 5% 5px;
-  }
-  
-  .modifier-offre .apropos td + td{
-      padding: 5px 0 5px 0;
-      width: 75%;
-  }
-  
-  .modifier-offre .apropos textarea{
+}
+
+.modifier-offre .apropos td+td {
+    padding: 5px 0 5px 0;
+    width: 75%;
+}
+
+.modifier-offre .apropos textarea {
     width: 100%;
     min-height: 150px;
     height: fit-content;
-  }
-  
-  .modifier-offre input[type="url"], 
-  .modifier-offre input[type="tel"]{
+}
+
+.modifier-offre input[type="url"],
+.modifier-offre input[type="tel"] {
     width: 65%;
-  }
-  
-  /****Tarif****/
-  
-  
-  
-  /* #options{
+}
+
+/****Tarif****/
+
+
+
+/* #options{
     display: none;
   } */
-  
-  /***Boutons***/
-  .modifier-offre input::file-selector-button{
+
+/***Boutons***/
+.modifier-offre input::file-selector-button {
     border: 0;
     border-radius: 10px;
     background: var(--orange-principale);
@@ -2636,28 +2651,28 @@ h3 {
     height: 40px;
     margin-top: 10px;
     margin-bottom: 5px;
-  }
-  
-  .modifier-offre input::file-selector-button:hover{
+}
+
+.modifier-offre input::file-selector-button:hover {
     background: #fff;
     color: var(--orange-principale);
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     transition: 0.3s ease-in-out;
-  }
-  
-  
-  /****AVANT LE FOOTER****/
-  
-  .modifier-offre .bt_cree{
+}
+
+
+/****AVANT LE FOOTER****/
+
+.modifier-offre .bt_cree {
     width: 100%;
     margin: 20px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  
-  }
-  
-  .modifier-offre .valider{
+
+}
+
+.modifier-offre .valider {
     background: var(--orange-principale);
     color: var(--blanc);
     padding: 10px 20px;
@@ -2669,15 +2684,15 @@ h3 {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     margin-left: 0;
-  }
-  
-  .modifier-offre .valider:hover{
+}
+
+.modifier-offre .valider:hover {
     background: var(--blanc-leger);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
-  }
-  
-  .modifier-offre .valider + a{
+}
+
+.modifier-offre .valider+a {
     width: 50px;
     height: 50px;
     background: var(--orange-principale);
@@ -2685,22 +2700,23 @@ h3 {
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
-  }
-  
-  .modifier-offre .valider + a :hover{
+}
+
+.modifier-offre .valider+a :hover {
     background: var(--blanc-leger);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     border-radius: 5px;
-  }
-  
-  .modifier-offre .valider+a img {
+}
+
+.modifier-offre .valider+a img {
     width: 90%;
     height: 90%;
-    transition: 0.3s ease-in-out; /* Ajoute une transition fluide au changement d'image */
-  }
+    transition: 0.3s ease-in-out;
+    /* Ajoute une transition fluide au changement d'image */
+}
 
 /**************************************************************************************
                                     Consulter Offre Front
@@ -2719,7 +2735,7 @@ h3 {
 }
 
 .consulter-offre-front .fond-blocs {
-    background: var(--blanc);    
+    background: var(--blanc);
     margin: 30px 30px 0 30px;
     padding: 30px;
 }
@@ -2728,7 +2744,8 @@ h3 {
     text-decoration: underline;
 }
 
-.consulter-offre-front header > div > a, header > div > a:hover {
+.consulter-offre-front header>div>a,
+header>div>a:hover {
     text-decoration: none;
 }
 
@@ -2754,7 +2771,7 @@ h3 {
         BLOC PRÉSENTATION                
 ********************************/
 
-.consulter-offre-front .bloc-presentation > div > p {
+.consulter-offre-front .bloc-presentation>div>p {
     font-size: 32px;
 }
 
@@ -2764,7 +2781,7 @@ h3 {
     align-items: center;
 }
 
-.consulter-offre-front .display-ligne-espace > p {
+.consulter-offre-front .display-ligne-espace>p {
     margin: 0;
 }
 
@@ -2774,186 +2791,186 @@ h3 {
     margin: 5px 0;
 }
 
-.consulter-offre-front .display-ligne > p {
+.consulter-offre-front .display-ligne>p {
     margin: 0 10px;
 }
 
-    /**********************************
+/**********************************
             IMAGES PRÉSENTATION                
     **********************************/
 
-    .consulter-offre-front .carousel {
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px;
-        width: 100%;
-    }
+.consulter-offre-front .carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    width: 100%;
+}
 
-    .consulter-offre-front .carousel-images {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: auto;
-    }
-      
-    .consulter-offre-front .carousel-images img {
-        width: 1100px;
-        height: auto;
-        flex-shrink: 0;
-    }
-      
+.consulter-offre-front .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: auto;
+}
+
+.consulter-offre-front .carousel-images img {
+    width: 1100px;
+    height: auto;
+    flex-shrink: 0;
+}
+
 
 /**********************************
         PREMIER DOUBLE BLOC                               
 **********************************/
 
-    /***********************************
+/***********************************
             BLOC CARACTÉRISTIQUE                       
     ***********************************/
 
-    .consulter-offre-front .liste-caracteristique {
-        align-items: center;
-    }
+.consulter-offre-front .liste-caracteristique {
+    align-items: center;
+}
 
-    .consulter-offre-front .liste-caracteristique > li {
-        color: var(--noir);
-        border-left: 5px solid var(--violet-principal);
-        font-size: 40px;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin-bottom: 1em;
-        padding-left: 10px ;
-    }
+.consulter-offre-front .liste-caracteristique>li {
+    color: var(--noir);
+    border-left: 5px solid var(--violet-principal);
+    font-size: 40px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
 
-    .consulter-offre-front .liste-caracteristique > li > img {
-        min-width: 50px;
-        max-width: 50px;
-        height: auto;
-        margin-right: 5px;
-        border-radius: 5px; 
-    }   
+.consulter-offre-front .liste-caracteristique>li>img {
+    min-width: 50px;
+    max-width: 50px;
+    height: auto;
+    margin-right: 5px;
+    border-radius: 5px;
+}
 
-    .consulter-offre-front .bloc-caracteristique {
-        flex: 1.75; 
-    }
+.consulter-offre-front .bloc-caracteristique {
+    flex: 1.75;
+}
 
-    /****************************
+/****************************
             BLOC À PROPOS                               
     ****************************/
 
-    .consulter-offre-front .bloc-a-propos {
-        flex: 2.5; 
-        border-left: 3px solid var(--violet-principal);
-    }
+.consulter-offre-front .bloc-a-propos {
+    flex: 2.5;
+    border-left: 3px solid var(--violet-principal);
+}
 
-    .consulter-offre-front .epingle {
-        width: 20px;
-        height: 20px;
-    }
+.consulter-offre-front .epingle {
+    width: 20px;
+    height: 20px;
+}
 
-    .consulter-offre-front .display-ligne-espace > button {
-        font-size: 60px;
-        display: flex;
-        flex-wrap: nowrap;
-    }
+.consulter-offre-front .display-ligne-espace>button {
+    font-size: 60px;
+    display: flex;
+    flex-wrap: nowrap;
+}
 
-    .consulter-offre-front .display-ligne-espace > a, 
-    .consulter-offre-front .fond-blocs > a {
-        color: var(--blanc);
-        text-decoration: none;
-        font-size: 24px;
-        background-color: var(--violet-principal);
-        border: 3px solid var(--blanc);
-        padding: 10px 20px;
-        border-radius: 15px;
-    }
-    
-    .consulter-offre-front .display-ligne-espace > a:hover, 
-    .consulter-offre-front .fond-blocs > a:hover {
-        color: var(--violet-principal);
-        background: var(--blanc);
-        border-color: var(--violet-principal);
-        transition: 0.3s ease-in-out;
-    }
+.consulter-offre-front .display-ligne-espace>a,
+.consulter-offre-front .fond-blocs>a {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+
+.consulter-offre-front .display-ligne-espace>a:hover,
+.consulter-offre-front .fond-blocs>a:hover {
+    color: var(--violet-principal);
+    background: var(--blanc);
+    border-color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
 ***********************************/
 
-    /***************************
+/***************************
             BLOC TARIFS                             
     ***************************/
 
-    .consulter-offre-front .bloc-tarif > button {
-        color: var(--blanc);
-        text-decoration: none;
-        font-size: 24px;
-        background-color: var(--violet-principal);
-        border: 3px solid var(--blanc);
-        padding: 10px 20px;
-        border-radius: 15px;
-        border: 0;
-    }
+.consulter-offre-front .bloc-tarif>button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--violet-principal);
+    border: 3px solid var(--blanc);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 0;
+}
 
-    .consulter-offre-front .bloc-tarif > button:hover {
-        color: var(--violet-principal);
-        background: var(--blanc);
-        border-color: var(--violet-principal);
-        transition: 0.3s ease-in-out;
-    }
+.consulter-offre-front .bloc-tarif>button:hover {
+    color: var(--violet-principal);
+    background: var(--blanc);
+    border-color: var(--violet-principal);
+    transition: 0.3s ease-in-out;
+}
 
-    .consulter-offre-front .bloc-tarif {
-        flex: 2.5; 
-    }
+.consulter-offre-front .bloc-tarif {
+    flex: 2.5;
+}
 
-    .consulter-offre-front .bloc-tarif > div {
-        display: flex;
-    }
+.consulter-offre-front .bloc-tarif>div {
+    display: flex;
+}
 
-    .consulter-offre-front table {
-        width: 80%;
-        margin: 10px 0;
-        border-collapse: separate;
-        border-spacing: 9px;
-    }
+.consulter-offre-front table {
+    width: 80%;
+    margin: 10px 0;
+    border-collapse: separate;
+    border-spacing: 9px;
+}
 
-    .consulter-offre-front td {
-        padding: 20px;
-        text-align: center;
-        border: 3px solid var(--noir);  
-        font-weight: 600;
-    }
+.consulter-offre-front td {
+    padding: 20px;
+    text-align: center;
+    border: 3px solid var(--noir);
+    font-weight: 600;
+}
 
-    /*****************************
+/*****************************
             BLOC OUVERTURE                                       
     *****************************/
 
-    .consulter-offre-front .liste-ouverture {
-        align-items: center;
-    }
+.consulter-offre-front .liste-ouverture {
+    align-items: center;
+}
 
-    .consulter-offre-front .liste-ouverture > li {
-        list-style: none;
-        display: flex;
-        align-items: center;
-    }
+.consulter-offre-front .liste-ouverture>li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
 
-    .consulter-offre-front .bloc-ouverture {
-        flex: 1; 
-    }
+.consulter-offre-front .bloc-ouverture {
+    flex: 1;
+}
 
-    .consulter-offre-front .bloc-ouverture > ul > li {
-        list-style: none;
-    }
+.consulter-offre-front .bloc-ouverture>ul>li {
+    list-style: none;
+}
 
 /**************************
         BLOCS CARTE                                                   
 **************************/
 
 .consulter-offre-front .carte {
-    width: 1000px; 
+    width: 1000px;
     height: 750px;
-    margin: auto; 
+    margin: auto;
 }
 
 /*************************
@@ -2969,23 +2986,23 @@ h3 {
     padding: 30px;
 }
 
-.consulter-offre-front form > div {
+.consulter-offre-front form>div {
     text-align: left;
 }
 
-.consulter-offre-front form > h2 {
+.consulter-offre-front form>h2 {
     margin-bottom: 0;
 }
 
-.consulter-offre-front form > p {
+.consulter-offre-front form>p {
     padding: 0;
 }
 
-.consulter-offre-front ::placeholder {  
+.consulter-offre-front ::placeholder {
     font-style: italic;
     color: var(--gris);
     text-align: center;
-  }
+}
 
 .consulter-offre-front label {
     text-align: start;
@@ -3019,7 +3036,7 @@ h3 {
     width: 200px;
     height: 50px;
 }
-  
+
 .consulter-offre-front input::file-selector-button:hover {
     background: rgb(26, 4, 44);
 }
@@ -3028,7 +3045,7 @@ h3 {
     color: var(--violet-principal);
 }
 
-.consulter-offre-front input, 
+.consulter-offre-front input,
 .consulter-offre-front select {
     padding: 5px;
     background: var(--blanc);
@@ -3041,7 +3058,7 @@ h3 {
 }
 
 .consulter-offre-front .fond-blocs-avis {
-    background: var(--blanc);    
+    background: var(--blanc);
     margin: 30px 0;
     padding: 30px;
     color: var(--noir);
@@ -3049,8 +3066,8 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front #avis > button, 
-.consulter-offre-front #avis > form > button {
+.consulter-offre-front #avis>button,
+.consulter-offre-front #avis>form>button {
     color: var(--blanc);
     text-decoration: none;
     font-size: 24px;
@@ -3060,13 +3077,12 @@ h3 {
     border: 0;
 }
 
-.consulter-offre-front #avis > button:hover, 
-.consulter-offre-front #avis > form > button:hover {
+.consulter-offre-front #avis>button:hover,
+.consulter-offre-front #avis>form>button:hover {
     background: var(--violet-secondaire);
 }
 
-.consulter-offre-front 
-.image-avis {
+.consulter-offre-front .image-avis {
     width: 500px;
     height: auto;
     border-radius: 12px;
@@ -3087,14 +3103,14 @@ h3 {
     padding-left: 3px;
 }
 
-.consulter-offre-front .reponse > p {
+.consulter-offre-front .reponse>p {
     padding-left: 10px;
     margin-left: 75px;
     margin-top: 0;
 }
 
-.consulter-offre-front .fond-blocs-avis > p {
-    margin: 0 0 0 75px ;
+.consulter-offre-front .fond-blocs-avis>p {
+    margin: 0 0 0 75px;
 }
 
 .consulter-offre-front .bordure-top {
@@ -3115,11 +3131,11 @@ h3 {
     color: var(--transparent);
 }
 
-.consulter-offre-front .display-notation > p {
+.consulter-offre-front .display-notation>p {
     margin-left: 15px;
 }
 
-.consulter-offre-front .display-notation > a {
+.consulter-offre-front .display-notation>a {
     color: var(--orange-principale);
     text-decoration: none;
     margin-right: 15px;
@@ -3133,12 +3149,12 @@ h3 {
     margin: 30px;
 }
 
-.consulter-offre-front .navigation > button {
+.consulter-offre-front .navigation>button {
     background: var(--violet-principal);
     border: 3px solid var(--blanc);
     color: var(--blanc);
     padding: 10px 20px;
-    text-align: center; 
+    text-align: center;
     font-size: 40px;
     width: auto;
     height: auto;
@@ -3146,7 +3162,7 @@ h3 {
     margin-left: 0;
 }
 
-.consulter-offre-front .navigation > button:hover {
+.consulter-offre-front .navigation>button:hover {
     background: var(--blanc);
     border-color: var(--violet-principal);
     color: var(--violet-principal);
@@ -3158,7 +3174,7 @@ h3 {
         FOOTER                                            
 *********************/
 
-.consulter-offre-front footer > div > a {
+.consulter-offre-front footer>div>a {
     text-decoration: none;
 }
 
@@ -3211,20 +3227,22 @@ h3 {
 }
 
 .consulter-offre-back .fond-blocs {
-    background: var(--blanc);    
+    background: var(--blanc);
     margin: 30px 30px 0 30px;
-    padding: 30px;}
+    padding: 30px;
+}
 
-    .consulter-offre-back a {
+.consulter-offre-back a {
     color: var(--orange-principale);
     text-decoration: none;
 }
-    
+
 .consulter-offre-back a:hover {
     text-decoration: underline;
 }
-    
-.consulter-offre-back header > div > a, header > div > a:hover {
+
+.consulter-offre-back header>div>a,
+header>div>a:hover {
     text-decoration: none;
 }
 
@@ -3250,111 +3268,112 @@ h3 {
         BLOC PRÉSENTATION                
 ********************************/
 
-    /******************************
+/******************************
             BOUTONS POP-UP                
     ******************************/
-    .consulter-offre-back .bouton-modifier {
-        margin: 30px 30px 0 30px;
-    }
+.consulter-offre-back .bouton-modifier {
+    margin: 30px 30px 0 30px;
+}
 
 
-    .consulter-offre-back .bouton-modifier > button {
-        color: var(--blanc);
-        text-decoration: none;
-        font-size: 30px;
-        background-color: var(--orange-principale);
-        border: 3px solid var(--blanc);
-        padding: 10px 80px;
-        border-radius: 15px;    }
+.consulter-offre-back .bouton-modifier>button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 30px;
+    background-color: var(--orange-principale);
+    border: 3px solid var(--blanc);
+    padding: 10px 80px;
+    border-radius: 15px;
+}
 
-        .consulter-offre-back .bouton-modifier > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc);
-        border-color: var(--orange-principale);
-        transition: 0.3s ease-in-out;
-    }
+.consulter-offre-back .bouton-modifier>button:hover {
+    color: var(--orange-principale);
+    background: var(--blanc);
+    border-color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
 
-    .consulter-offre-back #confirm {
-        background: var(--blanc-leger);
-        border: 3px solid var(--noir);
-        color: var(--noir);
-        font-size: 20px;
-        display: none;
-        border-radius: 15px;
-        text-align: center;
-        width: fit-content;
-        padding: 10px;
-        position: fixed;
-        left: 50%;
-        top: 40%;
-        transform: translateX(-50%);
-        z-index: 1;
-    }
+.consulter-offre-back #confirm {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+    color: var(--noir);
+    font-size: 20px;
+    display: none;
+    border-radius: 15px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
 
-    .consulter-offre-back #final {
-        background: var(--blanc-leger);
-        border: 3px solid var(--noir);
-        color: var(--noir);
-        font-size: 32px;
-        display: none;
-        border-radius: 15px;
-        text-align: center;
-        width: fit-content;
-        padding: 10px;
-        position: fixed;
-        left: 50%;
-        top: 40%;
-        transform: translateX(-50%);
-        z-index: 1;
-    }
+.consulter-offre-back #final {
+    background: var(--blanc-leger);
+    border: 3px solid var(--noir);
+    color: var(--noir);
+    font-size: 32px;
+    display: none;
+    border-radius: 15px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
 
-    .consulter-offre-back .close {
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.consulter-offre-back .close {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .consulter-offre-back .close button:first-child {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
-        cursor: pointer;
-        padding: 5px 15px;
-        margin-bottom: 12px;
-        background: var(--noir);
-        color: var(--blanc-leger);
-        font-size: 32px;
-        width: fit-content;
-    }
+.consulter-offre-back .close button:first-child {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin-bottom: 12px;
+    background: var(--noir);
+    color: var(--blanc-leger);
+    font-size: 32px;
+    width: fit-content;
+}
 
-    .consulter-offre-back #final button {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
-        cursor: pointer;
-        padding: 5px 15px;
-        margin-bottom: 12px;
-        background: var(--noir);
-        color: var(--blanc-leger);
-        font-size: 32px;
-        width: fit-content;
-    }
+.consulter-offre-back #final button {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin-bottom: 12px;
+    background: var(--noir);
+    color: var(--blanc-leger);
+    font-size: 32px;
+    width: fit-content;
+}
 
-    .consulter-offre-back .close button:last-child {
-        border: 1px solid;
-        border-radius: 30px;
-        text-align: center;
-        cursor: pointer;
-        padding: 5px 60px;
-        margin-bottom: 12px;
-        background: var(--gris);
-        color: var(--blanc-leger);
-        font-size: 20px;
-        width: fit-content;
-    }
+.consulter-offre-back .close button:last-child {
+    border: 1px solid;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 60px;
+    margin-bottom: 12px;
+    background: var(--gris);
+    color: var(--blanc-leger);
+    font-size: 20px;
+    width: fit-content;
+}
 
-    .consulter-offre-back .bloc-presentation > div > p {
+.consulter-offre-back .bloc-presentation>div>p {
     font-size: 32px;
 }
 
@@ -3369,7 +3388,7 @@ h3 {
     align-items: center;
 }
 
-.consulter-offre-back .display-ligne-espace > p {
+.consulter-offre-back .display-ligne-espace>p {
     margin: 0;
 }
 
@@ -3379,60 +3398,60 @@ h3 {
     margin: 5px 0;
 }
 
-.consulter-offre-back .display-ligne > p {
+.consulter-offre-back .display-ligne>p {
     margin: 0 10px;
 }
 
-    /**********************************
+/**********************************
             IMAGES PRÉSENTATION                
     **********************************/
- 
-    .consulter-offre-back .carousel {
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px;
-    }
 
-    .consulter-offre-back .carousel-images {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: auto;
-    }
-      
-    .consulter-offre-back .carousel-images img {
-        width: 100%;
-        height: 900px;
-        flex-shrink: 0;
-    }
+.consulter-offre-back .carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
 
-    .consulter-offre-back .arrow-left, 
-    .consulter-offre-back .arrow-right {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-    }
+.consulter-offre-back .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: auto;
+}
 
-    .consulter-offre-back .arrow-left > img, 
-    .consulter-offre-back .arrow-right > img {
-        background-color: var(--orange-principale);
-        border-radius: 90px;
-    } 
+.consulter-offre-back .carousel-images img {
+    width: 100%;
+    height: 900px;
+    flex-shrink: 0;
+}
 
-    .consulter-offre-back .arrow-left {
-        left: 20px;
-    }
-      
-    .consulter-offre-back .arrow-right {
-        right: 20px;
-    }
-      
+.consulter-offre-back .arrow-left,
+.consulter-offre-back .arrow-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.consulter-offre-back .arrow-left>img,
+.consulter-offre-back .arrow-right>img {
+    background-color: var(--orange-principale);
+    border-radius: 90px;
+}
+
+.consulter-offre-back .arrow-left {
+    left: 20px;
+}
+
+.consulter-offre-back .arrow-right {
+    right: 20px;
+}
+
 
 /**********************************
         PREMIER DOUBLE BLOC                               
 **********************************/
 
-    /***********************************
+/***********************************
             BLOC CARACTÉRISTIQUE                       
     ***********************************/
 
@@ -3441,141 +3460,140 @@ h3 {
         padding-right: 0;
     }
 
-    .consulter-offre-back .liste-caracteristique > li {
-        color: var(--noir);
-        border-left: 5px solid var(--orange-principale);
-        font-size: 40px;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin-bottom: 1em;
-        padding-left: 10px ;
-    }
+.consulter-offre-back .liste-caracteristique>li {
+    color: var(--noir);
+    border-left: 5px solid var(--orange-principale);
+    font-size: 40px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
 
-    .consulter-offre-back .liste-caracteristique > li > img {
-        min-width: 50px;
-        max-width: 50px;
-        height: auto;
-        margin-right: 5px;
-        border-radius: 5px; 
-    }   
+.consulter-offre-back .liste-caracteristique>li>img {
+    min-width: 50px;
+    max-width: 50px;
+    height: auto;
+    margin-right: 5px;
+    border-radius: 5px;
+}
 
-
-    /****************************
+/****************************
             BLOC À PROPOS                               
     ****************************/
 
-    .consulter-offre-back .bloc-a-propos {
-        flex: 5; 
-        border-left: 3px solid var(--orange-principale);
-    }
+.consulter-offre-back .bloc-a-propos {
+    flex: 5; 
+    border-left: 3px solid var(--orange-principale);
+}
 
-    .consulter-offre-back .epingle {
-        width: 20px;
-        height: 20px;
-    }
+.consulter-offre-back .epingle {
+    width: 20px;
+    height: 20px;
+}
 
-    .consulter-offre-back .display-ligne-espace > button {
-        font-size: 60px;
-    }
+.consulter-offre-back .display-ligne-espace>button {
+    font-size: 60px;
+}
 
-    .consulter-offre-back .display-ligne-espace > a, 
-    .consulter-offre-back .fond-blocs > a {
-        color: var(--blanc);
-        text-decoration: none;
-        font-size: 24px;
-        background-color: var(--orange-principale);
-        border: 3px solid var(--blanc);
-        padding: 10px 80px;
-        border-radius: 15px;
-    }
-    
-    .consulter-offre-back .display-ligne-espace > a:hover, 
-    .consulter-offre-back .fond-blocs > a:hover {
-        color: var(--orange-principale);
-        background: var(--blanc);
-        border-color: var(--orange-principale);
-        transition: 0.3s ease-in-out;
-    }
+.consulter-offre-back .display-ligne-espace>a,
+.consulter-offre-back .fond-blocs>a {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--orange-principale);
+    border: 3px solid var(--blanc);
+    padding: 10px 80px;
+    border-radius: 15px;
+}
+
+.consulter-offre-back .display-ligne-espace>a:hover,
+.consulter-offre-back .fond-blocs>a:hover {
+    color: var(--orange-principale);
+    background: var(--blanc);
+    border-color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
 ***********************************/
 
-    /***************************
+/***************************
             BLOC TARIFS                             
     ***************************/
 
-    .consulter-offre-back .bloc-tarif > button {
-        color: var(--blanc);
-        text-decoration: none;
-        font-size: 24px;
-        background-color: var(--orange-principale);
-        border: 3px solid var(--blanc);
-        padding: 10px 20px;
-        border-radius: 15px;
-    }
+.consulter-offre-back .bloc-tarif>button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--orange-principale);
+    border: 3px solid var(--blanc);
+    padding: 10px 20px;
+    border-radius: 15px;
+}
 
-    .consulter-offre-back .bloc-tarif > button:hover {
-        color: var(--orange-principale);
-        background: var(--blanc);
-        border-color: var(--orange-principale);
-        transition: 0.3s ease-in-out;
-    }
+.consulter-offre-back .bloc-tarif>button:hover {
+    color: var(--orange-principale);
+    background: var(--blanc);
+    border-color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
+}
 
-    .consulter-offre-back .bloc-tarif {
-        flex: 2.5; 
-    }
+.consulter-offre-back .bloc-tarif {
+    flex: 2.5;
+}
 
-    .consulter-offre-back .bloc-tarif > div {
-        display: flex;
-    }
+.consulter-offre-back .bloc-tarif>div {
+    display: flex;
+}
 
-    .consulter-offre-back table {
-        width: 80%;
-        margin: 10px 0;
-        border-collapse: separate;
-        border-spacing: 9px;
-    }
+.consulter-offre-back table {
+    width: 80%;
+    margin: 10px 0;
+    border-collapse: separate;
+    border-spacing: 9px;
+}
 
-    .consulter-offre-back td {
-        padding: 20px;
-        text-align: center;
-        border: 3px solid var(--noir);  
-        font-weight: 600;
-    }
+.consulter-offre-back td {
+    padding: 20px;
+    text-align: center;
+    border: 3px solid var(--noir);
+    font-weight: 600;
+}
 
-    /*****************************
+/*****************************
             BLOC OUVERTURE                                       
     *****************************/
 
-    .consulter-offre-back .liste-ouverture {
-        align-items: center;
-    }
+.consulter-offre-back .liste-ouverture {
+    align-items: center;
+}
 
-    .consulter-offre-back .liste-ouverture > li {
-        list-style: none;
-        display: flex;
-        align-items: center;
-    }
+.consulter-offre-back .liste-ouverture>li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
 
-    .consulter-offre-back .bloc-ouverture {
-        flex: 1; 
-        margin-left: 0;
-    }
+.consulter-offre-back .bloc-ouverture {
+    flex: 1;
+    margin-left: 0;
+}
 
-    .consulter-offre-back .bloc-ouverture > ul > li {
-        list-style: none;
-    }
+.consulter-offre-back .bloc-ouverture>ul>li {
+    list-style: none;
+}
 
 /**************************
         BLOCS CARTE                                                   
 **************************/
 
 .consulter-offre-back .carte {
-    width: 1000px; 
+    width: 1000px;
     height: 750px;
-    margin: auto; 
+    margin: auto;
 }
 
 /*************************
@@ -3583,7 +3601,7 @@ h3 {
 *************************/
 
 .consulter-offre-back .fond-blocs-avis {
-    background: var(--blanc);    
+    background: var(--blanc);
     margin: 30px 0;
     padding: 15px;
     border-radius: 15px;
@@ -3597,8 +3615,8 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-back .fond-blocs-avis > p {
-    margin: 0 0 0 75px ;
+.consulter-offre-back .fond-blocs-avis>p {
+    margin: 0 0 0 75px;
 }
 
 .consulter-offre-back .bordure-top {
@@ -3644,11 +3662,11 @@ h3 {
     color: var(--transparent);
 }
 
-.consulter-offre-back .display-notation > p {
+.consulter-offre-back .display-notation>p {
     margin-left: 15px;
 }
 
-.consulter-offre-back .display-notation > a {
+.consulter-offre-back .display-notation>a {
     color: var(--orange-principale);
     text-decoration: none;
     margin-right: 15px;
@@ -3662,7 +3680,7 @@ h3 {
     margin: 30px;
 }
 
-.consulter-offre-back .navigation > button {
+.consulter-offre-back .navigation>button {
     background: var(--orange-principale);
     border: 3px solid var(--blanc);
     color: var(--blanc);
@@ -3674,7 +3692,7 @@ h3 {
     border-radius: 15px;
 }
 
-.consulter-offre-back .navigation > button:hover {
+.consulter-offre-back .navigation>button:hover {
     background: var(--blanc);
     border-color: var(--orange-principale);
     color: var(--orange-principale);
@@ -3685,7 +3703,7 @@ h3 {
         FOOTER                                            
 *********************/
 
-.consulter-offre-back footer > div > a {
+.consulter-offre-back footer>div>a {
     text-decoration: none;
 }
 
@@ -3697,26 +3715,26 @@ h3 {
                                     Créer offre
 ***************************************************************************************/
 
-.creer-offre #labeldispo, 
-.creer-offre #dispo, 
-.creer-offre #labeladresse, 
-.creer-offre #adresse, 
-.creer-offre #cp, 
-.creer-offre div[id = "options"], 
-.creer-offre #labelcp{
-  display: none;
+.creer-offre #labeldispo,
+.creer-offre #dispo,
+.creer-offre #labeladresse,
+.creer-offre #adresse,
+.creer-offre #cp,
+.creer-offre div[id="options"],
+.creer-offre #labelcp {
+    display: none;
 }
 
-.creer-offre #descpresta{
-  width: 100%;
+.creer-offre #descpresta {
+    width: 100%;
 }
 
 .creer-offre h2 {
-  width: 55%;
-  text-align: center;
-  margin: 20px auto 20px auto;
-  border-radius: 15px;
-  font-size: 48px;
+    width: 55%;
+    text-align: center;
+    margin: 20px auto 20px auto;
+    border-radius: 15px;
+    font-size: 48px;
 }
 
 .creer-offre h3 {
@@ -3729,25 +3747,26 @@ h3 {
     margin-bottom: 15px;
 }
 
-.creer-offre label, 
-.creer-offre input, 
-.creer-offre p{
-  font-size: 24px;
-  margin:5px 5px 0 0;
-  font-weight: 400;
+.creer-offre label,
+.creer-offre input,
+.creer-offre p {
+    font-size: 24px;
+    margin: 5px 5px 0 0;
+    font-weight: 400;
 }
 
-.creer-offre p{
+.creer-offre p {
     color: var(--gris-etoile);
     text-align: center;
 }
 
-.creer-offre table{
-  font-size: 24px;
+.creer-offre table {
+    font-size: 24px;
 }
 
-.creer-offre .required{  /* asterisques en rouge*/
-  color: red;
+.creer-offre .required {
+    /* asterisques en rouge*/
+    color: red;
 }
 
 
@@ -3766,11 +3785,11 @@ h3 {
 
 /***Inputs Textuels (avec url,...)***/
 
-.creer-offre main input[type="text"], 
-.creer-offre input[type="url"], 
-.creer-offre input[type="number"], 
-.creer-offre input[type="tel"], 
-.creer-offre textarea{
+.creer-offre main input[type="text"],
+.creer-offre input[type="url"],
+.creer-offre input[type="number"],
+.creer-offre input[type="tel"],
+.creer-offre textarea {
     background-color: var(--blanc-leger);
     color: black;
     border: 0;
@@ -3783,101 +3802,107 @@ h3 {
 }
 
 .creer-offre input[name='tarif1'],
-.creer-offre input[name='tarif2'], 
-.creer-offre input[name='tarif3'], 
-.creer-offre input[name='tarif4']{
+.creer-offre input[name='tarif2'],
+.creer-offre input[name='tarif3'],
+.creer-offre input[name='tarif4'] {
     width: 100px;
 }
 
-.creer-offre textarea{
-  min-height: 150px;
-  height: fit-content;
-  word-wrap: break-word;
-  padding: 5px;
-  width: 100%;
-  text-align: left;
-  font-family: "Poppins"
+.creer-offre textarea {
+    min-height: 150px;
+    height: fit-content;
+    word-wrap: break-word;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    font-family: "Poppins"
 }
 
 
 /*HORAIRES*/
-.creer-offre input[placeholder = "00"]{
-  width: 50px;
+.creer-offre input[placeholder="00"] {
+    width: 50px;
 }
 
-.creer-offre  ::placeholder{   /*guidage*/
-  font-style: italic;
-  text-align: center;
-  color: var(--gris-etoile);
+.creer-offre ::placeholder {
+    /*guidage*/
+    font-style: italic;
+    text-align: center;
+    color: var(--gris-etoile);
 }
 
 /***Tableaux**/
 
-.creer-offre .apropos table, 
-.creer-offre .important table{
-  width: 100%;
-  display: inline-block;
+.creer-offre .apropos table,
+.creer-offre .important table {
+    width: 100%;
+    display: inline-block;
 }
 
-.creer-offre tbody{
-  width: 1500px;
+.creer-offre tbody {
+    width: 1500px;
 }
 
 /****INFORMATIONS IMPORTANTES****/
 
-.creer-offre .important input[id="titre"], 
-.creer-offre .important input[id="adresse"]{
-  width: 100%;
+.creer-offre .important input[id="titre"],
+.creer-offre .important input[id="adresse"] {
+    width: 100%;
 }
 
 .creer-offre .important td {
-  padding: 5px;
+    padding: 5px;
 }
 
-.creer-offre .important td + td{
-  /* width: 35%; */
-  padding-left: 5%;
+.creer-offre .important td+td {
+    /* width: 35%; */
+    padding-left: 5%;
 }
 
-.creer-offre .important table :nth-child(5) td + td + td{ /*"ville *" */
-  width: 10%;
-  padding-left: 0;
-} 
+.creer-offre .important table :nth-child(5) td+td+td {
+    /*"ville *" */
+    width: 10%;
+    padding-left: 0;
+}
+
 .creer-offre .important img {
-  max-width: 200px;
+    max-width: 200px;
 }
 
 /***Selects***/
 
 .creer-offre .custom-select-container {
-  display: inline-block;
-  position: relative;
-  width: 75%;
+    display: inline-block;
+    position: relative;
+    width: 75%;
 }
 
 .creer-offre .custom-select {
-  appearance: none; /* Remove default select styling */
-  background-color: var(--blanc-leger);
-  border: 1px solid #ccc;
-  padding: 10px;
-  font-size: 24px;
-  width: 100%; 
-  border-radius: 5px;
-  color: var(--gris-etoile);
-  cursor: pointer;
-  
+    appearance: none;
+    /* Remove default select styling */
+    background-color: var(--blanc-leger);
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 24px;
+    width: 100%;
+    border-radius: 5px;
+    color: var(--gris-etoile);
+    cursor: pointer;
+
 }
 
 /* Adding a custom dropdown arrow */
 .creer-offre .custom-select-container::after {
-  content: '▼'; /* Add arrow symbol */
-  font-size: 24px;
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--gris-etoile); /* Arrow color */
+    content: '▼';
+    /* Add arrow symbol */
+    font-size: 24px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--gris-etoile);
+    /* Arrow color */
 }
 
 /* Optional: Hover effect for the dropdown */
@@ -3885,7 +3910,8 @@ h3 {
   cursor: pointer;
   border-color: var(--orange-principale);
   border: 10px solid var(--orange-principale);
-} *//*marche pô*/
+} */
+/*marche pô*/
 
 /***Importer une image***/
 
@@ -3922,25 +3948,26 @@ h3 {
 
 
 /****A PROPOS DE L'OFFRE****/
-.creer-offre .apropos tr + td, 
-.creer-offre .important tr+td{
-  width: auto;
-  padding: 5% 5px;
+.creer-offre .apropos tr+td,
+.creer-offre .important tr+td {
+    width: auto;
+    padding: 5% 5px;
 }
 
-.creer-offre .apropos td + td{
+.creer-offre .apropos td+td {
     padding: 5px 0 5px 0;
     width: 75%;
 }
 
-.creer-offre .apropos textarea{
-  width: 100%;
-  min-height: 150px;
-  height: fit-content;
+.creer-offre .apropos textarea {
+    width: 100%;
+    min-height: 150px;
+    height: fit-content;
 }
 
-.creer-offre input[type="url"], input[type="tel"]{
-  width: 65%;
+.creer-offre input[type="url"],
+input[type="tel"] {
+    width: 65%;
 }
 
 /****Tarif****/
@@ -3955,22 +3982,22 @@ h3 {
 
 
 /***Boutons***/
-.creer-offre input::file-selector-button{
-  border: 0;
-  border-radius: 10px;
-  background: var(--orange-principale);
-  color: var(--blanc);
-  width: 200px;
-  height: 40px;
-  margin-top: 10px;
-  margin-bottom: 5px;
+.creer-offre input::file-selector-button {
+    border: 0;
+    border-radius: 10px;
+    background: var(--orange-principale);
+    color: var(--blanc);
+    width: 200px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-.creer-offre input::file-selector-button:hover{
-  background: #fff;
-  color: var(--orange-principale);
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-  transition: 0.3s ease-in-out;
+.creer-offre input::file-selector-button:hover {
+    background: #fff;
+    color: var(--orange-principale);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease-in-out;
 }
 
 
@@ -3980,58 +4007,59 @@ h3 {
 
 /****AVANT LE FOOTER****/
 
-.creer-offre .bt_cree{
-  width: 100%;
-  margin: 20px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.creer-offre .bt_cree {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
-.creer-offre .valider{
-  background: var(--orange-principale);
-  color: var(--blanc);
-  padding: 10px 20px;
-  border: 0;
-  text-align: center;
-  font-size: 40px;
-  width: 517px;
-  height: 97px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
-  margin-left: 0;
+.creer-offre .valider {
+    background: var(--orange-principale);
+    color: var(--blanc);
+    padding: 10px 20px;
+    border: 0;
+    text-align: center;
+    font-size: 40px;
+    width: 517px;
+    height: 97px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    margin-left: 0;
 }
 
-.creer-offre .valider:hover{
-  background: var(--blanc-leger);
-  color: var(--orange-principale);
-  transition: 0.3s ease-in-out;
+.creer-offre .valider:hover {
+    background: var(--blanc-leger);
+    color: var(--orange-principale);
+    transition: 0.3s ease-in-out;
 }
 
-.creer-offre .valider + a{
-  width: 50px;
-  height: 50px;
-  background: var(--orange-principale);
-  border-radius: 5px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
+.creer-offre .valider+a {
+    width: 50px;
+    height: 50px;
+    background: var(--orange-principale);
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
 }
 
-.creer-offre .valider + a :hover{
-  background: var(--blanc-leger);
-  content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
+.creer-offre .valider+a :hover {
+    background: var(--blanc-leger);
+    content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }
 
-.creer-offre .valider + a img {
-  width: 90%;
-  height: 90%;
-  transition: 0.3s ease-in-out; /* Ajoute une transition fluide au changement d'image */
+.creer-offre .valider+a img {
+    width: 90%;
+    height: 90%;
+    transition: 0.3s ease-in-out;
+    /* Ajoute une transition fluide au changement d'image */
 }
 
 /**************************************************************************************
@@ -4074,13 +4102,13 @@ h3 {
 
     width: 95vw;
     box-sizing: border-box;
-    
+
     background: var(--blanc-leger);
     border-radius: 15px;
-    border:3px solid var(--violet-principal);
+    border: 3px solid var(--violet-principal);
 }
 
-.liste-front .filtre-tri > h2 {
+.liste-front .filtre-tri>h2 {
     color: var(--blanc-leger);
     text-align: center;
     background-color: var(--violet-principal);
@@ -4094,13 +4122,13 @@ h3 {
     cursor: pointer;
 }
 
-.liste-front .filtre-tri > h2:hover {
+.liste-front .filtre-tri>h2:hover {
     background-color: var(--blanc-leger);
     border: solid 2px var(--violet-principal);
     color: var(--violet-principal);
 }
 
-.liste-front .filtre-tri h2 + div {
+.liste-front .filtre-tri h2+div {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
@@ -4149,11 +4177,11 @@ h3 {
     background-color: var(--blanc);
 }
 
-.liste-front .filtre-tri .categorie, 
-.liste-front .filtre-tri .localisation, 
-.liste-front .filtre-tri .disponibilite, 
+.liste-front .filtre-tri .categorie,
+.liste-front .filtre-tri .localisation,
+.liste-front .filtre-tri .disponibilite,
 .liste-front .filtre-tri .trier,
-.liste-front .filtre-tri .typeOffre, 
+.liste-front .filtre-tri .typeOffre,
 .liste-front .filtre-tri .date,
 .liste-front .filtre-tri .trier2 {
     margin: 0 1em;
@@ -4169,24 +4197,24 @@ h3 {
     flex-direction: column;
 }
 
-.liste-front .filtre-tri h2 + div > div,
-.liste-front .filtre-tri h2 + div > div + div{
+.liste-front .filtre-tri h2+div>div,
+.liste-front .filtre-tri h2+div>div+div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0;
 }
 
-.liste-front .filtre-tri h2 + div > div {
+.liste-front .filtre-tri h2+div>div {
     padding-top: 0.5em 0 0 0;
 }
 
-.liste-front .filtre-tri h2 + div > div + div {
+.liste-front .filtre-tri h2+div>div+div {
     padding: 0 0 1em 0;
-    
+
 }
 
-.liste-front .filtre-tri h3 + div {
+.liste-front .filtre-tri h3+div {
     background: var(--violet-principal);
     border-radius: 15px;
     padding: 0.5em;
@@ -4209,35 +4237,35 @@ h3 {
 /************
     TRIER
 *************/
-.liste-front .filtre-tri .trier > div {
+.liste-front .filtre-tri .trier>div {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     padding: 1em;
 }
 
-.liste-front .filtre-tri .trier > div > div {
+.liste-front .filtre-tri .trier>div>div {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 0 1em 0 0;
 }
 
-.liste-front .filtre-tri .trier > div > div > div,
-.liste-front .filtre-tri .trier > div > div > div + div{
+.liste-front .filtre-tri .trier>div>div>div,
+.liste-front .filtre-tri .trier>div>div>div+div {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.liste-front .filtre-tri .trier > div > div > div + div {
+.liste-front .filtre-tri .trier>div>div>div+div {
     padding: 0 0 0 2em;
     font-size: 20px;
     font-weight: 500;
     color: var(--violet-principal);
 }
 
-.liste-front .filtre-tri .trier > div  div div div {
+.liste-front .filtre-tri .trier>div div div div {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -4285,11 +4313,11 @@ h3 {
 /**************
       DATE
 ***************/
-.liste-front .filtre-tri .date > div {
+.liste-front .filtre-tri .date>div {
     display: flex;
 }
 
-.liste-front .filtre-tri .date > div div {
+.liste-front .filtre-tri .date>div div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -4611,18 +4639,22 @@ h3 {
 }
 
 .liste-front .fond-filtres {
-    overflow: hidden; /* Permet l'effet de rétractation */
-    max-height: 1000px; /* Grande valeur initiale */
-    transition: max-height 0.5s ease-out; /* Animation fluide */
+    overflow: hidden;
+    /* Permet l'effet de rétractation */
+    max-height: 1000px;
+    /* Grande valeur initiale */
+    transition: max-height 0.5s ease-out;
+    /* Animation fluide */
 }
 
 .liste-front .fond-filtres.hidden {
-    max-height: 0; /* Rétractation */
+    max-height: 0;
+    /* Rétractation */
     transition: max-height 0.5s ease-out;
 }
 
 .liste-front .no-offers-message {
-    text-align: center; 
+    text-align: center;
     color: var(--violet-principal);
     font-size: 20pt;
     margin: 20px auto;
@@ -4699,6 +4731,10 @@ h3 {
         padding-bottom: 120px;
     }
 
+    .front main {
+        padding-bottom: 10%;
+    }
+
     .front header {
         display: none;
     }
@@ -4725,32 +4761,64 @@ h3 {
         width: 90%;
     }
 
+    .creer-compte a {
+        transform: none;
+    }
+
+    .creer-compte header {
+        display: grid ;
+        padding: 0;
+    }
+
+    .creer-compte form {
+        padding: 1%;
+    }
+
+    .creer-compte h1 {
+        margin: 1%;
+        margin-bottom: 5%;
+    }
+
     /****************************************************
                        Pop Up
     *****************************************************/
 
-    #validerModifCompte, #annulerModifCompte, #popupRetourAccueil, #popupRetourCompte {
+    #validerModifCompte,
+    #annulerModifCompte,
+    #popupRetourAccueil,
+    #popupRetourCompte {
         width: fit-content;
         height: fit-content;
         border-radius: 10px;
         padding: 2%;
     }
-    #validerModifCompte h3, #annulerModifCompte h3, #popupRetourAccueil h3, #popupRetourCompte h3 {
+
+    #validerModifCompte h3,
+    #annulerModifCompte h3,
+    #popupRetourAccueil h3,
+    #popupRetourCompte h3 {
         margin: 1%;
         font-size: 41pt;
-      }
-      #validerModifCompte p, #annulerModifCompte p, #popupRetourAccueil p, #popupRetourCompte p {
-       
+    }
+
+    #validerModifCompte p,
+    #annulerModifCompte p,
+    #popupRetourAccueil p,
+    #popupRetourCompte p {
+
         font-size: 26pt;
         margin: 2%;
-      }
+    }
 
-      .compte-front-modif #validerModifCompte button, .compte-front-modif #annulerModifCompte button, .compte-front-modif #popupRetourAccueil button, .compte-front-modif #popupRetourCompte button {
-        font-size: 24pt;
-  width: 45%;
-  height: 100%;
-  border-radius: 28px;
-      }
+    .compte-front-modif #validerModifCompte button,
+    .compte-front-modif #annulerModifCompte button,
+    .compte-front-modif #popupRetourAccueil button,
+    .compte-front-modif #popupRetourCompte button {
+        font-size: 20pt;
+        width: 44%;
+        height: 100%;
+        border-radius: 28px;
+    }
     /****************************************************
                        COMPTE FRONT
     *****************************************************/
@@ -4773,19 +4841,51 @@ h3 {
     }
 
 
-    .compte-front {
-        display: flex;
-        flex-wrap: wrap;
+    .creer-compte header {
+        position: static;
+        display: grid;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        padding-bottom: 0;
+    }
+
+    .creer-compte #div-type-compte {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .creer-compte form {
+        max-width: 100vw;
+    }
+
+    .creer-compte #div-name-and-first-name {
         flex-direction: column;
     }
 
-    .compte-front main {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column-reverse;
-        margin: 0;
+    .creer-compte #div-name-and-first-name div {
+        width: 100%;
     }
 
+    .creer-compte #div-adresse .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .creer-compte #div-adresse .row div {
+        width: 100%;
+    }
+
+    .creer-compte form>label {
+        text-align: center;
+        width: 100%;
+    }
+
+    .creer-offre input[type="url"],
+input[type="tel"] {
+    width: 100%;
+}
     /********************
             NAV
     *********************/
@@ -4903,6 +5003,7 @@ h3 {
     .compte-front-modif main,
     .compte-front-modif {
         width: fit-content;
+        padding: 1% 1% 10% 1%;
     }
 
     .compte-front-modif h1 {
@@ -4916,6 +5017,11 @@ h3 {
     .compte-front-modif td {
         font-size: 30pt;
         padding-bottom: 1.5em;
+    }
+
+    .compte-front tr>td,
+    .compte-front-modif tr>td {
+        vertical-align: middle;
     }
 
     .compte-front-modif input {
@@ -4932,17 +5038,9 @@ h3 {
 }
 
 @media screen and (max-width: 1100px) {
-
-    .creer-compte form {
-        max-width: 75vw;
-    }
 }
 
 @media screen and (max-width: 750px) {
-    .creer-compte #div-type-compte {
-        flex-direction: column;
-        gap: 0;
-    }
 
     .liste-back .lesOffres {
         justify-content: center;
@@ -4950,16 +5048,6 @@ h3 {
 }
 
 @media screen and (max-width: 675px) {
-
-    .creer-compte header {
-        position: static;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        padding-bottom: 0;
-    }
 
     .creer-compte #div-adresse .row {
         flex-direction: column;
@@ -5021,44 +5109,5 @@ h3 {
 
 @media screen and (orientation: portrait) {
 
-    .creer-compte header {
-        position: static;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        padding-bottom: 0;
-    }
-
-    .creer-compte #div-type-compte {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .creer-compte form {
-        max-width: 100vw;
-    }
-
-    .creer-compte #div-name-and-first-name {
-        flex-direction: column;
-    }
-
-    .creer-compte #div-name-and-first-name div {
-        width: 100%;
-    }
-
-    .creer-compte #div-adresse .row {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .creer-compte #div-adresse .row div {
-        width: 100%;
-    }
-
-    .creer-compte form>label {
-        text-align: center;
-        width: 100%;
-    }
+    
 }
