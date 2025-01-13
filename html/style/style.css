@@ -2404,9 +2404,8 @@ h3 {
 
 .nav-content a {
     color: inherit;
-    display: none;
-    width: 0;
-    height: 0;
+    width: auto;
+    height: auto;
     padding: 0;
 }
 
