@@ -182,8 +182,8 @@ if (!isset($_SESSION)) {
                         $titre = $offre_consulte["titre"];
                         $note = $offre_consulte["note"]; ?>
 
-                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
+                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_consulte["id_offre"]; ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_consulte["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
                         </a>
                     <?php } ?>
                 </div>
