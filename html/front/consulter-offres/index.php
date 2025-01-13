@@ -277,7 +277,7 @@ try {
                                         echo 'ID membre : ' . intval($_SESSION['id']) . "\n";
                                         echo "</pre>";
                                         echo '<p style="display: none;" class="contientavisspot">';
-                                        if (in_array(intval($_SESSION['id']), getIdOffresContientAvis($tab['id_offre']))) {
+                                        if (in_array(intval($_SESSION['id']), getIdMembresContientAvis($tab['id_offre']))) {
                                             echo "Oui";
                                         } 
                                         echo "</p>";
