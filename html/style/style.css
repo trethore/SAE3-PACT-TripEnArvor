@@ -3624,13 +3624,7 @@ header>div>a:hover {
 
 .consulter-offre-back .display-notation {
     display: flex;
-    align-items: center;
-}
-
-.consulter-offre-back .display-notation > p {
-    display: flex;
-    align-items: end;
-    margin: 0 2px 0 0;
+    align-items: right;
 }
 
 /* Style réponse avis */
@@ -3654,6 +3648,14 @@ header>div>a:hover {
     height: 40px;
     margin-left: 5px;
 }
+
+/* Petite mention*/
+
+.petite-mention {
+    font-size: 14px;
+}
+
+/**/
 
 .consulter-offre-back .transparent {
     color: var(--transparent);
