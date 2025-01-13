@@ -3651,7 +3651,7 @@ header>div>a:hover {
 
 /* Petite mention*/
 
-.petite-mention {
+.consulter-offre-back .petite-mention > p{
     font-size: 14px;
 }
 

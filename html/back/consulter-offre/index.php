@@ -649,32 +649,27 @@ try {
 
                 <div class="fond-blocs-avis">
                     <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
-                    <div class="display-ligne-espace">
+                    <div class="display-ligne">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                        <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                        <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                        <div class="display-ligne">
+
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+
+                            <?php } 
+
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+
+                            <?php } ?>
+
                         </div>
                     </div>
 
-                    <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
-                    <div class="display-ligne">
-                        <p><?php echo htmlentities(html_entity_decode($a['titre'])) ?></p>
-
-                        <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
-
-                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-
-                        <?php } 
-
-                        for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
-
-                            <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-
-                        <?php } ?>
-
-                    </div>
+                    <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
                     <?php if ($categorie == "Restauration") { ?>
@@ -737,7 +732,7 @@ try {
                     <div class="petite-mention">
                         <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
                               $datePub = explode('-', $publication[0]); ?>
-                        <e><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                         <p><em>Cet avis est l'opinion subjective d'un membre de la PACT et non l'avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
                     </div>
 
