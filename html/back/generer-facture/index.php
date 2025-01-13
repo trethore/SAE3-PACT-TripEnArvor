@@ -56,7 +56,14 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <?php echo htmlentities($detailCompte["denomination"] ?? '');?>
                 <br>
                 <!-- Adresse -->
-                <?php echo htmlentities($detailCompte["email"] ?? '');?>
+                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>
+                <br>
+                <!-- CP -->
+                <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>,
+                <?php echo htmlentities($detailCompte["ville"] ?? '');?>
+                <br>
+                <!-- Tel -->
+                <?php echo htmlentities($detailCompte["tel"] ?? '');?>
                 <br>
                 <!-- Email -->
                 <?php echo htmlentities($detailCompte["email"] ?? '');?>
