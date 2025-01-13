@@ -777,4 +777,64 @@
             die();
         }
     }
+
+    function addConsultedOffer($idOffre) {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    
+        if (!isset($_SESSION['recent_offers'])) {
+            $_SESSION['recent_offers'] = [];
+        }
+    
+        // Évitez les doublons, mais ajoutez les nouveaux à la fin
+        if (!in_array($idOffre, $_SESSION['recent_offers'])) {
+            $_SESSION['recent_offers'][] = $idOffre;
+        }
+    
+        // Limitez à 10 offres consultées
+        if (count($_SESSION['recent_offers']) > 10) {
+            array_shift($_SESSION['recent_offers']); // Supprime le plus ancien
+        }
+    }
+
+    function getConsultedOffers() {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    
+        if (!isset($_SESSION['recent_offers']) || empty($_SESSION['recent_offers'])) {
+            return [];
+        }
+    
+        try {
+            // Connexion à la base de données
+            global $driver, $server, $dbname, $user, $pass;
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    
+            // Préparation de la requête
+            $placeholders = implode(',', array_fill(0, count($_SESSION['recent_offers']), '?'));
+            $query = "SELECT id_offre FROM sae._offre WHERE id_offre IN ($placeholders)";
+            $stmt = $dbh->prepare($query);
+            $stmt->execute($_SESSION['recent_offers']);
+            $offers = $stmt->fetchAll();
+    
+            // Sort offers to match the order in $_SESSION['recent_offers']
+            $offerMap = [];
+            foreach ($offers as $offer) {
+                $offerMap[$offer['id_offre']] = $offer;
+            }
+            $sortedOffers = array_map(function ($id) use ($offerMap) {
+                return $offerMap[$id] ?? null; // Handle cases where an ID may not exist in the database
+            }, $_SESSION['recent_offers']);
+    
+            $dbh = null;
+            return array_filter($sortedOffers); // Remove any null values
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des offres : " . $e->getMessage();
+            return [];
+        }
+    }
+    
 ?>

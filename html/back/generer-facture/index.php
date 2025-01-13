@@ -40,26 +40,44 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="genFacture">
-    <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
-    <section>
-        <article class="delivre">
-            <h3>Délivré à</h3>
-            <p>
-                <!-- Nom -->
-                <?php echo htmlentities($detailCompte["nom_compte"] ?? '');?> 
-                <!-- Prenom -->
-                <?php echo htmlentities($detailCompte["prenom"] ?? '');?><br>
-                <!-- Dénomination Sociale -->
-                <?php echo htmlentities($detailCompte["denomination"] ?? '');?><br>
-                <br>
-                <!-- Email -->
-                <?php echo htmlentities($detailCompte["email"] ?? '');?><br>
-            </p>
-        </article>
+    <div class="infoFacture">
+        <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
         <article>
             <h3>Numéro de facture</h3>
             <h3>{#id_facture}</h3>
             <p>{date_emission}</p>
+        </article>
+    </div>
+    <section>
+        <article class="delivre">
+            <h3>Délivré à</h3>
+            <p>
+                <!-- Dénomination Sociale -->
+                <?php echo htmlentities($detailCompte["denomination"] ?? '');?>
+                <br>
+                <!-- Adresse -->
+                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>
+                <br>
+                <!-- CP -->
+                <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>
+                <?php echo htmlentities($detailCompte["ville"] ?? '');?>
+                <br>
+                <!-- Tel -->
+                <?php echo htmlentities($detailCompte["tel"] ?? '');?>
+                <br>
+                <!-- Email -->
+                <?php echo htmlentities($detailCompte["email"] ?? '');?>
+            </p>
+        </article>
+        <article class="emetteur">
+            <h3>Emetteur</h3>
+            <p>
+                Trip en Arvor <br>
+                Rue Édouard Branly <br>
+                22300 Lannion <br>
+                Tél : 02 96 46 93 00 <br>
+                Email : tripenarvor@gmail.com
+            </p>
         </article>
     </section>
     <article class="facture-details">
@@ -133,7 +151,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         <p>Le paiement est dû dans les 15 jours</p>
         <p>
             Banque PACT<br>
-            Nom du compte: Trip en arvor<br>
+            Nom du compte: Trip en Arvor<br>
             Numéro de compte : 123-456-7890
         </p>
     </article>

@@ -33,7 +33,7 @@ try {
     $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-    print_r("ya un probleme");
+    print_r("y a un probleme");
 }
 
 
@@ -41,18 +41,15 @@ $typeCompte = getTypeCompte($id_compte);
 
 switch ($typeCompte) {
     case 'proPublique':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse 
-                        where cp.id_compte = :id_compte;";
+        $reqCompte = "SELECT * from sae.compte_professionnel_publique c
+            join sae._adresse a on c.id_adresse = a.id_adresse
+            where id_compte = :id_compte";
         break;
 
     case 'proPrive':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse
-                        join sae._compte_professionnel_prive cpp on c.id_compte = cpp.id_compte
-                        where cp.id_compte = :id_compte;";
+        $reqCompte = "SELECT * from sae.compte_professionnel_prive c
+            join sae._adresse a on c.id_adresse = a.id_adresse
+            where id_compte = :id_compte";
         break;
     
     default:
