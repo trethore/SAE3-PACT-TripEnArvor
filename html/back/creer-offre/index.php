@@ -1004,23 +1004,20 @@ try {
             }
 
 
-            let type =  document.getElementById('selectype');
+            //cacher les options si le type est standard
  
             document.getElementById('options').style.display = 'none';
             
             selectype.addEventListener('change', function(){
-                const typeChoisi = type.value;
+                const typeChoisi = selectype.value;
             
-            if(typeChoisi === "premium"){
-                document.getElementById('options').style.display = 'inline';
-            }else{
-                document.getElementById('options').style.display = 'none';
-            }
+                if(typeChoisi === "premium"){
+                    document.getElementById('options').style.display = 'inline';
+                }else{
+                    document.getElementById('options').style.display = 'none';
+                }
             });
  
- 
-
-
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
 
