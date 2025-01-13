@@ -56,10 +56,10 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <?php echo htmlentities($detailCompte["denomination"] ?? '');?>
                 <br>
                 <!-- Adresse -->
-                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>
+                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>,
                 <br>
                 <!-- CP -->
-                <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>,
+                <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>
                 <?php echo htmlentities($detailCompte["ville"] ?? '');?>
                 <br>
                 <!-- Tel -->
@@ -151,7 +151,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
         <p>Le paiement est dû dans les 15 jours</p>
         <p>
             Banque PACT<br>
-            Nom du compte: Trip en arvor<br>
+            Nom du compte: Trip en Arvor<br>
             Numéro de compte : 123-456-7890
         </p>
     </article>

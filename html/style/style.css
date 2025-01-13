@@ -2305,7 +2305,7 @@ h3 {
 
 .genFacture .infoFacture img {
     width: 100px;
-    margin: auto;
+    margin: 1em auto 1em 1em;
 }
 
 .genFacture .infoFacture article {
