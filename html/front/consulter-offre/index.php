@@ -161,6 +161,8 @@ try {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
+    addConsultedOffer($id_offre_cible);
+
 // ===== GESTION DES OFFRES ===== //
 
     // ===== Requête SQL pour récupérer les informations d'une offre ===== //
