@@ -610,6 +610,8 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
+            <p><em>Cet avis est l'opinion subjective d'un membre de la PACT et non l'avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+
             <?php $compteur = 0;
 
             foreach ($avis as $a) { ?>
@@ -699,7 +701,6 @@ try {
                         <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
                               $datePub = explode('-', $publication[0]); ?>
                         <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                        <p><em>Cet avis est l'opinion subjective d'un membre de la PACT et non l'avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
                     </div>
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
