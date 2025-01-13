@@ -4890,6 +4890,7 @@ h3 {
     .compte-front-modif main,
     .compte-front-modif {
         width: fit-content;
+        padding: 1%;
     }
 
     .compte-front-modif h1 {
@@ -4903,6 +4904,10 @@ h3 {
     .compte-front-modif td {
         font-size: 30pt;
         padding-bottom: 1.5em;
+    }
+
+    .compte-front tr>td, .compte-front-modif tr>td {
+        vertical-align: middle;
     }
 
     .compte-front-modif input {
