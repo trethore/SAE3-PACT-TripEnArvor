@@ -904,6 +904,8 @@ try {
                         }
                     }
 
+
+                    //options payantes
                     if ($optionPayante != null) {
                         $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                         $stmt_option = $dbh->prepare($requete_option);
