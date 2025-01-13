@@ -3591,6 +3591,9 @@ header>div>a:hover {
 /*************************
         BLOCS AVIS                                                   
 *************************/
+.consulter-offre-back #avis > h2 {
+    margin-bottom: 0;
+}
 
 .consulter-offre-back .fond-blocs-avis {
     background: var(--blanc);
@@ -3622,7 +3625,8 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .display-notation {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* Style réponse avis */
