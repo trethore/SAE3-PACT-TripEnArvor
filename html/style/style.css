@@ -2405,14 +2405,15 @@ h3 {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 0 10% 10px 10%;
-    margin: 20% auto 3% auto;
+    /*padding: 0 10% 10px 10%;
+    margin: 20% auto 3% auto;*/
 }
 
 .nav-content>a>div>img {
     display: block;
-    width: 100%;
+    width: 40px;
     height: auto;
+    margin: auto;
 }
 
 /*
