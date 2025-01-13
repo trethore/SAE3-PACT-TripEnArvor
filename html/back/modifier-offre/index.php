@@ -631,6 +631,13 @@ try {
                 $titre = $_POST['titre'];
             }
 
+            if (isset($_POST['presta'])) {
+                $presta = $_POST['presta'];
+            }
+            if (isset($_POST['descpresta'])) {
+                $descpresta = $_POST['descpresta'];
+            }
+
             if (isset($_POST['descriptionC'])) {
                 $resume = $_POST['descriptionC'];
             }
@@ -646,6 +653,14 @@ try {
                 $duree = $_POST['duree'];
                 $duree = intval($duree);
             }
+
+            if (!isset($_POST['date_event']) || empty($_POST['date_event'])) {
+                $date_event = null;
+            }else {
+                $date_event = $_POST['date_event'];
+                $date_event = date('Y-m-d H:i:s'); // La date de l'événement, par exemple '2024-12-19'
+            }
+
             if (isset($_POST['attractions'])) {
                 $nbattraction = $_POST['attractions'];
                 $nbattraction = intval($nbattraction);
@@ -666,6 +681,12 @@ try {
                 $type = $_POST['type'];
             }else {
                 $type = "gratuit";
+            }
+           
+            if(isset($_POST['optionPayante'])){
+                $optionP = $_POST['optionPayante'];
+            }else {
+                $optionP = null;
             }
             
 
@@ -861,7 +882,17 @@ try {
                             
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_parc   
-                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?,?,?,?,?,?,?,?,?,?,?)
+                            SET titre = ?,
+                                resume = ?, 
+                                ville =?,
+                                age_min = ?,
+                                nb_attractions = ?, 
+                                plan = ?, 
+                                id_compte_professionnel = ?, 
+                                abonnement = ?, 
+                                description_detaille = ?, 
+                                site_web = ?, 
+                                id_adresse = ?
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
@@ -879,25 +910,35 @@ try {
                                 SET titre = ?, 
                                     resume = ?, 
                                     ville = ?, 
-                                    duree = ?, 
-                                    nbattraction = ?, 
+                                    duree = ?,
+                                    capacite = ?,
                                     id_compte_professionnel = ?, 
                                     abonnement = ?, 
                                     description_detaille = ?, 
                                     site_web = ?, 
                                     id_adresse = ?
+                                    date_evenement = ?,
                                 WHERE id_offre = ?;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $nbattraction, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre, $date_evenement]);
 
                             break;
                         
                         case 'visite' :
                             $query = "UPDATE sae.offre_visite
-                            set (titre, resume, ville, duree, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            SET titre = ?, 
+                            resume = ?, 
+                            ville = ?, 
+                            duree = ?, 
+                            id_compte_professionnel = ?, 
+                            abonnement = ?, 
+                            description_detaille = ?, 
+                            site_web = ?, 
+                            id_adresse = ?
+                            date_evenement = ? 
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date, $id_offre]);
                             break;
                         
                         case 'restauration':
@@ -926,7 +967,16 @@ try {
                             
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_restauration
-                            set (titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            set (titre = ?, 
+                            resume = ?, 
+                            ville = ?, 
+                            gamme_prix = ?, 
+                            carte = ?, 
+                            id_compte_professionnel = ?, 
+                            abonnement = ?, 
+                            description_detaille = ?, 
+                            site_web = ?, 
+                            id_adresse = ?
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
@@ -952,7 +1002,7 @@ try {
 
                 }else{
 
-                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF
+                    //SWITCH CREATION REQUETE OFFRE //AJOUTER TABLE TARIF          SI LA CATEGORIE CHANGE ON SUPPRIME L4OFFRE POUR LA RECRÉÉE
                     switch ($categorie) {
                         case 'activite':
                             try{
@@ -1116,7 +1166,7 @@ try {
                             break;
                             
                             default:
-                            die("Erreur de categorie!");
+                            die("Erreur recréaction d'offre!");
                         }
                         
 
