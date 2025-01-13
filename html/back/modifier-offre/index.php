@@ -860,11 +860,11 @@ try {
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc    id_offre, nb_attractions, age_min, plan, titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement
-                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = ($titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse)
-                            where id_offre = $id_offre;";
+                            $query = "UPDATE sae.offre_parc   
+                            set (titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?,?,?,?,?,?,?,?,?,?,?)
+                            where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute();
+                            $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
@@ -876,10 +876,20 @@ try {
                         case 'spectacle':
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_spectacle
-                            set (titre, resume, ville, duree, nbattraction, id_compte_professionnel, abonnement, description_detaille, site_web, id_adresse) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            where id_offre = ?;";
-                            $stmt = $dbh->prepare($query);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $nbattraction, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+                                SET titre = ?, 
+                                    resume = ?, 
+                                    ville = ?, 
+                                    duree = ?, 
+                                    nbattraction = ?, 
+                                    id_compte_professionnel = ?, 
+                                    abonnement = ?, 
+                                    description_detaille = ?, 
+                                    site_web = ?, 
+                                    id_adresse = ?
+                                WHERE id_offre = ?;";
+                        $stmt = $dbh->prepare($query);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $nbattraction, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
+
                             break;
                         
                         case 'visite' :
