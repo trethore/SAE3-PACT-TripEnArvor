@@ -2308,10 +2308,13 @@ h3 {
     margin: auto;
 }
 
-.genFacture .infoFacture article,
-.genFacture .emetteur {
+.genFacture .infoFacture article {
     text-align: right;
     margin-bottom: 0;
+}
+
+.genFacture .emetteur {
+    text-align: right;
 }
 
 .genFacture h3 {
