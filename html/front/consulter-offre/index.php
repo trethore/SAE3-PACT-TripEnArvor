@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
 date_default_timezone_set('Europe/Paris');
 
@@ -160,6 +161,8 @@ try {
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
+
+    addConsultedOffer($id_offre_cible);
 
 // ===== GESTION DES OFFRES ===== //
 
