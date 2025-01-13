@@ -730,17 +730,12 @@ try {
                             </div>
                             <button type="submit" name="submit-reponse" value="true">Répondre</button>
                         </form>
-                        
-                        <?php if (!empty($reponse)) {
 
-                            if (isset($_POST['reponse'])) {
+                        <?php if (isset($_POST['reponse'])) {
 
-                                $reponse = htmlentities($_POST['reponse']);
-                                print_r($reponse);
+                            $reponse = htmlentities($_POST['reponse']);
+                            print_r($reponse); 
 
-                            } 
-
-                            $id_avis = $a['id_avis']; 
                             $publie_le = date('Y-m-d H:i:s');  
 
                             try {
