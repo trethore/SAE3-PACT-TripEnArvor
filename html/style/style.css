@@ -2399,7 +2399,7 @@ h3 {
     width: 100%;
     z-index: 99;
     background-color: var(--violet-principal);
-    padding: 1em;
+    padding: 12px;
 }
 
 .nav-content {
