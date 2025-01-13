@@ -56,7 +56,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
                 <?php echo htmlentities($detailCompte["denomination"] ?? '');?>
                 <br>
                 <!-- Adresse -->
-                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>,
+                <?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?>
                 <br>
                 <!-- CP -->
                 <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>
@@ -73,7 +73,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             <h3>Emetteur</h3>
             <p>
                 Trip en Arvor <br>
-                Rue Édouard Branly, <br>
+                Rue Édouard Branly <br>
                 22300 Lannion <br>
                 Tél : 02 96 46 93 00 <br>
                 Email : tripenarvor@gmail.com
