@@ -863,7 +863,7 @@ try {
                                         abonnement = ?, 
                                         description_detaille = ?, 
                                         site_web = ?, 
-                                        id_adresse = ?,
+                                        id_adresse = ?
                                     WHERE id_offre = ?;";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $duree, $age, $type, $descriptionL, $lien, $id_adresse, $id_offre]);
@@ -929,11 +929,11 @@ try {
                                     abonnement = ?, 
                                     description_detaille = ?, 
                                     site_web = ?, 
-                                    id_adresse = ?
+                                    id_adresse = ?,
                                     date_evenement = ?
                                 WHERE id_offre = ?;";
-                        $stmt = $dbh->prepare($query);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
+                            $stmt = $dbh->prepare($query);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $descriptionL, $lien, $id_adresse, $id_date_event, $id_offre]);
 
                             break;
                         
@@ -947,7 +947,7 @@ try {
                             abonnement = ?, 
                             description_detaille = ?, 
                             site_web = ?, 
-                            id_adresse = ?
+                            id_adresse = ?,
                             date_evenement = ? 
                             where id_offre = ?;";
                             $stmt = $dbh->prepare($query);
