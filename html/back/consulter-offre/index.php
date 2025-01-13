@@ -660,7 +660,7 @@ try {
 
                     <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
                     <div class="display-ligne">
-                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
+                        <p><?php echo htmlentities(html_entity_decode($a['titre'])) ?></p>
 
                         <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
 
@@ -676,7 +676,7 @@ try {
 
                         $publication = explode(' ', $dateAvis[$compteur]['date']);
                         $datePub = explode('-', $publication[0]); ?>
-                        <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
+                        <p>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -688,7 +688,7 @@ try {
 
                                 <?php if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
 
-                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
+                                    <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
 
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
 
