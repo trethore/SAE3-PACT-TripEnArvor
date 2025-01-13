@@ -899,8 +899,8 @@ try {
                         }
                     }
 
-                    if ($optionP) {
-                        # code...
+                    if ($optionPayante != null) {
+                        //insert into offre_souscrit_option(?)
                     }
                     
                     
