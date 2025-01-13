@@ -268,12 +268,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
                 </div>
             </a>
             <a href="/front/consulter-offres">
-                <div class="btOn">
+                <div class="btOff">
                     <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
                 </div>
             </a>
             <a href="/front/mon-compte">
-                <div class="btOn">
+                <div class="btOff">
                     <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
                 </div>
             </a>

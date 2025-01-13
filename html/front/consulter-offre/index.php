@@ -1097,17 +1097,17 @@ try {
     <div class="telephone-nav">
         <div class="nav-content">
             <a href="/front/accueil">
-                <div class="btOn">
+                <div class="btOff">
                     <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
                 </div>
             </a>
             <a href="/front/consulter-offres">
-                <div class="btOn">
+                <div class="btOff">
                     <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
                 </div>
             </a>
             <a href="/front/mon-compte">
-                <div class="btOn">
+                <div class="btOff">
                     <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
                 </div>
             </a>
