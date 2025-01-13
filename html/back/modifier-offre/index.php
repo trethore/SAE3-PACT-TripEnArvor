@@ -781,6 +781,8 @@ try {
 
              print($categorieBase);
              print($categorie);
+             echo "<br>";
+
              try {
 
 
@@ -844,7 +846,9 @@ try {
                         $id_date_event = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
 
                     }
-                    
+                    echo $date_evenement;
+                    echo "<br>";
+                    echo $id_date_event;
 
 
                     switch ($categorie) {
