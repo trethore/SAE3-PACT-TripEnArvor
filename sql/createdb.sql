@@ -17,7 +17,6 @@ CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dî
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
 CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
-CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
 
 CREATE TABLE _date (
@@ -27,19 +26,22 @@ CREATE TABLE _date (
 );
 
 
-CREATE TABLE _prix (
-    id_prix SERIAL,
-    prix_ht INTEGER NOT NULL,
-    CONSTRAINT _prix_pk PRIMARY KEY (id_prix)
+CREATE TABLE _abonnement (
+    nom_abonnement  VARCHAR(63),
+    CONSTRAINT _abonnement_pk
+        PRIMARY KEY (nom_abonnement)
 );
 
-CREATE TABLE _abonnement (
-    nom     VARCHAR(63),
-    id_prix INTEGER NOT NULL,
-    CONSTRAINT _abonnement_pk
-        PRIMARY KEY (nom),
-    CONSTRAINT _abonnement_fk_prix
-        FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+CREATE TABLE _historique_prix_abonnements (
+    id_prix                 SERIAL,
+    nom_abonnement          VARCHAR(63) NOT NULL,
+    prix_ht_jour_abonnement INTEGER NOT NULL,
+    date_maj                DATE NOT NULL DEFAULT NOW(),
+    CONSTRAINT _historique_prix_abonnements_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_abonnements_fk_abonnement
+        FOREIGN KEY (nom_abonnement)
+        REFERENCES _abonnement(nom_abonnement)
 );
 
 
@@ -142,8 +144,12 @@ CREATE TABLE _offre (
     id_adresse              INTEGER,
     abonnement              VARCHAR(63) NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
-    CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom)
+    CONSTRAINT _offre_fk_compte_professionnel 
+        FOREIGN KEY (id_compte_professionnel) 
+        REFERENCES _compte_professionnel(id_compte),
+    CONSTRAINT _offre_fk_abonnement 
+        FOREIGN KEY (abonnement) 
+        REFERENCES _abonnement(nom_abonnement)
 );
 
 
@@ -239,11 +245,32 @@ CREATE VIEW offre_restauration AS
 /* ============================== OPTIONS ============================== */
 
 CREATE TABLE _option (
-    nom_option  nom_option_t,
-    id_prix INTEGER NOT NULL,
-    CONSTRAINT _option_pk PRIMARY KEY (nom_option),
-    CONSTRAINT _option_fk_prix FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+    nom_option  VARCHAR(63),
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
 );
+
+CREATE TABLE _historique_prix_options (
+    id_prix                     SERIAL,
+    nom_option                  VARCHAR(63) NOT NULL,
+    prix_ht_hebdo_abonnement    INTEGER NOT NULL,
+    date_maj                    DATE NOT NULL DEFAULT NOW(),
+    CONSTRAINT _historique_prix_options_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_options_fk_option
+        FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option)
+);
+
+CREATE TABLE _date_souscription_option (
+    id_date_souscription    SERIAL,
+    date_debut              DATE NOT NULL,
+    nb_semaines             INTEGER NOT NULL DEFAULT 1,
+    CONSTRAINT _date_souscription_option_pk
+        PRIMARY KEY (id_date_souscription),
+    CONSTRAINT _date_souscription_option_1_4
+        CHECK ((nb_semaines >= 1) AND (nb_semaines <= 4))
+);
+
 
 
 /* ##################################################################### */
@@ -433,10 +460,9 @@ CREATE TABLE _offre_dates_mise_hors_ligne (
 /* ======================= OFFRE SOUSCRIT OPTION ======================= */
 
 CREATE TABLE _offre_souscrit_option (
-    id_offre    INTEGER,
-    nom_option  nom_option_t,
-    nb_semaine  INTEGER NOT NULL,
-    id_date     INTEGER NOT NULL,
+    id_offre                INTEGER,
+    nom_option              VARCHAR(63),
+    id_date_souscription    SERIAL,
     CONSTRAINT _offre_souscrit_option_pk
         PRIMARY KEY (id_offre, nom_option),
     CONSTRAINT _offre_souscrit_option_fk_offre
@@ -1344,6 +1370,38 @@ EXECUTE PROCEDURE delete_offre_restauration();
 /* ##################################################################### */
 /*                         TRIGGERS ASSOCIATIONS                         */
 /* ##################################################################### */
+
+
+CREATE FUNCTION abonnement_a_au_moins_un_prix () RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _abonnement INNER JOIN _historique_prix_abonnements ON _abonnement.nom_abonnement = _historique_prix_abonnements.nom_abonnement WHERE _abonnement.nom_abonnement = NEW.nom_abonnement;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Un _abonnement doit avoir au moins un prix';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER abonnement_a_au_mois_un_prix_tg
+AFTER INSERT ON _abonnement
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW EXECUTE PROCEDURE abonnement_a_au_moins_un_prix();
+
+
+CREATE FUNCTION option_a_au_moins_un_prix () RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM * FROM _option INNER JOIN _historique_prix_options ON _option.nom_option = _historique_prix_options.nom_option WHERE _option.nom_option = NEW.nom_option;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Une _option doit avoir au moins un prix';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE CONSTRAINT TRIGGER option_a_au_mois_un_prix_tg
+AFTER INSERT ON _option
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW EXECUTE PROCEDURE option_a_au_moins_un_prix();
 
 
 CREATE FUNCTION offre_jours_uniques() RETURNS TRIGGER AS $$
