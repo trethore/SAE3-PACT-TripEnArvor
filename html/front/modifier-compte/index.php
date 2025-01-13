@@ -33,7 +33,7 @@ $reqCompte = "SELECT * from sae.compte_membre
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/style/style.css">
     <title>Modifier mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -44,162 +44,162 @@ $reqCompte = "SELECT * from sae.compte_membre
     if (!$submitted) {
     ?>
         <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-    $stmt->execute();
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    $dbh = null;
-} catch (PDOException $e) {
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-}
-?>
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+            $stmt->execute();
+            $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+            $dbh = null;
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+        }
+        ?>
 
-<header>
-    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT Pro</a></div>
-    <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
-        <datalist id="cont">
-            <?php foreach ($offres as $offre) { ?>
-                <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
-                    <?php echo htmlspecialchars($offre['titre']); ?>
-                </option>
-            <?php } ?>
-        </datalist>
+        <header>
+            <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+            <div class="text-wrapper-17"><a href="/front/consulter-offres" class="retourAccueil">PACT Pro</a></div>
+            <div class="search-box">
+                <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+                <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+                <datalist id="cont">
+                    <?php foreach ($offres as $offre) { ?>
+                        <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                            <?php echo htmlspecialchars($offre['titre']); ?>
+                        </option>
+                    <?php } ?>
+                </datalist>
 
-    </div>
-    <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const inputSearch = document.querySelector(".input-search");
-            const datalist = document.querySelector("#cont");
-
-            // Événement sur le champ de recherche
-            inputSearch.addEventListener("input", () => {
-                // Rechercher l'option correspondante dans le datalist
-                const selectedOption = Array.from(datalist.options).find(
-                    option => option.value === inputSearch.value
-                );
-
-                if (selectedOption) {
-                    const idOffre = selectedOption.getAttribute("data-id");
-
-                    //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
-                    // Rediriger si un ID valide est trouvé
-                    if (idOffre) {
-                        window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
-                    }
-                }
-            });
-
-            // Debugging pour vérifier les options disponibles
-            const options = Array.from(datalist.options).map(option => ({
-                value: option.value,
-                id: option.getAttribute("data-id")
-            }));
-            //console.log("Options disponibles dans le datalist :", options);
-        });
-    </script>
-</header>
-    <main>
-        <?php
-        // Préparation et exécution de la requête
-        $stmt = $conn->prepare($reqCompte);
-        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-        $stmt->execute();
-        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);?>
-
-        <h1>Modification du compte</h1>
-        <form action="/front/modifier-compte/" method="POST" id="myForm">
-            <h2>Informations personnelles</h2>
-            <table>
-                <tr>
-                    <td>Pseudo</td>
-                    <td>
-                        <input type="text" name="pseudo" id="pseudo" value="<?= htmlentities($detailCompte["pseudo"] ?? '');?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nom</td>
-                    <td>
-                        <input type="text" name="nom" id="nom" value="<?= htmlentities($detailCompte["nom_compte"] ?? '');?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Prénom</td>
-                    <td>
-                        <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? '');?>"> 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Adresse mail</td>
-                    <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? '');?>" class="<?= $emailError ? 'error' : ''; ?>">
-                    <?php if ($emailError): ?>
-                        <p class="error"><?= $emailError; ?></p>
-                    <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>N° de téléphone</td>
-                    <td>
-                        <input type="tel" name="tel" id="tel" value="<?= htmlentities($detailCompte["tel"] ?? '');?>"> 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mot de passe</td>
-                    <td>
-                        <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
-                        <input type="hidden" name="ancien_mdp" value="<?= htmlentities($detailCompte['mot_de_passe']); ?>">
-                    </td>
-                </tr>
-            </table>
-            <div>
-                <a href="/front/mon-compte" id="retour">Revenir au compte</a>
-                <input type="submit" value="Valider les modifications">
             </div>
-        </form> 
-        <div id="popupOverlay" style="display: none;"></div>
-        <div id="validerModifCompte" style="display: none;">
-            <h3>Valider les modifications</h3>
-            <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
-            <div >
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Valider </button> 
+            <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+            <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const inputSearch = document.querySelector(".input-search");
+                    const datalist = document.querySelector("#cont");
+
+                    // Événement sur le champ de recherche
+                    inputSearch.addEventListener("input", () => {
+                        // Rechercher l'option correspondante dans le datalist
+                        const selectedOption = Array.from(datalist.options).find(
+                            option => option.value === inputSearch.value
+                        );
+
+                        if (selectedOption) {
+                            const idOffre = selectedOption.getAttribute("data-id");
+
+                            //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+
+                            // Rediriger si un ID valide est trouvé
+                            if (idOffre) {
+                                window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
+                            }
+                        }
+                    });
+
+                    // Debugging pour vérifier les options disponibles
+                    const options = Array.from(datalist.options).map(option => ({
+                        value: option.value,
+                        id: option.getAttribute("data-id")
+                    }));
+                    //console.log("Options disponibles dans le datalist :", options);
+                });
+            </script>
+        </header>
+        <main>
+            <?php
+            // Préparation et exécution de la requête
+            $stmt = $conn->prepare($reqCompte);
+            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+            $stmt->execute();
+            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC); ?>
+
+            <h1>Modification du compte</h1>
+            <form action="/front/modifier-compte/" method="POST" id="myForm">
+                <h2>Informations personnelles</h2>
+                <table>
+                    <tr>
+                        <td>Pseudo</td>
+                        <td>
+                            <input type="text" name="pseudo" id="pseudo" value="<?= htmlentities($detailCompte["pseudo"] ?? ''); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nom</td>
+                        <td>
+                            <input type="text" name="nom" id="nom" value="<?= htmlentities($detailCompte["nom_compte"] ?? ''); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Prénom</td>
+                        <td>
+                            <input type="text" name="prenom" id="prenom" value="<?= htmlentities($detailCompte["prenom"] ?? ''); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Adresse mail</td>
+                        <td><input type="email" name="email" id="email" value="<?= htmlentities($detailCompte["email"] ?? ''); ?>" class="<?= $emailError ? 'error' : ''; ?>">
+                            <?php if ($emailError): ?>
+                                <p class="error"><?= $emailError; ?></p>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>N° de téléphone</td>
+                        <td>
+                            <input type="tel" name="tel" id="tel" value="<?= htmlentities($detailCompte["tel"] ?? ''); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mot de passe</td>
+                        <td>
+                            <input type="password" name="mdp" id="mdp" placeholder="Saisissez un nouveau mot de passe">
+                            <input type="hidden" name="ancien_mdp" value="<?= htmlentities($detailCompte['mot_de_passe']); ?>">
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <a href="/front/mon-compte" id="retour">Revenir au compte</a>
+                    <input type="submit" value="Valider les modifications">
+                </div>
+            </form>
+            <div id="popupOverlay" style="display: none;"></div>
+            <div id="validerModifCompte" style="display: none;">
+                <h3>Valider les modifications</h3>
+                <p>Voulez-vous valider les modifications apporter à votre profil ?</p>
+                <div>
+                    <button id="boutonAnnuler"> Annuler </button>
+                    <button id="boutonValider"> Valider </button>
+                </div>
             </div>
-        </div>
-        <div id="annulerModifCompte" style="display: none;">
-            <h3>Annuler les modifications</h3>
-            <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
-            <div>
-                <button id="boutonReprendre"> Reprendre </button>
-                <button id="boutonQuitter"> Quitter </button>
+            <div id="annulerModifCompte" style="display: none;">
+                <h3>Annuler les modifications</h3>
+                <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+                <div>
+                    <button id="boutonReprendre"> Reprendre </button>
+                    <button id="boutonQuitter"> Quitter </button>
+                </div>
             </div>
-        </div>
-        <div id="popupRetourAccueil" style="display: none;">
-            <h3>Annuler les modifications</h3>
-            <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
-            <div>
-                <button id="boutonReprendreAccueil"> Reprendre </button>
-                <button id="boutonRetourAccueil"> Quitter </button>
+            <div id="popupRetourAccueil" style="display: none;">
+                <h3>Annuler les modifications</h3>
+                <p>Si vous retournez à l'accueil, vous annulez les modifications faites pour l'instant</p>
+                <div>
+                    <button id="boutonReprendreAccueil"> Reprendre </button>
+                    <button id="boutonRetourAccueil"> Quitter </button>
+                </div>
             </div>
-        </div> 
-        <div id="popupRetourCompte" style="display: none;">
-            <h3>Annuler les modifications</h3>
-            <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
-            <div>
-                <button id="boutonReprendreCompte"> Reprendre </button>
-                <button id="boutonRetourCompte"> Quitter </button>
+            <div id="popupRetourCompte" style="display: none;">
+                <h3>Annuler les modifications</h3>
+                <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
+                <div>
+                    <button id="boutonReprendreCompte"> Reprendre </button>
+                    <button id="boutonRetourCompte"> Quitter </button>
+                </div>
             </div>
-        </div> 
-    </main>
+        </main>
     <?php
     } else {
         $ok = true;
@@ -268,12 +268,20 @@ try {
         }
         redirectTo("/front/mon-compte");
     } ?>
-<script src="/scripts/popupCompteFront.js"></script>
+    <script src="/scripts/popupCompteFront.js"></script>
 
-<div class="telephone-nav">
+    <div class="telephone-nav">
         <div class="nav-content">
-            <a href="/front/accueil"><img width="400" height="400" src="/images/frontOffice/icones/accueil.png"></a>
-            <a href="/front/consulter-offres"><img width="400" height="400" src="/images/frontOffice/icones/chercher.png"></a>
+            <a href="/front/accueil">
+                <div class="btOn">
+                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
+                </div>
+            </a>
+            <a href="/front/consulter-offres">
+                <div class="btOn">
+                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
+                </div>
+            </a>
             <a href="/front/mon-compte">
                 <div class="btOn">
                     <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
