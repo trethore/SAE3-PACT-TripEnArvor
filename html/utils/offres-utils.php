@@ -814,20 +814,21 @@
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     
             // Préparation de la requête
-            $placeholders = implode(',', array_fill(0, count($_SESSION['recent_offers']), '?'));
+            $reversedOffers = array_reverse($_SESSION['recent_offers']); // Reverse the order
+            $placeholders = implode(',', array_fill(0, count($reversedOffers), '?'));
             $query = "SELECT id_offre FROM sae._offre WHERE id_offre IN ($placeholders)";
             $stmt = $dbh->prepare($query);
-            $stmt->execute($_SESSION['recent_offers']);
+            $stmt->execute($reversedOffers);
             $offers = $stmt->fetchAll();
     
-            // Sort offers to match the order in $_SESSION['recent_offers']
+            // Sort offers to match the reversed order in $reversedOffers
             $offerMap = [];
             foreach ($offers as $offer) {
                 $offerMap[$offer['id_offre']] = $offer;
             }
             $sortedOffers = array_map(function ($id) use ($offerMap) {
                 return $offerMap[$id] ?? null; // Handle cases where an ID may not exist in the database
-            }, $_SESSION['recent_offers']);
+            }, $reversedOffers);
     
             $dbh = null;
             return array_filter($sortedOffers); // Remove any null values
