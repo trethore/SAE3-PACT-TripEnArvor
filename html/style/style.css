@@ -4729,9 +4729,8 @@ input[type="tel"] {
     }
 
     .creer-compte header {
-        position: static;
-        display: grid box-sizing: border-box;
-        padding-bottom: 0;
+        display: grid ;
+        padding: 0;
     }
 
     .creer-compte form {
