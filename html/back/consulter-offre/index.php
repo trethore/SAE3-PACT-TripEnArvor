@@ -656,20 +656,25 @@ try {
 
                             <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
 
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
 
                             <?php } 
 
                             for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
 
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile">
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
 
                             <?php } ?>
 
                         </div>
                     </div>
 
-                    <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
+                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
+                    <div class="display-ligne">
+                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                              $datePass = explode('-', $passage[0]); ?>
+                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                    </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
                     <?php if ($categorie == "Restauration") { ?>
@@ -704,13 +709,6 @@ try {
 
                     <?php } ?>
 
-                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
-                    <div class="display-ligne">
-                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                            $datePass = explode('-', $passage[0]); ?>
-                        <p>Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></p>
-                    </div>
-
                     <div class="display-ligne">                        
 
                         <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
@@ -723,10 +721,9 @@ try {
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                    <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
-                        </div>
+                    <div class="display-notation display-ligne">
+                        <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                     </div>
 
                     <div class="petite-mention">
