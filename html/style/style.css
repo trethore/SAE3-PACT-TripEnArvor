@@ -5039,6 +5039,10 @@ input[type="tel"] {
         background-color: var(--blanc);
     }
 
+    .liste-front .section-offres {
+        justify-content: space-around;
+    }
+
 
 }
 
