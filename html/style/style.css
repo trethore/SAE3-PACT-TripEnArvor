@@ -5025,7 +5025,7 @@ input[type="tel"] {
 
     .liste-front .filtre-tri {
         margin: auto;
-        margin-top: 15%;
+        margin-top: 10%;
         padding: 9% 1% 1%;
         width: 80%;
         background: var(--blanc);
@@ -5043,6 +5043,31 @@ input[type="tel"] {
         justify-content: space-around;
     }
 
+    .liste-front .offre {
+        position: relative;
+        max-width: 379px;
+        min-width: 379px;
+        height: 506px;
+        left: 0;
+        top: 0;
+        background: var(--blanc);
+        border-radius: 15px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    .liste-front .en-relief-offre {
+        position: relative;
+        max-width: 379px;
+        min-width: 379px;
+        height: 506px;
+        left: 0;
+        top: 0;
+        background: var(--blanc);
+        border-radius: 15px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
 
 }
 
