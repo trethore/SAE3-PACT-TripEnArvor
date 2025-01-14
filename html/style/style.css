@@ -3946,10 +3946,6 @@ header>div>a:hover {
     height: fit-content;
 }
 
-.creer-offre input[type="url"],
-input[type="tel"] {
-    width: 65%;
-}
 
 /****Tarif****/
 
@@ -4862,7 +4858,7 @@ input[type="tel"] {
         width: 100%;
     }
 
-    .creer-offre input[type="url"],
+    .creer-offre input[type="url"], 
 input[type="tel"] {
     width: 100%;
 }
