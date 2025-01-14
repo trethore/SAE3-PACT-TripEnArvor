@@ -5143,6 +5143,16 @@ input[type="tel"] {
         width: 300px;
     }
 
+    .liste-front .offre div {
+        left: 8.28%;
+        right: 8.28%;
+    }
+
+    .liste-front .en-relief-offre div {
+        left: 8.28%;
+        right: 8.28%;
+    }
+
 
 }
 
