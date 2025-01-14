@@ -825,7 +825,7 @@ try {
                 
 
 
-
+ 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
