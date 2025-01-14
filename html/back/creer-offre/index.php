@@ -944,11 +944,26 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+            
 
             if(isIdProPublique === true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
+
+            document.getElementById('optionsPayantes').style.display = 'none';
+
+             //cacher les options si le type est standard
+
+             document.getElementById('selectype').addEventListener('change', function() {
+                const typeChoisi = this.value;
+
+                if (typeChoisi === "premium") {
+                    document.getElementById('optionsPayantes').style.display = 'inline';
+                } else {
+                    document.getElementById('optionsPayantes').style.display = 'none';
+                }
+            });
 
             let lacategorie = document.getElementById('categorie');
             let catRestauration = ["carte", "labelcarte"];
@@ -1015,19 +1030,7 @@ try {
             }
 
 
-            //cacher les options si le type est standard
- 
-            document.getElementById('optionsPayantes').style.display = 'none';
-
-            document.getElementById('selectype').addEventListener('change', function() {
-                const typeChoisi = this.value;
-
-                if (typeChoisi === "premium") {
-                    document.getElementById('optionsPayantes').style.display = 'inline';
-                } else {
-                    document.getElementById('optionsPayantes').style.display = 'none';
-                }
-            });
+           
 
 
             //pop up si pas de categorie selectionée
