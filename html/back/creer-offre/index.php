@@ -482,6 +482,7 @@ try {
             }else {
                 $optionP = null;
             }
+            print($optionP . " option ");
             
 
 
