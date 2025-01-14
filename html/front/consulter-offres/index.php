@@ -332,7 +332,12 @@ try {
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
 
-                                        <p class="date_publication_offre">Créée le <?php htmlentities($tab["date"]) ?></p>
+                                        <?php 
+                                            $publication = explode(' ', $tab["date"]);
+                                            $datePub = explode('-', $publication[0]);
+                                        ?>
+
+                                        <p class="date_publication_offre">Créée le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
