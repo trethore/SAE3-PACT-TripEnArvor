@@ -43,6 +43,9 @@ try {
     // Date
     foreach ($offres as &$offre) {
         $offre['date'] = getDatePublicationOffre($offre['id_offre']);
+        echo "<pre>";
+        print_r($offre['date']);
+        echo "</pre>";
     }
 
 } catch (PDOException $e) {
