@@ -43,6 +43,9 @@ try {
     // Date
     foreach ($offres as &$offre) {
         $offre['date'] = getDatePublicationOffre($offre['id_offre']);
+        echo "<pre>";
+        print_r($offre['date']);
+        echo "</pre>";
     }
 
 } catch (PDOException $e) {
@@ -332,7 +335,12 @@ try {
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
 
-                                        <p>Créée le <?php $tab["date"] ?></p>
+                                        <?php 
+                                            $publication = explode(' ', $tab["date"]);
+                                            $datePub = explode('-', $publication[0]);
+                                        ?>
+
+                                        <p class="date_publication_offre">Créée le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
