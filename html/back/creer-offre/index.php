@@ -922,12 +922,23 @@ try {
 
 
 
-                echo "<script>
+                echo  "  <script>
                         const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/liste-back/'
+                            window.location.href = '/back/consulter-offre/index.php?id=$id_offre'
                         }
-                </script>"; //if premium afficher a changer si il faut voir les erreurs
+                </script>; //if premium afficher a changer si il faut voir les erreurs ";
+                
+                // // REMETTRE LE BON POP UP
+                // alert('Offre créée ! Vous allez être redirigé vers la page de consultation.');
+                
+                // // Redirection automatique après un court délai
+                // setTimeout(function() {
+                //     window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
+                // }, 2000); // 2000 ms = 2 secondes" 
+
+                
+                
 
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec

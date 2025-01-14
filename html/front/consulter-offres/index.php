@@ -42,10 +42,11 @@ try {
 
     // Date
     foreach ($offres as &$offre) {
-        $offre['date'] = getDatePublicationOffre($offre['id_offre']);
-        echo "<pre>";
-        print_r($offre['date']);
-        echo "</pre>";
+        if (!getDatePublicationOffre($offre['id_offre'])) {
+            $offre['date'] = "0-0-0 0:0:0";
+        } else {
+            $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
+        }
     }
 
 } catch (PDOException $e) {
@@ -60,7 +61,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -335,12 +335,17 @@ try {
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
 
-                                        <?php 
-                                            $publication = explode(' ', $tab["date"]);
-                                            $datePub = explode('-', $publication[0]);
+                                        <?php
+                                            if ($tab['date'] == "0-0-0 0:0:0") {
+                                                $date = "date indisponible.";
+                                            } else {
+                                                $publication = explode(' ', $tab["date"]);
+                                                $datePub = explode('-', $publication[0]);
+                                                $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                                            }
                                         ?>
 
-                                        <p class="date_publication_offre">Créée le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></p>
+                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
@@ -549,7 +554,13 @@ try {
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
-                    pass
+                    offers.sort((a, b) => {
+                        const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
+                        const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
+                        return dateA < dateB;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
                 }
             };
 
