@@ -830,11 +830,17 @@ try {
                         if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
                         // Requete SQL pour modifier la table adresse
                         $query = "UPDATE sae._adresse 
-                                    set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                        where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    set num_et_nom_de_voie = ?, 
+                                    complement_adresse = ?, 
+                                    code_postal = ?, 
+                                    ville = ?, 
+                                    pays = ?
+                                    where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_compte]);
+                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         $id_adresse = $stmt->fetch()['id_adresse'];
+
+                        print("changement de adresse");
                         
                     }
                     if ($date_evenement != null) {

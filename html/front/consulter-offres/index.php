@@ -42,7 +42,7 @@ try {
 
     // Date
     foreach ($offres as &$offre) {
-        $offre['date'] = getOffre($offre['id_offre'])['date'];
+        $offre['date'] = getDatePublicationOffre($offre['id_offre']);
     }
 
 } catch (PDOException $e) {
