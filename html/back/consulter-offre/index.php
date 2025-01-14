@@ -709,7 +709,7 @@ try {
 
                     
 
-                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+                    <?php if(!empty($reponse[$compteur]['texte']) && ($reponse[$compteur]['id_membre'] == $a['id_membre'])) { ?>
 
                         <div class="reponse">
                             <div class="display-ligne">
