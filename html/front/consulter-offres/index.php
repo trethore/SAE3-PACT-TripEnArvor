@@ -557,7 +557,7 @@ try {
                     offers.sort((a, b) => {
                         const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
                         const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
-                        return dateA - dateB;
+                        return dateA < dateB;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
