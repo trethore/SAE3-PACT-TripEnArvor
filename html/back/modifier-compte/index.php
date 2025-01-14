@@ -119,7 +119,7 @@ try {
             $stmt = $conn->prepare($reqCompte);
             $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
             $stmt->execute();
-            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+            $detailCompte = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <h1>Modification du compte</h1>
         <form action="/back/modifier-compte/" method="POST" id="myForm">
