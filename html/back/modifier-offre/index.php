@@ -1045,7 +1045,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/id'
+                            window.location.href = '/back/consulter-offre/id=$offre'
                         }
                   </script>";
 
