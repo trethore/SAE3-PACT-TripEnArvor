@@ -45,7 +45,7 @@ try {
         if (!getDatePublicationOffre($offre['id_offre'])) {
             $offre['date'] = "0-0-0 0:0:0";
         } else {
-            $offre['date'] = getDatePublicationOffre($offre['id_offre'])['date'];
+            $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
         }
         echo "<pre>";
         print_r($offre['date']);
