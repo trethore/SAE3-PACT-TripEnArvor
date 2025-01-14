@@ -476,7 +476,7 @@ try {
                 $optionP = $_POST['optionPayante'];
                 if($optionP === "enRelief"){
                     $optionP = "En Relief";
-                }elseif ($optionP === "aLaUne") {
+                }else if ($optionP === "aLaUne") {
                     $optionP = "À la Une";
                 }
             }else {
