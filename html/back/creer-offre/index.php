@@ -478,6 +478,8 @@ try {
                     $optionP == "En Relief";
                 }elseif ($optionP === "aLaUne") {
                     $optionP = "À la Une";
+                }else {
+                    print("gros connard");
                 }
             }else {
                 $optionP = null;
