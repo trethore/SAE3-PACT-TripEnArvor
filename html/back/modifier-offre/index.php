@@ -825,7 +825,7 @@ try {
                 
 
 
-
+ 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
@@ -848,7 +848,7 @@ try {
                         
                             
                             //recuperation de id_adresse
-                            $id_adresse = $stmt->fetch()['id_adresse'];
+                            $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                             print("changement de adresse");
                         
