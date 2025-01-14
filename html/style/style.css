@@ -4821,6 +4821,10 @@ input[type="tel"] {
         padding-bottom: 1.5em;
     }
 
+    .compte-front main{
+        flex-direction: column-reverse;
+    }
+
 
     .creer-compte header {
         position: static;
