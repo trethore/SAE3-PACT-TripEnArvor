@@ -346,7 +346,7 @@ try {
                                             }
                                         ?>
 
-                                        <p class="date_publication_offre">Créée le <?php echo $date; ?></p>
+                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
@@ -555,7 +555,13 @@ try {
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
-                    pass
+                    offers.sort((a, b) => {
+                        const dateA = new Date(a.querySelector(".date_publication_offre span").trim());
+                        const dateB = new Date(b.querySelector(".date_publication_offre span").trim());
+                        return dateA - dateB;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
                 }
             };
 
