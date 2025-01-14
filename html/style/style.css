@@ -5020,7 +5020,7 @@ input[type="tel"] {
 
     .liste-front h1 {
         background: var(--blanc);
-        font-size: 40;
+        font-size: 40pt;
     }
 
     .liste-front .filtre-tri {
