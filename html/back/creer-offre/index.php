@@ -923,10 +923,12 @@ try {
 
 
                 echo "<script>
-                        const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
-                        if (redirect) {
-                            window.location.href = '/back/liste-back/'
-                        }
+                        
+                        alert('Offre créée ! Vous allez être redirigé vers la page de consultation.');
+                        
+                        setTimeout(function() {
+                            window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
+                        }, 2000); // 2000 ms = 2 secondes
                 </script>"; //if premium afficher a changer si il faut voir les erreurs
 
             } catch (PDOException $e) {
