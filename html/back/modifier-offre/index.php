@@ -848,7 +848,7 @@ try {
                         
                             
                             //recuperation de id_adresse
-                            $id_adresse = $stmt->fetch()['id_adresse'];
+                            $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                             print("changement de adresse");
                         
