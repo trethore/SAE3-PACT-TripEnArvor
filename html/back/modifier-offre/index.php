@@ -739,6 +739,8 @@ try {
             }else {
                 $num_et_nom_de_voie =null;
             }
+            $comp_adresse = null; //null car pas implementé dans le form
+
             if(isset($_POST['cp'])){
                 $cp = $_POST['cp'];
             }else {
