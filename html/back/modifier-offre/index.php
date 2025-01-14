@@ -833,7 +833,7 @@ try {
                         if ($adresse['id_adresse'] == null) {
                             $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
-                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         }else {
                             $requete_adresse = "UPDATE sae._adresse 
                                         set num_et_nom_de_voie = ?, 
@@ -843,7 +843,7 @@ try {
                                         pays = ?
                                         where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
-                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         }
                         
                             
