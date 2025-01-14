@@ -5014,6 +5014,30 @@ input[type="tel"] {
         font-size: 28pt;
     }
 
+    /****************************************************
+                       Consulter offres
+    *****************************************************/
+
+    .liste-front h1 {
+        background: var(--blanc);
+        font-size: 40;
+    }
+
+    .liste-front .filtre-tri {
+        margin: auto;
+        margin-top: 15%;
+        padding: 9% 1% 1%;
+        width: 80%;
+        background: var(--blanc);
+    }
+
+    .liste-front .filtre-tri>h2:hover {
+        background-color: var(--blanc);
+    }
+
+    .liste-front .filtre-tri h2+div {
+        background-color: var(--blanc);
+    }
 
 
 }
