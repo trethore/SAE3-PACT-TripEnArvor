@@ -22,13 +22,13 @@ $typeCompte = getTypeCompte($id_compte);
 
 switch ($typeCompte) {
     case 'proPublique':
-        $reqCompte = "SELECT * from sae._compte_professionnel_publique cp 
+        $reqCompte = "SELECT * from sae.compte_professionnel_publique cp 
                         join sae._adresse a on cp.id_adresse = a.id_adresse 
                         where cp.id_compte = :id_compte;";
         break;
 
     case 'proPrive':
-        $reqCompte = "SELECT * from sae._compte_professionnel_prive cp 
+        $reqCompte = "SELECT * from sae.compte_professionnel_prive cp 
                         join sae._adresse a on cp.id_adresse = a.id_adresse
                         where cp.id_compte = :id_compte;";
         break;
@@ -119,7 +119,7 @@ try {
             $stmt = $conn->prepare($reqCompte);
             $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
             $stmt->execute();
-            $detailCompte = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
         <h1>Modification du compte</h1>
         <form action="/back/modifier-compte/" method="POST" id="myForm">
