@@ -219,7 +219,7 @@ try {
                      <div id="options">
                         <td><label>Options</label></td>
                         <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
-                        <input type="radio" id="aLaUne" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                        <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne"/><label for="aLaUne">A la une</label></td>
                     </div>
                 </tr>
             </table>
