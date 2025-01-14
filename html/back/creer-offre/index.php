@@ -1018,13 +1018,13 @@ try {
             //cacher les options si le type est standard
  
             document.getElementById('optionsPayantes').style.display = 'none';
-            
-            selectype.addEventListener('change', function(){
-                const typeChoisi = selectype.value;
-            
-                if(typeChoisi === "premium"){
+
+            document.getElementById('selectype').addEventListener('change', function() {
+                const typeChoisi = this.value;
+
+                if (typeChoisi === "premium") {
                     document.getElementById('optionsPayantes').style.display = 'inline';
-                }else{
+                } else {
                     document.getElementById('optionsPayantes').style.display = 'none';
                 }
             });
