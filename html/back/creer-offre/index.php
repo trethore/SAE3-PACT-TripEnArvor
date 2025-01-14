@@ -216,7 +216,7 @@ try {
                     </td>
                 </tr>
                 <tr>
-                     <div id="options">
+                     <div id="optionsPayantes">
                         <td><label>Options</label></td>
                         <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
                         <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne"/><label for="aLaUne">A la une</label></td>
@@ -482,7 +482,6 @@ try {
             }else {
                 $optionP = null;
             }
-            print($optionP . " option ");
             
 
 
@@ -900,8 +899,6 @@ try {
                             // Exécution de la requête pour insérer dans la vue tarif
                             $stmt_tarif->execute([$key, $value, $id_offre]);
                             echo "<br>";
-                            print($key);
-                            print($value);
                         }
                     }
 
@@ -1020,15 +1017,15 @@ try {
 
             //cacher les options si le type est standard
  
-            document.getElementById('options').style.display = 'none';
+            document.getElementById('optionsPayantes').style.display = 'none';
             
             selectype.addEventListener('change', function(){
                 const typeChoisi = selectype.value;
             
                 if(typeChoisi === "premium"){
-                    document.getElementById('options').style.display = 'inline';
+                    document.getElementById('optionsPayantes').style.display = 'inline';
                 }else{
-                    document.getElementById('options').style.display = 'none';
+                    document.getElementById('optionsPayantes').style.display = 'none';
                 }
             });
 
