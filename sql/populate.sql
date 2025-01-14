@@ -3,13 +3,17 @@ SET SCHEMA 'sae';
 
 START TRANSACTION;
 
-INSERT INTO sae._prix (prix_ht) VALUES
-(0), (167), (334), (1668), (834);
+INSERT INTO sae._abonnement (nom_abonnement) VALUES
+('gratuit'),
+('standard'),
+('premium');
 
-INSERT INTO sae._abonnement (nom, id_prix) VALUES
-('gratuit', 1),
-('standard', 2),
-('premium', 3);
+INSERT INTO _historique_prix_abonnements (nom_abonnement, prix_ht_jour_abonnement) 
+VALUES
+('gratuit', 0),
+('standard', 167),
+('premium', 334);
+
 
 INSERT INTO sae._date(date)
 VALUES 
@@ -399,18 +403,35 @@ VALUES
 (4, 6, 'Nous sommes désolé du désagrément causé.', 10);
 
 -- 'En Relief', 'À la Une'
-INSERT INTO sae._option(nom_option, id_prix)
+INSERT INTO sae._option(nom_option)
 VALUES
-('En Relief', 5), 
-('À la Une', 4);
-INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, nb_semaine, id_date)
+('En Relief'), 
+('À la Une');
+
+INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_abonnement)
 VALUES
-(2, 'En Relief', 0, 5),
-(4, 'En Relief', 0, 6),
-(6, 'En Relief', 0, 7),
-(5, 'À la Une', 0, 8),
-(7, 'À la Une', 0, 9),
-(8, 'À la Une', 0, 10);
+('En Relief', 834), 
+('À la Une', 1668);
+
+INSERT INTO sae._date_souscription_option(date_debut, nb_semaines)
+VALUES
+('2024-11-28', 4),
+('2024-11-28', 3),
+('2024-11-28', 2),
+('2024-11-28', 1),
+('2024-11-29', 2),
+('2024-11-29', 3);
+
+INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription)
+VALUES
+(2, 'En Relief', 1),
+(4, 'En Relief', 2),
+(6, 'En Relief', 3),
+(5, 'À la Une', 4),
+(7, 'À la Une', 5),
+(8, 'À la Une', 6);
+
+
 COMMIT;
 
 -- ROLLBACK;

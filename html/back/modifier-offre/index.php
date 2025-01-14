@@ -374,13 +374,14 @@ try {
 
 
                     <tr>
-                        <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                        <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" value="<?php if (isset($adresse['num_et_nom_de_voie'])) {
+                        <td><label id="labeladresse" for="num_et_nom_de_voie">Adresse</label></td>
+                        <td colspan="3"><input type="text" id="num_et_nom_de_voie" name="num_et_nom_de_voie" placeholder="(ex : 1 rue Montparnasse)" value="<?php if (isset($adresse['num_et_nom_de_voie'])) {
                         
                             echo htmlentities($adresse['num_et_nom_de_voie']);
                             if (isset($adresse['complement_adresse'] )){
                                 echo htmlentities($adresse['complement_adresse']);
                             }; } ?>"/></td>
+                            
                     </tr>
                     <tr>
                         <td><label for="cp" id="labelcp">Code Postal </label></td>
@@ -733,10 +734,10 @@ try {
             }
             
 
-            if(isset($_POST['adresse'])){
-                $adresse = $_POST['adresse'];
+            if(isset($_POST['num_et_nom_de_voie'])){
+                $num_et_nom_de_voie = $_POST['num_et_nom_de_voie'];
             }else {
-                $adresse =null;
+                $num_et_nom_de_voie =null;
             }
             if(isset($_POST['cp'])){
                 $cp = $_POST['cp'];
@@ -759,7 +760,6 @@ try {
                 $tel = null;
             }
             $pays = "France";
-            $id_adresse =null;
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
             }
@@ -826,15 +826,29 @@ try {
 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
-                    if ((isset($_POST['cp']))&&(isset($_POST['adresse']))) {
-                        if(empty($adresse['complement_adresse'])){$comp_adresse = null;}else{$comp_adresse = $adresse['complement_adresse'];}
-                        // Requete SQL pour modifier la table adresse
-                        $query = "UPDATE sae._adresse 
-                                    set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                        where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
-                        $stmt = $dbh->prepare($query);
-                        $stmt->execute([$adresse, $comp_adresse, $cp, $ville, $pays, $id_compte]);
-                        $id_adresse = $stmt->fetch()['id_adresse'];
+                    if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
+                        //s'il n'y avait pas d'adresse a la base, on créer une nouvelle id_adresse
+                        if ($adresse['id_adresse'] == null) {
+                            $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
+                            $stmt_adresse = $dbh->prepare($requete_adresse);
+                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                        }else {
+                            $requete_adresse = "UPDATE sae._adresse 
+                                        set num_et_nom_de_voie = ?, 
+                                        complement_adresse = ?, 
+                                        code_postal = ?, 
+                                        ville = ?, 
+                                        pays = ?
+                                        where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
+                            $stmt_adresse = $dbh->prepare($requete_adresse);
+                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                        }
+                        
+                            
+                            //recuperation de id_adresse
+                            $id_adresse = $stmt->fetch()['id_adresse'];
+
+                            print("changement de adresse");
                         
                     }
                     if ($date_evenement != null) {
@@ -1031,7 +1045,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/id'
+                            window.location.href = '/back/consulter-offre/id=$offre'
                         }
                   </script>";
 

@@ -216,10 +216,10 @@ try {
                     </td>
                 </tr>
                 <tr>
-                     <div id="options">
+                     <div id="optionsPayantes">
                         <td><label>Options</label></td>
                         <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
-                        <input type="radio" id="aLaUne" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                        <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne"/><label for="aLaUne">A la une</label></td>
                     </div>
                 </tr>
             </table>
@@ -475,8 +475,8 @@ try {
             if(isset($_POST['optionPayante'])){
                 $optionP = $_POST['optionPayante'];
                 if($optionP === "enRelief"){
-                    $optionP == "En Relief";
-                }elseif ($optionP === "aLaUne") {
+                    $optionP = "En Relief";
+                }else if ($optionP === "aLaUne") {
                     $optionP = "À la Une";
                 }
             }else {
@@ -899,8 +899,6 @@ try {
                             // Exécution de la requête pour insérer dans la vue tarif
                             $stmt_tarif->execute([$key, $value, $id_offre]);
                             echo "<br>";
-                            print($key);
-                            print($value);
                         }
                     }
 
@@ -925,10 +923,12 @@ try {
 
 
                 echo "<script>
-                        const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
-                        if (redirect) {
-                            window.location.href = '/back/liste-back/'
-                        }
+                        
+                        alert('Offre créée ! Vous allez être redirigé vers la page de consultation.');
+                        
+                        setTimeout(function() {
+                            window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
+                        }, 2000); // 2000 ms = 2 secondes
                 </script>"; //if premium afficher a changer si il faut voir les erreurs
 
             } catch (PDOException $e) {
@@ -946,11 +946,26 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+            
 
             if(isIdProPublique === true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
             }
+
+            document.getElementById('optionsPayantes').style.display = 'none';
+
+             //cacher les options si le type est standard
+
+             document.getElementById('selectype').addEventListener('change', function() {
+                const typeChoisi = this.value;
+
+                if (typeChoisi === "premium") {
+                    document.getElementById('optionsPayantes').style.display = 'inline';
+                } else {
+                    document.getElementById('optionsPayantes').style.display = 'none';
+                }
+            });
 
             let lacategorie = document.getElementById('categorie');
             let catRestauration = ["carte", "labelcarte"];
@@ -1017,19 +1032,7 @@ try {
             }
 
 
-            //cacher les options si le type est standard
- 
-            document.getElementById('options').style.display = 'none';
-            
-            selectype.addEventListener('change', function(){
-                const typeChoisi = selectype.value;
-            
-                if(typeChoisi === "premium"){
-                    document.getElementById('options').style.display = 'inline';
-                }else{
-                    document.getElementById('options').style.display = 'none';
-                }
-            });
+           
 
 
             //pop up si pas de categorie selectionée
