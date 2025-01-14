@@ -4821,11 +4821,6 @@ input[type="tel"] {
         padding-bottom: 1.5em;
     }
 
-    .compte-front main{
-        flex-direction: column-reverse;
-    }
-
-
     .creer-compte header {
         position: static;
         display: grid;
@@ -4870,6 +4865,19 @@ input[type="tel"] {
     .creer-offre input[type="url"],
 input[type="tel"] {
     width: 100%;
+}
+
+.compte-front {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.compte-front main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    margin: 0;
 }
     /********************
             NAV
