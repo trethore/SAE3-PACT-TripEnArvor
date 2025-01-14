@@ -5044,29 +5044,27 @@ input[type="tel"] {
     }
 
     .liste-front .offre {
-        position: relative;
-        max-width: 379px;
-        min-width: 379px;
-        height: 506px;
         left: 0;
         top: 0;
         background: var(--blanc);
-        border-radius: 15px;
         margin-right: 0;
         margin-bottom: 0;
     }
 
+    .liste-front .offre div {
+        background: var(--blanc);
+    }
+
     .liste-front .en-relief-offre {
-        position: relative;
-        max-width: 379px;
-        min-width: 379px;
-        height: 506px;
         left: 0;
         top: 0;
         background: var(--blanc);
-        border-radius: 15px;
         margin-right: 0;
         margin-bottom: 0;
+    }
+
+    .liste-front .en-relief-offre div {
+        background: var(--blanc);
     }
 
 }
