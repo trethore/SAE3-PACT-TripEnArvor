@@ -646,7 +646,7 @@ try {
                     <div class="display-ligne">
                         <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                               $datePass = explode('-', $passage[0]); ?>
-                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -690,7 +690,7 @@ try {
 
                         <?php } ?>
 
-                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
@@ -714,7 +714,6 @@ try {
                         if (isset($_POST['reponse-' . $membre[$compteur]['id_membre']])) {
 
                             $reponse = htmlentities($_POST['reponse-' . $membre[$compteur]['id_membre']]);
-                            print_r($reponse); 
 
                             $publie_le = date('Y-m-d H:i:s');  
 
@@ -760,7 +759,7 @@ try {
                                 <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
-                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
 
                             <div class="display-ligne marge-reponse petite-mention">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
