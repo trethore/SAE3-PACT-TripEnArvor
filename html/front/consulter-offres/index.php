@@ -61,7 +61,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -556,8 +555,8 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        const dateA = new Date(a.querySelector(".date_publication_offre span").trim());
-                        const dateB = new Date(b.querySelector(".date_publication_offre span").trim());
+                        const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
+                        const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
                         return dateA - dateB;
                     });
 
