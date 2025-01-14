@@ -5127,6 +5127,22 @@ input[type="tel"] {
         margin-top: 130px;
     }
 
+    .liste-front .offre .sous-offre {
+        width: 322px;
+    }
+
+    .liste-front .image-offre {
+        width: 300px;
+    }
+
+    .liste-front .en-relief-offre .sous-offre {
+        width: 322px;
+    }
+
+    .liste-front .en-relief-offre .image-offre {
+        width: 300px;
+    }
+
 
 }
 
