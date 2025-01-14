@@ -2636,11 +2636,6 @@ h3 {
 /****Tarif****/
 
 
-
-/* #options{
-    display: none;
-  } */
-
 /***Boutons***/
 .modifier-offre input::file-selector-button {
     border: 0;
