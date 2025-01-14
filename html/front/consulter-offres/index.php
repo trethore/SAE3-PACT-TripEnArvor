@@ -42,7 +42,11 @@ try {
 
     // Date
     foreach ($offres as &$offre) {
-        $offre['date'] = getDatePublicationOffre($offre['id_offre']);
+        if (!getDatePublicationOffre($offre['id_offre'])) {
+            $offre['date'] = "0-0-0 0:0:0";
+        } else {
+            $offre['date'] = getDatePublicationOffre($offre['id_offre'])['date'];
+        }
         echo "<pre>";
         print_r($offre['date']);
         echo "</pre>";
