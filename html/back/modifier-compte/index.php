@@ -354,7 +354,7 @@ try {
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
@@ -383,7 +383,7 @@ try {
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
