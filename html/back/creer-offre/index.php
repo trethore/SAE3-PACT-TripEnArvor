@@ -463,12 +463,9 @@ try {
             }
             if (isset($_POST['letype'])&&($isIdProPrivee)) {
                 $abonnement = $_POST['letype'];
-                print("rrentre dans le if");
             }else {
                 $abonnement = "gratuit";
-                print("rentre dans le else");
             }
-            print("abonement : ". $abonnement);
 
             if (isset($_POST['presta'])) {
                 $presta = $_POST['presta'];
