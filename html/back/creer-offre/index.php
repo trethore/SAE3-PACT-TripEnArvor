@@ -466,6 +466,8 @@ try {
             }else {
                 $abonnement = "gratuit";
             }
+            print("abonement : ". $abonnement);
+
             if (isset($_POST['presta'])) {
                 $presta = $_POST['presta'];
             }
