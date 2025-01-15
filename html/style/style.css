@@ -3692,12 +3692,7 @@ header>div>a:hover {
 ***************************************************************************************/
 
 .creer-offre #labeldispo,
-.creer-offre #dispo,
-.creer-offre #labeladresse,
-.creer-offre #adresse,
-.creer-offre #cp,
-.creer-offre div[id="options"],
-.creer-offre #labelcp {
+.creer-offre #dispo{
     display: none;
 }
 
