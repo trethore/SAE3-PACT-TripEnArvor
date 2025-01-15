@@ -3761,10 +3761,6 @@ header>div>a:hover {
     justify-content: flex-end;
 }
 
-.consulter-offre-back #reponse > button:hover {
-    background: var(--orange-secondaire);
-}
-
 /* Petite mention*/
 
 .consulter-offre-back .petite-mention > p{
