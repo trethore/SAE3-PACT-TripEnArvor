@@ -55,7 +55,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
         <article>
             <h3>Numéro de facture</h3>
-            <h3>{#id_facture}</h3>
+            <h3><?php echo htmlentities($_GET["numero_facture"]); ?></h3>
             <p>{date_emission}</p>
         </article>
     </div>
