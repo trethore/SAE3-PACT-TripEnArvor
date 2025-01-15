@@ -14,6 +14,11 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+$TVA = 20; // TVA en %
+
+// Obtenir la date d'aujourd'hui
+$today = new DateTime();
+
 startSession();
 $id_compte = $_SESSION["id"]; 
 if (isset($id_compte)) {
@@ -110,10 +115,24 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
                     <tr>
                         <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
                         <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                        <td>2</td>
-                        <td>20%</td>
+                        <td>
+                        <?php 
+                        // Convertir la date de la base de données en objet DateTime
+                        $dateFromDbObj = new DateTime($factAbo["date"]);
+
+                        // Calculer la différence entre les deux dates
+                        $interval = $dateFromDbObj->diff($today);
+
+                        // Obtenir la différence en jours
+                        $daysDifference = $interval->days;
+
+                        // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
+                        $weeksDifference = floor($daysDifference / 7);
+                        ?>
+                        </td>
+                        <td><?php echo htmlentities($TVA) ?>%</td>
                         <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
-                        <td>22.30€</td>
+                        <td><?php echo htmlentities(($factAbo["prix_ht_jour_abonnement"]*$factAbo["nbSemaine"])*(1+$TVA/100)) ?></td>
                     </tr>
                 <?php }} ?>
             </tbody>
