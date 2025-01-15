@@ -957,7 +957,7 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
-            console.log($isIdProPublique);
+            console.log(isIdProPrivee);
             
 
             if(isIdProPublique === true){
