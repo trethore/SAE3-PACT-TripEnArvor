@@ -43,9 +43,6 @@ try {
         } else {
             $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
         }
-        echo "<pre>";
-        print_r("c'est bon!");
-        echo "</pre>";
     }
 
 } catch (PDOException $e) {
@@ -333,6 +330,18 @@ try {
                                             ?>
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
+
+                                        <?php
+                                            if ($tab['date'] == "0-0-0 0:0:0") {
+                                                $date = "date indisponible.";
+                                            } else {
+                                                $publication = explode(' ', $tab["date"]);
+                                                $datePub = explode('-', $publication[0]);
+                                                $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                                            }
+                                        ?>
+
+                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
