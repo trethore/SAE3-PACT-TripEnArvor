@@ -270,7 +270,6 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="/scripts/carousel.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -1014,7 +1013,7 @@ foreach ($images as $image) {
     </footer>
 
     <script>
-
+        /*
         let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
     
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1070,7 +1069,7 @@ foreach ($images as $image) {
         function updateCarousel() {
         const width = images.clientWidth;
         images.style.transform = `translateX(-${currentIndex * width}px)`;
-        }
+        } */
 
         function togglePouce(index, type, id) {
             console.log("index : " + index + ", type : " + type + "id :" + id);
