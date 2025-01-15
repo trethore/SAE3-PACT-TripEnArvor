@@ -739,6 +739,8 @@ try {
             }else {
                 $num_et_nom_de_voie =null;
             }
+            $comp_adresse = null; //null car pas implementé dans le form
+
             if(isset($_POST['cp'])){
                 $cp = $_POST['cp'];
             }else {
@@ -823,15 +825,16 @@ try {
                 
 
 
-
+ 
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
+                    
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
                         //s'il n'y avait pas d'adresse a la base, on créer une nouvelle id_adresse
                         if ($adresse['id_adresse'] == null) {
                             $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
-                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         }else {
                             $requete_adresse = "UPDATE sae._adresse 
                                         set num_et_nom_de_voie = ?, 
@@ -841,12 +844,12 @@ try {
                                         pays = ?
                                         where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
-                            $stmt_adresse->execute([$num_voie_et_nom_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                         }
                         
                             
                             //recuperation de id_adresse
-                            $id_adresse = $stmt->fetch()['id_adresse'];
+                            $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                             print("changement de adresse");
                         

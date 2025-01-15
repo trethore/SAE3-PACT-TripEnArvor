@@ -7,7 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
-$id_offre_cible = intval($_GET['id']);
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -20,6 +19,7 @@ try {
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
+
 
 date_default_timezone_set('Europe/Paris');
 
@@ -618,8 +618,6 @@ try {
 
             foreach ($avis as $a) { ?>
 
-                <?php global $a; ?>
-
                 <div class="fond-blocs-avis">
                     <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                     <div class="display-ligne">
@@ -646,7 +644,7 @@ try {
                     <div class="display-ligne">
                         <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                               $datePass = explode('-', $passage[0]); ?>
-                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -690,7 +688,7 @@ try {
 
                         <?php } ?>
 
-                        <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
@@ -709,11 +707,38 @@ try {
 
                     
 
-                    <?php if(empty($reponse[$compteur]['texte'])) { 
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
 
-                        if (isset($_POST['reponse-' . $membre[$compteur]['id_membre']])) {
+                        <div class="reponse">
+                            <div class="display-ligne">
+                                <img src="/images/universel/icones/reponse-orange.png">
+                                <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
+                            </div>
 
-                            $reponse = htmlentities($_POST['reponse-' . $membre[$compteur]['id_membre']]);
+                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
+
+                            <div class="display-ligne marge-reponse petite-mention">
+                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                      $dateRep = explode('-', $rep[0]); 
+                                      $heureRep = explode(':', $rep[1]); ?>
+                                <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
+                            </div>
+                        </div>
+
+                    <?php } else { ?>
+
+                        <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data">
+                            <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
+                            <div class="display-ligne">
+                                <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                            </div>
+                            <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                        </form>
+
+                        <?php if (isset($_POST['reponse'])) {
+
+                            $reponse = htmlentities($_POST['reponse']);
+                            print_r($reponse); 
 
                             $publie_le = date('Y-m-d H:i:s');  
 
@@ -769,7 +794,7 @@ try {
                             </div>
                         </div>
 
-                    <?php } ?> 
+                    } ?> 
 
                 </div>  
             <?php $compteur++; 
