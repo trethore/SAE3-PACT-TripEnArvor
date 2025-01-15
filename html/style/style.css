@@ -4698,6 +4698,13 @@ input[type="tel"] {
     padding: 0;
 }
 
+.accueil footer a {
+    display: contents;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
 
 
 /**************************************************************************************
