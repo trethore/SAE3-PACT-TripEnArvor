@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 startSession();
 
 date_default_timezone_set('Europe/Paris');
+$id_offre_cible = intval($_GET['id']);
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
