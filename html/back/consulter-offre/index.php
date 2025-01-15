@@ -903,6 +903,10 @@ try {
         images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
 
+        // Soumettre automatiquement le formulaire dès le chargement de la page
+        window.onload = function() {
+            document.getElementById("reponse").submit();
+        };
     </script>
 
 </body>
