@@ -57,7 +57,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -554,6 +553,7 @@ try {
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
                         let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        console.log(dateA);
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -565,10 +565,11 @@ try {
                             dateA = dateObject.getTime();
                         }
                         let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
-                        if (dateA == "date indisponible.") {
-                            dateA = "0";
+                        console.log(dateB);
+                        if (dateB == "date indisponible.") {
+                            dateB = "0";
                         } else {
-                            const [datePart, timePart] = dateA.split(" ");
+                            const [datePart, timePart] = dateB.split(" ");
                             const [day, month, year] = datePart.split("-").map(Number);
                             const [hours, minutes, seconds] = timePart.split(":").map(Number);
 
