@@ -3488,7 +3488,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .display-ligne>p {
-    margin: 0 10px;
+    margin: 0 0;
 }
 
 /**********************************
@@ -3691,6 +3691,7 @@ header>div>a:hover {
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
+    margin: 5px 0;
 }
 
 .consulter-offre-back .fond-blocs-avis>p {
@@ -3752,22 +3753,23 @@ header>div>a:hover {
     color: var(--blanc);
     text-decoration: none;
     font-size: 24px;
-    background-color: var(--violet-principal);
-    padding: 10px 20px;
+    background-color: var(--orange-principale);
+    padding: 5px 15px;
     border-radius: 15px;
-    text-align: center;
     border: 0;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .consulter-offre-back .reponse > button:hover {
-    background: var(--violet-secondaire);
+    background: var(--orange-secondaire);
 }
 
 /* Petite mention*/
 
 .consulter-offre-back .petite-mention > p{
     font-size: 14px;
-    margin: 5px 0 5px 10px;
+    margin: 5px 0 5px 0;
 }
 
 /*************************
