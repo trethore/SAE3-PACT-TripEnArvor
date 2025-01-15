@@ -345,7 +345,7 @@ try {
                                             }
                                         ?>
 
-                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
+                                        <p class="date_publication_offre">Créée le <div><?php echo $date; ?></div></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
@@ -361,7 +361,6 @@ try {
                 }
             ?>
         </section>
-        <iframe id="sofa-player-embed-889259" src="https://widgets.sofascore.com/fr/embed/player/889259?widgetTheme=light" style=height:830px!important;max-width:730px!important;width:100%!important; frameborder="0" scrolling="no"></iframe>        
     </main>
 
     <footer>
@@ -556,9 +555,15 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
-                        const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
-                        return dateA < dateB;
+                        const dateA = new Date(a.querySelector(".date_publication_offre div").textContent.trim());
+                        if (dateA == "date indisponible.") {
+                            dateA = "0-0-0 0:0:0";
+                        }
+                        const dateB = new Date(b.querySelector(".date_publication_offre div").textContent.trim());
+                        if (dateA == "date indisponible.") {
+                            dateA = "0-0-0 0:0:0";
+                        }
+                        return dateB - dateA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
