@@ -119,7 +119,6 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?></p></a>
                     </li>
                 <?php
                 }
