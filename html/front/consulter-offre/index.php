@@ -989,28 +989,51 @@ foreach ($images as $image) {
         const nbPouceHaut = document.getElementById('nbPouceHaut');
         const nbPouceBas = document.getElementById('nbPouceBas');
 
-        // Fonction pour incrémenter/décrémenter le nombre de pouces
+        // Variable pour garder la trace de l'état
+        let etatPouce = null; // null = aucun clic, "haut" = pouce haut, "bas" = pouce bas
+
+        // Gestionnaire pour le pouce haut
         pouceHaut.addEventListener('click', () => {
             let currentHaut = parseInt(nbPouceHaut.textContent);
             let currentBas = parseInt(nbPouceBas.textContent);
 
-            // Incrémenter les pouces haut et désactiver les pouces bas (si besoin)
-            nbPouceHaut.textContent = currentHaut + 1;
-            if (currentBas > 0) {
-                nbPouceBas.textContent = currentBas - 1;
+            if (etatPouce === "haut") {
+                // Si déjà cliqué, on annule l'action
+                nbPouceHaut.textContent = currentHaut - 1;
+                etatPouce = null;
+            } else {
+                // Incrémenter le pouce haut
+                nbPouceHaut.textContent = currentHaut + 1;
+
+                // Si le pouce bas est actif, on le désactive
+                if (etatPouce === "bas") {
+                    nbPouceBas.textContent = currentBas - 1;
+                }
+                etatPouce = "haut";
             }
         });
 
+        // Gestionnaire pour le pouce bas
         pouceBas.addEventListener('click', () => {
             let currentHaut = parseInt(nbPouceHaut.textContent);
             let currentBas = parseInt(nbPouceBas.textContent);
 
-            // Incrémenter les pouces bas et désactiver les pouces haut (si besoin)
-            nbPouceBas.textContent = currentBas + 1;
-            if (currentHaut > 0) {
-                nbPouceHaut.textContent = currentHaut - 1;
+            if (etatPouce === "bas") {
+                // Si déjà cliqué, on annule l'action
+                nbPouceBas.textContent = currentBas - 1;
+                etatPouce = null;
+            } else {
+                // Incrémenter le pouce bas
+                nbPouceBas.textContent = currentBas + 1;
+
+                // Si le pouce haut est actif, on le désactive
+                if (etatPouce === "haut") {
+                    nbPouceHaut.textContent = currentHaut - 1;
+                }
+                etatPouce = "bas";
             }
         });
+        
 
     </script>
     <div class="telephone-nav">
