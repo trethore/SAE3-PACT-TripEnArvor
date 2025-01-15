@@ -233,7 +233,7 @@ try {
                     </div>
 
                     <!-- Contient avis -->
-                    <div class="contient_avis">
+                    <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
                             <label><input type="checkbox" name="oui_avis"> Oui</label>
