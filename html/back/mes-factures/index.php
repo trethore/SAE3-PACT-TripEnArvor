@@ -113,11 +113,14 @@ try {
             ?>
             <h1>Mes factures</h1>
             <ul>
+                <li>
+                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Facture N°1 de janvier</p></a>
+                </li>
                 <?php
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/" target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?> - Abonnement de "<?php echo $facture["titre"] ?>"</p></a>
+
                     </li>
                 <?php
                 }

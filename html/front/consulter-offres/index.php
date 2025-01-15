@@ -334,7 +334,7 @@ try {
                     }
                 }
             ?>
-        </section>        
+
     </main>
 
     <footer>
@@ -527,6 +527,36 @@ try {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
+
+                } if (selectedValue === "create-desc") {
+                    offers.sort((a, b) => {
+                        const dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateA = dateObject.getTime();
+                        }
+                        const dateB = b.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateB = dateObject.getTime();
+                        }
+                        return dateB - dateA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+
                 }
             };
 
