@@ -509,12 +509,13 @@ try {
 
                 // Filtre par offre contient avis
                 const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                console.log(avisInput);
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
-                    console.log(contientAvis);
+                    console.log("contientAvis : ", contientAvis);
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
-                        console.log(offerContientAvis);
+                        console.log("offerContientAvis : ", offerContientAvis);
                         return offerContientAvis === contientAvis;
                     });
                 }
@@ -553,27 +554,21 @@ try {
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
                         let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
-                        console.log(dateA);
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
-                            const [datePart, timePart] = dateA.split(" ");
-                            const [day, month, year] = datePart.split("-").map(Number);
-                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+                            const [day, month, year] = dateA.split("/").map(Number);
 
-                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
                         let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
-                        console.log(dateB);
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {
-                            const [datePart, timePart] = dateB.split(" ");
-                            const [day, month, year] = datePart.split("-").map(Number);
-                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+                            const [day, month, year] = dateB.split("/").map(Number);
 
-                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            const dateObject = new Date(year, month - 1, day);
                             dateB = dateObject.getTime();
                         }
                         return dateB - dateA;

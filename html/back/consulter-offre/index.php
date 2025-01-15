@@ -8,6 +8,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 
+date_default_timezone_set('Europe/Paris');
+$id_offre_cible = intval($_GET['id']);
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -20,8 +23,60 @@ try {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
 
+// ===== GESTION DU FORMULAIRE DE MISE EN LIGNE / HORS LIGNE ===== //
 
-date_default_timezone_set('Europe/Paris');
+// ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
+
+// ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
+    $dateMEL = getDateOffreEnLigne($id_offre_cible);
+
+if (isset($_POST['mettre_hors_ligne'])) {
+
+    $date = date('Y-m-d H:i:s');
+
+    if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            //Insertion de la date de mise hors ligne
+            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+            $stmtInsertionDateMHL->execute([$date]);
+            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
+        
+            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
+            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
+
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion : " . $e->getMessage();
+        }
+    
+    } else if ($dateMHL > $dateMEL) {
+    
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            //Insertion de la date de mise en ligne
+            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+            $stmtInsertionDateMEL->execute([$date]);
+            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
+        
+            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
+            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
+
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion : " . $e->getMessage();
+        }
+    }
+} 
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -122,14 +177,6 @@ try {
     // ===== Requête SQL pour vérifier si une offre est hors ligne ===== //
     $dateMiseHorsLigne = isOffreHorsLigne($id_offre_cible);
 
-// ===== GESTION DU NOMBRE DE DATE (EN LIGNE / HORS LIGNE) ===== //
-
-    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
-    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
-
-    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
-    $dateMEL = getDateOffreEnLigne($id_offre_cible);
-
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -214,66 +261,23 @@ try {
                 <?php } ?>
                 
                 <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
-
-                    <?php $date = date('Y-m-d H:i:s'); 
-
-                    if (isset($_POST['mettre_hors_ligne'])) {
-
-                        if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
-                            try {
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                //Insertion de la date de mise hors ligne
-                                $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                                $stmtInsertionDateMHL->execute([$date]);
-                                $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            
-                                $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
-                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                                $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-            
-                            } catch (PDOException $e) {
-                                echo "Erreur lors de l'insertion : " . $e->getMessage();
-                            }
-                        
-                        } else if ($dateMHL > $dateMEL) {
-                        
-                            try {
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                //Insertion de la date de mise en ligne
-                                $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                                $stmtInsertionDateMEL->execute([$date]);
-                                $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            
-                                $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
-                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                                $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-            
-                            } catch (PDOException $e) {
-                                echo "Erreur lors de l'insertion : " . $e->getMessage();
-                            }
-                        }
-                    } ?>
-
+                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Confirmer</button></form> 
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
+
             <div id="final">
-                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+                    <p>Offre hors ligne !<br>Désormait cette offre n'apparait plus !</p>
+                <?php } else if ($dateMHL > $dateMEL) { ?>
+                    <p>Offre en ligne !<br>Désormait cette offre apparait !</p>
+                <?php } ?>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
 
-            <?php if ($dateMiseHorsLigne != True) { ?>
+            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <?php } else { ?>
+            <?php } else if ($dateMHL > $dateMEL) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
             <?php } ?>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
