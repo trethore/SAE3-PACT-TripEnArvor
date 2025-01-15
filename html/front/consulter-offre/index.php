@@ -983,6 +983,7 @@ foreach ($images as $image) {
         });
 
         // GESTION DES POUCES 
+            // GESTION DES POUCES
 
         // Cibler tous les éléments avec les classes correspondantes
         const pouceHauts = document.querySelectorAll('.pouceHaut');
@@ -1006,32 +1007,33 @@ foreach ($images as $image) {
         // Fonction pour gérer le clic sur le pouce haut
         pouceHauts.forEach((pouceHaut) => {
             pouceHaut.addEventListener('click', () => {
-                const avisId = pouceHaut.getAttribute('data-id');
-                const nbPouceHaut = pouceHaut.previousElementSibling;
-                const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling;
+                const avisId = pouceHaut.getAttribute('data-id'); // ID unique de l'avis
+                const nbPouceHaut = pouceHaut.previousElementSibling; // Nombre de pouces haut
+                const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling; // Nombre de pouces bas
+                const pouceBas = pouceHaut.nextElementSibling.nextElementSibling.nextElementSibling; // Image du pouce bas
 
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null; // Initialiser l'état si absent
 
                 let currentHaut = parseInt(nbPouceHaut.textContent);
                 let currentBas = parseInt(nbPouceBas.textContent);
 
                 if (etatsPouces[avisId] === "haut") {
-                    // Désactiver le pouce haut
+                    // Si le pouce haut est déjà activé, on le désactive
                     nbPouceHaut.textContent = currentHaut - 1;
                     pouceHaut.src = images.haut.inactif;
                     etatsPouces[avisId] = null;
                 } else {
-                    // Activer le pouce haut
+                    // Sinon, on active le pouce haut
                     nbPouceHaut.textContent = currentHaut + 1;
                     pouceHaut.src = images.haut.actif;
 
-                    // Désactiver le pouce bas si activé
+                    // Si le pouce bas était activé, on le désactive
                     if (etatsPouces[avisId] === "bas") {
                         nbPouceBas.textContent = currentBas - 1;
                         pouceBas.src = images.bas.inactif;
                     }
 
-                    etatsPouces[avisId] = "haut";
+                    etatsPouces[avisId] = "haut"; // Mettre l'état à "haut"
                 }
             });
         });
@@ -1039,35 +1041,37 @@ foreach ($images as $image) {
         // Fonction pour gérer le clic sur le pouce bas
         pouceBas.forEach((pouceBas) => {
             pouceBas.addEventListener('click', () => {
-                const avisId = pouceBas.getAttribute('data-id');
-                const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling;
-                const nbPouceBas = pouceBas.previousElementSibling;
+                const avisId = pouceBas.getAttribute('data-id'); // ID unique de l'avis
+                const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling; // Nombre de pouces haut
+                const nbPouceBas = pouceBas.previousElementSibling; // Nombre de pouces bas
+                const pouceHaut = pouceBas.previousElementSibling.previousElementSibling.previousElementSibling; // Image du pouce haut
 
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null; // Initialiser l'état si absent
 
                 let currentHaut = parseInt(nbPouceHaut.textContent);
                 let currentBas = parseInt(nbPouceBas.textContent);
 
                 if (etatsPouces[avisId] === "bas") {
-                    // Désactiver le pouce bas
+                    // Si le pouce bas est déjà activé, on le désactive
                     nbPouceBas.textContent = currentBas - 1;
                     pouceBas.src = images.bas.inactif;
                     etatsPouces[avisId] = null;
                 } else {
-                    // Activer le pouce bas
+                    // Sinon, on active le pouce bas
                     nbPouceBas.textContent = currentBas + 1;
                     pouceBas.src = images.bas.actif;
 
-                    // Désactiver le pouce haut si activé
+                    // Si le pouce haut était activé, on le désactive
                     if (etatsPouces[avisId] === "haut") {
                         nbPouceHaut.textContent = currentHaut - 1;
                         pouceHaut.src = images.haut.inactif;
                     }
 
-                    etatsPouces[avisId] = "bas";
+                    etatsPouces[avisId] = "bas"; // Mettre l'état à "bas"
                 }
             });
         });
+
 
     </script>
 
