@@ -5180,7 +5180,8 @@ input[type="tel"] {
     *****************************************************/
 
     .accueil h2 {
-        margin: 2% auto;
+        margin: 6% auto;
+        text-align: center;
     }
 
     .carousel {
@@ -5189,6 +5190,18 @@ input[type="tel"] {
 
     .carousel button:hover {
         background-color: var(--transparent); 
+    }
+
+    .accueil h1 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        color: var(--blanc-leger);
+        background: var(--violet-principal);
+        border-radius: 15px;
+        margin: 0.5em 0.2em 0em 0.2em;
+        text-align: center;
+        font-size: 30pt;
+        border: 2px var(--violet-principal) solid;
     }
 
 }
