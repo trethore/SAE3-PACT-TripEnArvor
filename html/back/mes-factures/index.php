@@ -14,6 +14,11 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+// Définir la localisation en français
+setlocale(LC_TIME, 'fr_FR.UTF-8');
+// Obtenir le jour actuel en français
+$jourActuel = strftime('%A');
+
 startSession();
 $id_compte = $_SESSION["id"]; 
 if (isset($id_compte)) {
@@ -112,11 +117,14 @@ try {
             ?>
             <h1>Mes factures</h1>
             <ul>
+                <li>
+                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Facture N°1 du <?php echo htmlentities($jourActuel) ?></p></a>
+                </li>
                 <?php
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?> - Abonnement de "<?php echo $facture["titre"] ?>"</p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?></p></a>
                     </li>
                 <?php
                 }
