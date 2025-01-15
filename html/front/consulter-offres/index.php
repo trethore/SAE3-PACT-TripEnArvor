@@ -557,11 +557,25 @@ try {
                     offers.sort((a, b) => {
                         const dateA = new Date(a.querySelector(".date_publication_offre div").textContent.trim());
                         if (dateA == "date indisponible.") {
-                            dateA = "0-0-0 0:0:0";
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateA = dateObject.getTime();
                         }
                         const dateB = new Date(b.querySelector(".date_publication_offre div").textContent.trim());
                         if (dateA == "date indisponible.") {
-                            dateA = "0-0-0 0:0:0";
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateB = dateObject.getTime();
                         }
                         return dateB - dateA;
                     });
