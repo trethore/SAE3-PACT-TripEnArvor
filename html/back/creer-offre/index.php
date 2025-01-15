@@ -584,7 +584,7 @@ try {
                 $stmt_adresse = $dbh->prepare($requete_adresse);
                 $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
                 $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
-
+                print("adresse : " . $id_adresse);
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
                 // $stmt_verif = $dbh->prepare($requete_verif);
                 // $stmt_verif->execute([$fichier_img]);
@@ -864,7 +864,7 @@ try {
                     if ($dbh->inTransaction()) {
                         $dbh->commit();
                     }
-                    
+
                     //insertion la date de mise en ligne de date
                     $date_en_ligne = date('Y-m-d H:i:s');
 
