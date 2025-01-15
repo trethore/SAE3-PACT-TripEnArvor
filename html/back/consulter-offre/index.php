@@ -180,7 +180,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/scripts/carousel.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -318,7 +318,7 @@ try {
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
-            <div class="carousel">
+           <!--  <div class="carousel">
                 <div class="carousel-images">
 
                     <?php foreach ($images as $image) { ?>
@@ -328,7 +328,23 @@ try {
                     <?php } ?>
 
                 </div>
-            </div>  
+            </div>   -->
+            <div class="carousel">
+            <div class="carousel-slides">
+<?php
+foreach ($images as $image) {
+?>
+                <div class="slide">
+                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                </div>
+<?php
+}
+?>
+            </div>
+            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+        </div>
+
 
             <div class="display-ligne-espace">
 
@@ -823,7 +839,7 @@ try {
 
     <script>
 
-        let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
+/*        let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
     
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -832,6 +848,7 @@ try {
         L.marker([47.497745757735, -2.772722737126]).addTo(map)
             .bindPopup('Côté Plage<br>Sarzeau')
             .openPopup();
+*/
 
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
@@ -873,6 +890,7 @@ try {
             bouton2.style.filter = "blur(0px)";
         }
 
+        /*
         const images = document.querySelector('.carousel-images');
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
@@ -902,7 +920,7 @@ try {
         const width = images.clientWidth;
         images.style.transform = `translateX(-${currentIndex * width}px)`;
         }
-
+*/
     </script>
 
 </body>
