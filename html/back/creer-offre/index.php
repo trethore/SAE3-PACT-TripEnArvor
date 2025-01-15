@@ -968,9 +968,7 @@ try {
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print "Erreur !: " . $e->getMessage() . "<br/>";
-                if ($pdo->inTransaction()) {
-                    $pdo->rollBack();
-                }
+                $dbh->rollBack();
                 die();
                     
                 }
