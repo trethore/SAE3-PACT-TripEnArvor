@@ -29,7 +29,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 	join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
 	join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
 	join sae._date d on oml.id_date = d.id_date
-	where o.id_compte_professionnel = :id_comte;";
+	where o.id_compte_professionnel = :id_compte;";
 
 // Préparation et exécution de la requête
 $stmt = $conn->prepare($reqCompte);
