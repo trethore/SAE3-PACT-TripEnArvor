@@ -619,7 +619,7 @@ try {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <div class="petite-mention">
+            <div class="petite-mention margin-0">
                 <p><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
             </div>
 
@@ -713,8 +713,6 @@ try {
                             <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
                         </div>
                     </div>
-
-                    
 
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
 
