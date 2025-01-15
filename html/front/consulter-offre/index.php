@@ -269,7 +269,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
+    <script src="/scripts/carousel.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
@@ -350,7 +350,7 @@ try {
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
-            <div class="carousel">
+            <!-- <div class="carousel">
                 <div class="carousel-images">
 
                     <?php foreach ($images as $image) { ?>
@@ -360,7 +360,23 @@ try {
                     <?php } ?>
 
                 </div>
-            </div>  
+            </div>   -->
+            <div class="carousel">
+            <div class="carousel-slides">
+<?php
+foreach ($images as $image) {
+?>
+                <div class="slide">
+                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                </div>
+<?php
+}
+?>
+            </div>
+            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+        </div>
+
 
             <div class="display-ligne-espace">
 
