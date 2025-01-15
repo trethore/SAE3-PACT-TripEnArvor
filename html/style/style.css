@@ -2881,7 +2881,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .display-ligne>p {
-    margin: 0 10px;
+    margin: 0 0;
 }
 
 /**********************************
@@ -3185,7 +3185,7 @@ header>div>a:hover {
     padding: 15px;
     border-radius: 15px;
     color: var(--noir);
-    border: 3px solid var(--orange-principale);
+    border: 3px solid var(--violet-principal);
 }
 
 .consulter-offre-front .titre-avis {
@@ -3199,7 +3199,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .bordure-top {
-    border-top: 3px solid var(--orange-principale);
+    border-top: 3px solid var(--violet-principal);
 }
 
 .consulter-offre-front .image-avis {
