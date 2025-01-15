@@ -47,6 +47,9 @@ try {
         } else {
             $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
         }
+        echo "<pre>";
+        print_r("c'est bon!");
+        echo "</pre>";
     }
 
 } catch (PDOException $e) {
