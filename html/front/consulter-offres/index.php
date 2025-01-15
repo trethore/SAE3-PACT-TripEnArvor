@@ -360,7 +360,8 @@ try {
                     }
                 }
             ?>
-        </section>        
+        </section>
+        <iframe id="sofa-player-embed-889259" src="https://widgets.sofascore.com/fr/embed/player/889259?widgetTheme=light" style=height:830px!important;max-width:730px!important;width:100%!important; frameborder="0" scrolling="no"></iframe>        
     </main>
 
     <footer>
