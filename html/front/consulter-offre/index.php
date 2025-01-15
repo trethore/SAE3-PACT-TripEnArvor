@@ -982,7 +982,8 @@ foreach ($images as $image) {
             showFormButton.style.display = 'block'; // Réaffiche le bouton
         });
 
-        
+        // GESTION DES POUCES 
+
         // Sélection des éléments
         const pouceHaut = document.getElementById('pouceHaut');
         const pouceBas = document.getElementById('pouceBas');
@@ -992,6 +993,18 @@ foreach ($images as $image) {
         // Variable pour garder la trace de l'état
         let etatPouce = null; // null = aucun clic, "haut" = pouce haut, "bas" = pouce bas
 
+        // Images des pouces
+        const images = {
+            haut: {
+                actif: '/images/universel/icones/pouce-up-hover.png', // Image quand le pouce haut est activé
+                inactif: '/images/universel/icones/pouce-up.png', // Image d'origine
+            },
+            bas: {
+                actif: '/images/universel/icones/pouce-down-hover.png', // Image quand le pouce bas est activé
+                inactif: '/images/universel/icones/pouce-down.png', // Image d'origine
+            },
+        };
+
         // Gestionnaire pour le pouce haut
         pouceHaut.addEventListener('click', () => {
             let currentHaut = parseInt(nbPouceHaut.textContent);
@@ -1000,15 +1013,19 @@ foreach ($images as $image) {
             if (etatPouce === "haut") {
                 // Si déjà cliqué, on annule l'action
                 nbPouceHaut.textContent = currentHaut - 1;
+                pouceHaut.src = images.haut.inactif; // Remet l'image d'origine
                 etatPouce = null;
             } else {
                 // Incrémenter le pouce haut
                 nbPouceHaut.textContent = currentHaut + 1;
+                pouceHaut.src = images.haut.actif; // Change l'image du pouce haut
 
                 // Si le pouce bas est actif, on le désactive
                 if (etatPouce === "bas") {
                     nbPouceBas.textContent = currentBas - 1;
+                    pouceBas.src = images.bas.inactif; // Remet l'image d'origine pour pouce bas
                 }
+
                 etatPouce = "haut";
             }
         });
@@ -1021,21 +1038,24 @@ foreach ($images as $image) {
             if (etatPouce === "bas") {
                 // Si déjà cliqué, on annule l'action
                 nbPouceBas.textContent = currentBas - 1;
+                pouceBas.src = images.bas.inactif; // Remet l'image d'origine
                 etatPouce = null;
             } else {
                 // Incrémenter le pouce bas
                 nbPouceBas.textContent = currentBas + 1;
+                pouceBas.src = images.bas.actif; // Change l'image du pouce bas
 
                 // Si le pouce haut est actif, on le désactive
                 if (etatPouce === "haut") {
                     nbPouceHaut.textContent = currentHaut - 1;
+                    pouceHaut.src = images.haut.inactif; // Remet l'image d'origine pour pouce haut
                 }
+
                 etatPouce = "bas";
             }
         });
-        
-
     </script>
+
     <div class="telephone-nav">
         <div class="nav-content">
             <a href="/front/accueil">
