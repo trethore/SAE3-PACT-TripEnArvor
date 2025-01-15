@@ -511,10 +511,10 @@ try {
                 const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
-                    console.log(contientAvis);
+                    console.log("contientAvis : ", contientAvis);
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
-                        console.log(offerContientAvis);
+                        console.log("offerContientAvis : ", offerContientAvis);
                         return offerContientAvis === contientAvis;
                     });
                 }
