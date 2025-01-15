@@ -3219,7 +3219,7 @@ header>div>a:hover {
 /* Style réponse avis */
 
 .consulter-offre-front .reponse > p {
-    margin: 5px 0 5px 55px;
+    margin: 5px 0 5px 45px;
 }
 
 .consulter-offre-front .titre-reponse {
@@ -3734,7 +3734,7 @@ header>div>a:hover {
 /* Style réponse avis */
 
 .consulter-offre-back .reponse > p {
-    margin: 5px 0 5px 55px;
+    margin: 5px 0 5px 45px;
 }
 
 .consulter-offre-back .titre-reponse {
