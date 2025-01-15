@@ -509,6 +509,7 @@ try {
 
                 // Filtre par offre contient avis
                 const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+                console.log(avisInput);
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
                     console.log("contientAvis : ", contientAvis);
