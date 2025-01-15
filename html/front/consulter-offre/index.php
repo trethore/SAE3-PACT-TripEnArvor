@@ -889,11 +889,11 @@ foreach ($images as $image) {
                         </div>
 
                         <div class="display-ligne">
-                            <p id="nbPouceHaut"><?php echo htmlentities($a['nb_pouce_haut']); ?></p>
-                            <img src="/images/universel/icones/pouce-up.png" class="pouce" id="pouceHaut">
+                            <p class="nbPouceHaut"><?php echo htmlentities($a['nb_pouce_haut']); ?></p>
+                            <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $compteur; ?>">
 
-                            <p id="nbPouceBas"><?php echo htmlentities($a['nb_pouce_bas']); ?></p>
-                            <img src="/images/universel/icones/pouce-down.png" class="pouce" id="pouceBas">
+                            <p class="nbPouceBas"><?php echo htmlentities($a['nb_pouce_bas']); ?></p>
+                            <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $compteur; ?>">
                         </div>
                     </div>
 
@@ -984,57 +984,91 @@ foreach ($images as $image) {
 
         // GESTION DES POUCES 
 
-        const pouceHaut = document.getElementById('pouceHaut');
-        const pouceBas = document.getElementById('pouceBas');
-        const nbPouceHaut = document.getElementById('nbPouceHaut');
-        const nbPouceBas = document.getElementById('nbPouceBas');
-        let etatPouce = null; 
+        // Cibler tous les éléments avec les classes correspondantes
+        const pouceHauts = document.querySelectorAll('.pouceHaut');
+        const pouceBas = document.querySelectorAll('.pouceBas');
+
+        // Images des pouces
         const images = {
             haut: {
-                actif: '/images/universel/icones/pouce-up-hover.png', 
-                inactif: '/images/universel/icones/pouce-up.png', 
+                actif: '/images/universel/icones/pouce-up-hover.png',
+                inactif: '/images/universel/icones/pouce-up.png',
             },
             bas: {
-                actif: '/images/universel/icones/pouce-down-hover.png', 
-                inactif: '/images/universel/icones/pouce-down.png', 
+                actif: '/images/universel/icones/pouce-down-hover.png',
+                inactif: '/images/universel/icones/pouce-down.png',
             },
         };
 
-        pouceHaut.addEventListener('click', () => { 
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-            if (etatPouce === "haut") {
-                nbPouceHaut.textContent = currentHaut - 1;
-                pouceHaut.src = images.haut.inactif;
-                etatPouce = null;
-            } else {
-                nbPouceHaut.textContent = currentHaut + 1;
-                pouceHaut.src = images.haut.actif;
-                if (etatPouce === "bas") {
-                    nbPouceBas.textContent = currentBas - 1;
-                    pouceBas.src = images.bas.inactif;
+        // État des pouces pour chaque avis
+        let etatsPouces = {}; // { avisId: "haut" ou "bas" ou null }
+
+        // Fonction pour gérer le clic sur le pouce haut
+        pouceHauts.forEach((pouceHaut) => {
+            pouceHaut.addEventListener('click', () => {
+                const avisId = pouceHaut.getAttribute('data-id');
+                const nbPouceHaut = pouceHaut.previousElementSibling;
+                const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling;
+
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
+
+                let currentHaut = parseInt(nbPouceHaut.textContent);
+                let currentBas = parseInt(nbPouceBas.textContent);
+
+                if (etatsPouces[avisId] === "haut") {
+                    // Désactiver le pouce haut
+                    nbPouceHaut.textContent = currentHaut - 1;
+                    pouceHaut.src = images.haut.inactif;
+                    etatsPouces[avisId] = null;
+                } else {
+                    // Activer le pouce haut
+                    nbPouceHaut.textContent = currentHaut + 1;
+                    pouceHaut.src = images.haut.actif;
+
+                    // Désactiver le pouce bas si activé
+                    if (etatsPouces[avisId] === "bas") {
+                        nbPouceBas.textContent = currentBas - 1;
+                        pouceBas.src = images.bas.inactif;
+                    }
+
+                    etatsPouces[avisId] = "haut";
                 }
-                etatPouce = "haut";
-            }
+            });
         });
 
-        pouceBas.addEventListener('click', () => {
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-            if (etatPouce === "bas") {
-                nbPouceBas.textContent = currentBas - 1;
-                pouceBas.src = images.bas.inactif; 
-                etatPouce = null;
-            } else {
-                nbPouceBas.textContent = currentBas + 1;
-                pouceBas.src = images.bas.actif; 
-                if (etatPouce === "haut") {
-                    nbPouceHaut.textContent = currentHaut - 1;
-                    pouceHaut.src = images.haut.inactif; 
+        // Fonction pour gérer le clic sur le pouce bas
+        pouceBas.forEach((pouceBas) => {
+            pouceBas.addEventListener('click', () => {
+                const avisId = pouceBas.getAttribute('data-id');
+                const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling;
+                const nbPouceBas = pouceBas.previousElementSibling;
+
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
+
+                let currentHaut = parseInt(nbPouceHaut.textContent);
+                let currentBas = parseInt(nbPouceBas.textContent);
+
+                if (etatsPouces[avisId] === "bas") {
+                    // Désactiver le pouce bas
+                    nbPouceBas.textContent = currentBas - 1;
+                    pouceBas.src = images.bas.inactif;
+                    etatsPouces[avisId] = null;
+                } else {
+                    // Activer le pouce bas
+                    nbPouceBas.textContent = currentBas + 1;
+                    pouceBas.src = images.bas.actif;
+
+                    // Désactiver le pouce haut si activé
+                    if (etatsPouces[avisId] === "haut") {
+                        nbPouceHaut.textContent = currentHaut - 1;
+                        pouceHaut.src = images.haut.inactif;
+                    }
+
+                    etatsPouces[avisId] = "bas";
                 }
-                etatPouce = "bas";
-            }
+            });
         });
+
     </script>
 
     <div class="telephone-nav">
