@@ -142,7 +142,6 @@ if (!isset($_SESSION)) {
                 </div>
                 <p class="titre" id="carousel-titre"></p>
             </div> -->
-
         <div class="carousel">
             <div class="carousel-slides">
 <?php
@@ -151,7 +150,7 @@ foreach ($ids as $offre) {
                 <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
                     <div>
-                        <span>Azerty</span>
+                        <span><?php echo($offre['titre']); ?></span>
                         <div>
 <?php
     $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
@@ -231,7 +230,7 @@ foreach ($ids_nouv as $offre) {
                 <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
                     <div>
-                        <span>Azerty</span>
+                        <span><?php echo($offre['titre']); ?></span>
                         <div>
 <?php
     $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
@@ -310,7 +309,7 @@ foreach ($ids_consulte as $offre) {
                 <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
                     <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
                     <div>
-                        <span>Azerty</span>
+                        <span><?php echo($offre['titre']); ?></span>
                         <div>
 <?php
     $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
