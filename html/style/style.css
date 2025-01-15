@@ -3541,8 +3541,8 @@ header>div>a:hover {
 **********************************/
 
 /***********************************
-            BLOC CARACTÉRISTIQUE                       
-    ***********************************/
+        BLOC CARACTÉRISTIQUE                       
+***********************************/
 
     .consulter-offre-back .liste-caracteristique {
         align-items: center;
@@ -3561,8 +3561,8 @@ header>div>a:hover {
     }
 
 /****************************
-            BLOC À PROPOS                               
-    ****************************/
+        BLOC À PROPOS                               
+****************************/
 
 .consulter-offre-back .bloc-a-propos {
     flex: 5; 
@@ -3602,8 +3602,8 @@ header>div>a:hover {
 ***********************************/
 
 /***************************
-            BLOC TARIFS                             
-    ***************************/
+        BLOC TARIFS                             
+***************************/
 
 .consulter-offre-back .bloc-tarif>button {
     color: var(--blanc);
@@ -3645,8 +3645,8 @@ header>div>a:hover {
 }
 
 /*****************************
-            BLOC OUVERTURE                                       
-    *****************************/
+        BLOC OUVERTURE                                       
+*****************************/
 
 .consulter-offre-back .liste-ouverture {
     align-items: center;
@@ -3670,8 +3670,13 @@ header>div>a:hover {
 /*************************
         BLOCS AVIS                                                   
 *************************/
+
 .consulter-offre-back #avis > div > h2 {
-    margin-bottom: 0;
+    margin: 0;
+}
+
+.consulter-offre-back #avis > div > h2 + p {
+    margin-left: 0;
 }
 
 .consulter-offre-back .fond-blocs-avis {
