@@ -984,73 +984,54 @@ foreach ($images as $image) {
 
         // GESTION DES POUCES 
 
-        // Sélection des éléments
         const pouceHaut = document.getElementById('pouceHaut');
         const pouceBas = document.getElementById('pouceBas');
         const nbPouceHaut = document.getElementById('nbPouceHaut');
         const nbPouceBas = document.getElementById('nbPouceBas');
-
-        // Variable pour garder la trace de l'état
-        let etatPouce = null; // null = aucun clic, "haut" = pouce haut, "bas" = pouce bas
-
-        // Images des pouces
+        let etatPouce = null; 
         const images = {
             haut: {
-                actif: '/images/universel/icones/pouce-up-hover.png', // Image quand le pouce haut est activé
-                inactif: '/images/universel/icones/pouce-up.png', // Image d'origine
+                actif: '/images/universel/icones/pouce-up-hover.png', 
+                inactif: '/images/universel/icones/pouce-up.png', 
             },
             bas: {
-                actif: '/images/universel/icones/pouce-down-hover.png', // Image quand le pouce bas est activé
-                inactif: '/images/universel/icones/pouce-down.png', // Image d'origine
+                actif: '/images/universel/icones/pouce-down-hover.png', 
+                inactif: '/images/universel/icones/pouce-down.png', 
             },
         };
 
-        // Gestionnaire pour le pouce haut
-        pouceHaut.addEventListener('click', () => {
+        pouceHaut.addEventListener('click', () => { 
             let currentHaut = parseInt(nbPouceHaut.textContent);
             let currentBas = parseInt(nbPouceBas.textContent);
-
             if (etatPouce === "haut") {
-                // Si déjà cliqué, on annule l'action
                 nbPouceHaut.textContent = currentHaut - 1;
-                pouceHaut.src = images.haut.inactif; // Remet l'image d'origine
+                pouceHaut.src = images.haut.inactif;
                 etatPouce = null;
             } else {
-                // Incrémenter le pouce haut
                 nbPouceHaut.textContent = currentHaut + 1;
-                pouceHaut.src = images.haut.actif; // Change l'image du pouce haut
-
-                // Si le pouce bas est actif, on le désactive
+                pouceHaut.src = images.haut.actif;
                 if (etatPouce === "bas") {
                     nbPouceBas.textContent = currentBas - 1;
-                    pouceBas.src = images.bas.inactif; // Remet l'image d'origine pour pouce bas
+                    pouceBas.src = images.bas.inactif;
                 }
-
                 etatPouce = "haut";
             }
         });
 
-        // Gestionnaire pour le pouce bas
         pouceBas.addEventListener('click', () => {
             let currentHaut = parseInt(nbPouceHaut.textContent);
             let currentBas = parseInt(nbPouceBas.textContent);
-
             if (etatPouce === "bas") {
-                // Si déjà cliqué, on annule l'action
                 nbPouceBas.textContent = currentBas - 1;
-                pouceBas.src = images.bas.inactif; // Remet l'image d'origine
+                pouceBas.src = images.bas.inactif; 
                 etatPouce = null;
             } else {
-                // Incrémenter le pouce bas
                 nbPouceBas.textContent = currentBas + 1;
-                pouceBas.src = images.bas.actif; // Change l'image du pouce bas
-
-                // Si le pouce haut est actif, on le désactive
+                pouceBas.src = images.bas.actif; 
                 if (etatPouce === "haut") {
                     nbPouceHaut.textContent = currentHaut - 1;
-                    pouceHaut.src = images.haut.inactif; // Remet l'image d'origine pour pouce haut
+                    pouceHaut.src = images.haut.inactif; 
                 }
-
                 etatPouce = "bas";
             }
         });
