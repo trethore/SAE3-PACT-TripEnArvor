@@ -14,21 +14,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Créer un objet DateTime pour la date actuelle
-$date = new DateTime();
-
-// Utiliser IntlDateFormatter pour formater la date en français
-$formatter = new IntlDateFormatter(
-    'fr_FR',
-    IntlDateFormatter::FULL,
-    IntlDateFormatter::NONE,
-    'Europe/Paris',  // Fuseau horaire
-    IntlDateFormatter::GREGORIAN,
-    'EEEE'           // Format pour obtenir le nom complet du jour
-);
-
-$jourActuel = $formatter->format($date);
-
 startSession();
 $id_compte = $_SESSION["id"]; 
 if (isset($id_compte)) {
@@ -128,7 +113,7 @@ try {
             <h1>Mes factures</h1>
             <ul>
                 <li>
-                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Facture N°1 du <?php echo htmlentities($jourActuel) ?></p></a>
+                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Facture N°1 de janvier</p></a>
                 </li>
                 <?php
                 foreach ($factures as $facture) {
