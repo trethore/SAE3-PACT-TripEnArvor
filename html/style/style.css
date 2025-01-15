@@ -1228,7 +1228,101 @@ h3 {
         IMAGES PRÉSENTATION                
 **********************************/
 
-.accueil .carousel {
+.carousel {
+    width: 90vw;
+    height: 90vh;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+}
+
+.carousel .carousel-slides {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.carousel .slide {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 0;
+}
+
+.carousel .slide > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel .slide > img + div {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    background-color: #ffffff;
+    color: black;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.carousel .slide > img + div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.carousel .slide > img + div > div > img {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.carousel button {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    background: none;
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    transition: background-color 0.5s ease;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.carousel .prev-slide {
+    left: 1rem;
+}
+
+.carousel .next-slide {
+    right: 1rem;
+}
+
+.carousel button:hover {
+    background-color: var(--violet-principal);
+}
+
+/* .accueil .carousel {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
@@ -1277,7 +1371,7 @@ h3 {
 .accueil .arrow-right {
     right: 20px;
 }
-
+ */
 .accueil .titre {
     position: absolute;
     left: 10px;
@@ -4688,6 +4782,13 @@ input[type="tel"] {
 
 
 .accueil header a {
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.accueil footer a {
+    display: contents;
     width: auto;
     height: auto;
     padding: 0;

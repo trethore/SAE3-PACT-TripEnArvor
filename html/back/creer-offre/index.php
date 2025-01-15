@@ -582,7 +582,7 @@ try {
                 //insertion dans adresse
                 $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
                 $stmt_adresse = $dbh->prepare($requete_adresse);
-                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                 $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
