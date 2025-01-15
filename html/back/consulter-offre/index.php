@@ -207,7 +207,7 @@ try {
 
                     <p>Voulez-vous mettre votre offre hors ligne ?</p>
 
-                <?php } else { ?>
+                <?php } else if ($dateMHL > $dateMEL) { ?>
 
                     <p>Voulez-vous mettre votre offre en ligne ?</p>
 
@@ -240,7 +240,7 @@ try {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
                             }
                         
-                        } else if ($dateMHL > $idDateMEL) {
+                        } else if ($dateMHL > $dateMEL) {
                         
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
