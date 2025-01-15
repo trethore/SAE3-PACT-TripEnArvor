@@ -104,16 +104,18 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
                 $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
-                foreach($factAbos as $factAbo) { ?>
-                <tr>
-                    <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
-                    <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                    <td>2</td>
-                    <td>20%</td>
-                    <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
-                    <td>22.30€</td>
-                </tr>
-                <?php } ?>
+                // Vérifiez si $factAbos est un tableau avant de le parcourir
+                if ($factAbos && is_array($factAbos)) {
+                    foreach($factAbos as $factAbo) { ?>
+                    <tr>
+                        <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
+                        <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
+                        <td>2</td>
+                        <td>20%</td>
+                        <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                        <td>22.30€</td>
+                    </tr>
+                <?php }} ?>
             </tbody>
         </table>
     </article>
