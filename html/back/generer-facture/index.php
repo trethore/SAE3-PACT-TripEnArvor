@@ -93,7 +93,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             </thead>
             <tbody>
                 <tr>
-                    <td>Nom Offre - Standard / premium</td>
+                    <td>Restaurant coté plage</td>
                     <td>2</td>
                     <td>20%</td>
                     <td>5.10€</td>
