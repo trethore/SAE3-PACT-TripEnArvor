@@ -125,10 +125,10 @@ try {
 // ===== GESTION DU NOMBRE DE DATE (EN LIGNE / HORS LIGNE) ===== //
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
-    $countDateMHL = countDatesOffreHorsLigne($id_offre_cible);
+    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
-    $countDateMEL = countDatesOffreEnLigne($id_offre_cible);
+    $dateMEL = getDateOffreEnLigne($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -148,7 +148,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/scripts/carousel.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -202,13 +202,25 @@ try {
     <div class="fond-bloc display-ligne-espace">
         <div class="bouton-modifier"> 
             <div id="confirm">
-                <p>Voulez-vous mettre votre offre hors ligne ?</p>
+
+                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+
+                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
+
+                <?php } else if ($dateMHL > $dateMEL) { ?>
+
+                    <p>Voulez-vous mettre votre offre en ligne ?</p>
+
+                <?php } ?>
+                
                 <div class="close">
                     <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
 
                     <?php $date = date('Y-m-d H:i:s'); 
+
                     if (isset($_POST['mettre_hors_ligne'])) {
-                        if ($countDateMHL == 0) {
+
+                        if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -223,18 +235,12 @@ try {
                                 $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
                                 $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
                                 $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-
-                                //Suppression de la date de mise en ligne
-                                $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_en_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                                $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
-                                $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                                $stmtSuppressionDateMEL->execute();
             
                             } catch (PDOException $e) {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
                             }
                         
-                        } else if ($countDateMEL == 0) {
+                        } else if ($dateMHL > $dateMEL) {
                         
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -250,12 +256,6 @@ try {
                                 $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
                                 $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
                                 $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-
-                                //Suppression de la date de mise hors ligne
-                                $reqSuppressionDateMHL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                                $stmtSuppressionDateMHL = $dbh->prepare($reqSuppressionDateMHL);
-                                $stmtSuppressionDateMHL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                                $stmtSuppressionDateMHL->execute();
             
                             } catch (PDOException $e) {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
@@ -287,16 +287,21 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="carousel">
-                <div class="carousel-images">
-
-                    <?php foreach ($images as $image) { ?>
-
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-
-                    <?php } ?>
-
+            <div class="carousel-slides">
+<?php
+foreach ($images as $image) {
+?>
+                <div class="slide">
+                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
                 </div>
-            </div>  
+<?php
+}
+?>
+            </div>
+            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+        </div>
+
 
             <div class="display-ligne-espace">
 
@@ -766,14 +771,11 @@ try {
 
                             }
 
-                        }
-
-                    } ?> 
-
+                        } 
+                    } ?>
                 </div>  
-            <?php $compteur++; 
-            } 
-            ?>  
+                <?php $compteur++; 
+            } ?>  
 
         </section>                
          
@@ -821,17 +823,6 @@ try {
     </footer>
 
     <script>
-
-        let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    
-        L.marker([47.497745757735, -2.772722737126]).addTo(map)
-            .bindPopup('Côté Plage<br>Sarzeau')
-            .openPopup();
-
         let confirmDiv = document.getElementById("confirm");
         let finalDiv = document.getElementById("final");
 
@@ -871,37 +862,6 @@ try {
             let bouton2 = document.getElementById('bouton2');
             bouton2.style.filter = "blur(0px)";
         }
-
-        const images = document.querySelector('.carousel-images');
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
-
-        let currentIndex = 0;
-
-        // Gestion du clic sur le bouton "Suivant"
-        nextButton.addEventListener('click', () => {
-        currentIndex++;
-        if (currentIndex >= images.children.length) {
-            currentIndex = 0; // Revenir au début
-        }
-        updateCarousel();
-        });
-
-        // Gestion du clic sur le bouton "Précédent"
-        prevButton.addEventListener('click', () => {
-        currentIndex--;
-        if (currentIndex < 0) {
-            currentIndex = images.children.length - 1; // Revenir à la fin
-        }
-        updateCarousel();
-        });
-
-        // Met à jour l'affichage du carrousel
-        function updateCarousel() {
-        const width = images.clientWidth;
-        images.style.transform = `translateX(-${currentIndex * width}px)`;
-        }
-
     </script>
 
 </body>

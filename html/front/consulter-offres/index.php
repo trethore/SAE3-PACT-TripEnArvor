@@ -35,6 +35,16 @@ try {
             $offre['prix'] = 0;
         }
     }
+  
+    // Date
+    foreach ($offres as &$offre) {
+        if (!getDatePublicationOffre($offre['id_offre'])) {
+            $offre['date'] = "0-0-0 0:0:0";
+        } else {
+            $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
+        }
+    }
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -188,6 +198,7 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="create-desc">Créé récemment</option>
                             </select>
                         </div>
                     </div>
@@ -320,6 +331,18 @@ try {
                                             ?>
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
+
+                                        <?php
+                                            if ($tab['date'] == "0-0-0 0:0:0") {
+                                                $date = "date indisponible.";
+                                            } else {
+                                                $publication = explode(' ', $tab["date"]);
+                                                $datePub = explode('-', $publication[0]);
+                                                $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                                            }
+                                        ?>
+
+                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>

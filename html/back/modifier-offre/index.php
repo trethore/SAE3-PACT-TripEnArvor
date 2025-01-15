@@ -774,6 +774,13 @@ try {
                     }
                 }
             }
+            if ($categorie === "restauration") {
+                foreach ($liste_tags_restauration as $tag) {
+                    if (isset($_POST[$tag])) {
+                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+                    }
+                }
+            }
            
             $descriptionL = $_POST['descriptionL'];
             
@@ -834,7 +841,7 @@ try {
                         if ($adresse['id_adresse'] == null) {
                             $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
-                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+                            $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
                         }else {
                             $requete_adresse = "UPDATE sae._adresse 
                                         set num_et_nom_de_voie = ?, 
