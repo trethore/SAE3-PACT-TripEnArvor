@@ -5187,6 +5187,10 @@ input[type="tel"] {
         height: 70vh;
     }
 
+    .carousel button:hover {
+        background-color: var(--transparent); 
+    }
+
 }
 
 @media screen and (max-width: 1100px) {
