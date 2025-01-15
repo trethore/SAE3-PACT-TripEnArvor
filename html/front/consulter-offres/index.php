@@ -198,6 +198,7 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="create-desc">Créé récemment</option>
                             </select>
                         </div>
                     </div>
