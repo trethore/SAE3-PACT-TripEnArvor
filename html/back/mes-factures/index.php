@@ -14,10 +14,20 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Définir la localisation en français
-setlocale(LC_TIME, 'fr_FR.UTF-8');
-// Obtenir le jour actuel en français
-$jourActuel = strftime('%A');
+// Créer un objet DateTime pour la date actuelle
+$date = new DateTime();
+
+// Utiliser IntlDateFormatter pour formater la date en français
+$formatter = new IntlDateFormatter(
+    'fr_FR',
+    IntlDateFormatter::FULL,
+    IntlDateFormatter::NONE,
+    'Europe/Paris',  // Fuseau horaire
+    IntlDateFormatter::GREGORIAN,
+    'EEEE'           // Format pour obtenir le nom complet du jour
+);
+
+$jourActuel = $formatter->format($date);
 
 startSession();
 $id_compte = $_SESSION["id"]; 
