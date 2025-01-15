@@ -3748,20 +3748,20 @@ header>div>a:hover {
     padding: 5px;
 }
 
-.consulter-offre-back .reponse > button {
+.consulter-offre-back #reponse > button {
     color: var(--blanc);
     text-decoration: none;
     font-size: 24px;
     background-color: var(--violet-principal);
     padding: 10px 20px;
     border-radius: 15px;
+    text-align: center;
     border: 0;
 }
 
 .consulter-offre-back .reponse > button:hover {
     background: var(--violet-secondaire);
 }
-
 
 /* Petite mention*/
 
