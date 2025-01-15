@@ -748,7 +748,7 @@ try {
                             <div class="display-ligne">
                                 <textarea id="reponse" name="reponse-<?php echo htmlentities($membre[$compteur]['id_membre']); ?>" placeholder="Merci pour votre retour ..." required></textarea><br>
                             </div>
-                            <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                            <button onclick="location.reload();" type="submit" name="submit-reponse" value="true">Répondre</button>
                         </form>
 
                     <?php } else { ?>
