@@ -556,7 +556,7 @@ try {
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
                         let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
-                        if (dateA == "date indisponible.") {
+                        /*if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
                             const [datePart, timePart] = dateA.split(" ");
@@ -565,9 +565,9 @@ try {
 
                             const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
                             dateA = dateObject.getTime();
-                        }
+                        }*/
                         let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
-                        if (dateA == "date indisponible.") {
+                        /*if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
                             const [datePart, timePart] = dateA.split(" ");
@@ -576,7 +576,7 @@ try {
 
                             const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
                             dateB = dateObject.getTime();
-                        }
+                        }*/
                         return dateB - dateA;
                     });
 
