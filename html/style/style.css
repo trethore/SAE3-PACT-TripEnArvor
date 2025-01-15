@@ -3171,31 +3171,27 @@ header>div>a:hover {
     background: var(--violet-secondaire);
 }
 
-.consulter-offre-front .image-avis {
-    width: 500px;
-    height: auto;
-    border-radius: 12px;
-    margin-left: 10px;
+.consulter-offre-front #avis > div > h2 {
+    margin: 0;
+}
+
+.consulter-offre-front .margin-0 {
+    margin-left: 0;
+}
+
+.consulter-offre-front .fond-blocs-avis {
+    background: var(--blanc);
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 15px;
+    color: var(--noir);
+    border: 3px solid var(--orange-principale);
 }
 
 .consulter-offre-front .titre-avis {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
-    padding-left: 10px;
-}
-
-.consulter-offre-front .reponse {
-    margin-left: 60px;
-}
-
-.consulter-offre-front .indentation {
-    padding-left: 3px;
-}
-
-.consulter-offre-front .reponse>p {
-    padding-left: 10px;
-    margin-left: 75px;
-    margin-top: 0;
+    margin: 5px 0;
 }
 
 .consulter-offre-front .fond-blocs-avis>p {
@@ -3203,31 +3199,50 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .bordure-top {
-    border-top: 3px solid var(--violet-principal);
+    border-top: 3px solid var(--orange-principale);
 }
+
+.consulter-offre-front .image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+
+/* Pouces avis */
 
 .consulter-offre-front .pouce {
-    width: 35px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
 }
 
-.consulter-offre-front .display-notation {
-    display: flex;
-    align-items: center;
+/* Style réponse avis */
+
+.consulter-offre-front .reponse > p {
+    margin: 5px 0 5px 55px;
 }
 
-.consulter-offre-front .transparent {
-    color: var(--transparent);
+.consulter-offre-front .titre-reponse {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.consulter-offre-front .display-notation>p {
-    margin-left: 15px;
+.consulter-offre-front .marge-reponse {
+    margin-left: 45px;
 }
 
-.consulter-offre-front .display-notation>a {
-    color: var(--orange-principale);
-    text-decoration: none;
-    margin-right: 15px;
+.consulter-offre-front .reponse > div > img {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+}
+
+/* Petite mention*/
+
+.consulter-offre-front .petite-mention > p{
+    font-size: 14px;
+    margin: 5px 0 5px 0;
 }
 
 /*************************

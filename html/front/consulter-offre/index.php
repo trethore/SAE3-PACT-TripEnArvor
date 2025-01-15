@@ -637,13 +637,6 @@ foreach ($images as $image) {
             
         </section>
 
-        <section id="carte" class="fond-blocs">
-
-            <h1>Localisation</h1>
-            <div id="map" class="carte"></div>
-
-        </section>
-
         <!-- GESTION DE L'AFFICHAGE DES AVIS -->
         <section id="avis" class="fond-blocs bordure-top">
 
@@ -679,7 +672,10 @@ foreach ($images as $image) {
 
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
-            
+
+            <div class="petite-mention margin-0">
+                <p><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
+            </div> 
 
             <!-- GESTION DE LA PUBLICTION DES AVIS -->
 
@@ -813,34 +809,31 @@ foreach ($images as $image) {
 
                 <div class="fond-blocs-avis">
                     <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
-                    <div class="display-ligne-espace">
+                    <div class="display-ligne">
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                        <div class="display-notation">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                        <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                        <div class="display-ligne">
+
+                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+
+                            <?php } 
+
+                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+
+                            <?php } ?>
+
                         </div>
                     </div>
 
-                    <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
                     <div class="display-ligne">
-                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?></strong></p>
-
-                        <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
-
-                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile">
-
-                        <?php } 
-
-                        for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
-
-                            <img src="/images/universel/icones/etoile-grise.png" class="etoile">
-
-                        <?php }
-
-                        $publication = explode(' ', $dateAvis[$compteur]['date']);
-                        $datePub = explode('-', $publication[0]); ?>
-                        <p><strong>Publié le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></strong></p>
+                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                              $datePass = explode('-', $passage[0]); ?>
+                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -852,7 +845,7 @@ foreach ($images as $image) {
 
                                 <?php if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
 
-                                    <p><strong><?php echo htmlentities($n['nom_note']) . " : " ?></strong></p>
+                                    <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
 
                                     <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
 
@@ -876,13 +869,6 @@ foreach ($images as $image) {
 
                     <?php } ?>
 
-                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
-                    <div class="display-ligne">
-                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                            $datePass = explode('-', $passage[0]); ?>
-                        <p>Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></p>
-                    </div>
-
                     <div class="display-ligne">                        
 
                         <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
@@ -891,67 +877,41 @@ foreach ($images as $image) {
 
                         <?php } ?>
 
-                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
                     </div>
 
-                    <!-- <?php //if(!empty($reponse[$compteur]['texte'])) { ?>
-                        <div class="reponse">
-                            <div class="display-ligne-espace">
-                                <p class="titre-avis"><?php //echo htmlentities($compte['denomination']) ?></p>
-                                <p><strong>⁝</strong></p>
-                            </div>
-                            <div class="display-ligne-espace">
-                                <div class="display-ligne">
-                                    <?php //$rep = explode(' ', $dateReponse[$compteur]['date']);
-                                    //$dateRep = explode('-', $rep[0]); 
-                                    //$heureRep = explode(':', $rep[1]); ?>
-                                    <p class="indentation"><strong>Répondu le <?php //echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?> à <?php //echo htmlentities($heureRep[0] . "H"); ?></strong></p>
-                                    <p class="transparent">.</p>
-                                </div>
-                            </div>
-                            <p><?php //echo htmlentities($reponse[$compteur]['texte']) ?></p>
+                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
+                    <div class="display-ligne-espace">
+                        <div class="petite-mention">
+                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                $datePub = explode('-', $publication[0]); ?>
+                            <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                         </div>
-                    <?php //} else { ?>
-                        <form id="avisForm-<?php //echo $a['id_avis']; ?>" class="avis-form" action="index.php?id=<?php //echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data">
-                            <h2>Répondre à <?php //echo htmlentities($membre[$compteur]['pseudo']); ?></h2>
-                            <div class="display-ligne-espace">
-                                <textarea id="reponse-<?php //echo $a['id_avis']; ?>" name="reponse" required></textarea><br>
-                                <p class="transparent">.</p>
+
+                        <div class="display-ligne">
+                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                        </div>
+                    </div>
+
+                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+
+                        <div class="reponse">
+                            <div class="display-ligne">
+                                <img src="/images/universel/icones/reponse-orange.png">
+                                <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
-                            <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience...</em></p>
-                            <button type="submit" name="submit-reponse" value="true">Publier</button>
-                        </form>
-                        
-                        <?php /*if (!empty($reponse)) {
-                            if (isset($_POST['reponse'])) {
-                                $reponse = htmlentities($_POST['reponse']);
-                                print_r($reponse);
-                            } 
-                            $id_avis = $a['id_avis']; 
-                            $publie_le = date('Y-m-d H:i:s');                             
-                            try {
-                                // Connexion à la base de données
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                // Insérer la date de publication
-                                $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                                $stmtInsertionDateReponse->execute([$publie_le]);
-                                $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
 
-                                // Insérer la réponse liée à l'avis
-                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_avis, texte, publie_le) VALUES (?, ?, ?)";
-                                $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                $stmtInsertionReponse->execute([$id_avis, $reponse, $idDateReponse]);
-
-                            } catch (PDOException $e) {
-                                echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
-                            }
-                        }
-                    } */?> -->
-
+                            <div class="display-ligne marge-reponse petite-mention">
+                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                      $dateRep = explode('-', $rep[0]); 
+                                      $heureRep = explode(':', $rep[1]); ?>
+                                <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </div>  
             <?php $compteur++; 
             } ?>  
