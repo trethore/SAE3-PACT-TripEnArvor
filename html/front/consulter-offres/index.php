@@ -553,7 +553,6 @@ try {
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
                         let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
-                        console.log(dateA);
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -563,7 +562,6 @@ try {
                             dateA = dateObject.getTime();
                         }
                         let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
-                        console.log(dateB);
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {

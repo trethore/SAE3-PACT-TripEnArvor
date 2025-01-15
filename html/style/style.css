@@ -4634,7 +4634,7 @@ input[type="tel"] {
     color: var(--noir);
 }
 
-.liste-front .offre span {
+.description-offre span {
     color: var(--violet-principal);
     text-decoration: underline;
 }
@@ -4658,7 +4658,7 @@ input[type="tel"] {
     background-color: transparent !important;
 
     left: 0 !important;
-    top: -1em !important;
+    top: 1.5em !important;
 }
 
 .liste-front .etoiles img {
