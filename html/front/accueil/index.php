@@ -121,27 +121,6 @@ if (!isset($_SESSION)) {
         ?>
 
         <section>
-            <!-- <div class="carousel">
-                <div class="carousel-images">
-                    <?php foreach ($ids as $offre) {
-                        $id = $offre["id_offre"];
-                        $titre = $offre["titre"];
-                        $note = $offre["note"]; ?>
-                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
-                        </a>
-                    <?php } ?>
-                </div>
-                <div>
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
-                <p class="titre" id="carousel-titre"></p>
-            </div> -->
         <div class="carousel">
             <div class="carousel-slides">
 <?php
@@ -200,28 +179,6 @@ foreach ($ids as $offre) {
         <h2>Nouveautés</h2>
 
         <section>
-            <!-- <div class="carousel">
-                <div class="carousel-images">
-                    <?php foreach ($ids_nouv as $offre_nouv) {
-                        $id = $offre_nouv["id_offre"];
-                        $titre = $offre_nouv["titre"];
-                        $note = $offre_nouv["note"]; ?>
-
-                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_nouv["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_nouv["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
-                        </a>
-                    <?php } ?>
-                </div>
-                <div>
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
-                <p class="titre" id="carousel-titre"></p>
-            </div> -->
             <div class="carousel">
             <div class="carousel-slides">
 <?php
@@ -279,28 +236,6 @@ foreach ($ids_nouv as $offre) {
         <h2>Consultés Récemment</h2>
 
         <section>
-            <!-- <div class="carousel">
-                <div class="carousel-images">
-                <?php foreach ($ids_consulte as $offre_consulte) {
-                        $id = $offre_consulte["id_offre"];
-                        $titre = $offre_consulte["titre"];
-                        $note = $offre_consulte["note"]; ?>
-
-                        <a href="/front/consulter-offre/index.php?id=<?php echo $offre_consulte["id_offre"]; ?>">
-                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre_consulte["id_offre"])) ?>" alt="Image" data-titre="<?php echo htmlentities($titre); ?>" data-note="<?php echo htmlentities($note); ?>">
-                        </a>
-                    <?php } ?>
-                </div>
-                <div>
-                    <div class="arrow-left">
-                        <img src="/images/universel/icones/fleche-gauche.png" alt="Flèche navigation" class="prev">
-                    </div>
-                    <div class="arrow-right">
-                        <img src="/images/universel/icones/fleche-droite.png" alt="Flèche navigation" class="next">
-                    </div>
-                </div>
-                <p class="titre" id="carousel-titre"></p>
-            </div> -->
             <div class="carousel">
             <div class="carousel-slides">
 <?php
@@ -388,62 +323,6 @@ foreach ($ids_consulte as $offre) {
             Redden's, Inc.
         </div>
     </footer>
-
-    <!-- <script>
-        /* document.querySelectorAll('.carousel').forEach(carousel => {
-            const images = carousel.querySelector('.carousel-images');
-            const prevButton = carousel.querySelector('.prev');
-            const nextButton = carousel.querySelector('.next');
-            const titreElement = carousel.querySelector('.titre');
-
-            let currentIndex = 0;
-
-            function updateCarousel() {
-                const width = images.clientWidth;
-                images.style.transform = `translateX(-${currentIndex * width}px)`;
-
-                const currentAnchor = images.children[currentIndex];
-                const imgElement = currentAnchor.querySelector('img');
-                const titre = imgElement.dataset.titre || "Titre indisponible";
-                const note = parseFloat(imgElement.dataset.note) || 0;
-
-                let starsHTML = '';
-                if (note === 0) {
-                    starsHTML = "Pas d'avis disponibles.";
-                } else {
-                    etoilesPleines = Math.floor(note);
-                    demiEtoile = (note - etoilesPleines) == 0.5 ? 1 : 0;
-                    etoilesVides = 5 - etoilesPleines - demiEtoile;
-
-                    for (i = 0; i < etoilesPleines; i++) {
-                        starsHTML += '<img src="/images/frontOffice/etoile-pleine.png" alt="Star pleine">';
-                    }
-
-                    if (demiEtoile) {
-                        starsHTML += '<img src="/images/frontOffice/etoile-moitie.png" alt="Star moitie">';
-                    }
-
-                    for (i = 0; i < etoilesVides; i++) {
-                        starsHTML += '<img src="/images/frontOffice/etoile-vide.png" alt="Star vide">';
-                    }
-                }
-
-                titreElement.innerHTML = `${titre} ${starsHTML}`;
-            }
-
-            prevButton.addEventListener('click', () => {
-                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.children.length - 1;
-                updateCarousel();
-            });
-
-            nextButton.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % images.children.length;
-                updateCarousel();
-            });
-
-            updateCarousel();
-        }); */
-    </script> -->
     <div class="telephone-nav">
         <div class="nav-content">
             <a href="/front/accueil">
