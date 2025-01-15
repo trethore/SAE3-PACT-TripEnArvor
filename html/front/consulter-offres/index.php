@@ -17,34 +17,24 @@ try {
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
-    // Catégorie
     foreach ($offres as &$offre) {
         $offre['categorie'] = getTypeOffre($offre['id_offre']);
     }
 
-    // Note
     foreach ($offres as &$offre) {
         $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
     
-    // Nombre notes
     foreach ($offres as &$offre) {
         $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
     }
 
-    // Prix
     foreach ($offres as &$offre) {
         $offre['prix'] = getPrixPlusPetit($offre['id_offre']);
         if (getPrixPlusPetit($offre['id_offre']) == null) {
             $offre['prix'] = 0;
         }
     }
-
-    // Date
-    foreach ($offres as &$offre) {
-        $offre['date'] = getOffre($offre['id_offre'])['date'];
-    }
-
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -198,7 +188,6 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
-                                <option value="create-desc">Créé récemment</option>
                             </select>
                         </div>
                     </div>
@@ -332,8 +321,6 @@ try {
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
 
-                                        <p>Créée le <?php $tab["date"] ?></p>
-
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
                                         <?php } else { ?>
@@ -347,7 +334,7 @@ try {
                     }
                 }
             ?>
-        </section>        
+
     </main>
 
     <footer>
@@ -540,8 +527,36 @@ try {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
+
                 } if (selectedValue === "create-desc") {
-                    pass
+                    offers.sort((a, b) => {
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateA = dateObject.getTime();
+                        }
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [datePart, timePart] = dateA.split(" ");
+                            const [day, month, year] = datePart.split("-").map(Number);
+                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+                            dateB = dateObject.getTime();
+                        }
+                        return dateB - dateA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+
                 }
             };
 

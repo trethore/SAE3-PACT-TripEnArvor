@@ -3681,7 +3681,7 @@ header>div>a:hover {
         BLOCS AVIS                                                   
 *************************/
 .consulter-offre-back #avis > div > h2 {
-    margin: 0;
+    margin-bottom: 0;
 }
 
 .consulter-offre-back .fond-blocs-avis {
@@ -3786,12 +3786,7 @@ header>div>a:hover {
 ***************************************************************************************/
 
 .creer-offre #labeldispo,
-.creer-offre #dispo,
-.creer-offre #labeladresse,
-.creer-offre #adresse,
-.creer-offre #cp,
-.creer-offre div[id="options"],
-.creer-offre #labelcp {
+.creer-offre #dispo{
     display: none;
 }
 
@@ -4141,7 +4136,7 @@ input[type="tel"] {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     color: var(--violet-principal);
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
@@ -4173,7 +4168,7 @@ input[type="tel"] {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
 }
@@ -4452,7 +4447,7 @@ input[type="tel"] {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4466,7 +4461,7 @@ input[type="tel"] {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -4478,7 +4473,7 @@ input[type="tel"] {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4492,7 +4487,7 @@ input[type="tel"] {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -4785,6 +4780,19 @@ input[type="tel"] {
     border-radius: 30px 40px;
 }*/
 
+
+.accueil header a {
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.accueil footer a {
+    display: contents;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
 
 
 

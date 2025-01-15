@@ -20,38 +20,6 @@ try {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
 
-if (isset($_POST['reponse'])) {
-
-    $reponse = htmlentities($_POST['reponse']);
-    print_r($reponse); 
-
-    $publie_le = date('Y-m-d H:i:s');  
-
-    try {
-
-        // Connexion à la base de données
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Insérer la date de publication
-        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-        $stmtInsertionDateReponse->execute([$publie_le]);
-        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-        // Insérer la réponse liée à l'avis
-        $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
-        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-        $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
-
-    } catch (PDOException $e) {
-
-        echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
-
-    }
-
-}
 
 date_default_timezone_set('Europe/Paris');
 
@@ -157,10 +125,10 @@ try {
 // ===== GESTION DU NOMBRE DE DATE (EN LIGNE / HORS LIGNE) ===== //
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
-    $countDateMHL = countDatesOffreHorsLigne($id_offre_cible);
+    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
-    $countDateMEL = countDatesOffreEnLigne($id_offre_cible);
+    $dateMEL = getDateOffreEnLigne($id_offre_cible);
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -234,13 +202,25 @@ try {
     <div class="fond-bloc display-ligne-espace">
         <div class="bouton-modifier"> 
             <div id="confirm">
-                <p>Voulez-vous mettre votre offre hors ligne ?</p>
+
+                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+
+                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
+
+                <?php } else { ?>
+
+                    <p>Voulez-vous mettre votre offre en ligne ?</p>
+
+                <?php } ?>
+
                 <div class="close">
                     <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
 
                     <?php $date = date('Y-m-d H:i:s'); 
+
                     if (isset($_POST['mettre_hors_ligne'])) {
-                        if ($countDateMHL == 0) {
+
+                        if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -255,18 +235,12 @@ try {
                                 $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
                                 $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
                                 $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-
-                                //Suppression de la date de mise en ligne
-                                $reqSuppressionDateMEL = "DELETE FROM sae._offre_dates_mise_en_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                                $stmtSuppressionDateMEL = $dbh->prepare($reqSuppressionDateMEL);
-                                $stmtSuppressionDateMEL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                                $stmtSuppressionDateMEL->execute();
             
                             } catch (PDOException $e) {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
                             }
                         
-                        } else if ($countDateMEL == 0) {
+                        } else if ($dateMHL > $idDateMEL) {
                         
                             try {
                                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -282,12 +256,6 @@ try {
                                 $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
                                 $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
                                 $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-
-                                //Suppression de la date de mise hors ligne
-                                $reqSuppressionDateMHL = "DELETE FROM sae._offre_dates_mise_hors_ligne WHERE id_date IN (SELECT id_date FROM sae._date WHERE id_offre = :id_offre)";
-                                $stmtSuppressionDateMHL = $dbh->prepare($reqSuppressionDateMHL);
-                                $stmtSuppressionDateMHL->bindParam(':id_offre', $id_offre_cible, PDO::PARAM_INT);
-                                $stmtSuppressionDateMHL->execute();
             
                             } catch (PDOException $e) {
                                 echo "Erreur lors de l'insertion : " . $e->getMessage();
@@ -655,8 +623,6 @@ foreach ($images as $image) {
 
             foreach ($avis as $a) { ?>
 
-                <?php global $a; ?>
-
                 <div class="fond-blocs-avis">
                     <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                     <div class="display-ligne">
@@ -773,6 +739,39 @@ foreach ($images as $image) {
                             </div>
                             <button type="submit" name="submit-reponse" value="true">Répondre</button>
                         </form>
+
+                        <?php if (isset($_POST['reponse'])) {
+
+                            $reponse = htmlentities($_POST['reponse']);
+                            print_r($reponse); 
+
+                            $publie_le = date('Y-m-d H:i:s');  
+
+                            try {
+
+                                // Connexion à la base de données
+                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                // Insérer la date de publication
+                                $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                $stmtInsertionDateReponse->execute([$publie_le]);
+                                $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                // Insérer la réponse liée à l'avis
+                                $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
+                                $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
+
+                            } catch (PDOException $e) {
+
+                                echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+
+                            }
+
+                        } ?>
 
                     <?php } ?> 
 
