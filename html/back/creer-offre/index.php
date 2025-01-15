@@ -185,7 +185,7 @@ try {
 
                 <tr>
                     <td><label id="labeladresse" for="adresse">Adresse</label></td>
-                    <td colspan="3"><input type="text" id="num_et_nom_de_voie" name="num_et_nom_de_voie" placeholder="(ex : 1 rue Montparnasse)" /></td>
+                    <td colspan="3"><input type="text" id="num_et_nom_de_voie" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
                 </tr>
                 <tr>
                     <td><label for="cp" id="labelcp">Code Postal </label></td>
@@ -582,7 +582,7 @@ try {
                 //insertion dans adresse
                 $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
                 $stmt_adresse = $dbh->prepare($requete_adresse);
-                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
                 $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
