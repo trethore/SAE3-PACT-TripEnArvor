@@ -212,7 +212,7 @@ try {
                     <p>Voulez-vous mettre votre offre en ligne ?</p>
 
                 <?php } ?>
-                
+
                 <div class="close">
                     <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
 
@@ -775,7 +775,7 @@ try {
             <?php $compteur++; 
             } 
             ?>  
-
+            
         </section>                
          
         <div class="navigation display-ligne-espace">
