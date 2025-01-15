@@ -286,21 +286,21 @@ try {
 
     <main id="body">
 
-        <section id="top" class="fond-blocs bordure">
+        <section class="fond-blocs bordure">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="carousel">
             <div class="carousel-slides">
-<?php
-foreach ($images as $image) {
-?>
-                <div class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
-                </div>
-<?php
-}
-?>
+                <?php
+                foreach ($images as $image) {
+                ?>
+                    <div class="slide">
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                    </div>
+                <?php
+                }
+                ?>
             </div>
             <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
             <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
@@ -785,7 +785,7 @@ foreach ($images as $image) {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'">^</button>
+            <button id="remonte" onclick="location.href='#'">^</button>
         </div>
 
     </main>
