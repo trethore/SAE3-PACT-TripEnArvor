@@ -275,9 +275,9 @@ try {
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
 
-            <?php if ($dateMiseHorsLigne != True) { ?>
+            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <?php } else { ?>
+            <?php } else if ($dateMHL > $dateMEL) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
             <?php } ?>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
