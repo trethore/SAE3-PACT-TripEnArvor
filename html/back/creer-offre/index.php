@@ -580,14 +580,13 @@ try {
                 if (($cp != null)&&($num_et_nom_de_voie!= null)) {
                     
                 }
-                $dbh->beginTransaction();
+                
                 //insertion dans adresse
-                $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
+                $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?) returning id_adresse;";
                 $stmt_adresse = $dbh->prepare($requete_adresse);
                 $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
                 $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
-                $dbh->commit();
                 print("adresse : " . $id_adresse);
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
                 // $stmt_verif = $dbh->prepare($requete_verif);
