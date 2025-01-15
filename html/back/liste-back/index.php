@@ -275,7 +275,7 @@ try {
                             } else {
                                 $etoilesPleines = 0;
                                 $demiEtoile = 0;
-                                $etoilesVides = 0;
+                                $etoilesVides = 5;
                             }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
