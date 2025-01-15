@@ -898,7 +898,7 @@ foreach ($images as $image) {
 
                         <div class="reponse">
                             <div class="display-ligne">
-                                <img src="/images/universel/icones/reponse-orange.png">
+                                <img src="/images/universel/icones/reponse-violet.png">
                                 <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
