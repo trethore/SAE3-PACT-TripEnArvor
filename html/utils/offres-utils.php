@@ -705,16 +705,16 @@
     }
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
-    function countDatesOffreHorsLigne($id_offre) {
+    function getDateOffreHorsLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDate = "SELECT COUNT(*) AS date_count FROM sae._date NATURAL JOIN sae._offre_dates_mise_hors_ligne  WHERE id_offre = :id_offre";
+        $reqDate = "SELECT date FROM sae._date NATURAL JOIN sae._offre_dates_mise_hors_ligne  WHERE id_offre = :id_offre ORDER BY date DESC LIMIT 1";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDate = $conn->prepare($reqDate);
             $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDate->execute();
-            $date = $stmtDate->fetch(PDO::FETCH_ASSOC)['date_count'];
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $date;
         } catch (Exception $e) {
@@ -724,16 +724,16 @@
     }
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
-    function countDatesOffreEnLigne($id_offre) {
+    function getDateOffreEnLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDate = "SELECT COUNT(*) AS date_count FROM sae._date NATURAL JOIN sae._offre_dates_mise_en_ligne  WHERE id_offre = :id_offre";
+        $reqDate = "SELECT date FROM sae._date NATURAL JOIN sae._offre_dates_mise_en_ligne  WHERE id_offre = :id_offre ORDER BY date DESC LIMIT 1";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDate = $conn->prepare($reqDate);
             $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDate->execute();
-            $date = $stmtDate->fetch(PDO::FETCH_ASSOC)['date_count'];
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $date;
         } catch (Exception $e) {
@@ -835,26 +835,6 @@
         } catch (PDOException $e) {
             echo "Erreur lors de la récupération des offres : " . $e->getMessage();
             return [];
-        }
-    }
-
-    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication d'une offre ===== //
-    function getDatePublicationOffre($id_offre) {
-        global $driver, $server, $dbname, $user, $pass;
-        // SELECT sae._date.date FROM sae._offre JOIN sae._offre_dates_mise_en_ligne ON sae._offre.id_offre = sae._offre_dates_mise_en_ligne.id_offre JOIN sae._date ON sae._offre_dates_mise_en_ligne.id_date = sae._date.id_date WHERE sae._offre.id_offre = 19;
-        $reqDatePublicationOffre = "SELECT sae._date.date FROM sae._offre JOIN sae._offre_dates_mise_en_ligne ON sae._offre.id_offre = sae._offre_dates_mise_en_ligne.id_offre JOIN sae._date ON sae._offre_dates_mise_en_ligne.id_date = sae._date.id_date WHERE sae._offre.id_offre = :id_offre";
-        try {
-            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $conn->prepare("SET SCHEMA 'sae';")->execute();
-            $stmtDatePublicationOffre = $conn->prepare($reqDatePublicationOffre);
-            $stmtDatePublicationOffre->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
-            $stmtDatePublicationOffre->execute();
-            $datePublicationOffre = $stmtDatePublicationOffre->fetchAll(PDO::FETCH_ASSOC);
-            $conn = null;
-            return $datePublicationOffre;
-        } catch (Exception $e) {
-            print "Erreur !: " . $e->getMessage() . "<br>";
-            die();
         }
     }
     

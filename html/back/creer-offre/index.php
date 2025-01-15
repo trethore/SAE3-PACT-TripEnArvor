@@ -7,9 +7,9 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
     require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
-    function get_file_extension($abonnement) {
+    function get_file_extension($type) {
         $extension = '';
-        switch ($abonnement) {
+        switch ($type) {
             case 'image/png':
                 $extension = '.png';
                 break;
@@ -184,12 +184,12 @@ try {
 
 
                 <tr>
-                    <!-- <td><label id="labeladresse" for="adresse">Adresse</label></td> -->
-                    <td colspan="3"><input type="text" id="adresse" name="adresse" placeholder="(ex : 1 rue Montparnasse)" /></td>
+                    <td><label id="labeladresse" for="adresse">Adresse</label></td>
+                    <td colspan="3"><input type="text" id="num_et_nom_de_voie" name="num_et_nom_de_voie" placeholder="(ex : 1 rue Montparnasse)" /></td>
                 </tr>
                 <tr>
-                    <!-- <td><label for="cp" id="labelcp">Code Postal </label></td>
-                    <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td> -->
+                    <td><label for="cp" id="labelcp">Code Postal </label></td>
+                    <td><input type="text" id="cp" name="cp" placeholder="5 chiffres" size="local5" /></td>
                     <td><label for="ville">Ville <span class="required">*</span></label></td>
                     <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" required /></td>
                 </tr>
@@ -434,6 +434,20 @@ try {
                 $ville = $_POST['ville'];
             }
 
+            if(isset($_POST['num_et_nom_de_voie'])){
+                $num_et_nom_de_voie = $_POST['num_et_nom_de_voie'];
+            }else {
+                $num_et_nom_de_voie =null;
+            }
+            $comp_adresse = null; //null car pas implementé dans le form
+            $pays = "France";
+
+            if(isset($_POST['cp'])){
+                $cp = $_POST['cp'];
+            }else {
+                $cp = null;
+            }
+
             if (isset($_POST['gammedeprix'])) {
                 $gammedeprix = $_POST['gammedeprix'];
             }
@@ -466,6 +480,7 @@ try {
             }else {
                 $abonnement = "gratuit";
             }
+
             if (isset($_POST['presta'])) {
                 $presta = $_POST['presta'];
             }
@@ -561,6 +576,14 @@ try {
                     $stmt_image->execute([$fichier_img]);
 
                 }
+
+
+
+                //insertion dans adresse
+                $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
+                $stmt_adresse = $dbh->prepare($requete_adresse);
+                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
 
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
                 // $stmt_verif = $dbh->prepare($requete_verif);
@@ -683,10 +706,10 @@ try {
                                 }
                             
                                 // Insertion dans la vue offre_spectacle
-                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement, id_adresse)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent]); 
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent, $id_adresse]); 
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -700,7 +723,7 @@ try {
                                 }
     
                                 foreach ($tabtarifs as $key => $value) {
-                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+                                    $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix, id_offre ) VALUES (?, ?, ?);";
         
                                     // Préparation de la requête pour la vue tarif
                                     $stmt_tarif = $dbh->prepare($requete_tarif);
@@ -955,6 +978,7 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+            console.log(isIdProPrivee);
             
 
             if(isIdProPublique === true){
