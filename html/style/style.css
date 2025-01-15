@@ -3626,7 +3626,7 @@ header>div>a:hover {
     flex: 2.5;
 }
 
-.consulter-offre-back .bloc-tarif>div {
+.consulter-offre-back .bloc-tarif > div {
     display: flex;
 }
 
@@ -3665,16 +3665,6 @@ header>div>a:hover {
 
 .consulter-offre-back .bloc-ouverture>ul>li {
     list-style: none;
-}
-
-/**************************
-        BLOCS CARTE                                                   
-**************************/
-
-.consulter-offre-back .carte {
-    width: 1000px;
-    height: 750px;
-    margin: auto;
 }
 
 /*************************
@@ -3733,6 +3723,13 @@ header>div>a:hover {
     width: 40px;
     height: 40px;
     margin-left: 5px;
+}
+
+.consulter-offre-back .image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 10px;
 }
 
 /* Petite mention*/
