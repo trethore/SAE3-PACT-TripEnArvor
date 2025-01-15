@@ -269,8 +269,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/scripts/carousel.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -351,16 +350,21 @@ try {
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="carousel">
-                <div class="carousel-images">
-
-                    <?php foreach ($images as $image) { ?>
-
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
-
-                    <?php } ?>
-
+            <div class="carousel-slides">
+<?php
+foreach ($images as $image) {
+?>
+                <div class="slide">
+                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
                 </div>
-            </div>  
+<?php
+}
+?>
+            </div>
+            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+        </div>
+
 
             <div class="display-ligne-espace">
 
@@ -998,17 +1002,6 @@ try {
     </footer>
 
     <script>
-
-        let map = L.map('map').setView([47.497745757735, -2.772722737126], 13); 
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    
-        L.marker([47.497745757735, -2.772722737126]).addTo(map)
-            .bindPopup('Côté Plage<br>Sarzeau')
-            .openPopup();
-
         // Cibler les éléments
         const showFormButton = document.getElementById('showFormButton');
         const avisForm = document.getElementById('avisForm');
@@ -1025,36 +1018,6 @@ try {
             avisForm.style.display = 'none'; // Masque le formulaire
             showFormButton.style.display = 'block'; // Réaffiche le bouton
         });
-
-        const images = document.querySelector('.carousel-images');
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
-
-        let currentIndex = 0;
-
-        // Gestion du clic sur le bouton "Suivant"
-        nextButton.addEventListener('click', () => {
-        currentIndex++;
-        if (currentIndex >= images.children.length) {
-            currentIndex = 0; // Revenir au début
-        }
-        updateCarousel();
-        });
-
-        // Gestion du clic sur le bouton "Précédent"
-        prevButton.addEventListener('click', () => {
-        currentIndex--;
-        if (currentIndex < 0) {
-            currentIndex = images.children.length - 1; // Revenir à la fin
-        }
-        updateCarousel();
-        });
-
-        // Met à jour l'affichage du carrousel
-        function updateCarousel() {
-        const width = images.clientWidth;
-        images.style.transform = `translateX(-${currentIndex * width}px)`;
-        }
 
         function togglePouce(index, type, id) {
             console.log("index : " + index + ", type : " + type + "id :" + id);
