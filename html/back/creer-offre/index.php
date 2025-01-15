@@ -861,6 +861,10 @@ try {
                         die("Erreur de categorie!");
                     }
 
+                    if ($dbh->inTransaction()) {
+                        $dbh->commit();
+                    }
+                    
                     //insertion la date de mise en ligne de date
                     $date_en_ligne = date('Y-m-d H:i:s');
 
@@ -898,13 +902,13 @@ try {
                         if ($dbh->inTransaction()) {
                             $dbh->rollBack();
                         }
-                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                        print "Erreur PDO date : " . $e->getMessage() . "<br/>";
                         exit;
                     } catch (Exception $e) {
                         if ($dbh->inTransaction()) {
                             $dbh->rollBack();
                         }
-                        print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                        print "Erreur (autre exception)  date: " . $e->getMessage() . "<br/>";
                         exit;
                     }
                    
@@ -936,7 +940,7 @@ try {
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
                     
-                    if (!$dbh->inTransaction()) {
+                    if ($dbh->inTransaction()) {
                         $dbh->commit();
                     }
                     
