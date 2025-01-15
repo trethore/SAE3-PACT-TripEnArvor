@@ -4053,7 +4053,7 @@ header>div>a:hover {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     color: var(--violet-principal);
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
@@ -4085,7 +4085,7 @@ header>div>a:hover {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
 }
@@ -4364,7 +4364,7 @@ header>div>a:hover {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4378,7 +4378,7 @@ header>div>a:hover {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -4390,7 +4390,7 @@ header>div>a:hover {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4404,7 +4404,7 @@ header>div>a:hover {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
