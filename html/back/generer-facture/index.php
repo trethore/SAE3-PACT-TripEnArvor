@@ -23,19 +23,13 @@ if (isset($id_compte)) {
 }
 
 $reqCompte = "SELECT * from sae.compte_professionnel_prive where id_compte = :id_compte;";
-$reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
-	join sae._abonnement a on o.abonnement = a.nom_abonnement
-	join sae._facture f on o.id_offre = f.id_offre
-	join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
-	join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
-	join sae._date d on oml.id_date = d.id_date
-	where o.id_compte_professionnel = :id_comte;";
+$reqFacture = "";
 
 // Préparation et exécution de la requête
 $stmt = $conn->prepare($reqCompte);
 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
 $stmt->execute();
-$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -91,7 +85,6 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
             <thead>
                 <tr>
                     <th>Nom offre</th>
-                    <th>Type offre</th>
                     <th>Nb Jour</th>
                     <th>% TVA</th>
                     <th>Prix HT Journalier</th>
@@ -99,21 +92,20 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php // Préparation et exécution de la requête
-                $stmt = $conn->prepare($reqFactureAbonnement);
-                $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                $stmt->execute();
-                $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
-                foreach($factAbos as $factAbo) { ?>
                 <tr>
-                    <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
-                    <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
+                    <td>Restaurant coté plage</td>
                     <td>2</td>
                     <td>20%</td>
-                    <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                    <td>5.10€</td>
                     <td>22.30€</td>
                 </tr>
-                <?php } ?>
+                <tr>
+                    <td>Parc d'attraction vraiment wahou</td>
+                    <td>1</td>
+                    <td>20%</td>
+                    <td>24.75€</td>
+                    <td>5.10€</td>
+                </tr>
             </tbody>
         </table>
     </article>
