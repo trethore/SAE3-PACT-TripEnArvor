@@ -771,40 +771,11 @@ foreach ($images as $image) {
 
                             }
 
-                        } ?>
-
-                        <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id'])?>" method="post" enctype="multipart/form-data">
-                            <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
-                            <div class="display-ligne">
-                                <textarea id="reponse" name="reponse-<?php echo htmlentities($membre[$compteur]['id_membre']); ?>" placeholder="Merci pour votre retour ..." required></textarea><br>
-                            </div>
-                            <button type="submit" name="submit-reponse" value="true">Répondre</button>
-                        </form>
-
-                    <?php } else { ?>
-
-                        <div class="reponse">
-                            <div class="display-ligne">
-                                <img src="/images/universel/icones/reponse-orange.png">
-                                <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
-                            </div>
-
-                            <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
-
-                            <div class="display-ligne marge-reponse petite-mention">
-                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
-                                      $dateRep = explode('-', $rep[0]); 
-                                      $heureRep = explode(':', $rep[1]); ?>
-                                <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
-                            </div>
-                        </div>
-
-                    } ?> 
-
+                        } 
+                    } ?>
                 </div>  
-            <?php $compteur++; 
-            } 
-            ?>  
+                <?php $compteur++; 
+            } ?>  
 
         </section>                
          
