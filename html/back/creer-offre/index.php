@@ -7,9 +7,9 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
     require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
-    function get_file_extension($abonnement) {
+    function get_file_extension($type) {
         $extension = '';
-        switch ($abonnement) {
+        switch ($type) {
             case 'image/png':
                 $extension = '.png';
                 break;
@@ -463,8 +463,10 @@ try {
             }
             if (isset($_POST['letype'])&&($isIdProPrivee)) {
                 $abonnement = $_POST['letype'];
+                print("rrentre dans le if");
             }else {
                 $abonnement = "gratuit";
+                print("rentre dans le else");
             }
             print("abonement : ". $abonnement);
 
