@@ -937,9 +937,9 @@ try {
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
                     
-                    if ($dbh->inTransaction()) {
-                        $dbh->commit();
-                    }
+                    
+                    $dbh->commit();
+                    
                     // Fermeture de la connexion
                     $dbh = null;
 
