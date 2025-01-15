@@ -268,9 +268,11 @@ try {
                         ?>
                         <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
                         <?php
-                            $etoilesPleines = floor($note);
-                            $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
-                            $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            if ($note != 0) {
+                                $etoilesPleines = floor($note);
+                                $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                 ?>
@@ -478,8 +480,8 @@ try {
                 } if (selectedValue === "note-asc") {
                     offers.sort((a, b) => {
                         let noteA = a.querySelector(".note-avis").textContent.trim();
-                        let dateB = b.querySelector(".note-avis").textContent.trim();
-                        return dateB - dateA;
+                        let noteB = b.querySelector(".note-avis").textContent.trim();
+                        return noteB - noteA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
