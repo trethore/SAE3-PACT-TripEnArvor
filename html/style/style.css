@@ -3586,9 +3586,16 @@ header>div>a:hover {
 /*************************
         BLOCS AVIS                                                   
 *************************/
+
 .consulter-offre-back #avis > div > h2 {
     margin: 0;
 }
+
+.consulter-offre-back .bordure-top {
+    border-top: 3px solid var(--orange-principale);
+}
+
+/* Style avis */
 
 .consulter-offre-back .fond-blocs-avis {
     background: var(--blanc);
@@ -3608,8 +3615,11 @@ header>div>a:hover {
     margin: 0 0 0 75px;
 }
 
-.consulter-offre-back .bordure-top {
-    border-top: 3px solid var(--orange-principale);
+.consulter-offre-back .image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-left: 10px;
 }
 
 /* Pouces avis */

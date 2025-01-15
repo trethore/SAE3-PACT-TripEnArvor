@@ -461,11 +461,15 @@ try {
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
             }
-            if (isset($_POST['type'])&&($isIdProPrivee)) {
-                $type = $_POST['type'];
+            if (isset($_POST['letype'])&&($isIdProPrivee)) {
+                $abonnement = $_POST['letype'];
+                print("rrentre dans le if");
             }else {
-                $type = "gratuit";
+                $abonnement = "gratuit";
+                print("rentre dans le else");
             }
+            print("abonement : ". $abonnement);
+
             if (isset($_POST['presta'])) {
                 $presta = $_POST['presta'];
             }
@@ -588,7 +592,7 @@ try {
                         $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -641,7 +645,7 @@ try {
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $type]);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement]);
                            
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -686,7 +690,7 @@ try {
                                 $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
                                             VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent]); 
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent]); 
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -755,7 +759,7 @@ try {
                             $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
                                         VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent]); // Utilisation de $idDateEvent
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
@@ -820,7 +824,7 @@ try {
 
                             $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]); 
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement]); 
 
 
                         }
@@ -922,14 +926,23 @@ try {
 
 
 
-                echo "<script>
-                        
-                        alert('Offre créée ! Vous allez être redirigé vers la page de consultation.');
-                        
-                        setTimeout(function() {
-                            window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
-                        }, 2000); // 2000 ms = 2 secondes
-                </script>"; //if premium afficher a changer si il faut voir les erreurs
+                echo  "  <script>
+                        const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
+                        if (redirect) {
+                            window.location.href = '/back/consulter-offre/index.php?id=$id_offre'
+                        }
+                </script>; //if premium afficher a changer si il faut voir les erreurs ";
+                
+                // // REMETTRE LE BON POP UP
+                // alert('Offre créée ! Vous allez être redirigé vers la page de consultation.');
+                
+                // // Redirection automatique après un court délai
+                // setTimeout(function() {
+                //     window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
+                // }, 2000); // 2000 ms = 2 secondes" 
+
+                
+                
 
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
@@ -946,6 +959,7 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
             console.log(isIdProPublique);
+            console.log(isIdProPrivee);
             
 
             if(isIdProPublique === true){

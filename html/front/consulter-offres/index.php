@@ -61,7 +61,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -361,7 +360,8 @@ try {
                     }
                 }
             ?>
-        </section>        
+        </section>
+        <iframe id="sofa-player-embed-889259" src="https://widgets.sofascore.com/fr/embed/player/889259?widgetTheme=light" style=height:830px!important;max-width:730px!important;width:100%!important; frameborder="0" scrolling="no"></iframe>        
     </main>
 
     <footer>
@@ -556,9 +556,9 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        const dateA = new Date(a.querySelector(".date_publication_offre span").trim());
-                        const dateB = new Date(b.querySelector(".date_publication_offre span").trim());
-                        return dateA - dateB;
+                        const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
+                        const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
+                        return dateA < dateB;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));

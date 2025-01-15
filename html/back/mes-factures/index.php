@@ -35,7 +35,6 @@ $reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture 
     <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-
 </head>
 <body class="back factures">
 <?php
@@ -117,7 +116,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/" target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?> - Abonnement de "<?php echo $facture["titre"] ?>"</p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?> - Abonnement de "<?php echo $facture["titre"] ?>"</p></a>
                     </li>
                 <?php
                 }
