@@ -5081,6 +5081,18 @@ input[type="tel"] {
         background: var(--blanc);
     }
 
+    /****************************************************
+                       acceuil
+    *****************************************************/
+
+    .accueil h2 {
+        margin: 2% auto;
+    }
+
+    .carousel {
+        height: 70vh;
+    }
+
 }
 
 @media screen and (max-width: 1100px) {
