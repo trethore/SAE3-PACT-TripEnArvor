@@ -345,7 +345,7 @@ try {
                                             }
                                         ?>
 
-                                        <p class="date_publication_offre">Créée le <div><?php echo $date; ?></div></p>
+                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
@@ -555,7 +555,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        const dateA = new Date(a.querySelector(".date_publication_offre div").textContent.trim());
+                        const dateA = new Date(a.querySelector(".date_publication_offre span").textContent.trim());
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -566,7 +566,7 @@ try {
                             const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
                             dateA = dateObject.getTime();
                         }
-                        const dateB = new Date(b.querySelector(".date_publication_offre div").textContent.trim());
+                        const dateB = new Date(b.querySelector(".date_publication_offre span").textContent.trim());
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
