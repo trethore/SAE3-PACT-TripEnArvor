@@ -982,8 +982,7 @@ foreach ($images as $image) {
             showFormButton.style.display = 'block'; // Réaffiche le bouton
         });
 
-        // GESTION DES POUCES 
-            // GESTION DES POUCES
+        // GESTION DES POUCES
 
         // Cibler tous les éléments avec les classes correspondantes
         const pouceHauts = document.querySelectorAll('.pouceHaut');
@@ -1012,7 +1011,8 @@ foreach ($images as $image) {
                 const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling; // Nombre de pouces bas
                 const pouceBas = pouceHaut.nextElementSibling.nextElementSibling.nextElementSibling; // Image du pouce bas
 
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null; // Initialiser l'état si absent
+                // Initialiser l'état si absent
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
 
                 let currentHaut = parseInt(nbPouceHaut.textContent);
                 let currentBas = parseInt(nbPouceBas.textContent);
@@ -1046,7 +1046,8 @@ foreach ($images as $image) {
                 const nbPouceBas = pouceBas.previousElementSibling; // Nombre de pouces bas
                 const pouceHaut = pouceBas.previousElementSibling.previousElementSibling.previousElementSibling; // Image du pouce haut
 
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null; // Initialiser l'état si absent
+                // Initialiser l'état si absent
+                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
 
                 let currentHaut = parseInt(nbPouceHaut.textContent);
                 let currentBas = parseInt(nbPouceBas.textContent);
