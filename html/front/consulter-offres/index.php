@@ -446,6 +446,7 @@ try {
 
                 // Filter by Availability
                 const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
+                console.log(availabilityInput);
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
