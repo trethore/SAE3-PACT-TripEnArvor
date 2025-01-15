@@ -168,6 +168,7 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="note-asc">Meilleure note</option>
                             </select>
                         </div>
                     </div>
@@ -264,10 +265,9 @@ try {
                     <div class="etoiles">
                         <?php 
                             $note = getNoteMoyenne($row['id_offre']);
-                            echo "<pre>";
-                            print_r($row["id_offre"]);
-                            print_r($note);
-                            echo "</pre>";
+                        ?>
+                        <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
+                        <?php
                             $etoilesPleines = floor($note);
                             $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
                             $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
@@ -467,6 +467,19 @@ try {
                         const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
                         return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "default") {
+                    offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+
+                } if (selectedValue === "note-asc") {
+                    offers.sort((a, b) => {
+                        let noteA = a.querySelector(".note-avis").textContent.trim();
+                        let dateB = b.querySelector(".note-avis").textContent.trim();
+                        return dateB - dateA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
