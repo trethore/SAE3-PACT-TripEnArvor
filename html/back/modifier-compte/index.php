@@ -22,20 +22,17 @@ $typeCompte = getTypeCompte($id_compte);
 
 switch ($typeCompte) {
     case 'proPublique':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse 
+        $reqCompte = "SELECT * from sae.compte_professionnel_publique cp 
+                        join sae._adresse a on cp.id_adresse = a.id_adresse 
                         where cp.id_compte = :id_compte;";
         break;
 
     case 'proPrive':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse
-                        join sae._compte_professionnel_prive cpp on c.id_compte = cpp.id_compte
+        $reqCompte = "SELECT * from sae.compte_professionnel_prive cp 
+                        join sae._adresse a on cp.id_adresse = a.id_adresse
                         where cp.id_compte = :id_compte;";
         break;
-    
+
     default:
         break;
 }
@@ -357,7 +354,7 @@ try {
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
@@ -386,7 +383,7 @@ try {
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
