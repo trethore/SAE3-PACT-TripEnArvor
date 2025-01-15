@@ -889,8 +889,11 @@ foreach ($images as $image) {
                         </div>
 
                         <div class="display-ligne">
-                            <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                            <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce"> 
+                            <p id="nbPouceHaut"><?php echo htmlentities($a['nb_pouce_haut']); ?></p>
+                            <img src="/images/universel/icones/pouce-up.png" class="pouce" id="pouceHaut">
+
+                            <p id="nbPouceBas"><?php echo htmlentities($a['nb_pouce_bas']); ?></p>
+                            <img src="/images/universel/icones/pouce-down.png" class="pouce" id="pouceBas">
                         </div>
                     </div>
 
@@ -979,43 +982,35 @@ foreach ($images as $image) {
             showFormButton.style.display = 'block'; // Réaffiche le bouton
         });
 
-        function togglePouce(index, type, id) {
-            console.log("index : " + index + ", type : " + type + "id :" + id);
-            const pouceHaut = document.getElementById(`pouce_haut_${index}`);
-            const pouceBas = document.getElementById(`pouce_bas_${index}`);
+        
+        // Sélection des éléments
+        const pouceHaut = document.getElementById('pouceHaut');
+        const pouceBas = document.getElementById('pouceBas');
+        const nbPouceHaut = document.getElementById('nbPouceHaut');
+        const nbPouceBas = document.getElementById('nbPouceBas');
 
-            if (type === 'haut') {
-                if (pouceHaut.src.endsWith("/images/universel/icones/pouce-up.png")) {
-                    // Activate pouce haut and deactivate pouce bas
-                    pouceHaut.src = "/images/universel/icones/pouce-up-hover.png";
-                    pouceBas.src = "/images/universel/icones/pouce-down.png";
-                    <?php
-                        // updatePouce(id, 'haut', 'add');
-                    ?>
-                } else {
-                    // Deactivate pouce haut
-                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
-                    <?php
-                        // updatePouce(id, 'haut', 'sub');
-                    ?>
-                }
-            } else if (type === 'bas') {
-                if (pouceBas.src.endsWith("/images/universel/icones/pouce-down.png")) {
-                    // Activate pouce bas and deactivate pouce haut
-                    pouceBas.src = "/images/universel/icones/pouce-down-hover.png";
-                    pouceHaut.src = "/images/universel/icones/pouce-up.png";
-                    <?php
-                        // updatePouce(id, 'bas', 'add');
-                    ?>
-                } else {
-                    // Deactivate pouce bas
-                    pouceBas.src = "/images/universel/icones/pouce-down.png";
-                    <?php
-                        // updatePouce(id, 'bas', 'sub');
-                    ?>
-                }
+        // Fonction pour incrémenter/décrémenter le nombre de pouces
+        pouceHaut.addEventListener('click', () => {
+            let currentHaut = parseInt(nbPouceHaut.textContent);
+            let currentBas = parseInt(nbPouceBas.textContent);
+
+            // Incrémenter les pouces haut et désactiver les pouces bas (si besoin)
+            nbPouceHaut.textContent = currentHaut + 1;
+            if (currentBas > 0) {
+                nbPouceBas.textContent = currentBas - 1;
             }
-        }
+        });
+
+        pouceBas.addEventListener('click', () => {
+            let currentHaut = parseInt(nbPouceHaut.textContent);
+            let currentBas = parseInt(nbPouceBas.textContent);
+
+            // Incrémenter les pouces bas et désactiver les pouces haut (si besoin)
+            nbPouceBas.textContent = currentBas + 1;
+            if (currentHaut > 0) {
+                nbPouceHaut.textContent = currentHaut - 1;
+            }
+        });
 
     </script>
     <div class="telephone-nav">
