@@ -272,6 +272,10 @@ try {
                                 $etoilesPleines = floor($note);
                                 $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
                                 $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            } else {
+                                $etoilesPleines = 0;
+                                $demiEtoile = 0;
+                                $etoilesVides = 0;
                             }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
