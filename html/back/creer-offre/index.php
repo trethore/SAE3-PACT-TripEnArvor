@@ -7,9 +7,9 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
     require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
-    function get_file_extension($type) {
+    function get_file_extension($abonnement) {
         $extension = '';
-        switch ($type) {
+        switch ($abonnement) {
             case 'image/png':
                 $extension = '.png';
                 break;
@@ -461,10 +461,10 @@ try {
             if (isset($_POST['lacat'])) {
                 $categorie = $_POST['lacat'];
             }
-            if (isset($_POST['type'])&&($isIdProPrivee)) {
-                $type = $_POST['type'];
+            if (isset($_POST['letype'])&&($isIdProPrivee)) {
+                $abonnement = $_POST['letype'];
             }else {
-                $type = "gratuit";
+                $abonnement = "gratuit";
             }
             if (isset($_POST['presta'])) {
                 $presta = $_POST['presta'];
@@ -588,7 +588,7 @@ try {
                         $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $type]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -641,7 +641,7 @@ try {
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $type]);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement]);
                            
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -686,7 +686,7 @@ try {
                                 $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement)
                                             VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $type, $idDateEvent]); 
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent]); 
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -755,7 +755,7 @@ try {
                             $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
                                         VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $type, $idDateEvent]); // Utilisation de $idDateEvent
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent]); // Utilisation de $idDateEvent
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
@@ -820,7 +820,7 @@ try {
 
                             $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $type]); 
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement]); 
 
 
                         }
