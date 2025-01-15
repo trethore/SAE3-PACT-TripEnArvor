@@ -128,6 +128,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
                         $weeksDifference = floor($daysDifference / 7);
+                        echo htmlentities($weeksDifference);
                         ?>
                         </td>
                         <td><?php echo htmlentities($TVA) ?>%</td>
