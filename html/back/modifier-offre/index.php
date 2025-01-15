@@ -828,6 +828,7 @@ try {
  
 
                 if($categorieBase === $categorie){ //SI LA CATEGORIE N'A PAS CHANGE
+                    
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
                         //s'il n'y avait pas d'adresse a la base, on créer une nouvelle id_adresse
                         if ($adresse['id_adresse'] == null) {

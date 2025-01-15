@@ -35,6 +35,7 @@ $reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture 
     <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+
 </head>
 <body class="back factures">
 <?php
@@ -119,6 +120,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
+
                     </li>
                 <?php
                 }

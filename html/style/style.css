@@ -3586,16 +3586,9 @@ header>div>a:hover {
 /*************************
         BLOCS AVIS                                                   
 *************************/
-
 .consulter-offre-back #avis > div > h2 {
-    margin: 0;
+    margin-bottom: 0;
 }
-
-.consulter-offre-back .bordure-top {
-    border-top: 3px solid var(--orange-principale);
-}
-
-/* Style avis */
 
 .consulter-offre-back .fond-blocs-avis {
     background: var(--blanc);
@@ -3615,11 +3608,8 @@ header>div>a:hover {
     margin: 0 0 0 75px;
 }
 
-.consulter-offre-back .image-avis {
-    width: 500px;
-    height: auto;
-    border-radius: 12px;
-    margin-left: 10px;
+.consulter-offre-back .bordure-top {
+    border-top: 3px solid var(--orange-principale);
 }
 
 /* Pouces avis */
@@ -3951,6 +3941,10 @@ header>div>a:hover {
     height: fit-content;
 }
 
+.creer-offre input[type="url"],
+input[type="tel"] {
+    width: 65%;
+}
 
 /****Tarif****/
 
@@ -4053,7 +4047,7 @@ header>div>a:hover {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     color: var(--violet-principal);
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
@@ -4085,7 +4079,7 @@ header>div>a:hover {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
 }
@@ -4364,7 +4358,7 @@ header>div>a:hover {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4378,7 +4372,7 @@ header>div>a:hover {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -4390,7 +4384,7 @@ header>div>a:hover {
     left: 32px;
     top: 26px;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
 
     margin-right: 4em;
@@ -4404,7 +4398,7 @@ header>div>a:hover {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
@@ -4575,16 +4569,12 @@ header>div>a:hover {
     background-color: transparent !important;
 
     left: 0 !important;
-    top: 1.5em !important;
+    top: -1em !important;
 }
 
 .liste-front .etoiles img {
     height: 30px;
     width: 30px;
-}
-
-.liste-front .date_publication_offre {
-    font-size: small;
 }
 
 .liste-front .nombre-notes {
@@ -4873,7 +4863,7 @@ header>div>a:hover {
         width: 100%;
     }
 
-    .creer-offre input[type="url"], 
+    .creer-offre input[type="url"],
 input[type="tel"] {
     width: 100%;
 }
