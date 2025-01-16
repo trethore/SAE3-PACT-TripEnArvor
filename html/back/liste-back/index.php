@@ -302,6 +302,12 @@ try {
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
+                        <?php
+                            $avisNonLus = getLu($row['id_offre']);
+                            echo "<pre>";
+                            print_r($avisNonLus);
+                            echo "<pre>";
+                        ?>
                         <p>Avis non lus : <span><b>4</b></span></p>
 
                         <!-------------------------------------- 

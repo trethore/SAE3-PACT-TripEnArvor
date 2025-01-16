@@ -907,4 +907,22 @@ function factureExiste($pdo, $numeroFacture) {
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
+
+function getLu($id_offre) {
+    global $driver, $server, $dbname, $user, $pass;
+    $reqLu = "SELECT lu FROM sae._offre JOIN sae._avis ON sae._offre.id_offre = sae._avis.id_offre WHERE sae._offre.id_offre = :id_offre;";
+    try {
+        $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $conn->prepare("SET SCHEMA 'sae';")->execute();
+        $stmtLu = $conn->prepare($reqLu);
+        $stmtLu->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+        $stmtLu->execute();
+        $lu = $stmtLu->fetchAll(PDO::FETCH_ASSOC);
+        $conn = null;
+        return $lu;
+    } catch (Exception $e) {
+        print "Erreur !: " . $e->getMessage() . "<br>";
+        die();
+    }
+}
 ?>
