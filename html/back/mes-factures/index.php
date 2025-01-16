@@ -120,6 +120,7 @@ try {
                     <li>
                         <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - <?php echo htmlentities($facture["date"]); ?></a>
                     </li>
+                    <hr>
                 <?php
                 }
                 ?>
