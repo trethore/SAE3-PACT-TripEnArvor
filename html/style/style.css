@@ -5279,7 +5279,7 @@ input[type="tel"] {
         margin: 2% 0 2% 1%;
     }
 
-    .consulter-offre-front .avis .display-ligne-espace div {
+    .consulter-offre-front .fond-blocs .bordure-top .display-ligne-espace div {
         justify-content: flex-end;
     }
 
