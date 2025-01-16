@@ -2842,12 +2842,9 @@ h3 {
     text-decoration: underline;
 }
 
-.consulter-offre-front header > div > a {
+.consulter-offre-front header > div > a,
+.consulter-offre-front header > div > a:hover {
     text-decoration: none; 
-}
-
-.consulter-offre-front > div > a:hover {
-    text-decoration: none !important;
 }
 
 .consulter-offre-front .etoile {
