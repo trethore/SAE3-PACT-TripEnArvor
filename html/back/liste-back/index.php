@@ -326,7 +326,7 @@ try {
                         if ($row['date'] == "0-0-0 0:0:0") {
                             $date = "date indisponible.";
                         } else {
-                            $publication = explode(' ', $tab["date"]);
+                            $publication = explode(' ', $row["date"]);
                             $datePub = explode('-', $publication[0]);
                             $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
                         }
