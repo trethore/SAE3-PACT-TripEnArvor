@@ -182,7 +182,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <!-- Nb de jour -->
                             <td>
                             <?php 
-                            echo $factAbo["date_mise_en_ligne"];
                             $nb_jour = getNbJours($factAbo["date_mise_en_ligne"], $today);
                             echo htmlentities($nb_jour);
                             ?>
