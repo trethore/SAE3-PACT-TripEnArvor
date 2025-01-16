@@ -295,7 +295,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/accueil">PACT</a></div>
+    <div class="text-wrapper-17"><a href="/front/liste-offres">PACT</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -647,7 +647,7 @@ try {
 
                 <?php if ($noteMoyenne !== null) { ?>
 
-                    <h2>Note moyenne : </h2>
+                    <h2>Note moyenne     </h2>
                     <?php $etoilesPleines = floor($noteMoyenne);
                         $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                         $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
@@ -672,7 +672,7 @@ try {
 
                 } ?>
 
-                <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
+                <p> (<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
             <div class="petite-mention margin-0">
