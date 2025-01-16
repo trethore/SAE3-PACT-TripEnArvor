@@ -5208,7 +5208,7 @@ input[type="tel"] {
     *****************************************************/
 
     .consulter-offre-front .fond-blocs {    
-        margin: 0;
+        margin: 3%;
         padding: 3%;
     }
 
@@ -5252,12 +5252,13 @@ input[type="tel"] {
     }
 
     .consulter-offre-front .navigation>button {
-        padding: 1% 2%;
-        font-size: 30pt;
+        padding: 1% 5%;
+        margin-inline-start: 1%;
+        font-size: 25pt;
     }
 
     .consulter-offre-front .display-ligne-espace {
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
     .consulter-offre-front .reponse {
@@ -5278,8 +5279,27 @@ input[type="tel"] {
         margin: 2% 0 2% 1%;
     }
 
-    .consulter-offre-front .display-ligne-espace div {
+    .consulter-offre-front .fond-blocs .bordure-top .display-ligne-espace div {
         justify-content: flex-end;
+    }
+
+    .consulter-offre-front .pouce {
+        width: 20%;
+        height: 20%;
+        margin: 2%;
+    }
+
+    .consulter-offre-front .navigation {
+        margin: 2%;
+    }
+
+    .consulter-offre-front .etoile {
+        width: 8%;
+        height: 8%;
+    }
+
+    .consulter-offre-front h2 {
+        font-size: 20pt;
     }
 }
 
