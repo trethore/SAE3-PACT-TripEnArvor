@@ -68,7 +68,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 </head>
 <body class="genFacture">
     <?php 
-    if (!factureExiste($conn, $_GET["numero_facture"]) && $today < $echeanceDate) {
+    if (!factureExiste($conn, $_GET["numero_facture"]) && $today > $echeanceDate) {
         // Check si les dates existes pour pas faire de doublons
         if (!dateExiste($conn, $emissionDate)) {
             // Insert de la date d'emission de la facture dans la table _date
