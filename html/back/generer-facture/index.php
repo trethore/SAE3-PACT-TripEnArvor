@@ -20,6 +20,14 @@ $TotalTVA = 0; // Somme finale TVA
 
 // Obtenir la date d'aujourd'hui
 $today = new DateTime();
+// La date du dernier jour du mois
+$DernierJour = date("t-m-Y");
+
+// Conversion de la chaîne en objet DateTime pour faciliter les calculs
+$dernierJourDate = new DateTime($DernierJour);
+$echeanceDate = $dernierJourDate->modify('+15 days');
+
+echo $echeanceDate;
 
 startSession();
 $id_compte = $_SESSION["id"]; 
@@ -55,7 +63,7 @@ $stmt->execute();
 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 // Préparation et exécution de la requête
 $stmt = $conn->prepare($reqFacture);
-$stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
 $stmt->execute();
 $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -70,10 +78,14 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 <body class="genFacture">
     <?php 
     if (!isset($detailFacture["numero_facture"])) {
-        echo  date("t-m-Y");
-        // $stmt = $conn->prepare($reqDate);
-        // $stmt->bindParam(':date', $today, PDO::PARAM_INT); // Lié à l'ID du compte
-        // $stmt->execute();
+        // Insert de la date d'emission de la facture dans la table _date
+        $stmt = $conn->prepare($reqDate);
+        $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
+        $stmt->execute();
+        // Insert de la date d'échéance de la facture dans la table _date
+        $stmt = $conn->prepare($reqDate);
+        $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
+        $stmt->execute();
     } else {
     ?>
     <div class="infoFacture">
