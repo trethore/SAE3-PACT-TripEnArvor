@@ -1011,7 +1011,7 @@ h3 {
     padding-top: 4px;
 }
 
-.liste-back .lesOffres .etoiles+div+p {
+.liste-back .lesOffres .prix {
     background: var(--orange-principale);
     color: var(--blanc);
 
@@ -1031,7 +1031,7 @@ h3 {
     flex-direction: column;
 }
 
-.liste-back .lesOffres .etoiles+div+p span {
+.liste-back .lesOffres .prix span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);

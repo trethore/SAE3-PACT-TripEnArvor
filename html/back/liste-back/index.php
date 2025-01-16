@@ -298,7 +298,7 @@ try {
                         ?>
                         <p><?php echo getNombreNotes($row['id_offre']) ?></p>
                     </div>
-                    <div style="display: none;">
+                    <div>
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
@@ -312,7 +312,7 @@ try {
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
                         ---------------------------------------->
-                        <p>Avis blacklistés : <span><b>0</b></span></p>
+                        <!-- <p>Avis blacklistés : <span><b>0</b></span></p> -->
                     </div>
 
                     <?php
@@ -331,7 +331,7 @@ try {
                         }
                     ?>
 
-                    <!-- <article style="display: none;" class="date_publication_offre">Créée le <article><?php /*echo $date;*/ ?></article></article> -->
+                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                     <!-------------------------------------- 
                     Affichage du prix 
