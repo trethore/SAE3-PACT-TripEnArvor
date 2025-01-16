@@ -147,6 +147,18 @@ $reqCompte = "SELECT * from sae.compte_membre
             <div>
                 <a href="/front/modifier-compte">Modifier les informations</a>
             </div>
+            <?php
+                $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
+            ?>
+            <script>
+                function copyAPIKey() {
+                    var apiKey = "<?php echo addslashes($APIKey); ?>";
+                    navigator.clipboard.writeText(apiKey);
+                    alert("Clé d'API Tchatator copiée dans le presse-papier!");
+                }
+            </script>
+            
+            <button onclick="copyAPIKey()">Votre clé d'API Tchatator</button>
         </section>
     </main>
     <footer>
