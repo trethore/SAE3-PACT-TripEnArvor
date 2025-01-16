@@ -74,23 +74,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 </head>
 <body class="genFacture">
     <?php 
-    if (!factureExiste($conn, $_GET["numero_facture"]) && $today > $echeanceDate) {
-        // Check si les dates existes pour pas faire de doublons
-        if (!dateExiste($conn, $emissionDate)) {
-            // Insert de la date d'emission de la facture dans la table _date
-            $stmt = $conn->prepare($reqInsertDate);
-            $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
-            $stmt->execute();
-            $idDateEmission = $stmt->fetchColumn();
-        }
-        if (!dateExiste($conn, $echeanceDate)) {
-            // Insert de la date d'échéance de la facture dans la table _date
-            $stmt = $conn->prepare($reqInsertDate);
-            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
-            $stmt->execute();
-            $idDateEcheance = $stmt->fetchColumn();
-        }
-    }
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqCompte);
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte

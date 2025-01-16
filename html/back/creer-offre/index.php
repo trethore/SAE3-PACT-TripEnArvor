@@ -935,7 +935,41 @@ try {
                     } 
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
-                    
+                    /*******************************************
+                                    INSERTION FACTURE
+                    ********************************************/
+                        // Obtenir la date d'aujourd'hui
+                        $today = new DateTime();
+                        // La date du dernier jour du mois
+                        $emissionDate = date("Y-m-d H:i:s");
+
+                        // Conversion de la chaîne en objet DateTime pour faciliter les calculs
+                        $emissionDateDate = new DateTime($emissionDate);
+                        $echeanceDate = $emissionDateDate->modify('+15 days');
+                        $echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
+
+                        $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
+                        // Check si les dates existes pour pas faire de doublons
+                        if (!dateExiste($conn, $emissionDate)) {
+                            // Insert de la date d'emission de la facture dans la table _date
+                            $stmt = $conn->prepare($reqInsertDate);
+                            $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+                            $stmt->execute();
+                            $idDateEmission = $stmt->fetchColumn();
+                        }
+                        if (!dateExiste($conn, $echeanceDate)) {
+                            // Insert de la date d'échéance de la facture dans la table _date
+                            $stmt = $conn->prepare($reqInsertDate);
+                            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
+                            $stmt->execute();
+                            $idDateEcheance = $stmt->fetchColumn();
+                        }
+                        
+                        $reqFacture = "INSERT into sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre)
+		                            values (?, ?, ?, ?);";
+                        $stmt_facture = $dbh->prepare($reqFacture);
+                        $stmt_facture -> execute([1, $idDateEmission, $idDateEcheance , $id_offre]);
+
                     if ($dbh->inTransaction()) {
                         $dbh->commit();
                     }
