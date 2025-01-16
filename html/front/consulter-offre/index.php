@@ -270,6 +270,8 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="/scripts/carousel.js"></script>
+    <script src="/scripts/poucesAvis.js"></script>
+    <script src="/scripts/formulaireAvis.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -963,100 +965,6 @@ foreach ($images as $image) {
         </div>
         
     </footer>
-
-    <script>
-        // Cibler les éléments
-        const showFormButton = document.getElementById('showFormButton');
-        const avisForm = document.getElementById('avisForm');
-        const cancelFormButton = document.getElementById('cancelFormButton');
-
-        // Afficher le formulaire au clic sur "Publier un avis"
-        showFormButton.addEventListener('click', () => {
-            avisForm.style.display = 'block'; // Affiche le formulaire
-            showFormButton.style.display = 'none'; // Masque le bouton
-        });
-
-        // Masquer le formulaire au clic sur "Annuler"
-        cancelFormButton.addEventListener('click', () => {
-            avisForm.style.display = 'none'; // Masque le formulaire
-            showFormButton.style.display = 'block'; // Réaffiche le bouton
-        });
-
-        // GESTION DES POUCES
-        const pouceHauts = document.querySelectorAll('.pouceHaut');
-        const pouceBas = document.querySelectorAll('.pouceBas');
-
-        const images = {
-            haut: {
-                actif: '/images/universel/icones/pouce-up-hover.png',
-                inactif: '/images/universel/icones/pouce-up.png',
-            },
-            bas: {
-                actif: '/images/universel/icones/pouce-down-hover.png',
-                inactif: '/images/universel/icones/pouce-down.png',
-            },
-        };
-    
-        let etatsPouces = {};
-
-        pouceHauts.forEach((pouceHaut) => {
-
-            pouceHaut.addEventListener('click', () => {
-
-                const avisId = pouceHaut.getAttribute('data-id');
-                const nbPouceHaut = pouceHaut.previousElementSibling;
-                const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling;
-
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-                let currentHaut = parseInt(nbPouceHaut.textContent);
-                let currentBas = parseInt(nbPouceBas.textContent);
-
-                if (etatsPouces[avisId] === "haut") {
-                    nbPouceHaut.textContent = currentHaut - 1;
-                    pouceHaut.src = images.haut.inactif;
-                    etatsPouces[avisId] = null;
-                } else {
-                    nbPouceHaut.textContent = currentHaut + 1;
-                    pouceHaut.src = images.haut.actif;
-                    if (etatsPouces[avisId] === "bas") {
-                        nbPouceBas.textContent = currentBas - 1;
-                        pouceBas.src = images.bas.inactif;
-                    }
-                    etatsPouces[avisId] = "haut";
-                }
-            });
-        });
-
-        pouceBas.forEach((pouceBas) => {
-
-            pouceBas.addEventListener('click', () => {
-
-                const avisId = pouceBas.getAttribute('data-id');
-                const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling;
-                const nbPouceBas = pouceBas.previousElementSibling;
-
-                if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-                let currentHaut = parseInt(nbPouceHaut.textContent);
-                let currentBas = parseInt(nbPouceBas.textContent);
-
-                if (etatsPouces[avisId] === "bas") {
-                    nbPouceBas.textContent = currentBas - 1;
-                    pouceBas.src = images.bas.inactif;
-                    etatsPouces[avisId] = null;
-                } else {
-                    nbPouceBas.textContent = currentBas + 1;
-                    pouceBas.src = images.bas.actif;
-                    if (etatsPouces[avisId] === "haut") {
-                        nbPouceHaut.textContent = currentHaut - 1;
-                        pouceHaut.src = images.haut.inactif;
-                    }
-                    etatsPouces[avisId] = "bas";
-                }
-            });
-        });
-    </script>
 
     <div class="telephone-nav">
         <div class="nav-content">

@@ -29,8 +29,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style_HFB.css">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="/style/style.css">
 
     <title>Liste de vos offres</title>
@@ -332,7 +331,7 @@ try {
                         }
                     ?>
 
-                    <!--<article style="display: none; class="date_publication_offre">Créée le <article><?php /*echo $date;*/ ?></article></article>-->
+                    <article style="display: none;" class="date_publication_offre">Créée le <article><?php echo $date; ?></article></article>
 
                     <!-------------------------------------- 
                     Affichage du prix 

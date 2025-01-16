@@ -685,6 +685,25 @@
         }
     }
 
+
+    function isOffreALaUne($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqALaUne = "SELECT 1 FROM sae._offre_souscrit_option WHERE nom_option = 'À la Une' AND id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtALaUne = $conn->prepare($reqALaUne);
+            $stmtALaUne->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtALaUne->execute();
+            $ALaUne = $stmtALaUne->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $ALaUne !== false;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
     function isOffreHorsLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;

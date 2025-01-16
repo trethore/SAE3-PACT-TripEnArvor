@@ -686,9 +686,16 @@ try {
            
             if(isset($_POST['optionPayante'])){
                 $optionP = $_POST['optionPayante'];
+                if($optionP === "enRelief"){
+                    $optionP = "En Relief";
+                }else if ($optionP === "aLaUne") {
+                    $optionP = "À la Une";
+                }
             }else {
                 $optionP = null;
             }
+
+            
             
 
             if ($categorie !== "restauration") {
@@ -1028,6 +1035,20 @@ try {
 
                 }
 
+                //modification des options
+                if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
+                    if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
+                        $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
+                        $stmt_suppression = $dbh->prepare($requete_suppression_option);
+                        $stmt_suppression->execute([$id_offre, $optionP]);
+
+                    }
+                    $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
+                    $stmt_option = $dbh->prepare($requete_option);
+                    $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
+                    print("option payante mise dans la bdd");
+                } 
+                
                 //upddate tarifs
 
                 // if(($isIdProPrivee)&&($categorie !== "restaurant")){
@@ -1041,6 +1062,7 @@ try {
 
                 //     }
                 // }
+                
                 //
                 
                     $dbh->commit();
