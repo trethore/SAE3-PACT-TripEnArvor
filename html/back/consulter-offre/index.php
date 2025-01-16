@@ -249,39 +249,14 @@ try {
 
     <div class="fond-bloc display-ligne-espace">
         <div class="bouton-modifier"> 
-            <div id="confirm">
-
-                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-
-                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
-
-                <?php } else if ($dateMHL > $dateMEL) { ?>
-
-                    <p>Voulez-vous mettre votre offre en ligne ?</p>
-
-                <?php } ?>
-                
-                <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Confirmer</button></form> 
-                    <button onclick="btnAnnuler()">Annuler</button>
-                </div>
-            </div>
-
-            <div id="final">
-                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                    <p>Offre hors ligne !<br>Désormait cette offre n'apparait plus !</p>
-                <?php } else if ($dateMHL > $dateMEL) { ?>
-                    <p>Offre en ligne !<br>Désormait cette offre apparait !</p>
-                <?php } ?>
-                <button onclick="btnAnnuler()">Fermer</button>
-            </div> 
 
             <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
+                <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button></form>
             <?php } else if ($dateMHL > $dateMEL) { ?>
-                <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
+                <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button></form>
             <?php } ?>
-            <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+
+            <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
         </div>
     </div>  
 
