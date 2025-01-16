@@ -407,7 +407,7 @@ try {
                         </td>
                     </tr>
                     
-                    <?if (isIdProPrivee($id_offre)) { ?>
+                    <?if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
 
                     <tr>
                    
@@ -517,7 +517,7 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
-                        <?php if (isIdProPrivee($id_offre)) { ?>
+                        <?php if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
                         
                         
                         <div id="tarifs">
