@@ -36,7 +36,10 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqDate = "INSERT INTO sae._date (date) VALUES (:date)";
+$reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date)";
+
+$reqInsertFact = "INSERT INTO sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre) 
+                   VALUES (:montant_ht, :id_date_emission, :id_date_echeance, :id_offre)";
 
 $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
                 join sae._adresse a on a.id_adresse = cp.id_adresse
@@ -69,20 +72,26 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         // Check si les dates existes pour pas faire de doublons
         if (!dateExiste($conn, $DernierJour)) {
             // Insert de la date d'emission de la facture dans la table _date
-            $stmt = $conn->prepare($reqDate);
-            $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
+            $stmt = $conn->prepare($reqInsertDate);
+            $stmt->bindParam(':date', $DernierJour, PDO::PARAM_STR);
             $stmt->execute();
         }
         if (!dateExiste($conn, $echeanceDate)) {
             // Insert de la date d'échéance de la facture dans la table _date
-            $stmt = $conn->prepare($reqDate);
-            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_INT);
+            $stmt = $conn->prepare($reqInsertDate);
+            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
             $stmt->execute();
         }
 
         // Insert d'une facture
-        
-    } else {
+        $stmt = $conn->prepare($reqFacture);
+        $stmt->bindParam(':montant_ht', $montant_ht, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $id_date_emission, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_echeance', $id_date_echeance, PDO::PARAM_INT);
+        $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+        $stmt->execute();
+
+    }
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqCompte);
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
@@ -227,6 +236,5 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
             Numéro de compte : 123-456-7890
         </p>
     </article>
-    <?php } ?>
 </body>
 </html>

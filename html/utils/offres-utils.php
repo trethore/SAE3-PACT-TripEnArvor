@@ -900,4 +900,10 @@ function dateExiste($pdo, $date) {
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
+
+function numeroFactureExiste($pdo, $numeroFacture) {
+    $stmt = $pdo->prepare("SELECT 1 FROM sae._facture WHERE numero_facture = ?");
+    $stmt->execute([$numeroFacture]);
+    return $stmt->fetchColumn() > 0;
+}
 ?>
