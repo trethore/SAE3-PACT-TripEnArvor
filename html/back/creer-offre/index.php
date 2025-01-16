@@ -938,6 +938,11 @@ try {
                     /*******************************************
                                     INSERTION FACTURE
                     ********************************************/
+                    
+                        // Initialisation des variables pour éviter les erreurs de variable non définie
+                        $idDateEmission = null;
+                        $idDateEcheance = null;
+
                         // Obtenir la date d'aujourd'hui
                         $today = new DateTime();
                         // La date du dernier jour du mois
