@@ -179,7 +179,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
                             <!-- Type de l'abonnement -->
                             <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                            <!-- Nb de semaine -->
+                            <!-- Nb de jour -->
                             <td>
                             <?php 
                             $nb_jour = getNbJours($factAbo["date_mise_en_ligne"], $today);
@@ -189,9 +189,9 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <!-- TVA en % -->
                             <td><?php echo htmlentities($TVA) ?>%</td>
                             <!-- Prix HT -->
-                            <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros($factAbo["prix_ht_jour_abonnement"] ?? ''));?></td>
                             <!-- Prix total TTC -->
-                            <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_jour, $TVA));?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_jour, $TVA)));?></td>
 
                             <?php // Calcul pour le total final
                                 $TotalHT += $factAbo["prix_ht_jour_abonnement"];
