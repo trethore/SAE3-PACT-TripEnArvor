@@ -2948,7 +2948,7 @@ h3 {
     border-left: 3px solid var(--violet-principal);
     background: var(--blanc);
     margin: 30px 30px 0 0;
-    padding: 0 30px;
+    padding: 0 0 0 30px;
 }
 
 .consulter-offre-front .bloc-a-propos > p {
@@ -4178,7 +4178,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--violet-principal);
     border-radius: 15px;
@@ -4192,7 +4192,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2:hover {
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border: solid 2px var(--violet-principal);
     color: var(--violet-principal);
 }
@@ -4201,7 +4201,7 @@ input[type="tel"] {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
