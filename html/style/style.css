@@ -2885,12 +2885,13 @@ header>div>a:hover {
 
 .consulter-offre-front .liste-caracteristique>li {
     color: var(--noir);
-    border-left: 5px solid var(--violet-principal);
-    font-size: 36px;
+    border-left: 3px solid var(--violet-principal);
+    font-size: 24px;
     list-style: none;
     display: flex;
     align-items: center;
     margin-bottom: 1em;
+    padding-left: 10px;
 }
 
 /****************************
@@ -2898,12 +2899,19 @@ header>div>a:hover {
     ****************************/
 
 .consulter-offre-front .bloc-a-propos {
-    flex: 5;
+    flex: 6;
     border-left: 3px solid var(--violet-principal);
+    background: var(--blanc);
+    margin: 30px 30px 0 0;
+    padding-left: 30px;
 }
 
 .consulter-offre-front .bloc-a-propos > p {
     margin: 5px 0;
+}
+
+.consulter-offre-front .bloc-a-propos > h2 {
+    margin: 0;
 }
 
 .consulter-offre-front .display-ligne-espace>button {
