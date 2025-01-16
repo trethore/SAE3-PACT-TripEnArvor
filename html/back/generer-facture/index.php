@@ -235,7 +235,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         </tr>
         <tr>
             <td>Total TVA</td>
-            <td><?php echo htmlentities(convertCentimesToEuros($TotalTVA)) ?? '' ?></td>
+            <td><?php echo htmlentities(convertCentimesToEuros($TotalTVA*($TVA/100))) ?? '' ?></td>
         </tr>
         <tr>
             <td><b>Total TTC</b></td>
