@@ -20,6 +20,14 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+startSession();
+$id_compte = $_SESSION["id"]; 
+if (isset($id_compte)) {
+    redirectToConnexionIfNecessaryPro($id_compte);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
+
 $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
@@ -35,14 +43,6 @@ echo $emissionDate;
 $emissionDateDate = new DateTime($emissionDate);
 $echeanceDate = $emissionDateDate->modify('+15 days');
 $echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
-
-startSession();
-$id_compte = $_SESSION["id"]; 
-if (isset($id_compte)) {
-    redirectToConnexionIfNecessaryPro($id_compte);
-} else {
-    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
-}
 
 $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
