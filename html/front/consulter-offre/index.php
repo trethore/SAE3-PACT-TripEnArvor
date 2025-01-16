@@ -353,15 +353,15 @@ try {
 
             <div class="carousel">
                 <div class="carousel-slides">
-<?php
-foreach ($images as $image) {
-?>
-                <div class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
-                </div>
-<?php
-}
-?>
+                    <?php
+                    foreach ($images as $image) {
+                    ?>
+                        <div class="slide">
+                            <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
                 <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>

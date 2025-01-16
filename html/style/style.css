@@ -3227,27 +3227,20 @@ header>div>a:hover {
 *************************/
 
 .consulter-offre-front .navigation {
-    margin: 30px;
+    margin: 0 60px 30px 60px;
 }
 
 .consulter-offre-front .navigation>button {
-    background: var(--violet-principal);
-    border: 3px solid var(--blanc);
     color: var(--blanc);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 40px;
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    margin-left: 0;
+    text-decoration: none;
+    background-color: var(--violet-principal);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-front .navigation>button:hover {
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    border-color: var(--violet-secondaire);
 }
 
 
