@@ -651,12 +651,16 @@ try {
                         'id_membre' => $a['id_membre'],
                         'id_offre' => $a['id_offre']
                     ]);
+                    $consulted = $stmt->fetchColumn();
 
                     $style = $consulted ? "" : "background-color: cyan;";
 
                     if (!$consulted) {
-                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id = :id");
-                        $updateStmt->execute(['id' => $a['id']]);
+                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                        $updateStmt->execute([
+                            'id_membre' => $a['id_membre'],
+                            'id_offre' => $a['id_offre']
+                        ]);
                     }
                     ?>
 
