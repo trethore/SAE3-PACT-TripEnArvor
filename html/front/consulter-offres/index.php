@@ -207,7 +207,7 @@ try {
         
                     <!-- Date -->
                     <div class="date">
-                        <h3>Date</h3>
+                        <!-- <h3>Date</h3>
                         <div>
                             <div>
                                 <label>Période &nbsp;: du </label>
@@ -219,7 +219,7 @@ try {
                                 <label>Date d'ouverture :</label>
                                 <input id="open-date" type="date">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Contient avis -->
@@ -238,7 +238,7 @@ try {
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
-                    if (!isOffreHorsLigne($tab['id_offre'])) {
+                    if (getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre'])) {
                     ?>
                         <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
                             <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
@@ -271,7 +271,7 @@ try {
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
-                                    if ($_SESSION) {
+                                    if (isset($_SESSION['id'])) {
                                         $idMembres = getIdMembresContientAvis($tab['id_offre']);
                                         $userId = intval($_SESSION['id']);
 
@@ -366,9 +366,7 @@ try {
 
         </div>
         <div class="footer-bottom">
-        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
 

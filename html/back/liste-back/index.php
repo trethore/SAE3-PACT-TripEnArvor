@@ -302,12 +302,28 @@ try {
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
-                        <p>Avis non lus : <span><b>4</b></span></p>
+                        <?php
+                            $avisNonLus = getLu($row['id_offre']);
+                            $nonLusCount = 0;
+
+                            forEach($avisNonLus as $avis) {
+                                if (empty($avis['lu'])) {
+                                    $nonLusCount++;
+                                }
+                            }
+                        ?>
+                        <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis non répondues
                         ---------------------------------------->
-                        <p>Avis non répondus : <span><b>1</b></span></p>
+                        <?php
+                            $nbrAvis = getAvis($row['id_offre']);
+                            $nbrReponses = getReponse($row['id_offre']);
+
+                            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                        ?>
+                        <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
@@ -331,7 +347,7 @@ try {
                         }
                     ?>
 
-                    <article class="date_publication_offre">Créée le <article><?php echo $date; ?></article></article>
+                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                     <!-------------------------------------- 
                     Affichage du prix 
@@ -382,9 +398,7 @@ try {
 
         </div>
         <div class="footer-bottom">
-        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
 

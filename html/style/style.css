@@ -58,6 +58,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 button {
     font-family: "Poppins", sans-serif;
 }
@@ -317,6 +321,25 @@ h3 {
     flex-direction: row;
     margin: 1em;
 }
+
+.compte-back #apibutton {
+    color:var(--blanc-leger);
+    background-color: var(--orange-principale);
+    border: var(--orange-principale) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+ }
+ .compte-back #apibutton:hover {
+     background-color: var(--blanc-leger);
+     color: var(--orange-principale);
+     border: var(--orange-principale) 2px solid;
+     border-radius: 15px;
+     padding: 0.2em 1em;
+     font-size: 1.2em;
+     cursor: pointer;
+ }
 
 /********************
         NAV
@@ -685,7 +708,7 @@ h3 {
 }
 
 .liste-back .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-back .filtre-tri h2+div>div+div {
@@ -1173,6 +1196,13 @@ h3 {
     color: var(--noir);
 }
 
+.factures hr {
+    color: var(--orange-principale);
+    background-color: var(--orange-principale);
+    border: none;
+    height: 1px;
+}
+
 /**************************************************************************************
                                      FRONT ACCUEIL
 ***************************************************************************************/
@@ -1192,7 +1222,7 @@ h3 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 45pt;
+    font-size: 35pt;
     border: 2px var(--violet-principal) solid;
 }
 
@@ -1229,8 +1259,8 @@ h3 {
 **********************************/
 
 .carousel {
-    width: 90vw;
-    height: 90vh;
+    height: 55vh;
+    width: 70vw;
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
@@ -1391,6 +1421,25 @@ h3 {
     flex-wrap: nowrap;
     flex-direction: row;
     margin: 1em;
+}
+
+.compte-front #apibutton {
+   color:var(--blanc-leger);
+   background-color: var(--violet-principal);
+   border: var(--violet-principal) 2px solid;
+   border-radius: 15px;
+   padding: 0.2em 1em;
+   font-size: 1.2em;
+   cursor: pointer;
+}
+.compte-front #apibutton:hover {
+    background-color: var(--blanc-leger);
+    color: var(--violet-principal);
+    border: var(--violet-principal) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
 }
 
 /********************
@@ -2768,22 +2817,32 @@ h3 {
 /**************************************************************************************
                                     Consulter Offre Front
 ***************************************************************************************/
+.consulter-offre-front section {
+    width: 63vw;
+}
+
 .consulter-offre-front h1 {
     font-size: 64px;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     color: var(--violet-principal);
+    margin-top: 0;
+}
+
+.consulter-offre-front p {
+    margin: 5px 0;
 }
 
 .consulter-offre-front h2 {
     font-size: 36px;
     font-weight: bold;
     color: var(--violet-principal);
-}
+    margin: 5px 0;
+} 
 
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
-    margin: 30px 30px 0 30px;
+    margin: 0 30px 0 30px;
     padding: 30px;
 }
 
@@ -2791,14 +2850,14 @@ h3 {
     text-decoration: underline;
 }
 
-.consulter-offre-front header>div>a,
-header>div>a:hover {
-    text-decoration: none;
+.consulter-offre-front header > div > a,
+.consulter-offre-front header > div > a:hover {
+    text-decoration: none; 
 }
 
 .consulter-offre-front .etoile {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 .consulter-offre-front .etoile_detail {
@@ -2843,45 +2902,40 @@ header>div>a:hover {
 }
 
 /**********************************
-            IMAGES PRÉSENTATION                
-    **********************************/
+        IMAGES PRÉSENTATION                
+**********************************/
+.consulter-offre-front .pur {
+    display: flex;
+    flex-direction: column;
+}
 
 .consulter-offre-front .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    width: 100%;
+    height: 55vh;
+    width: 60vw;
+    align-self: center;
 }
-
-.consulter-offre-front .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: auto;
-}
-
-.consulter-offre-front .carousel-images img {
-    width: 1100px;
-    height: auto;
-    flex-shrink: 0;
-}
-
 
 /**********************************
         PREMIER DOUBLE BLOC                               
 **********************************/
 
 /***********************************
-            BLOC CARACTÉRISTIQUE                       
-    ***********************************/
+        BLOC CARACTÉRISTIQUE                       
+***********************************/
 
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
 }
 
+.consulter-offre-front .bloc-caracteristique {
+    background: var(--blanc);
+    margin: 30px 30px 0 30px;
+}
+
 .consulter-offre-front .liste-caracteristique>li {
     color: var(--noir);
-    border-left: 5px solid var(--violet-principal);
-    font-size: 40px;
+    border-left: 3px solid var(--violet-principal);
+    font-size: 24px;
     list-style: none;
     display: flex;
     align-items: center;
@@ -2889,16 +2943,8 @@ header>div>a:hover {
     padding-left: 10px;
 }
 
-.consulter-offre-front .liste-caracteristique>li>img {
-    min-width: 50px;
-    max-width: 50px;
-    height: auto;
-    margin-right: 5px;
-    border-radius: 5px;
-}
-
-.consulter-offre-front .bloc-caracteristique {
-    flex: 1.75;
+.consulter-offre-front .liste-caracteristique li:last-child {
+    margin-bottom: 0;
 }
 
 /****************************
@@ -2906,17 +2952,22 @@ header>div>a:hover {
     ****************************/
 
 .consulter-offre-front .bloc-a-propos {
-    flex: 2.5;
+    flex: 6;
     border-left: 3px solid var(--violet-principal);
+    background: var(--blanc);
+    margin: 30px 30px 0 0;
+    padding: 0 0 0 30px;
 }
 
-.consulter-offre-front .epingle {
-    width: 20px;
-    height: 20px;
+.consulter-offre-front .bloc-a-propos > p {
+    margin: 5px 0;
+}
+
+.consulter-offre-front .bloc-a-propos > div > h2 {
+    margin: 0;
 }
 
 .consulter-offre-front .display-ligne-espace>button {
-    font-size: 60px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -2925,20 +2976,15 @@ header>div>a:hover {
 .consulter-offre-front .fond-blocs>a {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 20px;
+    border-radius: 8px;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
 .consulter-offre-front .fond-blocs>a:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
-}
+    background: var(--violet-secondaire);
+} 
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
@@ -2951,19 +2997,14 @@ header>div>a:hover {
 .consulter-offre-front .bloc-tarif>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
     border: 0;
 }
 
 .consulter-offre-front .bloc-tarif>button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    border-color: var(--violet-secondaire);
 }
 
 .consulter-offre-front .bloc-tarif {
@@ -3010,16 +3051,6 @@ header>div>a:hover {
     list-style: none;
 }
 
-/**************************
-        BLOCS CARTE                                                   
-**************************/
-
-.consulter-offre-front .carte {
-    width: 1000px;
-    height: 750px;
-    margin: auto;
-}
-
 /*************************
         BLOCS AVIS                                                   
 *************************/
@@ -3057,14 +3088,12 @@ header>div>a:hover {
     margin: 10px 0;
 }
 
-
 .consulter-offre-front textarea {
     background: var(--blanc);
     border: 1px solid var(--gris);
     border-radius: 12px;
     width: 100%;
     height: 200px;
-    font-size: 20px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
 }
@@ -3075,17 +3104,16 @@ header>div>a:hover {
 }
 
 .consulter-offre-front input::file-selector-button {
-    text-align: center;
-    border: 0;
-    border-radius: 12px;
-    background: var(--violet-principal);
     color: var(--blanc);
-    width: 200px;
-    height: 50px;
+    text-decoration: none;
+    background-color: var(--violet-principal);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-front input::file-selector-button:hover {
-    background: rgb(26, 4, 44);
+    background: var(--violet-secondaire);
 }
 
 .consulter-offre-front span {
@@ -3097,10 +3125,9 @@ header>div>a:hover {
     padding: 5px;
     background: var(--blanc);
     border: 1px solid var(--gris);
-    border-radius: 12px;
-    height: 50px;
+    border-radius: 8px;
+    height: 35px;
     margin: 10px 30px 10px 0;
-    font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
 
@@ -3117,10 +3144,9 @@ header>div>a:hover {
 .consulter-offre-front #avis>form>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
     border: 0;
 }
 
@@ -3161,8 +3187,8 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .image-avis {
-    width: 500px;
-    height: auto;
+    width: 20vw;
+    height: 20vh;
     border-radius: 12px;
     margin-right: 10px;
 }
@@ -3194,6 +3220,7 @@ header>div>a:hover {
     width: 40px;
     height: 40px;
     margin-left: 5px;
+    object-fit: cover;
 }
 
 /* Petite mention*/
@@ -3208,27 +3235,25 @@ header>div>a:hover {
 *************************/
 
 .consulter-offre-front .navigation {
-    margin: 30px;
+    margin: 0 60px 30px 60px;
 }
 
 .consulter-offre-front .navigation>button {
-    background: var(--violet-principal);
-    border: 3px solid var(--blanc);
     color: var(--blanc);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 40px;
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    margin-left: 0;
+    text-decoration: none;
+    background-color: var(--violet-principal);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-front .navigation>button:hover {
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    background-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front #remonte > img {
+    width: 13px;
+    height: 13px; 
 }
 
 
@@ -3240,39 +3265,12 @@ header>div>a:hover {
     text-decoration: none;
 }
 
-.consulter-offre-front #carte {
-    display: none;
-}
-
-.consulter-offre-front .pouce_haut:hover {
-    background-image: ('/images/universel/icones/pouce-up-hover.png');
-}
-
-.consulter-offre-front .pouce_bas:hover {
-    background-image: ('/images/universel/icones/pouce-down-hover.png');
-}
-
 /**************************************************************************************
                                     Consulter Offre Back
 ***************************************************************************************/
 
-.consulter-offre-back header {
-    text-decoration: none;
-}
-
-.consulter-offre-back button {
-    font-family: "Poppins", sans-serif;
-}
-
-.consulter-offre-back body {
-    font-family: "Poppins", sans-serif;
-    font-size: 24px;
-    color: var(--noir);
-    background: var(--blanc);
-}
-
-.consulter-offre-back p {
-    font-size: 24px;
+.consulter-offre-back section {
+    width: 63vw;
 }
 
 .consulter-offre-back h1 {
@@ -3280,37 +3278,38 @@ header>div>a:hover {
     font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
+    margin-top: 0;
+}
+
+.consulter-offre-back p {
+    margin: 5px 0;
 }
 
 .consulter-offre-back h2 {
     font-size: 36px;
     font-weight: bold;
     color: var(--orange-principale);
-}
+    margin: 5px 0;
+} 
 
 .consulter-offre-back .fond-blocs {
     background: var(--blanc);
-    margin: 30px 30px 0 30px;
+    margin: 0 30px 0 30px;
     padding: 30px;
-}
-
-.consulter-offre-back a {
-    color: var(--orange-principale);
-    text-decoration: none;
 }
 
 .consulter-offre-back a:hover {
     text-decoration: underline;
 }
 
-.consulter-offre-back header>div>a,
-header>div>a:hover {
-    text-decoration: none;
+.consulter-offre-back header > div > a,
+.consulter-offre-back header > div > a:hover {
+    text-decoration: none; 
 }
 
 .consulter-offre-back .etoile {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 .consulter-offre-back .etoile_detail {
@@ -3331,117 +3330,32 @@ header>div>a:hover {
 ********************************/
 
 /******************************
-            BOUTONS POP-UP                
-    ******************************/
+        BOUTONS POP-UP                
+******************************/
+.consulter-offre-back .zone-boutons {
+    padding: 30px 30px 0 30px;
+
+}
+
 .consulter-offre-back .bouton-modifier {
     margin: 30px 30px 0 30px;
 }
 
-
-.consulter-offre-back .bouton-modifier>button {
+.consulter-offre-back .bouton-modif-mise > button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 30px;
     background-color: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    padding: 10px 80px;
-    border-radius: 15px;
-}
-
-.consulter-offre-back .bouton-modifier>button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
-}
-
-.consulter-offre-back #confirm {
-    background: var(--blanc-leger);
-    border: 3px solid var(--noir);
-    color: var(--noir);
-    font-size: 20px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.consulter-offre-back #final {
-    background: var(--blanc-leger);
-    border: 3px solid var(--noir);
-    color: var(--noir);
-    font-size: 32px;
-    display: none;
-    border-radius: 15px;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.consulter-offre-back .close {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.consulter-offre-back .close button:first-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
     padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
+    border-radius: 8px;
+    border: 0;
 }
 
-.consulter-offre-back #final button {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin-bottom: 12px;
-    background: var(--noir);
-    color: var(--blanc-leger);
-    font-size: 32px;
-    width: fit-content;
-}
-
-.consulter-offre-back .close button:last-child {
-    border: 1px solid;
-    border-radius: 30px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 60px;
-    margin-bottom: 12px;
-    background: var(--gris);
-    color: var(--blanc-leger);
-    font-size: 20px;
-    width: fit-content;
+.consulter-offre-back .bouton-modif-mise > button:hover {
+    background: var(--orange-secondaire-2);
 }
 
 .consulter-offre-back .bloc-presentation>div>p {
     font-size: 32px;
-}
-
-.consulter-offre-back .information-offre {
-    font-size: 32px;
-    margin-top: 30px;
 }
 
 .consulter-offre-back .display-ligne-espace {
@@ -3465,49 +3379,23 @@ header>div>a:hover {
 }
 
 /**********************************
-            IMAGES PRÉSENTATION                
-    **********************************/
+        IMAGES PRÉSENTATION                
+**********************************/
+.consulter-offre-back .pur {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; 
+}
 
 .consulter-offre-back .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
+    height: 55vh;
+    width: 60vw;
+    align-self: center;
 }
 
-.consulter-offre-back .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: auto;
-}
-
-.consulter-offre-back .carousel-images img {
-    width: 100%;
-    height: 900px;
-    flex-shrink: 0;
-}
-
-.consulter-offre-back .arrow-left,
-.consulter-offre-back .arrow-right {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-}
-
-.consulter-offre-back .arrow-left>img,
-.consulter-offre-back .arrow-right>img {
+.consulter-offre-back .carousel button:hover img {
     background-color: var(--orange-principale);
-    border-radius: 90px;
 }
-
-.consulter-offre-back .arrow-left {
-    left: 20px;
-}
-
-.consulter-offre-back .arrow-right {
-    right: 20px;
-}
-
 
 /**********************************
         PREMIER DOUBLE BLOC                               
@@ -3517,58 +3405,68 @@ header>div>a:hover {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
-    .consulter-offre-back .liste-caracteristique {
-        align-items: center;
-        padding-right: 0;
-    }
+.consulter-offre-back .liste-caracteristique {
+    align-items: center;
+}
 
-    .consulter-offre-back .liste-caracteristique > li {
-        color: var(--noir);
-        border-left: 5px solid var(--orange-principale);
-        font-size: 24px;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        padding-left: 10px ;
-    }
+.consulter-offre-back .bloc-caracteristique {
+    background: var(--blanc);
+    margin: 30px 30px 0 30px;
+}
+
+.consulter-offre-back .liste-caracteristique>li {
+    color: var(--noir);
+    border-left: 3px solid var(--orange-principale);
+    font-size: 24px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
+
+.consulter-offre-back .liste-caracteristique li:last-child {
+    margin-bottom: 0;
+}
 
 /****************************
         BLOC À PROPOS                               
 ****************************/
 
 .consulter-offre-back .bloc-a-propos {
-    flex: 5; 
+    flex: 6;
     border-left: 3px solid var(--orange-principale);
+    background: var(--blanc);
+    margin: 30px 30px 0 0;
+    padding: 0 0 0 30px;
 }
 
-.consulter-offre-back .epingle {
-    width: 20px;
-    height: 20px;
+.consulter-offre-back .bloc-a-propos > p {
+    margin: 5px 0;
+}
+
+.consulter-offre-back .bloc-a-propos > div > h2 {
+    margin: 0;
 }
 
 .consulter-offre-back .display-ligne-espace>button {
-    font-size: 60px;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .consulter-offre-back .display-ligne-espace>a,
 .consulter-offre-back .fond-blocs>a {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    padding: 10px 80px;
-    border-radius: 15px;
+    padding: 5px 20px;
+    border-radius: 8px;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
 .consulter-offre-back .fond-blocs>a:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
-}
+    background: var(--orange-secondaire-2);
+} 
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
@@ -3581,25 +3479,21 @@ header>div>a:hover {
 .consulter-offre-back .bloc-tarif>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-back .bloc-tarif>button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
+    border-color: var(--orange-secondaire-2);
 }
 
 .consulter-offre-back .bloc-tarif {
     flex: 2.5;
 }
 
-.consulter-offre-back .bloc-tarif > div {
+.consulter-offre-back .bloc-tarif>div {
     display: flex;
 }
 
@@ -3633,7 +3527,6 @@ header>div>a:hover {
 
 .consulter-offre-back .bloc-ouverture {
     flex: 1;
-    margin-left: 0;
 }
 
 .consulter-offre-back .bloc-ouverture>ul>li {
@@ -3676,8 +3569,8 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .image-avis {
-    width: 500px;
-    height: auto;
+    width: 20vw;
+    height: 20vh;
     border-radius: 12px;
     margin-right: 10px;
 }
@@ -3717,7 +3610,6 @@ header>div>a:hover {
     border-radius: 12px;
     width: 100%;
     height: 200px;
-    font-size: 20px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
 }
@@ -3725,13 +3617,14 @@ header>div>a:hover {
 .consulter-offre-back #reponse > button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--orange-principale);
     padding: 5px 15px;
-    border-radius: 15px;
+    border-radius: 8px;
     border: 0;
-    display: flex;
-    justify-content: flex-end;
+}
+
+.consulter-offre-back #reponse > button:hover {
+    background-color: var(--orange-secondaire-2);
 }
 
 /* Petite mention*/
@@ -3746,26 +3639,25 @@ header>div>a:hover {
 *************************/
 
 .consulter-offre-back .navigation {
-    margin: 30px;
+    margin: 0 60px 30px 60px;
 }
 
 .consulter-offre-back .navigation>button {
-    background: var(--orange-principale);
-    border: 3px solid var(--blanc);
     color: var(--blanc);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 40px;
-    width: auto;
-    height: auto;
-    border-radius: 15px;
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-back .navigation>button:hover {
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back #remonte > img {
+    width: 13px;
+    height: 13px; 
 }
 
 /*********************
@@ -4173,7 +4065,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--violet-principal);
     border-radius: 15px;
@@ -4187,7 +4079,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2:hover {
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border: solid 2px var(--violet-principal);
     color: var(--violet-principal);
 }
@@ -4196,7 +4088,7 @@ input[type="tel"] {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
@@ -4270,7 +4162,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-front .filtre-tri h2+div>div+div {
@@ -4805,7 +4697,7 @@ input[type="tel"] {
     }
 
     .front {
-        padding-bottom: 120px;
+        padding-bottom: 10%;
     }
 
     .front main {
@@ -4984,7 +4876,6 @@ input[type="tel"] {
         top: 0;
 
         position: relative;
-        top: none;
         background-color: var(--violet-principal);
         border-radius: 0;
         width: auto;
@@ -5184,7 +5075,8 @@ input[type="tel"] {
     }
 
     .carousel {
-        height: 70vh;
+        height: 55vh;
+        width: 70vw;
     }
 
     .carousel button:hover {
@@ -5203,12 +5095,17 @@ input[type="tel"] {
         border: 2px var(--violet-principal) solid;
     }
 
+    .front.accueil .carousel {
+        width: 70vw;
+        height: 55vh;
+    }
+
     /****************************************************
                        consulter-offre
     *****************************************************/
 
     .consulter-offre-front .fond-blocs {    
-        margin: 0;
+        margin: 3%;
         padding: 3%;
     }
 
@@ -5217,7 +5114,7 @@ input[type="tel"] {
     }
 
     .consulter-offre-front .display-ligne-espace {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .consulter-offre-front h1 {
@@ -5226,6 +5123,8 @@ input[type="tel"] {
     }
 
     .consulter-offre-front .fond-blocs-avis {
+        display: flex;
+        flex-direction: column;
         margin: 5% 0;
         padding: 2%;
     }
@@ -5233,10 +5132,94 @@ input[type="tel"] {
     .consulter-offre-front .display-ligne {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-items: center;
         margin: 5px 0;
     }
+
+    .consulter-offre-front .double-blocs {  
+        flex-direction: column;
+    }
+
+    .consulter-offre-front .image-avis {
+        width: 80%;
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-bottom: 5%;
+    }
+
+    .consulter-offre-front .navigation>button {
+        padding: 1% 5%;
+        margin-inline-start: 1%;
+        font-size: 20pt;
+    }
+
+    .consulter-offre-front .display-ligne-espace {
+        flex-wrap: wrap;
+    }
+
+    .consulter-offre-front .reponse {
+        border: 3px solid var(--violet-principal);
+        border-radius: 10px;
+        margin: 1%;
+        margin-bottom: 0;
+        margin-top: 5%;
+    }
+
+    .consulter-offre-front .reponse > div > img {
+        width: 6%;
+        height: 5%;
+        margin: 2%;
+    }
+
+    .consulter-offre-front .reponse > p {
+        margin: 2% 0 2% 1%;
+    }
+
+    .consulter-offre-front .fond-blocs-avis .display-ligne-espace div {
+        justify-content: flex-end;
+    }
+
+    .consulter-offre-front .pouce {
+        width: 20%;
+        height: 20%;
+        margin: 2%;
+    }
+
+    .consulter-offre-front .navigation {
+        margin: 2%;
+        flex-wrap: nowrap;
+    }
+
+    .consulter-offre-front .etoile {
+        width: 8%;
+        height: 8%;
+    }
+
+    .consulter-offre-front h2 {
+        font-size: 18pt;
+    }
+
+    .consulter-offre-front .liste-caracteristique>li {
+        font-size: 20pt;
+        margin-bottom: 8%;
+        padding-left: 4%;
+    }
+
+    .consulter-offre-front h1 {
+        font-size: 40pt;
+        margin-top: 0;
+
+        
+    }
+
+    .consulter-offre-front section {
+        width: fit-content;
+      }
+
+    .consulter-offre-front .carousel {
+        width: fit-content;
+      }
 }
 
 @media screen and (max-width: 1100px) {

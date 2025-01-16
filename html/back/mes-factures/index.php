@@ -22,9 +22,11 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture f
-	            join sae._offre o on f.id_offre = o.id_offre
-                where o.id_compte_professionnel = :id_compte;"
+$reqFacture = "SELECT * from sae._facture f
+                join sae._date d on d.id_date = f.id_date_emission
+                join sae._offre o on f.id_offre = o.id_offre
+                join sae.compte_professionnel_prive cp on cp.id_compte = o.id_compte_professionnel
+                where cp.id_compte = :id_compte;"
 
 ?>
 <!DOCTYPE html> 
@@ -33,7 +35,7 @@ $reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture 
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
-    <title>Mon compte</title>
+    <title>Mes factures</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back factures">
@@ -112,15 +114,13 @@ try {
             ?>
             <h1>Mes factures</h1>
             <ul>
-                <li>
-                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Facture N°1 de janvier</p></a>
-                </li>
                 <?php
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?></p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - <?php echo htmlentities($facture["date"]); ?></a>
                     </li>
+                    <hr>
                 <?php
                 }
                 ?>
@@ -155,10 +155,8 @@ try {
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
-            <div class="footer-bottom">
-                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-                Redden's, Inc.
-            </div>
+        <div class="footer-bottom">
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
     </footer>
 </body>

@@ -395,10 +395,8 @@ try {
 
             </div>
             <div class="footer-bottom">
-                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-                Redden's, Inc.
-            </div>
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
         </footer>
 
         <?php
@@ -935,10 +933,73 @@ try {
                         $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
                         print("option payante mise dans la bdd");
                     } 
-                    //faut il rentré un nombre de semaine a la souscription ?
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
-                    
+                    /*******************************************
+                                    INSERTION FACTURE
+                    ********************************************/
+
+                        // Initialisation des variables pour éviter les erreurs de variable non définie
+                        $idDateEmission = null;
+                        $idDateEcheance = null;
+
+                        // Obtenir la date d'aujourd'hui
+                        $today = new DateTime();
+                        // La date du dernier jour du mois
+                        $emissionDate = date("Y-m-d H:i:s");
+
+                        // Conversion de la chaîne en objet DateTime pour faciliter les calculs
+                        $emissionDateDate = new DateTime($emissionDate);
+                        $echeanceDate = $emissionDateDate->modify('+15 days');
+                        $echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
+
+                        $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
+
+                        $reqSelectDate = "SELECT id_date FROM sae._date WHERE date = :date"; // Requête pour vérifier l'existence de la date
+                        // Vérification de la date d'émission
+                        $stmt = $dbh->prepare($reqSelectDate);
+                        $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+                        $stmt->execute();
+                        $idDateEmission = $stmt->fetchColumn();
+                        echo $idDateEmission;
+
+                        // Check si les dates existes pour pas faire de doublons
+                        if (!dateExiste($dbh, $emissionDate)) {
+                            // Insert de la date d'emission de la facture dans la table _date
+                            $stmt = $dbh->prepare($reqInsertDate);
+                            $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+                            $stmt->execute();
+                            $idDateEmission = $stmt->fetchColumn();
+                        }
+
+                        // Vérification de la date d'émission
+                        $stmt = $dbh->prepare($reqSelectDate);
+                        $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+                        $stmt->execute();
+                        $idDateEmission = $stmt->fetchColumn();
+                        echo $idDateEmission;
+
+                        if (!dateExiste($dbh, $echeanceDate)) {
+                            // Insert de la date d'échéance de la facture dans la table _date
+                            $stmt = $dbh->prepare($reqInsertDate);
+                            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
+                            $stmt->execute();
+                            $idDateEcheance = $stmt->fetchColumn();
+                        }
+
+                        // Vérification de la date d'émission
+                        $stmt = $dbh->prepare($reqSelectDate);
+                        $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
+                        $stmt->execute();
+                        $idDateEcheance = $stmt->fetchColumn();
+                        echo $idDateEcheance;
+
+                        $reqFacture = "INSERT into sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre)
+		                            values (?, ?, ?, ?);";
+                                    
+                        $stmt_facture = $dbh->prepare($reqFacture);
+                        $stmt_facture -> execute([1, $idDateEmission, $idDateEcheance , $id_offre]);
+
                     if ($dbh->inTransaction()) {
                         $dbh->commit();
                     }

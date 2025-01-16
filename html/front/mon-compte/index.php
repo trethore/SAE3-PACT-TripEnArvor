@@ -147,6 +147,21 @@ $reqCompte = "SELECT * from sae.compte_membre
             <div>
                 <a href="/front/modifier-compte">Modifier les informations</a>
             </div>
+            <div>
+                <?php
+                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
+                ?>
+                <script>
+                    function copyAPIKey() {
+                        var apiKey = "<?php echo addslashes($APIKey); ?>";
+                        navigator.clipboard.writeText(apiKey);
+                        alert("Clé d'API Tchatator copiée dans le presse-papier!");
+                    }
+                </script>
+                <h2>Clé d'accès au Tchatator : </h2>
+                <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
+            </div>
+            
         </section>
     </main>
     <footer>
@@ -178,9 +193,7 @@ $reqCompte = "SELECT * from sae.compte_membre
 
         </div>
         <div class="footer-bottom">
-            <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-            <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-            Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
     <div class="telephone-nav">

@@ -56,6 +56,19 @@ switch ($typeCompte) {
         break;
 }
 
+// Préparation et exécution de la requête
+$stmt = $conn->prepare($reqCompte);
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->execute();
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$informationsBancaires;
+if ($typeCompte === 'proPrive') {
+    $query = "SELECT * FROM sae._mandat_prelevement_sepa INNER JOIN sae._compte_professionnel_prive ON _mandat_prelevement_sepa.id_compte_pro_prive = _compte_professionnel_prive.id_compte WHERE _compte_professionnel_prive.id_compte = ?;";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$detailCompte['id_compte']]);
+    $informationsBancaires = $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,6 +80,7 @@ switch ($typeCompte) {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back compte-back">
+<pre>
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
@@ -121,13 +135,6 @@ switch ($typeCompte) {
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
-            <?php 
-                // Préparation et exécution de la requête
-                $stmt = $conn->prepare($reqCompte);
-                $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
-            ?>
             <h1>Détails du compte</h1>
             <article style="display: none;">
                 <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
@@ -201,28 +208,47 @@ switch ($typeCompte) {
                     <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
                 </tr>
             </table>
+<?php
+if ($typeCompte === 'proPrive') {
+?>
             <h2>Informations bancaires</h2>
             <table>
                 <tr>
-                    <td>Nom du compte</td>
-                    <td><?php //echo htmlentities($detailCompte[""] ?? '');?></td>
+                    <td>Nom</td>
+                    <td><?php echo htmlentities($informationsBancaires['nom_creancier'] ?? '');?></td>
                 </tr>
                 <tr>
-                    <td>code IBAN</td>
-                    <td><?php //echo htmlentities($detailCompte["prenom"] ?? '');?></td>
+                    <td>Identifiant</td>
+                    <td><?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?></td>
                 </tr>
                 <tr>
-                    <td>Adresse mail</td>
-                    <td><?php //echo htmlentities($detailCompte["email"]);?></td>
+                    <td>IBAN</td>
+                    <td><?php echo htmlentities($informationsBancaires['iban_creancier'] ?? '');?></td>
                 </tr>
                 <tr>
-                    <td>N° de téléphone</td>
-                    <td><?php //echo htmlentities($detailCompte["tel"] ?? '');?></td>
+                    <td>BIC</td>
+                    <td><?php echo htmlentities($informationsBancaires['bic_creancier'] ?? '');?></td>
                 </tr>
-
             </table>
+<?php
+}
+?>
             <div>
                 <a href="/back/modifier-compte">Modifier les informations</a>
+            </div>
+            <div>
+                <?php
+                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
+                ?>
+                <script>
+                    function copyAPIKey() {
+                        var apiKey = "<?php echo addslashes($APIKey); ?>";
+                        navigator.clipboard.writeText(apiKey);
+                        alert("Clé d'API Tchatator copiée dans le presse-papier!");
+                    }
+                </script>
+                <h2>Clé d'accès au Tchatator : </h2>
+                <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
         </section>
     </main>
@@ -254,11 +280,9 @@ switch ($typeCompte) {
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
-            <div class="footer-bottom">
-                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-                Redden's, Inc.
-            </div>
+        <div class="footer-bottom">
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
     </footer>
 </body>
 </html>

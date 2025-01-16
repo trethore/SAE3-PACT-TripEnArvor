@@ -704,6 +704,26 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL qui donne la date de debut de souscription a une option ===== //
+
+    function getDateSouscritOption($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM sae._date NATURAL JOIN sae._offre_souscrit_option  WHERE id_offre = :id_offre ORDER BY date DESC LIMIT 1";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
     function isOffreHorsLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -875,4 +895,76 @@
             die();
         }
     }
+
+    function getNbSemaine($date, $today) {
+        // Convertir la date de la base de données en objet DateTime
+        $dateFromDbObj = new DateTime($date);
+    
+        // Calculer la différence entre les deux dates
+        $interval = $dateFromDbObj->diff($today);
+    
+        // Obtenir la différence en jours
+        $daysDifference = $interval->days;
+    
+        // Convertir la différence en semaines et arrondir vers le haut
+        $weeksDifference = ceil($daysDifference / 7);
+        
+        // Limiter le nombre de semaines à un maximum de 4
+        $weeksDifference = min($weeksDifference, 4);
+    
+        return $weeksDifference;
+    }    
+
+function getNbJours($date, $today) {
+    // Convertir la date de la base de données en objet DateTime
+    $dateFromDbObj = new DateTime($date);
+
+    // Calculer la différence entre les deux dates
+    $interval = $dateFromDbObj->diff($today);
+
+    // Obtenir la différence en jours
+    $daysDifference = $interval->days;
+
+    return $daysDifference;
+}
+
+function convertCentimesToEuros($centimes) {
+    // Convertir les centimes en euros
+    $euros = $centimes / 100;
+
+    // Formater le résultat avec 2 décimales et ajouter le symbole €
+    $formattedEuros = number_format($euros, 2, '.', '') . '€';
+
+    return $formattedEuros;
+}
+
+
+function getOffreTTC($prix, $nb, $TVA) {
+    return ($prix*$nb)*(1+$TVA/100);
+}
+
+function dateExiste($pdo, $date) {
+    $stmt = $pdo->prepare("SELECT 1 FROM sae._date WHERE date = :date");
+    $stmt->bindParam(':date', $date, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
+
+function getLu($id_offre) {
+    global $driver, $server, $dbname, $user, $pass;
+    $reqLu = "SELECT lu FROM sae._offre JOIN sae._avis ON sae._offre.id_offre = sae._avis.id_offre WHERE sae._offre.id_offre = :id_offre;";
+    try {
+        $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $conn->prepare("SET SCHEMA 'sae';")->execute();
+        $stmtLu = $conn->prepare($reqLu);
+        $stmtLu->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+        $stmtLu->execute();
+        $lu = $stmtLu->fetchAll(PDO::FETCH_ASSOC);
+        $conn = null;
+        return $lu;
+    } catch (Exception $e) {
+        print "Erreur !: " . $e->getMessage() . "<br>";
+        die();
+    }
+}
 ?>

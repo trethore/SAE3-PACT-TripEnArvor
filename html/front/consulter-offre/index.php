@@ -129,7 +129,7 @@ if ($submitted) {
             $stmtInsertionRapport->execute(["Rapport qualité prix", $noteRapport, $id_membre, $id_offre]);
         }
 
-        if (isset($_FILES['photo'])) {
+        if ((isset($_FILES['photo'])) && ($_FILES['photo']['error'] == 0)) {
             $nomFichier = 'Image_Avis_' . strval(time());
             $fichier = $_FILES['photo'];
             $extension = get_file_extension($fichier['type']);
@@ -269,6 +269,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
@@ -295,7 +296,7 @@ try {
 
 <header>
     <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/accueil">PACT</a></div>
+    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
     <div class="search-box">
         <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
@@ -346,26 +347,26 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section class="fond-blocs bordure pur">
             
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
-            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
+            <h1><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></h1>
 
             <div class="carousel">
-            <div class="carousel-slides">
-<?php
-foreach ($images as $image) {
-?>
-                <div class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                <div class="carousel-slides">
+                    <?php
+                    foreach ($images as $image) {
+                    ?>
+                        <div class="slide">
+                            <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
-<?php
-}
-?>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-        </div>
 
 
             <div class="display-ligne-espace">
@@ -499,7 +500,7 @@ foreach ($images as $image) {
         <section class="double-blocs">
 
             <!-- AFFICHAGE DES TAGS DES OFFRES -->
-            <div class="fond-blocs bloc-caracteristique">
+            <div class="bloc-caracteristique">
                 <ul class="liste-caracteristique">
 
                     <?php if (!empty($tags)) {
@@ -647,7 +648,7 @@ foreach ($images as $image) {
 
                 <?php if ($noteMoyenne !== null) { ?>
 
-                    <h2>Note moyenne : </h2>
+                    <h2>Note moyenne     </h2>
                     <?php $etoilesPleines = floor($noteMoyenne);
                         $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                         $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
@@ -672,7 +673,7 @@ foreach ($images as $image) {
 
                 } ?>
 
-                <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
+                <p> (<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
             <div class="petite-mention margin-0">
@@ -925,7 +926,7 @@ foreach ($images as $image) {
         <!-- BOUTONS DE NAVIGATION -->
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'">^</button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
@@ -959,9 +960,7 @@ foreach ($images as $image) {
 
         </div>
         <div class="footer-bottom">
-        <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
         
     </footer>

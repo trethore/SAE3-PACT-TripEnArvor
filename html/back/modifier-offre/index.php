@@ -216,6 +216,8 @@ print_r($tags);
     echo ($date_evenement);
 
     print_r($adresse);
+
+    $date_aujourdhui = new DateTime(); 
     
 
     
@@ -404,26 +406,34 @@ try {
                             </div>
                         </td>
                     </tr>
+                    
+                    <?if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+
                     <tr>
-                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
+                   
+                    
+                        <td> 
+                            <label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
-                                    <option value="standard"> Offre Standard </option>
-                                    <option value="premium"> Offre Premium </option>
+                                    <option value="standard"  <?php if($offre_bonne_cat['abonnement'] === "standard"){ echo "selected";} ?>> Offre Standard </option>
+                                    <option value="premium"  <?php if($offre_bonne_cat['abonnement'] === "premium"){ echo "selected";} ?>> Offre Premium </option>
                                 </select>
                             </div>
                                     
                         </td>
                         <td>(impossible de modifier le type)</td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <div id="options">
-                            <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                            <td><label id="labeloptions" for="optionPayante">Options</label></td>
+
+                            <td> <input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="enRelief" id="labelEnRelief">En relief</label>
+                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
+                  <?php  } ?>
                 </table>
 
 
@@ -507,6 +517,9 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
+                        <?php if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                        
+                        
                         <div id="tarifs">
                             
                             <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
@@ -533,7 +546,7 @@ try {
                             } ?>
 
                         </div>
-
+                        <?php  } ?>
                     <br>
                     
 
@@ -596,33 +609,37 @@ try {
             </main>
             
             <footer>
-                <div class="footer-top">
-                    <div class="footer-top-left">
-                        <span class="footer-subtitle">P.A.C.T</span>
-                        <span class="footer-title">TripEnArmor</span>
-                    </div>
-                    <div class="footer-top-right">
-                        <span class="footer-connect">Restons connectés !</span>
-                        <div class="social-icons">
-                            <a href="https://x.com/?locale=fr">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-                            </a>
-                            <a href="https://www.facebook.com/?locale=fr_FR">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');">
-                                </div>
-                            </a>
-                            <a href="https://www.youtube.com/">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');">
-                                </div>
-                            </a>
-                            <a href="https://www.instagram.com/">
-                                <div class="social-icon"
-                                    style="background-image: url('/images/universel/icones/instagram.png');"></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+        <div class="footer-top">
+        <div class="footer-top-left">
+            <span class="footer-subtitle">P.A.C.T</span>
+            <span class="footer-title">TripEnArmor</span>
+        </div>
+        <div class="footer-top-right">
+            <span class="footer-connect">Restons connectés !</span>
+            <div class="social-icons">
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
+            </div>
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
+        </div>
+        <div class="footer-bottom">
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
+    </footer>
         <?php } else {
             $id_offre = $id_offre_cible;
             $id_compte = $_SESSION['id'];
@@ -753,11 +770,7 @@ try {
             }else {
                 $cp = null;
             }
-            if(isset($_POST['option'])){
-                $option = $_POST['option'];
-            }else {
-                $option = null;
-            }
+            
             if(isset($_POST['lien'])){
                 $lien = $_POST['lien'];
             }else {
@@ -846,9 +859,11 @@ try {
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
                         //s'il n'y avait pas d'adresse a la base, on créer une nouvelle id_adresse
                         if ($adresse['id_adresse'] == null) {
-                            $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
+                            $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?) returning id_adresse;";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
                             $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                            //recuperation de id_adresse
+                            $id_adresse = $stmt_adresse->fetch(PDO::FETCH_ASSOC)['id_adresse'];
                         }else {
                             $requete_adresse = "UPDATE sae._adresse 
                                         set num_et_nom_de_voie = ?, 
@@ -859,13 +874,15 @@ try {
                                         where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
                             $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+
+                            $id_adresse = $offre_bonne_cat['id_adresse'];
                         }
                         
                             
-                            //recuperation de id_adresse
-                            $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
+                            
 
                             print("changement de adresse");
+                            print(" id : " . $id_adresse);
                         
                     }
                     if ($date_evenement != null) {
@@ -1034,34 +1051,77 @@ try {
                     }
 
                 }
-
-                //modification des options
-                if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
-                    if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
-                        $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
-                        $stmt_suppression = $dbh->prepare($requete_suppression_option);
-                        $stmt_suppression->execute([$id_offre, $optionP]);
-
-                    }
-                    $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
-                    $stmt_option = $dbh->prepare($requete_option);
-                    $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
-                    print("option payante mise dans la bdd");
-                } 
                 
-                //upddate tarifs
+                //modification des options
+                
+                
+                print($optionP);
+                if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
+                    print("rentre dans la premier if");
+                    //insertion de la date de souscription dans_date
+                    
+                    $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                    $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                    $stmtInsertionDateEvent->execute([$date_souscription]);
+                    $id_date_souscription = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                // if(($isIdProPrivee)&&($categorie !== "restaurant")){
-                //     foreach ($tabtarifs as $key => $value) {
-                //         $requete_tarif = "UPDATE sae._tarif_publique
-                //                         set nom_tarif = ?,
-                //                         prix = ?,
-                //                         where id_offre = ?";
-                //          $stmt_tarif = $dbh->prepare($requete_tarif);    
-                //          $stmt_tarif -> execute([$key, $value, $id_offre]);
 
-                //     }
-                // }
+                    if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
+                        print("rentre dans la deuxieme if");
+                        
+                            $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
+                            $stmt_suppression = $dbh->prepare($requete_suppression_option);
+                            $stmt_suppression->execute([$id_offre]);
+                            print("option supprimée");
+                        
+                    }
+                        $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
+                        $stmt_option = $dbh->prepare($requete_option);
+                        $stmt_option -> execute([$id_offre, $optionP, $id_date_souscription]);
+                        print("option payante mise dans la bdd");
+                
+                    
+                } 
+            
+
+
+                //insertion dans tarif si c'est pas un restaurant
+                
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                        try {
+                            $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
+                            $stmt_suppr_tarif = $dbh->prepare($requete_suppr_tarif);
+                            $stmt_suppr_tarif->execute([$id_offre]);}
+                            catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! suppression: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
+
+                        foreach ($tabtarifs as $key => $value) {
+                            try{
+                                $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+
+                                // Préparation de la requête pour la vue tarif
+                                $stmt_tarif = $dbh->prepare($requete_tarif);
+
+                                // Exécution de la requête pour insérer dans la vue tarif
+                                $stmt_tarif->execute([$key, $value, $id_offre]);
+                                echo "<br>";
+                            }catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! insertion tarif: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
+                            
+                        }
+                    }
+                
+                
                 
                 //
                 
@@ -1077,7 +1137,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/id=$offre'
+                            window.location.href = '/back/consulter-offre/index.php?id=$offre'
                         }
                   </script>";
 
