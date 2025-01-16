@@ -938,7 +938,7 @@ try {
                     /*******************************************
                                     INSERTION FACTURE
                     ********************************************/
-                    
+
                         // Initialisation des variables pour éviter les erreurs de variable non définie
                         $idDateEmission = null;
                         $idDateEcheance = null;
@@ -954,6 +954,15 @@ try {
                         $echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
 
                         $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
+
+$reqSelectDate = "SELECT id_date FROM sae._date WHERE date = :date"; // Requête pour vérifier l'existence de la date
+// Vérification de la date d'émission
+$stmt = $dbh->prepare($reqSelectDate);
+$stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+$stmt->execute();
+$idDateEmission = $stmt->fetchColumn();
+echo $idDateEmission;
+
                         // Check si les dates existes pour pas faire de doublons
                         if (!dateExiste($dbh, $emissionDate)) {
                             // Insert de la date d'emission de la facture dans la table _date
@@ -962,6 +971,14 @@ try {
                             $stmt->execute();
                             $idDateEmission = $stmt->fetchColumn();
                         }
+
+// Vérification de la date d'émission
+$stmt = $dbh->prepare($reqSelectDate);
+$stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
+$stmt->execute();
+$idDateEmission = $stmt->fetchColumn();
+echo $idDateEmission;
+
                         if (!dateExiste($dbh, $echeanceDate)) {
                             // Insert de la date d'échéance de la facture dans la table _date
                             $stmt = $dbh->prepare($reqInsertDate);
@@ -969,9 +986,17 @@ try {
                             $stmt->execute();
                             $idDateEcheance = $stmt->fetchColumn();
                         }
-                        
+
+// Vérification de la date d'émission
+$stmt = $dbh->prepare($reqSelectDate);
+$stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
+$stmt->execute();
+$idDateEcheance = $stmt->fetchColumn();
+echo $idDateEcheance;
+
                         $reqFacture = "INSERT into sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre)
 		                            values (?, ?, ?, ?);";
+                                    
                         $stmt_facture = $dbh->prepare($reqFacture);
                         $stmt_facture -> execute([1, $idDateEmission, $idDateEcheance , $id_offre]);
 
