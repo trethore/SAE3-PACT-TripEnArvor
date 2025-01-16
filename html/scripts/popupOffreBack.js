@@ -1,4 +1,4 @@
-function toggleButtonText() {
+function miseHorsLigneEnLigne() {
     const button = document.getElementById('boutonMHL-MEL');
     if (button.textContent === "Mettre hors ligne") {
         button.textContent = "Mettre en ligne";
