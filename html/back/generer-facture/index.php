@@ -33,9 +33,14 @@ $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
 
 // Obtenir la date d'aujourd'hui
-$today = new DateTime();
-// La date du dernier jour du mois
-$emissionDate = date("Y-m-d H:i:s");
+$emissionDate = new DateTime();
+// Modifie la date pour qu'elle corresponde au dernier jour du mois
+$emissionDate->modify('last day of this month');
+// Définit l'heure à 23:59:59
+$emissionDate->setTime(23, 59, 59);
+// Retourne la date formatée
+$emissionDate->format('Y-m-d H:i:s');
+
 
 echo $emissionDate;
 
