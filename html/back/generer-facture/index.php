@@ -68,7 +68,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
 $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix from sae._offre_souscrit_option os
                 join sae._date d on d.id_date = os.id_date_souscription
-                join sae._historique_prix_options ho on ho.nom_option = os.nom_option 
+                join sae._historique_prix_options ho on ho.nom_option = os.nom_option
                 where id_offre = :id_offre;"
 ?>
 <!DOCTYPE html>
