@@ -1034,6 +1034,13 @@ h3 {
     padding-top: 4px;
 }
 
+.liste-back .date_publication_offre {
+    position: absolute;
+    left: 10%;
+    bottom: 1em;
+
+}
+
 .liste-back .lesOffres .prix {
     background: var(--orange-principale);
     color: var(--blanc);
