@@ -910,6 +910,20 @@ function getNbSemaine($date, $today) {
     $weeksDifference = floor($daysDifference / 7);
     return $weeksDifference;
 }
+
+function getNbJours($date, $today) {
+    // Convertir la date de la base de données en objet DateTime
+    $dateFromDbObj = new DateTime($date);
+
+    // Calculer la différence entre les deux dates
+    $interval = $dateFromDbObj->diff($today);
+
+    // Obtenir la différence en jours
+    $daysDifference = $interval->days;
+
+    return $daysDifference;
+}
+
 function getOffreTTC($prix, $nb, $TVA) {
     return ($prix*$nb)*(1+$TVA/100);
 }
@@ -917,13 +931,6 @@ function getOffreTTC($prix, $nb, $TVA) {
 function dateExiste($pdo, $date) {
     $stmt = $pdo->prepare("SELECT 1 FROM sae._date WHERE date = :date");
     $stmt->bindParam(':date', $date, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchColumn() > 0;
-}
-
-function factureExiste($pdo, $numeroFacture) {
-    $stmt = $pdo->prepare("SELECT 1 FROM sae._facture WHERE numero_facture = :num");
-    $stmt->bindParam(':num', $numeroFacture, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
