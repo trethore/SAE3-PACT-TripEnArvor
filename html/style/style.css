@@ -1397,6 +1397,7 @@ h3 {
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
    border-radius: 15px;
+   padding: 0.2em 1em;
 }
 
 /********************
