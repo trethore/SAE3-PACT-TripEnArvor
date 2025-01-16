@@ -231,15 +231,15 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     <table class="totals">
         <tr>
             <td>Total HT</td>
-            <td><?php echo htmlentities($TotalHT) ?? '' ?></td>
+            <td><?php echo htmlentities(convertCentimesToEuros($TotalHT)) ?? '' ?></td>
         </tr>
         <tr>
             <td>Total TVA</td>
-            <td><?php echo htmlentities($TotalTVA) ?? '' ?></td>
+            <td><?php echo htmlentities(convertCentimesToEuros($TotalTVA)) ?? '' ?></td>
         </tr>
         <tr>
             <td><b>Total TTC</b></td>
-            <td><b><?php echo htmlentities($TotalHT + $TotalTVA) ?? '' ?></b></td>
+            <td><b><?php echo htmlentities(convertCentimesToEuros($TotalHT + $TotalTVA)) ?? '' ?></b></td>
         </tr>
     </table>
     <article class="payment-terms">
