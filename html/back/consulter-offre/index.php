@@ -645,7 +645,7 @@ try {
                 foreach ($avisGroupe as $item) {
                     $a = $item['avis'];
                     echo "<pre>";
-                    print_r($a");
+                    print_r($a);
                     echo "</pre>";
                     $compteur = $item['index'];
 
