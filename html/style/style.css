@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.cdnfonts.com/css/garet');
 
-html {
-    scroll-behavior: smooth;
-}
-
 :root {
     /****************
       COULEURS
@@ -60,6 +56,10 @@ html {
 * {
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 button {
@@ -708,7 +708,7 @@ h3 {
 }
 
 .liste-back .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-back .filtre-tri h2+div>div+div {
@@ -2832,10 +2832,6 @@ h3 {
     margin: 5px 0;
 } 
 
-.consulter-offre-front header > a {
-    text-decoration: none;
-}
-
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
     margin: 0 30px 0 30px;
@@ -2846,9 +2842,9 @@ h3 {
     text-decoration: underline;
 }
 
-.consulter-offre-front header>div>a,
-header>div>a:hover {
-    text-decoration: none;
+.consulter-offre-front header > div > a,
+.consulter-offre-front header > div > a:hover {
+    text-decoration: none; 
 }
 
 .consulter-offre-front .etoile {
@@ -2952,7 +2948,7 @@ header>div>a:hover {
     border-left: 3px solid var(--violet-principal);
     background: var(--blanc);
     margin: 30px 30px 0 0;
-    padding: 0 30px;
+    padding: 0 0 0 30px;
 }
 
 .consulter-offre-front .bloc-a-propos > p {
@@ -3216,6 +3212,7 @@ header>div>a:hover {
     width: 40px;
     height: 40px;
     margin-left: 5px;
+    object-fit: cover;
 }
 
 /* Petite mention*/
@@ -3258,18 +3255,6 @@ header>div>a:hover {
 
 .consulter-offre-front footer>div>a {
     text-decoration: none;
-}
-
-.consulter-offre-front #carte {
-    display: none;
-}
-
-.consulter-offre-front .pouce_haut:hover {
-    background-image: ('/images/universel/icones/pouce-up-hover.png');
-}
-
-.consulter-offre-front .pouce_bas:hover {
-    background-image: ('/images/universel/icones/pouce-down-hover.png');
 }
 
 /**************************************************************************************
@@ -4193,7 +4178,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--violet-principal);
     border-radius: 15px;
@@ -4207,7 +4192,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2:hover {
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border: solid 2px var(--violet-principal);
     color: var(--violet-principal);
 }
@@ -4216,7 +4201,7 @@ input[type="tel"] {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
@@ -4290,7 +4275,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-front .filtre-tri h2+div>div+div {
@@ -5004,7 +4989,6 @@ input[type="tel"] {
         top: 0;
 
         position: relative;
-        top: none;
         background-color: var(--violet-principal);
         border-radius: 0;
         width: auto;
