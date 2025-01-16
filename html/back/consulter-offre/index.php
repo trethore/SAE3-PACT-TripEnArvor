@@ -644,24 +644,25 @@ try {
 
                 foreach ($avisGroupe as $item) {
                     $a = $item['avis'];
-                    echo "<pre>";
-                    print_r($a);
-                    echo "</pre>";
                     $compteur = $item['index'];
 
-                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id = :id");
-                    $stmt->execute(['id' => $a['id']]);
+                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                    $stmt->execute([
+                        'id_membre' => $a['id_membre'],
+                        'id_offre' => $a['id_offre']
+                    ]);
                     $consulted = $stmt->fetchColumn();
 
-                    $style = $consulted ? "" : "background-color: cyan;";
-
                     if (!$consulted) {
-                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id = :id");
-                        $updateStmt->execute(['id' => $a['id']]);
+                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                        $updateStmt->execute([
+                            'id_membre' => $a['id_membre'],
+                            'id_offre' => $a['id_offre']
+                        ]);
                     }
                     ?>
 
-                    <div class="fond-blocs-avis" style="<?php echo $style; ?>>
+                    <div class="fond-blocs-avis">
                         <div class="display-ligne">
                             <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                             <div class="display-ligne">
