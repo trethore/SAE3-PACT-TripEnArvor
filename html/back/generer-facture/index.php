@@ -29,13 +29,17 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
+$reqDate = "INSERT INTO sae._date (date) VALUES (:date)";
+
 $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
                 join sae._adresse a on a.id_adresse = cp.id_adresse
                 where id_compte =  :id_compte;";
+
 $reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance from sae._facture 
                 join sae._date d on d.id_date = id_date_emission
                 join sae._date da on da.id_date = id_date_echeance
                 where numero_facture = :nu_facture;";
+
 $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
                         join sae._abonnement a on o.abonnement = a.nom_abonnement
                         join sae._facture f on o.id_offre = f.id_offre
@@ -64,6 +68,14 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="genFacture">
+    <?php 
+    if (!isset($detailFacture["numero_facture"])) {
+        echo  date("t-m-Y");
+        // $stmt = $conn->prepare($reqDate);
+        // $stmt->bindParam(':date', $today, PDO::PARAM_INT); // Lié à l'ID du compte
+        // $stmt->execute();
+    } else {
+    ?>
     <div class="infoFacture">
         <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
         <article>
@@ -197,5 +209,6 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
             Numéro de compte : 123-456-7890
         </p>
     </article>
+    <?php } ?>
 </body>
 </html>
