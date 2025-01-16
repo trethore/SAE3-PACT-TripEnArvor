@@ -596,33 +596,37 @@ try {
             </main>
             
             <footer>
-                <div class="footer-top">
-                    <div class="footer-top-left">
-                        <span class="footer-subtitle">P.A.C.T</span>
-                        <span class="footer-title">TripEnArmor</span>
-                    </div>
-                    <div class="footer-top-right">
-                        <span class="footer-connect">Restons connectés !</span>
-                        <div class="social-icons">
-                            <a href="https://x.com/?locale=fr">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-                            </a>
-                            <a href="https://www.facebook.com/?locale=fr_FR">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');">
-                                </div>
-                            </a>
-                            <a href="https://www.youtube.com/">
-                                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');">
-                                </div>
-                            </a>
-                            <a href="https://www.instagram.com/">
-                                <div class="social-icon"
-                                    style="background-image: url('/images/universel/icones/instagram.png');"></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+        <div class="footer-top">
+        <div class="footer-top-left">
+            <span class="footer-subtitle">P.A.C.T</span>
+            <span class="footer-title">TripEnArmor</span>
+        </div>
+        <div class="footer-top-right">
+            <span class="footer-connect">Restons connectés !</span>
+            <div class="social-icons">
+            <a href="https://x.com/?locale=fr">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+            </a>
+            <a href="https://www.facebook.com/?locale=fr_FR">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+            </a>
+            <a href="https://www.youtube.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+            </a>
+            <a href="https://www.instagram.com/">
+                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+            </a>
+            </div>
+        </div>
+
+
+        <!-- Barre en bas du footer incluse ici -->
+
+        </div>
+        <div class="footer-bottom">
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
+    </footer>
         <?php } else {
             $id_offre = $id_offre_cible;
             $id_compte = $_SESSION['id'];
