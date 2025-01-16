@@ -644,14 +644,13 @@ try {
 
                 foreach ($avisGroupe as $item) {
                     $a = $item['avis'];
-                    echo "<pre>";
-                    print_r($a);
-                    echo "</pre>";
                     $compteur = $item['index'];
 
-                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id = :id");
-                    $stmt->execute(['id' => $a['id']]);
-                    $consulted = $stmt->fetchColumn();
+                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                    $stmt->execute([
+                        'id_membre' => $a['id_membre'],
+                        'id_offre' => $a['id_offre']
+                    ]);
 
                     $style = $consulted ? "" : "background-color: cyan;";
 
