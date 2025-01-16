@@ -406,10 +406,14 @@ try {
                             </div>
                         </td>
                     </tr>
+                    
+                    <?if (isIdProPrivee($id_offre)) { ?>
+
                     <tr>
                    
                     
-                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
+                        <td> 
+                            <label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -429,6 +433,7 @@ try {
                             <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
+                  <?php  } ?>
                 </table>
 
 
@@ -512,6 +517,9 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
+                        <?php if (isIdProPrivee($id_offre)) { ?>
+                        
+                        
                         <div id="tarifs">
                             
                             <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
@@ -538,7 +546,7 @@ try {
                             } ?>
 
                         </div>
-
+                        <?php  } ?>
                     <br>
                     
 
@@ -1129,7 +1137,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/id=$offre'
+                            window.location.href = '/back/consulter-offre/index.php?id=$offre'
                         }
                   </script>";
 
