@@ -499,7 +499,7 @@ foreach ($images as $image) {
         <section class="double-blocs">
 
             <!-- AFFICHAGE DES TAGS DES OFFRES -->
-            <div class="fond-blocs bloc-caracteristique">
+            <div class="bloc-caracteristique">
                 <ul class="liste-caracteristique">
 
                     <?php if (!empty($tags)) {
