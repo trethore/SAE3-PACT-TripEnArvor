@@ -248,20 +248,17 @@ try {
     </header>
 
     <div class="fond-bloc display-ligne-espace">
-        <div class="bouton-modifier"> 
+        <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+            <form method="post" enctype="multipart/form-data">
+                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigneEnLigne()">Mettre hors ligne</button>
+            </form>
+        <?php } else if ($dateMHL > $dateMEL) { ?>
+            <form method="post" enctype="multipart/form-data">
+                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigneEnLigne()">Mettre en ligne</button>
+            </form>
+        <?php } ?>
 
-            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                <form method="post" enctype="multipart/form-data">
-                    <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
-                </form>
-            <?php } else if ($dateMHL > $dateMEL) { ?>
-                <form method="post" enctype="multipart/form-data">
-                    <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
-                </form>
-            <?php } ?>
-
-            <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
-        </div>
+        <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
     </div>  
 
     <main id="body">
