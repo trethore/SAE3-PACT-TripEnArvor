@@ -107,7 +107,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         <article>
             <h3>Numéro de facture</h3>
             <h3>#<?php echo htmlentities($detailFacture["numero_facture"]); ?></h3>
-            <p><?php echo htmlentities($detailFacture["date_emission"]->format('d-m-Y')); ?></p>
+            <p><?php echo htmlentities($detailFacture["date_emission"]); ?></p>
         </article>
     </div>
     <section>
@@ -228,7 +228,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]->format('d-m-Y')) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
