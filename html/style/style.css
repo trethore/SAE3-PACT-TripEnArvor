@@ -5254,7 +5254,7 @@ input[type="tel"] {
     .consulter-offre-front .navigation>button {
         padding: 1% 5%;
         margin-inline-start: 1%;
-        font-size: 25pt;
+        font-size: 20pt;
     }
 
     .consulter-offre-front .display-ligne-espace {
@@ -5279,7 +5279,7 @@ input[type="tel"] {
         margin: 2% 0 2% 1%;
     }
 
-    .consulter-offre-front .display-ligne-espace div {
+    .consulter-offre-front .fond-blocs-avis .display-ligne-espace div {
         justify-content: flex-end;
     }
 
@@ -5291,6 +5291,7 @@ input[type="tel"] {
 
     .consulter-offre-front .navigation {
         margin: 2%;
+        flex-wrap: nowrap;
     }
 
     .consulter-offre-front .etoile {
@@ -5299,7 +5300,18 @@ input[type="tel"] {
     }
 
     .consulter-offre-front h2 {
+        font-size: 18pt;
+    }
+
+    .consulter-offre-front .liste-caracteristique>li {
         font-size: 20pt;
+        margin-bottom: 8%;
+        padding-left: 4%;
+    }
+
+    .consulter-offre-front h1 {
+        font-size: 40pt;
+        margin-top: 0;
     }
 }
 
