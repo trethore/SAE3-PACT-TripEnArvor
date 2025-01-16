@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
 
     let confirmDiv = document.getElementById("confirm");
     let finalDiv = document.getElementById("final");
@@ -39,4 +38,3 @@ document.addEventListener("DOMContentLoaded", function() {
         let bouton2 = document.getElementById('bouton2');
         bouton2.style.filter = "blur(0px)";
     }
-});
