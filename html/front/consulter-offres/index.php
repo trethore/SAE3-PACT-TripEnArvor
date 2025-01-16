@@ -205,7 +205,7 @@ try {
                         </div>
                     </div>
         
-                    <!-- Date -->
+                    <!-- Date 
                     <div class="date">
                         <h3>Date</h3>
                         <div>
@@ -220,7 +220,7 @@ try {
                                 <input id="open-date" type="date">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Contient avis -->
                     <div class="oui_avis">
