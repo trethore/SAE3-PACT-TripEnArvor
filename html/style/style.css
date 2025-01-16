@@ -5211,8 +5211,13 @@ input[type="tel"] {
         border-radius: 15px;
         margin: 0.5em 0.2em 0em 0.2em;
         text-align: center;
-        font-size: 30pt;
+        font-size: 35pt;
         border: 2px var(--violet-principal) solid;
+    }
+
+    .accueil .section-accueil {
+        width: 70vw;
+        height: 55vh;
     }
 
     /****************************************************
