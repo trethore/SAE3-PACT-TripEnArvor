@@ -195,6 +195,7 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
 </head>
@@ -271,7 +272,7 @@ try {
 
         <section class="fond-blocs bordure pur">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
-            <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
+            <h1><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></h1>
 
             <div class="carousel">
             <div class="carousel-slides">
