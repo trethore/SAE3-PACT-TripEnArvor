@@ -4805,7 +4805,7 @@ input[type="tel"] {
     }
 
     .front {
-        padding-bottom: 120px;
+        padding-bottom: 10%;
     }
 
     .front main {
@@ -5217,7 +5217,8 @@ input[type="tel"] {
     }
 
     .consulter-offre-front .display-ligne-espace {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        order: 9;
     }
 
     .consulter-offre-front h1 {
@@ -5226,6 +5227,8 @@ input[type="tel"] {
     }
 
     .consulter-offre-front .fond-blocs-avis {
+        display: flex;
+        flex-direction: column;
         margin: 5% 0;
         padding: 2%;
     }
@@ -5236,6 +5239,36 @@ input[type="tel"] {
         justify-content: space-around;
         align-items: center;
         margin: 5px 0;
+    }
+
+    .consulter-offre-front .double-blocs {  
+        flex-direction: column;
+    }
+
+    .consulter-offre-front .image-avis {
+        width: 80%;
+        margin-right: 0;
+    }
+
+    .consulter-offre-front .navigation>button {
+        padding: 1% 2%;
+        font-size: 30pt;
+    }
+
+    .consulter-offre-front .display-ligne-espace {
+        flex-wrap: nowrap;
+    }
+
+    .consulter-offre-front .reponse > div > img {
+        display: none;
+    }
+
+    .consulter-offre-front .reponse {
+        border: 3px solid var(--violet-principal);
+        border-radius: 10px;
+        margin: 1%;
+        margin-bottom: 0;
+        margin-top: 5%;
     }
 }
 
