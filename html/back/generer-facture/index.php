@@ -42,7 +42,7 @@ $emissionDate->setTime(23, 59, 59);
 $emissionDate->format('Y-m-d H:i:s');
 
 $echeanceDate = $emissionDate->modify('+15 days');
-$echeanceDate = $emissionDate->format('Y-m-d H:i:s');
+$echeanceDate = $echeanceDate->format('Y-m-d H:i:s');
 
 $emissionDate->format('Y-m-d H:i:s');
 
