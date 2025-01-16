@@ -1038,18 +1038,20 @@ try {
                     }
 
                 }
-
+                
                 //modification des options
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
+                    $date_souscription = date('Y-m-d H:i:s');
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
                         $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
                         $stmt_suppression = $dbh->prepare($requete_suppression_option);
                         $stmt_suppression->execute([$id_offre, $optionP]);
+                        print("option supprimée");
 
                     }
                     $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                     $stmt_option = $dbh->prepare($requete_option);
-                    $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
+                    $stmt_option -> execute([$id_offre, $optionP, $id_souscription]);
                     print("option payante mise dans la bdd");
                 } 
                 
