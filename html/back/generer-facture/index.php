@@ -21,12 +21,12 @@ $TotalTVA = 0; // Somme finale TVA
 // Obtenir la date d'aujourd'hui
 $today = new DateTime();
 // La date du dernier jour du mois
-$DernierJour = date("Y-m-d H:i:s");
+$emissionDate = date("Y-m-d H:i:s");
 
 // Conversion de la chaîne en objet DateTime pour faciliter les calculs
-$dernierJourDate = new DateTime($DernierJour);
-$echeanceDate = $dernierJourDate->modify('+15 days');
-$echeanceDate = $dernierJourDate->format('Y-m-d H:i:s');
+$emissionDateDate = new DateTime($emissionDate);
+$echeanceDate = $emissionDateDate->modify('+15 days');
+$echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
 
 startSession();
 $id_compte = $_SESSION["id"]; 
@@ -70,10 +70,10 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     <?php 
     if (!factureExiste($conn, $_GET["numero_facture"])) {
         // Check si les dates existes pour pas faire de doublons
-        if (!dateExiste($conn, $DernierJour)) {
+        if (!dateExiste($conn, $emissionDate)) {
             // Insert de la date d'emission de la facture dans la table _date
             $stmt = $conn->prepare($reqInsertDate);
-            $stmt->bindParam(':date', $DernierJour, PDO::PARAM_STR);
+            $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
             $stmt->execute();
         }
         if (!dateExiste($conn, $echeanceDate)) {
@@ -86,8 +86,8 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         // Insert d'une facture
         $stmt = $conn->prepare($reqFacture);
         $stmt->bindParam(':montant_ht', $montant_ht, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_emission', $id_date_emission, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_echeance', $id_date_echeance, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $emissionDate, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_echeance', $echeanceDate, PDO::PARAM_INT);
         $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -126,10 +126,10 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 <?php echo htmlentities($detailCompte["ville"] ?? '');?>
                 <br>
                 <!-- Tel -->
-                <?php echo htmlentities($detailCompte["tel"] ?? '');?>
+                Tél : <?php echo htmlentities($detailCompte["tel"] ?? '');?>
                 <br>
                 <!-- Email -->
-                <?php echo htmlentities($detailCompte["email"] ?? '');?>
+                Email : <?php echo htmlentities($detailCompte["email"] ?? '');?>
             </p>
         </article>
         <article class="emetteur">
