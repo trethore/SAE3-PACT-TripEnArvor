@@ -2934,9 +2934,8 @@ header>div>a:hover {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 20px;
+    border-radius: 8px;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
@@ -2955,19 +2954,14 @@ header>div>a:hover {
 .consulter-offre-front .bloc-tarif>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
     border: 0;
 }
 
 .consulter-offre-front .bloc-tarif>button:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
+    border-color: var(--violet-secondaire);
 }
 
 .consulter-offre-front .bloc-tarif {
@@ -3014,16 +3008,6 @@ header>div>a:hover {
     list-style: none;
 }
 
-/**************************
-        BLOCS CARTE                                                   
-**************************/
-
-.consulter-offre-front .carte {
-    width: 1000px;
-    height: 750px;
-    margin: auto;
-}
-
 /*************************
         BLOCS AVIS                                                   
 *************************/
@@ -3068,7 +3052,6 @@ header>div>a:hover {
     border-radius: 12px;
     width: 100%;
     height: 200px;
-    font-size: 20px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
 }
@@ -3079,17 +3062,16 @@ header>div>a:hover {
 }
 
 .consulter-offre-front input::file-selector-button {
-    text-align: center;
-    border: 0;
-    border-radius: 12px;
-    background: var(--violet-principal);
     color: var(--blanc);
-    width: 200px;
-    height: 50px;
+    text-decoration: none;
+    background-color: var(--violet-principal);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-front input::file-selector-button:hover {
-    background: rgb(26, 4, 44);
+    background: var(--violet-secondaire);
 }
 
 .consulter-offre-front span {
@@ -3101,10 +3083,9 @@ header>div>a:hover {
     padding: 5px;
     background: var(--blanc);
     border: 1px solid var(--gris);
-    border-radius: 12px;
-    height: 50px;
+    border-radius: 8px;
+    height: 40px;
     margin: 10px 30px 10px 0;
-    font-size: 20px;
     font-family: "Poppins", sans-serif;
 }
 
