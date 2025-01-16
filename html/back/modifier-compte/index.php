@@ -218,24 +218,29 @@ if ($typeCompte === 'proPrive') {
             </table>
             <?php
 if ($typeCompte === 'proPrive') {
+    if ($informationsBancaires == null) {
+?>
+            <input type="hidden" name="creer-infos-bancaires" value="true">
+<?php
+    }
 ?>
             <h2>Informations bancaires</h2>
             <table>
                 <tr>
                     <td>Nom</td>
-                    <td><input type="text" name="nom_creancier" id="nom_creancier" value="<?php echo htmlentities($informationsBancaires['nom_creancier']);?>"></td>
+                    <td><input type="text" name="nom_creancier" id="nom_creancier" value="<?php echo htmlentities($informationsBancaires['nom_creancier'] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>Identifiant</td>
-                    <td><input type="text" name="id_crancier" id="id_crancier" value="<?php echo(htmlentities($informationsBancaires['id_crancier'])); ?>"></td>
+                    <td><input type="text" name="id_crancier" id="id_crancier" value="<?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?>"></td>
                 </tr>
                 <tr>
                     <td>IBAN</td>
-                    <td><input type="text" name="iban_creancier" id="iban_creancier" value="<?php echo htmlentities($informationsBancaires['iban_creancier']);?>"></td>
+                    <td><input type="text" name="iban_creancier" id="iban_creancier" value="<?php echo htmlentities($informationsBancaires['iban_creancier'] ?? '');?>"></td>
                 </tr>
                 <tr>
                     <td>BIC</td>
-                    <td><input type="text" name="bic_creancier" id="bic_creancier" value="<?php echo htmlentities($informationsBancaires['bic_creancier']);?>"></td>
+                    <td><input type="text" name="bic_creancier" id="bic_creancier" value="<?php echo htmlentities($informationsBancaires['bic_creancier'] ?? '');?>"></td>
                 </tr>
             </table>
 <?php
@@ -423,9 +428,33 @@ if ($typeCompte === 'proPrive') {
                     $bicCreancier = $_POST['bic_creancier'];
 
                     if (isset($nomCreancier) && isset($idCreancier) && isset($ibanCreancier) && isset($bicCreancier)) {
-                        $query = 'UPDATE sae._mandat_prelevement_sepa SET nom_creancier = ?, iban_creancier = ?, bic_creancier = ?, id_crancier = ? WHERE id_compte_pro_prive = ?;';
-                        $stmt = $conn->prepare($query);
-                        $stmt->execute([$nomCreancier, $ibanCreancier, $bicCreancier, $idCreancier, $detailCompte['id_compte']]);
+                        if (isset($_POST['creer-infos-bancaires'])) {
+                            $query = 'INSERT INTO sae._mandat_prelevement_sepa
+(
+  rum,
+  nom_creancier,
+  iban_creancier,
+  bic_creancier,
+  id_crancier,
+  nom_debiteur,
+  iban_debiteur,
+  bic_debiteur,
+  nature_prelevement,
+  periodicite,
+  signature_mandat,
+  date_signature,
+  date_premiere_echeance,
+  id_compte_pro_prive
+)
+VALUES
+(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([uniqid(), $nomCreancier, $ibanCreancier, $bicCreancier, $idCreancier, 'TripEnArvor', '0123456789', '12345', 'récurrent', 'mensuel', uniqid(), '01-04-2025', '01-04-2025', $detailCompte['id_compte']]);
+                        } else {
+                            $query = 'UPDATE sae._mandat_prelevement_sepa SET nom_creancier = ?, iban_creancier = ?, bic_creancier = ?, id_crancier = ? WHERE id_compte_pro_prive = ?;';
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$nomCreancier, $ibanCreancier, $bicCreancier, $idCreancier, $detailCompte['id_compte']]);
+                        }
                     }
 
 

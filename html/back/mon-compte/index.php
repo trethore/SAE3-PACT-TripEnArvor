@@ -220,19 +220,19 @@ if ($typeCompte === 'proPrive') {
             <table>
                 <tr>
                     <td>Nom</td>
-                    <td><?php echo htmlentities($informationsBancaires['nom_creancier']);?></td>
+                    <td><?php echo htmlentities($informationsBancaires['nom_creancier'] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>Identifiant</td>
-                    <td><?php echo(htmlentities($informationsBancaires['id_crancier'])); ?></td>
+                    <td><?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?></td>
                 </tr>
                 <tr>
                     <td>IBAN</td>
-                    <td><?php echo htmlentities($informationsBancaires['iban_creancier']);?></td>
+                    <td><?php echo htmlentities($informationsBancaires['iban_creancier'] ?? '');?></td>
                 </tr>
                 <tr>
                     <td>BIC</td>
-                    <td><?php echo htmlentities($informationsBancaires['bic_creancier']);?></td>
+                    <td><?php echo htmlentities($informationsBancaires['bic_creancier'] ?? '');?></td>
                 </tr>
             </table>
 <?php
