@@ -1329,54 +1329,7 @@ h3 {
     transform: scale(1.1);
 }
 
-/* .accueil .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    width: 1226px;
-}
 
-.accueil .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: auto;
-}
-
-.accueil .carousel-images a {
-    display: block;
-    text-decoration: none;
-    width: 100%;
-    height: 100%;
-}
-
-.accueil .carousel-images img {
-    width: 1226px;
-    height: 600px;
-    pointer-events: none;
-}
-
-.accueil .arrow-left,
-.arrow-right {
-    position: absolute;
-    bottom: 5px;
-    transform: translateY(-50%);
-    z-index: 0
-.accueil .arrow-left>img,
-.arrow-right>img {
-    background-color: var(--violet-principal);
-    border-radius: 90px;
-    height: 38px;
-    width: 39px;
-}
-
-.accueil .arrow-left {
-    right: 69px;
-}
-
-.accueil .arrow-right {
-    right: 20px;
-}
- */
 .accueil .titre {
     position: absolute;
     left: 10px;
