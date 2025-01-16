@@ -307,8 +307,15 @@ try {
                             echo "<pre>";
                             print_r($avisNonLus);
                             echo "<pre>";
+                            forEach($avisNonLus as $avis) {
+                                foreach ($avisNonLus as $avis) {
+                                    if (empty($avis['lu'])) {
+                                        $nonLusCount++;
+                                    }
+                                }
+                            }
                         ?>
-                        <p>Avis non lus : <span><b>4</b></span></p>
+                        <p>Avis non lus : <span><b><?php echo $nonLusCount ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis non répondues
