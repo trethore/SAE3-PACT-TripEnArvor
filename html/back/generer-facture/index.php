@@ -228,22 +228,24 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($factOptions as $factOption) { ?>
-                <tr>
-                    <td><?php echo htmlentities($factOption["nom_option"] ?? '');?></td>
-                    <td><?php 
-                    $nb_semaine = getNbSemaine($factOption["nom_option"], $today);
-                    echo htmlentities($nb_semaine);
-                    ?></td>
-                    <td><?php echo htmlentities($TVA);?>%</td>
-                    <td><?php echo htmlentities(convertCentimesToEuros($factOption["prix"]));?></td>
-                    <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factOption["prix"],$nb_semaine, $TVA)))?></td>
-                    <?php // Calcul pour le total final
-                        $TotalHT += $factOption["prix"]*$nb_semaine;
-                        $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
-                    ?>
-                </tr>
-                    <?php }
+                    // Vérifiez si $factOptions est un tableau avant de le parcourir
+                    if ($factOptions && is_array($factOptions)) {
+                        foreach($factOptions as $factOption) { ?>
+                        <tr>
+                            <td><?php echo htmlentities($factOption["nom_option"] ?? '');?></td>
+                            <td><?php 
+                            $nb_semaine = getNbSemaine($factOption["date"], $today);
+                            echo htmlentities($nb_semaine);
+                            ?></td>
+                            <td><?php echo htmlentities($TVA);?>%</td>
+                            <td><?php echo htmlentities(convertCentimesToEuros($factOption["prix"]));?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factOption["prix"],$nb_semaine, $TVA)))?></td>
+                            <?php // Calcul pour le total final
+                                $TotalHT += $factOption["prix"]*$nb_semaine;
+                                $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
+                            ?>
+                        </tr>
+                    <?php }}
                 } catch (PDOException $e) {
                     echo "Erreur : " . $e->getMessage();
                 } ?>
@@ -268,7 +270,7 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
         <p>Le paiement est à régler jusqu'au <?php 
-        $date_echeance_DMY = new DateTime($detailFacture["date_emission"]);
+        $date_echeance_DMY = new DateTime($detailFacture["date_echeance"]);
         $date_echeance_DMY = $date_echeance_DMY->format('d-m-Y');
         echo htmlentities($date_echeance_DMY);
         ?></p>
