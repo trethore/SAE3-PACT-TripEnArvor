@@ -795,11 +795,6 @@ try {
                 }
             }
 
-            echo "<pre>";
-            print_r($avisSansReponse);
-            print_r($avisAvecReponse);
-            echo "</pre>";
-
             // Fonction pour afficher les avis
             function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass)
             {
@@ -883,6 +878,37 @@ try {
                                 </div>
                                 <button type="submit" name="submit-reponse" value="true">Répondre</button>
                             </form>
+
+                            <?php if (isset($_POST['reponse'])) {
+                                $reponse = htmlentities($_POST['reponse']);
+                                print_r($reponse); 
+
+                                $publie_le = date('Y-m-d H:i:s');  
+
+                                try {
+
+                                    // Connexion à la base de données
+                                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    // Insérer la date de publication
+                                    $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                    $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                    $stmtInsertionDateReponse->execute([$publie_le]);
+                                    $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+                                    // Insérer la réponse liée à l'avis
+                                    $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
+                                    $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                    $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
+
+                                } catch (PDOException $e) {
+
+                                    echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+
+                                } 
+                            } ?>
                         <?php } ?>
                     </div>
                     <?php
