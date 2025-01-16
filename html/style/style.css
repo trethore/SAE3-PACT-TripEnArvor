@@ -5301,6 +5301,10 @@ input[type="tel"] {
     .consulter-offre-front h2 {
         font-size: 20pt;
     }
+
+    .consulter-offre-front .navigation .display-ligne-espace {
+        flex-wrap: nowrap;
+    }
 }
 
 @media screen and (max-width: 1100px) {
