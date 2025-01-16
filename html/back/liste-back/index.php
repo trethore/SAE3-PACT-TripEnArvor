@@ -306,7 +306,7 @@ try {
                             $avisNonLus = getLu($row['id_offre']);
                             echo "<pre>";
                             print_r($avisNonLus);
-                            echo "<pre>";
+                            echo "</pre>";
 
                             $nonLusCount = 0;
 
