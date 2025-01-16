@@ -287,7 +287,7 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section class="fond-blocs bordure pur">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
