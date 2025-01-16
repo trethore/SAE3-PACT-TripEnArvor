@@ -774,7 +774,7 @@ try {
                         
                             // Insertion dans la table offre_visite
                             $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement, id_adresse)
-                                        VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent, $id_adresse]);
                         
