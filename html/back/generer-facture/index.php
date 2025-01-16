@@ -91,7 +91,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Update de la date d'émission
         $stmt = $conn->prepare($reqUpdateDate);
-        $stmt->bindParam(':date_emission_maj', $emissionDate, PDO::PARAM_INT);
+        $stmt->bindParam(':date_emission_maj', $emissionDate, PDO::PARAM_STR);
         $stmt->bindParam(':id_date_emission', $detailFacture["id_date_emission"], PDO::PARAM_INT);
         $stmt->execute();
 
