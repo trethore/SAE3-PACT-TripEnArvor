@@ -254,11 +254,9 @@ switch ($typeCompte) {
         <!-- Barre en bas du footer incluse ici -->
 
         </div>
-            <div class="footer-bottom">
-                <a href="/confidentialité/" target="_blank">Politique de confidentialité</a> - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-                <a href="/cgu/" target="_blank">Conditions générales</a> - ©
-                Redden's, Inc.
-            </div>
+        <div class="footer-bottom">
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
     </footer>
 </body>
 </html>
