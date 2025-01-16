@@ -249,7 +249,7 @@ try {
 
     <main id="body">
 
-        <section class="zone boutons">
+        <section class=" fond-blocs zone boutons">
             <div class="display-ligne-espace">
                 <div>
                     <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
