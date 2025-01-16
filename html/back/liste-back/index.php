@@ -523,7 +523,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -532,7 +532,7 @@ try {
                             const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
-                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {
