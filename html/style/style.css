@@ -2768,9 +2768,6 @@ h3 {
 /**************************************************************************************
                                     Consulter Offre Front
 ***************************************************************************************/
-.consulter-offre-front main {
-    padding: 0 200px;
-}
 
 .consulter-offre-front h1 {
     font-size: 64px;
@@ -2859,8 +2856,8 @@ header>div>a:hover {
         IMAGES PRÉSENTATION                
 **********************************/
 .consulter-offre-front .carousel {
-    height: 50vh;
-    width: 80vw;
+    height: 55vh;
+    width: 60vw;
 }
 
 /**********************************
@@ -3136,8 +3133,8 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .image-avis {
-    width: 500px;
-    height: auto;
+    width: 30vw;
+    height: 20vh;
     border-radius: 12px;
     margin-right: 10px;
 }
