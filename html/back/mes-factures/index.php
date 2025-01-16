@@ -113,7 +113,7 @@ try {
             <h1>Mes factures</h1>
             <ul>
                 <li>
-                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>> Prévisualiser la prochaine facture <</p></a>
+                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Prévisualiser votre prochaine facture</p></a>
                 </li>
                 <?php
                 foreach ($factures as $facture) {
