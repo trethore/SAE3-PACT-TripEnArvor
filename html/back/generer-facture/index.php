@@ -181,9 +181,9 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                         foreach($factAbos as $factAbo) { ?>
                         <tr>
                             <!-- Titre de l'offre -->
-                            <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
+                            <td><?php echo htmlentities($factAbo["titre"]);?></td>
                             <!-- Type de l'abonnement -->
-                            <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
+                            <td><?php echo htmlentities($factAbo["abonnement"]);?></td>
                             <!-- Nb de jour -->
                             <td>
                             <?php 
@@ -232,7 +232,7 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
                         <tr>
-                            <td><?php echo htmlentities($factOption["nom_option"] ?? '');?></td>
+                            <td><?php echo htmlentities($factOption["nom_option"]);?></td>
                             <td><?php 
                             $nb_semaine = getNbSemaine($factOption["date"], $today);
                             echo htmlentities($nb_semaine);
