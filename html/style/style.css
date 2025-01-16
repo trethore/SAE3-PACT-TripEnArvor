@@ -1011,7 +1011,7 @@ h3 {
     padding-top: 4px;
 }
 
-.liste-back .lesOffres .etoiles+div+p {
+.liste-back .lesOffres .prix {
     background: var(--orange-principale);
     color: var(--blanc);
 
@@ -1031,7 +1031,7 @@ h3 {
     flex-direction: column;
 }
 
-.liste-back .lesOffres .etoiles+div+p span {
+.liste-back .lesOffres .prix span {
     font-size: 24px;
     text-decoration: none;
     color: var(--blanc);
@@ -4805,7 +4805,7 @@ input[type="tel"] {
     }
 
     .front {
-        padding-bottom: 120px;
+        padding-bottom: 10%;
     }
 
     .front main {
@@ -5203,6 +5203,73 @@ input[type="tel"] {
         border: 2px var(--violet-principal) solid;
     }
 
+    /****************************************************
+                       consulter-offre
+    *****************************************************/
+
+    .consulter-offre-front .fond-blocs {    
+        margin: 0;
+        padding: 3%;
+    }
+
+    .consulter-offre-front .carousel {
+        height: 50vh;
+    }
+
+    .consulter-offre-front .display-ligne-espace {
+        flex-wrap: nowrap;
+        order: 9;
+    }
+
+    .consulter-offre-front h1 {
+        font-size: 58px;
+        text-align: center;
+    }
+
+    .consulter-offre-front .fond-blocs-avis {
+        display: flex;
+        flex-direction: column;
+        margin: 5% 0;
+        padding: 2%;
+    }
+
+    .consulter-offre-front .display-ligne {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin: 5px 0;
+    }
+
+    .consulter-offre-front .double-blocs {  
+        flex-direction: column;
+    }
+
+    .consulter-offre-front .image-avis {
+        width: 80%;
+        margin-right: 0;
+    }
+
+    .consulter-offre-front .navigation>button {
+        padding: 1% 2%;
+        font-size: 30pt;
+    }
+
+    .consulter-offre-front .display-ligne-espace {
+        flex-wrap: nowrap;
+    }
+
+    .consulter-offre-front .reponse > div > img {
+        display: none;
+    }
+
+    .consulter-offre-front .reponse {
+        border: 3px solid var(--violet-principal);
+        border-radius: 10px;
+        margin: 1%;
+        margin-bottom: 0;
+        margin-top: 5%;
+    }
 }
 
 @media screen and (max-width: 1100px) {
