@@ -321,12 +321,8 @@ try {
                             $avisNonRepondus = getAvis($row['id_offre']);
                             $avisSansReponseCount = 0;
 
-                            echo "<pre>";
-                            print_r($avisNonRepondus);
-                            echo "</pre>";
-
                             foreach ($avisNonRepondus as $index => $a) {
-                                if (empty($reponse[$index]['texte'])) {
+                                if (empty(getReponse($row['id_offre']))) {
                                     $avisSansReponseCount++;
                                 }
                             }
