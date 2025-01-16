@@ -2897,22 +2897,13 @@ header>div>a:hover {
     border-radius: 5px;
 }
 
-.consulter-offre-front .bloc-caracteristique {
-    flex: 1.75;
-}
-
 /****************************
             BLOC À PROPOS                               
     ****************************/
 
 .consulter-offre-front .bloc-a-propos {
-    flex: 2.5;
+    flex: 5;
     border-left: 3px solid var(--violet-principal);
-}
-
-.consulter-offre-front .epingle {
-    width: 20px;
-    height: 20px;
 }
 
 .consulter-offre-front .display-ligne-espace>button {
@@ -2925,7 +2916,6 @@ header>div>a:hover {
 .consulter-offre-front .fond-blocs>a {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
     border: 3px solid var(--blanc);
     padding: 10px 20px;
@@ -2934,11 +2924,8 @@ header>div>a:hover {
 
 .consulter-offre-front .display-ligne-espace>a:hover,
 .consulter-offre-front .fond-blocs>a:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
-}
+    background: var(--violet-secondaire);
+} 
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
