@@ -31,6 +31,7 @@ if (isset($id_compte)) {
 $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
+$num_facture = $_GET["numero_facture"];
 
 // Obtenir la date du dernier jour du mois et la convertir en chaîne de caractères
 $emissionDate = new DateTime();
@@ -82,7 +83,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Préparation et exécution de la requête du premier select afin d'avoir id_date_emission pour pouvoir l'update juste après
         $stmt = $conn->prepare($reqFacture);
-        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de la facture
         $stmt->execute();
         $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -100,7 +101,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqFacture);
-        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de la facture
         $stmt->execute();
         $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
     ?>
@@ -179,18 +180,21 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
                             <!-- Nb de semaine -->
                             <td>
-                            <?php echo htmlentities(getNbSemaine($factAbo["date"], $today));?>
+                            <?php 
+                            $nb_semaine = getNbSemaine($factAbo["date_mise_en_ligne"], $today);
+                            echo htmlentities($nb_semaine);
+                            ?>
                             </td>
                             <!-- TVA en % -->
                             <td><?php echo htmlentities($TVA) ?>%</td>
                             <!-- Prix HT -->
                             <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
                             <!-- Prix total TTC -->
-                            <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA));?></td>
+                            <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_semaine, $TVA));?></td>
 
                             <?php // Calcul pour le total final
                                 $TotalHT += $factAbo["prix_ht_jour_abonnement"];
-                                $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA) - $factAbo["prix_ht_jour_abonnement"]);
+                                $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_semaine, $TVA) - $factAbo["prix_ht_jour_abonnement"]);
                             ?>
                         </tr>
                     <?php }}
