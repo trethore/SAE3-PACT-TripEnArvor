@@ -5291,6 +5291,7 @@ input[type="tel"] {
 
     .consulter-offre-front .navigation {
         margin: 2%;
+        flex-wrap: nowrap;
     }
 
     .consulter-offre-front .etoile {
@@ -5300,10 +5301,6 @@ input[type="tel"] {
 
     .consulter-offre-front h2 {
         font-size: 20pt;
-    }
-
-    .consulter-offre-front .navigation .display-ligne-espace {
-        flex-wrap: nowrap;
     }
 }
 
