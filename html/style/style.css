@@ -3532,7 +3532,7 @@ h3 {
 
 .consulter-offre-back .display-ligne-espace>a:hover,
 .consulter-offre-back .fond-blocs>a:hover {
-    background: var(--orange-secondaire-1);
+    background: var(--orange-secondaire-2);
 } 
 
 /***********************************
@@ -3636,8 +3636,8 @@ h3 {
 }
 
 .consulter-offre-back .image-avis {
-    width: 500px;
-    height: auto;
+    width: 20vw;
+    height: 20vh;
     border-radius: 12px;
     margin-right: 10px;
 }
@@ -3706,26 +3706,25 @@ h3 {
 *************************/
 
 .consulter-offre-back .navigation {
-    margin: 30px;
+    margin: 0 60px 30px 60px;
 }
 
 .consulter-offre-back .navigation>button {
-    background: var(--orange-principale);
-    border: 3px solid var(--blanc);
     color: var(--blanc);
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 40px;
-    width: auto;
-    height: auto;
-    border-radius: 15px;
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-back .navigation>button:hover {
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back #remonte > img {
+    width: 13px;
+    height: 13px; 
 }
 
 /*********************

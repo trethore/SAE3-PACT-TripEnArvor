@@ -514,7 +514,7 @@ try {
 
         <section class="fond-blocs bordure">
 
-            <h2>Description détaillée de l'offre :</h2>
+            <h2>Description détaillée de l'offre</h2>
             <!-- AFFICHAGE DES INFORMATIONS DÉTAILLÉS DES OFFRES -->
             <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
@@ -592,7 +592,7 @@ try {
 
                 <?php if ($noteMoyenne !== null) { ?>
 
-                    <h2>Note moyenne : </h2>
+                    <h2>Note moyenne </h2>
                     <?php $etoilesPleines = floor($noteMoyenne);
                         $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                         $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
