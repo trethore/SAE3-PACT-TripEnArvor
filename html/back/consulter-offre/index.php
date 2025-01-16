@@ -650,7 +650,7 @@ try {
                     $stmt->execute(['id' => $a['id']]);
                     $consulted = $stmt->fetchColumn();
 
-                    $style = $consulted ? "" : "font-weight: bold;";
+                    $style = $consulted ? "" : "background-color: cyan;";
 
                     if (!$consulted) {
                         $updateStmt = $pdo->prepare("UPDATE avis SET lu = true WHERE id = :id");
@@ -658,7 +658,7 @@ try {
                     }
                     ?>
 
-                    <div class="fond-blocs-avis">
+                    <div class="fond-blocs-avis" style="<?php echo $style; ?>>
                         <div class="display-ligne">
                             <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                             <div class="display-ligne">
