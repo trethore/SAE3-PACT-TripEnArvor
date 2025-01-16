@@ -7,6 +7,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
+// Vérification de l'existence de numero_facture
+if (isset($_GET['numero_facture'])) {
+    $numero_facture = $_GET['numero_facture'];
+}
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();

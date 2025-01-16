@@ -33,7 +33,7 @@ $reqFacture = "SELECT * from sae._offre o
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
-    <title>Mon compte</title>
+    <title>Mes factures</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back factures">
@@ -112,17 +112,13 @@ try {
             ?>
             <h1>Mes factures</h1>
             <ul>
-                <li>
-                    <a href="/back/generer-facture/index.php?numero_facture=99999999," target="_blank"><p>Prévisualiser votre prochaine facture</p></a>
-                </li>
-                <li>
-                    <a href=""></a>
-                </li>
                 <?php
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=1<?php // echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php //echo htmlentities($facture["numero_facture"]); ?>du <?php // echo htmlentities($facture["date"]); ?></p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">
+                            Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - <?php echo htmlentities($facture["date_emission"]); ?>
+                        </a>
                     </li>
                 <?php
                 }
