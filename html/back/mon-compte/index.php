@@ -224,6 +224,20 @@ switch ($typeCompte) {
             <div>
                 <a href="/back/modifier-compte">Modifier les informations</a>
             </div>
+            <div>
+                <?php
+                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
+                ?>
+                <script>
+                    function copyAPIKey() {
+                        var apiKey = "<?php echo addslashes($APIKey); ?>";
+                        navigator.clipboard.writeText(apiKey);
+                        alert("Clé d'API Tchatator copiée dans le presse-papier!");
+                    }
+                </script>
+                <h2>Clé d'accès au Tchatator : </h2>
+                <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
+            </div>
         </section>
     </main>
     <footer>
