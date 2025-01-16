@@ -168,9 +168,7 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                 </tr>
             </thead>
             <tbody>
-                
-                <?php 
-                try {
+                <?php try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqFactureAbonnement);
                     $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID du compte
@@ -232,13 +230,18 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
                         <tr>
+                            <!-- Titre de l'option -->
                             <td><?php echo htmlentities($factOption["nom_option"]);?></td>
+                            <!-- Nb de semaine  -->
                             <td><?php 
                             $nb_semaine = getNbSemaine($factOption["date"], $today);
                             echo htmlentities($nb_semaine);
                             ?></td>
+                            <!-- TVA en % -->
                             <td><?php echo htmlentities($TVA);?>%</td>
+                            <!-- Prix HT hebdo -->
                             <td><?php echo htmlentities(convertCentimesToEuros($factOption["prix"]));?></td>
+                            <!-- Prix TTC total de l'option -->
                             <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factOption["prix"],$nb_semaine, $TVA)))?></td>
                             <?php // Calcul pour le total final
                                 $TotalHT += $factOption["prix"]*$nb_semaine;

@@ -908,6 +908,9 @@
     
         // Convertir la différence en semaines et arrondir vers le haut
         $weeksDifference = ceil($daysDifference / 7);
+        
+        // Limiter le nombre de semaines à un maximum de 4
+        $weeksDifference = min($weeksDifference, 4);
     
         return $weeksDifference;
     }    
