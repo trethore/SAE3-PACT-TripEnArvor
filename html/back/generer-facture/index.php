@@ -68,7 +68,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 </head>
 <body class="genFacture">
     <?php 
-    if (!isset($detailFacture["numero_facture"])) {
+    if (!factureExiste($conn, $_GET["numero_facture"])) {
         // Check si les dates existes pour pas faire de doublons
         if (!dateExiste($conn, $DernierJour)) {
             // Insert de la date d'emission de la facture dans la table _date
@@ -90,7 +90,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         $stmt->bindParam(':id_date_echeance', $id_date_echeance, PDO::PARAM_INT);
         $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
         $stmt->execute();
-
     }
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqCompte);
