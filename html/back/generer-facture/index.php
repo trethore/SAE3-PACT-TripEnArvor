@@ -32,17 +32,16 @@ $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
 
-// Obtenir la date d'aujourd'hui
+// Obtenir la date du dernier jour du mois et la convertir en chaîne de caractères
 $emissionDate = new DateTime();
-// Modifie la date pour qu'elle corresponde au dernier jour du mois
 $emissionDate->modify('last day of this month');
-// Définit l'heure à 23:59:59
 $emissionDate->setTime(23, 59, 59);
-// Retourne la date formatée
 $emissionDate->format('Y-m-d H:i:s');
 
-$echeanceDate = $emissionDate->modify('+15 days');
-$echeanceDate = $echeanceDate->format('Y-m-d H:i:s');
+// Calculer la date d'échéance et la convertir en chaîne de caractères
+$echeanceDate = clone $emissionDate;
+$echeanceDate->modify('+15 days');
+$echeanceDate->format('Y-m-d H:i:s');
 
 $emissionDate->format('Y-m-d H:i:s');
 
