@@ -2871,12 +2871,16 @@ header>div>a:hover {
 **********************************/
 
 /***********************************
-            BLOC CARACTÉRISTIQUE                       
-    ***********************************/
+        BLOC CARACTÉRISTIQUE                       
+***********************************/
 
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
-    padding: 0;
+}
+
+.consulter-offre-front .bloc-caracteristique {
+    background: var(--blanc);
+    margin: 30px 30px 0 30px;
 }
 
 .consulter-offre-front .liste-caracteristique>li {
@@ -2889,14 +2893,6 @@ header>div>a:hover {
     margin-bottom: 1em;
 }
 
-.consulter-offre-front .liste-caracteristique>li>img {
-    min-width: 50px;
-    max-width: 50px;
-    height: auto;
-    margin-right: 5px;
-    border-radius: 5px;
-}
-
 /****************************
             BLOC À PROPOS                               
     ****************************/
@@ -2904,6 +2900,10 @@ header>div>a:hover {
 .consulter-offre-front .bloc-a-propos {
     flex: 5;
     border-left: 3px solid var(--violet-principal);
+}
+
+.consulter-offre-front .bloc-a-propos > p {
+    margin: 5px 0;
 }
 
 .consulter-offre-front .display-ligne-espace>button {
