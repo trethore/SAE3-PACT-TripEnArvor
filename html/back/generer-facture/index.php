@@ -32,7 +32,8 @@ $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
 $num_facture = $_GET["numero_facture"];
-$today = new DateTime(); // Obtenir la date d'aujourd'hui
+$todayDateTime = new DateTime(); // Obtenir la date d'aujourd'hui
+$today = $todayDateTime->format('Y-m-d H:i:s');
 
 // Obtenir la date du dernier jour du mois et la convertir en chaîne de caractères
 $emissionDate = new DateTime();
@@ -183,7 +184,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <td>
                             <?php 
                             echo $factAbo["date_mise_en_ligne"];
-                            echo $today;
                             $nb_jour = getNbJours($factAbo["date_mise_en_ligne"], $today);
                             echo htmlentities($nb_jour);
                             ?>
