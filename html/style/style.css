@@ -2769,7 +2769,7 @@ h3 {
                                     Consulter Offre Front
 ***************************************************************************************/
 .consulter-offre-front section {
-    width: 65vw;
+    width: 63vw;
 }
 
 .consulter-offre-front h1 {
@@ -2790,7 +2790,7 @@ h3 {
     margin: 5px 0;
 } 
 
-.consulter-offre-front header {
+.consulter-offre-front header > a {
     text-decoration: none;
 }
 
