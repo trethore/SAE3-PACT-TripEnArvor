@@ -5204,6 +5204,40 @@ input[type="tel"] {
         border: 2px var(--violet-principal) solid;
     }
 
+    /****************************************************
+                       consulter-offre
+    *****************************************************/
+
+    .consulter-offre-front .fond-blocs {    
+        margin: 0;
+        padding: 3%;
+    }
+
+    .consulter-offre-front .carousel {
+        height: 50vh;
+    }
+
+    .consulter-offre-front .display-ligne-espace {
+        flex-wrap: wrap;
+    }
+
+    .consulter-offre-front h1 {
+        font-size: 58px;
+        text-align: center;
+    }
+
+    .consulter-offre-front .fond-blocs-avis {
+        margin: 5% 0;
+        padding: 2%;
+    }
+
+    .consulter-offre-front .display-ligne {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin: 5px 0;
+    }
 }
 
 @media screen and (max-width: 1100px) {
