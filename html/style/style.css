@@ -5215,7 +5215,7 @@ input[type="tel"] {
         border: 2px var(--violet-principal) solid;
     }
 
-    .accueil .section-accueil {
+    .accueil .carousel {
         width: 70vw;
         height: 55vh;
     }

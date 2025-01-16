@@ -120,7 +120,7 @@ if (!isset($_SESSION)) {
 
         ?>
 
-        <section class="section-accueil">
+        <section>
             <div class="carousel">
                 <div class="carousel-slides">
                     <?php
