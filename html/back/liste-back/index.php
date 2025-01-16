@@ -302,12 +302,28 @@ try {
                         <!-------------------------------------- 
                         Affichage des avis non lues
                         ---------------------------------------->
-                        <p>Avis non lus : <span><b>4</b></span></p>
+                        <?php
+                            $avisNonLus = getLu($row['id_offre']);
+                            $nonLusCount = 0;
+
+                            forEach($avisNonLus as $avis) {
+                                if (empty($avis['lu'])) {
+                                    $nonLusCount++;
+                                }
+                            }
+                        ?>
+                        <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis non répondues
                         ---------------------------------------->
-                        <p>Avis non répondus : <span><b>1</b></span></p>
+                        <?php
+                            $nbrAvis = getAvis($row['id_offre']);
+                            $nbrReponses = getReponse($row['id_offre']);
+
+                            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                        ?>
+                        <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 

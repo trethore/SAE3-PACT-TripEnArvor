@@ -121,7 +121,7 @@ if (!isset($_SESSION)) {
         ?>
 
         <section>
-            <div class="carousel">
+            <div class="carousel les_carousels">
                 <div class="carousel-slides">
                     <?php
                     foreach ($ids as $offre) {

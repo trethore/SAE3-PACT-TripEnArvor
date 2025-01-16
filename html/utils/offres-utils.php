@@ -704,6 +704,26 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL qui donne la date de debut de souscription a une option ===== //
+
+    function getDateSouscritOption($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDate = "SELECT date FROM sae._date NATURAL JOIN sae._offre_souscrit_option  WHERE id_offre = :id_offre ORDER BY date DESC LIMIT 1";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDate = $conn->prepare($reqDate);
+            $stmtDate->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDate->execute();
+            $date = $stmtDate->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $date;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
     function isOffreHorsLigne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -906,5 +926,23 @@ function factureExiste($pdo, $numeroFacture) {
     $stmt->bindParam(':num', $numeroFacture, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
+}
+
+function getLu($id_offre) {
+    global $driver, $server, $dbname, $user, $pass;
+    $reqLu = "SELECT lu FROM sae._offre JOIN sae._avis ON sae._offre.id_offre = sae._avis.id_offre WHERE sae._offre.id_offre = :id_offre;";
+    try {
+        $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $conn->prepare("SET SCHEMA 'sae';")->execute();
+        $stmtLu = $conn->prepare($reqLu);
+        $stmtLu->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+        $stmtLu->execute();
+        $lu = $stmtLu->fetchAll(PDO::FETCH_ASSOC);
+        $conn = null;
+        return $lu;
+    } catch (Exception $e) {
+        print "Erreur !: " . $e->getMessage() . "<br>";
+        die();
+    }
 }
 ?>

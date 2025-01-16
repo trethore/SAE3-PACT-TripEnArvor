@@ -247,47 +247,29 @@ try {
         </script>
     </header>
 
-    <div class="fond-bloc display-ligne-espace">
-        <div class="bouton-modifier"> 
-            <div id="confirm">
-
-                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-
-                    <p>Voulez-vous mettre votre offre hors ligne ?</p>
-
-                <?php } else if ($dateMHL > $dateMEL) { ?>
-
-                    <p>Voulez-vous mettre votre offre en ligne ?</p>
-
-                <?php } ?>
-                
-                <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Confirmer</button></form> 
-                    <button onclick="btnAnnuler()">Annuler</button>
-                </div>
-            </div>
-
-            <div id="final">
-                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                    <p>Offre hors ligne !<br>Désormait cette offre n'apparait plus !</p>
-                <?php } else if ($dateMHL > $dateMEL) { ?>
-                    <p>Offre en ligne !<br>Désormait cette offre apparait !</p>
-                <?php } ?>
-                <button onclick="btnAnnuler()">Fermer</button>
-            </div> 
-
-            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <?php } else if ($dateMHL > $dateMEL) { ?>
-                <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
-            <?php } ?>
-            <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
-        </div>
-    </div>  
-
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section class=" fond-blocs zone boutons">
+            <div class="display-ligne-espace">
+                <div>
+                    <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
+                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
+                        </form>
+                    <?php } else if ($dateMHL > $dateMEL) { ?>
+                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
+                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
+                        </form>
+                    <?php } ?>
+                </div>
+
+                <div class="bouton-modif-mise">
+                    <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                </div>
+            </div>
+        </section>  
+
+        <section class="fond-blocs bordure pur">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
@@ -514,7 +496,7 @@ try {
 
         <section class="fond-blocs bordure">
 
-            <h2>Description détaillée de l'offre :</h2>
+            <h2>Description détaillée de l'offre</h2>
             <!-- AFFICHAGE DES INFORMATIONS DÉTAILLÉS DES OFFRES -->
             <p><?php echo nl2br(htmlentities($offre['description_detaille'] ?? "Pas de description détaillée disponible")); ?></p>
 
@@ -592,7 +574,7 @@ try {
 
                 <?php if ($noteMoyenne !== null) { ?>
 
-                    <h2>Note moyenne : </h2>
+                    <h2>Note moyenne </h2>
                     <?php $etoilesPleines = floor($noteMoyenne);
                         $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                         $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
@@ -644,24 +626,25 @@ try {
 
                 foreach ($avisGroupe as $item) {
                     $a = $item['avis'];
-                    echo "<pre>";
-                    print_r($a);
-                    echo "</pre>";
                     $compteur = $item['index'];
 
-                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id = :id");
-                    $stmt->execute(['id' => $a['id']]);
+                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                    $stmt->execute([
+                        'id_membre' => $a['id_membre'],
+                        'id_offre' => $a['id_offre']
+                    ]);
                     $consulted = $stmt->fetchColumn();
 
-                    $style = $consulted ? "" : "background-color: cyan;";
-
                     if (!$consulted) {
-                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id = :id");
-                        $updateStmt->execute(['id' => $a['id']]);
+                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                        $updateStmt->execute([
+                            'id_membre' => $a['id_membre'],
+                            'id_offre' => $a['id_offre']
+                        ]);
                     }
                     ?>
 
-                    <div class="fond-blocs-avis" style="<?php echo $style; ?>>
+                    <div class="fond-blocs-avis">
                         <div class="display-ligne">
                             <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                             <div class="display-ligne">
@@ -785,7 +768,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'">^</button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>

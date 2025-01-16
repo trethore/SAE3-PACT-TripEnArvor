@@ -216,6 +216,8 @@ print_r($tags);
     echo ($date_evenement);
 
     print_r($adresse);
+
+    $date_aujourdhui = new DateTime(); 
     
 
     
@@ -404,8 +406,14 @@ try {
                             </div>
                         </td>
                     </tr>
+                    
+                    <?if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+
                     <tr>
-                        <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
+                   
+                    
+                        <td> 
+                            <label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -416,14 +424,16 @@ try {
                                     
                         </td>
                         <td>(impossible de modifier le type)</td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <div id="options">
-                            <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="enRelief">En relief</label>
-                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="aLaUne">A la une</label></td>
+                            <td><label id="labeloptions" for="optionPayante">Options</label></td>
+
+                            <td> <input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="enRelief" id="labelEnRelief">En relief</label>
+                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
+                  <?php  } ?>
                 </table>
 
 
@@ -507,6 +517,9 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
+                        <?php if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                        
+                        
                         <div id="tarifs">
                             
                             <h3>Tarifs (minimum 1) <span class="required">*</span></h3>
@@ -533,7 +546,7 @@ try {
                             } ?>
 
                         </div>
-
+                        <?php  } ?>
                     <br>
                     
 
@@ -1040,11 +1053,13 @@ try {
                 }
                 
                 //modification des options
+                
+                
                 print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
                     print("rentre dans la premier if");
                     //insertion de la date de souscription dans_date
-                    $date_souscription = date('Y-m-d H:i:s');
+                    
                     $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
                     $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                     $stmtInsertionDateEvent->execute([$date_souscription]);
@@ -1053,61 +1068,60 @@ try {
 
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
                         print("rentre dans la deuxieme if");
-                        try {
-                                $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
+                        
+                            $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
                             $stmt_suppression = $dbh->prepare($requete_suppression_option);
                             $stmt_suppression->execute([$id_offre]);
                             print("option supprimée");
-
-                        } catch (PDOException $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                            exit;
-                        } catch (Exception $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
-                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
-                            exit;
-                        }
                         
                     }
-                    try {
                         $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                         $stmt_option = $dbh->prepare($requete_option);
                         $stmt_option -> execute([$id_offre, $optionP, $id_date_souscription]);
                         print("option payante mise dans la bdd");
-                    } catch (PDOException $e) {
-                        if ($dbh->inTransaction()) {
-                            $dbh->rollBack();
-                        }
-                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                        exit;
-                    } catch (Exception $e) {
-                        if ($dbh->inTransaction()) {
-                            $dbh->rollBack();
-                        }
-                        print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
-                        exit;
-                    }
+                
                     
                 } 
+            
+
+
+                //insertion dans tarif si c'est pas un restaurant
                 
-                //upddate tarifs
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                        try {
+                            $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
+                            $stmt_suppr_tarif = $dbh->prepare($requete_suppr_tarif);
+                            $stmt_suppr_tarif->execute([$id_offre]);}
+                            catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! suppression: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
 
-                // if(($isIdProPrivee)&&($categorie !== "restaurant")){
-                //     foreach ($tabtarifs as $key => $value) {
-                //         $requete_tarif = "UPDATE sae._tarif_publique
-                //                         set nom_tarif = ?,
-                //                         prix = ?,
-                //                         where id_offre = ?";
-                //          $stmt_tarif = $dbh->prepare($requete_tarif);    
-                //          $stmt_tarif -> execute([$key, $value, $id_offre]);
+                        foreach ($tabtarifs as $key => $value) {
+                            try{
+                                $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
-                //     }
-                // }
+                                // Préparation de la requête pour la vue tarif
+                                $stmt_tarif = $dbh->prepare($requete_tarif);
+
+                                // Exécution de la requête pour insérer dans la vue tarif
+                                $stmt_tarif->execute([$key, $value, $id_offre]);
+                                echo "<br>";
+                            }catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! insertion tarif: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
+                            
+                        }
+                    }
+                
+                
                 
                 //
                 
@@ -1123,7 +1137,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/id=$offre'
+                            window.location.href = '/back/consulter-offre/index.php?id=$offre'
                         }
                   </script>";
 
