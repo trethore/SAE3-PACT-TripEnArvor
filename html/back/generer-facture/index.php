@@ -36,12 +36,12 @@ $TotalTVA = 0; // Somme finale TVA
 $emissionDate = new DateTime();
 $emissionDate->modify('last day of this month');
 $emissionDate->setTime(23, 59, 59);
-$emissionDate->format('Y-m-d H:i:s');
+$emissionDateFormatted = $emissionDate->format('Y-m-d H:i:s');
 
 // Calculer la date d'échéance et la convertir en chaîne de caractères
 $echeanceDate = clone $emissionDate;
 $echeanceDate->modify('+15 days');
-$echeanceDate->format('Y-m-d H:i:s');
+$echeanceDateFormatted = $echeanceDate->format('Y-m-d H:i:s');
 
 $emissionDate->format('Y-m-d H:i:s');
 
@@ -90,7 +90,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Update de la date d'émission
         $stmt = $conn->prepare($reqUpdateDate);
-        $stmt->bindParam(':date_emission_maj', $emissionDate, PDO::PARAM_STR);
+        $stmt->bindParam(':date_emission_maj', $emissionDateFormatted, PDO::PARAM_STR);
         $stmt->bindParam(':id_date_emission', $detailFacture["id_date_emission"], PDO::PARAM_INT);
         $stmt->execute();
 
