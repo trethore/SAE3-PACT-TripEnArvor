@@ -70,7 +70,7 @@ $reqOption = "SELECT f.id_offre, os.nom_option, d.date, ho.prix_ht_hebdo_abonnem
                 join sae._date d on d.id_date = os.id_date_souscription
                 join sae._historique_prix_options ho on ho.nom_option = os.nom_option
                 join sae._facture f on f.id_offre = os.id_offre
-                where os.id_offre = :id_offre;"
+                where f.numero_facture = :nu_facture;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -224,7 +224,7 @@ $reqOption = "SELECT f.id_offre, os.nom_option, d.date, ho.prix_ht_hebdo_abonnem
                 <?php try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqOption);
-                    $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
+                    $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     print_r($factOptions);
