@@ -2843,7 +2843,7 @@ h3 {
 }
 
 .consulter-offre-front header > div > a {
-    text-decoration: none;
+    text-decoration: none; 
 }
 
 .consulter-offre-front > div > a:hover {
