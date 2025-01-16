@@ -933,7 +933,6 @@ try {
                         $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
                         print("option payante mise dans la bdd");
                     } 
-                    //faut il rentré un nombre de semaine a la souscription ?
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
                     

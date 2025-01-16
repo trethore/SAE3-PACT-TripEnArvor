@@ -1091,23 +1091,42 @@ try {
 
 
                 //insertion dans tarif si c'est pas un restaurant
-                if (($isIdProPrivee)&&($categorie !== "restaurant")){
-                        $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
-                        $stmt_suppr_tarif = $dbh->prepare($requete_suppr_tarif);
-                        $stmt_suppr_tarif->execute([$id_offre]);
+                
+                    if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                        try {
+                            $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
+                            $stmt_suppr_tarif = $dbh->prepare($requete_suppr_tarif);
+                            $stmt_suppr_tarif->execute([$id_offre]);}
+                            catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! suppression: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
 
-                    foreach ($tabtarifs as $key => $value) {
-                        $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+                        foreach ($tabtarifs as $key => $value) {
+                            try{
+                                $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
-                        // Préparation de la requête pour la vue tarif
-                        $stmt_tarif = $dbh->prepare($requete_tarif);
+                                // Préparation de la requête pour la vue tarif
+                                $stmt_tarif = $dbh->prepare($requete_tarif);
 
-                        // Exécution de la requête pour insérer dans la vue tarif
-                        $stmt_tarif->execute([$key, $value, $id_offre]);
-                        echo "<br>";
+                                // Exécution de la requête pour insérer dans la vue tarif
+                                $stmt_tarif->execute([$key, $value, $id_offre]);
+                                echo "<br>";
+                            }catch (PDOException $e) {
+                                // Affichage de l'erreur en cas d'échec
+                                print "Erreur ! insertion tarif: " . $e->getMessage() . "<br/>";
+                                $dbh->rollBack();
+                                die();
+                                    
+                                }
+                            
+                        }
                     }
-                }
-
+                
+                
                 
                 //
                 
