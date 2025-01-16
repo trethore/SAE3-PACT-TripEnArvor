@@ -3045,7 +3045,6 @@ header>div>a:hover {
     margin: 10px 0;
 }
 
-
 .consulter-offre-front textarea {
     background: var(--blanc);
     border: 1px solid var(--gris);
@@ -3084,7 +3083,7 @@ header>div>a:hover {
     background: var(--blanc);
     border: 1px solid var(--gris);
     border-radius: 8px;
-    height: 40px;
+    height: 35px;
     margin: 10px 30px 10px 0;
     font-family: "Poppins", sans-serif;
 }
@@ -3102,10 +3101,9 @@ header>div>a:hover {
 .consulter-offre-front #avis>form>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
     border: 0;
 }
 
