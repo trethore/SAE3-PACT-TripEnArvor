@@ -10,6 +10,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 // Vérification de l'existence de numero_facture
 if (isset($_GET['numero_facture'])) {
     $numero_facture = $_GET['numero_facture'];
+} else {
+    die();
 }
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -56,10 +58,11 @@ $reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_e
 
 $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
                         join sae._abonnement a on o.abonnement = a.nom_abonnement
+                        join sae._facture f on o.id_offre = f.id_offre
                         join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
                         join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
                         join sae._date d on oml.id_date = d.id_date
-                        where o.id_compte_professionnel = :id_compte;";
+                        where f.numero_facture = :nu_facture;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -87,16 +90,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
             $stmt->execute();
             $idDateEcheance = $stmt->fetchColumn();
         }
-
-
-
-        // Insert d'une facture
-        $stmt = $conn->prepare($reqInsertFact);
-        $stmt->bindParam(':montant_ht', 0, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_emission', $idDateEmission, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_echeance', $idDateEcheance, PDO::PARAM_INT);
-        $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
-        $stmt->execute();
     }
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqCompte);
@@ -163,36 +156,42 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 </tr>
             </thead>
             <tbody>
-                <?php // Préparation et exécution de la requête
-                $stmt = $conn->prepare($reqFactureAbonnement);
-                $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-                $stmt->execute();
-                $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
-                // Vérifiez si $factAbos est un tableau avant de le parcourir
-                if ($factAbos && is_array($factAbos)) {
-                    foreach($factAbos as $factAbo) { ?>
-                    <tr>
-                        <!-- Titre de l'offre -->
-                        <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
-                        <!-- Type de l'abonnement -->
-                        <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                        <!-- Nb de semaine -->
-                        <td>
-                        <?php echo htmlentities(getNbSemaine($factAbo["date"], $today));?>
-                        </td>
-                        <!-- TVA en % -->
-                        <td><?php echo htmlentities($TVA) ?>%</td>
-                        <!-- Prix HT -->
-                        <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
-                        <!-- Prix total TTC -->
-                        <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA));?></td>
+                
+                <?php 
+                try {
+                    // Préparation et exécution de la requête
+                    $stmt = $conn->prepare($reqFactureAbonnement);
+                    $stmt->bindParam(':nu_facture', $numero_facture, PDO::PARAM_INT); // Lié à l'ID du compte
+                    $stmt->execute();
+                    $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
+                    // Vérifiez si $factAbos est un tableau avant de le parcourir
+                    if ($factAbos && is_array($factAbos)) {
+                        foreach($factAbos as $factAbo) { ?>
+                        <tr>
+                            <!-- Titre de l'offre -->
+                            <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
+                            <!-- Type de l'abonnement -->
+                            <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
+                            <!-- Nb de semaine -->
+                            <td>
+                            <?php echo htmlentities(getNbSemaine($factAbo["date"], $today));?>
+                            </td>
+                            <!-- TVA en % -->
+                            <td><?php echo htmlentities($TVA) ?>%</td>
+                            <!-- Prix HT -->
+                            <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                            <!-- Prix total TTC -->
+                            <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA));?></td>
 
-                        <?php // Calcul pour le total final
-                            $TotalHT += $factAbo["prix_ht_jour_abonnement"];
-                            $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA) - $factAbo["prix_ht_jour_abonnement"]);
-                        ?>
-                    </tr>
-                <?php }} ?>
+                            <?php // Calcul pour le total final
+                                $TotalHT += $factAbo["prix_ht_jour_abonnement"];
+                                $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA) - $factAbo["prix_ht_jour_abonnement"]);
+                            ?>
+                        </tr>
+                    <?php }}
+                } catch (PDOException $e) {
+                    echo "Erreur : " . $e->getMessage();
+                } ?>
             </tbody>
         </table>
     </article>
