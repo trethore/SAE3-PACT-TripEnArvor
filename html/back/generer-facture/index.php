@@ -36,7 +36,7 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date)";
+$reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
 $reqInsertFact = "INSERT INTO sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre) 
                    VALUES (:montant_ht, :id_date_emission, :id_date_echeance, :id_offre)";
@@ -75,19 +75,21 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
             $stmt = $conn->prepare($reqInsertDate);
             $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
             $stmt->execute();
+            $idDateEmission = $stmt->fetchColumn();
         }
         if (!dateExiste($conn, $echeanceDate)) {
             // Insert de la date d'échéance de la facture dans la table _date
             $stmt = $conn->prepare($reqInsertDate);
             $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
             $stmt->execute();
+            $idDateEcheance = $stmt->fetchColumn();
         }
 
         // Insert d'une facture
         $stmt = $conn->prepare($reqInsertFact);
         $stmt->bindParam(':montant_ht', $montant_ht, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_emission', $emissionDate, PDO::PARAM_INT);
-        $stmt->bindParam(':id_date_echeance', $echeanceDate, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $idDateEmission, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_echeance', $idDateEcheance, PDO::PARAM_INT);
         $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
         $stmt->execute();
     }
