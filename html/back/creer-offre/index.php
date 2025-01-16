@@ -780,7 +780,7 @@ try {
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
-                            // Insertion d'une image liée à l'offre
+                            // Insertion dans offre contient image
                             if (!empty($file_extension)) {
                                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                                 $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
