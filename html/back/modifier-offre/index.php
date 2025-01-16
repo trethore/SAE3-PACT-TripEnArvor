@@ -1073,17 +1073,39 @@ try {
                 
                 //upddate tarifs
 
-                // if(($isIdProPrivee)&&($categorie !== "restaurant")){
-                //     foreach ($tabtarifs as $key => $value) {
-                //         $requete_tarif = "UPDATE sae._tarif_publique
-                //                         set nom_tarif = ?,
-                //                         prix = ?,
-                //                         where id_offre = ?";
-                //          $stmt_tarif = $dbh->prepare($requete_tarif);    
-                //          $stmt_tarif -> execute([$key, $value, $id_offre]);
+                if(($isIdProPrivee)&&($categorie !== "restaurant")){
+                    foreach ($tabtarifs as $key => $value) {
+                        $requete_tarif = "UPDATE sae._tarif_publique
+                                        set nom_tarif = ?,
+                                        prix = ?,
+                                        where id_offre = ?";
+                         $stmt_tarif = $dbh->prepare($requete_tarif);    
+                         $stmt_tarif -> execute([$key, $value, $id_offre]);
 
-                //     }
-                // }
+                    }
+                }
+
+
+                //insertion dans la tarif si c'est pas un restaurant
+                if (($isIdProPrivee)&&($categorie !== "restaurant")){
+                    foreach (getTarifs($id_offre) as $tarif) {
+                        $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
+                        $stmt__suppr_tarif = $dbh->prepare($requete_suppr_tarif);
+                        $stmt_tarif->execute([$id_offre]);
+
+                    }
+                    foreach ($tabtarifs as $key => $value) {
+                        $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
+
+                        // Préparation de la requête pour la vue tarif
+                        $stmt_tarif = $dbh->prepare($requete_tarif);
+
+                        // Exécution de la requête pour insérer dans la vue tarif
+                        $stmt_tarif->execute([$key, $value, $id_offre]);
+                        echo "<br>";
+                    }
+                }
+
                 
                 //
                 
