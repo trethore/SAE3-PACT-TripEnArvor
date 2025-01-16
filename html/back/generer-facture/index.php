@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
 // Vérification de l'existence de numero_facture
 if (isset($_GET['numero_facture'])) {
-    $numero_facture = $_GET['numero_facture'];
+    $num_facture = $_GET['numero_facture'];
 } else {
     die();
 }
@@ -168,7 +168,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqFactureAbonnement);
-                    $stmt->bindParam(':nu_facture', $numero_facture, PDO::PARAM_INT); // Lié à l'ID du compte
+                    $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID du compte
                     $stmt->execute();
                     $factAbos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factAbos est un tableau avant de le parcourir
@@ -195,7 +195,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
                             <?php // Calcul pour le total final
                                 $TotalHT += $factAbo["prix_ht_jour_abonnement"]*$nb_jour;
-                                $TotalTVA += ($factAbo["prix_ht_jour_abonnement"]*$nb_jour)*($TVA/100);
+                                $TotalTVA += convertCentimesToEuros($factAbo["prix_ht_jour_abonnement"]*$nb_jour)*($TVA/100);
                             ?>
                         </tr>
                     <?php }}
