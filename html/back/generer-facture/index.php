@@ -41,9 +41,6 @@ $emissionDate->setTime(23, 59, 59);
 // Retourne la date formatée
 $emissionDate->format('Y-m-d H:i:s');
 
-
-echo $emissionDate;
-
 $echeanceDate = $emissionDate->modify('+15 days');
 $echeanceDate = $emissionDate->format('Y-m-d H:i:s');
 
