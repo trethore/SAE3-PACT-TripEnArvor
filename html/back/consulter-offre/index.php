@@ -247,7 +247,7 @@ try {
         </script>
     </header>
 
-    <div class="display-ligne-espace">
+    <div class="display-ligne-espace bouton-modif-mise">
         <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
             <form method="post" enctype="multipart/form-data">
                 <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
