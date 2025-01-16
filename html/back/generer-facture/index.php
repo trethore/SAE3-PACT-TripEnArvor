@@ -43,15 +43,13 @@ $echeanceDate = clone $emissionDate;
 $echeanceDate->modify('+15 days');
 $echeanceDateFormatted = $echeanceDate->format('Y-m-d H:i:s');
 
-$emissionDate->format('Y-m-d H:i:s');
-
 $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
 $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
                 join sae._adresse a on a.id_adresse = cp.id_adresse
                 where id_compte =  :id_compte;";
 
-$reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance from sae._facture 
+$reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance, d.id_date from sae._facture 
                 join sae._date d on d.id_date = id_date_emission
                 join sae._date da on da.id_date = id_date_echeance
                 where numero_facture = :nu_facture;";
@@ -91,7 +89,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         // Update de la date d'émission
         $stmt = $conn->prepare($reqUpdateDate);
         $stmt->bindParam(':date_emission_maj', $emissionDateFormatted, PDO::PARAM_STR);
-        $stmt->bindParam(':id_date_emission', $detailFacture["id_date_emission"], PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $detailFacture["id_date"], PDO::PARAM_INT);
         $stmt->execute();
 
         // Préparation et exécution de la requête
