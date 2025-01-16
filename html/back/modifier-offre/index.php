@@ -1039,13 +1039,20 @@ try {
                 print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
                     print("rentre dans la premier if");
+                    //insertion de la date de souscription dans_date
                     $date_souscription = date('Y-m-d H:i:s');
+                    $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                    $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                    $stmtInsertionDateEvent->execute([$date_souscription]);
+                    $id_date_souscription = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
+
+
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
                         print("rentre dans la deuxieme if");
                         try {
-                                $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
+                                $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
                             $stmt_suppression = $dbh->prepare($requete_suppression_option);
-                            $stmt_suppression->execute([$id_offre, $optionP]);
+                            $stmt_suppression->execute([$id_offre]);
                             print("option supprimée");
 
                         } catch (PDOException $e) {
@@ -1066,7 +1073,7 @@ try {
                     try {
                         $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                         $stmt_option = $dbh->prepare($requete_option);
-                        $stmt_option -> execute([$id_offre, $optionP, $id_souscription]);
+                        $stmt_option -> execute([$id_offre, $optionP, $id_date_souscription]);
                         print("option payante mise dans la bdd");
                     } catch (PDOException $e) {
                         if ($dbh->inTransaction()) {
