@@ -3242,6 +3242,11 @@ header>div>a:hover {
     background-color: var(--violet-secondaire);
 }
 
+.consulter-offre-front #remonte > img {
+    width: 13px;
+    height: 13px;
+}
+
 
 /*********************
         FOOTER                                            
