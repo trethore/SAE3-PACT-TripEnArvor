@@ -318,19 +318,12 @@ try {
                         Affichage des avis non répondues
                         ---------------------------------------->
                         <?php
-                            $avisNonRepondus = getAvis($row['id_offre']);
-                            $avisSansReponseCount = 0;
+                            $nbrAvis = getAvis($row['id_offre']);
+                            $nbrReponses = getReponse($row['id_offre']);
 
-                            foreach ($avisNonRepondus as $index => $a) {
-                                echo "<pre>";
-                                print_r(getReponse($row['id_offre']));
-                                echo "</pre>";
-                                if (empty(getReponse($row['id_offre']))) {
-                                    $avisSansReponseCount++;
-                                }
-                            }
+                            $nbrAvisNonRepondus = $nbrAvis - $nbrReponses;
                         ?>
-                        <p>Avis non répondus : <span><b><?php echo $avisSansReponseCount; ?></b></span></p>
+                        <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
