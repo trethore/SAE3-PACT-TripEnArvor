@@ -1041,6 +1041,10 @@ h3 {
     font-size: 13px;
 }
 
+.liste-back .date_publication_offre span {
+    font-size: 13px;
+}
+
 .liste-back .lesOffres .prix {
     background: var(--orange-principale);
     color: var(--blanc);
