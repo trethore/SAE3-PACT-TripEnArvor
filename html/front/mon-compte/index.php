@@ -158,7 +158,7 @@ $reqCompte = "SELECT * from sae.compte_membre
                         alert("Clé d'API Tchatator copiée dans le presse-papier!");
                     }
                 </script>
-                <p>Clé d'accès au Tchatator : </p>
+                <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Votre Clé</button>
             </div>
             
