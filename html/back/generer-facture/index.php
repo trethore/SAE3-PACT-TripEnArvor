@@ -32,6 +32,7 @@ $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
 $num_facture = $_GET["numero_facture"];
+$today = new DateTime(); // Obtenir la date d'aujourd'hui
 
 // Obtenir la date du dernier jour du mois et la convertir en chaîne de caractères
 $emissionDate = new DateTime();
