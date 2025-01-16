@@ -220,14 +220,13 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                 </tr>
             </thead>
             <tbody>
-                <?php try {
+                <?php
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqOption);
                     $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factOptions est un tableau avant de le parcourir
-                    echo $id_offre;
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
                         <tr>
@@ -249,10 +248,7 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                                 $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
                             ?>
                         </tr>
-                    <?php }}
-                } catch (PDOException $e) {
-                    echo "Erreur : " . $e->getMessage();
-                } ?>
+                    <?php }}?>
             </tbody>
         </table>
     </article>
