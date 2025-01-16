@@ -2832,7 +2832,7 @@ h3 {
     margin: 5px 0;
 } 
 
-.consulter-offre-front header > a {
+.consulter-offre-front header > div > a {
     text-decoration: none;
 }
 
