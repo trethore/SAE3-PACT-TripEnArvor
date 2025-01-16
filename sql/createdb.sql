@@ -57,8 +57,13 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
+    cle_api         CHAR(30),
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
+
+CREATE UNIQUE INDEX cle_api_unique
+ON _compte(cle_api)
+WHERE cle_api IS NOT NULL;
 
 
 /* =================== COMPTE PROFESSIONNEL ABSTRAIT =================== */
@@ -66,8 +71,8 @@ CREATE TABLE _compte (
 CREATE TABLE _compte_professionnel (
     id_compte       INTEGER,
     denomination    VARCHAR(255) NOT NULL,
-    a_propos         VARCHAR(255) NOT NULL,
-    site_web         VARCHAR(255) NOT NULL,
+    a_propos        VARCHAR(255) NOT NULL,
+    site_web        VARCHAR(255) NOT NULL,
     id_adresse      INTEGER NOT NULL,
     CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id_compte),
     CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
