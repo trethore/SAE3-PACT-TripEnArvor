@@ -1392,6 +1392,12 @@ h3 {
     flex-direction: row;
     margin: 1em;
 }
+#apibutton.compte-front {
+   color:var(--blanc-leger);
+   background-color: var(--violet-principal);
+   border: var(--violet-principal) 2px solid;
+   border-radius: 15px;
+}
 
 /********************
         NAV
