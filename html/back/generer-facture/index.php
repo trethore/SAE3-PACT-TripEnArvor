@@ -267,7 +267,11 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]->format('d-m-Y')) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php 
+        $date_echeance_DMY = new DateTime($detailFacture["date_emission"]);
+        $date_echeance_DMY = $date_echeance_DMY->format('d-m-Y');
+        echo htmlentities($date_echeance_DMY);
+        ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
