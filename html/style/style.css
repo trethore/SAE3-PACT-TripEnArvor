@@ -320,8 +320,8 @@ h3 {
 
 .compte-back #apibutton {
     color:var(--blanc-leger);
-    background-color: var(--orange-principal);
-    border: var(--orange-principal) 2px solid;
+    background-color: var(--orange-principale);
+    border: var(--orange-principale) 2px solid;
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
@@ -329,8 +329,8 @@ h3 {
  }
  .compte-back #apibutton:hover {
      background-color: var(--blanc-leger);
-     color: var(--orange-principal);
-     border: var(--orange-principal) 2px solid;
+     color: var(--orange-principale);
+     border: var(--orange-principale) 2px solid;
      border-radius: 15px;
      padding: 0.2em 1em;
      font-size: 1.2em;
