@@ -577,14 +577,15 @@ try {
 
                 }
 
-
-
-                //insertion dans adresse
-                $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
-                $stmt_adresse = $dbh->prepare($requete_adresse);
-                $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
-                $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
-
+                if (($cp != null)&&($num_et_nom_de_voie!= null)) {
+                    //insertion dans adresse
+                    $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?) returning id_adresse;";
+                    $stmt_adresse = $dbh->prepare($requete_adresse);
+                    $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                    $id_adresse = $stmt_adresse->fetch(PDO::FETCH_ASSOC)['id_adresse'];
+                }
+                
+                
                 // $requete_verif = 'SELECT COUNT(*) FROM _image WHERE lien_fichier = ?';
                 // $stmt_verif = $dbh->prepare($requete_verif);
                 // $stmt_verif->execute([$fichier_img]);
@@ -608,10 +609,10 @@ try {
                         $dbh->beginTransaction();
 
 
-                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement, $id_adresse]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -659,12 +660,10 @@ try {
                             $stmt_plan->execute([$fichier_plan]);
 
                         }
-                        $requete = "INSERT INTO sae.offre_parc_attraction(
-                            titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement]);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement, $id_adresse]);
                            
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -760,9 +759,8 @@ try {
 
                     case 'visite':
                         try {
-                            if (!$dbh->inTransaction()) {
                                 $dbh->beginTransaction();
-                            }
+                            
                         
                             // Insertion de la date dans la table _date
                             $reqInsertionDateEvent = 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
@@ -775,14 +773,14 @@ try {
                             }
                         
                             // Insertion dans la table offre_visite
-                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement)
-                                        VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement, id_adresse)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent]); // Utilisation de $idDateEvent
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent, $id_adresse]);
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
-                            // Insertion d'une image liée à l'offre
+                            // Insertion dans offre contient image
                             if (!empty($file_extension)) {
                                 $requete_offre_contient_image = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                                 $stmt_image_offre = $dbh->prepare($requete_offre_contient_image);
@@ -805,15 +803,15 @@ try {
                             // Commit de la transaction
                             $dbh->commit();
                         } catch (PDOException $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
+                            // if ($dbh->inTransaction()) {
+                            //     $dbh->rollBack();
+                            // }
                             print "Erreur PDO : " . $e->getMessage() . "<br/>";
                             exit;
                         } catch (Exception $e) {
-                            if ($dbh->inTransaction()) {
-                                $dbh->rollBack();
-                            }
+                            // if ($dbh->inTransaction()) {
+                            //     $dbh->rollBack();
+                            // }
                             print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
                             exit;
                         }
@@ -841,9 +839,9 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement]); 
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $id_adresse]); 
 
 
                         }
@@ -860,6 +858,10 @@ try {
                         
                         default:
                         die("Erreur de categorie!");
+                    }
+
+                    if ($dbh->inTransaction()) {
+                        $dbh->commit();
                     }
 
                     //insertion la date de mise en ligne de date
@@ -899,13 +901,13 @@ try {
                         if ($dbh->inTransaction()) {
                             $dbh->rollBack();
                         }
-                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                        print "Erreur PDO date : " . $e->getMessage() . "<br/>";
                         exit;
                     } catch (Exception $e) {
                         if ($dbh->inTransaction()) {
                             $dbh->rollBack();
                         }
-                        print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                        print "Erreur (autre exception)  date: " . $e->getMessage() . "<br/>";
                         exit;
                     }
                    
@@ -937,7 +939,7 @@ try {
                     // il faut aussi resumé le prix de l'abonnement a la création 
                     
                     
-                    if (!$dbh->inTransaction()) {
+                    if ($dbh->inTransaction()) {
                         $dbh->commit();
                     }
                     

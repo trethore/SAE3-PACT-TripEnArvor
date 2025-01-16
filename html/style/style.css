@@ -1291,87 +1291,45 @@ h3 {
 
 .carousel button {
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 0;
+    bottom: 0;
     background: none;
     font-size: 2rem;
-    width: 3rem;
-    height: 3rem;
+    padding: 1rem;
     border: none;
-    border-radius: 50%;
-    transition: background-color 0.5s ease;
     cursor: pointer;
     z-index: 2;
 }
 
 .carousel button img {
-    width: 100%;
-    height: 100%;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    transition: background-color 0.5s ease;
     object-fit: contain;
 }
 
 .carousel .prev-slide {
-    left: 1rem;
+    left: 0;
 }
 
 .carousel .next-slide {
-    right: 1rem;
+    right: 0;
 }
 
-.carousel button:hover {
+.carousel button:hover img {
     background-color: var(--violet-principal);
 }
 
-/* .accueil .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    width: 1226px;
+.carousel a.slide > img {
+    transition: transform 500ms ease-in-out;
 }
 
-.accueil .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: auto;
+.carousel a.slide:hover > img {
+    transform: scale(1.1);
 }
 
-.accueil .carousel-images a {
-    display: block;
-    text-decoration: none;
-    width: 100%;
-    height: 100%;
-}
 
-.accueil .carousel-images img {
-    width: 1226px;
-    height: 600px;
-    pointer-events: none;
-}
-
-.accueil .arrow-left,
-.arrow-right {
-    position: absolute;
-    bottom: 5px;
-    transform: translateY(-50%);
-    z-index: 1;
-}
-
-.accueil .arrow-left>img,
-.arrow-right>img {
-    background-color: var(--violet-principal);
-    border-radius: 90px;
-    height: 38px;
-    width: 39px;
-}
-
-.accueil .arrow-left {
-    right: 69px;
-}
-
-.accueil .arrow-right {
-    right: 20px;
-}
- */
 .accueil .titre {
     position: absolute;
     left: 10px;
@@ -2881,7 +2839,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .display-ligne>p {
-    margin: 0 10px;
+    margin: 0 0;
 }
 
 /**********************************
@@ -3171,31 +3129,27 @@ header>div>a:hover {
     background: var(--violet-secondaire);
 }
 
-.consulter-offre-front .image-avis {
-    width: 500px;
-    height: auto;
-    border-radius: 12px;
-    margin-left: 10px;
+.consulter-offre-front #avis > div > h2 {
+    margin: 0;
+}
+
+.consulter-offre-front .margin-0 {
+    margin-left: 0;
+}
+
+.consulter-offre-front .fond-blocs-avis {
+    background: var(--blanc);
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 15px;
+    color: var(--noir);
+    border: 3px solid var(--violet-principal);
 }
 
 .consulter-offre-front .titre-avis {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
-    padding-left: 10px;
-}
-
-.consulter-offre-front .reponse {
-    margin-left: 60px;
-}
-
-.consulter-offre-front .indentation {
-    padding-left: 3px;
-}
-
-.consulter-offre-front .reponse>p {
-    padding-left: 10px;
-    margin-left: 75px;
-    margin-top: 0;
+    margin: 5px 0;
 }
 
 .consulter-offre-front .fond-blocs-avis>p {
@@ -3206,28 +3160,47 @@ header>div>a:hover {
     border-top: 3px solid var(--violet-principal);
 }
 
+.consulter-offre-front .image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-right: 10px;
+}
+
+/* Pouces avis */
+
 .consulter-offre-front .pouce {
-    width: 35px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
 }
 
-.consulter-offre-front .display-notation {
-    display: flex;
-    align-items: center;
+/* Style réponse avis */
+
+.consulter-offre-front .reponse > p {
+    margin: 5px 0 5px 45px;
 }
 
-.consulter-offre-front .transparent {
-    color: var(--transparent);
+.consulter-offre-front .titre-reponse {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.consulter-offre-front .display-notation>p {
-    margin-left: 15px;
+.consulter-offre-front .marge-reponse {
+    margin-left: 45px;
 }
 
-.consulter-offre-front .display-notation>a {
-    color: var(--orange-principale);
-    text-decoration: none;
-    margin-right: 15px;
+.consulter-offre-front .reponse > div > img {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+}
+
+/* Petite mention*/
+
+.consulter-offre-front .petite-mention > p{
+    font-size: 14px;
+    margin: 5px 0 5px 0;
 }
 
 /*************************
@@ -3488,7 +3461,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-back .display-ligne>p {
-    margin: 0 10px;
+    margin: 0 0;
 }
 
 /**********************************
@@ -3541,8 +3514,8 @@ header>div>a:hover {
 **********************************/
 
 /***********************************
-            BLOC CARACTÉRISTIQUE                       
-    ***********************************/
+        BLOC CARACTÉRISTIQUE                       
+***********************************/
 
     .consulter-offre-back .liste-caracteristique {
         align-items: center;
@@ -3561,8 +3534,8 @@ header>div>a:hover {
     }
 
 /****************************
-            BLOC À PROPOS                               
-    ****************************/
+        BLOC À PROPOS                               
+****************************/
 
 .consulter-offre-back .bloc-a-propos {
     flex: 5; 
@@ -3602,8 +3575,8 @@ header>div>a:hover {
 ***********************************/
 
 /***************************
-            BLOC TARIFS                             
-    ***************************/
+        BLOC TARIFS                             
+***************************/
 
 .consulter-offre-back .bloc-tarif>button {
     color: var(--blanc);
@@ -3626,7 +3599,7 @@ header>div>a:hover {
     flex: 2.5;
 }
 
-.consulter-offre-back .bloc-tarif>div {
+.consulter-offre-back .bloc-tarif > div {
     display: flex;
 }
 
@@ -3645,8 +3618,8 @@ header>div>a:hover {
 }
 
 /*****************************
-            BLOC OUVERTURE                                       
-    *****************************/
+        BLOC OUVERTURE                                       
+*****************************/
 
 .consulter-offre-back .liste-ouverture {
     align-items: center;
@@ -3667,21 +3640,16 @@ header>div>a:hover {
     list-style: none;
 }
 
-/**************************
-        BLOCS CARTE                                                   
-**************************/
-
-.consulter-offre-back .carte {
-    width: 1000px;
-    height: 750px;
-    margin: auto;
-}
-
 /*************************
         BLOCS AVIS                                                   
 *************************/
+
 .consulter-offre-back #avis > div > h2 {
-    margin-bottom: 0;
+    margin: 0;
+}
+
+.consulter-offre-back .margin-0 {
+    margin-left: 0;
 }
 
 .consulter-offre-back .fond-blocs-avis {
@@ -3696,6 +3664,7 @@ header>div>a:hover {
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
+    margin: 5px 0;
 }
 
 .consulter-offre-back .fond-blocs-avis>p {
@@ -3704,6 +3673,13 @@ header>div>a:hover {
 
 .consulter-offre-back .bordure-top {
     border-top: 3px solid var(--orange-principale);
+}
+
+.consulter-offre-back .image-avis {
+    width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-right: 10px;
 }
 
 /* Pouces avis */
@@ -3716,7 +3692,7 @@ header>div>a:hover {
 /* Style réponse avis */
 
 .consulter-offre-back .reponse > p {
-    margin: 5px 0 5px 55px;
+    margin: 5px 0 5px 45px;
 }
 
 .consulter-offre-back .titre-reponse {
@@ -3735,11 +3711,34 @@ header>div>a:hover {
     margin-left: 5px;
 }
 
+.consulter-offre-back textarea {
+    background: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+    width: 100%;
+    height: 200px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+}
+
+.consulter-offre-back #reponse > button {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 24px;
+    background-color: var(--orange-principale);
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Petite mention*/
 
 .consulter-offre-back .petite-mention > p{
     font-size: 14px;
-    margin: 5px 0 5px 10px;
+    margin: 5px 0 5px 0;
 }
 
 /*************************
@@ -4634,7 +4633,7 @@ input[type="tel"] {
     color: var(--noir);
 }
 
-.liste-front .offre span {
+.description-offre span {
     color: var(--violet-principal);
     text-decoration: underline;
 }

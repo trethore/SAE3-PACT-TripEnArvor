@@ -35,15 +35,6 @@ try {
             $offre['prix'] = 0;
         }
     }
-  
-    // Date
-    foreach ($offres as &$offre) {
-        if (!getDatePublicationOffre($offre['id_offre'])) {
-            $offre['date'] = "0-0-0 0:0:0";
-        } else {
-            $offre['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
-        }
-    }
 
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -57,7 +48,6 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style-consulter-offres-front.css">
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
@@ -198,7 +188,6 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
-                                <option value="create-desc">Créé récemment</option>
                             </select>
                         </div>
                     </div>
@@ -234,7 +223,7 @@ try {
                     </div>
 
                     <!-- Contient avis -->
-                    <div class="contient_avis">
+                    <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
                             <label><input type="checkbox" name="oui_avis"> Oui</label>
@@ -331,18 +320,6 @@ try {
                                             ?>
                                             <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                         </div>
-
-                                        <?php
-                                            if ($tab['date'] == "0-0-0 0:0:0") {
-                                                $date = "date indisponible.";
-                                            } else {
-                                                $publication = explode(' ', $tab["date"]);
-                                                $datePub = explode('-', $publication[0]);
-                                                $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
-                                            }
-                                        ?>
-
-                                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                                         <?php if ($tab["categorie"] == "Restauration") { ?>
                                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
@@ -447,6 +424,7 @@ try {
 
                 // Filter by Availability
                 const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
+                console.log(availabilityInput);
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
@@ -512,10 +490,8 @@ try {
                 const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
                 if (avisInput) {
                     const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
-                    console.log(contientAvis);
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerContientAvis = offer.querySelector(".contientavisspot").textContent.trim().toLowerCase();
-                        console.log(offerContientAvis);
                         return offerContientAvis === contientAvis;
                     });
                 }
@@ -548,35 +524,6 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
-
-                    offers.forEach(offer => offersContainer.appendChild(offer));
-
-                } if (selectedValue === "create-desc") {
-                    offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
-                        if (dateA == "date indisponible.") {
-                            dateA = "0";
-                        } else {
-                            const [datePart, timePart] = dateA.split(" ");
-                            const [day, month, year] = datePart.split("-").map(Number);
-                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
-
-                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
-                            dateA = dateObject.getTime();
-                        }
-                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
-                        if (dateA == "date indisponible.") {
-                            dateA = "0";
-                        } else {
-                            const [datePart, timePart] = dateA.split(" ");
-                            const [day, month, year] = datePart.split("-").map(Number);
-                            const [hours, minutes, seconds] = timePart.split(":").map(Number);
-
-                            const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
-                            dateB = dateObject.getTime();
-                        }
-                        return dateB - dateA;
-                    });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
 

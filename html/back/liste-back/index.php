@@ -29,8 +29,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style_HFB.css">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="/style/style.css">
 
     <title>Liste de vos offres</title>
@@ -168,6 +167,8 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="create-desc">Créé récemment</option>
+                                <option value="note-asc">Meilleure note</option>
                             </select>
                         </div>
                     </div>
@@ -264,13 +265,18 @@ try {
                     <div class="etoiles">
                         <?php 
                             $note = getNoteMoyenne($row['id_offre']);
-                            echo "<pre>";
-                            print_r($row["id_offre"]);
-                            print_r($note);
-                            echo "</pre>";
-                            $etoilesPleines = floor($note);
-                            $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
-                            $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                        ?>
+                        <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
+                        <?php
+                            if ($note != 0) {
+                                $etoilesPleines = floor($note);
+                                $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            } else {
+                                $etoilesPleines = 0;
+                                $demiEtoile = 0;
+                                $etoilesVides = 5;
+                            }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                 ?>
@@ -308,6 +314,24 @@ try {
                         ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
+
+                    <?php
+                        if (!getDatePublicationOffre($row['id_offre'])) {
+                            $row['date'] = "0-0-0 0:0:0";
+                        } else {
+                            $row['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
+                        }
+                        
+                        if ($row['date'] == "0-0-0 0:0:0") {
+                            $date = "date indisponible.";
+                        } else {
+                            $publication = explode(' ', $row["date"]);
+                            $datePub = explode('-', $publication[0]);
+                            $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                        }
+                    ?>
+
+                    <!-- <article style="display: none;" class="date_publication_offre">Créée le <article><?php /*echo $date;*/ ?></article></article> -->
 
                     <!-------------------------------------- 
                     Affichage du prix 
@@ -467,6 +491,43 @@ try {
                         const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
                         return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "default") {
+                    offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+
+                } if (selectedValue === "note-asc") {
+                    offers.sort((a, b) => {
+                        let noteA = a.querySelector(".note-avis").textContent.trim();
+                        let noteB = b.querySelector(".note-avis").textContent.trim();
+                        return noteB - noteA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "create-desc") {
+                    offers.sort((a, b) => {
+                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [day, month, year] = dateA.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateA = dateObject.getTime();
+                        }
+                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
+                        if (dateB == "date indisponible.") {
+                            dateB = "0";
+                        } else {
+                            const [day, month, year] = dateB.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateB = dateObject.getTime();
+                        }
+                        return dateB - dateA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));

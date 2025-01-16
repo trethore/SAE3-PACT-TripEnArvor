@@ -14,6 +14,11 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
+$TVA = 20; // TVA en %
+
+// Obtenir la date d'aujourd'hui
+$today = new DateTime();
+
 startSession();
 $id_compte = $_SESSION["id"]; 
 if (isset($id_compte)) {
@@ -22,20 +27,31 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqCompte = "SELECT * from sae.compte_professionnel_prive where id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_professionnel_prive cp
+                join sae._adresse a on a.id_adresse = cp.id_adresse
+                where id_compte =  :id_compte;";
+$reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance from sae._facture 
+                join sae._date d on d.id_date = id_date_emission
+                join sae._date da on da.id_date = id_date_echeance
+                where numero_facture = :nu_facture;";
 $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
-	join sae._abonnement a on o.abonnement = a.nom_abonnement
-	join sae._facture f on o.id_offre = f.id_offre
-	join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
-	join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
-	join sae._date d on oml.id_date = d.id_date
-	where o.id_compte_professionnel = :id_compte;";
+                        join sae._abonnement a on o.abonnement = a.nom_abonnement
+                        join sae._facture f on o.id_offre = f.id_offre
+                        join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
+                        join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
+                        join sae._date d on oml.id_date = d.id_date
+                        where o.id_compte_professionnel = :id_compte;";
 
 // Préparation et exécution de la requête
 $stmt = $conn->prepare($reqCompte);
 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
 $stmt->execute();
 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+// Préparation et exécution de la requête
+$stmt = $conn->prepare($reqFacture);
+$stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->execute();
+$detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -50,8 +66,8 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
         <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
         <article>
             <h3>Numéro de facture</h3>
-            <h3>{#id_facture}</h3>
-            <p>{date_emission}</p>
+            <h3>#<?php echo htmlentities($detailFacture["numero_facture"]); ?></h3>
+            <p><?php echo htmlentities($detailFacture["date_emission"]); ?></p>
         </article>
     </div>
     <section>
@@ -66,6 +82,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
                 <br>
                 <!-- CP -->
                 <?php echo htmlentities($detailCompte["code_postale"] ?? '');?>
+                <!-- Ville -->
                 <?php echo htmlentities($detailCompte["ville"] ?? '');?>
                 <br>
                 <!-- Tel -->
@@ -104,16 +121,39 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
                 $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
-                foreach($factAbos as $factAbo) { ?>
-                <tr>
-                    <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
-                    <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                    <td>2</td>
-                    <td>20%</td>
-                    <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
-                    <td>22.30€</td>
-                </tr>
-                <?php } ?>
+                // Vérifiez si $factAbos est un tableau avant de le parcourir
+                if ($factAbos && is_array($factAbos)) {
+                    foreach($factAbos as $factAbo) { ?>
+                    <tr>
+                        <!-- Titre de l'offre -->
+                        <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
+                        <!-- Type de l'abonnement -->
+                        <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
+                        <!-- Nb de semaine -->
+                        <td>
+                        <?php 
+                        // Convertir la date de la base de données en objet DateTime
+                        $dateFromDbObj = new DateTime($factAbo["date"]);
+
+                        // Calculer la différence entre les deux dates
+                        $interval = $dateFromDbObj->diff($today);
+
+                        // Obtenir la différence en jours
+                        $daysDifference = $interval->days;
+
+                        // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
+                        $weeksDifference = floor($daysDifference / 7);
+                        echo htmlentities($weeksDifference);
+                        ?>
+                        </td>
+                        <!-- TVA en % -->
+                        <td><?php echo htmlentities($TVA) ?>%</td>
+                        <!-- Prix HT -->
+                        <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                        <!-- Prix total TTC -->
+                        <td><?php echo htmlentities(($factAbo["prix_ht_jour_abonnement"]*$factAbo["nbSemaine"])*(1+$TVA/100)) ?></td>
+                    </tr>
+                <?php }} ?>
             </tbody>
         </table>
     </article>
@@ -156,7 +196,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est dû dans les 15 jours</p>
+        <p>Le paiement est à régler jusqu'à <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>

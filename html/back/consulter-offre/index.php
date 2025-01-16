@@ -8,6 +8,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
 startSession();
 
+date_default_timezone_set('Europe/Paris');
+$id_offre_cible = intval($_GET['id']);
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -20,8 +23,60 @@ try {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
 }
 
+// ===== GESTION DU FORMULAIRE DE MISE EN LIGNE / HORS LIGNE ===== //
 
-date_default_timezone_set('Europe/Paris');
+// ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
+    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
+
+// ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
+    $dateMEL = getDateOffreEnLigne($id_offre_cible);
+
+if (isset($_POST['mettre_hors_ligne'])) {
+
+    $date = date('Y-m-d H:i:s');
+
+    if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            //Insertion de la date de mise hors ligne
+            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+            $stmtInsertionDateMHL->execute([$date]);
+            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
+        
+            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
+            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
+            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
+
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion : " . $e->getMessage();
+        }
+    
+    } else if ($dateMHL > $dateMEL) {
+    
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            //Insertion de la date de mise en ligne
+            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+            $stmtInsertionDateMEL->execute([$date]);
+            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
+        
+            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
+            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
+            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
+
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion : " . $e->getMessage();
+        }
+    }
+} 
 
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -122,14 +177,6 @@ try {
     // ===== Requête SQL pour vérifier si une offre est hors ligne ===== //
     $dateMiseHorsLigne = isOffreHorsLigne($id_offre_cible);
 
-// ===== GESTION DU NOMBRE DE DATE (EN LIGNE / HORS LIGNE) ===== //
-
-    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise hors ligne existe pour une offre ===== //
-    $dateMHL = getDateOffreHorsLigne($id_offre_cible);
-
-    // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
-    $dateMEL = getDateOffreEnLigne($id_offre_cible);
-
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -214,66 +261,23 @@ try {
                 <?php } ?>
                 
                 <div class="close">
-                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Mettre hors ligne</button></form>
-
-                    <?php $date = date('Y-m-d H:i:s'); 
-
-                    if (isset($_POST['mettre_hors_ligne'])) {
-
-                        if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
-                            try {
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                //Insertion de la date de mise hors ligne
-                                $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                                $stmtInsertionDateMHL->execute([$date]);
-                                $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            
-                                $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
-                                $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-                                $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-            
-                            } catch (PDOException $e) {
-                                echo "Erreur lors de l'insertion : " . $e->getMessage();
-                            }
-                        
-                        } else if ($dateMHL > $dateMEL) {
-                        
-                            try {
-                                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                //Insertion de la date de mise en ligne
-                                $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                                $stmtInsertionDateMEL->execute([$date]);
-                                $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
-                            
-                                $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
-                                $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-                                $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-            
-                            } catch (PDOException $e) {
-                                echo "Erreur lors de l'insertion : " . $e->getMessage();
-                            }
-                        }
-                    } ?>
-
+                    <form method="post" enctype="multipart/form-data"><button type="submit" name="mettre_hors_ligne" onclick="showFinal()">Confirmer</button></form> 
                     <button onclick="btnAnnuler()">Annuler</button>
                 </div>
             </div>
+
             <div id="final">
-                <p>Offre hors ligne !<br>Cette offre n'apparait plus</p>
+                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+                    <p>Offre hors ligne !<br>Désormait cette offre n'apparait plus !</p>
+                <?php } else if ($dateMHL > $dateMEL) { ?>
+                    <p>Offre en ligne !<br>Désormait cette offre apparait !</p>
+                <?php } ?>
                 <button onclick="btnAnnuler()">Fermer</button>
             </div> 
 
-            <?php if ($dateMiseHorsLigne != True) { ?>
+            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre hors ligne</button>
-            <?php } else { ?>
+            <?php } else if ($dateMHL > $dateMEL) { ?>
                 <button id="bouton1" onclick="showConfirm()">Mettre en ligne</button>
             <?php } ?>
             <button id="bouton2" onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
@@ -282,21 +286,21 @@ try {
 
     <main id="body">
 
-        <section id="top" class="fond-blocs bordure">
+        <section class="fond-blocs bordure">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="carousel">
             <div class="carousel-slides">
-<?php
-foreach ($images as $image) {
-?>
-                <div class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
-                </div>
-<?php
-}
-?>
+                <?php
+                foreach ($images as $image) {
+                ?>
+                    <div class="slide">
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                    </div>
+                <?php
+                }
+                ?>
             </div>
             <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
             <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
@@ -615,7 +619,7 @@ foreach ($images as $image) {
                 <p>(<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
-            <div class="petite-mention">
+            <div class="petite-mention margin-0">
                 <p><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
             </div>
 
@@ -649,7 +653,7 @@ foreach ($images as $image) {
                     <div class="display-ligne">
                         <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                               $datePass = explode('-', $passage[0]); ?>
-                        <p><strong><?php echo htmlentities(html_entity_decode($a['titre'])) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
                     </div>
 
                     <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
@@ -693,7 +697,7 @@ foreach ($images as $image) {
 
                         <?php } ?>
 
-                        <p><?php echo htmlentities(html_entity_decode($a['commentaire'])); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
                     </div>
 
                     <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
@@ -710,8 +714,6 @@ foreach ($images as $image) {
                         </div>
                     </div>
 
-                    
-
                     <?php if(!empty($reponse[$compteur]['texte'])) { ?>
 
                         <div class="reponse">
@@ -720,7 +722,7 @@ foreach ($images as $image) {
                                 <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                             </div>
 
-                            <p><?php echo htmlentities(html_entity_decode($reponse[$compteur]['texte'])) ?></p>
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
 
                             <div class="display-ligne marge-reponse petite-mention">
                                 <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
@@ -781,7 +783,7 @@ foreach ($images as $image) {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#top'">^</button>
+            <button id="remonte" onclick="location.href='#'">^</button>
         </div>
 
     </main>
