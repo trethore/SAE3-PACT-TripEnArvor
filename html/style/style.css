@@ -1398,6 +1398,16 @@ h3 {
    border: var(--violet-principal) 2px solid;
    border-radius: 15px;
    padding: 0.2em 1em;
+   font-size: 1.2em;
+}
+#apibutton:hover {
+    background-color: var(--blanc-leger);
+    color: var(--violet-principal);
+    border: var(--violet-principal) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
 }
 
 /********************

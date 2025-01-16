@@ -159,7 +159,7 @@ $reqCompte = "SELECT * from sae.compte_membre
                     }
                 </script>
                 <h2>Clé d'accès au Tchatator : </h2>
-                <button onclick="copyAPIKey()" id="apibutton">Votre Clé</button>
+                <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
             
         </section>
