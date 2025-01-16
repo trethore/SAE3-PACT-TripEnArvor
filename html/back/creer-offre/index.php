@@ -950,16 +950,16 @@ try {
 
                         $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
                         // Check si les dates existes pour pas faire de doublons
-                        if (!dateExiste($conn, $emissionDate)) {
+                        if (!dateExiste($dbh, $emissionDate)) {
                             // Insert de la date d'emission de la facture dans la table _date
-                            $stmt = $conn->prepare($reqInsertDate);
+                            $stmt = $dbh->prepare($reqInsertDate);
                             $stmt->bindParam(':date', $emissionDate, PDO::PARAM_STR);
                             $stmt->execute();
                             $idDateEmission = $stmt->fetchColumn();
                         }
-                        if (!dateExiste($conn, $echeanceDate)) {
+                        if (!dateExiste($dbh, $echeanceDate)) {
                             // Insert de la date d'échéance de la facture dans la table _date
-                            $stmt = $conn->prepare($reqInsertDate);
+                            $stmt = $dbh->prepare($reqInsertDate);
                             $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_STR);
                             $stmt->execute();
                             $idDateEcheance = $stmt->fetchColumn();
