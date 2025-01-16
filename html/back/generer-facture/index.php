@@ -195,7 +195,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
                             <?php // Calcul pour le total final
                                 $TotalHT += $factAbo["prix_ht_jour_abonnement"]*$nb_jour;
-                                $TotalTVA += ($factAbo["prix_ht_jour_abonnement"]*$nb_jour*$TVA/100);
+                                $TotalTVA += ($factAbo["prix_ht_jour_abonnement"]*$nb_jour)*($TVA/100);
                             ?>
                         </tr>
                     <?php }}
