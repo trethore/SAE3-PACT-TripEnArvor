@@ -893,4 +893,11 @@ function getNbSemaine($date, $today) {
 function getOffreTTC($prix, $nb, $TVA) {
     return ($prix*$nb)*(1+$TVA/100);
 }
+
+function dateExiste($pdo, $date) {
+    $stmt = $pdo->prepare("SELECT 1 FROM sae._date WHERE date = :date");
+    $stmt->bindParam(':date', $date, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
 ?>
