@@ -66,7 +66,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                         join sae._date d on oml.id_date = d.id_date
                         where f.numero_facture = :nu_facture;";
 
-$reqOption = "SELECT * from sae._offre_souscrit_option os
+$reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix from sae._offre_souscrit_option os
                 join sae._date d on d.id_date = os.id_date_souscription
                 join sae._historique_prix_options ho on ho.nom_option = os.nom_option 
                 where id_offre = :id_offre;"
@@ -267,7 +267,7 @@ $reqOption = "SELECT * from sae._offre_souscrit_option os
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]->format('d-m-Y')) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
