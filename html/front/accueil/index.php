@@ -95,7 +95,7 @@ if (!isset($_SESSION)) {
     </header>
 
     <!-- Conteneur principal -->
-    <main>
+    <main class="les_carousels">
         <h2>Offres à la une</h2>
 
         <?php
