@@ -227,6 +227,10 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factOptions est un tableau avant de le parcourir
+                    echo '<pre>';
+                    print_r($factOptions);
+                    echo '</pre>';
+                    
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
                         <tr>
