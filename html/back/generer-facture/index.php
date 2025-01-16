@@ -21,14 +21,12 @@ $TotalTVA = 0; // Somme finale TVA
 // Obtenir la date d'aujourd'hui
 $today = new DateTime();
 // La date du dernier jour du mois
-$DernierJour = date("t-m-Y");
+$DernierJour = date("Y-m-d H:i:s");
 
 // Conversion de la chaîne en objet DateTime pour faciliter les calculs
 $dernierJourDate = new DateTime($DernierJour);
 $echeanceDate = $dernierJourDate->modify('+15 days');
-$echeanceDate = $dernierJourDate->format('d-m-Y');
-
-echo $echeanceDate;
+$echeanceDate = $dernierJourDate->format('Y-m-d H:i:s');
 
 startSession();
 $id_compte = $_SESSION["id"]; 
@@ -56,17 +54,6 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                         join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
                         join sae._date d on oml.id_date = d.id_date
                         where o.id_compte_professionnel = :id_compte;";
-
-// Préparation et exécution de la requête
-$stmt = $conn->prepare($reqCompte);
-$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-$stmt->execute();
-$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
-// Préparation et exécution de la requête
-$stmt = $conn->prepare($reqFacture);
-$stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
-$stmt->execute();
-$detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -79,15 +66,33 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 <body class="genFacture">
     <?php 
     if (!isset($detailFacture["numero_facture"])) {
-        // Insert de la date d'emission de la facture dans la table _date
-        $stmt = $conn->prepare($reqDate);
-        $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
-        $stmt->execute();
-        // Insert de la date d'échéance de la facture dans la table _date
-        $stmt = $conn->prepare($reqDate);
-        $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
-        $stmt->execute();
+        // Check si les dates existes pour pas faire de doublons
+        if (!dateExiste($conn, $DernierJour)) {
+            // Insert de la date d'emission de la facture dans la table _date
+            $stmt = $conn->prepare($reqDate);
+            $stmt->bindParam(':date', $DernierJour, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+        if (!dateExiste($conn, $echeanceDate)) {
+            // Insert de la date d'échéance de la facture dans la table _date
+            $stmt = $conn->prepare($reqDate);
+            $stmt->bindParam(':date', $echeanceDate, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+
+        // Insert d'une facture
+        
     } else {
+        // Préparation et exécution de la requête
+        $stmt = $conn->prepare($reqCompte);
+        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+        $stmt->execute();
+        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Préparation et exécution de la requête
+        $stmt = $conn->prepare($reqFacture);
+        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->execute();
+        $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
     ?>
     <div class="infoFacture">
         <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">

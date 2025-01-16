@@ -2871,34 +2871,26 @@ header>div>a:hover {
 **********************************/
 
 /***********************************
-            BLOC CARACTÉRISTIQUE                       
-    ***********************************/
+        BLOC CARACTÉRISTIQUE                       
+***********************************/
 
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
 }
 
+.consulter-offre-front .bloc-caracteristique {
+    background: var(--blanc);
+    margin: 30px 30px 0 30px;
+}
+
 .consulter-offre-front .liste-caracteristique>li {
     color: var(--noir);
     border-left: 5px solid var(--violet-principal);
-    font-size: 40px;
+    font-size: 36px;
     list-style: none;
     display: flex;
     align-items: center;
     margin-bottom: 1em;
-    padding-left: 10px;
-}
-
-.consulter-offre-front .liste-caracteristique>li>img {
-    min-width: 50px;
-    max-width: 50px;
-    height: auto;
-    margin-right: 5px;
-    border-radius: 5px;
-}
-
-.consulter-offre-front .bloc-caracteristique {
-    flex: 1.75;
 }
 
 /****************************
@@ -2906,13 +2898,12 @@ header>div>a:hover {
     ****************************/
 
 .consulter-offre-front .bloc-a-propos {
-    flex: 2.5;
+    flex: 5;
     border-left: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front .epingle {
-    width: 20px;
-    height: 20px;
+.consulter-offre-front .bloc-a-propos > p {
+    margin: 5px 0;
 }
 
 .consulter-offre-front .display-ligne-espace>button {
@@ -2925,7 +2916,6 @@ header>div>a:hover {
 .consulter-offre-front .fond-blocs>a {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--violet-principal);
     border: 3px solid var(--blanc);
     padding: 10px 20px;
@@ -2934,11 +2924,8 @@ header>div>a:hover {
 
 .consulter-offre-front .display-ligne-espace>a:hover,
 .consulter-offre-front .fond-blocs>a:hover {
-    color: var(--violet-principal);
-    background: var(--blanc);
-    border-color: var(--violet-principal);
-    transition: 0.3s ease-in-out;
-}
+    background: var(--violet-secondaire);
+} 
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
