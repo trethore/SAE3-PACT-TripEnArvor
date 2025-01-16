@@ -2903,14 +2903,14 @@ header>div>a:hover {
     border-left: 3px solid var(--violet-principal);
     background: var(--blanc);
     margin: 30px 30px 0 0;
-    padding-left: 30px;
+    padding: 0 30px;
 }
 
 .consulter-offre-front .bloc-a-propos > p {
     margin: 5px 0;
 }
 
-.consulter-offre-front .bloc-a-propos > h2 {
+.consulter-offre-front .bloc-a-propos > div > h2 {
     margin: 0;
 }
 
