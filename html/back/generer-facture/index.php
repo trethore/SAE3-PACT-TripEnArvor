@@ -44,10 +44,8 @@ $emissionDate->format('Y-m-d H:i:s');
 
 echo $emissionDate;
 
-// Conversion de la chaîne en objet DateTime pour faciliter les calculs
-$emissionDateDate = new DateTime($emissionDate);
-$echeanceDate = $emissionDateDate->modify('+15 days');
-$echeanceDate = $emissionDateDate->format('Y-m-d H:i:s');
+$echeanceDate = $emissionDate->modify('+15 days');
+$echeanceDate = $emissionDate->format('Y-m-d H:i:s');
 
 $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
