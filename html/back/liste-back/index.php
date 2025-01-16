@@ -311,10 +311,8 @@ try {
                             $nonLusCount = 0;
 
                             forEach($avisNonLus as $avis) {
-                                foreach ($avisNonLus as $avis) {
-                                    if (empty($avis['lu'])) {
-                                        $nonLusCount++;
-                                    }
+                                if (empty($avis['lu'])) {
+                                    $nonLusCount++;
                                 }
                             }
                         ?>
