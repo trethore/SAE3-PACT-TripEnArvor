@@ -2826,6 +2826,7 @@ h3 {
     font-weight: bold;
     text-align: center;
     color: var(--violet-principal);
+    margin-top: 0;
 }
 
 .consulter-offre-front p {
@@ -3390,6 +3391,10 @@ h3 {
     height: 55vh;
     width: 60vw;
     align-self: center;
+}
+
+.consulter-offre-back .carousel button:hover img {
+    background-color: var(--orange-principale);
 }
 
 /**********************************
