@@ -2903,8 +2903,7 @@ header>div>a:hover {
     padding-left: 10px;
 }
 
-.consulter-offre-back .liste-caracteristique li:last-child {
-    color: red;
+.consulter-offre-front .liste-caracteristique li:last-child {
     margin-bottom: 0;
 }
 
