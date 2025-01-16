@@ -326,13 +326,13 @@ try {
                         if ($row['date'] == "0-0-0 0:0:0") {
                             $date = "date indisponible.";
                         } else {
-                            $publication = explode(' ', $tab["date"]);
+                            $publication = explode(' ', $row["date"]);
                             $datePub = explode('-', $publication[0]);
                             $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
                         }
                     ?>
 
-                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
+                    <article style="display: none; class="date_publication_offre">Créée le <article><?php echo $date; ?></article></article>
 
                     <!-------------------------------------- 
                     Affichage du prix 
@@ -510,7 +510,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -519,7 +519,7 @@ try {
                             const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
-                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
+                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {
