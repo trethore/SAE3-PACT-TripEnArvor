@@ -3321,8 +3321,8 @@ h3 {
 ********************************/
 
 /******************************
-            BOUTONS POP-UP                
-    ******************************/
+        BOUTONS POP-UP                
+******************************/
 .consulter-offre-back .bouton-modifier {
     margin: 30px 30px 0 30px;
 }
@@ -3458,7 +3458,7 @@ h3 {
     flex-direction: column;
 }
 
-.consulter-offre-front .carousel {
+.consulter-offre-back .carousel {
     height: 55vh;
     width: 60vw;
     align-self: center;
@@ -3532,7 +3532,7 @@ h3 {
 
 .consulter-offre-back .display-ligne-espace>a:hover,
 .consulter-offre-back .fond-blocs>a:hover {
-    background: var(--orange-secondaire-2);
+    background: var(--orange-secondaire-1);
 } 
 
 /***********************************
