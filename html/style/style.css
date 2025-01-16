@@ -2842,8 +2842,8 @@ h3 {
     text-decoration: underline;
 }
 
-.consulter-offre-front header>div>a,
-header>div>a:hover {
+.consulter-offre-front header > div > a,
+.consulter-offre-front > div > a:hover {
     text-decoration: none;
 }
 
