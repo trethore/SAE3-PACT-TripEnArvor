@@ -708,7 +708,7 @@ h3 {
 }
 
 .liste-back .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-back .filtre-tri h2+div>div+div {
@@ -3256,18 +3256,6 @@ h3 {
     text-decoration: none;
 }
 
-.consulter-offre-front #carte {
-    display: none;
-}
-
-.consulter-offre-front .pouce_haut:hover {
-    background-image: ('/images/universel/icones/pouce-up-hover.png');
-}
-
-.consulter-offre-front .pouce_bas:hover {
-    background-image: ('/images/universel/icones/pouce-down-hover.png');
-}
-
 /**************************************************************************************
                                     Consulter Offre Back
 ***************************************************************************************/
@@ -4286,7 +4274,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri h2+div>div {
-    padding-top: 0.5em 0 0 0;
+    padding-top: 0.5em;
 }
 
 .liste-front .filtre-tri h2+div>div+div {
@@ -5000,7 +4988,6 @@ input[type="tel"] {
         top: 0;
 
         position: relative;
-        top: none;
         background-color: var(--violet-principal);
         border-radius: 0;
         width: auto;
