@@ -795,6 +795,9 @@ try {
                 }
             }
 
+            console.log($avisSansReponse);
+            console.log($avisAvecReponse);
+
             // Fonction pour afficher les avis
             function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass)
             {
@@ -891,7 +894,7 @@ try {
             afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
 
         ?>
-        
+
         </section>                
          
         <div class="navigation display-ligne-espace">
