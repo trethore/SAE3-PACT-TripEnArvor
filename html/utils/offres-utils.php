@@ -924,6 +924,17 @@ function getNbJours($date, $today) {
     return $daysDifference;
 }
 
+function convertCentimesToEuros($centimes) {
+    // Convertir les centimes en euros
+    $euros = $centimes / 100;
+
+    // Formater le résultat avec 2 décimales et ajouter le symbole €
+    $formattedEuros = number_format($euros, 2, '.', '') . '€';
+
+    return $formattedEuros;
+}
+
+
 function getOffreTTC($prix, $nb, $TVA) {
     return ($prix*$nb)*(1+$TVA/100);
 }
