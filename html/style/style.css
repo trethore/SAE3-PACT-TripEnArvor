@@ -3261,23 +3261,8 @@ h3 {
                                     Consulter Offre Back
 ***************************************************************************************/
 
-.consulter-offre-back header {
-    text-decoration: none;
-}
-
-.consulter-offre-back button {
-    font-family: "Poppins", sans-serif;
-}
-
-.consulter-offre-back body {
-    font-family: "Poppins", sans-serif;
-    font-size: 24px;
-    color: var(--noir);
-    background: var(--blanc);
-}
-
-.consulter-offre-back p {
-    font-size: 24px;
+.consulter-offre-back section {
+    width: 63vw;
 }
 
 .consulter-offre-back h1 {
@@ -3287,35 +3272,35 @@ h3 {
     color: var(--orange-principale);
 }
 
+.consulter-offre-back p {
+    margin: 5px 0;
+}
+
 .consulter-offre-back h2 {
     font-size: 36px;
     font-weight: bold;
     color: var(--orange-principale);
-}
+    margin: 5px 0;
+} 
 
 .consulter-offre-back .fond-blocs {
     background: var(--blanc);
-    margin: 30px 30px 0 30px;
+    margin: 0 30px 0 30px;
     padding: 30px;
-}
-
-.consulter-offre-back a {
-    color: var(--orange-principale);
-    text-decoration: none;
 }
 
 .consulter-offre-back a:hover {
     text-decoration: underline;
 }
 
-.consulter-offre-back header>div>a,
-header>div>a:hover {
-    text-decoration: none;
+.consulter-offre-back header > div > a,
+.consulter-offre-back header > div > a:hover {
+    text-decoration: none; 
 }
 
 .consulter-offre-back .etoile {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 .consulter-offre-back .etoile_detail {
@@ -3439,14 +3424,10 @@ header>div>a:hover {
     font-size: 20px;
     width: fit-content;
 }
+/**/
 
 .consulter-offre-back .bloc-presentation>div>p {
     font-size: 32px;
-}
-
-.consulter-offre-back .information-offre {
-    font-size: 32px;
-    margin-top: 30px;
 }
 
 .consulter-offre-back .display-ligne-espace {
@@ -3470,49 +3451,18 @@ header>div>a:hover {
 }
 
 /**********************************
-            IMAGES PRÉSENTATION                
-    **********************************/
-
-.consulter-offre-back .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.consulter-offre-back .carousel-images {
+        IMAGES PRÉSENTATION                
+**********************************/
+.consulter-offre-back .pur {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: auto;
+    flex-direction: column;
 }
 
-.consulter-offre-back .carousel-images img {
-    width: 100%;
-    height: 900px;
-    flex-shrink: 0;
+.consulter-offre-front .carousel {
+    height: 55vh;
+    width: 60vw;
+    align-self: center;
 }
-
-.consulter-offre-back .arrow-left,
-.consulter-offre-back .arrow-right {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-}
-
-.consulter-offre-back .arrow-left>img,
-.consulter-offre-back .arrow-right>img {
-    background-color: var(--orange-principale);
-    border-radius: 90px;
-}
-
-.consulter-offre-back .arrow-left {
-    left: 20px;
-}
-
-.consulter-offre-back .arrow-right {
-    right: 20px;
-}
-
 
 /**********************************
         PREMIER DOUBLE BLOC                               
@@ -3522,58 +3472,68 @@ header>div>a:hover {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
-    .consulter-offre-back .liste-caracteristique {
-        align-items: center;
-        padding-right: 0;
-    }
+.consulter-offre-back .liste-caracteristique {
+    align-items: center;
+}
 
-    .consulter-offre-back .liste-caracteristique > li {
-        color: var(--noir);
-        border-left: 5px solid var(--orange-principale);
-        font-size: 24px;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        padding-left: 10px ;
-    }
+.consulter-offre-back .bloc-caracteristique {
+    background: var(--blanc);
+    margin: 30px 30px 0 30px;
+}
+
+.consulter-offre-back .liste-caracteristique>li {
+    color: var(--noir);
+    border-left: 3px solid var(--orange-principale);
+    font-size: 24px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
+
+.consulter-offre-back .liste-caracteristique li:last-child {
+    margin-bottom: 0;
+}
 
 /****************************
         BLOC À PROPOS                               
 ****************************/
 
 .consulter-offre-back .bloc-a-propos {
-    flex: 5; 
+    flex: 6;
     border-left: 3px solid var(--orange-principale);
+    background: var(--blanc);
+    margin: 30px 30px 0 0;
+    padding: 0 0 0 30px;
 }
 
-.consulter-offre-back .epingle {
-    width: 20px;
-    height: 20px;
+.consulter-offre-back .bloc-a-propos > p {
+    margin: 5px 0;
+}
+
+.consulter-offre-back .bloc-a-propos > div > h2 {
+    margin: 0;
 }
 
 .consulter-offre-back .display-ligne-espace>button {
-    font-size: 60px;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .consulter-offre-back .display-ligne-espace>a,
 .consulter-offre-back .fond-blocs>a {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    padding: 10px 80px;
-    border-radius: 15px;
+    padding: 5px 20px;
+    border-radius: 8px;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
 .consulter-offre-back .fond-blocs>a:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
-}
+    background: var(--orange-secondaire-2);
+} 
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
@@ -3586,25 +3546,21 @@ header>div>a:hover {
 .consulter-offre-back .bloc-tarif>button {
     color: var(--blanc);
     text-decoration: none;
-    font-size: 24px;
     background-color: var(--orange-principale);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 0;
 }
 
 .consulter-offre-back .bloc-tarif>button:hover {
-    color: var(--orange-principale);
-    background: var(--blanc);
-    border-color: var(--orange-principale);
-    transition: 0.3s ease-in-out;
+    border-color: var(--orange-secondaire-2);
 }
 
 .consulter-offre-back .bloc-tarif {
     flex: 2.5;
 }
 
-.consulter-offre-back .bloc-tarif > div {
+.consulter-offre-back .bloc-tarif>div {
     display: flex;
 }
 
@@ -3638,7 +3594,6 @@ header>div>a:hover {
 
 .consulter-offre-back .bloc-ouverture {
     flex: 1;
-    margin-left: 0;
 }
 
 .consulter-offre-back .bloc-ouverture>ul>li {
