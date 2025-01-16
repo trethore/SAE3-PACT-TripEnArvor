@@ -5300,13 +5300,18 @@ input[type="tel"] {
     }
 
     .consulter-offre-front h2 {
-        font-size: 20pt;
+        font-size: 18pt;
     }
 
     .consulter-offre-front .liste-caracteristique>li {
         font-size: 20pt;
         margin-bottom: 8%;
         padding-left: 4%;
+    }
+
+    .consulter-offre-front h1 {
+        font-size: 40pt;
+        margin-top: 0;
     }
 }
 
