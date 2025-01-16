@@ -65,6 +65,11 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                         join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
                         join sae._date d on oml.id_date = d.id_date
                         where f.numero_facture = :nu_facture;";
+
+$reqOption = "SELECT * from sae._offre_souscrit_option os
+                join sae._date d on d.id_date = os.id_date_souscription
+                join sae._historique_prix_options ho on ho.nom_option = os.nom_option 
+                where id_offre = :id_offre;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -189,7 +194,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                             <!-- TVA en % -->
                             <td><?php echo htmlentities($TVA) ?>%</td>
                             <!-- Prix HT -->
-                            <td><?php echo htmlentities(convertCentimesToEuros($factAbo["prix_ht_jour_abonnement"] ?? ''));?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros($factAbo["prix_ht_jour_abonnement"]));?></td>
                             <!-- Prix total TTC -->
                             <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_jour, $TVA)));?></td>
 
@@ -217,13 +222,31 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 </tr>
             </thead>
             <tbody>
+                <?php try {
+                    // Préparation et exécution de la requête
+                    $stmt = $conn->prepare($reqOption);
+                    $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
+                    $stmt->execute();
+                    $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($factOptions as $factOption) { ?>
                 <tr>
-                    <td>A la Une</td>
-                    <td>1</td>
-                    <td>20%</td>
-                    <td>12.00€</td>
-                    <td>18.00€</td>
+                    <td><?php echo htmlentities($factOption["nom_option"] ?? '');?></td>
+                    <td><?php 
+                    $nb_semaine = getNbSemaine($factOption["nom_option"], $today);
+                    echo htmlentities($nb_semaine);
+                    ?></td>
+                    <td><?php echo htmlentities($TVA);?>%</td>
+                    <td><?php echo htmlentities(convertCentimesToEuros($factOption["prix"]));?></td>
+                    <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factOption["prix"],$nb_semaine, $TVA)))?></td>
+                    <?php // Calcul pour le total final
+                        $TotalHT += $factOption["prix"]*$nb_semaine;
+                        $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
+                    ?>
                 </tr>
+                    <?php }
+                } catch (PDOException $e) {
+                    echo "Erreur : " . $e->getMessage();
+                } ?>
             </tbody>
         </table>
     </article>
@@ -244,7 +267,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date"]) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
