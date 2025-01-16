@@ -5,6 +5,10 @@ html {
     scroll-behavior: smooth;
 }
 
+.consulter-offre-front > div > a:hover {
+    text-decoration: none !important;
+}
+
 :root {
     /****************
       COULEURS
@@ -2844,10 +2848,6 @@ h3 {
 
 .consulter-offre-front header > div > a {
     text-decoration: none; 
-}
-
-.consulter-offre-front > div > a:hover {
-    text-decoration: none !important;
 }
 
 .consulter-offre-front .etoile {
