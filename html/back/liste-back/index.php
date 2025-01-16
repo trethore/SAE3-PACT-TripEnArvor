@@ -331,7 +331,7 @@ try {
                         }
                     ?>
 
-                    <article class="date_publication_offre">Créée le <article><?php echo $date; ?></article></article>
+                    <p class="date_publication_offre">Créée le <article><?php echo $date; ?></article></p>
 
                     <!-------------------------------------- 
                     Affichage du prix 
