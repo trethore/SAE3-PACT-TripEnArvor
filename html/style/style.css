@@ -2775,15 +2775,20 @@ h3 {
     color: var(--violet-principal);
 }
 
+.consulter-offre-front p {
+    margin: 5px 0;
+}
+
 .consulter-offre-front h2 {
     font-size: 36px;
     font-weight: bold;
     color: var(--violet-principal);
+    margin: 5px 0;
 }
 
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
-    margin: 30px 30px 0 30px;
+    margin: 0 30px 0 30px;
     padding: 30px;
 }
 
@@ -2797,8 +2802,8 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .etoile {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
 
 .consulter-offre-front .etoile_detail {
@@ -2892,6 +2897,10 @@ header>div>a:hover {
     align-items: center;
     margin-bottom: 1em;
     padding-left: 10px;
+}
+
+.consulter-offre-back .liste-caracteristique :last-child {
+    margin-bottom: 0;
 }
 
 /****************************
