@@ -1399,6 +1399,7 @@ h3 {
    border-radius: 15px;
    padding: 0.2em 1em;
    font-size: 1.2em;
+   cursor: pointer;
 }
 #apibutton:hover {
     background-color: var(--blanc-leger);
