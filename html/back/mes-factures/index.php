@@ -23,6 +23,7 @@ if (isset($id_compte)) {
 }
 
 $reqFacture = "SELECT * from sae._facture f
+                join sae._date d on d.id_date = f.id_date_emission
                 join sae._offre o on f.id_offre = o.id_offre
                 join sae.compte_professionnel_prive cp on cp.id_compte = o.id_compte_professionnel
                 where cp.id_compte = :id_compte;"
