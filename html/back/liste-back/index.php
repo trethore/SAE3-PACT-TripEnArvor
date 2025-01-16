@@ -332,7 +332,7 @@ try {
                         }
                     ?>
 
-                    <article style="display: none; class="date_publication_offre">Créée le <article><?php echo $date; ?></article></article>
+                    <!--<article style="display: none; class="date_publication_offre">Créée le <article><?php /*echo $date;*/ ?></article></article>-->
 
                     <!-------------------------------------- 
                     Affichage du prix 
