@@ -2899,7 +2899,7 @@ header>div>a:hover {
     padding-left: 10px;
 }
 
-.consulter-offre-back .liste-caracteristique :last-child {
+.consulter-offre-back .liste-caracteristique:last-child {
     margin-bottom: 0;
 }
 
