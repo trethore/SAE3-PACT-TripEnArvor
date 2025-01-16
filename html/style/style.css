@@ -1259,8 +1259,8 @@ h3 {
 **********************************/
 
 .carousel {
-    width: 90vw;
-    height: 90vh;
+    height: 55vh;
+    width: 70vw;
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
