@@ -644,16 +644,19 @@ try {
 
                 foreach ($avisGroupe as $item) {
                     $a = $item['avis'];
+                    echo "<pre>";
+                    print_r($a");
+                    echo "</pre>";
                     $compteur = $item['index'];
 
-                    $stmt = $pdo->prepare("SELECT lu FROM avis WHERE id = :id");
+                    $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id = :id");
                     $stmt->execute(['id' => $a['id']]);
                     $consulted = $stmt->fetchColumn();
 
                     $style = $consulted ? "" : "background-color: cyan;";
 
                     if (!$consulted) {
-                        $updateStmt = $pdo->prepare("UPDATE avis SET lu = true WHERE id = :id");
+                        $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id = :id");
                         $updateStmt->execute(['id' => $a['id']]);
                     }
                     ?>

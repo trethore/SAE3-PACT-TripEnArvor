@@ -121,57 +121,56 @@ if (!isset($_SESSION)) {
         ?>
 
         <section>
-        <div class="carousel">
-            <div class="carousel-slides">
-<?php
-foreach ($ids as $offre) {
-?>
-                <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
-                    <div>
-                        <span><?php echo($offre['titre']); ?></span>
-                        <div>
-<?php
-    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
+            <div class="carousel">
+                <div class="carousel-slides">
+                    <?php
+                    foreach ($ids as $offre) {
+                    ?>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo ($offre['id_offre']); ?>" class="slide">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
+                            <div>
+                                <span><?php echo ($offre['titre']); ?></span>
+                                <div>
+                                    <?php
+                                    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
 
-    if ($noteMoyenne !== null) {
+                                    if ($noteMoyenne !== null) {
 
-        $etoilesPleines = floor($noteMoyenne);
-        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-        
-        for ($i = 0; $i < $etoilesPleines; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-<?php 
-        }
-        if ($demiEtoile) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-<?php
-        }
-        for ($i = 0; $i < $etoilesVides; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-<?php
-        }
+                                        $etoilesPleines = floor($noteMoyenne);
+                                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
-    } else {
-?>
-                            <span>Pas d'avis</span>
-<?php
-    }
-?>
-                        </div>
-                    </div>
-                </a>
-<?php
-}
-?>
+                                        for ($i = 0; $i < $etoilesPleines; $i++) {
+                                    ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <?php
+                                        }
+                                        if ($demiEtoile) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < $etoilesVides; $i++) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <span>Pas d'avis</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </a>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-        </div>
         </section>
 
         <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
@@ -180,56 +179,55 @@ foreach ($ids as $offre) {
 
         <section>
             <div class="carousel">
-            <div class="carousel-slides">
-<?php
-foreach ($ids_nouv as $offre) {
-?>
-                <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
-                    <div>
-                        <span><?php echo($offre['titre']); ?></span>
-                        <div>
-<?php
-    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
+                <div class="carousel-slides">
+                    <?php
+                    foreach ($ids_nouv as $offre) {
+                    ?>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo ($offre['id_offre']); ?>" class="slide">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
+                            <div>
+                                <span><?php echo ($offre['titre']); ?></span>
+                                <div>
+                                    <?php
+                                    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
 
-    if ($noteMoyenne !== null) {
+                                    if ($noteMoyenne !== null) {
 
-        $etoilesPleines = floor($noteMoyenne);
-        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-        
-        for ($i = 0; $i < $etoilesPleines; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-<?php 
-        }
-        if ($demiEtoile) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-<?php
-        }
-        for ($i = 0; $i < $etoilesVides; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-<?php
-        }
+                                        $etoilesPleines = floor($noteMoyenne);
+                                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
-    } else {
-?>
-                            <span>Pas d'avis</span>
-<?php
-    }
-?>
-                        </div>
-                    </div>
-                </a>
-<?php
-}
-?>
+                                        for ($i = 0; $i < $etoilesPleines; $i++) {
+                                    ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <?php
+                                        }
+                                        if ($demiEtoile) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < $etoilesVides; $i++) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <span>Pas d'avis</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </a>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-        </div>
 
         </section>
 
@@ -237,56 +235,55 @@ foreach ($ids_nouv as $offre) {
 
         <section>
             <div class="carousel">
-            <div class="carousel-slides">
-<?php
-foreach ($ids_consulte as $offre) {
-?>
-                <a href="/front/consulter-offre/index.php?id=<?php echo($offre['id_offre']); ?>" class="slide">
-                    <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
-                    <div>
-                        <span><?php echo($offre['titre']); ?></span>
-                        <div>
-<?php
-    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
+                <div class="carousel-slides">
+                    <?php
+                    foreach ($ids_consulte as $offre) {
+                    ?>
+                        <a href="/front/consulter-offre/index.php?id=<?php echo ($offre['id_offre']); ?>" class="slide">
+                            <img src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($offre["id_offre"])) ?>">
+                            <div>
+                                <span><?php echo ($offre['titre']); ?></span>
+                                <div>
+                                    <?php
+                                    $noteMoyenne = getNoteMoyenne($offre["id_offre"]);
 
-    if ($noteMoyenne !== null) {
+                                    if ($noteMoyenne !== null) {
 
-        $etoilesPleines = floor($noteMoyenne);
-        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-        
-        for ($i = 0; $i < $etoilesPleines; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-<?php 
-        }
-        if ($demiEtoile) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-<?php
-        }
-        for ($i = 0; $i < $etoilesVides; $i++) {
-?>
-                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-<?php
-        }
+                                        $etoilesPleines = floor($noteMoyenne);
+                                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
-    } else {
-?>
-                            <span>Pas d'avis</span>
-<?php
-    }
-?>
-                        </div>
-                    </div>
-                </a>
-<?php
-}
-?>
+                                        for ($i = 0; $i < $etoilesPleines; $i++) {
+                                    ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                        <?php
+                                        }
+                                        if ($demiEtoile) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < $etoilesVides; $i++) {
+                                        ?>
+                                            <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <span>Pas d'avis</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </a>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-        </div>
         </section>
     </main>
 
@@ -318,8 +315,8 @@ foreach ($ids_consulte as $offre) {
 
         </div>
         <div class="footer-bottom">
-        <a href="../../droit/CGU.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
-  </div>
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
+        </div>
     </footer>
     <div class="telephone-nav">
         <div class="nav-content">
