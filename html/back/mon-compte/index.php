@@ -81,11 +81,6 @@ if ($typeCompte === 'proPrive') {
 </head>
 <body class="back compte-back">
 <pre>
-<?php
-print_r($detailCompte);
-print_r($informationsBancaires);
-?>
-</pre>
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
