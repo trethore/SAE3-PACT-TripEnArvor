@@ -786,7 +786,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'">^</button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
