@@ -346,13 +346,13 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs bordure">
+        <section class="fond-blocs bordure pur">
             
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
             <h1><?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible") ?></h1>
 
             <div class="carousel">
-            <div class="carousel-slides">
+                <div class="carousel-slides">
 <?php
 foreach ($images as $image) {
 ?>
@@ -362,10 +362,10 @@ foreach ($images as $image) {
 <?php
 }
 ?>
+                </div>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-        </div>
 
 
             <div class="display-ligne-espace">
