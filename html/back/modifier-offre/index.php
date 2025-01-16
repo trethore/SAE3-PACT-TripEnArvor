@@ -420,8 +420,8 @@ try {
                     <tr>
                         <div id="options">
                             <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($id_offre)){echo "checked";} ?>/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="optionPayante" value="alaune" <?php if(isOffreALaUne($id_offre)){echo "checked";} ?>/><label for="alaune">A la une</label></td>
+                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="optionPayante" value="alaune" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="alaune">A la une</label></td>
                         </div>
                     </tr>
                 </table>
