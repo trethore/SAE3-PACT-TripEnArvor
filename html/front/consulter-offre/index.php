@@ -925,7 +925,7 @@ try {
         <!-- BOUTONS DE NAVIGATION -->
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'">^</button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
         </div>
 
     </main>
