@@ -916,7 +916,7 @@ function getNbJours($date, $today) {
     $dateFromDbObj = new DateTime($date);
 
     // Calculer la différence entre les deux dates
-    $interval = $dateFromDbObj->diff($today);
+    $interval = $today->diff($dateFromDbObj);
 
     // Obtenir la différence en jours
     $daysDifference = $interval->days;
