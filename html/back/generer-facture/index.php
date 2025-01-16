@@ -44,6 +44,8 @@ $emissionDate->format('Y-m-d H:i:s');
 $echeanceDate = $emissionDate->modify('+15 days');
 $echeanceDate = $emissionDate->format('Y-m-d H:i:s');
 
+$emissionDate->format('Y-m-d H:i:s');
+
 $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
 $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
