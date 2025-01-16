@@ -52,7 +52,6 @@ $reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_e
 
 $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
                         join sae._abonnement a on o.abonnement = a.nom_abonnement
-                        join sae._facture f on o.id_offre = f.id_offre
                         join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
                         join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
                         join sae._date d on oml.id_date = d.id_date
@@ -85,9 +84,11 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
             $idDateEcheance = $stmt->fetchColumn();
         }
 
+
+
         // Insert d'une facture
         $stmt = $conn->prepare($reqInsertFact);
-        $stmt->bindParam(':montant_ht', $montant_ht, PDO::PARAM_INT);
+        $stmt->bindParam(':montant_ht', 0, PDO::PARAM_INT);
         $stmt->bindParam(':id_date_emission', $idDateEmission, PDO::PARAM_INT);
         $stmt->bindParam(':id_date_echeance', $idDateEcheance, PDO::PARAM_INT);
         $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);

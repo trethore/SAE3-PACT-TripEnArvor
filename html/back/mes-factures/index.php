@@ -22,8 +22,8 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqFacture = "SELECT numero_facture, id_date_emission, titre from sae._facture f
-	            join sae._offre o on f.id_offre = o.id_offre
+$reqFacture = "SELECT * from sae._offre o
+                join sae.compte_professionnel_prive cp on  cp.id_compte = o.id_compte_professionnel
                 where o.id_compte_professionnel = :id_compte;"
 
 ?>
@@ -113,13 +113,16 @@ try {
             <h1>Mes factures</h1>
             <ul>
                 <li>
-                    <a href="/back/generer-facture/index.php?numero_facture=1" target="_blank"><p>Prévisualiser votre prochaine facture</p></a>
+                    <a href="/back/generer-facture/index.php?numero_facture=99999999," target="_blank"><p>Prévisualiser votre prochaine facture</p></a>
+                </li>
+                <li>
+                    <a href=""></a>
                 </li>
                 <?php
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php echo htmlentities($facture["numero_facture"]); ?>du <?php echo htmlentities($facture["date"]); ?></p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=1<?php // echo urlencode($facture["numero_facture"]); ?>"  target="_blank"><p>Facture N°<?php //echo htmlentities($facture["numero_facture"]); ?>du <?php // echo htmlentities($facture["date"]); ?></p></a>
                     </li>
                 <?php
                 }
