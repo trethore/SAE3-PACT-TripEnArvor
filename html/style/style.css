@@ -2855,9 +2855,15 @@ header>div>a:hover {
 /**********************************
         IMAGES PRÉSENTATION                
 **********************************/
+.consulter-offre-front .pur {
+    display: flex;
+    flex-direction: column;
+}
+
 .consulter-offre-front .carousel {
     height: 55vh;
     width: 60vw;
+    align-self: center;
 }
 
 /**********************************
