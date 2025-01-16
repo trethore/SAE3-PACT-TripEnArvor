@@ -168,6 +168,7 @@ try {
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="create-desc">Créé récemment</option>
                                 <option value="note-asc">Meilleure note</option>
                             </select>
                         </div>
@@ -314,6 +315,24 @@ try {
                         ---------------------------------------->
                         <p>Avis blacklistés : <span><b>0</b></span></p>
                     </div>
+
+                    <?php
+                        if (!getDatePublicationOffre($row['id_offre'])) {
+                            $row['date'] = "0-0-0 0:0:0";
+                        } else {
+                            $row['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
+                        }
+                        
+                        if ($row['date'] == "0-0-0 0:0:0") {
+                            $date = "date indisponible.";
+                        } else {
+                            $publication = explode(' ', $tab["date"]);
+                            $datePub = explode('-', $publication[0]);
+                            $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                        }
+                    ?>
+
+                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                     <!-------------------------------------- 
                     Affichage du prix 
@@ -486,6 +505,30 @@ try {
                         let noteA = a.querySelector(".note-avis").textContent.trim();
                         let noteB = b.querySelector(".note-avis").textContent.trim();
                         return noteB - noteA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "create-desc") {
+                    offers.sort((a, b) => {
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [day, month, year] = dateA.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateA = dateObject.getTime();
+                        }
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateB == "date indisponible.") {
+                            dateB = "0";
+                        } else {
+                            const [day, month, year] = dateB.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateB = dateObject.getTime();
+                        }
+                        return dateB - dateA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
