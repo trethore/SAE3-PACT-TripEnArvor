@@ -103,7 +103,11 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         <article>
             <h3>Numéro de facture</h3>
             <h3>#<?php echo htmlentities($detailFacture["numero_facture"]); ?></h3>
-            <p><?php echo htmlentities($detailFacture["date_emission"]); ?></p>
+            <p><?php 
+            $date_emission_DMY = new DateTime($detailFacture["date_emission"]);
+            $date_emission_DMY->format('d-m-Y');
+            echo htmlentities($date_emission_DMY); 
+            ?></p>
         </article>
     </div>
     <section>
