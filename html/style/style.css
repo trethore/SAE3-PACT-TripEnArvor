@@ -2832,10 +2832,6 @@ h3 {
     margin: 5px 0;
 } 
 
-.consulter-offre-front header > a {
-    text-decoration: none;
-}
-
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
     margin: 0 30px 0 30px;
