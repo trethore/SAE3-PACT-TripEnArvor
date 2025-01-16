@@ -5210,11 +5210,11 @@ input[type="tel"] {
         border-radius: 15px;
         margin: 0.5em 0.2em 0em 0.2em;
         text-align: center;
-        font-size: 35pt;
+        font-size: 30pt;
         border: 2px var(--violet-principal) solid;
     }
 
-    .accueil .carousel {
+    .les_carousels .carousel {
         width: 70vw;
         height: 55vh;
     }
