@@ -2934,9 +2934,8 @@ header>div>a:hover {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--violet-principal);
-    border: 3px solid var(--blanc);
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 5px 20px;
+    border-radius: 8px;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
