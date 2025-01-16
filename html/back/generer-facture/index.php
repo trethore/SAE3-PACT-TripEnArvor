@@ -225,11 +225,8 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     $stmt = $conn->prepare($reqOption);
                     $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
-                    if (!$stmt->execute()) {
-                        echo "Erreur SQL : ";
-                        print_r($stmt->errorInfo());
-                    }
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    print_r($factOptions);
                     // Vérifiez si $factOptions est un tableau avant de le parcourir
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
