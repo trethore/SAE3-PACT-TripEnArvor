@@ -2768,8 +2768,8 @@ h3 {
 /**************************************************************************************
                                     Consulter Offre Front
 ***************************************************************************************/
-.consulter-offre-front body {
-    margin: 0 200px;
+.consulter-offre-front main {
+    padding: 0 200px;
 }
 
 .consulter-offre-front h1 {
