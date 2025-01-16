@@ -219,7 +219,7 @@ if ($typeCompte === 'proPrive') {
                 </tr>
                 <tr>
                     <td>Identifiant</td>
-                    <td><?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?></td>
+                    <td><?php echo htmlentities($informationsBancaires['id_crancier'] ?? ''); ?></td>
                 </tr>
                 <tr>
                     <td>IBAN</td>
