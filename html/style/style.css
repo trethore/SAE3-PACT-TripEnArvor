@@ -5260,10 +5260,6 @@ input[type="tel"] {
         flex-wrap: nowrap;
     }
 
-    .consulter-offre-front .reponse > div > img {
-        display: none;
-    }
-
     .consulter-offre-front .reponse {
         border: 3px solid var(--violet-principal);
         border-radius: 10px;
