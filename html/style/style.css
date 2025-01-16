@@ -3277,6 +3277,7 @@ h3 {
     font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
+    margin-top: 0;
 }
 
 .consulter-offre-back p {
@@ -3382,7 +3383,7 @@ h3 {
 .consulter-offre-back .pur {
     display: flex;
     flex-direction: column;
-    padding-top: 30px 
+    padding-top: 0; 
 }
 
 .consulter-offre-back .carousel {
