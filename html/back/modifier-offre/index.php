@@ -1090,14 +1090,12 @@ try {
                 }
 
 
-                //insertion dans la tarif si c'est pas un restaurant
+                //insertion dans tarif si c'est pas un restaurant
                 if (($isIdProPrivee)&&($categorie !== "restaurant")){
-                    foreach (getTarifs($id_offre) as $tarif) {
                         $requete_suppr_tarif = "DELETE FROM sae._tarif_publique WHERE id_offre = ?; ";
-                        $stmt__suppr_tarif = $dbh->prepare($requete_suppr_tarif);
-                        $stmt_tarif->execute([$id_offre]);
+                        $stmt_suppr_tarif = $dbh->prepare($requete_suppr_tarif);
+                        $stmt_suppr_tarif->execute([$id_offre]);
 
-                    }
                     foreach ($tabtarifs as $key => $value) {
                         $requete_tarif = "INSERT INTO sae._tarif_publique(nom_tarif, prix,id_offre ) VALUES (?, ?, ?);";
 
