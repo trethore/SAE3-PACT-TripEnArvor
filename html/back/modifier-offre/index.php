@@ -421,7 +421,7 @@ try {
                         <div id="options">
                             <td><label>Options</label></td>
                             <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="optionPayante" value="alaune" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="alaune">A la une</label></td>
+                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="aLaUne">A la une</label></td>
                         </div>
                     </tr>
                 </table>
@@ -1038,18 +1038,57 @@ try {
                 //modification des options
                 print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
+                    print("rentre dans la premier if");
+                    //insertion de la date de souscription dans_date
                     $date_souscription = date('Y-m-d H:i:s');
-                    if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
-                        $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
-                        $stmt_suppression = $dbh->prepare($requete_suppression_option);
-                        $stmt_suppression->execute([$id_offre, $optionP]);
-                        print("option supprimée");
+                    $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
+                    $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
+                    $stmtInsertionDateEvent->execute([$date_souscription]);
+                    $id_date_souscription = $stmtInsertionDateEvent->fetch(PDO::FETCH_ASSOC)['id_date'];
 
+
+                    if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
+                        print("rentre dans la deuxieme if");
+                        try {
+                                $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
+                            $stmt_suppression = $dbh->prepare($requete_suppression_option);
+                            $stmt_suppression->execute([$id_offre]);
+                            print("option supprimée");
+
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
+                        } catch (Exception $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                            exit;
+                        }
+                        
                     }
-                    $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
-                    $stmt_option = $dbh->prepare($requete_option);
-                    $stmt_option -> execute([$id_offre, $optionP, $id_souscription]);
-                    print("option payante mise dans la bdd");
+                    try {
+                        $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
+                        $stmt_option = $dbh->prepare($requete_option);
+                        $stmt_option -> execute([$id_offre, $optionP, $id_date_souscription]);
+                        print("option payante mise dans la bdd");
+                    } catch (PDOException $e) {
+                        if ($dbh->inTransaction()) {
+                            $dbh->rollBack();
+                        }
+                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                        exit;
+                    } catch (Exception $e) {
+                        if ($dbh->inTransaction()) {
+                            $dbh->rollBack();
+                        }
+                        print "Erreur (autre exception) : " . $e->getMessage() . "<br/>";
+                        exit;
+                    }
+                    
                 } 
                 
                 //upddate tarifs
