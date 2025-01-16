@@ -29,6 +29,8 @@ $today = new DateTime();
 // La date du dernier jour du mois
 $emissionDate = date("Y-m-d H:i:s");
 
+echo $emissionDate;
+
 // Conversion de la chaîne en objet DateTime pour faciliter les calculs
 $emissionDateDate = new DateTime($emissionDate);
 $echeanceDate = $emissionDateDate->modify('+15 days');
@@ -53,7 +55,9 @@ $reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_e
                 join sae._date da on da.id_date = id_date_echeance
                 where numero_facture = :nu_facture;";
 
-$reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date from sae._offre o
+$reqUpdateDate = "UPDATE sae._date set date = :date_emission_maj where id_date = :id_date_emission;";
+
+$reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, d.date as date_mise_en_ligne from sae._offre o
                         join sae._abonnement a on o.abonnement = a.nom_abonnement
                         join sae._facture f on o.id_offre = f.id_offre
                         join sae._historique_prix_abonnements ha on a.nom_abonnement = ha.nom_abonnement
@@ -76,6 +80,19 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
         $stmt->execute();
         $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Préparation et exécution de la requête du premier select afin d'avoir id_date_emission pour pouvoir l'update juste après
+        $stmt = $conn->prepare($reqFacture);
+        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->execute();
+        $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Update de la date d'émission
+        $stmt = $conn->prepare($reqUpdateDate);
+        $stmt->bindParam(':date_emission_maj', $emissionDate, PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $detailFacture["id_date_emission"], PDO::PARAM_INT);
+        $stmt->execute();
+
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqFacture);
         $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
