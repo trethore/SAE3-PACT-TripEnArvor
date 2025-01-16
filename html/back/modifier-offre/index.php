@@ -216,6 +216,8 @@ print_r($tags);
     echo ($date_evenement);
 
     print_r($adresse);
+
+    $date_aujourdhui = new DateTime(); 
     
 
     
@@ -405,6 +407,8 @@ try {
                         </td>
                     </tr>
                     <tr>
+                   
+                    
                         <td><label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
@@ -416,12 +420,13 @@ try {
                                     
                         </td>
                         <td>(impossible de modifier le type)</td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <div id="options">
-                            <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="enRelief">En relief</label>
-                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} ?>/><label for="aLaUne">A la une</label></td>
+                            <td><label id="labeloptions" for="optionPayante">Options</label></td>
+
+                            <td> <input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="enRelief" id="labelEnRelief">En relief</label>
+                            <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
                 </table>
@@ -1036,11 +1041,13 @@ try {
                 }
                 
                 //modification des options
+                
+                
                 print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
                     print("rentre dans la premier if");
                     //insertion de la date de souscription dans_date
-                    $date_souscription = date('Y-m-d H:i:s');
+                    
                     $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
                     $stmtInsertionDateEvent = $dbh->prepare($reqInsertionDateEvent);
                     $stmtInsertionDateEvent->execute([$date_souscription]);
