@@ -1392,7 +1392,8 @@ h3 {
     flex-direction: row;
     margin: 1em;
 }
-#apibutton {
+
+.compte-front #apibutton {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1401,7 +1402,7 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-#apibutton:hover {
+.compte-front #apibutton:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
