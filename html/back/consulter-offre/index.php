@@ -247,14 +247,14 @@ try {
         </script>
     </header>
 
-    <div class="fond-bloc display-ligne-espace">
+    <div class="display-ligne-espace">
         <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
             <form method="post" enctype="multipart/form-data">
-                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigneEnLigne()">Mettre hors ligne</button>
+                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
             </form>
         <?php } else if ($dateMHL > $dateMEL) { ?>
             <form method="post" enctype="multipart/form-data">
-                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigneEnLigne()">Mettre en ligne</button>
+                <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
             </form>
         <?php } ?>
 
