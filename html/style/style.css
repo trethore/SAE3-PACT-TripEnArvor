@@ -2960,7 +2960,6 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .display-ligne-espace>button {
-    font-size: 60px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -3180,7 +3179,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .image-avis {
-    width: 30vw;
+    width: 20vw;
     height: 20vh;
     border-radius: 12px;
     margin-right: 10px;
