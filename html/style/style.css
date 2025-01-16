@@ -5307,7 +5307,17 @@ input[type="tel"] {
     .consulter-offre-front h1 {
         font-size: 40pt;
         margin-top: 0;
+
+        
     }
+
+    .consulter-offre-front section {
+        width: fit-content;
+      }
+
+    .consulter-offre-front .carousel {
+        width: fit-content;
+      }
 }
 
 @media screen and (max-width: 1100px) {
