@@ -409,8 +409,8 @@ try {
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
-                                    <option value="standard"> Offre Standard </option>
-                                    <option value="premium"> Offre Premium </option>
+                                    <option value="standard"  <?php if($offre_bonne_cat['abonnement'] === "standard"){ echo "selected";} ?>> Offre Standard </option>
+                                    <option value="premium"  <?php if($offre_bonne_cat['abonnement'] === "premium"){ echo "selected";} ?>> Offre Premium </option>
                                 </select>
                             </div>
                                     
@@ -420,8 +420,8 @@ try {
                     <tr>
                         <div id="options">
                             <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($id_offre)){echo "checked";} ?>/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="optionPayante" value="alaune" <?php if(isOffreALaUne($id_offre)){echo "checked";} ?>/><label for="alaune">A la une</label></td>
                         </div>
                     </tr>
                 </table>
