@@ -70,7 +70,7 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 <body class="genFacture">
     <?php 
     if (!isset($detailFacture["numero_facture"])) {
-        echo  date("Y-m-t");
+        echo  date("t-m-Y");
         // $stmt = $conn->prepare($reqDate);
         // $stmt->bindParam(':date', $today, PDO::PARAM_INT); // Lié à l'ID du compte
         // $stmt->execute();
