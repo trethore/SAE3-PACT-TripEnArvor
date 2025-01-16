@@ -84,7 +84,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         }
 
         // Insert d'une facture
-        $stmt = $conn->prepare($reqFacture);
+        $stmt = $conn->prepare($reqInsertFact);
         $stmt->bindParam(':montant_ht', $montant_ht, PDO::PARAM_INT);
         $stmt->bindParam(':id_date_emission', $emissionDate, PDO::PARAM_INT);
         $stmt->bindParam(':id_date_echeance', $echeanceDate, PDO::PARAM_INT);
