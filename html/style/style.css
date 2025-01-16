@@ -5302,6 +5302,12 @@ input[type="tel"] {
     .consulter-offre-front h2 {
         font-size: 20pt;
     }
+
+    .consulter-offre-front .liste-caracteristique>li {
+        font-size: 20pt;
+        margin-bottom: 8%;
+        padding-left: 4%;
+    }
 }
 
 @media screen and (max-width: 1100px) {
