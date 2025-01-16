@@ -22,9 +22,10 @@ if (isset($id_compte)) {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
 
-$reqFacture = "SELECT * from sae._offre o
-                join sae.compte_professionnel_prive cp on  cp.id_compte = o.id_compte_professionnel
-                where o.id_compte_professionnel = :id_compte;"
+$reqFacture = "SELECT * from sae._facture f
+                join sae._offre o on f.id_offre = o.id_offre
+                join sae.compte_professionnel_prive cp on cp.id_compte = o.id_compte_professionnel
+                where cp.id_compte = :id_compte;"
 
 ?>
 <!DOCTYPE html> 
@@ -116,9 +117,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">
-                            Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - <?php echo htmlentities($facture["date_emission"]); ?>
-                        </a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - <?php echo htmlentities($facture["date_emission"]); ?></a>
                     </li>
                 <?php
                 }

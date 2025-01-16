@@ -44,9 +44,6 @@ if (isset($id_compte)) {
 
 $reqInsertDate = "INSERT INTO sae._date (date) VALUES (:date) returning id_date";
 
-$reqInsertFact = "INSERT INTO sae._facture (montant_ht, id_date_emission, id_date_echeance, id_offre) 
-                   VALUES (:montant_ht, :id_date_emission, :id_date_echeance, :id_offre)";
-
 $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
                 join sae._adresse a on a.id_adresse = cp.id_adresse
                 where id_compte =  :id_compte;";
