@@ -15,6 +15,8 @@ try {
 }
 
 $TVA = 20; // TVA en %
+$TotalHT = 0; // Somme final hors taxe
+$TotalTVA = 0; // Somme finale TVA
 
 // Obtenir la date d'aujourd'hui
 $today = new DateTime();
@@ -131,27 +133,19 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
                         <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
                         <!-- Nb de semaine -->
                         <td>
-                        <?php 
-                        // Convertir la date de la base de données en objet DateTime
-                        $dateFromDbObj = new DateTime($factAbo["date"]);
-
-                        // Calculer la différence entre les deux dates
-                        $interval = $dateFromDbObj->diff($today);
-
-                        // Obtenir la différence en jours
-                        $daysDifference = $interval->days;
-
-                        // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
-                        $weeksDifference = floor($daysDifference / 7);
-                        echo htmlentities($weeksDifference);
-                        ?>
+                        <?php echo htmlentities(getNbSemaine($factAbo["date"], $today));?>
                         </td>
                         <!-- TVA en % -->
                         <td><?php echo htmlentities($TVA) ?>%</td>
                         <!-- Prix HT -->
                         <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
                         <!-- Prix total TTC -->
-                        <td><?php echo htmlentities(($factAbo["prix_ht_jour_abonnement"]*$factAbo["nbSemaine"])*(1+$TVA/100)) ?></td>
+                        <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA));?></td>
+
+                        <?php // Calcul pour le total final
+                            $TotalHT += $factAbo["prix_ht_jour_abonnement"];
+                            $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA) - $factAbo["prix_ht_jour_abonnement"]);
+                        ?>
                     </tr>
                 <?php }} ?>
             </tbody>
@@ -183,20 +177,20 @@ $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
     <table class="totals">
         <tr>
             <td>Total HT</td>
-            <td>31.25€</td>
+            <td><?php echo htmlentities($TotalHT) ?? '' ?></td>
         </tr>
         <tr>
             <td>Total TVA</td>
-            <td>10€</td>
+            <td><?php echo htmlentities($TotalTVA) ?? '' ?></td>
         </tr>
         <tr>
             <td><b>Total TTC</b></td>
-            <td><b>34.38€</b></td>
+            <td><b><?php echo htmlentities($TotalHT + $TotalTVA) ?? '' ?></b></td>
         </tr>
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'à <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
