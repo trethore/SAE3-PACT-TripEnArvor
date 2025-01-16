@@ -2847,7 +2847,7 @@ h3 {
 }
 
 .consulter-offre-front > div > a:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .consulter-offre-front .etoile {
