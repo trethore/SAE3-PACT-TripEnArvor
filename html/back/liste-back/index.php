@@ -304,10 +304,6 @@ try {
                         ---------------------------------------->
                         <?php
                             $avisNonLus = getLu($row['id_offre']);
-                            echo "<pre>";
-                            print_r($avisNonLus);
-                            echo "</pre>";
-
                             $nonLusCount = 0;
 
                             forEach($avisNonLus as $avis) {
@@ -321,6 +317,15 @@ try {
                         <!-------------------------------------- 
                         Affichage des avis non répondues
                         ---------------------------------------->
+                        <?php
+                            $avisSansReponseCount = 0;
+
+                            foreach ($avis as $index => $a) {
+                                if (empty($reponse[$index]['texte'])) {
+                                    $avisSansReponseCount++;
+                                }
+                            }
+                        ?>
                         <p>Avis non répondus : <span><b>1</b></span></p>
 
                         <!-------------------------------------- 
