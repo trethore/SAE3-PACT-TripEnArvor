@@ -369,6 +369,32 @@ CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
+
+
+CREATE TABLE _mandat_prelevement_sepa (
+    rum                     VARCHAR(255) NOT NULL,
+    nom_creancier           VARCHAR(255) NOT NULL,
+    iban_creancier          VARCHAR(255) NOT NULL,
+    bic_creancier           VARCHAR(255) NOT NULL,
+    id_crancier             VARCHAR(255) NOT NULL,
+    nom_debiteur            VARCHAR(255) NOT NULL,
+    iban_debiteur           VARCHAR(255) NOT NULL,
+    bic_debiteur            VARCHAR(255) NOT NULL,
+    nature_prelevement      VARCHAR(255) NOT NULL,
+    periodicite             VARCHAR(255) NOT NULL,
+    signature_mandat        VARCHAR(255) NOT NULL,
+    date_signature          DATE NOT NULL,
+    date_premiere_echeance  DATE NOT NULL,
+    id_compte_pro_prive     INTEGER NOT NULL,
+    CONSTRAINT _mandat_prelevement_sepa_pk
+        PRIMARY KEY (rum),
+    CONSTRAINT _mandat_prelevement_sepa_fk_compte_pro_prive
+        FOREIGN KEY (id_compte_pro_prive)
+        REFERENCES _compte_professionnel_prive(id_compte)
+);
+
+
+
 /* ##################################################################### */
 /*                                FACTURES                               */
 /* ##################################################################### */

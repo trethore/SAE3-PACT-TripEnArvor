@@ -875,4 +875,22 @@
             die();
         }
     }
+
+function getNbSemaine($date, $today) {
+    // Convertir la date de la base de données en objet DateTime
+    $dateFromDbObj = new DateTime($date);
+
+    // Calculer la différence entre les deux dates
+    $interval = $dateFromDbObj->diff($today);
+
+    // Obtenir la différence en jours
+    $daysDifference = $interval->days;
+
+    // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
+    $weeksDifference = floor($daysDifference / 7);
+    return $weeksDifference;
+}
+function getOffreTTC($prix, $nb, $TVA) {
+    return ($prix*$nb)*(1+$TVA/100);
+}
 ?>

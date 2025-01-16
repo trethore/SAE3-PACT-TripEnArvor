@@ -409,8 +409,8 @@ try {
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
-                                    <option value="standard"> Offre Standard </option>
-                                    <option value="premium"> Offre Premium </option>
+                                    <option value="standard"  <?php if($offre_bonne_cat['abonnement'] === "standard"){ echo "selected";} ?>> Offre Standard </option>
+                                    <option value="premium"  <?php if($offre_bonne_cat['abonnement'] === "premium"){ echo "selected";} ?>> Offre Premium </option>
                                 </select>
                             </div>
                                     
@@ -420,8 +420,8 @@ try {
                     <tr>
                         <div id="options">
                             <td><label>Options</label></td>
-                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"/><label for="enRelief">En relief</label>
-                            <input type="radio" id="alaune" name="optionPayante" value="alaune"/><label for="alaune">A la une</label></td>
+                            <td><input type="radio" id="enRelief" name="optionPayante" value="enRelief"  <?php if(isOffreEnRelief($id_offre)){echo "checked";} ?>/><label for="enRelief">En relief</label>
+                            <input type="radio" id="alaune" name="optionPayante" value="alaune" <?php if(isOffreALaUne($id_offre)){echo "checked";} ?>/><label for="alaune">A la une</label></td>
                         </div>
                     </tr>
                 </table>
@@ -1038,18 +1038,20 @@ try {
                     }
 
                 }
-
+                
                 //modification des options
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
+                    $date_souscription = date('Y-m-d H:i:s');
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
                         $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ? AND nom_option = ?;';
                         $stmt_suppression = $dbh->prepare($requete_suppression_option);
                         $stmt_suppression->execute([$id_offre, $optionP]);
+                        print("option supprimée");
 
                     }
                     $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                     $stmt_option = $dbh->prepare($requete_option);
-                    $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
+                    $stmt_option -> execute([$id_offre, $optionP, $id_souscription]);
                     print("option payante mise dans la bdd");
                 } 
                 
