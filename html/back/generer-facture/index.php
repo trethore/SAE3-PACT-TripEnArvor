@@ -26,6 +26,7 @@ $DernierJour = date("t-m-Y");
 // Conversion de la chaîne en objet DateTime pour faciliter les calculs
 $dernierJourDate = new DateTime($DernierJour);
 $echeanceDate = $dernierJourDate->modify('+15 days');
+$echeanceDate = $dernierJourDate->format('d-m-Y');
 
 echo $echeanceDate;
 
