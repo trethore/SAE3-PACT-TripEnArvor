@@ -318,13 +318,13 @@ try {
                         Affichage des avis non répondues
                         ---------------------------------------->
                         <?php
-                            $avisSansReponseCount = 0;
+                            /*$avisSansReponseCount = 0;
 
                             foreach ($avis as $index => $a) {
                                 if (empty($reponse[$index]['texte'])) {
                                     $avisSansReponseCount++;
                                 }
-                            }
+                            }*/
                         ?>
                         <p>Avis non répondus : <span><b>1</b></span></p>
 
