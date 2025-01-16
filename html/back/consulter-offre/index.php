@@ -247,25 +247,25 @@ try {
         </script>
     </header>
 
-    <div class="display-ligne-espace">
-        <div>
-            <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
-                <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                    <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
-                </form>
-            <?php } else if ($dateMHL > $dateMEL) { ?>
-                <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                    <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
-                </form>
-            <?php } ?>
-        </div>
-
-        <div class="bouton-modif-mise">
-            <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
-        </div>
-    </div>  
-
     <main id="body">
+
+        <div class="display-ligne-espace">
+            <div>
+                <?php if (($dateMEL > $dateMHL) || ($dateMHL == null)) { ?>
+                    <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
+                        <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
+                    </form>
+                <?php } else if ($dateMHL > $dateMEL) { ?>
+                    <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
+                        <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
+                    </form>
+                <?php } ?>
+            </div>
+
+            <div class="bouton-modif-mise">
+                <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+            </div>
+        </div>  
 
         <section class="fond-blocs bordure pur">
             <!-- AFFICHAGE DES TITRES ET DES IMAGES DES OFFRES -->
