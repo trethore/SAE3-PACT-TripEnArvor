@@ -227,7 +227,6 @@ $reqOption = "SELECT f.id_offre, os.nom_option, d.date, ho.prix_ht_hebdo_abonnem
                     $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    print_r($factOptions);
                     // Vérifiez si $factOptions est un tableau avant de le parcourir
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
