@@ -95,7 +95,7 @@ if (!isset($_SESSION)) {
     </header>
 
     <!-- Conteneur principal -->
-    <main class="les_carousels">
+    <main>
         <h2>Offres à la une</h2>
 
         <?php
@@ -121,7 +121,7 @@ if (!isset($_SESSION)) {
         ?>
 
         <section>
-            <div class="carousel">
+            <div class="carousel les_carousels">
                 <div class="carousel-slides">
                     <?php
                     foreach ($ids as $offre) {
