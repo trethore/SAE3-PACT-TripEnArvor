@@ -846,9 +846,11 @@ try {
                     if ((isset($_POST['cp']))||(isset($_POST['num_et_nom_de_voie']))) {
                         //s'il n'y avait pas d'adresse a la base, on créer une nouvelle id_adresse
                         if ($adresse['id_adresse'] == null) {
-                            $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?);";
+                            $requete_adresse = "INSERT INTO sae._adresse(num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) VALUES (?,?,?,?,?) returning id_adresse;";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
                             $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays]);
+                            //recuperation de id_adresse
+                            $id_adresse = $stmt_adresse->fetch(PDO::FETCH_ASSOC)['id_adresse'];
                         }else {
                             $requete_adresse = "UPDATE sae._adresse 
                                         set num_et_nom_de_voie = ?, 
@@ -859,13 +861,15 @@ try {
                                         where id_adresse = (select id_adresse from sae._offre where id_offre = ?);";
                             $stmt_adresse = $dbh->prepare($requete_adresse);
                             $stmt_adresse->execute([$num_et_nom_de_voie, $comp_adresse, $cp, $ville, $pays, $id_offre]);
+
+                            $id_adresse = $offre_bonne_cat['id_adresse'];
                         }
                         
                             
-                            //recuperation de id_adresse
-                            $id_adresse = $stmt->fetch(PDO::FETCH_ASSOC)['id_adresse'];
+                            
 
                             print("changement de adresse");
+                            print(" id : " . $id_adresse);
                         
                     }
                     if ($date_evenement != null) {
