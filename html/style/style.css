@@ -3239,7 +3239,7 @@ header>div>a:hover {
 }
 
 .consulter-offre-front .navigation>button:hover {
-    border-color: var(--violet-secondaire);
+    background-color: var(--violet-secondaire);
 }
 
 
