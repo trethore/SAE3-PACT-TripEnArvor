@@ -49,7 +49,7 @@ $reqCompte = "SELECT * from sae.compte_professionnel_prive cp
                 join sae._adresse a on a.id_adresse = cp.id_adresse
                 where id_compte =  :id_compte;";
 
-$reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance, d.id_date from sae._facture 
+$reqFacture = "SELECT numero_facture, d.date as date_emission, da.date as date_echeance, d.id_date as id_date_emission, da.id_date as id_date_echeance from sae._facture 
                 join sae._date d on d.id_date = id_date_emission
                 join sae._date da on da.id_date = id_date_echeance
                 where numero_facture = :nu_facture;";
@@ -89,7 +89,13 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
         // Update de la date d'émission
         $stmt = $conn->prepare($reqUpdateDate);
         $stmt->bindParam(':date_emission_maj', $emissionDateFormatted, PDO::PARAM_STR);
-        $stmt->bindParam(':id_date_emission', $detailFacture["id_date"], PDO::PARAM_INT);
+        $stmt->bindParam(':id_date_emission', $detailFacture["id_date_emission"], PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Update de la date d'émission
+        $stmt = $conn->prepare($reqUpdateDate);
+        $stmt->bindParam(':date_emission_maj', $echeanceDateFormatted, PDO::PARAM_STR);
+        $stmt->bindParam(':id_date_emission', $detailFacture["id_date_echeance"], PDO::PARAM_INT);
         $stmt->execute();
 
         // Préparation et exécution de la requête
@@ -101,8 +107,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     <div class="infoFacture">
         <img src="/images/universel/logo/Logo_couleurs.png" alt="logo de PACT">
         <article>
-            <h3>Numéro de facture</h3>
-            <h3>#<?php echo htmlentities($detailFacture["numero_facture"]); ?></h3>
+            <h3>Numéro de facture #<?php echo htmlentities($detailFacture["numero_facture"]); ?></h3>
             <p><?php 
             $date_emission_DMY = new DateTime($detailFacture["date_emission"]);
             $date_emission_DMY = $date_emission_DMY->format('d-m-Y');
@@ -234,7 +239,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date_echeance"]) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date"]) ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>
