@@ -2771,7 +2771,7 @@ h3 {
 .consulter-offre-front h1 {
     font-size: 64px;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     color: var(--violet-principal);
 }
 
@@ -2784,6 +2784,10 @@ h3 {
     font-weight: bold;
     color: var(--violet-principal);
     margin: 5px 0;
+}
+
+.consulter-offre-front header {
+    text-decoration: none;
 }
 
 .consulter-offre-front .fond-blocs {
@@ -2899,7 +2903,8 @@ header>div>a:hover {
     padding-left: 10px;
 }
 
-.consulter-offre-back .liste-caracteristique > li:last-child {
+.consulter-offre-back .liste-caracteristique li:last-child {
+    color: red;
     margin-bottom: 0;
 }
 
