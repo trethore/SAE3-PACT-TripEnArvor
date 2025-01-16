@@ -1199,6 +1199,8 @@ h3 {
 .factures hr {
     color: var(--orange-principale);
     background-color: var(--orange-principale);
+    border: none;
+    height: 1px;
 }
 
 /**************************************************************************************
