@@ -173,6 +173,10 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                     $stmt = $conn->prepare($reqFactureAbonnement);
                     $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID du compte
                     $stmt->execute();
+                    if (!$stmt->execute()) {
+                        echo "Erreur SQL : ";
+                        print_r($stmt->errorInfo());
+                    }
                     $factAbos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factAbos est un tableau avant de le parcourir
                     if ($factAbos && is_array($factAbos)) {
@@ -220,7 +224,7 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                 </tr>
             </thead>
             <tbody>
-                <?php
+                <?php try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqOption);
                     $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
@@ -248,7 +252,10 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                                 $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
                             ?>
                         </tr>
-                    <?php }}?>
+                    <?php }}
+                } catch (PDOException $e) {
+                    echo "Erreur : " . $e->getMessage();
+                } ?>
             </tbody>
         </table>
     </article>
