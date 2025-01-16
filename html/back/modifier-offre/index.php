@@ -753,11 +753,7 @@ try {
             }else {
                 $cp = null;
             }
-            if(isset($_POST['option'])){
-                $option = $_POST['option'];
-            }else {
-                $option = null;
-            }
+            
             if(isset($_POST['lien'])){
                 $lien = $_POST['lien'];
             }else {
@@ -1040,6 +1036,7 @@ try {
                 }
                 
                 //modification des options
+                print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
                     $date_souscription = date('Y-m-d H:i:s');
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
