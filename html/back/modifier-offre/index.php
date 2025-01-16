@@ -1074,20 +1074,7 @@ try {
                 
                     
                 } 
-                
-                //upddate tarifs
-
-                if(($isIdProPrivee)&&($categorie !== "restaurant")){
-                    foreach ($tabtarifs as $key => $value) {
-                        $requete_tarif = "UPDATE sae._tarif_publique
-                                        set nom_tarif = ?,
-                                        prix = ?,
-                                        where id_offre = ?";
-                         $stmt_tarif = $dbh->prepare($requete_tarif);    
-                         $stmt_tarif -> execute([$key, $value, $id_offre]);
-
-                    }
-                }
+            
 
 
                 //insertion dans tarif si c'est pas un restaurant
