@@ -5218,7 +5218,6 @@ input[type="tel"] {
 
     .consulter-offre-front .display-ligne-espace {
         flex-wrap: nowrap;
-        order: 9;
     }
 
     .consulter-offre-front h1 {
@@ -5236,7 +5235,7 @@ input[type="tel"] {
     .consulter-offre-front .display-ligne {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         margin: 5px 0;
     }
@@ -5247,7 +5246,9 @@ input[type="tel"] {
 
     .consulter-offre-front .image-avis {
         width: 80%;
-        margin-right: 0;
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-bottom: 5%;
     }
 
     .consulter-offre-front .navigation>button {
@@ -5269,6 +5270,16 @@ input[type="tel"] {
         margin: 1%;
         margin-bottom: 0;
         margin-top: 5%;
+    }
+
+    .consulter-offre-front .reponse > div > img {
+        width: 6%;
+        height: 5%;
+        margin: 2%;
+    }
+
+    .consulter-offre-front .reponse > p {
+        margin: 2% 0 2% 1%;
     }
 }
 
