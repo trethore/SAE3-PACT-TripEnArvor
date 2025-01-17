@@ -57,7 +57,7 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
-    cle_api         CHAR(30),
+    cle_api         CHAR(64),
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
 
