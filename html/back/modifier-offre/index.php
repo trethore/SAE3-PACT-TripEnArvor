@@ -917,7 +917,7 @@ try {
                             break;
 
                         case 'parcattraction' :
-                            if(isset( $_FILES['plan'])){
+                            if((isset( $_FILES['plan']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['plan'];
                                 $file_extension = get_file_extension($file['type']);
                                 $time = 'p' . strval(time());
@@ -936,7 +936,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_plan = $offre_bonne_cat(['plan']);
+                                $fichier_plan = $offre_bonne_cat['plan'];
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -999,7 +999,7 @@ try {
                         
                         case 'restauration':
                             print($_FILES);
-                            if(isset( $_FILES['carte'])&& $_FILES['carte']['error'] === UPLOAD_ERR_OK){
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['carte'];
                                 $file_extension = get_file_extension($file['carte']);
                                 $time = 'p' . strval(time());
