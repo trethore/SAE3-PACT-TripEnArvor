@@ -413,7 +413,7 @@ try {
                    
                     
                         <td> 
-                            <label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
+                            <label id ="labeltype" for="selectype">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -423,7 +423,7 @@ try {
                             </div>
                                     
                         </td>
-                        <td>(impossible de modifier le type)</td>
+                        <td><label id="labeltypeImpossible" for="selectype" >(impossible de modifier le type) </label></td>
                     </tr> 
                     <tr>
                         <div id="options">
@@ -1166,12 +1166,21 @@ try {
 
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-            console.log(isIdProPublique);
+            const abonnement = "<?php echo json_encode($abonnement); ?>"
 
-            if(isIdProPublique){
+            if(isIdProPublique == true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
+                 document.getElementById("labeltypeImpossible").style.display = 'none';
+                 if(abonnement === "standard"){
+                    document.getElementById("labeloptions").style.display = 'none';
+                    document.getElementById("labelEnRelief").style.display = 'none';
+                    document.getElementById("labelALaUne").style.display = 'none';
+                    document.getElementById("aLaUne").style.display = 'none';
+                    document.getElementById("enRelief").style.display = 'none';
+                 }
             }
+            
 
             // const liste_tags = "<?php // echo json_encode($liste_tags) ?>";
             // const liste_tags_restauration = "<?php //echo json_encode($liste_tags_restauration) ?>";
