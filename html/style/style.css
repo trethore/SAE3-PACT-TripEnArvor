@@ -611,13 +611,13 @@ h3 {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--orange-principale);
 }
 
 .liste-back .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--orange-principale);
     border-radius: 15px;
@@ -634,7 +634,7 @@ h3 {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
@@ -897,12 +897,16 @@ h3 {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-back .lesOffres article>a {
+.liste-back .offre > a {
     border: 3px solid var(--orange-principale);
+}
+
+.liste-back .hors-ligne-offre > a {
+    border: 3px solid var(--gris-etoile);
 }
 
 .liste-back .lieu-offre {
@@ -1046,7 +1050,6 @@ h3 {
 }
 
 .liste-back .lesOffres .prix {
-    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
@@ -1063,6 +1066,14 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.liste-back .lesOffres .offre .prix {
+    background: var(--orange-principale);
+}
+
+.liste-back .lesOffres .hors-ligne-offre .prix {
+    background: var(--gris-etoile);
 }
 
 .liste-back .lesOffres .prix span {
@@ -1108,7 +1119,7 @@ h3 {
 }
 
 .liste-back section+a:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
@@ -4057,6 +4068,10 @@ input[type="tel"] {
     font-weight: 500;
     font-size: 20pt;
     color: var(--noir);
+}
+
+.lisre-front > footer {
+    margin-top: 30px;
 }
 
 /***************************
