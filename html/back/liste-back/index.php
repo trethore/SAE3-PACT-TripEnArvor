@@ -221,7 +221,7 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article class="offre">
+            <article class="<?php if (getDateOffreHorsLigne($tab['id_offre']) > getDateOffreEnLigne($tab['id_offre'])) { echo 'hors-ligne-offre'; } else { echo 'offre'; } ?>">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
                     <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
@@ -523,7 +523,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -532,7 +532,7 @@ try {
                             const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
-                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {

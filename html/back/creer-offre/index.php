@@ -533,8 +533,8 @@ try {
                 }
 
             }
-            print_r($tabtarifs);
-            print_r($_POST);
+            // print_r($tabtarifs);
+            // print_r($_POST);
 
             
             try {

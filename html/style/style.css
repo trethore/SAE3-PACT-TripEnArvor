@@ -611,13 +611,13 @@ h3 {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--orange-principale);
 }
 
 .liste-back .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--orange-principale);
     border-radius: 15px;
@@ -634,7 +634,7 @@ h3 {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
@@ -897,12 +897,16 @@ h3 {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-back .lesOffres article>a {
+.liste-back .offre > a {
     border: 3px solid var(--orange-principale);
+}
+
+.liste-back .hors-ligne-offre > a {
+    border: 3px solid var(--gris-etoile);
 }
 
 .liste-back .lieu-offre {
@@ -1034,8 +1038,18 @@ h3 {
     padding-top: 4px;
 }
 
+.liste-back .date_publication_offre {
+    position: absolute;
+    left: 1.4em;
+    bottom: 0;
+    font-size: 13px;
+}
+
+.liste-back .date_publication_offre span {
+    font-size: 13px;
+}
+
 .liste-back .lesOffres .prix {
-    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
@@ -1052,6 +1066,14 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.liste-back .lesOffres .offre .prix {
+    background: var(--orange-principale);
+}
+
+.liste-back .lesOffres .hors-ligne-offre .prix {
+    background: var(--gris-etoile);
 }
 
 .liste-back .lesOffres .prix span {
@@ -1097,7 +1119,7 @@ h3 {
 }
 
 .liste-back section+a:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
@@ -5019,6 +5041,7 @@ input[type="tel"] {
     .liste-front h1 {
         background: var(--blanc);
         font-size: 40pt;
+        padding-bottom: 3%;
     }
 
     .liste-front .filtre-tri {
@@ -5096,7 +5119,7 @@ input[type="tel"] {
     }
 
     .front.accueil .carousel {
-        width: 70vw;
+        width: 90vw;
         height: 55vh;
     }
 
