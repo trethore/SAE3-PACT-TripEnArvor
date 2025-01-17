@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
 // Vérification de l'existence de numero_facture
 if (isset($_GET['numero_facture'])) {
-    $numero_facture = $_GET['numero_facture'];
+    $num_facture = $_GET['numero_facture'];
 } else {
     die();
 }
@@ -31,6 +31,8 @@ if (isset($id_compte)) {
 $TVA = 20; // TVA en %
 $TotalHT = 0; // Somme final hors taxe
 $TotalTVA = 0; // Somme finale TVA
+$num_facture = $_GET["numero_facture"];
+$today = new DateTime(); // Obtenir la date d'aujourd'hui
 
 // Obtenir la date du dernier jour du mois et la convertir en chaîne de caractères
 $emissionDate = new DateTime();
@@ -63,6 +65,12 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                         join sae._offre_dates_mise_en_ligne oml on o.id_offre = oml.id_offre
                         join sae._date d on oml.id_date = d.id_date
                         where f.numero_facture = :nu_facture;";
+
+$reqOption = "SELECT f.id_offre, os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix from sae._offre_souscrit_option os
+                join sae._date d on d.id_date = os.id_date_souscription
+                join sae._historique_prix_options ho on ho.nom_option = os.nom_option
+                join sae._facture f on f.id_offre = os.id_offre
+                where f.numero_facture = :nu_facture;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,7 +90,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Préparation et exécution de la requête du premier select afin d'avoir id_date_emission pour pouvoir l'update juste après
         $stmt = $conn->prepare($reqFacture);
-        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de la facture
         $stmt->execute();
         $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -100,7 +108,7 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
 
         // Préparation et exécution de la requête
         $stmt = $conn->prepare($reqFacture);
-        $stmt->bindParam(':nu_facture', $_GET["numero_facture"], PDO::PARAM_INT); // Lié à l'ID de la facture
+        $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de la facture
         $stmt->execute();
         $detailFacture = $stmt->fetch(PDO::FETCH_ASSOC);
     ?>
@@ -161,36 +169,37 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 </tr>
             </thead>
             <tbody>
-                
-                <?php 
-                try {
+                <?php try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqFactureAbonnement);
-                    $stmt->bindParam(':nu_facture', $numero_facture, PDO::PARAM_INT); // Lié à l'ID du compte
+                    $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID du compte
                     $stmt->execute();
-                    $factAbos = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $factAbos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factAbos est un tableau avant de le parcourir
                     if ($factAbos && is_array($factAbos)) {
                         foreach($factAbos as $factAbo) { ?>
                         <tr>
                             <!-- Titre de l'offre -->
-                            <td><?php echo htmlentities($factAbo["titre"] ?? '');?></td>
+                            <td><?php echo htmlentities($factAbo["titre"]);?></td>
                             <!-- Type de l'abonnement -->
-                            <td><?php echo htmlentities($factAbo["abonnement"] ?? '');?></td>
-                            <!-- Nb de semaine -->
+                            <td><?php echo htmlentities($factAbo["abonnement"]);?></td>
+                            <!-- Nb de jour -->
                             <td>
-                            <?php echo htmlentities(getNbSemaine($factAbo["date"], $today));?>
+                            <?php 
+                            $nb_jour = getNbJours($factAbo["date_mise_en_ligne"], $today);
+                            echo htmlentities($nb_jour);
+                            ?>
                             </td>
                             <!-- TVA en % -->
                             <td><?php echo htmlentities($TVA) ?>%</td>
                             <!-- Prix HT -->
-                            <td><?php echo htmlentities($factAbo["prix_ht_jour_abonnement"] ?? '');?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros($factAbo["prix_ht_jour_abonnement"]));?></td>
                             <!-- Prix total TTC -->
-                            <td><?php echo htmlentities(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA));?></td>
+                            <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factAbo["prix_ht_jour_abonnement"],$nb_jour, $TVA)));?></td>
 
                             <?php // Calcul pour le total final
-                                $TotalHT += $factAbo["prix_ht_jour_abonnement"];
-                                $TotalTVA += (getOffreTTC($factAbo["prix_ht_jour_abonnement"],$factAbo["nbSemaine"], $TVA) - $factAbo["prix_ht_jour_abonnement"]);
+                                $TotalHT += $factAbo["prix_ht_jour_abonnement"]*$nb_jour;
+                                $TotalTVA += $factAbo["prix_ht_jour_abonnement"]*$nb_jour*$TVA/100;
                             ?>
                         </tr>
                     <?php }}
@@ -212,13 +221,38 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>A la Une</td>
-                    <td>1</td>
-                    <td>20%</td>
-                    <td>12.00€</td>
-                    <td>18.00€</td>
-                </tr>
+                <?php try {
+                    // Préparation et exécution de la requête
+                    $stmt = $conn->prepare($reqOption);
+                    $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de l'offre
+                    $stmt->execute();
+                    $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    // Vérifiez si $factOptions est un tableau avant de le parcourir
+                    if ($factOptions && is_array($factOptions)) {
+                        foreach($factOptions as $factOption) { ?>
+                        <tr>
+                            <!-- Titre de l'option -->
+                            <td><?php echo htmlentities($factOption["nom_option"]);?></td>
+                            <!-- Nb de semaine  -->
+                            <td><?php 
+                            $nb_semaine = getNbSemaine($factOption["date"], $today);
+                            echo htmlentities($nb_semaine);
+                            ?></td>
+                            <!-- TVA en % -->
+                            <td><?php echo htmlentities($TVA);?>%</td>
+                            <!-- Prix HT hebdo -->
+                            <td><?php echo htmlentities(convertCentimesToEuros($factOption["prix"]));?></td>
+                            <!-- Prix TTC total de l'option -->
+                            <td><?php echo htmlentities(convertCentimesToEuros(getOffreTTC($factOption["prix"],$nb_semaine, $TVA)))?></td>
+                            <?php // Calcul pour le total final
+                                $TotalHT += $factOption["prix"]*$nb_semaine;
+                                $TotalTVA += $factOption["prix"]*$nb_semaine*$TVA/100;
+                            ?>
+                        </tr>
+                    <?php }}
+                } catch (PDOException $e) {
+                    echo "Erreur : " . $e->getMessage();
+                } ?>
             </tbody>
         </table>
     </article>
@@ -226,20 +260,24 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
     <table class="totals">
         <tr>
             <td>Total HT</td>
-            <td><?php echo htmlentities($TotalHT) ?? '' ?></td>
+            <td><?php echo htmlentities(convertCentimesToEuros($TotalHT)) ?? '' ?></td>
         </tr>
         <tr>
             <td>Total TVA</td>
-            <td><?php echo htmlentities($TotalTVA) ?? '' ?></td>
+            <td><?php echo htmlentities(convertCentimesToEuros($TotalTVA)) ?? '' ?></td>
         </tr>
         <tr>
             <td><b>Total TTC</b></td>
-            <td><b><?php echo htmlentities($TotalHT + $TotalTVA) ?? '' ?></b></td>
+            <td><b><?php echo htmlentities(convertCentimesToEuros($TotalHT + $TotalTVA)) ?? '' ?></b></td>
         </tr>
     </table>
     <article class="payment-terms">
         <h3>Conditions et modalités de paiement</h3>
-        <p>Le paiement est à régler jusqu'au <?php echo htmlentities($detailFacture["date"]) ?></p>
+        <p>Le paiement est à régler jusqu'au <?php 
+        $date_echeance_DMY = new DateTime($detailFacture["date_echeance"]);
+        $date_echeance_DMY = $date_echeance_DMY->format('d-m-Y');
+        echo htmlentities($date_echeance_DMY);
+        ?></p>
         <p>
             Banque PACT<br>
             Nom du compte: Trip en Arvor<br>

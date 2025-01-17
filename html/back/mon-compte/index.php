@@ -80,7 +80,6 @@ if ($typeCompte === 'proPrive') {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back compte-back">
-<pre>
 <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
@@ -219,7 +218,7 @@ if ($typeCompte === 'proPrive') {
                 </tr>
                 <tr>
                     <td>Identifiant</td>
-                    <td><?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?></td>
+                    <td><?php echo htmlentities($informationsBancaires['id_crancier'] ?? ''); ?></td>
                 </tr>
                 <tr>
                     <td>IBAN</td>

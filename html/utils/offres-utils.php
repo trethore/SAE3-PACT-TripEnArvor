@@ -896,7 +896,30 @@
         }
     }
 
-function getNbSemaine($date, $today) {
+    function getNbSemaine($date, $today) {
+        // Convertir la date de la base de données en objet DateTime
+        $dateFromDbObj = new DateTime($date);
+    
+        // Calculer la différence entre les deux dates
+        $interval = $dateFromDbObj->diff($today);
+    
+        // Obtenir la différence en jours
+        $daysDifference = $interval->days;
+    
+        // Convertir la différence en semaines et arrondir vers le haut
+        $weeksDifference = ceil($daysDifference / 7);
+        
+        // Limiter le nombre de semaines à un maximum de 4
+        $weeksDifference = min($weeksDifference, 4);
+    
+        if($weeksDifference == 0) {
+            $weeksDifference = 1;
+        }
+
+        return $weeksDifference;
+    }    
+
+function getNbJours($date, $today) {
     // Convertir la date de la base de données en objet DateTime
     $dateFromDbObj = new DateTime($date);
 
@@ -906,10 +929,24 @@ function getNbSemaine($date, $today) {
     // Obtenir la différence en jours
     $daysDifference = $interval->days;
 
-    // Convertir la différence en semaines (en supposant que 1 semaine = 7 jours)
-    $weeksDifference = floor($daysDifference / 7);
-    return $weeksDifference;
+    if($daysDifference == 0) {
+        $daysDifference = 1;
+    }
+
+    return $daysDifference;
 }
+
+function convertCentimesToEuros($centimes) {
+    // Convertir les centimes en euros
+    $euros = $centimes / 100;
+
+    // Formater le résultat avec 2 décimales et ajouter le symbole €
+    $formattedEuros = number_format($euros, 2, '.', '') . '€';
+
+    return $formattedEuros;
+}
+
+
 function getOffreTTC($prix, $nb, $TVA) {
     return ($prix*$nb)*(1+$TVA/100);
 }
@@ -917,13 +954,6 @@ function getOffreTTC($prix, $nb, $TVA) {
 function dateExiste($pdo, $date) {
     $stmt = $pdo->prepare("SELECT 1 FROM sae._date WHERE date = :date");
     $stmt->bindParam(':date', $date, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchColumn() > 0;
-}
-
-function factureExiste($pdo, $numeroFacture) {
-    $stmt = $pdo->prepare("SELECT 1 FROM sae._facture WHERE numero_facture = :num");
-    $stmt->bindParam(':num', $numeroFacture, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }

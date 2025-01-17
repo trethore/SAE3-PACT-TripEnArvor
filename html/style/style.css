@@ -1034,6 +1034,17 @@ h3 {
     padding-top: 4px;
 }
 
+.liste-back .date_publication_offre {
+    position: absolute;
+    left: 1.4em;
+    bottom: 0;
+    font-size: 13px;
+}
+
+.liste-back .date_publication_offre span {
+    font-size: 13px;
+}
+
 .liste-back .lesOffres .prix {
     background: var(--orange-principale);
     color: var(--blanc);
@@ -1222,7 +1233,7 @@ h3 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 45pt;
+    font-size: 35pt;
     border: 2px var(--violet-principal) solid;
 }
 
@@ -1259,8 +1270,8 @@ h3 {
 **********************************/
 
 .carousel {
-    width: 90vw;
-    height: 90vh;
+    height: 55vh;
+    width: 70vw;
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
@@ -5075,7 +5086,8 @@ input[type="tel"] {
     }
 
     .carousel {
-        height: 70vh;
+        height: 55vh;
+        width: 70vw;
     }
 
     .carousel button:hover {
