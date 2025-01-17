@@ -359,7 +359,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" value="<?php echo htmlentities($offre_bonne_cat['game_prix']) ?>" /></td>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
@@ -917,7 +917,7 @@ try {
                             break;
 
                         case 'parcattraction' :
-                            if(isset( $_FILES['plan'])){
+                            if((isset( $_FILES['plan']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['plan'];
                                 $file_extension = get_file_extension($file['type']);
                                 $time = 'p' . strval(time());
@@ -936,7 +936,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_plan = $offre_bonne_cat(['plan']);
+                                $fichier_plan = $offre_bonne_cat['plan'];
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -999,7 +999,7 @@ try {
                         
                         case 'restauration':
                             print($_FILES);
-                            if(isset( $_FILES['carte'])&& $_FILES['carte']['error'] === UPLOAD_ERR_OK){
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['carte'];
                                 $file_extension = get_file_extension($file['carte']);
                                 $time = 'p' . strval(time());
