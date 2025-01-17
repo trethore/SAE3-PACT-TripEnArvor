@@ -184,7 +184,7 @@ try {
     die();
 }
 
-print_r($tags);
+// print_r($tags);
 
     // Extraire les noms des tags
     $tag_names = array_map(function($tag) {
@@ -200,7 +200,7 @@ print_r($tags);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
-    print_r($offre_bonne_cat);
+    // print_r($offre_bonne_cat);
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
@@ -805,7 +805,7 @@ try {
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
             
-             print_r($_POST);
+             // print_r($_POST);
              print($photo1);
 
              print($categorieBase);
