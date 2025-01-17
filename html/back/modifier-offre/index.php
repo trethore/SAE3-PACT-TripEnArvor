@@ -359,7 +359,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" value="<?php echo htmlentities($offre_bonne_cat['game_prix']) ?>" /></td>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
