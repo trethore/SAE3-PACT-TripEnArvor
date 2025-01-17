@@ -359,7 +359,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" value="<?php if(getRestaurant($offre_bonne_cat['id_offre']["gamme_prix"])){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre']["gamme_prix"]));} ?>" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" value="<?php if(getRestaurant($offre_bonne_cat['id_offre']["gamme_prix"])){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre']["gamme_prix"]));} ?>" /></td><?php print(getRestaurant($offre_bonne_cat['id_offre']["gamme_prix"])); ?>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
@@ -391,7 +391,7 @@ try {
                         if (isset($adresse['code_postal'])) {
                             echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
-                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td> 
                     </tr>
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
