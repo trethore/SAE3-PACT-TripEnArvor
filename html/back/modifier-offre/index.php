@@ -1155,10 +1155,7 @@ try {
 
         }?>
         <script> 
-                
-            liste_tags.forEach(element => {
-                
-            });
+            
                         // if(!liste_tags.include()){
                         //     if($categorie != "restaurant")
                         //     foreach ($liste_tags as $tag)
