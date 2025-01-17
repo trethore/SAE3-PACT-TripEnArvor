@@ -1248,6 +1248,7 @@ h3 {
 }
 
 .accueil h1:hover {
+    color: var(--blanc);
     background-color: var(--violet-secondaire);
 }
 
