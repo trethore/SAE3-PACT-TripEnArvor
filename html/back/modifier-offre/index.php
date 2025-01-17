@@ -1148,7 +1148,7 @@ try {
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
 
-            if(isIdProPublique == true){
+            if(isIdProPublique === true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
                  document.getElementById("labeltypeImpossible").style.display = 'none';
