@@ -901,7 +901,7 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-back .lesOffres article>a {
+.liste-back .offre > a {
     border: 3px solid var(--orange-principale);
 }
 
