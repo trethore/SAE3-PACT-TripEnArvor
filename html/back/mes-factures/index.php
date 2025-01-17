@@ -118,7 +118,7 @@ try {
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - pour le <?php echo htmlentities($facture["titre"]); ?> - <?php 
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - pour le <?php 
                             $date_formater = new DateTime($facture["date"]);
                             $date_formater = $date_formater->format('d-m-Y');
                             echo htmlentities($date_formater); ?></a>
