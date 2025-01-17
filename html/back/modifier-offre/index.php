@@ -919,7 +919,7 @@ try {
                         case 'parcattraction' :
                             if(isset( $_FILES['plan'])){
                                 $file = $_FILES['plan'];
-                                $file_extension = get_file_extension($file['type']);
+                                $file_extension = get_file_extension($offre_bonne_cat['type']);
                                 $time = 'p' . strval(time());
                                     if ($file_extension !== '') {
                                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'plan_' . $time . $file_extension);
@@ -1001,7 +1001,7 @@ try {
 
                             if(isset( $_FILES['carte'])){
                                 $file = $_FILES['carte'];
-                                $file_extension = get_file_extension($file['carte']);
+                                $file_extension = get_file_extension($offre_bonne_cat['carte']);
                                 $time = 'p' . strval(time());
                                     if ($file_extension !== '') {
                                         move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/images/universel/photos/' . 'carte_' . $time . $file_extension);
