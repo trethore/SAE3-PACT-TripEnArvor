@@ -4070,6 +4070,10 @@ input[type="tel"] {
     color: var(--noir);
 }
 
+.lisre-front > footer {
+    margin-top: 30px;
+}
+
 /***************************
     LES FILTRES ET TRIS
 ****************************/
