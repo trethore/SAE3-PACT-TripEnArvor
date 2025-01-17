@@ -407,7 +407,7 @@ try {
                         </td>
                     </tr>
                     
-                    <?if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                    <? //if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
 
                     <tr>
                    
@@ -433,7 +433,7 @@ try {
                             <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
-                  <?php  } ?>
+                  <?php  //} ?>
                 </table>
 
 
@@ -517,7 +517,7 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
-                        <?php if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                        <?php //if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?> 
                         
                         
                         <div id="tarifs">
@@ -546,7 +546,7 @@ try {
                             } ?>
 
                         </div>
-                        <?php  } ?>
+                        <?php // } ?>
                     <br>
                     
 
@@ -936,7 +936,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_plan = $attraction(['plan']);
+                                $fichier_plan = $offre_bonne_cat(['plan']);
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -1018,7 +1018,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_carte = $restauration(['carte']);
+                                $fichier_carte = $offre_bonne_cat(['carte']);
                             }
                             
                             // Requete SQL pour modifier la vue offre
