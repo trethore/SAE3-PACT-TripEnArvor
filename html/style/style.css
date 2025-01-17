@@ -2198,6 +2198,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    margin-top: 30px;
 }
 
 /* Section supérieure avec le gradient */
@@ -4057,10 +4058,6 @@ input[type="tel"] {
     font-weight: 500;
     font-size: 20pt;
     color: var(--noir);
-}
-
-.liste-front > footer {
-    margin-top: 30px;
 }
 
 /***************************
