@@ -1166,7 +1166,7 @@ try {
 
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-            const abonnement = "<?php echo json_encode($abonnement); ?>"
+            const abonnement = "<?php echo json_encode($abonnement) ?>";
 
             if(isIdProPublique == true){
                  document.getElementById("divtype").style.display = 'none';
