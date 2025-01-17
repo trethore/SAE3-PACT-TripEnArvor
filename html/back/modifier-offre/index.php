@@ -1039,8 +1039,8 @@ try {
                             
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                            $stmt_carte_offre = $dbh->prepare($requete_plan_offre);
-                            $stmt_carte_offre->execute([$id_offre, $fichier_plan]);
+                            $stmt_carte_offre = $dbh->prepare($requete_carte_offre);
+                            $stmt_carte_offre->execute([$id_offre, $fichier_carte]);
                             
                             break;
 
