@@ -961,7 +961,7 @@ try {
                             $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                             $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
                             }
-                            
+
                             break;
 
                         case 'spectacle':
@@ -1142,7 +1142,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/index.php?id=$offre'
+                            window.location.href = '/back/liste-back/'
                         }
                   </script>";
 
