@@ -1187,20 +1187,21 @@ try {
 
             let typecategorie = document.getElementById('categorie');
             let typerestauration = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelnbattractions2"];
+            let typevisite = ["labelduree", "duree", "labelduree2", "labeldate__event", "date_event"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelpresta", "presta","labeldescpresta", "descpresta"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "labelcapacite2", "labelcapacite2"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2"];
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2",  "labelpresta", "presta","labeldescpresta", "descpresta",  "labelcapacite", "labelcapacite2", "labelcapacite2", "labeldate__event", "date_event"];
 
-            obligatoireselontype.forEach(element => {
-                document.getElementById(element).style.display = 'none';
-            });
-
-            document.getElementById("tarifs").style.display = 'none';
 
 
             document.addEventListener('DOMContentLoaded', function() {
+                obligatoireselontype.forEach(element => {
+                document.getElementById(element).style.display = 'none';
+                 });
+
+            document.getElementById("tarifs").style.display = 'none';
+
                 const typeselectionne = categorie.value;
                 // Afficher les champs selon la catégorie sélectionnée
                 switch (typeselectionne) {
