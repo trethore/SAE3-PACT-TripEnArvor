@@ -1187,11 +1187,11 @@ try {
 
             let typecategorie = document.getElementById('categorie');
             let typerestauration = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2", "labeldate__event", "date_event"];
+            let typevisite = ["labelduree", "duree", "labelduree2", "labeldate_event", "date_event"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelpresta", "presta","labeldescpresta", "descpresta"];
             let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "labelcapacite2", "labelcapacite2"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2",  "labelpresta", "presta","labeldescpresta", "descpresta",  "labelcapacite", "labelcapacite2", "labelcapacite2", "labeldate__event", "date_event"];
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2",  "labelpresta", "presta","labeldescpresta", "descpresta",  "labelcapacite", "labelcapacite2", "labelcapacite2", "labeldate_event", "date_event"];
 
 
 
