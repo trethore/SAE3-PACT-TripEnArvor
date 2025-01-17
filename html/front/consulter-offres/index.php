@@ -80,7 +80,6 @@ try {
                     </option>
                 <?php } ?>
             </datalist>
-
         </div>
         <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
@@ -238,7 +237,7 @@ try {
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
-                    if (getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre'])) {
+                    if ((getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre']) || getDateOffreHorsLigne($tab['id_offre']) == null)) {
                     ?>
                         <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
                             <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">

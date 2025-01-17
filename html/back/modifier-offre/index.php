@@ -78,6 +78,7 @@ if (isset($_POST['titre'])) { // les autres svp²
 }
 
 // Vérifier si l'utilisateur est connecté (si la session 'id' existe)
+/*
 if (!isset($_SESSION['id'])) {
     // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
     echo "Pas connecté";
@@ -85,7 +86,7 @@ if (!isset($_SESSION['id'])) {
 } else {
     echo "Connecté  avec id : " . $_SESSION['id'];
 } 
-
+*/
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -185,6 +186,7 @@ try {
 }
 
 
+
     // Extraire les noms des tags
     $tag_names = array_map(function($tag) {
         return $tag['nom_tag'];
@@ -195,9 +197,11 @@ try {
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
+
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
+
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
@@ -208,6 +212,7 @@ try {
     }else {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
+
 
     $date_aujourdhui = new DateTime(); 
     
@@ -796,6 +801,7 @@ try {
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
             
+
 
              try {
 
