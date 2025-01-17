@@ -356,7 +356,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" value="<?php if(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]);} ?>" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" value="<?php if(isset(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"])){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]);} ?>" /></td>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
