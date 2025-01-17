@@ -1024,7 +1024,7 @@ try {
                             
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_restauration
-                                set (titre = ?, 
+                                set titre = ?, 
                                 resume = ?, 
                                 ville = ?, 
                                 gamme_prix = ?, 
