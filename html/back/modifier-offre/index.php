@@ -78,6 +78,7 @@ if (isset($_POST['titre'])) { // les autres svp²
 }
 
 // Vérifier si l'utilisateur est connecté (si la session 'id' existe)
+/*
 if (!isset($_SESSION['id'])) {
     // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
     echo "Pas connecté";
@@ -85,7 +86,7 @@ if (!isset($_SESSION['id'])) {
 } else {
     echo "Connecté  avec id : " . $_SESSION['id'];
 } 
-
+*/
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -196,7 +197,7 @@ try {
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
-    print($categorie);
+    // print($categorie);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
