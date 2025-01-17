@@ -912,6 +912,10 @@
         // Limiter le nombre de semaines à un maximum de 4
         $weeksDifference = min($weeksDifference, 4);
     
+        if($weeksDifference == 0) {
+            $weeksDifference = 1;
+        }
+
         return $weeksDifference;
     }    
 
@@ -924,6 +928,10 @@ function getNbJours($date, $today) {
 
     // Obtenir la différence en jours
     $daysDifference = $interval->days;
+
+    if($daysDifference == 0) {
+        $daysDifference = 1;
+    }
 
     return $daysDifference;
 }
