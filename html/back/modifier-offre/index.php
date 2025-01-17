@@ -1196,76 +1196,96 @@ try {
 
 
             document.addEventListener('DOMContentLoaded', function() {
-                obligatoireselontype.forEach(element => {
-                document.getElementById(element).style.display = 'none';
-                 });
+    obligatoireselontype.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'none';
+        }
+    });
 
-            document.getElementById("tarifs").style.display = 'none';
+    const tarifsElement = document.getElementById("tarifs");
+    if (tarifsElement) {
+        tarifsElement.style.display = 'none';
+    }
 
-                const typeselectionne = categorie.value;
-                // Afficher les champs selon la catégorie sélectionnée
-                switch (typeselectionne) {
-                    case "restauration":
-                        afficheSelonType(typerestauration);
+    const typeselectionne = typecategorie ? typecategorie.value : null;
+    // Afficher les champs selon la catégorie sélectionnée
+    if (typeselectionne) {
+        switch (typeselectionne) {
+            case "restauration":
+                afficheSelonType(typerestauration);
 
-                        if (isIdProPrivee) {
-                            document.getElementById("labelgammedeprix").style.display = 'inline';
-                            document.getElementById("gammedeprix").style.display = 'inline';
-                        }
-                        document.getElementById("tarifs").style.display = 'none';
-                        break;
-
-                    case "activite":
-                        afficheSelonType(typeactivite);
-                        break;
-
-                    case "visite":
-                        afficheSelonType(typevisite);
-                        break;
-
-                    case "spectacle":
-                        afficheSelonType(typespectacle);
-                        break;
-
-                    case "parcattraction":
-                        afficheSelonType(typeparc);
-                        afficherTags(typeparc);
-                        break;
-
-                    default:
-                        console.log("Aucune catégorie sélectionnée.");
+                if (typeof isIdProPrivee !== 'undefined' && isIdProPrivee) {
+                    const labelGammeDePrix = document.getElementById("labelgammedeprix");
+                    const gammeDePrix = document.getElementById("gammedeprix");
+                    if (labelGammeDePrix) labelGammeDePrix.style.display = 'inline';
+                    if (gammeDePrix) gammeDePrix.style.display = 'inline';
                 }
-            });
+                if (tarifsElement) tarifsElement.style.display = 'none';
+                break;
+
+            case "activite":
+                afficheSelonType(typeactivite);
+                break;
+
+            case "visite":
+                afficheSelonType(typevisite);
+                break;
+
+            case "spectacle":
+                afficheSelonType(typespectacle);
+                break;
+
+            case "parcattraction":
+                afficheSelonType(typeparc);
+                afficherTags(typeparc);
+                break;
+
+            default:
+                console.log("Aucune catégorie sélectionnée.");
+        }
+    }
+});
+
+function afficheSelonType(typechoisi) {
+    obligatoireselontype.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'none';
+        }
+    });
+    typechoisi.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'inline';
+        }
+    });
+    if (typechoisi !== "restauration" && typeof isIdProPrivee !== 'undefined' && isIdProPrivee) {
+        const tarifsElement = document.getElementById("tarifs");
+        if (tarifsElement) {
+            tarifsElement.style.display = 'inline';
+        }
+    }
+}
 
 
 
-            function afficheSelonType(typechoisi) {
-                obligatoireselontype.forEach(element => {
-                    document.getElementById(element).style.display = 'none';
-                });
-                typechoisi.forEach(element => {
-                    document.getElementById(element).style.display = 'inline';
-                });
-                if ((typechoisi !== "restauration") && (isIdProPrivee)) {
-                    document.getElementById("tarifs").style.display = 'inline';
-                }
-            }
 
-            function afficherTags(typechoisi){
-                if (typeselectionne === "restauration"){
-                    liste_tags.forEach(tag => {
-                        if(!tags.includes(tag)){
-                            document.getElementById(tag).style.display ='none';
-                        }
-                    });
-                }else{
-                    liste_tags_restauration.forEach(tag => {
-                        if(!tags.includes(tag)){
-                            document.getElementById(tag).style.display ='none';
-                        }
-                    });
-                }
-            }
+            // function afficherTags(typechoisi){
+            //     if (typeselectionne === "restauration"){
+            //         liste_tags.forEach(tag => {
+            //             if(!tags.includes(tag)){
+            //                 document.getElementById(tag).style.display ='none';
+            //             }
+            //         });
+            //     }else{
+            //         liste_tags_restauration.forEach(tag => {
+            //             if(!tags.includes(tag)){
+            //                 document.getElementById(tag).style.display ='none';
+            //             }
+            //         });
+            //     }
+            // }
 
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
