@@ -1169,7 +1169,7 @@ try {
             let typerestauration = ["carte", "labelcarte"];
             let typevisite = ["labelduree", "duree", "labelduree2", "labeldate_event", "date_event"];
             let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelpresta", "presta","labeldescpresta", "descpresta"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "labelcapacite2", "labelcapacite2", "labeldate_event", "date_event"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2", "labeldate_event", "date_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
             let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2",  "labelpresta", "presta","labeldescpresta", "descpresta",  "labelcapacite", "capacite", "labelcapacite2", "labeldate_event", "date_event"];
 
