@@ -787,22 +787,23 @@ try {
             }
 
 
-            if ($categorie !== "restauration") {
-                foreach ($liste_tags as $tag) {
-                    if (isset($_POST[$tag])) {
-                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-                    }
-                }
-            }
-            if ($categorie === "restauration") {
-                foreach ($liste_tags_restauration as $tag) {
-                    if (isset($_POST[$tag])) {
-                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-                    }
-                }
-            }
+            // if ($categorie !== "restauration") {
+            //     foreach ($liste_tags as $tag) {
+            //         if (isset($_POST[$tag])) {
+            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+            //         }
+            //     }
+            // }
+            // if ($categorie === "restauration") {
+            //     foreach ($liste_tags_restauration as $tag) {
+            //         if (isset($_POST[$tag])) {
+            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+            //         }
+            //     }
+            // }
            
             $descriptionL = $_POST['descriptionL'];
+            $abonnement = $offre_bonne_cat['abonnement'];
             
              print_r($_POST);
              print($photo1);
