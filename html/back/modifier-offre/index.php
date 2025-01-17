@@ -955,10 +955,12 @@ try {
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                             $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                             $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
+                            }
                             
                             break;
 
@@ -1037,11 +1039,13 @@ try {
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                             $stmt_carte_offre = $dbh->prepare($requete_carte_offre);
                             $stmt_carte_offre->execute([$id_offre, $fichier_carte]);
-                            
+                            }
+
                             break;
 
 
