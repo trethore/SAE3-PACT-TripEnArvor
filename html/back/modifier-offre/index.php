@@ -184,7 +184,6 @@ try {
     die();
 }
 
-print_r($tags);
 
     // Extraire les noms des tags
     $tag_names = array_map(function($tag) {
@@ -196,11 +195,9 @@ print_r($tags);
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
-    print($categorie);
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
-    print_r($offre_bonne_cat);
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
@@ -211,11 +208,6 @@ print_r($tags);
     }else {
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
-
-    print_r (getDateSpectacle($id_offre_cible));
-    echo ($date_evenement);
-
-    print_r($adresse);
 
     $date_aujourdhui = new DateTime(); 
     
@@ -645,7 +637,6 @@ try {
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
-                print("titre = ". $titre);
             }
 
             if (isset($_POST['presta'])) {
@@ -805,12 +796,6 @@ try {
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
             
-             print_r($_POST);
-             print($photo1);
-
-             print($categorieBase);
-             print($categorie);
-             echo "<br>";
 
              try {
 
@@ -878,12 +863,6 @@ try {
 
                             $id_adresse = $offre_bonne_cat['id_adresse'];
                         }
-                        
-                            
-                            
-
-                            print("changement de adresse");
-                            print(" id : " . $id_adresse);
                         
                     }
                     if ($date_evenement != null) {
@@ -1001,7 +980,6 @@ try {
                             break;
                         
                         case 'restauration':
-                            print($_FILES);
                             if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['carte'];
                                 $file_extension = get_file_extension($file['carte']);
@@ -1022,7 +1000,6 @@ try {
                                     }
                             }else{
                                 $fichier_carte = $offre_bonne_cat['carte'];
-                                print("rentre dans le else");
                             }
                             
                             // Requete SQL pour modifier la vue offre
@@ -1061,9 +1038,7 @@ try {
                 //modification des options
                 
                 
-                print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
-                    print("rentre dans la premier if");
                     //insertion de la date de souscription dans_date
                     
                     $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
@@ -1073,7 +1048,6 @@ try {
 
 
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
-                        print("rentre dans la deuxieme if");
                         
                             $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
                             $stmt_suppression = $dbh->prepare($requete_suppression_option);
@@ -1100,7 +1074,7 @@ try {
                             $stmt_suppr_tarif->execute([$id_offre]);}
                             catch (PDOException $e) {
                                 // Affichage de l'erreur en cas d'échec
-                                print "Erreur ! suppression: " . $e->getMessage() . "<br/>";
+                                print "Erreur !: " . $e->getMessage() . "<br/>";
                                 $dbh->rollBack();
                                 die();
                                     
@@ -1118,7 +1092,7 @@ try {
                                 echo "<br>";
                             }catch (PDOException $e) {
                                 // Affichage de l'erreur en cas d'échec
-                                print "Erreur ! insertion tarif: " . $e->getMessage() . "<br/>";
+                                print "Erreur ! : " . $e->getMessage() . "<br/>";
                                 $dbh->rollBack();
                                 die();
                                     
