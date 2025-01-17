@@ -26,7 +26,7 @@ CREATE TABLE _date (
 );
 
 CREATE TABLE _abonnement (
-    nom_abonnement     VARCHAR(63)
+    nom_abonnement     VARCHAR(63),
     CONSTRAINT _abonnement_pk
         PRIMARY KEY (nom_abonnement)
 );
@@ -41,7 +41,18 @@ CREATE TABLE _historique_prix_abonnements (
         PRIMARY KEY (id_prix),
     CONSTRAINT _historique_prix_abonnements_fk_abonnement
         FOREIGN KEY (nom_abonnement)
-        REFERENCES _option(nom_abonnement)
+        REFERENCES _abonnement(nom_abonnement)
+);
+
+
+CREATE TABLE _adresse (
+    id_adresse          SERIAL,
+    num_et_nom_de_voie  VARCHAR(255) NOT NULL,
+    complement_adresse  VARCHAR(255),
+    code_postal         VARCHAR(6) NOT NULL,
+    ville               VARCHAR(255) NOT NULL,
+    pays                VARCHAR(255) NOT NULL,
+    CONSTRAINT _adresse_pk PRIMARY KEY (id_adresse)
 );
 
 
@@ -253,7 +264,7 @@ CREATE VIEW offre_restauration AS
 
 CREATE TABLE _option (
     nom_option  VARCHAR(63),
-    CONSTRAINT _option_pk PRIMARY KEY (nom_option),
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
 );
 
 
@@ -309,17 +320,6 @@ CREATE TABLE _note_detaillee (
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
 /* ##################################################################### */
-
-
-CREATE TABLE _adresse (
-    id_adresse          SERIAL,
-    num_et_nom_de_voie  VARCHAR(255) NOT NULL,
-    complement_adresse  VARCHAR(255),
-    code_postal         VARCHAR(6) NOT NULL,
-    ville               VARCHAR(255) NOT NULL,
-    pays                VARCHAR(255) NOT NULL,
-    CONSTRAINT _adresse_pk PRIMARY KEY (id_adresse)
-);
 
 
 CREATE TABLE _prestation (
@@ -469,6 +469,17 @@ CREATE TABLE _offre_dates_mise_hors_ligne (
 
 /* ======================= OFFRE SOUSCRIT OPTION ======================= */
 
+CREATE TABLE _date_souscription_option (
+    id_date_souscription    SERIAL,
+    date_debut              DATE NOT NULL,
+    nb_semaines             INTEGER NOT NULL DEFAULT 1,
+    CONSTRAINT _date_souscription_option_pk
+        PRIMARY KEY (id_date_souscription),
+    CONSTRAINT _date_souscription_option_1_a_4_semaines
+        CHECK ((nb_semaines >= 1) AND (nb_semaines <= 4))
+);
+
+
 CREATE TABLE _offre_souscrit_option (
     id_offre                INTEGER,
     nom_option              VARCHAR(63),
@@ -481,20 +492,9 @@ CREATE TABLE _offre_souscrit_option (
     CONSTRAINT _offre_souscrit_option_fk_option
         FOREIGN KEY (nom_option)
         REFERENCES _option(nom_option),
-    CONSTRAINT _offre_souscrit_option_fk__date_souscription_option
+    CONSTRAINT _offre_souscrit_option_fk_date_souscription_option
         FOREIGN KEY (id_date_souscription)
-        REFERENCES _date_souscription_option(nom_option)
-);
-
-
-CREATE TABLE _date_souscription_option (
-    id_date_souscription    SERIAL,
-    date_debut              DATE NOT NULL,
-    nb_semaines             INTEGER NOT NULL DEFAULT 1,
-    CONSTRAINT _date_souscription_option_pk
-        PRIMARY KEY (id_date_souscription),
-    CONSTRAINT _date_souscription_option_1_a_4_semaines
-        CHECK ((nb_semaines >= 1) AND (nb_semaines <= 4))
+        REFERENCES _date_souscription_option(id_date_souscription)
 );
 
 
