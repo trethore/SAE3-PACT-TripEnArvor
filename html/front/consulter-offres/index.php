@@ -36,6 +36,10 @@ try {
         }
     }
 
+    echo "<pre>";
+    print_r($offres);
+    echo "</pre>";
+
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
