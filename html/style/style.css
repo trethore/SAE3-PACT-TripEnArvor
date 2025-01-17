@@ -1247,7 +1247,7 @@ h3 {
     font-size: 35pt;
 }
 
-.accueil h1:hover {
+.accueil h1 > a:hover {
     color: var(--blanc);
     background-color: var(--violet-secondaire);
 }
