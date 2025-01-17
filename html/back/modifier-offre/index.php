@@ -999,7 +999,7 @@ try {
                         
                         case 'restauration':
                             print($_FILES);
-                            if(isset( $_FILES['carte'])){
+                            if(isset( $_FILES['carte'])&& $_FILES['carte']['error'] === UPLOAD_ERR_OK){
                                 $file = $_FILES['carte'];
                                 $file_extension = get_file_extension($file['carte']);
                                 $time = 'p' . strval(time());
@@ -1018,7 +1018,7 @@ try {
             
                                     }
                             }else{
-                                $fichier_carte = $offre_bonne_cat(['carte']);
+                                $fichier_carte = $offre_bonne_cat['carte'];
                                 print("rentre dans le else");
                             }
                             
