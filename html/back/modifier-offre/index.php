@@ -212,10 +212,10 @@ print_r($tags);
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
-    print_r (getDateSpectacle($id_offre_cible));
-    echo ($date_evenement);
+    //print_r (getDateSpectacle($id_offre_cible));
+    //echo ($date_evenement);
 
-    print_r($adresse);
+    //print_r($adresse);
 
     $date_aujourdhui = new DateTime(); 
     
