@@ -17,7 +17,6 @@ CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dî
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
 CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
-CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
 
 CREATE TABLE _date (
@@ -26,20 +25,23 @@ CREATE TABLE _date (
     CONSTRAINT _date_pk PRIMARY KEY (id_date)
 );
 
-
-CREATE TABLE _prix (
-    id_prix SERIAL,
-    prix_ht INTEGER NOT NULL,
-    CONSTRAINT _prix_pk PRIMARY KEY (id_prix)
+CREATE TABLE _abonnement (
+    nom_abonnement     VARCHAR(63)
+    CONSTRAINT _abonnement_pk
+        PRIMARY KEY (nom_abonnement)
 );
 
-CREATE TABLE _abonnement (
-    nom     VARCHAR(63),
-    id_prix INTEGER NOT NULL,
-    CONSTRAINT _abonnement_pk
-        PRIMARY KEY (nom),
-    CONSTRAINT _abonnement_fk_prix
-        FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+
+CREATE TABLE _historique_prix_abonnements (
+    id_prix                     SERIAL,
+    nom_abonnement              VARCHAR(63) NOT NULL,
+    prix_ht_jour_abonnement     INT NOT  NULL,
+    date_maj                    DATE NOT NULL,
+    CONSTRAINT _historique_prix_abonnements_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_abonnements_fk_abonnement
+        FOREIGN KEY (nom_abonnement)
+        REFERENCES _option(nom_abonnement)
 );
 
 
@@ -74,8 +76,14 @@ CREATE TABLE _compte_professionnel (
     a_propos        VARCHAR(255) NOT NULL,
     site_web        VARCHAR(255) NOT NULL,
     id_adresse      INTEGER NOT NULL,
-    CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id_compte),
-    CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
+    CONSTRAINT _compte_professionnel_pk 
+        PRIMARY KEY (id_compte),
+    CONSTRAINT _compte_professionnel_fk_compte 
+        FOREIGN KEY (id_compte) 
+        REFERENCES _compte(id_compte),
+    CONSTRAINT _compte_professionnel_fk_adresse
+        FOREIGN KEY (id_adresse)
+        REFERENCES _adresse(id_adresse)
 );
 
 
@@ -145,10 +153,10 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
-    abonnement              VARCHAR(63) NOT NULL,
+    nom_abonnement          VARCHAR(63) NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (nom_abonnement) REFERENCES _abonnement(nom_abonnement)
 );
 
 
@@ -244,10 +252,8 @@ CREATE VIEW offre_restauration AS
 /* ============================== OPTIONS ============================== */
 
 CREATE TABLE _option (
-    nom_option  nom_option_t,
-    id_prix INTEGER NOT NULL,
+    nom_option  VARCHAR(63),
     CONSTRAINT _option_pk PRIMARY KEY (nom_option),
-    CONSTRAINT _option_fk_prix FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
 );
 
 
@@ -464,19 +470,46 @@ CREATE TABLE _offre_dates_mise_hors_ligne (
 /* ======================= OFFRE SOUSCRIT OPTION ======================= */
 
 CREATE TABLE _offre_souscrit_option (
-    id_offre    INTEGER,
-    nom_option  nom_option_t,
-    nb_semaine  INTEGER NOT NULL,
-    id_date     INTEGER NOT NULL,
+    id_offre                INTEGER,
+    nom_option              VARCHAR(63),
+    id_date_souscription    INTEGER NOT NULL,
     CONSTRAINT _offre_souscrit_option_pk
-        PRIMARY KEY (id_offre, nom_option),
+        PRIMARY KEY (id_offre, nom_option, id_date_souscription),
     CONSTRAINT _offre_souscrit_option_fk_offre
         FOREIGN KEY (id_offre)
         REFERENCES _offre(id_offre),
     CONSTRAINT _offre_souscrit_option_fk_option
         FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option),
+    CONSTRAINT _offre_souscrit_option_fk__date_souscription_option
+        FOREIGN KEY (id_date_souscription)
+        REFERENCES _date_souscription_option(nom_option)
+);
+
+
+CREATE TABLE _date_souscription_option (
+    id_date_souscription    SERIAL,
+    date_debut              DATE NOT NULL,
+    nb_semaines             INTEGER NOT NULL DEFAULT 1,
+    CONSTRAINT _date_souscription_option_pk
+        PRIMARY KEY (id_date_souscription),
+    CONSTRAINT _date_souscription_option_1_a_4_semaines
+        CHECK ((nb_semaines >= 1) AND (nb_semaines <= 4))
+);
+
+
+CREATE TABLE _historique_prix_options (
+    id_prix                     SERIAL,
+    nom_option                  VARCHAR(63) NOT NULL,
+    prix_ht_hebdo_option        INT NOT  NULL,
+    date_maj                    DATE NOT NULL,
+    CONSTRAINT _historique_prix_options_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_options_fk_option
+        FOREIGN KEY (nom_option)
         REFERENCES _option(nom_option)
 );
+
 
 
 /* ====================== OFFRE SE SITUE ADRESSE ======================= */
