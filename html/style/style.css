@@ -1050,7 +1050,6 @@ h3 {
 }
 
 .liste-back .lesOffres .prix {
-    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
@@ -1067,6 +1066,14 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.liste-back .lesOffres .offre .prix {
+    background: var(--orange-principale);
+}
+
+.liste-back .lesOffres .hors-ligne-offre .prix {
+    background: var(--gris-etoile);
 }
 
 .liste-back .lesOffres .prix span {
