@@ -905,7 +905,7 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
-.liste-back .hors-ligne-offre {
+.liste-back .hors-ligne-offre > a {
     border: 3px solid var(--gris-etoile);
 }
 
