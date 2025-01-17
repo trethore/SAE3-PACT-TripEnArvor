@@ -1195,9 +1195,9 @@ try {
             document.getElementById("tarifs").style.display = 'none';
 
 
-            categorie.addEventListener('change', function() {
+            document.addEventListener('DOMContentLoaded', function() {
                 const typeselectionne = categorie.value;
-                // Afficher les champs selon la catégorie sélectionnée test
+                // Afficher les champs selon la catégorie sélectionnée
                 switch (typeselectionne) {
                     case "restauration":
                         afficheSelonType(typerestauration);
@@ -1207,8 +1207,6 @@ try {
                             document.getElementById("gammedeprix").style.display = 'inline';
                         }
                         document.getElementById("tarifs").style.display = 'none';
-
-
                         break;
 
                     case "activite":
