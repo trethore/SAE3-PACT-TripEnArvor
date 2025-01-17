@@ -191,8 +191,8 @@ print_r($tags);
         return $tag['nom_tag'];
     }, $tags);
 
-    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
-    $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
+    // $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
+    // $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
@@ -347,7 +347,7 @@ try {
                             <tr>
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
-                                        <select class="custom-select" id="categorie" name="lacat">
+                                        <select class="custom-select" id="categorie" name="lacat" disabled>
                                             <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restauration</option>
                                             <option value="parcattraction" <?php if($categorie === "parcattraction"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
@@ -359,7 +359,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" value="<?php if(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]);} ?>" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" value="<?php if(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]);} ?>" /></td>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
@@ -476,23 +476,23 @@ try {
                     <br>
                     </div>
 
-                    <h3>Tags de l'offre</h3>
+                    <!-- <h3>Tags de l'offre</h3>
                     <ul>
                     <?php 
-                        if (!empty($tags)) {
-                            foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } } 
-                    foreach($liste_tags as $tag){ 
-                            if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }}
-                        foreach ($liste_tags_restauration as $tag) { 
-                            if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                        //if (!empty($tags)) {
+                           // foreach ($tags as $tag) { ?>
+                                <li><input type="checkbox" id="<?php //echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php //echo htmlentities($tag['nom_tag']); ?>" checked> <?php //echo htmlentities($tag['nom_tag']); ?></li>
+                    <?php //} } 
+                    // foreach($liste_tags as $tag){ 
+                    //         if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php //echo htmlentities($tag); ?>" name="tags[]" value="<?php //echo htmlentities($tag); ?>"> <?php //echo htmlentities($tag); ?></li>
+                        <?php //}}
+                        // foreach ($liste_tags_restauration as $tag) { 
+                        //     if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php //echo htmlentities($tag); ?>" name="tag[]" value="<?php //echo htmlentities($tag); ?>"> <?php //echo htmlentities($tag); ?></li>
                    
-                   <?php } 
-                    } ?>
+                   <?php //} 
+                   // } ?> -->
                          
                         
                      </ul>   
@@ -1172,9 +1172,9 @@ try {
                  document.getElementById("labeltype").style.display = 'none';
             }
 
-            const liste_tags = "<?php echo json_encode($liste_tags) ?>";
-            const liste_tags_restauration = "<?php echo json_encode($liste_tags_restauration) ?>";
-            const $tags = "<?php echo json_encode($tags) ?>"
+            // const liste_tags = "<?php // echo json_encode($liste_tags) ?>";
+            // const liste_tags_restauration = "<?php //echo json_encode($liste_tags_restauration) ?>";
+            // const $tags = "<?php //echo json_encode($tags) ?>"
 
             let typecategorie = document.getElementById('categorie');
             let typerestauration = ["carte", "labelcarte"];
@@ -1269,6 +1269,8 @@ try {
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
+
 
             // const tarif = tarif.value; // Récupère la valeur de la tarif
 
