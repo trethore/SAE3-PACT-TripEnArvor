@@ -24,7 +24,6 @@ char admin_api_key[256];
 int reload_signal;
 // Server
 int server_fd;
-
 // client actuel
 
 char client_ip[BUFFER_SIZE];
@@ -32,28 +31,41 @@ int client_id = -1;
 int isProClient = false;
 
 // fonctions
-void readConfig();
+void getConfig();
 void startSocketServer();
-void handle_sigint(int sig);
+void stopServer(int sig);
 void logInFile(int level, const char* text);
 char* getDateHeure();
-
+void gereMessage(const char* message, int client_fd);
+void rechargeConfig(int sig);
 
 int main() {
-    signal(SIGINT, handle_sigint);
-    readConfig();
+    signal(SIGINT, stopServer);
+    signal(reload_signal, rechargeConfig);
+    getConfig();
     startSocketServer();
 
     return EXIT_SUCCESS;
 }
 
-void handle_sigint(int sig) {
+void stopServer(int sig) {
     printf("\nShutting down server...\n");
     close(server_fd);
     exit(EXIT_SUCCESS);
 }
+void rechargeConfig(int sig) {
+    printf("\nSignal reçu (%d), rechargement de la configuration...\n", sig);
+    logInFile(0, "Rechargement de la configuration suite à un signal.");
+    getConfig();
 
-void readConfig() {
+    char log_message[256];
+    snprintf(log_message, sizeof(log_message), 
+             "Nouvelle configuration : port=%d, max_requests_per_minute=%d, max_requests_per_hour=%d",
+             port, max_requests_per_minute, max_requests_per_hour);
+    logInFile(0, log_message);
+    printf("\nRechargement de la configuration terminé !\n");
+}
+void getConfig() {
     const char *filename = "config.cfg";
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -105,6 +117,7 @@ void startSocketServer() {
     struct sockaddr_in server_addr, client_addr;
     socklen_t client_addr_len = sizeof(client_addr);
     char client_address[INET_ADDRSTRLEN];
+    char buffer[BUFFER_SIZE];
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1) {
@@ -137,21 +150,50 @@ void startSocketServer() {
         int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_addr_len);
         if (client_fd == -1) {
             perror("Erreur lors de l'acceptation de la connexion");
-            continue;  
+            continue;
         }
 
         if (inet_ntop(AF_INET, &client_addr.sin_addr, client_address, INET_ADDRSTRLEN) != NULL) {
-            strncpy(client_ip, client_address, BUFFER_SIZE - 1);
-            printf("Connexion acceptée depuis : %s\n", client_ip);
+            printf("Connexion acceptée depuis : %s\n", client_address);
+
         } else {
             perror("Erreur lors de la récupération de l'adresse IP du client");
+            close(client_fd);
+            continue;
         }
 
-        printf("Connexion traitée pour le client : %s\n", client_ip);
-        close(client_fd);  
+        while (1) {
+            memset(buffer, 0, BUFFER_SIZE); 
+
+            ssize_t bytes_received = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
+            if (bytes_received > 0) {
+                buffer[bytes_received] = '\0'; // Null terminate the buffer
+                printf("Message reçu de %s : %s\n", client_address, buffer);
+
+            
+                if (strcmp(buffer, "QUIT\n") == 0 || strcmp(buffer, "QUIT\r\n") == 0) {
+                    printf("Client %s s'est déconnecté.\n", client_address);
+                    break; 
+                } else {
+                    gereMessage(buffer, client_fd);
+                }
+            } else if (bytes_received == 0) {
+                printf("Client %s s'est déconnecté.\n", client_address);
+                break;
+            } else {
+                perror("Erreur lors de la réception des données");
+                break;
+            }
+        }
+
+        close(client_fd); // Fermer la connexion avec le client
     }
 }
+// TODO: gerer les messages
+void gereMessage(const char* message, int client_fd) {
 
+
+}
 
 
 void logInFile(int level, const char* text) {
@@ -191,19 +233,19 @@ char* getDateHeure() {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    char* date_heure = malloc(20 * sizeof(char));
+    char* date_heure = malloc(72 * sizeof(char)); 
     if (date_heure == NULL) {
         perror("Erreur d'allocation de mémoire");
         exit(EXIT_FAILURE);
     }
 
-    sprintf(date_heure, "%04d-%02d-%02d:%02d:%02d:%02d",
-            tm.tm_year + 1900,
-            tm.tm_mon + 1,
-            tm.tm_mday,
-            tm.tm_hour,
-            tm.tm_min,
-            tm.tm_sec);
+    snprintf(date_heure, 72, "%04d-%02d-%02d:%02d:%02d:%02d",
+             tm.tm_year + 1900,
+             tm.tm_mon + 1,
+             tm.tm_mday,
+             tm.tm_hour,
+             tm.tm_min,
+             tm.tm_sec);
 
     return date_heure;
 }
