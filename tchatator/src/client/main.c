@@ -6,6 +6,7 @@ int main() {
     char cleAPI[256];
     printf("Client Loaded !");    
 
+    printf("############ CONFIGURATION ############\n");
     printf("Veuillez inserez votre port : ");
     scanf("%d", &port);
     printf("Veuillez inserez votre cle API : ");
@@ -32,22 +33,24 @@ int main() {
 
         case 2:
             printf("\n\n");
-            printf("################# LIRE LES MESSAGE #################\n");
-            printf("1. Voir les messages non lues");
-            printf("2. Afficher une conversation");
+            printf("################# LIRE LES MESSAGES #################\n");
+            printf("1. Voir les messages non lus\n");
+            printf("2. Afficher une conversation\n");
+            printf("\nTapez le chiffre associé à une action : ");
             scanf("%d", choixRecep);
             switch (choixRecep)
             {
             case 1:
-                // Affichage des msgs non lues
+                // Affichage des msgs non lus
                 break;
             
             case 2:
                 // Affichage d'une conversation
                 printf("\n\n");
-                printf("################# AFFICHAGE D'UNE CONVERSATION #################\n");
+                printf("############ AFFICHAGE D'UNE CONVERSATION ############\n");
                 printf("1. Conversation avec pro 1");
                 printf("2. Conversation avec pro 1");
+                printf("\nTapez le chiffre associé à une conversation : ");
                 scanf("%d", choixConv);
                 switch (choixConv)
                 {
@@ -66,7 +69,7 @@ int main() {
 
             case 3:
                 printf("\n\n");
-                printf("################# MODIFICATION D'UN MESSAGE #################\n");
+                printf("############# MODIFICATION D'UN MESSAGE #############\n");
                 scanf("%d", choixModif);
                 break;
 
