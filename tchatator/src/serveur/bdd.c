@@ -5,8 +5,12 @@
 
 extern char* computeSha256(const char *input);
 
-// requetes
-
+/*
+ * Fonction : getConnection
+ * But      : Établir une connexion à la base de données PostgreSQL.
+ * Paramètres : Aucun.
+ * Retour   : Pointeur vers PGconn en cas de succès, NULL en cas d'échec.
+ */
 PGconn* getConnection() {
     const char *conninfo = "host=redden.ventsdouest.dev dbname=sae user=sae password=naviguer-vag1n-eNTendes";
     PGconn *conn = PQconnectdb(conninfo);
@@ -19,6 +23,13 @@ PGconn* getConnection() {
 
     return conn;
 }
+
+/*
+ * Fonction : getAllMembers
+ * But      : Récupérer tous les membres présents dans la table sae.compte_membre.
+ * Paramètres : Aucun.
+ * Retour   : Pointeur vers PGresult contenant les données des membres, ou NULL en cas d'erreur.
+ */
 PGresult* getAllMembers() {
     PGconn *conn = getConnection();
     if (!conn) return NULL;
@@ -35,6 +46,13 @@ PGresult* getAllMembers() {
     PQfinish(conn);
     return res; 
 }
+
+/*
+ * Fonction : getAllPrivateProfessionals
+ * But      : Récupérer tous les professionnels privés depuis la table sae.compte_professionnel_prive.
+ * Paramètres : Aucun.
+ * Retour   : Pointeur vers PGresult contenant les données des professionnels privés, ou NULL en cas d'erreur.
+ */
 PGresult* getAllPrivateProfessionals() {
     PGconn *conn = getConnection();
     if (!conn) return NULL;
@@ -51,6 +69,13 @@ PGresult* getAllPrivateProfessionals() {
     PQfinish(conn);
     return res;
 }
+
+/*
+ * Fonction : getAllPublicProfessionals
+ * But      : Récupérer tous les professionnels publics depuis la table sae.compte_professionnel_publique.
+ * Paramètres : Aucun.
+ * Retour   : Pointeur vers PGresult contenant les données des professionnels publics, ou NULL en cas d'erreur.
+ */
 PGresult* getAllPublicProfessionals() {
     PGconn *conn = getConnection();
     if (!conn) return NULL;
@@ -68,7 +93,15 @@ PGresult* getAllPublicProfessionals() {
     return res; 
 }
 
-
+/*
+ * Fonction : createMessage
+ * But      : Créer un nouveau message dans la table sae._message.
+ * Paramètres :
+ *   - id_emeteur : Identifiant de l'émetteur du message.
+ *   - id_receveur : Identifiant du destinataire du message.
+ *   - contenu : Contenu textuel du message.
+ * Retour   : Identifiant du message créé en cas de succès, 0 en cas d'échec.
+ */
 int createMessage(int id_emeteur, int id_receveur, const char *contenu) {
     PGconn *conn = getConnection();
     if (!conn) return 0;
@@ -95,7 +128,13 @@ int createMessage(int id_emeteur, int id_receveur, const char *contenu) {
     return message_id; 
 }
 
-
+/*
+ * Fonction : getMessagesForUser
+ * But      : Récupérer les messages reçus par un utilisateur spécifique.
+ * Paramètres :
+ *   - id_receveur : Identifiant du destinataire dont on souhaite récupérer les messages.
+ * Retour   : Pointeur vers PGresult contenant les messages, ou NULL en cas d'erreur.
+ */
 PGresult* getMessagesForUser(int id_receveur) {
     PGconn *conn = getConnection();
     if (!conn) return NULL;
@@ -119,6 +158,14 @@ PGresult* getMessagesForUser(int id_receveur) {
     return res;
 }
 
+/*
+ * Fonction : updateMessage
+ * But      : Mettre à jour le contenu d'un message existant.
+ * Paramètres :
+ *   - id_message : Identifiant du message à mettre à jour.
+ *   - new_content : Nouveau contenu du message.
+ * Retour   : 1 en cas de succès, 0 en cas d'échec.
+ */
 int updateMessage(int id_message, const char *new_content) {
     PGconn *conn = getConnection();
     if (!conn) return 0;
@@ -139,9 +186,16 @@ int updateMessage(int id_message, const char *new_content) {
 
     PQclear(res);
     PQfinish(conn);
-    return 1; // Success
+    return 1; // Succès
 }
 
+/*
+ * Fonction : deleteMessage
+ * But      : Marquer un message comme supprimé dans la table sae._message.
+ * Paramètres :
+ *   - id_message : Identifiant du message à supprimer.
+ * Retour   : 1 en cas de succès, 0 en cas d'échec.
+ */
 int deleteMessage(int id_message) {
     PGconn *conn = getConnection();
     if (!conn) return 0;
@@ -164,8 +218,13 @@ int deleteMessage(int id_message) {
     return 1; 
 }
 
-
-
+/*
+ * Fonction : isProfessional
+ * But      : Vérifier si un compte correspond à un professionnel.
+ * Paramètres :
+ *   - compteId : Identifiant du compte à vérifier.
+ * Retour   : 1 si le compte est professionnel, 0 s'il ne l'est pas, -1 en cas d'erreur.
+ */
 int isProfessional(int compteId) {
     PGconn *conn = getConnection();
     if (!conn) return -1; 
@@ -190,9 +249,20 @@ int isProfessional(int compteId) {
     return result;
 }
 
+/*
+ * Fonction : loginWithKey
+ * But      : Authentifier un utilisateur à l'aide d'une clé API.
+ * Paramètres :
+ *   - apiKey : Clé API utilisée pour l'authentification.
+ *   - isPro : Pointeur vers un entier qui indiquera si le compte est professionnel (1) ou non (0).
+ *   - compteId : Pointeur vers un entier qui recevra l'identifiant du compte authentifié.
+ * Retour   : 1 si l'authentification est réussie, 0 sinon.
+ */
 int loginWithKey(const char *apiKey, int *isPro, int *compteId) {
     PGconn *conn = getConnection();
-    if (!conn) return 0;
+    if (!conn) {
+        return -1;
+    }
 
     char query[512];
     snprintf(query, sizeof(query),
@@ -204,7 +274,7 @@ int loginWithKey(const char *apiKey, int *isPro, int *compteId) {
         fprintf(stderr, "Erreur lors de la récupération des comptes : %s\n", PQerrorMessage(conn));
         PQclear(res);
         PQfinish(conn);
-        return 0;
+        return -1;
     }
 
     int found = 0;
@@ -240,6 +310,15 @@ int loginWithKey(const char *apiKey, int *isPro, int *compteId) {
     return found;
 }
 
+/*
+ * Fonction : getUsersList
+ * But      : Récupérer la liste des utilisateurs en fonction du type de compte.
+ * Paramètres :
+ *   - isPro : Indicateur précisant si l'utilisateur connecté est professionnel.
+ *           Si isPro est vrai, la requête retourne uniquement les membres ; sinon, 
+ *           elle retourne les professionnels avec leur type (public ou private).
+ * Retour   : Pointeur vers PGresult contenant la liste des utilisateurs, ou NULL en cas d'erreur.
+ */
 PGresult* getUsersList(int isPro) {
     PGconn *conn = getConnection();
     if (!conn) return NULL;
@@ -272,6 +351,14 @@ PGresult* getUsersList(int isPro) {
     return res; 
 }
 
+/*
+ * Fonction : isMessageFromSender
+ * But      : Vérifier si un message appartient à un émetteur spécifique.
+ * Paramètres :
+ *   - msgid : Identifiant du message à vérifier.
+ *   - client_id : Identifiant de l'émetteur supposé.
+ * Retour   : 1 si le message appartient à l'émetteur, 0 sinon, -1 en cas d'erreur.
+ */
 int isMessageFromSender(int msgid, int client_id) {
     PGconn *conn = getConnection();
     if (conn == NULL) {
@@ -303,6 +390,14 @@ int isMessageFromSender(int msgid, int client_id) {
     return (count > 0) ? 1 : 0;
 }
 
+/*
+ * Fonction : getEmailFromId
+ * But      : Récupérer l'adresse email associée à un identifiant de compte.
+ * Paramètres :
+ *   - id_compte : Identifiant du compte dont on souhaite obtenir l'email.
+ * Retour   : Pointeur vers une chaîne de caractères contenant l'email (la mémoire doit être libérée par l'appelant),
+ *            ou NULL en cas d'erreur.
+ */
 char* getEmailFromId(int id_compte) {
     PGconn *conn = getConnection();
     if (!conn) return NULL;

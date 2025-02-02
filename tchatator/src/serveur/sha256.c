@@ -103,7 +103,6 @@ void sha256Update(uint32_t state[8], const uint8_t data[], uint64_t len) {
         processed += 64;
     }
 
-    // Padding et ajout de la longueur en bits
     uint8_t buffer[64] = {0};
     uint64_t remaining = len - processed;
     memcpy(buffer, data + processed, remaining);
@@ -132,4 +131,31 @@ void sha256Final(uint32_t state[8], uint8_t hash[32]) {
         hash[i * 4 + 2] = (state[i] >> 8) & 0xff;
         hash[i * 4 + 3] = state[i] & 0xff;
     }
+}
+
+/**
+ * @brief Calcule le hachage SHA-256 d'une chaîne de caractères.
+ * 
+ * @param input Chaine en entrée à hacher.
+ */
+
+char* computeSha256(const char *input) {
+    uint32_t state[8];
+    uint8_t hash[32];
+    size_t inputLen = strlen(input);
+
+    sha256Init(state);
+    sha256Update(state, (const uint8_t*)input, inputLen);
+    sha256Final(state, hash);
+
+    char *hashStr = malloc(65);
+    if (!hashStr) {
+        return NULL;
+    }
+    for (int i = 0; i < 32; ++i) {
+        sprintf(hashStr + (i * 2), "%02x", hash[i]);
+    }
+    hashStr[64] = '\0';
+
+    return hashStr;
 }

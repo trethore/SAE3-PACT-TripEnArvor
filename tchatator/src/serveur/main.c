@@ -782,11 +782,17 @@ int login(const char* message, int fdClient, int *idClient, int *estClientPro)  
         return 1;
     }
     
-    if (!loginWithKey(cleApi, estClientPro, idClient)) {
-        *idClient = -1;
-        sendErrorMessage(fdClient, ERROR_NOT_LOGIN, "Connexion échouée\n");
-        return 1;
-    }
+    int ret = loginWithKey(cleApi, estClientPro, idClient);
+
+if (ret == 0) {
+    *idClient = -1;
+    sendErrorMessage(fdClient, ERROR_NOT_LOGIN, "Connexion échouée\n");
+    return 1;
+} else if (ret == -1) {
+    sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Connexion échouée à la bdd\n");
+    return 1;
+}
+
     
     sendErrorMessage(fdClient, SUCCESS_OK, "Connexion réussie\n");
     return 1;
@@ -983,50 +989,64 @@ int isBlockedOrBanned(int idDestinataire) {
     char action[10];
     int idEmetteur, idCible;
     char dateHeure[20];
-    
     time_t maintenant = time(NULL);
+
+    typedef struct {
+        time_t tempsAction;
+        char action[10];
+        int duree;      
+        int estDefinie; 
+    } LastAction;
+
+    LastAction last;
+    last.estDefinie = 0;
 
     while (fgets(ligne, sizeof(ligne), fichier)) {
         if (sscanf(ligne, "[%19[^]]]:%9[^,],%d,%d", dateHeure, action, &idEmetteur, &idCible) != 4) {
-            continue; 
+            continue;
         }
-
         time_t tempsAction = parseDateTime(dateHeure);
-        if (tempsAction == -1) continue;
+        if (tempsAction == -1) continue; 
 
-        int duree = 0;
-        if (strcmp(action, "block") == 0) duree = dureeBlocage * 3600;
-        if (strcmp(action, "ban") == 0) duree = (dureeBanissement == 0) ? -1 : dureeBanissement * 3600;
-
-        if (strcmp(action, "ban") == 0) {
-            if (idEmetteur == -2 && idCible == idClient ) { 
-                fclose(fichier);
-                return 1;
-            }
-            if (idCible == idClient  && idEmetteur == idDestinataire) { 
-                if (duree == -1 || (maintenant - tempsAction) <= duree) {
-                    fclose(fichier);
-                    return 1;
-                }
-            }
+        if (idCible != idClient) {
+            continue;
+        }
+        if (idEmetteur != idDestinataire && idEmetteur != -2) {
+            continue;
         }
 
-        if (strcmp(action, "block") == 0 && idCible == idClient  && idEmetteur == idDestinataire) {
-            if ((maintenant - tempsAction) <= duree) {
-                fclose(fichier);
-                return 1;
-            }
+        int dureeAction = 0;
+        if (strcmp(action, "block") == 0) {
+            dureeAction = dureeBlocage * 3600;
+        } else if (strcmp(action, "ban") == 0) {
+            dureeAction = (dureeBanissement == 0) ? -1 : dureeBanissement * 3600;
         }
 
-        if ((strcmp(action, "unblock") == 0 || strcmp(action, "unban") == 0) && idCible == idClient ) {
-            if (idEmetteur == idDestinataire || idEmetteur == -2) {
-                fclose(fichier);
-                return 0;
+        if ((strcmp(action, "block") == 0 || strcmp(action, "ban") == 0) && dureeAction != -1) {
+            if ((maintenant - tempsAction) > (unsigned int)dureeAction) {
+                continue;
             }
+        }
+        if (!last.estDefinie || tempsAction > last.tempsAction) {
+            last.tempsAction = tempsAction;
+            strcpy(last.action, action);
+            last.duree = dureeAction;
+            last.estDefinie = 1;
         }
     }
-
     fclose(fichier);
+
+    if (!last.estDefinie) {
+        return 0;
+    }
+
+   
+    if (strcmp(last.action, "block") == 0 || strcmp(last.action, "ban") == 0) {
+        return 1;
+    } else if (strcmp(last.action, "unblock") == 0 || strcmp(last.action, "unban") == 0) {
+        return 0;
+    }
+
     return 0;
 }
 

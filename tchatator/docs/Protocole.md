@@ -67,7 +67,6 @@ Bloque un utilisateur.
 - `1/OK`
 - `104/FORBIDDEN`
 - `500/INTERNAL_ERROR`
-#### `UNBANUSR:<id>`
 
 #### `UNBLOCKUSR:<id>`
 Débloque un utilisateur.
@@ -76,7 +75,6 @@ Débloque un utilisateur.
 - `1/OK`
 - `104/FORBIDDEN`
 - `500/INTERNAL_ERROR`
-#### `UNBANUSR:<id>`
 
 #### `BANUSR:<id>`
 Bannit un utilisateur.
