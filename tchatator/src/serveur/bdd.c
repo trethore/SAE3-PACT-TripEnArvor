@@ -65,7 +65,7 @@ PGresult* getAllPublicProfessionals() {
     }
 
     PQfinish(conn);
-    return res; // Caller must call PQclear() after use
+    return res; 
 }
 
 
@@ -92,7 +92,7 @@ int createMessage(int id_emeteur, int id_receveur, const char *contenu) {
 
     PQclear(res);
     PQfinish(conn);
-    return message_id; // Return the new message ID
+    return message_id; 
 }
 
 
@@ -161,11 +161,10 @@ int deleteMessage(int id_message) {
 
     PQclear(res);
     PQfinish(conn);
-    return 1; // Success
+    return 1; 
 }
 
 
-// fonctions
 
 int isProfessional(int compteId) {
     PGconn *conn = getConnection();

@@ -1,0 +1,7 @@
+Pour compiler le serveur :
+
+gcc -Wall -o tchatator main.c sha256.c bdd.c -I/usr/include/postgresql -lpq
+
+Pour compiler le client :
+
+gcc main.c -o client

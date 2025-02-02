@@ -7,47 +7,135 @@
 #include <netinet/in.h>
 #include <sys/select.h>
 
-#define BUFFER_SIZE 1024
+#define TAILLE_BUFFER 1024
 
-/* Affiche le menu principal */
-void displayMenu() {
+/**
+ * Affiche le menu principal.
+ */
+void afficherMenu() {
     printf("\n----- MENU -----\n");
-    printf("1. Login\n");
-    printf("2. List Users\n");
-    printf("3. Send Message\n");
-    printf("4. List Messages\n");
-    printf("5. List History\n");
-    printf("6. Modify Message\n");
-    printf("7. Delete Message\n");
-    printf("8. Quit\n");
+    printf("1. Se connecter (Login)\n");
+    printf("2. Lister les utilisateurs\n");
+    printf("3. Envoyer un message\n");
+    printf("4. Lister les messages reçus\n");
+    printf("5. Lister l'historique\n");
+    printf("6. Modifier un message\n");
+    printf("7. Supprimer un message\n");
+    printf("8. Bloquer un utilisateur\n");
+    printf("9. Débloquer un utilisateur\n");
+    printf("10. Bannir un utilisateur\n");
+    printf("11. Débannir un utilisateur\n");
+    printf("12. Quitter\n");
     printf("Votre choix : ");
 }
 
-/* Lit la réponse du serveur en utilisant select pour gérer les délais */
-void readResponse(int sockFd) {
-    char buffer[BUFFER_SIZE];
+/**
+ * Supprime le caractère de saut de ligne en fin de chaîne.
+ * @param chaine La chaîne de caractères à traiter.
+ */
+void supprimerSautDeLigne(char *chaine) {
+    size_t longueur = strlen(chaine);
+    if (longueur > 0 && chaine[longueur - 1] == '\n') {
+        chaine[longueur - 1] = '\0';
+    }
+}
+
+/**
+ * Affiche une ligne de réponse reçue du serveur de manière formatée.
+ * @param ligne La ligne de réponse du serveur.
+ */
+void afficherReponse(const char *ligne) {
+    if (strncmp(ligne, "user:", 5) == 0) {
+        char *donnees = strdup(ligne + 5);
+        char *token = strtok(donnees, ",");
+        int compteur = 1;
+        while (token != NULL) {
+            if (compteur == 1) {
+                printf("  ID : %s\n", token);
+            } else if (compteur == 2) {
+                printf("  Email : %s\n", token);
+            } else {
+                printf("  Info supplémentaire : %s\n", token);
+            }
+            token = strtok(NULL, ",");
+            compteur++;
+        }
+        free(donnees);
+    } else if (strncmp(ligne, "msg:", 4) == 0) {
+        char *data = strdup(ligne + 4);
+        if (!data) {
+            perror("Erreur strdup");
+            return;
+        }
+        char *donnees = data;
+        char *expediteur   = strsep(&donnees, ",");
+        char *destinataire = strsep(&donnees, ",");
+        char *dateEnvoi    = strsep(&donnees, ",");
+        char *dateModif    = strsep(&donnees, ",");
+        char *contenu      = donnees;
+        if (!expediteur)   expediteur   = "";
+        if (!destinataire) destinataire = "";
+        if (!dateEnvoi)    dateEnvoi    = "";
+        if (!dateModif)    dateModif    = "";
+        if (!contenu)      contenu      = "";
+        printf("Message reçu :\n");
+        printf("  Expéditeur      : %s\n", expediteur);
+        printf("  Destinataire    : %s\n", destinataire);
+        printf("  Date d'envoi    : %s\n", dateEnvoi);
+        printf("  Date modifiée   : %s\n", dateModif);
+        printf("  Contenu         : %s\n", contenu);
+        free(data);
+    } else if ((strcmp(ligne, "userend") == 0) || (strcmp(ligne, "msgend") == 0)) {
+        ;
+    } else {
+        printf("Réponse du serveur : %s\n", ligne);
+    }
+}
+
+/**
+ * Lit une ligne (ou un bloc) de réponse du serveur pour les commandes simples.
+ * @param fdSocket Descripteur de socket.
+ */
+void lireReponseUneLigne(int fdSocket) {
+    char tampon[TAILLE_BUFFER];
+    int octets = recv(fdSocket, tampon, sizeof(tampon) - 1, 0);
+    if (octets > 0) {
+        tampon[octets] = '\0';
+        char *ligne = strtok(tampon, "\n");
+        while (ligne != NULL) {
+            afficherReponse(ligne);
+            ligne = strtok(NULL, "\n");
+        }
+    }
+}
+
+/**
+ * Lit la réponse du serveur (plusieurs lignes) jusqu'à "msgend" ou "userend".
+ * @param fdSocket Descripteur de socket.
+ */
+void lireReponseListe(int fdSocket) {
+    char tampon[TAILLE_BUFFER];
     fd_set readfds;
     struct timeval tv;
-
-    // Boucle de lecture : on continue tant que le socket dispose de données à lire
     while (1) {
         FD_ZERO(&readfds);
-        FD_SET(sockFd, &readfds);
-        tv.tv_sec = 1;   // délai d'attente d'une seconde
+        FD_SET(fdSocket, &readfds);
+        tv.tv_sec = 5;
         tv.tv_usec = 0;
-
-        int ret = select(sockFd + 1, &readfds, NULL, NULL, &tv);
-        if (ret > 0 && FD_ISSET(sockFd, &readfds)) {
-            int bytes = recv(sockFd, buffer, sizeof(buffer) - 1, 0);
-            if (bytes > 0) {
-                buffer[bytes] = '\0';
-                printf("Réponse du serveur : %s\n", buffer);
-                // Si la réponse contient "msgend", on considère la fin de la réponse multi-lignes
-                if (strstr(buffer, "msgend") != NULL) {
+        int ret = select(fdSocket + 1, &readfds, NULL, NULL, &tv);
+        if (ret > 0 && FD_ISSET(fdSocket, &readfds)) {
+            int octets = recv(fdSocket, tampon, sizeof(tampon) - 1, 0);
+            if (octets > 0) {
+                tampon[octets] = '\0';
+                char *ligne = strtok(tampon, "\n");
+                while (ligne != NULL) {
+                    afficherReponse(ligne);
+                    ligne = strtok(NULL, "\n");
+                }
+                if (strstr(tampon, "msgend") != NULL || strstr(tampon, "userend") != NULL) {
                     break;
                 }
             } else {
-                // Connexion fermée ou erreur
                 break;
             }
         } else {
@@ -56,170 +144,190 @@ void readResponse(int sockFd) {
     }
 }
 
-/* Supprime le caractère de saut de ligne en fin de chaîne */
-void trimNewline(char *str) {
-    size_t len = strlen(str);
-    if(len > 0 && str[len - 1] == '\n') {
-        str[len - 1] = '\0';
-    }
-}
-
+/**
+ * Point d'entrée du programme.
+ * @return Code de retour du programme.
+ */
 int main() {
-    char serverIp[100];
-    int serverPort;
-    int sockFd;
-    struct sockaddr_in serverAddr;
-    char buffer[BUFFER_SIZE];
+    char ipServeur[100];
+    int portServeur;
+    int fdSocket;
+    struct sockaddr_in adresseServeur;
+    char tampon[TAILLE_BUFFER];
 
-    /* Saisie de l'adresse IP et du port */
     printf("Entrez l'adresse IP du serveur : ");
-    if (fgets(serverIp, sizeof(serverIp), stdin) == NULL) {
+    if (fgets(ipServeur, sizeof(ipServeur), stdin) == NULL) {
         perror("Erreur de lecture de l'adresse IP");
         exit(EXIT_FAILURE);
     }
-    trimNewline(serverIp);
+    supprimerSautDeLigne(ipServeur);
 
     printf("Entrez le port du serveur : ");
-    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+    if (fgets(tampon, sizeof(tampon), stdin) == NULL) {
         perror("Erreur de lecture du port");
         exit(EXIT_FAILURE);
     }
-    serverPort = atoi(buffer);
-    if (serverPort <= 0) {
+    portServeur = atoi(tampon);
+    if (portServeur <= 0) {
         fprintf(stderr, "Port invalide.\n");
         exit(EXIT_FAILURE);
     }
 
-    /* Création du socket */
-    sockFd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockFd == -1) {
+    fdSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (fdSocket == -1) {
         perror("Erreur lors de la création du socket");
         exit(EXIT_FAILURE);
     }
 
-    /* Configuration de l'adresse du serveur */
-    memset(&serverAddr, 0, sizeof(serverAddr));
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(serverPort);
-    if (inet_pton(AF_INET, serverIp, &serverAddr.sin_addr) <= 0) {
+    memset(&adresseServeur, 0, sizeof(adresseServeur));
+    adresseServeur.sin_family = AF_INET;
+    adresseServeur.sin_port = htons(portServeur);
+    if (inet_pton(AF_INET, ipServeur, &adresseServeur.sin_addr) <= 0) {
         perror("Adresse IP invalide");
-        close(sockFd);
+        close(fdSocket);
         exit(EXIT_FAILURE);
     }
 
-    /* Connexion au serveur */
-    if (connect(sockFd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
+    if (connect(fdSocket, (struct sockaddr *)&adresseServeur, sizeof(adresseServeur)) == -1) {
         perror("Erreur lors de la connexion au serveur");
-        close(sockFd);
+        close(fdSocket);
         exit(EXIT_FAILURE);
     }
+    printf("Connecté au serveur %s:%d\n", ipServeur, portServeur);
 
-    printf("Connecté au serveur %s:%d\n", serverIp, serverPort);
-
-    /* Boucle principale du menu */
-    int choice;
+    int choix;
     while (1) {
-        displayMenu();
-        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+        afficherMenu();
+        if (fgets(tampon, sizeof(tampon), stdin) == NULL) {
             break;
         }
-        choice = atoi(buffer);
-
-        memset(buffer, 0, sizeof(buffer));
-
-        switch (choice) {
+        choix = atoi(tampon);
+        memset(tampon, 0, sizeof(tampon));
+        switch (choix) {
             case 1: {
-                /* Login : demande la clé API */
-                char apiKey[256];
+                char cleApi[256];
                 printf("Entrez votre clé API : ");
-                if (fgets(apiKey, sizeof(apiKey), stdin) == NULL) {
+                if (fgets(cleApi, sizeof(cleApi), stdin) == NULL) {
                     continue;
                 }
-                trimNewline(apiKey);
-                snprintf(buffer, sizeof(buffer), "LOGIN:%s", apiKey);
+                supprimerSautDeLigne(cleApi);
+                snprintf(tampon, sizeof(tampon), "LOGIN:%s", cleApi);
                 break;
             }
             case 2: {
-                /* List Users */
-                strcpy(buffer, "GETUSERS");
+                strcpy(tampon, "GETUSERS");
                 break;
             }
             case 3: {
-                /* Send Message */
-                int receiverId;
-                char messageContent[BUFFER_SIZE];
-                char receiverStr[10];
-
+                int idDestinataire;
+                char contenuMessage[TAILLE_BUFFER];
+                char idDestStr[10];
                 printf("Entrez l'ID du destinataire : ");
-                if (fgets(receiverStr, sizeof(receiverStr), stdin) == NULL) {
+                if (fgets(idDestStr, sizeof(idDestStr), stdin) == NULL) {
                     continue;
                 }
-                receiverId = atoi(receiverStr);
+                idDestinataire = atoi(idDestStr);
                 printf("Entrez votre message : ");
-                if (fgets(messageContent, sizeof(messageContent), stdin) == NULL) {
+                if (fgets(contenuMessage, sizeof(contenuMessage), stdin) == NULL) {
                     continue;
                 }
-                trimNewline(messageContent);
-                // Utilisation d'une précision pour limiter la taille du message à 1000 caractères
-                snprintf(buffer, sizeof(buffer), "MSG:%d,%.1000s", receiverId, messageContent);
+                supprimerSautDeLigne(contenuMessage);
+                snprintf(tampon, sizeof(tampon), "MSG:%d,%.1000s", idDestinataire, contenuMessage);
                 break;
             }
             case 4: {
-                /* List Messages */
-                strcpy(buffer, "LISTMSG");
+                strcpy(tampon, "LISTMSG");
                 break;
             }
             case 5: {
-                /* List History */
-                char input[20];
+                char entree[20];
                 printf("Entrez un ID de message pour paginer (laisser vide pour la dernière page) : ");
-                if (fgets(input, sizeof(input), stdin) == NULL) {
+                if (fgets(entree, sizeof(entree), stdin) == NULL) {
                     continue;
                 }
-                trimNewline(input);
-                if (strlen(input) == 0) {
-                    strcpy(buffer, "LISTHIST");
+                supprimerSautDeLigne(entree);
+                if (strlen(entree) == 0) {
+                    strcpy(tampon, "LISTHIST");
                 } else {
-                    int msgId = atoi(input);
-                    snprintf(buffer, sizeof(buffer), "LISTHIST:%d", msgId);
+                    int idMsg = atoi(entree);
+                    snprintf(tampon, sizeof(tampon), "LISTHIST:%d", idMsg);
                 }
                 break;
             }
             case 6: {
-                /* Modify Message */
-                int msgId;
-                char newContent[BUFFER_SIZE];
-                char msgIdStr[20];
-
+                int idMsg;
+                char nouveauContenu[TAILLE_BUFFER];
+                char idMsgStr[20];
                 printf("Entrez l'ID du message à modifier : ");
-                if (fgets(msgIdStr, sizeof(msgIdStr), stdin) == NULL) {
+                if (fgets(idMsgStr, sizeof(idMsgStr), stdin) == NULL) {
                     continue;
                 }
-                msgId = atoi(msgIdStr);
+                idMsg = atoi(idMsgStr);
                 printf("Entrez le nouveau contenu : ");
-                if (fgets(newContent, sizeof(newContent), stdin) == NULL) {
+                if (fgets(nouveauContenu, sizeof(nouveauContenu), stdin) == NULL) {
                     continue;
                 }
-                trimNewline(newContent);
-                // Utilisation d'une précision pour limiter la taille du message à 1000 caractères
-                snprintf(buffer, sizeof(buffer), "MDFMSG:%d,%.1000s", msgId, newContent);
+                supprimerSautDeLigne(nouveauContenu);
+                snprintf(tampon, sizeof(tampon), "MDFMSG:%d,%.1000s", idMsg, nouveauContenu);
                 break;
             }
             case 7: {
-                /* Delete Message */
-                int msgId;
-                char msgIdStr[20];
+                int idMsg;
+                char idMsgStr[20];
                 printf("Entrez l'ID du message à supprimer : ");
-                if (fgets(msgIdStr, sizeof(msgIdStr), stdin) == NULL) {
+                if (fgets(idMsgStr, sizeof(idMsgStr), stdin) == NULL) {
                     continue;
                 }
-                msgId = atoi(msgIdStr);
-                snprintf(buffer, sizeof(buffer), "DLTMSG:%d", msgId);
+                idMsg = atoi(idMsgStr);
+                snprintf(tampon, sizeof(tampon), "DLTMSG:%d", idMsg);
                 break;
             }
             case 8: {
-                /* Quitter */
-                strcpy(buffer, "QUIT");
+                int idUtilisateur;
+                char idUtilisateurStr[20];
+                printf("Entrez l'ID de l'utilisateur à bloquer : ");
+                if (fgets(idUtilisateurStr, sizeof(idUtilisateurStr), stdin) == NULL) {
+                    continue;
+                }
+                idUtilisateur = atoi(idUtilisateurStr);
+                snprintf(tampon, sizeof(tampon), "BLOCKUSR:%d", idUtilisateur);
+                break;
+            }
+            case 9: {
+                int idUtilisateur;
+                char idUtilisateurStr[20];
+                printf("Entrez l'ID de l'utilisateur à débloquer : ");
+                if (fgets(idUtilisateurStr, sizeof(idUtilisateurStr), stdin) == NULL) {
+                    continue;
+                }
+                idUtilisateur = atoi(idUtilisateurStr);
+                snprintf(tampon, sizeof(tampon), "UNBLOCKUSR:%d", idUtilisateur);
+                break;
+            }
+            case 10: {
+                int idUtilisateur;
+                char idUtilisateurStr[20];
+                printf("Entrez l'ID de l'utilisateur à bannir : ");
+                if (fgets(idUtilisateurStr, sizeof(idUtilisateurStr), stdin) == NULL) {
+                    continue;
+                }
+                idUtilisateur = atoi(idUtilisateurStr);
+                snprintf(tampon, sizeof(tampon), "BANUSR:%d", idUtilisateur);
+                break;
+            }
+            case 11: {
+                int idUtilisateur;
+                char idUtilisateurStr[20];
+                printf("Entrez l'ID de l'utilisateur à débannir : ");
+                if (fgets(idUtilisateurStr, sizeof(idUtilisateurStr), stdin) == NULL) {
+                    continue;
+                }
+                idUtilisateur = atoi(idUtilisateurStr);
+                snprintf(tampon, sizeof(tampon), "UNBANUSR:%d", idUtilisateur);
+                break;
+            }
+            case 12: {
+                strcpy(tampon, "QUIT");
                 break;
             }
             default: {
@@ -227,23 +335,20 @@ int main() {
                 continue;
             }
         }
-
-        /* Envoi de la commande au serveur */
-        if (write(sockFd, buffer, strlen(buffer)) == -1) {
+        if (write(fdSocket, tampon, strlen(tampon)) == -1) {
             perror("Erreur lors de l'envoi de la commande");
             break;
         }
-
-        /* Si l'utilisateur a choisi de quitter, on arrête la boucle */
-        if (strcmp(buffer, "QUIT") == 0) {
+        if (strcmp(tampon, "QUIT") == 0) {
             printf("Déconnexion...\n");
             break;
         }
-
-        /* Lecture et affichage de la réponse du serveur */
-        readResponse(sockFd);
+        if (choix == 2 || choix == 4 || choix == 5) {
+            lireReponseListe(fdSocket);
+        } else {
+            lireReponseUneLigne(fdSocket);
+        }
     }
-
-    close(sockFd);
+    close(fdSocket);
     return 0;
 }

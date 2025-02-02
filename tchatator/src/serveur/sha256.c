@@ -1,8 +1,19 @@
+/**
+ * Implémentation de l'algorithme SHA-256 en C
+ * 
+ * Cette implémentation est inspirée de projet sources open-source, notamment :
+ * - https://github.com/B-Con/crypto-algorithms 
+ * - https://fr.wikipedia.org/wiki/SHA-2
+ * 
+ */
+
+
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 
+// Définition des macros pour les opérations utilisées dans SHA-256
 #define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))
 #define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
 #define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
@@ -11,6 +22,7 @@
 #define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
 #define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
 
+// Constantes utilisées dans l'algorithme SHA-256
 static const uint32_t k[64] = {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
     0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -22,12 +34,19 @@ static const uint32_t k[64] = {
     0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
+/**
+ * @brief Transforme un bloc de données de 512 bits en une mise à jour de l'état SHA-256.
+ * 
+ * @param state Tableau contenant l'état courant du hachage.
+ * @param data Bloc de 64 octets (512 bits) à traiter.
+ */
 void sha256Transform(uint32_t state[8], const uint8_t data[]) {
     uint32_t m[64], s[8], t1, t2;
     int i, j;
 
     for (i = 0, j = 0; i < 16; ++i, j += 4)
         m[i] = (data[j] << 24) | (data[j+1] << 16) | (data[j+2] << 8) | data[j+3];
+    
     for ( ; i < 64; ++i)
         m[i] = SIG1(m[i - 2]) + m[i - 7] + SIG0(m[i - 15]) + m[i - 16];
 
@@ -51,6 +70,11 @@ void sha256Transform(uint32_t state[8], const uint8_t data[]) {
         state[i] += s[i];
 }
 
+/**
+ * @brief Initialise l'état du hachage SHA-256.
+ * 
+ * @param state Tableau contenant l'état initialisé.
+ */
 void sha256Init(uint32_t state[8]) {
     state[0] = 0x6a09e667;
     state[1] = 0xbb67ae85;
@@ -62,35 +86,45 @@ void sha256Init(uint32_t state[8]) {
     state[7] = 0x5be0cd19;
 }
 
+/**
+ * @brief Met à jour l'état du hachage avec de nouvelles données.
+ * 
+ * @param state L'état SHA-256 actuel.
+ * @param data Les données à traiter.
+ * @param len La taille des données en octets.
+ */
 void sha256Update(uint32_t state[8], const uint8_t data[], uint64_t len) {
-   uint64_t processed = 0;
+    uint64_t processed = 0;
     uint8_t block[64];
 
-    // Traitement des blocs complets
     while (len - processed >= 64) {
         memcpy(block, data + processed, 64);
         sha256Transform(state, block);
         processed += 64;
     }
 
-    // Préparation du dernier bloc avec padding
+    // Padding et ajout de la longueur en bits
     uint8_t buffer[64] = {0};
     uint64_t remaining = len - processed;
     memcpy(buffer, data + processed, remaining);
     buffer[remaining] = 0x80;
 
-    // Si l'espace restant dans le bloc est insuffisant pour la longueur, traiter ce bloc
     if (remaining >= 56) {
         sha256Transform(state, buffer);
         memset(buffer, 0, 64);
     }
 
-    // Ajout de la longueur totale en bits sur les 8 derniers octets
     uint64_t bitlen = len * 8;
     *((uint64_t*)&buffer[56]) = __builtin_bswap64(bitlen);
     sha256Transform(state, buffer);
 }
 
+/**
+ * @brief Finalise le hachage et génère le digest final.
+ * 
+ * @param state État du hachage.
+ * @param hash Résultat du hachage (32 octets).
+ */
 void sha256Final(uint32_t state[8], uint8_t hash[32]) {
     for (int i = 0; i < 8; ++i) {
         hash[i * 4] = (state[i] >> 24) & 0xff;
@@ -98,25 +132,4 @@ void sha256Final(uint32_t state[8], uint8_t hash[32]) {
         hash[i * 4 + 2] = (state[i] >> 8) & 0xff;
         hash[i * 4 + 3] = state[i] & 0xff;
     }
-}
-
-char* computeSha256(const char *input) {
-    uint32_t state[8];
-    uint8_t hash[32];
-    size_t inputLen = strlen(input);
-
-    sha256Init(state);
-    sha256Update(state, (const uint8_t*)input, inputLen);
-    sha256Final(state, hash);
-
-    char *hashStr = malloc(65);
-    if (!hashStr) {
-        return NULL;
-    }
-    for (int i = 0; i < 32; ++i) {
-        sprintf(hashStr + (i * 2), "%02x", hash[i]);
-    }
-    hashStr[64] = '\0';
-
-    return hashStr;
 }

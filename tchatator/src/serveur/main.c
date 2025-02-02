@@ -12,30 +12,29 @@
 
 #define BUFFER_SIZE 1024
 
-int port = 12345;
-int ban_duration = 0;
-int block_duration = 0;
-int max_requests_per_minute = 12;
-int max_requests_per_hour = 90;
-int max_message_size = 1000;
-int queue_size = 5;
-int history_block_size = 20;
-char log_file_path[1024];
-char admin_api_key[256];
-int reload_signal= SIGHUP;
-// Server
-int server_fd;
-bool isVerbose = false;
-// client actuel
+int portServeur = 12345;
+int dureeBanissement = 0;
+int dureeBlocage = 0;
+int nbRequetesMaxParMinute = 12;
+int nbRequetesMaxParHeure = 90;
+int tailleMaxMessage = 1000;
+int tailleFileAttente = 5;
+int tailleBlocHistorique = 20;
+char cheminFichierLog[1024];
+char cleApiAdmin[256];
+int signalRechargement = SIGHUP;
+// Serveur
+int fdServeur;
+bool estVerbeux = false;
+// Client actuel
+char ipClient[INET_ADDRSTRLEN];
+int idClient = -1;
+int estClientPro = false;
 
-char client_ip[INET_ADDRSTRLEN];
-int client_id = -1;
-int isProClient = false;
-
-// fichiers
+// Fichiers
 const char *CONFIG_FILE = "config.cfg";
-const char *PUNISHMENT_FILE = "punishment.log";
-// extern
+const char *PUNISHMENT_FILE = "punishment.txt";
+// Externes
 
 extern PGconn* getConnection();
 extern PGresult* getAllMembers();
@@ -51,35 +50,203 @@ extern int isProfessional(int compteId);
 extern int isMessageFromSender(int msgid, int client_id);
 extern char* getEmailFromId(int id_compte);
 
-// fonctions
+// Prototypes des fonctions
+
+/**
+ * Affiche l'aide du programme et quitte.
+ */
 void help();
+
+/**
+ * Charge la configuration depuis le fichier config.cfg.
+ */
 void getConfig();
+
+/**
+ * Initialise et démarre le serveur socket.
+ */
 void startSocketServer();
+
+/**
+ * Arrête le serveur proprement lors de la réception d'un signal.
+ * @param sig Numéro du signal reçu.
+ */
 void stopServer(int sig);
-void logInFile(int level, const char* text);
-void logInFileWithIp(int level, const char* client_ip, const char* text);
+
+/**
+ * Écrit un message dans le fichier de log.
+ * @param niveau Niveau de log (0: INFO, 1: WARN, 2: ERROR).
+ * @param texte Message à enregistrer.
+ */
+void logInFile(int niveau, const char* texte);
+
+/**
+ * Écrit un message dans le fichier de log avec l'adresse IP du client.
+ * @param niveau Niveau de log.
+ * @param ipClient Adresse IP du client.
+ * @param texte Message à enregistrer.
+ */
+void logInFileWithIp(int niveau, const char* ipClient, const char* texte);
+
+/**
+ * Retourne la date et l'heure actuelles sous forme de chaîne formatée.
+ * @return Chaîne de caractères représentant la date et l'heure.
+ */
 char* getDateHeure();
-int gereMessage(const char* message, int client_fd);
-void sendMessage(int client_fd, const char* message);
-void rechargeConfig(int sig);
 
-int login(const char* message, int client_fd, int *client_id, int *isProClient) ;
-int quitServer(const char* message, int client_fd, int *client_id, int *isProClient);
-int listUsers(const char* message, int client_fd);
-int sendUserMessage(const char* message, int client_fd);
-int modifyUserMessage(const char* message, int client_fd);
-int deleteUserMessage(const char* message, int client_fd);
-int listUserMessage(const char* message, int client_fd);
-int listUserHistory(const char* message, int client_fd);
+/**
+ * Gère les messages reçus par le serveur et exécute les actions correspondantes.
+ * @param message Message reçu du client.
+ * @param fdClient Descripteur de socket du client.
+ * @return 0 si le message a été traité, -1 si la connexion doit être fermée.
+ */
+int gereMessage(const char* message, int fdClient);
 
-int blockUser(const char* message, int client_fd);
-int unblockUser(const char* message, int client_fd);
-int banUser(const char* message, int client_fd);
-int unbanUser(const char* message, int client_fd);
-int isBlockedOrBanned(int receveur_id);
+/**
+ * Envoie un message au client via le socket.
+ * @param fdClient Descripteur de socket du client.
+ * @param message Message à envoyer.
+ */
+void sendMessage(int fdClient, const char* message);
+
+/**
+ * Envoie un message au client via le socket avec un code d'erreur.
+ * @param fdClient Descripteur du client.
+ * @param codeErreur Code d'erreur à envoyer.
+ * @param texte Message à envoyer.
+ */
+void sendErrorMessage(int fdClient, const char* codeErreur, const char* texte);
+
+/**
+ * Authentifie un utilisateur à l'aide d'une clé API.
+ * @param message Message contenant la clé API.
+ * @param fdClient Descripteur du client.
+ * @param idClient Pointeur vers l'ID du client authentifié.
+ * @param estClientPro Pointeur vers le statut professionnel du client.
+ * @return 1 si l'authentification réussit, 0 sinon.
+ */
+int login(const char* message, int fdClient, int *idClient, int *estClientPro);
+
+/**
+ * Gère la déconnexion du client.
+ * @param message Message reçu.
+ * @param fdClient Descripteur du client.
+ * @param idClient Pointeur vers l'ID du client.
+ * @param estClientPro Pointeur vers le statut professionnel du client.
+ * @return -1 si le client se déconnecte, 0 sinon.
+ */
+int quitServer(const char* message, int fdClient, int *idClient, int *estClientPro);
+
+/**
+ * Liste les utilisateurs disponibles pour le client connecté.
+ * @param message Message reçu.
+ * @param fdClient Descripteur du client.
+ * @return 1 si la requête est traitée, 0 sinon.
+ */
+int listUsers(const char* message, int fdClient);
+
+/**
+ * Permet l'envoi d'un message à un utilisateur.
+ * @param message Message reçu.
+ * @param fdClient Descripteur du client.
+ * @return 1 si le message est envoyé, 0 sinon.
+ */
+int sendUserMessage(const char* message, int fdClient);
+
+/**
+ * Modifie un message existant.
+ * @param message Message reçu contenant l'ID et le nouveau contenu.
+ * @param fdClient Descripteur du client.
+ * @return 1 si la modification réussit, 0 sinon.
+ */
+int modifyUserMessage(const char* message, int fdClient);
+
+/**
+ * Supprime un message en le marquant comme supprimé.
+ * @param message Message reçu contenant l'ID du message.
+ * @param fdClient Descripteur du client.
+ * @return 1 si la suppression réussit, 0 sinon.
+ */
+int deleteUserMessage(const char* message, int fdClient);
+
+/**
+ * Liste les messages non lus du client.
+ * @param message Message reçu.
+ * @param fdClient Descripteur du client.
+ * @return 1 si la requête est traitée, 0 sinon.
+ */
+int listUserMessage(const char* message, int fdClient);
+
+/**
+ * Récupère l'historique des messages du client.
+ * @param message Message reçu.
+ * @param fdClient Descripteur du client.
+ * @return 1 si la requête est traitée, 0 sinon.
+ */
+int listUserHistory(const char* message, int fdClient);
+
+/**
+ * Bloque un utilisateur pour une période déterminée.
+ * @param message Message reçu contenant l'ID de l'utilisateur.
+ * @param idClient ID du client qui effectue le blocage.
+ * @return 1 si l'opération réussit, 0 sinon.
+ */
+int blockUser(const char* message, int fdClient);
+
+/**
+ * Débloque un utilisateur précédemment bloqué.
+ * @param message Message reçu contenant l'ID de l'utilisateur.
+ * @param fdClient Descripteur du client.
+ * @return 1 si l'opération réussit, 0 sinon.
+ */
+int unblockUser(const char* message, int fdClient);
+
+/**
+ * Bannit un utilisateur définitivement.
+ * @param message Message reçu contenant l'ID de l'utilisateur.
+ * @param fdClient Descripteur du client.
+ * @return 1 si l'opération réussit, 0 sinon.
+ */
+int banUser(const char* message, int fdClient);
+
+/**
+ * Débannit un utilisateur précédemment banni.
+ * @param message Message reçu contenant l'ID de l'utilisateur.
+ * @param fdClient Descripteur du client.
+ * @return 1 si l'opération réussit, 0 sinon.
+ */
+int unbanUser(const char* message, int fdClient);
+
+/**
+ * Vérifie si un utilisateur est bloqué ou banni.
+ * @param fdClient Descripteur du client.
+ * @return 1 si bloqué ou banni, 0 sinon.
+ */
+int isBlockedOrBanned(int idDestinataire);
+
+/**
+ * Vérifie si un utilisateur a le droit de modérer (bloquer/bannir).
+ * @param idCompte ID de l'utilisateur à vérifier.
+ * @return 1 si l'utilisateur peut modérer, 0 sinon.
+ */
+int canModerate(int idCompte);
+
+/**
+ * Convertit une date/heure sous forme de chaîne en timestamp.
+ * @param datetime Chaîne représentant la date et l'heure.
+ * @return Valeur timestamp (time_t) ou -1 en cas d'erreur.
+ */
+time_t parseDateTime(const char *datetime);
+
+/**
+ * Effectue des tests sur le serveur.
+ * --test pour activer les tests.
+ */
+
+void test();
 
 bool isSpamming();
-// codes d'erreur
+// Codes d'erreur
 #define SUCCESS_OK "1/OK"
 #define ERROR_DENIED "103/DENIED"
 #define ERROR_FORBIDDEN "104/FORBIDDEN"
@@ -89,6 +256,9 @@ bool isSpamming();
 #define ERROR_BAD_REQUEST "142/BAD_REQUEST"
 #define ERROR_INTERNAL_ERROR "500/INTERNAL_ERROR"
 #define ERROR_INCORRECT_FORMAT "116/MISFMT"
+// Autres
+
+#define MAX_INT 2147483647
 
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
@@ -96,13 +266,16 @@ int main(int argc, char *argv[]) {
             help();
             return EXIT_SUCCESS;
         } else if (strcmp(argv[i], "--verbose") == 0) {
-            isVerbose = true;
+            estVerbeux = true;
+        } else if (strcmp(argv[i], "--test") == 0) {
+            test();
+            return EXIT_SUCCESS;
         }
     }
     signal(SIGINT, stopServer);
-    signal(reload_signal, rechargeConfig);
+    signal(signalRechargement, getConfig);
     getConfig();
-    printf("server file %s\n", log_file_path);
+    printf("Chemin du fichier de log : %s\n", cheminFichierLog);
     logInFile(0, "Démarrage du serveur...");
     startSocketServer();
 
@@ -111,8 +284,8 @@ int main(int argc, char *argv[]) {
 
 void stopServer(int sig) {
     logInFile(0, "Stop...");
-    printf("\nArret du Serveur\n");
-    close(server_fd);
+    printf("\nArrêt du Serveur\n");
+    close(fdServeur);
     exit(EXIT_SUCCESS);
 }
 void rechargeConfig(int sig) {
@@ -120,129 +293,131 @@ void rechargeConfig(int sig) {
     logInFile(0, "Rechargement de la configuration suite à un signal");
     getConfig();
 
-    char log_message[256];
-    snprintf(log_message, sizeof(log_message), 
-             "Nouvelle configuration : port=%d, max_requests_per_minute=%d, max_requests_per_hour=%d",
-             port, max_requests_per_minute, max_requests_per_hour);
-    logInFile(0, log_message);
+    char messageLog[256];
+    snprintf(messageLog, sizeof(messageLog), 
+             "Nouvelle configuration : port=%d, nbRequetesMaxParMinute=%d, nbRequetesMaxParHeure=%d",
+             portServeur, nbRequetesMaxParMinute, nbRequetesMaxParHeure);
+    logInFile(0, messageLog);
     printf("\nRechargement de la configuration terminé !\n");
 }
 void getConfig() {
-    const char *filename = CONFIG_FILE;
-    FILE *file = fopen(filename, "r");
-    if (!file) {
+    const char *nomFichier = CONFIG_FILE;
+    FILE *fichier = fopen(nomFichier, "r");
+    if (!fichier) {
         logInFile(2, "Erreur ouverture config");
         perror("Erreur lors de l'ouverture du fichier de configuration");
         exit(EXIT_FAILURE);
     }
 
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        if (line[0] == '#' || line[0] == '\n') continue;
+    char ligne[256];
+    while (fgets(ligne, sizeof(ligne), fichier)) {
+        if (ligne[0] == '#' || ligne[0] == '\n') continue;
 
-        char key[128];
-        char value[128];
+        char cle[128];
+        char valeur[128];
 
-        if (sscanf(line, "%127[^=]=%127s", key, value) == 2) {
-            if (strcmp(key, "port") == 0) {
-                port = atoi(value);
-            } else if (strcmp(key, "ban_duration") == 0) {
-                ban_duration = atoi(value);
-            } else if (strcmp(key, "block_duration") == 0) {
-                block_duration = atoi(value);
-            } else if (strcmp(key, "max_requests_per_minute") == 0) {
-                max_requests_per_minute = atoi(value);
-            } else if (strcmp(key, "max_requests_per_hour") == 0) {
-                max_requests_per_hour = atoi(value);
-            } else if (strcmp(key, "max_message_size") == 0) {
-                max_message_size = atoi(value);
-            } else if (strcmp(key, "queue_size") == 0) {
-                queue_size = atoi(value);
-            } else if (strcmp(key, "history_block_size") == 0) {
-                history_block_size = atoi(value);
-            } else if (strcmp(key, "log_file_path") == 0) {
-                strncpy(log_file_path, value, sizeof(log_file_path) - 1);
-                log_file_path[sizeof(log_file_path) - 1] = '\0';
-            } else if (strcmp(key, "admin_api_key") == 0) {
-                strncpy(admin_api_key, value, sizeof(admin_api_key) - 1);
-            } else if (strcmp(key, "reload_signal") == 0) {
-                reload_signal = atoi(value);
+        if (sscanf(ligne, "%127[^=]=%127s", cle, valeur) == 2) {
+            if (strcmp(cle, "port") == 0) {
+                portServeur = atoi(valeur);
+            } else if (strcmp(cle, "ban_duration") == 0) {
+                dureeBanissement = atoi(valeur);
+            } else if (strcmp(cle, "block_duration") == 0) {
+                dureeBlocage = atoi(valeur);
+            } else if (strcmp(cle, "max_requests_per_minute") == 0) {
+                nbRequetesMaxParMinute = atoi(valeur);
+            } else if (strcmp(cle, "max_requests_per_hour") == 0) {
+                nbRequetesMaxParHeure = atoi(valeur);
+            } else if (strcmp(cle, "max_message_size") == 0) {
+                tailleMaxMessage = atoi(valeur);
+            } else if (strcmp(cle, "queue_size") == 0) {
+                tailleFileAttente = atoi(valeur);
+            } else if (strcmp(cle, "history_block_size") == 0) {
+                tailleBlocHistorique = atoi(valeur);
+            } else if (strcmp(cle, "log_file_path") == 0) {
+                strncpy(cheminFichierLog, valeur, sizeof(cheminFichierLog) - 1);
+                cheminFichierLog[sizeof(cheminFichierLog) - 1] = '\0';
+            } else if (strcmp(cle, "admin_api_key") == 0) {
+                strncpy(cleApiAdmin, valeur, sizeof(cleApiAdmin) - 1);
+            } else if (strcmp(cle, "reload_signal") == 0) {
+                signalRechargement = atoi(valeur);
             } else {
-                fprintf(stderr, "Cle inconnue : %s\n", key);
+                fprintf(stderr, "Clé inconnue : %s\n", cle);
             }
         }
     }
 
-    fclose(file);
+    fclose(fichier);
 }
 
 
 void startSocketServer() {
-    struct sockaddr_in server_addr, client_addr;
-    socklen_t client_addr_len = sizeof(client_addr);
-    char buffer[BUFFER_SIZE];
+    struct sockaddr_in adresseServeur, adresseClient;
+    socklen_t tailleAdresseClient = sizeof(adresseClient);
+    char tampon[BUFFER_SIZE];
 
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_fd == -1) {
+    fdServeur = socket(AF_INET, SOCK_STREAM, 0);
+    if (fdServeur == -1) {
         perror("Erreur lors de la création du socket");
         exit(EXIT_FAILURE);
     }
 
-    memset(&server_addr, 0, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(port);
+    memset(&adresseServeur, 0, sizeof(adresseServeur));
+    adresseServeur.sin_family = AF_INET;
+    adresseServeur.sin_addr.s_addr = INADDR_ANY;
+    adresseServeur.sin_port = htons(portServeur);
     
-    int opt = 1;
-    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    int option = 1;
+    setsockopt(fdServeur, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 
-    if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
+    if (bind(fdServeur, (struct sockaddr*)&adresseServeur, sizeof(adresseServeur)) == -1) {
         perror("Erreur lors du bind");
-        close(server_fd);
+        close(fdServeur);
         exit(EXIT_FAILURE);
     }
 
-    if (listen(server_fd, queue_size) == -1) {
-        perror("Erreur lors du listen)");
-        close(server_fd);
+    if (listen(fdServeur, tailleFileAttente) == -1) {
+        perror("Erreur lors du listen");
+        close(fdServeur);
         exit(EXIT_FAILURE);
     }
 
-    printf("Serveur démarré sur le port %d avec une file d'attente de %d\n", port, queue_size);
+    printf("Serveur démarré sur le port %d avec une file d'attente de %d\n", portServeur, tailleFileAttente);
     logInFile(0, "Serveur démarré !");
     while (1) {
         printf("En attente de connexions\n");
 
-        int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_addr_len);
-        if (client_fd == -1) {
+        int fdClient = accept(fdServeur, (struct sockaddr*)&adresseClient, &tailleAdresseClient);
+        if (fdClient == -1) {
             perror("Erreur lors de l'acceptation de la connexion");
             continue;
         }
 
-        if (inet_ntop(AF_INET, &client_addr.sin_addr, client_ip, INET_ADDRSTRLEN) != NULL) { // recuperation de l'adresse IP dans client_address
-            printf("Connexion acceptée depuis : %s\n", client_ip);
-            logInFile(0,strcat("Connexion acceptée depuis : ", client_ip));
+        if (inet_ntop(AF_INET, &adresseClient.sin_addr, ipClient, INET_ADDRSTRLEN) != NULL) {
+            printf("Connexion acceptée depuis : %s\n", ipClient);
+            char buffer[256]; // segmentation fault qui ma fait perdere 2h de ma vie
+            snprintf(buffer, sizeof(buffer), "Connexion acceptée depuis : %s", ipClient);
+            logInFile(0, buffer);
         } else {
             perror("Erreur lors de la récupération de l'adresse IP du client");
-            close(client_fd);
+            close(fdClient);
             continue;
         }
 
         while (1) {
-            memset(buffer, 0, BUFFER_SIZE); 
+            memset(tampon, 0, BUFFER_SIZE); 
 
-            ssize_t bytes_received = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
-            if (bytes_received > 0) {
-                buffer[bytes_received] = '\0';
-                printf("Message reçu de %s : %s\n", client_ip, buffer);
-                logInFileWithIp(0, client_ip, buffer);
-                if (gereMessage(buffer, client_fd) == -1) {
+            ssize_t octetsRecus = recv(fdClient, tampon, BUFFER_SIZE - 1, 0);
+            if (octetsRecus > 0) {
+                tampon[octetsRecus] = '\0';
+                printf("Message reçu de %s : %s\n", ipClient, tampon);
+                logInFileWithIp(0, ipClient, tampon);
+                if (gereMessage(tampon, fdClient) == -1) {
                     break;
                 }
-            } else if (bytes_received == 0) {
-                printf("Client %s s'est déconnecté.\n", client_ip);
-                client_id = -1;
-                isProClient = 0;
+            } else if (octetsRecus == 0) {
+                printf("Client %s s'est déconnecté.\n", ipClient);
+                idClient = -1;
+                estClientPro = 0;
                 break;
             } else {
                 perror("Erreur lors de la réception des données");
@@ -250,382 +425,384 @@ void startSocketServer() {
             }
         }
 
-        close(client_fd); 
+        close(fdClient); 
     }
 }
 
-int gereMessage(const char* message, int client_fd) {
-    int result = 0;
+int gereMessage(const char* message, int fdClient) {
+    int resultat = 0;
 
-    if (quitServer(message, client_fd, &client_id, &isProClient) == -1) {
+    if (quitServer(message, fdClient, &idClient, &estClientPro) == -1) {
         return -1;
     }
     if (isSpamming()) {
-        sendMessage(client_fd, strcat(ERROR_TOO_MANY_REQUESTS,": Trop de requetes\n"));
+        sendErrorMessage(fdClient, ERROR_TOO_MANY_REQUESTS, "Trop de requêtes\n");
         return 1;
     }
      
-    result |= login(message, client_fd, &client_id, &isProClient);
-    if (client_id == -1) {
-        if (result == 1) {
-            sendMessage(client_fd, strcat(ERROR_NOT_LOGIN, ": Veuilley vous connecter\n"));
+    resultat |= login(message, fdClient, &idClient, &estClientPro);
+    if (idClient == -1) {
+        if (resultat == 1) {
+            sendErrorMessage(fdClient, ERROR_NOT_LOGIN, "Veuillez vous connecter\n");
         } else {
-            sendMessage(client_fd,  strcat(ERROR_BAD_REQUEST, ": Mauvaise requete\n"));
+            sendErrorMessage(fdClient, ERROR_BAD_REQUEST, "Mauvaise requête\n");
         }
         return 0;
     }
 
-    result |= listUsers(message, client_fd);
-    result |= sendUserMessage(message, client_fd);
-    result |= modifyUserMessage(message, client_fd);
-    result |= deleteUserMessage(message, client_fd);
-    result |= listUserMessage(message, client_fd);
-    result |= listUserHistory(message, client_fd);
-    result |= blockUser(message, client_fd);
-    result |= unblockUser(message, client_fd);
-    result |= banUser(message, client_fd);
-    result |= unbanUser(message, client_fd);
+    resultat |= listUsers(message, fdClient);
+    resultat |= sendUserMessage(message, fdClient);
+    resultat |= modifyUserMessage(message, fdClient);
+    resultat |= deleteUserMessage(message, fdClient);
+    resultat |= listUserMessage(message, fdClient);
+    resultat |= listUserHistory(message, fdClient);
+    resultat |= blockUser(message, fdClient);
+    resultat |= unblockUser(message, fdClient);
+    resultat |= banUser(message, fdClient);
+    resultat |= unbanUser(message, fdClient);
 
-    if (!result) {
-        sendMessage(client_fd,  strcat(ERROR_BAD_REQUEST, ": Mauvaise requete\n"));
+    if (!resultat) {
+        sendErrorMessage(fdClient, ERROR_BAD_REQUEST, "Mauvaise requête\n");
     }
     return 0;
-
 }
 
-int listUserHistory(const char* message, int client_fd) {
-    int message_id = -1;
+int listUserHistory(const char* message, int fdClient) {
+    int idMessage = -1;
 
     if (strncmp(message, "LISTHIST:", 9) == 0) {
-        if (sscanf(message + 9, "%d", &message_id) != 1) {
-            sendMessage(client_fd,  strcat(ERROR_INCORRECT_FORMAT, ": Mauvais format de requete\n"));
+        if (sscanf(message + 9, "%d", &idMessage) != 1) {
+            sendErrorMessage(fdClient, ERROR_INCORRECT_FORMAT, "Mauvais format de requête\n");
             return 1;
         }
     } else if (strcmp(message, "LISTHIST") != 0) {
         return 0;
     }
 
-    PGconn *conn = getConnection();
-    if (!conn) {
-        sendMessage(client_fd,  strcat(ERROR_INTERNAL_ERROR, ": Connexion BDD échouée\n"));
+    PGconn *connexion = getConnection();
+    if (!connexion) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Connexion BDD échouée\n");
         return 1;
     }
 
-    char query[512];
-    if (message_id == -1) {
-        snprintf(query, sizeof(query),
+    char requete[512];
+    if (idMessage == -1) {
+        snprintf(requete, sizeof(requete),
             "SELECT id_emeteur, id_receveur, date_envoi, date_modif, contenu "
             "FROM sae._message WHERE (id_emeteur = %d OR id_receveur = %d) "
             "AND supprime = FALSE "
             "ORDER BY date_envoi DESC LIMIT %d;",
-            client_id, client_id, history_block_size);
+            idClient, idClient, tailleBlocHistorique);
     } else {
-        snprintf(query, sizeof(query),
+        snprintf(requete, sizeof(requete),
             "SELECT id_emeteur, id_receveur, date_envoi, date_modif, contenu "
             "FROM sae._message WHERE (id_emeteur = %d OR id_receveur = %d) "
             "AND supprime = FALSE AND id_message <= %d "
             "ORDER BY date_envoi DESC LIMIT %d;",
-            client_id, client_id, message_id, history_block_size);
+            idClient, idClient, idMessage, tailleBlocHistorique);
     }
 
-    PGresult *res = PQexec(conn, query);
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de récupération des messages\n"));
-        PQclear(res);
-        PQfinish(conn);
+    PGresult *resultatReq = PQexec(connexion, requete);
+    if (PQresultStatus(resultatReq) != PGRES_TUPLES_OK) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de récupération de l'historique\n");
+        PQclear(resultatReq);
+        PQfinish(connexion);
         return 1;
     }
 
-    int num_rows = PQntuples(res);
-    sendMessage(client_fd, strcat(SUCCESS_OK, ":"));
+    int nombreLignes = PQntuples(resultatReq);
+    sendErrorMessage(fdClient, SUCCESS_OK, "\n");
 
-    for (int i = 0; i < num_rows; i++) {
-        int sender_id = atoi(PQgetvalue(res, i, 0));
-        int receiver_id = atoi(PQgetvalue(res, i, 1));
-        char *date_envoi = PQgetvalue(res, i, 2);
-        char *date_modif = PQgetvalue(res, i, 3);
-        char *content = PQgetvalue(res, i, 4);
+    for (int i = 0; i < nombreLignes; i++) {
+        int idExpediteur = atoi(PQgetvalue(resultatReq, i, 0));
+        int idDestinataire = atoi(PQgetvalue(resultatReq, i, 1));
+        char *dateEnvoi = PQgetvalue(resultatReq, i, 2);
+        char *dateModification = PQgetvalue(resultatReq, i, 3);
+        char *contenu = PQgetvalue(resultatReq, i, 4);
 
-        char *sender_email = getEmailFromId(sender_id);
-        char *receiver_email = getEmailFromId(receiver_id);
+        char *emailExpediteur = getEmailFromId(idExpediteur);
+        char *emailDestinataire = getEmailFromId(idDestinataire);
 
-        if (sender_email && receiver_email) {
-            char msg_buffer[1024];
-            snprintf(msg_buffer, sizeof(msg_buffer), 
-                     "msg:%s,%s,%s,%s,%s", sender_email, receiver_email, date_envoi, date_modif, content);
-            sendMessage(client_fd, msg_buffer);
+        if (emailExpediteur && emailDestinataire) {
+            char tamponMessage[1024];
+            snprintf(tamponMessage, sizeof(tamponMessage), 
+                     "msg:%s,%s,%s,%s,%s\n", emailExpediteur, emailDestinataire, dateEnvoi, dateModification, contenu);
+            sendMessage(fdClient, tamponMessage);
         }
 
-        free(sender_email);
-        free(receiver_email);
+        free(emailExpediteur);
+        free(emailDestinataire);
     }
 
-    sendMessage(client_fd, "msgend");
+    sendMessage(fdClient, "msgend\n");
 
-    PQclear(res);
-    PQfinish(conn);
+    PQclear(resultatReq);
+    PQfinish(connexion);
     return 1;
 }
 
-int listUserMessage(const char* message, int client_fd) {
+int listUserMessage(const char* message, int fdClient) {
     if (strcmp(message, "LISTMSG") != 0) {
         return 0;
     }
 
-    PGconn *conn = getConnection();
-    if (!conn) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Connexion BDD échouée\n"));
+    PGconn *connexion = getConnection();
+    if (!connexion) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Connexion BDD échouée\n");
         return 1;
     }
 
-    char query[256];
-    snprintf(query, sizeof(query),
+    char requete[256];
+    snprintf(requete, sizeof(requete),
         "SELECT id_message, id_emeteur, id_receveur, contenu FROM sae._message "
-        "WHERE id_receveur = %d AND lu = FALSE AND supprime = FALSE;", client_id);
+        "WHERE id_receveur = %d AND lu = FALSE AND supprime = FALSE;", idClient);
 
-    PGresult *res = PQexec(conn, query);
+    PGresult *resultatReq = PQexec(connexion, requete);
 
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de récupération des messages\n"));
-        PQclear(res);
-        PQfinish(conn);
+    if (PQresultStatus(resultatReq) != PGRES_TUPLES_OK) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de récupération des messages\n");
+        PQclear(resultatReq);
+        PQfinish(connexion);
         return 1;
     }
 
-    int num_rows = PQntuples(res);
-    sendMessage(client_fd, strcat(SUCCESS_OK, ":")); 
+    int nombreLignes = PQntuples(resultatReq);
+    sendErrorMessage(fdClient, SUCCESS_OK, ":");
 
-    for (int i = 0; i < num_rows; i++) {
-        int msg_id = atoi(PQgetvalue(res, i, 0));
-        int sender_id = atoi(PQgetvalue(res, i, 1));
-        int receiver_id = atoi(PQgetvalue(res, i, 2));
-        char *content = PQgetvalue(res, i, 3);
+    for (int i = 0; i < nombreLignes; i++) {
+        int idMsg = atoi(PQgetvalue(resultatReq, i, 0));
+        int idExpediteur = atoi(PQgetvalue(resultatReq, i, 1));
+        int idDestinataire = atoi(PQgetvalue(resultatReq, i, 2));
+        char *contenu = PQgetvalue(resultatReq, i, 3);
 
-        char *sender_email = getEmailFromId(sender_id);
-        char *receiver_email = getEmailFromId(receiver_id);
+        char *emailExpediteur = getEmailFromId(idExpediteur);
+        char *emailDestinataire = getEmailFromId(idDestinataire);
 
-        if (sender_email && receiver_email) {
-            char msg_buffer[1024];
-            snprintf(msg_buffer, sizeof(msg_buffer), "msg:%s,%s,%s", sender_email, receiver_email, content);
-            sendMessage(client_fd, msg_buffer);
+        if (emailExpediteur && emailDestinataire) {
+            char tamponMessage[1024];
+            snprintf(tamponMessage, sizeof(tamponMessage), "msg:%s,%s,%s", emailExpediteur, emailDestinataire, contenu);
+            sendMessage(fdClient, tamponMessage);
         }
 
-        char update_query[256];
-        snprintf(update_query, sizeof(update_query), 
-                 "UPDATE sae._message SET lu = TRUE WHERE id_message = %d;", msg_id);
-        PGresult *update_res = PQexec(conn, update_query);
+        char requeteMaj[256];
+        snprintf(requeteMaj, sizeof(requeteMaj), 
+                 "UPDATE sae._message SET lu = TRUE WHERE id_message = %d;", idMsg);
+        PGresult *resultatMaj = PQexec(connexion, requeteMaj);
 
-        if (PQresultStatus(update_res) != PGRES_COMMAND_OK) {
-            sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de mise à jour du message (lu)\n"));
+        if (PQresultStatus(resultatMaj) != PGRES_COMMAND_OK) {
+            sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de mise à jour du message (lu)\n");
         }
 
-        PQclear(update_res);
+        PQclear(resultatMaj);
 
-        free(sender_email);
-        free(receiver_email);
+        free(emailExpediteur);
+        free(emailDestinataire);
     }
 
-    sendMessage(client_fd, "msgend"); 
+    sendMessage(fdClient, "msgend"); 
 
-    PQclear(res);
-    PQfinish(conn);
+    PQclear(resultatReq);
+    PQfinish(connexion);
     return 1;
 }
 
 
-int deleteUserMessage(const char* message, int client_fd) {
-    int msgid;
+int deleteUserMessage(const char* message, int fdClient) {
+    int idMsg;
     
-    if (sscanf(message, "DLTMSG:%d", &msgid) != 1) {
+    if (sscanf(message, "DLTMSG:%d", &idMsg) != 1) {
         return 0;
     }
 
-    PGconn *conn = getConnection();
-    if (!conn) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Connexion BDD échouée\n"));
+    PGconn *connexion = getConnection();
+    if (!connexion) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Connexion BDD échouée\n");
         return 1;
     }
 
-    int is_sender = isMessageFromSender(msgid, client_id);
-    int is_admin = (client_id == -2);
+    int estEmetteur = isMessageFromSender(idMsg, idClient);
+    int estAdmin = (idClient == -2);
 
-    if (!is_sender && !is_admin) {
-        sendMessage(client_fd, strcat(ERROR_FORBIDDEN, ": Suppression non autorisée\n"));
-        PQfinish(conn);
+    if (!estEmetteur && !estAdmin) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Suppression non autorisée\n");
+        PQfinish(connexion);
         return 1;
     }
 
-    if (!deleteMessage(msgid)) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de suppression du message\n"));
-        PQfinish(conn);
+    if (!deleteMessage(idMsg)) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de suppression du message\n");
+        PQfinish(connexion);
         return 1;
     }
 
-    sendMessage(client_fd, strcat(SUCCESS_OK, ": Message supprimé\n"));
-    PQfinish(conn);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Message supprimé\n");
+    PQfinish(connexion);
     return 1;
 }
 
 
-int modifyUserMessage(const char* message, int client_fd) {
+int modifyUserMessage(const char* message, int fdClient) {
     if (strncmp(message, "MDFMSG:", 7) != 0) {
         return 0; 
     }
 
+    int idMsg;
+    char nouveauMsg[tailleMaxMessage + 1]; 
+    char formatChaine[50];
 
-    int msgid;
-    char newmsg[max_message_size + 1]; 
-    char formatString[50];
+    snprintf(formatChaine, sizeof(formatChaine), "%%d,%%%d[^\n]", MAX_INT);
 
-    snprintf(formatString, sizeof(formatString), "%%d,%%%d[^\n]", 2147483647);
-
-    if (sscanf(message + 7, formatString, &msgid, newmsg) < 2) {
-        sendMessage(client_fd, strcat(ERROR_INCORRECT_FORMAT, ": Mauvais format de requete\n"));
+    if (sscanf(message + 7, formatChaine, &idMsg, nouveauMsg) < 2) {
+        sendErrorMessage(fdClient, ERROR_INCORRECT_FORMAT, "Mauvais format de requête\n");
         return 1;
     }
-    if (strlen(newmsg) > max_message_size) {
-        sendMessage(client_fd, strcat(ERROR_INCORRECT_FORMAT, ": Message trop long\n"));
-        return 1;
-    }
-
-    if (!isMessageFromSender(msgid, client_id)) {
-        sendMessage(client_fd, strcat(ERROR_FORBIDDEN, ": Modification non autorisée\n"));
+    if (strlen(nouveauMsg) > tailleMaxMessage) {
+        sendErrorMessage(fdClient, ERROR_BAD_REQUEST, "Message trop long\n");
         return 1;
     }
 
-    if (!updateMessage(msgid, newmsg)) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de modification du message\n"));
+    if (!isMessageFromSender(idMsg, idClient)) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Modification non autorisée\n");
         return 1;
     }
 
-    sendMessage(client_fd, strcat(SUCCESS_OK, ": Message modifié\n"));
+    if (!updateMessage(idMsg, nouveauMsg)) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de modification du message\n");
+        return 1;
+    }
+
+    sendErrorMessage(fdClient, SUCCESS_OK, "Message modifié\n");
     return 1;
 }
 
 
 
-int sendUserMessage(const char* message, int client_fd) {
+int sendUserMessage(const char* message, int fdClient) {
     if (strncmp(message, "MSG:", 4) != 0) {
         return 0;
     }
 
-    const char *msgData = message + 4;
-    while (*msgData == ' ') msgData++;  
+    const char *donneesMessage = message + 4;
+    while (*donneesMessage == ' ') donneesMessage++;  
 
-    int recepteur_id;
-    char msgContent[max_message_size + 1]; 
-    char formatString[50];  
+    int idDestinataire;
+    char contenuMessage[tailleMaxMessage + 1]; 
+    char formatChaine[50];  
 
-    snprintf(formatString, sizeof(formatString), "%%d,%%%d[^\n]", max_message_size);
+    snprintf(formatChaine, sizeof(formatChaine), "%%d,%%%d[^\n]", MAX_INT);
 
-    if (sscanf(msgData, formatString, &recepteur_id, msgContent) < 2) {
-        sendMessage(client_fd, strcat(ERROR_INCORRECT_FORMAT, ": Mauvais format de requete\n"));
+    if (sscanf(donneesMessage, formatChaine, &idDestinataire, contenuMessage) < 2) {
+        sendErrorMessage(fdClient, ERROR_INCORRECT_FORMAT, "Mauvais format de requête\n");
         return 1;
     }
-    if (isBlockedOrBanned(recepteur_id) == 1) {
-        sendMessage(client_fd,  strcat(ERROR_FORBIDDEN, ": Utilisateur bloqué ou banni\n"));
-        return 1;
-    }
-    int emetteur_id = client_id;
-
-    int messageId = createMessage(emetteur_id, recepteur_id, msgContent);
-    if (messageId == 0) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de l'envoi du message\n"));
+    if (strlen(contenuMessage) > tailleMaxMessage) {
+        sendErrorMessage(fdClient, ERROR_BAD_REQUEST, "Message trop long\n");
         return 1;
     }
 
-    char response[50];
-    snprintf(response, sizeof(response), "%s:%d",SUCCESS_OK, messageId);
-    sendMessage(client_fd, response);
+    if (isBlockedOrBanned(idDestinataire) == 1) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Utilisateur bloqué ou banni\n");
+        return 1;
+    }
+    int idExpediteur = idClient;
+
+    int idMessage = createMessage(idExpediteur, idDestinataire, contenuMessage);
+    if (idMessage == 0) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de l'envoi du message\n");
+        return 1;
+    }
+
+    char reponse[50];
+    snprintf(reponse, sizeof(reponse), "%s:%d", SUCCESS_OK, idMessage);
+    sendMessage(fdClient, reponse);
     return 1;
 }
 
-int listUsers(const char* message, int client_fd) {
+int listUsers(const char* message, int fdClient) {
     if (strcmp(message, "GETUSERS") != 0) {
         return 0;
     }
 
-    PGconn *conn = getConnection();
-    if (!conn) {
-        sendMessage(client_fd,strcat(ERROR_INTERNAL_ERROR, ": Connexion BDD échouée\n"));
+    PGconn *connexion = getConnection();
+    if (!connexion) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Connexion BDD échouée\n");
         return 1;
     }
 
-    PGresult *res = getUsersList(isProClient);
-    if (!res) {
-        sendMessage(client_fd, strcat(ERROR_INTERNAL_ERROR, ": Échec de récupération des utilisateurs\n"));
-        PQfinish(conn);
+    PGresult *resultatReq = getUsersList(estClientPro);
+    if (!resultatReq) {
+        sendErrorMessage(fdClient, ERROR_INTERNAL_ERROR, "Échec de récupération des utilisateurs\n");
+        PQfinish(connexion);
         return 1;
     }
 
-    int num_rows = PQntuples(res);
-    sendMessage(client_fd, strcat(SUCCESS_OK, ":")); 
+    int nombreLignes = PQntuples(resultatReq);
+    sendErrorMessage(fdClient, SUCCESS_OK, "\n");
 
-    for (int i = 0; i < num_rows; i++) {
-        char user_buffer[256];
+    for (int i = 0; i < nombreLignes; i++) {
+        char tamponUtilisateur[256];
 
-        if (isProClient) {
-            snprintf(user_buffer, sizeof(user_buffer), "user:%s,%s\n", 
-                     PQgetvalue(res, i, 0), PQgetvalue(res, i, 1));
+        if (estClientPro) {
+            snprintf(tamponUtilisateur, sizeof(tamponUtilisateur), "user:%s,%s\n", 
+                     PQgetvalue(resultatReq, i, 0), PQgetvalue(resultatReq, i, 1));
         } else {
-            snprintf(user_buffer, sizeof(user_buffer), "user:%s,%s,%s\n", 
-                     PQgetvalue(res, i, 0), PQgetvalue(res, i, 1), PQgetvalue(res, i, 2));
+            snprintf(tamponUtilisateur, sizeof(tamponUtilisateur), "user:%s,%s,%s\n", 
+                     PQgetvalue(resultatReq, i, 0), PQgetvalue(resultatReq, i, 1), PQgetvalue(resultatReq, i, 2));
         }
-        sendMessage(client_fd, user_buffer);
+        printf("%s", tamponUtilisateur);
+        sendMessage(fdClient, tamponUtilisateur);
     }
-    sendMessage(client_fd, "userend\n");
+    sendMessage(fdClient, "userend\n");
 
-    PQclear(res);
-    PQfinish(conn);
+    PQclear(resultatReq);
+    PQfinish(connexion);
     return 1;
 }
 
 
-int login(const char* message, int client_fd, int *client_id, int *isProClient)  {
+int login(const char* message, int fdClient, int *idClient, int *estClientPro)  {
     if (strncmp(message, "LOGIN:", 6) != 0) {
         return 0;
     }
     
-    const char *apiKey = message + 6;
-    while (*apiKey == ' ') {
-        apiKey++;
+    const char *cleApi = message + 6;
+    while (*cleApi == ' ') {
+        cleApi++;
     }
     
-    if (strlen(apiKey) == 0) {
-        sendMessage(client_fd, strcat(ERROR_DENIED, ": Mauvais format de clé\n"));
+    if (strlen(cleApi) == 0) {
+        sendErrorMessage(fdClient, ERROR_BAD_REQUEST, "Clé d'API manquante\n");
         return 1;
     }
     
-    if (strcmp(apiKey, admin_api_key) == 0) {
-        *client_id = -2;
-        *isProClient = 1;
-        sendMessage(client_fd, strcat(SUCCESS_OK, ": Admin connecté\n"));
+    if (strcmp(cleApi, cleApiAdmin) == 0) {
+        *idClient = -2;
+        *estClientPro = 1;
+        sendErrorMessage(fdClient, SUCCESS_OK, "Connection Admin\n");
         return 1;
     }
     
-    if (!loginWithKey(apiKey, isProClient, client_id)) {
-        *client_id = -1;
-        sendMessage(client_fd, strcat(ERROR_DENIED, ": Clé invalide\n"));
+    if (!loginWithKey(cleApi, estClientPro, idClient)) {
+        *idClient = -1;
+        sendErrorMessage(fdClient, ERROR_NOT_LOGIN, "Connexion échouée\n");
         return 1;
     }
     
-    char response[50];
-    snprintf(response, sizeof(response), "%s:%d,%d",SUCCESS_OK ,*client_id, *isProClient);
-    sendMessage(client_fd, response);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Connexion réussie\n");
     return 1;
 }
 
-int quitServer(const char* message, int client_fd, int *client_id, int *isProClient) {
+int quitServer(const char* message, int fdClient, int *idClient, int *estClientPro) {
     if (strcmp(message, "QUIT") != 0) {
         return 0; 
     }
 
-    *client_id = -1;
-    *isProClient = 0;
+    *idClient = -1;
+    *estClientPro = 0;
 
-    sendMessage(client_fd, SUCCESS_OK);
+    sendMessage(fdClient, SUCCESS_OK);
 
-    close(client_fd);
+    close(fdClient);
     printf("Client disconnected.\n");
 
     return -1; 
@@ -633,40 +810,40 @@ int quitServer(const char* message, int client_fd, int *client_id, int *isProCli
 
 
 
-void logInFile(int level, const char* text) {
-    if (isVerbose) {
-        printf("%s\n", text);
+void logInFile(int niveau, const char* texte) {
+    if (estVerbeux) {
+        printf("%s\n", texte);
     }
 
-    const char* level_prefix;
-    FILE* file;
+    const char* prefixNiveau;
+    FILE* fichier;
 
-    switch (level) {
+    switch (niveau) {
         case 0:
-            level_prefix = "[INFO]";
+            prefixNiveau = "[INFO]";
             break;
         case 1:
-            level_prefix = "[WARN]";
+            prefixNiveau = "[WARN]";
             break;
         case 2:
-            level_prefix = "[ERROR]";
+            prefixNiveau = "[ERROR]";
             break;
         default:
-            level_prefix = "[UNKNOWN]";
+            prefixNiveau = "[UNKNOWN]";
     }
 
-    file = fopen(log_file_path, "a");
-    if (file == NULL) {
+    fichier = fopen(cheminFichierLog, "a");
+    if (fichier == NULL) {
         perror("Erreur lors de l'ouverture du fichier de log");
         exit(EXIT_FAILURE);
     }
 
-    char* date_heure = getDateHeure();
+    char* dateHeure = getDateHeure();
 
-    fprintf(file, "%s[%s]: %s\n", level_prefix, date_heure, text);
+    fprintf(fichier, "%s[%s]: %s\n", prefixNiveau, dateHeure, texte);
 
-    free(date_heure);
-    fclose(file);
+    free(dateHeure);
+    fclose(fichier);
 }
 
 
@@ -674,13 +851,13 @@ char* getDateHeure() {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    char* date_heure = malloc(72 * sizeof(char)); 
-    if (date_heure == NULL) {
+    char* dateHeure = malloc(72 * sizeof(char)); 
+    if (dateHeure == NULL) {
         perror("Erreur d'allocation de mémoire");
         exit(EXIT_FAILURE);
     }
 
-    snprintf(date_heure, 72, "%04d-%02d-%02d:%02d:%02d:%02d",
+    snprintf(dateHeure, 72, "%04d-%02d-%02d:%02d:%02d:%02d",
              tm.tm_year + 1900,
              tm.tm_mon + 1,
              tm.tm_mday,
@@ -688,7 +865,7 @@ char* getDateHeure() {
              tm.tm_min,
              tm.tm_sec);
 
-    return date_heure;
+    return dateHeure;
 }
 
 void help() {
@@ -696,80 +873,88 @@ void help() {
     printf("Options disponibles :\n");
     printf("  --help        Affiche cette aide et quitte.\n");
     printf("  --verbose     Active le mode verbeux.\n");
+    printf("  --test        Fait des tests.\n");
     printf("\nPour plus d'informations veuillez consulter Protocole.md ou Config.cfg\n");
 }
 
-void logPunishment(const char *action, int emetteur_id, int compte_id) {
-    FILE *file = fopen("punishment.txt", "a");
-    if (file == NULL) {
+void logPunishment(const char *action, int idEmetteur, int idCompte) {
+    FILE *fichier = fopen(PUNISHMENT_FILE, "a");
+    if (fichier == NULL) {
         perror("Erreur lors de l'ouverture du fichier punishment.txt");
         exit(EXIT_FAILURE);
     }
 
-    char *date_heure = getDateHeure();
-    fprintf(file, "[%s]:%s,%d,%d\n", date_heure, action, emetteur_id, compte_id);
+    char *dateHeure = getDateHeure();
+    fprintf(fichier, "[%s]:%s,%d,%d\n", dateHeure, action, idEmetteur, idCompte);
 
-    free(date_heure);
-    fclose(file);
+    free(dateHeure);
+    fclose(fichier);
 }
 
-int canModerate(int compte_id) {
-    return (compte_id == -2 || isProfessional(compte_id));
+int canModerate(int idCompte) {
+    return (idCompte == -2 || isProfessional(idCompte));
 }
-int blockUser(const char* message, int client_id) {
+int blockUser(const char* message, int fdClient) {
     
-    int compte_id;
-    if (sscanf(message, "BLOCKUSR:%d", &compte_id) != 1) {
+    int idCompte;
+    if (sscanf(message, "BLOCKUSR:%d", &idCompte) != 1) {
         return 0; 
     }
 
-    if (!canModerate(client_id)) {
+    if (!canModerate(idClient)) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Action non autorisée\n");
         return 1; 
     }
 
-    logPunishment("block", client_id, compte_id);
+    logPunishment("block", idClient, idCompte);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Utilisateur bloqué\n");
     return 1;
 }
 
-int unblockUser(const char* message, int client_id) {
-    int compte_id;
-    if (sscanf(message, "UNBLOCKUSR:%d", &compte_id) != 1) {
+int unblockUser(const char* message, int fdClient) {
+    int idCompte;
+    if (sscanf(message, "UNBLOCKUSR:%d", &idCompte) != 1) {
         return 0;
     }
 
-    if (!canModerate(client_id)) {
+    if (!canModerate(idClient)) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Action non autorisée\n");
         return 1;
     }
 
-    logPunishment("unblock", client_id, compte_id);
+    logPunishment("unblock", idClient, idCompte);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Utilisateur débloqué\n");
     return 1;
 }
 
-int banUser(const char* message, int client_id) {
-    int compte_id;
-    if (sscanf(message, "BANUSR:%d", &compte_id) != 1) {
+int banUser(const char* message, int fdClient) {
+    int idCompte;
+    if (sscanf(message, "BANUSR:%d", &idCompte) != 1) {
         return 0;
     }
-
-    if (!canModerate(client_id)) {
+    if (!canModerate(idClient)) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Action non autorisée\n");
         return 1;
     }
 
-    logPunishment("ban", client_id, compte_id);
+    logPunishment("ban", idClient, idCompte);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Utilisateur banni\n");
     return 1;
 }
 
-int unbanUser(const char* message, int client_id) {
-    int compte_id;
-    if (sscanf(message, "UNBANUSR:%d", &compte_id) != 1) {
+int unbanUser(const char* message, int fdClient) {
+    int idCompte;
+    if (sscanf(message, "UNBANUSR:%d", &idCompte) != 1) {
         return 0;
     }
 
-    if (!canModerate(client_id)) {
+    if (!canModerate(idClient)) {
+        sendErrorMessage(fdClient, ERROR_FORBIDDEN, "Action non autorisée\n");
         return 1;
     }
 
-    logPunishment("unban", client_id, compte_id);
+    logPunishment("unban", idClient, idCompte);
+    sendErrorMessage(fdClient, SUCCESS_OK, "Utilisateur débanni\n");
     return 1;
 }
 
@@ -783,121 +968,177 @@ time_t parseDateTime(const char *datetime) {
     t.tm_mon -= 1;
     return mktime(&t);
 }
-int isBlockedOrBanned(int receveur_id) {
-    if (client_id == -2) {
+int isBlockedOrBanned(int idDestinataire) {
+    if (idClient == -2) {
         return 0;
     }
 
-    FILE *file = fopen(PUNISHMENT_FILE, "r");
-    if (!file) {
+    FILE *fichier = fopen(PUNISHMENT_FILE, "r");
+    if (!fichier) {
         perror("Erreur lors de l'ouverture du fichier punishment.txt");
         return -1;
     }
 
-    char line[128];
+    char ligne[128];
     char action[10];
-    int emetteur, cible;
-    char date_heure[20];
+    int idEmetteur, idCible;
+    char dateHeure[20];
     
-    time_t now = time(NULL);
+    time_t maintenant = time(NULL);
 
-    while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "[%19[^]]]:%9[^,],%d,%d", date_heure, action, &emetteur, &cible) != 4) {
-            continue; // Ligne mal formée
+    while (fgets(ligne, sizeof(ligne), fichier)) {
+        if (sscanf(ligne, "[%19[^]]]:%9[^,],%d,%d", dateHeure, action, &idEmetteur, &idCible) != 4) {
+            continue; 
         }
 
-        time_t action_time = parseDateTime(date_heure);
-        if (action_time == -1) continue;
+        time_t tempsAction = parseDateTime(dateHeure);
+        if (tempsAction == -1) continue;
 
-        int duration = 0;
-        if (strcmp(action, "block") == 0) duration = block_duration * 3600;
-        if (strcmp(action, "ban") == 0) duration = (ban_duration == 0) ? -1 : ban_duration * 3600;
+        int duree = 0;
+        if (strcmp(action, "block") == 0) duree = dureeBlocage * 3600;
+        if (strcmp(action, "ban") == 0) duree = (dureeBanissement == 0) ? -1 : dureeBanissement * 3600;
 
         if (strcmp(action, "ban") == 0) {
-            if (emetteur == -2 && cible == client_id ) { 
-                fclose(file);
+            if (idEmetteur == -2 && idCible == idClient ) { 
+                fclose(fichier);
                 return 1;
             }
-            if (cible == client_id  && emetteur == receveur_id) { 
-                if (duration == -1 || (now - action_time) <= duration) {
-                    fclose(file);
+            if (idCible == idClient  && idEmetteur == idDestinataire) { 
+                if (duree == -1 || (maintenant - tempsAction) <= duree) {
+                    fclose(fichier);
                     return 1;
                 }
             }
         }
 
-        if (strcmp(action, "block") == 0 && cible == client_id  && emetteur == receveur_id) {
-            if ((now - action_time) <= duration) {
-                fclose(file);
+        if (strcmp(action, "block") == 0 && idCible == idClient  && idEmetteur == idDestinataire) {
+            if ((maintenant - tempsAction) <= duree) {
+                fclose(fichier);
                 return 1;
             }
         }
 
-        if ((strcmp(action, "unblock") == 0 || strcmp(action, "unban") == 0) && cible == client_id ) {
-            if (emetteur == receveur_id || emetteur == -2) {
-                fclose(file);
+        if ((strcmp(action, "unblock") == 0 || strcmp(action, "unban") == 0) && idCible == idClient ) {
+            if (idEmetteur == idDestinataire || idEmetteur == -2) {
+                fclose(fichier);
                 return 0;
             }
         }
     }
 
-    fclose(file);
+    fclose(fichier);
     return 0;
 }
 
-void logInFileWithIp(int level, const char* client_ip, const char* text) {
-    char log_message[1024]; 
+void logInFileWithIp(int niveau, const char* ipClient, const char* texte) {
+    char messageLog[1024]; 
 
-    snprintf(log_message, sizeof(log_message), "[%s] %s", client_ip, text);
+    snprintf(messageLog, sizeof(messageLog), "[%s] %s", ipClient, texte);
 
-    logInFile(level, log_message);
+    logInFile(niveau, messageLog);
 }
 
 bool isSpamming() {
-    FILE *file = fopen(log_file_path, "r");
-    if (file == NULL) {
+    FILE *fichier = fopen(cheminFichierLog, "r");
+    if (fichier == NULL) {
         perror("Erreur lors de l'ouverture du fichier de log");
         return false; 
     }
 
-    time_t now = time(NULL);
-    struct tm *current_time = localtime(&now);
+    time_t maintenant = time(NULL);
 
-    int count_last_minute = 0;
-    int count_last_hour = 0;
-    char line[1024];
+    int compteurDerniereMinute = 0;
+    int compteurDerniereHeure = 0;
+    char ligne[1024];
 
-    while (fgets(line, sizeof(line), file)) {
-        int log_year, log_month, log_day, log_hour, log_minute, log_second;
-        char log_ip[BUFFER_SIZE];
+    while (fgets(ligne, sizeof(ligne), fichier)) {
+        int anneeLog, moisLog, jourLog, heureLog, minuteLog, secondeLog;
+        char ipLog[BUFFER_SIZE];
 
-        if (sscanf(line, "[INFO][%d-%d-%d:%d:%d:%d]: [%255[^]]]%*[^\n]", 
-                   &log_year, &log_month, &log_day, 
-                   &log_hour, &log_minute, &log_second, log_ip) == 7) {
-            if (strcmp(log_ip, client_ip) == 0) {
-                struct tm log_time = {0};
-                log_time.tm_year = log_year - 1900;
-                log_time.tm_mon = log_month - 1;
-                log_time.tm_mday = log_day;
-                log_time.tm_hour = log_hour;
-                log_time.tm_min = log_minute;
-                log_time.tm_sec = log_second;
+        if (sscanf(ligne, "[INFO][%d-%d-%d:%d:%d:%d]: [%255[^]]]%*[^\n]", 
+                   &anneeLog, &moisLog, &jourLog, 
+                   &heureLog, &minuteLog, &secondeLog, ipLog) == 7) {
+            if (strcmp(ipLog, ipClient) == 0) {
+                struct tm tempsLog = {0};
+                tempsLog.tm_year = anneeLog - 1900;
+                tempsLog.tm_mon = moisLog - 1;
+                tempsLog.tm_mday = jourLog;
+                tempsLog.tm_hour = heureLog;
+                tempsLog.tm_min = minuteLog;
+                tempsLog.tm_sec = secondeLog;
 
-                time_t log_timestamp = mktime(&log_time);
-                double diff_seconds = difftime(now, log_timestamp);
-                if (diff_seconds >= 0 && diff_seconds <= 60) {
-                    count_last_minute++;
+                time_t timestampLog = mktime(&tempsLog);
+                double diffSecondes = difftime(maintenant, timestampLog);
+                if (diffSecondes >= 0 && diffSecondes <= 60) {
+                    compteurDerniereMinute++;
                 }
-                if (diff_seconds >= 0 && diff_seconds <= 3600) {
-                    count_last_hour++;
+                if (diffSecondes >= 0 && diffSecondes <= 3600) {
+                    compteurDerniereHeure++;
                 }
             }
         }
     }
-    fclose(file);
+    fclose(fichier);
 
-    return (count_last_minute >= max_requests_per_minute || count_last_hour >= max_requests_per_hour);
+    return (compteurDerniereMinute >= nbRequetesMaxParMinute || compteurDerniereHeure >= nbRequetesMaxParHeure);
 }
-void sendMessage(int client_fd, const char* message) {
-    write(client_fd, message, strlen(message));
+void sendMessage(int fdClient, const char* message) {
+    write(fdClient, message, strlen(message));
+}
+void sendErrorMessage(int fdClient, const char* codeErreur, const char* texte) {
+    char tampon[256];
+    strcpy(tampon, codeErreur);
+    strcat(tampon, ": ");
+    strcat(tampon, texte);
+    sendMessage(fdClient, tampon);
+}
+
+
+void test() {
+    printf("Début des tests\n");
+    //bdd
+
+    PGconn *connexion = getConnection();
+    if (!connexion) {
+        printf("Test connexion BDD: Echec\n");
+    } else {
+        printf("Test connexion BDD: OK\n");
+        PQfinish(connexion);
+    }
+    // test  date et heure
+    char *dateHeureStr = getDateHeure();
+    if (dateHeureStr) {
+        printf("Test getDateHeure: %s\n", dateHeureStr);
+        int annee, mois, jour, heure, minute, seconde;
+        if (sscanf(dateHeureStr, "%d-%d-%d:%d:%d:%d", &annee, &mois, &jour, &heure, &minute, &seconde) == 6) {
+            printf("Test getDateHeure: Format correct\n");
+        } else {
+            printf("Test getDateHeure: Format incorrect\n");
+        }
+    } else {
+        printf("Test getDateHeure: Echec\n");
+    }
+    free(dateHeureStr);
+
+    const char *validDateTime = "2025-02-02:12:34:56";
+    time_t parsedTime = parseDateTime(validDateTime);
+    if (parsedTime != -1) {
+        printf("Test parseDateTime (valide): OK (%ld)\n", parsedTime);
+    } else {
+        printf("Test parseDateTime (valide): Echec\n");
+    }
+
+    const char *invalidDateTime = "invalid-date-format";
+    parsedTime = parseDateTime(invalidDateTime);
+    if (parsedTime == -1) {
+        printf("Test parseDateTime (invalide): OK\n");
+    } else {
+        printf("Test parseDateTime (invalide): Echec\n");
+    }
+
+    // logs
+
+    logInFile(1, "Test logInFile");
+    logInFileWithIp(1, "192.168.0.1", "Test logInFileWithIp");
+
 }
