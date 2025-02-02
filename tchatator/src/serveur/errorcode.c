@@ -25,4 +25,4 @@
 #define ERROR_MESSAGE_MODIFY_FAILED "112/ERROR: Failed to modify message"  
 #define ERROR_UNAUTHORIZED_MODIFICATION "113/ERROR: Unauthorized to modify message" 
 
-#endif // ERRORCODE_H
+#endif 
