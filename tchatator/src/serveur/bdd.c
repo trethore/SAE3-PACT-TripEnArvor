@@ -33,7 +33,7 @@ PGresult* getAllMembers() {
     }
 
     PQfinish(conn);
-    return res; // Caller must call PQclear() after use
+    return res; 
 }
 PGresult* getAllPrivateProfessionals() {
     PGconn *conn = getConnection();
@@ -49,7 +49,7 @@ PGresult* getAllPrivateProfessionals() {
     }
 
     PQfinish(conn);
-    return res; // Caller must call PQclear() after use
+    return res;
 }
 PGresult* getAllPublicProfessionals() {
     PGconn *conn = getConnection();
@@ -302,4 +302,24 @@ int isMessageFromSender(int msgid, int client_id) {
     PQclear(res);
 
     return (count > 0) ? 1 : 0;
+}
+
+char* getEmailFromId(int id_compte) {
+    PGconn *conn = getConnection();
+    if (!conn) return NULL;
+
+    char query[256];
+    snprintf(query, sizeof(query), "SELECT email FROM sae._compte WHERE id_compte = %d;", id_compte);
+
+    PGresult *res = PQexec(conn, query);
+    if (PQresultStatus(res) != PGRES_TUPLES_OK || PQntuples(res) == 0) {
+        PQclear(res);
+        PQfinish(conn);
+        return NULL;
+    }
+
+    char *email = strdup(PQgetvalue(res, 0, 0));
+    PQclear(res);
+    PQfinish(conn);
+    return email;
 }

@@ -53,6 +53,15 @@ int deleteUserMessage(const char* message, int client_fd);
 int listUserMessage(const char* message, int client_fd);
 int listUserHistory(const char* message, int client_fd);
 
+int blockUser(const char* message, int client_fd);
+int unblockUser(const char* message, int client_fd);
+int banUser(const char* message, int client_fd);
+int unbanUser(const char* message, int client_fd);
+bool isBannedOrBlocked();
+
+bool isSpamming();
+
+
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--help") == 0) {
@@ -204,7 +213,7 @@ void startSocketServer() {
             }
         }
 
-        close(client_fd); // Fermer la connexion avec le client
+        close(client_fd); 
     }
 }
 
@@ -214,6 +223,10 @@ int gereMessage(const char* message, int client_fd) {
     result |= login(message, client_fd, &client_id, &isProClient);
     result |= listUsers(message, client_fd);
     result |= sendUserMessage(message, client_fd);
+    result |= modifyUserMessage(message, client_fd);
+    result |= deleteUserMessage(message, client_fd);
+    result |= listUserMessage(message, client_fd);
+    result |= listUserHistory(message, client_fd);
 
     if (quitServer(message, client_fd, &client_id, &isProClient) == -1) {
         return -1;
@@ -225,6 +238,183 @@ int gereMessage(const char* message, int client_fd) {
     return 0;
 
 }
+
+int listUserHistory(const char* message, int client_fd) {
+     int message_id = -1;
+
+    if (strncmp(message, "LISTHIST:", 9) == 0) {
+        if (sscanf(message + 9, "%d", &message_id) != 1) {
+            write(client_fd, "116/MISFMT:Format incorrect\n", 28);
+            return 1;
+        }
+    } else if (strcmp(message, "LISTHIST") != 0) {
+        write(client_fd, "116/MISFMT:Format incorrect\n", 28);
+        return 0;
+    }
+
+    PGconn *conn = getConnection();
+    if (!conn) {
+        write(client_fd, "500/ERROR:Connexion BDD échouée\n", 31);
+        return 1;
+    }
+
+    char query[512];
+    if (message_id == -1) {
+        snprintf(query, sizeof(query),
+            "SELECT id_emeteur, id_receveur, date_envoi, date_modif, contenu "
+            "FROM sae._message WHERE (id_emeteur = %d OR id_receveur = %d) "
+            "AND lu = TRUE AND supprime = FALSE "
+            "ORDER BY date_envoi DESC LIMIT %d;",
+            client_id, client_id, history_block_size);
+    } else {
+        snprintf(query, sizeof(query),
+            "SELECT id_emeteur, id_receveur, date_envoi, date_modif, contenu "
+            "FROM sae._message WHERE (id_emeteur = %d OR id_receveur = %d) "
+            "AND lu = TRUE AND supprime = FALSE AND id_message <= %d "
+            "ORDER BY date_envoi DESC LIMIT %d;",
+            client_id, client_id, message_id, history_block_size);
+    }
+
+    PGresult *res = PQexec(conn, query);
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        write(client_fd, "500/ERROR:Échec de récupération des messages\n", 46);
+        PQclear(res);
+        PQfinish(conn);
+        return 1;
+    }
+
+    int num_rows = PQntuples(res);
+    write(client_fd, "1/OK:\n", 6);
+
+    for (int i = 0; i < num_rows; i++) {
+        int sender_id = atoi(PQgetvalue(res, i, 0));
+        int receiver_id = atoi(PQgetvalue(res, i, 1));
+        char *date_envoi = PQgetvalue(res, i, 2);
+        char *date_modif = PQgetvalue(res, i, 3);
+        char *content = PQgetvalue(res, i, 4);
+
+        char *sender_email = getEmailFromId(sender_id);
+        char *receiver_email = getEmailFromId(receiver_id);
+
+        if (sender_email && receiver_email) {
+            char msg_buffer[1024];
+            snprintf(msg_buffer, sizeof(msg_buffer), 
+                     "msg:%s,%s,%s,%s,%s\n", sender_email, receiver_email, date_envoi, date_modif, content);
+            write(client_fd, msg_buffer, strlen(msg_buffer));
+        }
+
+        free(sender_email);
+        free(receiver_email);
+    }
+
+    write(client_fd, "msgend\n", 7);
+
+    PQclear(res);
+    PQfinish(conn);
+    return 1;
+}
+
+int listUserMessage(const char* message, int client_fd) {
+     if (strcmp(message, "LISTMSG") != 0) {
+        write(client_fd, "116/MISFMT:Format incorrect\n", 28);
+        return 0;
+    }
+
+    PGconn *conn = getConnection();
+    if (!conn) {
+        write(client_fd, "500/ERROR:Connexion BDD échouée\n", 31);
+        return 1;
+    }
+
+    char query[256];
+    snprintf(query, sizeof(query),
+        "SELECT id_message, id_emeteur, id_receveur, contenu FROM sae._message "
+        "WHERE id_receveur = %d AND lu = FALSE AND supprime = FALSE;", client_id);
+
+    PGresult *res = PQexec(conn, query);
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        write(client_fd, "500/ERROR:Échec de récupération des messages\n", 46);
+        PQclear(res);
+        PQfinish(conn);
+        return 1;
+    }
+
+    int num_rows = PQntuples(res);
+    write(client_fd, "1/OK:\n", 6); 
+
+    for (int i = 0; i < num_rows; i++) {
+        int msg_id = atoi(PQgetvalue(res, i, 0));
+        int sender_id = atoi(PQgetvalue(res, i, 1));
+        int receiver_id = atoi(PQgetvalue(res, i, 2));
+        char *content = PQgetvalue(res, i, 3);
+
+        char *sender_email = getEmailFromId(sender_id);
+        char *receiver_email = getEmailFromId(receiver_id);
+
+        if (sender_email && receiver_email) {
+            char msg_buffer[1024];
+            snprintf(msg_buffer, sizeof(msg_buffer), "msg:%s,%s,%s\n", sender_email, receiver_email, content);
+            write(client_fd, msg_buffer, strlen(msg_buffer));
+        }
+
+        char update_query[256];
+        snprintf(update_query, sizeof(update_query), 
+                 "UPDATE sae._message SET lu = TRUE WHERE id_message = %d;", msg_id);
+        PGresult *update_res = PQexec(conn, update_query);
+
+        if (PQresultStatus(update_res) != PGRES_COMMAND_OK) {
+            write(client_fd, "500/ERROR:Impossible de marquer comme lu\n", 42);
+        }
+
+        PQclear(update_res);
+
+        free(sender_email);
+        free(receiver_email);
+    }
+
+    write(client_fd, "msgend\n", 7); 
+
+    PQclear(res);
+    PQfinish(conn);
+    return 1;
+}
+
+
+int deleteUserMessage(const char* message, int client_fd) {
+    int msgid;
+    
+    if (sscanf(message, "DLTMSG:%d", &msgid) != 1) {
+        write(client_fd, "116/MISFMT:Format incorrect\n", 28);
+        return 0;
+    }
+
+    PGconn *conn = getConnection();
+    if (!conn) {
+        write(client_fd, "500/ERROR:Connexion BDD échouée\n", 31);
+        return 1;
+    }
+
+    int is_sender = isMessageFromSender(msgid, client_id);
+    int is_admin = (client_id == -2);
+
+    if (!is_sender && !is_admin) {
+        write(client_fd, "103/FORBIDDEN:Suppression non autorisée\n", 39);
+        PQfinish(conn);
+        return 1;
+    }
+
+    if (!deleteMessage(msgid)) {
+        write(client_fd, "500/ERROR:Échec de suppression\n", 30);
+        PQfinish(conn);
+        return 1;
+    }
+
+    write(client_fd, "1/OK:Message supprimé\n", 22);
+    PQfinish(conn);
+    return 1;
+}
+
 
 int modifyUserMessage(const char* message, int client_fd) {
     if (strncmp(message, "MDFMSG:", 7) != 0) {
@@ -454,4 +644,207 @@ void help() {
     printf("  --help        Affiche cette aide et quitte.\n");
     printf("  --verbose     Active le mode verbeux.\n");
     printf("\nPour plus d'informations veuillez consulter Protocole.md ou Config.cfg\n");
+}
+
+void logPunishment(const char *action, int emetteur_id, int compte_id) {
+    FILE *file = fopen("punishment.txt", "a");
+    if (file == NULL) {
+        perror("Erreur lors de l'ouverture du fichier punishment.txt");
+        exit(EXIT_FAILURE);
+    }
+
+    char *date_heure = getDateHeure();
+    fprintf(file, "[%s]:%s,%d,%d\n", date_heure, action, emetteur_id, compte_id);
+
+    free(date_heure);
+    fclose(file);
+}
+
+int canModerate(int compte_id) {
+    return (compte_id == -2 || isProfessional(compte_id));
+}
+int blockUser(const char* message, int client_id) {
+    int compte_id;
+    if (sscanf(message, "BLOCKUSR:%d", &compte_id) != 1) {
+        return -1; 
+    }
+
+    if (!canModerate(client_id)) {
+        return -2; 
+    }
+
+    logPunishment("block", client_id, compte_id);
+    return 0;
+}
+
+int unblockUser(const char* message, int client_id) {
+    int compte_id;
+    if (sscanf(message, "UNBLOCKUSR:%d", &compte_id) != 1) {
+        return -1;
+    }
+
+    if (!canModerate(client_id)) {
+        return -2;
+    }
+
+    logPunishment("unblock", client_id, compte_id);
+    return 0;
+}
+
+int banUser(const char* message, int client_id) {
+    int compte_id;
+    if (sscanf(message, "BANUSR:%d", &compte_id) != 1) {
+        return -1;
+    }
+
+    if (!canModerate(client_id)) {
+        return -2;
+    }
+
+    logPunishment("ban", client_id, compte_id);
+    return 0;
+}
+
+int unbanUser(const char* message, int client_id) {
+    int compte_id;
+    if (sscanf(message, "UNBANUSR:%d", &compte_id) != 1) {
+        return -1;
+    }
+
+    if (!canModerate(client_id)) {
+        return -2;
+    }
+
+    logPunishment("unban", client_id, compte_id);
+    return 0;
+}
+
+time_t parseDateTime(const char *datetime) {
+    struct tm t = {0};
+    if (sscanf(datetime, "%d-%d-%d:%d:%d:%d", &t.tm_year, &t.tm_mon, &t.tm_mday,
+               &t.tm_hour, &t.tm_min, &t.tm_sec) != 6) {
+        return -1;
+    }
+    t.tm_year -= 1900;
+    t.tm_mon -= 1;
+    return mktime(&t);
+}
+int isBlockedOrBanned(int receveur_id) {
+    if (client_id == -2) {
+        return 0;
+    }
+
+    FILE *file = fopen("punishment.txt", "r");
+    if (!file) {
+        perror("Erreur lors de l'ouverture du fichier punishment.txt");
+        return -1;
+    }
+
+    char line[128];
+    char action[10];
+    int emetteur, cible;
+    char date_heure[20];
+    
+    time_t now = time(NULL);
+
+    while (fgets(line, sizeof(line), file)) {
+        if (sscanf(line, "[%19[^]]]:%9[^,],%d,%d", date_heure, action, &emetteur, &cible) != 4) {
+            continue; // Ligne mal formée
+        }
+
+        time_t action_time = parseDateTime(date_heure);
+        if (action_time == -1) continue;
+
+        int duration = 0;
+        if (strcmp(action, "block") == 0) duration = block_duration * 3600;
+        if (strcmp(action, "ban") == 0) duration = (ban_duration == 0) ? -1 : ban_duration * 3600;
+
+        if (strcmp(action, "ban") == 0) {
+            if (emetteur == -2 && cible == client_id ) { 
+                fclose(file);
+                return 1;
+            }
+            if (cible == client_id  && emetteur == receveur_id) { 
+                if (duration == -1 || (now - action_time) <= duration) {
+                    fclose(file);
+                    return 1;
+                }
+            }
+        }
+
+        if (strcmp(action, "block") == 0 && cible == client_id  && emetteur == receveur_id) {
+            if ((now - action_time) <= duration) {
+                fclose(file);
+                return 1;
+            }
+        }
+
+        if ((strcmp(action, "unblock") == 0 || strcmp(action, "unban") == 0) && cible == client_id ) {
+            if (emetteur == receveur_id || emetteur == -2) {
+                fclose(file);
+                return 0;
+            }
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
+void logInFileWithIp(int level, const char* client_ip, const char* text) {
+    char log_message[1024]; 
+
+    snprintf(log_message, sizeof(log_message), "[%s] %s", client_ip, text);
+
+    logInFile(level, log_message);
+}
+
+bool isSpamming() {
+    FILE *file = fopen(log_file_path, "r");
+    if (file == NULL) {
+        perror("Erreur lors de l'ouverture du fichier de log");
+        return false; 
+    }
+
+    time_t now = time(NULL);
+    struct tm *current_time = localtime(&now);
+
+    int count_last_minute = 0;
+    int count_last_hour = 0;
+
+    char line[1024];
+
+    while (fgets(line, sizeof(line), file)) {
+        char log_ip[BUFFER_SIZE];
+        int log_year, log_month, log_day, log_hour, log_minute, log_second;
+
+        if (sscanf(line, "%*s[%d-%d-%d %d:%d:%d]:[%255[^]]]", 
+                   &log_year, &log_month, &log_day, 
+                   &log_hour, &log_minute, &log_second, log_ip) == 7) {
+
+            if (strcmp(log_ip, client_ip) == 0) {
+                struct tm log_time = {0};
+                log_time.tm_year = log_year - 1900;
+                log_time.tm_mon = log_month - 1;
+                log_time.tm_mday = log_day;
+                log_time.tm_hour = log_hour;
+                log_time.tm_min = log_minute;
+                log_time.tm_sec = log_second;
+
+                time_t log_timestamp = mktime(&log_time);
+                double diff_seconds = difftime(now, log_timestamp);
+
+                if (diff_seconds <= 60) {
+                    count_last_minute++;
+                }
+                if (diff_seconds <= 3600) {
+                    count_last_hour++;
+                }
+            }
+        }
+    }
+
+    fclose(file);
+
+    return (count_last_minute >= max_requests_per_minute || count_last_hour >= max_requests_per_hour);
 }
