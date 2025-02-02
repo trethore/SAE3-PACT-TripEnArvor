@@ -63,10 +63,30 @@ void sha256Init(uint32_t state[8]) {
 }
 
 void sha256Update(uint32_t state[8], const uint8_t data[], uint64_t len) {
+   uint64_t processed = 0;
+    uint8_t block[64];
+
+    // Traitement des blocs complets
+    while (len - processed >= 64) {
+        memcpy(block, data + processed, 64);
+        sha256Transform(state, block);
+        processed += 64;
+    }
+
+    // Préparation du dernier bloc avec padding
     uint8_t buffer[64] = {0};
+    uint64_t remaining = len - processed;
+    memcpy(buffer, data + processed, remaining);
+    buffer[remaining] = 0x80;
+
+    // Si l'espace restant dans le bloc est insuffisant pour la longueur, traiter ce bloc
+    if (remaining >= 56) {
+        sha256Transform(state, buffer);
+        memset(buffer, 0, 64);
+    }
+
+    // Ajout de la longueur totale en bits sur les 8 derniers octets
     uint64_t bitlen = len * 8;
-    memcpy(buffer, data, len);
-    buffer[len] = 0x80;
     *((uint64_t*)&buffer[56]) = __builtin_bswap64(bitlen);
     sha256Transform(state, buffer);
 }

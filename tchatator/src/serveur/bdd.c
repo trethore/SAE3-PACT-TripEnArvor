@@ -215,9 +215,8 @@ int loginWithKey(const char *apiKey, int *isPro, int *compteId) {
         int id = atoi(PQgetvalue(res, i, 0));
         char *email = PQgetvalue(res, i, 1);
         char *password = PQgetvalue(res, i, 2);
-
-        char keyInput[512];
-        snprintf(keyInput, sizeof(keyInput), "%d%s%s", id, email, password);
+        char keyInput[1024];
+        snprintf(keyInput, sizeof(keyInput), "%d%.*s%.*s", id,500, email,500, password);
 
         char *generatedKey = computeSha256(keyInput);
 
@@ -254,10 +253,11 @@ PGresult* getUsersList(int isPro) {
     } else {
         snprintf(query, sizeof(query),
             "SELECT c.id_compte, c.email, "
-            "CASE WHEN p.siren IS NOT NULL THEN 'private' ELSE 'public' END AS pro_type "
+            "CASE WHEN p2.siren IS NOT NULL THEN 'private' ELSE 'public' END AS pro_type "
             "FROM sae.compte_professionnel_publique p "
             "FULL JOIN sae.compte_professionnel_prive p2 USING (id_compte) "
             "JOIN sae._compte c USING (id_compte);");
+
     }
 
     PGresult *res = PQexec(conn, query);
