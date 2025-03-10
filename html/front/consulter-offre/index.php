@@ -814,25 +814,29 @@ try {
             foreach ($avis as $a) { ?>
 
                 <div class="fond-blocs-avis">
-                    <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
-                    <div class="display-ligne">
-                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+
+                    <div class="display-ligne-espace">
+                        <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                         <div class="display-ligne">
+                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                            <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                            <div class="display-ligne">
 
-                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                                <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
 
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
 
-                            <?php } 
+                                <?php } 
 
-                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
 
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
 
-                            <?php } ?>
+                                <?php } ?>
 
+                            </div>
                         </div>
+                        <button>⋮</button>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
