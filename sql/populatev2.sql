@@ -3,13 +3,11 @@ SET SCHEMA 'sae';
 
 START TRANSACTION;
 
-INSERT INTO sae._prix (prix_ht) VALUES
-(0), (167), (334), (1668), (834);
 
-INSERT INTO sae._abonnement (nom, id_prix) VALUES
-('gratuit', 1),
-('standard', 2),
-('premium', 3);
+INSERT INTO sae._abonnement (nom_abonnement) VALUES
+('gratuit'),
+('standard'),
+('premium');
 
 INSERT INTO sae._date(date)
 VALUES 
@@ -36,22 +34,7 @@ VALUES
 ('2024-11-28 16:30:00'), 
 ('2024-11-29 10:00:00'), 
 ('2024-11-29 15:00:00'), 
-('2024-11-29 18:00:00'),
-('2025-01-17 00:00:00'), -- 25
-('2025-01-17 00:00:00'),
-('2025-01-17 00:00:00'),
-('2025-01-17 00:00:00'),
-('2025-01-17 00:00:00'),
-('2025-01-16 00:00:00'), -- 30
-('2025-01-16 00:00:00'),
-('2025-01-16 00:00:00'),
-('2025-01-16 00:00:00'),
-('2025-01-16 00:00:00'),
-('2025-01-15 00:00:00'), -- 35
-('2025-01-15 00:00:00'),
-('2025-01-15 00:00:00'),
-('2025-01-15 00:00:00');
-
+('2024-11-29 18:00:00');
 INSERT INTO _image (lien_fichier) VALUES
 ('image1.webp'),
 ('image2.webp'),
@@ -414,37 +397,28 @@ VALUES
 (4, 6, 'Nous sommes désolé du désagrément causé.', 10);
 
 -- 'En Relief', 'À la Une'
-INSERT INTO sae._option(nom_option, id_prix)
+INSERT INTO sae._option(nom_option)
 VALUES
-('En Relief', 5), 
-('À la Une', 4);
-INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, nb_semaine, id_date)
+('En Relief'), 
+('À la Une');
+
+INSERT INTO sae._historique_prix_abonnements(nom_abonnement, prix_ht_jour_abonnement) VALUES 
+('gratuit', 0),
+('standard', 167),
+('premium', 334);
+
+INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_abonnement) VALUES 
+('En Relief', 834),
+('À la Une', 1668);
+
+INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription)
 VALUES
-(2, 'En Relief', 0, 5),
-(4, 'En Relief', 0, 6),
-(6, 'En Relief', 0, 7),
-(5, 'À la Une', 0, 8),
-(7, 'À la Une', 0, 9),
-(8, 'À la Une', 0, 10);
-
--- Dates de mise en ligne
-INSERT INTO _offre_dates_mise_en_ligne(id_offre, id_date)
-VALUES 
-(1,25),
-(2,26),
-(3,27),
-(4,28),
-(5,29),
-(6,30),
-(7,31),
-(8,32),
-(9,33),
-(10,34),
-(11,35),
-(12,36),
-(13,37),
-(14,38);
-
+(2, 'En Relief',5),
+(4, 'En Relief', 6),
+(6, 'En Relief', 7),
+(5, 'À la Une',8),
+(7, 'À la Une', 9),
+(8, 'À la Une', 10);
 COMMIT;
 
 -- ROLLBACK;

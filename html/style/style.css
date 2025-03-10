@@ -4418,14 +4418,6 @@ input[type="tel"] {
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-front .en-relief-offre .sous-offre {
-    border: 5px solid var;
-}
-
-.liste-front .en-relief-offre .sous-offre .prix span {
-    color: var(--noir);
-}
-
 .liste-front .offre .sous-offre {
     border: 3px solid var(--violet-principal);
 }
@@ -4493,6 +4485,16 @@ input[type="tel"] {
     left: auto;
     top: auto;
     border-radius: 5px 5px 0px 0px;
+}
+
+.image-en-relief {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: auto;
+    z-index: 1000;
 }
 
 .liste-front .titre-offre {
@@ -4628,10 +4630,6 @@ input[type="tel"] {
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
-}
-
-.liste-front .en-relief-offre .prix {
-    background: var(--jaune-relief);
 }
 
 .liste-front .fond-filtres {

@@ -192,8 +192,8 @@ try {
         return $tag['nom_tag'];
     }, $tags);
 
-    // $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
-    // $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
+    $liste_tags = array("Culturel", "Patrimoine", "Histoire", "Urbain", "Nature", "Plein air", "Nautique", "Gastronomie", "Musée", "Atelier", "Musique", "Famille", "Cinéma", "Cirque", "Son et lumière", "Humour");
+    $liste_tags_restauration = array("Française", "Fruits de mer", "Asiatique", "Indienne", "Gastronomique", "Italienne", "Restauration rapide", "Creperie");
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
@@ -473,26 +473,36 @@ try {
                     <br>
                     </div>
 
-                    <!-- <h3>Tags de l'offre</h3>
+                    <h3>Tags de l'offre</h3>
                     <ul>
                     <?php 
-                        //if (!empty($tags)) {
-                           // foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" id="<?php //echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php //echo htmlentities($tag['nom_tag']); ?>" checked> <?php //echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php //} } 
-                    // foreach($liste_tags as $tag){ 
-                    //         if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php //echo htmlentities($tag); ?>" name="tags[]" value="<?php //echo htmlentities($tag); ?>"> <?php //echo htmlentities($tag); ?></li>
-                        <?php //}}
-                        // foreach ($liste_tags_restauration as $tag) { 
-                        //     if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php //echo htmlentities($tag); ?>" name="tag[]" value="<?php //echo htmlentities($tag); ?>"> <?php //echo htmlentities($tag); ?></li>
-                   
-                   <?php //} 
-                   // } ?> -->
-                         
+                        if (!empty($tags)) {
+                            foreach ($tags as $tag) { ?>
+                                <li>
+                                    <input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked>
+                                    <?php echo htmlentities($tag['nom_tag']); ?>
+                                </li>
+                        <?php } } 
+
+                        // Ajout des tags spécifiques à la restauration
+                        if ($categorie == "restauration") {
+                            foreach ($liste_tags_restauration as $tag) { 
+                                if (!in_array($tag, $tag_names)) { ?>
+                                    <li>
+                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <?php echo htmlentities($tag); ?>
+                                    </li>
+                        <?php } } } else {
+                        // Ajout des autres tags généraux
+                            foreach ($liste_tags as $tag) { 
+                                if (!in_array($tag, $tag_names)) { ?>
+                                    <li>
+                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <?php echo htmlentities($tag); ?>
+                                    </li>
+                        <?php } } } ?>
                         
-                     </ul>   
+                    </ul>   
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0"> 
@@ -783,21 +793,29 @@ try {
             }
 
 
-            // if ($categorie !== "restauration") {
-            //     foreach ($liste_tags as $tag) {
-            //         if (isset($_POST[$tag])) {
-            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-            //         }
-            //     }
-            // }
-            // if ($categorie === "restauration") {
-            //     foreach ($liste_tags_restauration as $tag) {
-            //         if (isset($_POST[$tag])) {
-            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-            //         }
-            //     }
-            // }
-           
+            $tagsSelectionnes = [];
+
+            if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
+                if ($categorie !== "restauration") {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags)) { // Vérifie si le tag appartient bien à la liste des tags valides
+                            $tagsSelectionnes[] = $tag;
+                        }
+                    }
+                } else {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags_restauration)) { // Vérifie si le tag appartient à la liste des tags restauration
+                            $tagsSelectionnes[] = $tag;
+                        }
+                    }
+                }
+            }
+
+           foreach ($tagsSelectionnes as $tags){
+                echo $tags; 
+           }
+            
+
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
             
@@ -881,7 +899,7 @@ try {
                     }
                     echo $date_evenement;
                     echo "<br>";
-                    echo $id_date_event;
+                    //echo $id_date_event;
 
 
                     switch ($categorie) {
@@ -926,7 +944,7 @@ try {
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc   
+                            $query = "UPDATE sae.offre_parc_attraction
                             SET titre = ?,
                                 resume = ?, 
                                 ville =?,
