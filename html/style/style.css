@@ -4383,7 +4383,7 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .sous-offre {
-    border: 5px solid red;
+    border: 5px solid #ffbf00;
 }
 
 .liste-front .offre .sous-offre {
@@ -4591,7 +4591,7 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .prix {
-    background: red;
+    background: #ffbf00;
 }
 
 .liste-front .fond-filtres {
