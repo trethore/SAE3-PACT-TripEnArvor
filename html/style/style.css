@@ -4418,6 +4418,26 @@ input[type="tel"] {
     border-radius: 15px 15px 10px 10px;
 }
 
+.liste-front .en-relief-offre .sous-offre {
+    border: 5px solid #ffbf00;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 #ffbf00;
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
 .liste-front .offre .sous-offre {
     border: 3px solid var(--violet-principal);
 }
