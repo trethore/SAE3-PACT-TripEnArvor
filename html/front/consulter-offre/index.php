@@ -1010,8 +1010,6 @@ try {
         function toggleMenu(event, button, compteur) {
             event.stopPropagation();
             let menu = document.getElementById(`popup-menu-${compteur}`);
-
-            // Fermer tous les autres menus avant d'afficher le bon
             document.querySelectorAll(".popup-menu").forEach(m => {
                 if (m !== menu) m.style.display = "none";
             });
@@ -1023,7 +1021,7 @@ try {
 
             let rect = button.getBoundingClientRect();
             menu.style.top = `${rect.top + window.scrollY - 20}px`;
-            menu.style.left = `${rect.left + window.scrollX - 000}px`;
+            menu.style.left = `${rect.left + window.scrollX - 100}px`;
             menu.style.display = "block";
         }
 
