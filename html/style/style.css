@@ -4476,8 +4476,9 @@ input[type="tel"] {
     top: 0;
     left: 0;
     transform: translate(-50%, -50%);
-    width: 50px;
+    width: 65px;
     height: auto;
+    z-index: 1000;
 }
 
 .liste-front .titre-offre {
