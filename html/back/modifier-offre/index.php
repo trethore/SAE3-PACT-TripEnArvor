@@ -794,6 +794,11 @@ try {
 
             print_r($_POST['tag']);
             $tagsSelectionnes = [];
+            foreach ($_POST['tag'] as $tag) {
+                $tagsSelectionnes[] = $tag;
+            }
+            print_r($tagsSelectionnes);
+            
 
             if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
                 if ($categorie !== "restauration") {
