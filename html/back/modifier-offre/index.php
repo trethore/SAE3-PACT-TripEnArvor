@@ -792,7 +792,7 @@ try {
                 $categorie = $_POST['lacat'];
             }
 
-            print_r($_POST);
+            print_r($_POST['tag']);
             $tagsSelectionnes = [];
 
             if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
