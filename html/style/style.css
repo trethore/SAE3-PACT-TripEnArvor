@@ -3192,7 +3192,8 @@ h3 {
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
-    color: var(--violet-principal);
+    background-image: radial-gradient(circle, var(--violet-principal) 3px, transparent 11px);
+    background-size: 100% 33.33%;
 }
 
 .consulter-offre-front #avis>button,
@@ -3629,7 +3630,8 @@ h3 {
 }
 
 .consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
-    color: var(--orange-principale);
+    background-image: radial-gradient(circle, var(--orange-principale) 3px, transparent 11px);
+    background-size: 100% 33.33%;
 }
 
 .consulter-offre-back .titre-avis {
