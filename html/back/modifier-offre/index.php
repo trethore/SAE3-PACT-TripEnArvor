@@ -798,7 +798,7 @@ try {
                     $tagsSelectionnes[] = $tag;
                 }
             }
-        
+            print_r($tagsSelectionnes);
 
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
