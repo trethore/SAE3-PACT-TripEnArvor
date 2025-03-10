@@ -2896,18 +2896,6 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front .O {
-    color: green;
-}
-
-.consulter-offre-front .F {
-    color: red;
-}
-
-.consulter-offre-front .FB {
-    color: orange;
-}
-
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
@@ -2934,6 +2922,22 @@ h3 {
 
 .consulter-offre-front .display-ligne>p {
     margin: 0 0;
+}
+
+.consulter-offre-front .display-ligne > p :last-child {
+    margin-left: 2px;
+}
+
+.consulter-offre-front .O {
+    color: green;
+}
+
+.consulter-offre-front .F {
+    color: red;
+}
+
+.consulter-offre-front .FB {
+    color: orange;
 }
 
 /**********************************
