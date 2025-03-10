@@ -600,6 +600,17 @@ h3 {
                                 BACK-OFFICE-LISTE
 ***************************************************************************************/
 
+.liste-back h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--orange-principale);
+    background: var(--blanc);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
+}
+
 /***************************
     LES FILTRES ET TRIS
 ****************************/
@@ -4417,6 +4428,10 @@ input[type="tel"] {
     border-radius: 15px 15px 10px 10px;
 }
 
+.liste-front .en-relief-offre .prix span {
+    color: var(--noir);
+}
+
 .liste-front .en-relief-offre .sous-offre {
     border: 5px solid #ffbf00;
     animation: pulse 2s infinite;
@@ -4653,6 +4668,7 @@ input[type="tel"] {
 
 .liste-front .en-relief-offre .prix {
     background: #ffbf00;
+    color: var(--noir);
 }
 
 .liste-front .fond-filtres {
