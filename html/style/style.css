@@ -1920,13 +1920,14 @@ h3 {
 .back .notification-badge {
     position: absolute;
     top: -10px;
-    right: -10px;
+    right: -2px;
     background-color: red;
     color: white;
     border-radius: 50%;
-    padding: 5px 8px;
+    padding: 3px 8px;
     font-size: 12px;
     font-weight: bold;
+    border: solid black 2px;
 }
 
 .front .notification-badge {
