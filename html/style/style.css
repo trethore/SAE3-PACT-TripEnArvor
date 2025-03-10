@@ -4420,7 +4420,7 @@ input[type="tel"] {
 
 .liste-front .en-relief-offre .sous-offre {
     border: 5px solid #ffbf00;
-    animation: pulse 2s infinite;
+    animation: pulse 2.5s forwards;
 }
 
 @keyframes pulse {
