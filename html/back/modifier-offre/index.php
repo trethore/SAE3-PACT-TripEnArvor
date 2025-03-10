@@ -1108,7 +1108,20 @@ try {
                             
                         }
                     }
-                
+                    try{
+                        $requete_suppression_tags ="DELETE FROM sae._offre_possede_tag WHERE id_offre = ?;";
+                        $stmt_suppression_tags = $dbh->prepare($requete_suppression_tags);
+                        $stmt_suppression_tags->execute([$id_offre]);
+                        foreach($tagsSelectionnes as $tag){
+                            $requete_tag = "INSERT INTO sae._offre_possede_tag(nom_tag, id_offre) VALUES (?,?);";
+                            $stmt_tag = $dbh->prepare($requete_tag);
+                            $stmt_tag->execute([$tag, $id_offre]);
+                        }
+                    }catch (PDOException $e) { 
+                        print "Erreur ! : " . $e->getMessage() . "<br/>";
+                        $dbh->rollBack();
+                        die();
+                    }
                 
                 
                 //
