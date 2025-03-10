@@ -221,10 +221,31 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article class="offre">
+            <article class="<?php if (getDateOffreHorsLigne($row['id_offre']) > getDateOffreEnLigne($row['id_offre'])) { echo 'hors-ligne-offre'; } else { echo 'offre'; } ?>">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
+
+                    <?php $horaire = getHorairesOuverture($row['id_offre']);
+                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                    $jour_actuel = $jours[date('w')];
+                                    $ouverture = "Indét.";
+                                    foreach ($horaire as $h) {
+                                        if (!empty($horaire)) {
+                                            $ouvert_ferme = date('H:i');
+                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                            $ouverture = "Fermé";
+                                            if ($h['nom_jour'] == $jour_actuel) {
+                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                    $ouverture = "Ouvert";
+                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                    $ouverture = "Ferme Bnt.";
+                                                }
+                                            }
+                                        } 
+                                    } ?>
+
+                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture) ?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
@@ -523,7 +544,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -532,7 +553,7 @@ try {
                             const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
-                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {

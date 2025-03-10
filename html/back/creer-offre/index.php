@@ -533,8 +533,6 @@ try {
                 }
 
             }
-            print_r($tabtarifs);
-            print_r($_POST);
 
             
             try {
@@ -837,7 +835,7 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $id_adresse]); 
 
@@ -865,8 +863,6 @@ try {
                     //insertion la date de mise en ligne de date
                     $date_en_ligne = date('Y-m-d H:i:s');
 
-                    print($date_en_ligne);
-
                     try {
                         if (!$dbh->inTransaction()) {
                             $dbh->beginTransaction();
@@ -877,7 +873,6 @@ try {
                     $stmt_date->execute([$date_en_ligne]);
                     $id_date_en_ligne = $stmt_date->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                    print($id_date_en_ligne);
 
                     //insertion dans la date mise en ligne
                     $requete_date_en_ligne = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) values (?, ?);";
@@ -1042,16 +1037,19 @@ try {
             
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-            console.log(isIdProPublique);
-            console.log(isIdProPrivee);
+          
             
-
-            if(isIdProPublique === true){
+            if(isIdProPublique == true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
+                 document.getElementById("labeltypeImpossible").style.display = 'none';
+                    document.getElementById("labeloptions").style.display = 'none';
+                    document.getElementById("labelEnRelief").style.display = 'none';
+                    document.getElementById("labelALaUne").style.display = 'none';
+                    document.getElementById("aLaUne").style.display = 'none';
+                    document.getElementById("enRelief").style.display = 'none';
+                 
             }
-
-            document.getElementById('optionsPayantes').style.display = 'none';
 
              //cacher les options si le type est standard
 

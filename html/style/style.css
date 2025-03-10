@@ -16,6 +16,7 @@
     --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
+    --jaune-relief: #ffbf00;
 
     --fond-bouton: rgba(217, 217, 217, 0.73);
     --transparent: rgba(255, 255, 255, 0);
@@ -611,13 +612,13 @@ h3 {
     width: 95vw;
     box-sizing: border-box;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--orange-principale);
 }
 
 .liste-back .filtre-tri>h2 {
-    color: var(--blanc-leger);
+    color: var(--blanc);
     text-align: center;
     background-color: var(--orange-principale);
     border-radius: 15px;
@@ -634,7 +635,7 @@ h3 {
     display: flex;
     flex-direction: column;
     color: var(--blanc);
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     border-radius: 15px;
 }
 
@@ -897,12 +898,16 @@ h3 {
     top: 3.75%;
     bottom: 5.34%;
 
-    background: var(--blanc-leger);
+    background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-back .lesOffres article>a {
+.liste-back .offre > a {
     border: 3px solid var(--orange-principale);
+}
+
+.liste-back .hors-ligne-offre > a {
+    border: 3px solid var(--gris-etoile);
 }
 
 .liste-back .lieu-offre {
@@ -1034,8 +1039,18 @@ h3 {
     padding-top: 4px;
 }
 
+.liste-back .date_publication_offre {
+    position: absolute;
+    left: 1.4em;
+    bottom: 0;
+    font-size: 13px;
+}
+
+.liste-back .date_publication_offre span {
+    font-size: 13px;
+}
+
 .liste-back .lesOffres .prix {
-    background: var(--orange-principale);
     color: var(--blanc);
 
     position: absolute;
@@ -1052,6 +1067,14 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.liste-back .lesOffres .offre .prix {
+    background: var(--orange-principale);
+}
+
+.liste-back .lesOffres .hors-ligne-offre .prix {
+    background: var(--gris-etoile);
 }
 
 .liste-back .lesOffres .prix span {
@@ -1097,7 +1120,7 @@ h3 {
 }
 
 .liste-back section+a:hover {
-    background: var(--blanc-leger);
+    background: var(--blanc);
     color: var(--orange-principale);
     transition: 0.3s ease-in-out;
 }
@@ -1219,16 +1242,16 @@ h3 {
     font-weight: 600;
     color: var(--blanc-leger);
     background: var(--violet-principal);
-    border-radius: 15px;
-    margin: 0.5em 0.2em;
+    border-radius: 8px;
+    margin: 0.5em 0;
     text-align: center;
-    font-size: 45pt;
-    border: 2px var(--violet-principal) solid;
+    font-size: 35pt;
 }
 
-.accueil h1:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
+.accueil h1 > a:hover {
+    color: var(--blanc);
+    border-radius: 8px;
+    background-color: var(--violet-secondaire);
 }
 
 .accueil main {
@@ -1259,8 +1282,8 @@ h3 {
 **********************************/
 
 .carousel {
-    width: 90vw;
-    height: 90vh;
+    height: 55vh;
+    width: 70vw;
     overflow: hidden;
     position: relative;
     border-radius: 1rem;
@@ -1526,15 +1549,15 @@ h3 {
     width: 16em;
 }
 
-.compte-front table td+td,
-.compte-front-modif table td+td {
+.compte-front table td + td,
+.compte-front-modif table td + td {
     text-align: right;
     width: 28em;
     color: var(--violet-principal);
 }
 
-.compte-front td>div,
-.compte-front-modif td>div {
+.compte-front td > div,
+.compte-front-modif td > div {
     text-align: justify;
     /* Justifie uniquement le contenu interne */
     display: inline-block;
@@ -1545,8 +1568,8 @@ h3 {
 /********************
         BOUTON
 *********************/
-.compte-front main>section a,
-.compte-front-modif main>section a {
+.compte-front main > section a,
+.compte-front-modif main > section a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
@@ -2187,6 +2210,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    margin-top: 30px;
 }
 
 /* Section supérieure avec le gradient */
@@ -2822,7 +2846,7 @@ h3 {
 }
 
 .consulter-offre-front h1 {
-    font-size: 64px;
+    font-size: 45px;
     font-weight: bold;
     text-align: center;
     color: var(--violet-principal);
@@ -2834,7 +2858,7 @@ h3 {
 }
 
 .consulter-offre-front h2 {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--violet-principal);
     margin: 5px 0;
@@ -2899,6 +2923,22 @@ h3 {
 
 .consulter-offre-front .display-ligne>p {
     margin: 0 0;
+}
+
+.consulter-offre-front .display-ligne > p :last-child {
+    margin-left: 2px;
+}
+
+.consulter-offre-front .O {
+    color: green;
+}
+
+.consulter-offre-front .F {
+    color: red;
+}
+
+.consulter-offre-front .FB {
+    color: orange;
 }
 
 /**********************************
@@ -3274,11 +3314,14 @@ h3 {
 }
 
 .consulter-offre-back h1 {
-    font-size: 64px;
-    font-weight: bold;
-    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
     color: var(--orange-principale);
-    margin-top: 0;
+    background: var(--blanc);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
 }
 
 .consulter-offre-back p {
@@ -3286,7 +3329,7 @@ h3 {
 }
 
 .consulter-offre-back h2 {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--orange-principale);
     margin: 5px 0;
@@ -3900,9 +3943,6 @@ h3 {
   cursor: pointer;
 } */
 
-
-
-
 /****A PROPOS DE L'OFFRE****/
 .creer-offre .apropos tr+td,
 .creer-offre .important tr+td {
@@ -3928,13 +3968,9 @@ input[type="tel"] {
 
 /****Tarif****/
 
-
-
 /* #options{
   display: none;
 } */
-
-
 
 
 /***Boutons***/
@@ -4380,26 +4416,6 @@ input[type="tel"] {
 
     background: var(--blanc);
     border-radius: 15px 15px 10px 10px;
-}
-
-.liste-front .en-relief-offre .sous-offre {
-    border: 5px solid #ffbf00;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 #ffbf00;
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
-    }
 }
 
 .liste-front .offre .sous-offre {
@@ -5049,6 +5065,7 @@ input[type="tel"] {
     .liste-front h1 {
         background: var(--blanc);
         font-size: 40pt;
+        padding-bottom: 3%;
     }
 
     .liste-front .filtre-tri {
@@ -5105,7 +5122,8 @@ input[type="tel"] {
     }
 
     .carousel {
-        height: 70vh;
+        height: 55vh;
+        width: 70vw;
     }
 
     .carousel button:hover {
@@ -5125,7 +5143,7 @@ input[type="tel"] {
     }
 
     .front.accueil .carousel {
-        width: 70vw;
+        width: 90vw;
         height: 55vh;
     }
 

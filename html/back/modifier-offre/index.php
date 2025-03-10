@@ -78,6 +78,7 @@ if (isset($_POST['titre'])) { // les autres svp²
 }
 
 // Vérifier si l'utilisateur est connecté (si la session 'id' existe)
+/*
 if (!isset($_SESSION['id'])) {
     // Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
     echo "Pas connecté";
@@ -85,7 +86,7 @@ if (!isset($_SESSION['id'])) {
 } else {
     echo "Connecté  avec id : " . $_SESSION['id'];
 } 
-
+*/
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -184,7 +185,7 @@ try {
     die();
 }
 
-print_r($tags);
+
 
     // Extraire les noms des tags
     $tag_names = array_map(function($tag) {
@@ -196,11 +197,11 @@ print_r($tags);
 
     $categorie = preg_replace('/\s+/', '', strtolower(supprimerAccents($categorie))); //formatage de $categorie
 
-    print($categorie);
+
     $categorieBase = $categorie;
 
     $offre_bonne_cat = bon_get_selon_categorie($id_offre_cible, $categorie);
-    print_r($offre_bonne_cat);
+
 
     if (($categorie == 'spectacle')) {
         $date_evenement = getDateSpectacle($id_offre_cible);
@@ -212,10 +213,6 @@ print_r($tags);
         $date_evenement = null; // Gestion par défaut si aucune catégorie ne correspond
     }
 
-    print_r (getDateSpectacle($id_offre_cible));
-    echo ($date_evenement);
-
-    print_r($adresse);
 
     $date_aujourdhui = new DateTime(); 
     
@@ -347,7 +344,7 @@ try {
                             <tr>
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
                                 <td><div class="custom-select-container">
-                                        <select class="custom-select" id="categorie" name="lacat">
+                                        <select class="custom-select" id="categorie" name="lacat" disabled>
                                             <option value="restauration" <?php if($categorie === "restauration"){ echo "selected";} ?>> Restauration</option>
                                             <option value="parcattraction" <?php if($categorie === "parcattraction"){echo "selected";} ?>> Parc d'attraction</option>
                                             <option value="spectacle" <?php if($categorie === "spectacle"){echo "selected";} ?>> Spectacle</option>
@@ -359,7 +356,7 @@ try {
                             </tr>
                             <tr>
                                 <td><label for="gammedeprix" id="labelgammedeprix">Gamme de prix <span class="required" >*</span> </label></td>
-                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammeprix" /></td>
+                                <td><input type="text" id="gammedeprix" placeholder="€ ou €€ ou €€€" pattern="^€{1,3}$" name="gammedeprix" value="<?php if(isset(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"])){echo htmlentities(getRestaurant($offre_bonne_cat['id_offre'])["gamme_prix"]);} ?>" /></td>
                             </tr>
                             <tr>
                                 <td><!-- <label id="labeldispo" for="dispo">Disponibilité </label>--></td> 
@@ -391,7 +388,7 @@ try {
                         if (isset($adresse['code_postal'])) {
                             echo htmlentities($adresse['code_postal']); } ?>"/></td>
                         <td><label for="ville">Ville <span class="required">*</span></label></td>
-                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td>
+                        <td><input type="text" id="ville" name="ville" placeholder="Nom de ville" value="<?php if(isset($offre['ville'])) {echo htmlentities($offre['ville']); } ?>"required ></td> 
                     </tr>
                     <tr>
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
@@ -407,13 +404,13 @@ try {
                         </td>
                     </tr>
                     
-                    <?if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                    <? //if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
 
                     <tr>
                    
                     
                         <td> 
-                            <label id ="labeltype" for="type">Type de l'offre<span class="required">*</span></label></td>
+                            <label id ="labeltype" for="selectype">Type de l'offre<span class="required">*</span></label></td>
                         <td>
                             <div class="custom-select-container" id="divtype">
                                 <select class="custom-select" name="letype" id="selectype" disabled>
@@ -423,7 +420,7 @@ try {
                             </div>
                                     
                         </td>
-                        <td>(impossible de modifier le type)</td>
+                        <td><label id="labeltypeImpossible" for="selectype" >(impossible de modifier le type) </label></td>
                     </tr> 
                     <tr>
                         <div id="options">
@@ -433,7 +430,7 @@ try {
                             <input type="radio" id="aLaUne" name="optionPayante" value="aLaUne" <?php if(isOffreALaUne($offre_bonne_cat['id_offre'])){echo "checked";} if (getDateSouscritOption($offre_bonne_cat['id_offre']) > $date_aujourdhui) {echo "disabled";} ?>/><label for="aLaUne" id="labelALaUne">A la une</label></td>
                         </div>
                     </tr>
-                  <?php  } ?>
+                  <?php  //} ?>
                 </table>
 
 
@@ -481,21 +478,31 @@ try {
                     <?php 
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php } } 
-                    foreach($liste_tags as $tag){ 
-                            if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }}
-                        foreach ($liste_tags_restauration as $tag) { 
-                            if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                   
-                   <?php } 
-                    } ?>
-                         
+                                <li>
+                                    <input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked>
+                                    <?php echo htmlentities($tag['nom_tag']); ?>
+                                </li>
+                        <?php } } 
+
+                        // Ajout des tags spécifiques à la restauration
+                        if ($categorie == "restauration") {
+                            foreach ($liste_tags_restauration as $tag) { 
+                                if (!in_array($tag, $tag_names)) { ?>
+                                    <li>
+                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <?php echo htmlentities($tag); ?>
+                                    </li>
+                        <?php } } } else {
+                        // Ajout des autres tags généraux
+                            foreach ($liste_tags as $tag) { 
+                                if (!in_array($tag, $tag_names)) { ?>
+                                    <li>
+                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <?php echo htmlentities($tag); ?>
+                                    </li>
+                        <?php } } } ?>
                         
-                     </ul>   
+                    </ul>   
                     <h3>A propos de l'offre</h3>
                     <div class="apropos">
                         <table border="0"> 
@@ -517,7 +524,7 @@ try {
                         <textarea id="descriptionL" name="descriptionL" placeholder="Ecrire une description plus détaillée... "><?php if(isset($offre['description_detaille'])){
                                                                                                                                 echo nl2br(htmlentities($offre['description_detaille'])); } ?></textarea>
 
-                        <?php if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?>
+                        <?php //if (isIdProPrivee($offre_bonne_cat['id_offre'])) { ?> 
                         
                         
                         <div id="tarifs">
@@ -546,7 +553,7 @@ try {
                             } ?>
 
                         </div>
-                        <?php  } ?>
+                        <?php // } ?>
                     <br>
                     
 
@@ -645,7 +652,6 @@ try {
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
-                print("titre = ". $titre);
             }
 
             if (isset($_POST['presta'])) {
@@ -787,29 +793,33 @@ try {
             }
 
 
-            if ($categorie !== "restauration") {
-                foreach ($liste_tags as $tag) {
-                    if (isset($_POST[$tag])) {
-                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-                    }
-                }
-            }
-            if ($categorie === "restauration") {
-                foreach ($liste_tags_restauration as $tag) {
-                    if (isset($_POST[$tag])) {
-                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-                    }
-                }
-            }
-           
-            $descriptionL = $_POST['descriptionL'];
-            
-             print_r($_POST);
-             print($photo1);
+            $tagsSelectionnes = [];
 
-             print($categorieBase);
-             print($categorie);
-             echo "<br>";
+            if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
+                if ($categorie !== "restauration") {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags)) { // Vérifie si le tag appartient bien à la liste des tags valides
+                            $tagsSelectionnes[] = $tag;
+                        }
+                    }
+                } else {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags_restauration)) { // Vérifie si le tag appartient à la liste des tags restauration
+                            $tagsSelectionnes[] = $tag;
+                        }
+                    }
+                }
+            }
+
+           foreach ($tagsSelectionnes as $tags){
+                echo $tags; 
+           }
+            
+
+            $descriptionL = $_POST['descriptionL'];
+            $abonnement = $offre_bonne_cat['abonnement'];
+            
+
 
              try {
 
@@ -878,12 +888,6 @@ try {
                             $id_adresse = $offre_bonne_cat['id_adresse'];
                         }
                         
-                            
-                            
-
-                            print("changement de adresse");
-                            print(" id : " . $id_adresse);
-                        
                     }
                     if ($date_evenement != null) {
                         // Insertion de la date dans la table _date
@@ -895,7 +899,7 @@ try {
                     }
                     echo $date_evenement;
                     echo "<br>";
-                    echo $id_date_event;
+                    //echo $id_date_event;
 
 
                     switch ($categorie) {
@@ -917,7 +921,7 @@ try {
                             break;
 
                         case 'parcattraction' :
-                            if(isset( $_FILES['plan'])){
+                            if((isset( $_FILES['plan']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['plan'];
                                 $file_extension = get_file_extension($file['type']);
                                 $time = 'p' . strval(time());
@@ -936,11 +940,11 @@ try {
             
                                     }
                             }else{
-                                $fichier_plan = $attraction(['plan']);
+                                $fichier_plan = $offre_bonne_cat['plan'];
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc   
+                            $query = "UPDATE sae.offre_parc_attraction
                             SET titre = ?,
                                 resume = ?, 
                                 ville =?,
@@ -955,11 +959,13 @@ try {
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $age, $nbattraction,$fichier_plan, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_plan_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
                             $stmt_plan_offre = $dbh->prepare($requete_plan_offre);
                             $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
-                            
+                            }
+
                             break;
 
                         case 'spectacle':
@@ -998,8 +1004,7 @@ try {
                             break;
                         
                         case 'restauration':
-
-                            if(isset( $_FILES['carte'])){
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                                 $file = $_FILES['carte'];
                                 $file_extension = get_file_extension($file['carte']);
                                 $time = 'p' . strval(time());
@@ -1018,12 +1023,12 @@ try {
             
                                     }
                             }else{
-                                $fichier_carte = $restauration(['carte']);
+                                $fichier_carte = $offre_bonne_cat['carte'];
                             }
                             
                             // Requete SQL pour modifier la vue offre
                             $query = "UPDATE sae.offre_restauration
-                                set (titre = ?, 
+                                set titre = ?, 
                                 resume = ?, 
                                 ville = ?, 
                                 gamme_prix = ?, 
@@ -1036,11 +1041,13 @@ try {
                             $stmt = $dbh->prepare($query);
                             $stmt->execute([$titre, $resume, $ville, $gammedeprix ,$fichier_carte, $id_compte, $descriptionL, $lien, $id_adresse, $id_offre]);
                             
+                            if((isset( $_FILES['carte']))&& ($_FILES['carte']['error'] === UPLOAD_ERR_OK)){
                             //INSERTION IMAGE DANS _OFFRE_CONTIENT_IMAGE
                             $requete_carte_offre = 'INSERT INTO _offre_contient_image(id_offre, id_image) VALUES (?, ?)';
-                            $stmt_carte_offre = $dbh->prepare($requete_plan_offre);
-                            $stmt_carte_offre->execute([$id_offre, $fichier_plan]);
-                            
+                            $stmt_carte_offre = $dbh->prepare($requete_carte_offre);
+                            $stmt_carte_offre->execute([$id_offre, $fichier_carte]);
+                            }
+
                             break;
 
 
@@ -1055,9 +1062,7 @@ try {
                 //modification des options
                 
                 
-                print($optionP);
                 if((!isOffreEnRelief($id_offre)&&($optionP === "En Relief"))||(!isOffreALaUne($id_offre)&&($optionP === "À la Une"))){
-                    print("rentre dans la premier if");
                     //insertion de la date de souscription dans_date
                     
                     $reqInsertionDateEvent = 'INSERT INTO sae._date (date) VALUES (?) RETURNING id_date';
@@ -1067,7 +1072,6 @@ try {
 
 
                     if(isOffreEnRelief($id_offre)||isOffreALaUne($id_offre)){
-                        print("rentre dans la deuxieme if");
                         
                             $requete_suppression_option = 'DELETE FROM sae._offre_souscrit_option WHERE id_offre = ?;';
                             $stmt_suppression = $dbh->prepare($requete_suppression_option);
@@ -1094,7 +1098,7 @@ try {
                             $stmt_suppr_tarif->execute([$id_offre]);}
                             catch (PDOException $e) {
                                 // Affichage de l'erreur en cas d'échec
-                                print "Erreur ! suppression: " . $e->getMessage() . "<br/>";
+                                print "Erreur !: " . $e->getMessage() . "<br/>";
                                 $dbh->rollBack();
                                 die();
                                     
@@ -1112,7 +1116,7 @@ try {
                                 echo "<br>";
                             }catch (PDOException $e) {
                                 // Affichage de l'erreur en cas d'échec
-                                print "Erreur ! insertion tarif: " . $e->getMessage() . "<br/>";
+                                print "Erreur ! : " . $e->getMessage() . "<br/>";
                                 $dbh->rollBack();
                                 die();
                                     
@@ -1137,7 +1141,7 @@ try {
                 echo "<script>
                         const redirect = confirm('Offre modifiée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
-                            window.location.href = '/back/consulter-offre/index.php?id=$offre'
+                            window.location.href = '/back/liste-back/'
                         }
                   </script>";
 
@@ -1150,10 +1154,7 @@ try {
 
         }?>
         <script> 
-                
-            liste_tags.forEach(element => {
-                
-            });
+            
                         // if(!liste_tags.include()){
                         //     if($categorie != "restaurant")
                         //     foreach ($liste_tags as $tag)
@@ -1164,99 +1165,125 @@ try {
 
             const isIdProPrivee = "<?php echo json_encode($isIdProPrivee) ?>";
             const isIdProPublique = "<?php echo json_encode($isIdProPublique) ?>";
-            console.log(isIdProPublique);
 
-            if(isIdProPublique){
+            if(isIdProPublique == true){
                  document.getElementById("divtype").style.display = 'none';
                  document.getElementById("labeltype").style.display = 'none';
+                 document.getElementById("labeltypeImpossible").style.display = 'none';
+                    document.getElementById("labeloptions").style.display = 'none';
+                    document.getElementById("labelEnRelief").style.display = 'none';
+                    document.getElementById("labelALaUne").style.display = 'none';
+                    document.getElementById("aLaUne").style.display = 'none';
+                    document.getElementById("enRelief").style.display = 'none';
+                 
             }
+            
 
-            const liste_tags = "<?php echo json_encode($liste_tags) ?>";
-            const liste_tags_restauration = "<?php echo json_encode($liste_tags_restauration) ?>";
-            const $tags = "<?php echo json_encode($tags) ?>"
+            // const liste_tags = "<?php // echo json_encode($liste_tags) ?>";
+            // const liste_tags_restauration = "<?php //echo json_encode($liste_tags_restauration) ?>";
+            // const $tags = "<?php //echo json_encode($tags) ?>"
 
             let typecategorie = document.getElementById('categorie');
             let typerestauration = ["carte", "labelcarte"];
-            let typevisite = ["labelduree", "duree", "labelduree2"];
-            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2"];
-            let typespectacle = ["labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelnbattractions2"];
+            let typevisite = ["labelduree", "duree", "labelduree2", "labeldate_event", "date_event"];
+            let typeactivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelpresta", "presta","labeldescpresta", "descpresta"];
+            let typespectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2", "labeldate_event", "date_event"];
             let typeparc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2"];
-
-            obligatoireselontype.forEach(element => {
-                document.getElementById(element).style.display = 'none';
-            });
-
-            document.getElementById("tarifs").style.display = 'none';
+            let obligatoireselontype = ["carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelnbattractions", "nbattraction", "labelnbattractions2",  "labelpresta", "presta","labeldescpresta", "descpresta",  "labelcapacite", "capacite", "labelcapacite2", "labeldate_event", "date_event"];
 
 
-            categorie.addEventListener('change', function() {
-                const typeselectionne = categorie.value;
-                // Afficher les champs selon la catégorie sélectionnée test
-                switch (typeselectionne) {
-                    case "restauration":
-                        afficheSelonType(typerestauration);
 
-                        if (isIdProPrivee) {
-                            document.getElementById("labelgammedeprix").style.display = 'inline';
-                            document.getElementById("gammedeprix").style.display = 'inline';
-                        }
-                        document.getElementById("tarifs").style.display = 'none';
+            document.addEventListener('DOMContentLoaded', function() {
+    obligatoireselontype.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'none';
+        }
+    });
 
+    const tarifsElement = document.getElementById("tarifs");
+    if (tarifsElement) {
+        tarifsElement.style.display = 'none';
+    }
 
-                        break;
+    const typeselectionne = typecategorie ? typecategorie.value : null;
+    // Afficher les champs selon la catégorie sélectionnée
+    if (typeselectionne) {
+        switch (typeselectionne) {
+            case "restauration":
+                afficheSelonType(typerestauration);
 
-                    case "activite":
-                        afficheSelonType(typeactivite);
-                        break;
-
-                    case "visite":
-                        afficheSelonType(typevisite);
-                        break;
-
-                    case "spectacle":
-                        afficheSelonType(typespectacle);
-                        break;
-
-                    case "parcattraction":
-                        afficheSelonType(typeparc);
-                        afficherTags(typeparc);
-                        break;
-
-                    default:
-                        console.log("Aucune catégorie sélectionnée.");
+                if (typeof isIdProPrivee !== 'undefined' && isIdProPrivee) {
+                    const labelGammeDePrix = document.getElementById("labelgammedeprix");
+                    const gammeDePrix = document.getElementById("gammedeprix");
+                    if (labelGammeDePrix) labelGammeDePrix.style.display = 'inline';
+                    if (gammeDePrix) gammeDePrix.style.display = 'inline';
                 }
-            });
+                if (tarifsElement) tarifsElement.style.display = 'none';
+                break;
+
+            case "activite":
+                afficheSelonType(typeactivite);
+                break;
+
+            case "visite":
+                afficheSelonType(typevisite);
+                break;
+
+            case "spectacle":
+                afficheSelonType(typespectacle);
+                break;
+
+            case "parcattraction":
+                afficheSelonType(typeparc);
+                afficherTags(typeparc);
+                break;
+
+            default:
+                console.log("Aucune catégorie sélectionnée.");
+        }
+    }
+});
+
+function afficheSelonType(typechoisi) {
+    obligatoireselontype.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'none';
+        }
+    });
+    typechoisi.forEach(element => {
+        const el = document.getElementById(element);
+        if (el) {
+            el.style.display = 'inline';
+        }
+    });
+    if (typechoisi !== "restauration" && typeof isIdProPrivee !== 'undefined' && isIdProPrivee) {
+        const tarifsElement = document.getElementById("tarifs");
+        if (tarifsElement) {
+            tarifsElement.style.display = 'inline';
+        }
+    }
+}
 
 
 
-            function afficheSelonType(typechoisi) {
-                obligatoireselontype.forEach(element => {
-                    document.getElementById(element).style.display = 'none';
-                });
-                typechoisi.forEach(element => {
-                    document.getElementById(element).style.display = 'inline';
-                });
-                if ((typechoisi !== "restauration") && (isIdProPrivee)) {
-                    document.getElementById("tarifs").style.display = 'inline';
-                }
-            }
 
-            function afficherTags(typechoisi){
-                if (typeselectionne === "restauration"){
-                    liste_tags.forEach(tag => {
-                        if(!tags.includes(tag)){
-                            document.getElementById(tag).style.display ='none';
-                        }
-                    });
-                }else{
-                    liste_tags_restauration.forEach(tag => {
-                        if(!tags.includes(tag)){
-                            document.getElementById(tag).style.display ='none';
-                        }
-                    });
-                }
-            }
+            // function afficherTags(typechoisi){
+            //     if (typeselectionne === "restauration"){
+            //         liste_tags.forEach(tag => {
+            //             if(!tags.includes(tag)){
+            //                 document.getElementById(tag).style.display ='none';
+            //             }
+            //         });
+            //     }else{
+            //         liste_tags_restauration.forEach(tag => {
+            //             if(!tags.includes(tag)){
+            //                 document.getElementById(tag).style.display ='none';
+            //             }
+            //         });
+            //     }
+            // }
 
             const boutonValider = document.getElementById("valider");
             const lacat = categorie.value; // Récupère la valeur de la catégorie
@@ -1268,6 +1295,8 @@ try {
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
+
 
             // const tarif = tarif.value; // Récupère la valeur de la tarif
 
