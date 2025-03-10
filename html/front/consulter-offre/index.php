@@ -836,7 +836,7 @@ try {
 
                             </div>
                         </div>
-                        <button><img src="/images/universel/icones/trois-points-violet.png"></button>
+                        <button class="menu-button" onclick="toggleMenu(event)"><img src="/images/universel/icones/trois-points-violet.png"></button>
 
                         <div class="popup-menu" id="popup-menu">
                             <ul>
