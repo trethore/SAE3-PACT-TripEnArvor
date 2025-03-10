@@ -836,7 +836,7 @@ try {
 
                             </div>
                         </div>
-                        <button>⋮</button>
+                        <button><strong>⋮</strong></button>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
