@@ -811,8 +811,10 @@ try {
                 }
             }
 
-           
-            print_r($tagsSelectionnes);
+           foreach ($tagsSelectionnes as $tags){
+                echo $tags; 
+           }
+            
 
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
