@@ -481,15 +481,15 @@ try {
                                 <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } } 
                     if($categorie =! "restauration"){
-                        foreach($liste_tags as $tag){ 
-                                if(!in_array($tag, $tag_names)){ ?>
-                                <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                    <?php }}} else {
                         foreach ($liste_tags_restauration as $tag) { 
                             if(!in_array($tag, $tag_names)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
                         
-                   
+                    <?php }}} else {
+                        foreach($liste_tags as $tag){ 
+                            if(!in_array($tag, $tag_names)){ ?>
+                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                
                    <?php } } } ?>
                          
                         
