@@ -836,7 +836,7 @@ try {
 
                             </div>
                         </div>
-                        <button><div></div></button>
+                        <button><img src="/images/universel/icones/trois-points-violet.png"></button>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
