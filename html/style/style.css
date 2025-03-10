@@ -4328,6 +4328,8 @@ input[type="tel"] {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .liste-front .offre {
@@ -4384,6 +4386,22 @@ input[type="tel"] {
 
 .liste-front .en-relief-offre .sous-offre {
     border: 5px solid #ffbf00;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
 }
 
 .liste-front .offre .sous-offre {
