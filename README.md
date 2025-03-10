@@ -47,10 +47,10 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
     puis exécutez `docker compose up --build && docker compose logs -f`.
 
  4. Ouvrez pgAdmin à l'adresse `http://localhost:${PGADMIN_PORT}/`. 
-    Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env`.
+    Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env` (par défaut `8081`).
       - Identifiant : `${EQUIPE}@dbadmin-sae.com`
         Remplacez `${EQUIPE}` par la valeur de `EQUIPE` dans `docker/.env`.
-      - Mot de passe :  Valeur de `PGADMIN_PASSWORD` dans `docker/.env` (par défaut `8081`).
+      - Mot de passe :  Valeur de `PGADMIN_PASSWORD` dans `docker/.env`.
 
  5. Ajoutez un serveur avec les information suivantes :
 
