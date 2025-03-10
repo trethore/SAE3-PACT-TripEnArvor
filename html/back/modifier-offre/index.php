@@ -881,7 +881,7 @@ try {
                     }
                     echo $date_evenement;
                     echo "<br>";
-                    echo $id_date_event;
+                    //echo $id_date_event;
 
 
                     switch ($categorie) {
@@ -926,7 +926,7 @@ try {
                             }
                             
                             // Requete SQL pour modifier la vue offre
-                            $query = "UPDATE sae.offre_parc   
+                            $query = "UPDATE sae.offre_parc_attraction
                             SET titre = ?,
                                 resume = ?, 
                                 ville =?,
