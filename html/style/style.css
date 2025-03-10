@@ -3226,9 +3226,9 @@ h3 {
     width: 120px;
     display: none;
     position: absolute;
-    background: var(--blanc);
-    border: 1px solid var(--blanc);
-    border-radius: 5px;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    border-radius: 8px;
     z-index: 1000; 
 }
 
@@ -3239,7 +3239,7 @@ h3 {
 }
 
 .consulter-offre-front .popup-menu li {
-    padding: 5px 10px;
+    padding: 8px 12px;
     cursor: pointer;
     text-align: left;
     font-size: 14px;
