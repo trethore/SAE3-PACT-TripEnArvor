@@ -480,16 +480,17 @@ try {
                            foreach ($tags as $tag) { ?>
                                 <li><input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked> <?php echo htmlentities($tag['nom_tag']); ?></li>
                     <?php } } 
-                     foreach($liste_tags as $tag){ 
-                             if(!in_array($tag, $tag_names)){ ?>
-                            <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
-                        <?php }}
+                    if($categorie =! "restauration"){
+                        foreach($liste_tags as $tag){ 
+                                if(!in_array($tag, $tag_names)){ ?>
+                                <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tags[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                    <?php }}} else {
                         foreach ($liste_tags_restauration as $tag) { 
                             if(!in_array($tag, $tag_names)){ ?>
                             <li><input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>"> <?php echo htmlentities($tag); ?></li>
+                        
                    
-                   <?php } 
-                 } ?>
+                   <?php } } } ?>
                          
                         
                      </ul>   
@@ -783,21 +784,23 @@ try {
             }
 
 
-            // if ($categorie !== "restauration") {
-            //     foreach ($liste_tags as $tag) {
-            //         if (isset($_POST[$tag])) {
-            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-            //         }
-            //     }
-            // }
-            // if ($categorie === "restauration") {
-            //     foreach ($liste_tags_restauration as $tag) {
-            //         if (isset($_POST[$tag])) {
-            //             $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
-            //         }
-            //     }
-            // }
+            if ($categorie !== "restauration") {
+                foreach ($liste_tags as $tag) {
+                    if (isset($_POST[$tag])) {
+                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+                    }
+                }
+            }
+            if ($categorie === "restauration") {
+                foreach ($liste_tags_restauration as $tag) {
+                    if (isset($_POST[$tag])) {
+                        $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
+                    }
+                }
+            }
            
+            print_r($tagsSelectionnes);
+
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
             
