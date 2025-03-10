@@ -849,16 +849,16 @@ try {
                                     </ul>
                                 </div>
 
-                            <?php } else { ?>
+                        <?php } 
+                        } else { ?>
 
-                                <div class="popup-menu" id="popup-menu">
-                                    <ul>
-                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                    </ul>
-                                </div>
+                            <div class="popup-menu" id="popup-menu">
+                                <ul>
+                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                </ul>
+                            </div>
 
-                            <?php } 
-                        } ?>
+                        <?php } ?>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
