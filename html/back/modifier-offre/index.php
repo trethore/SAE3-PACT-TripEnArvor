@@ -792,6 +792,8 @@ try {
                 $categorie = $_POST['lacat'];
             }
 
+            print_r($_POST['tag']);
+            
             if (!empty($_POST['tag'])){
                 $tagsSelectionnes = [];
                 foreach ($_POST['tag'] as $tag) {
