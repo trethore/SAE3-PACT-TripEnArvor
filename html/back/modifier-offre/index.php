@@ -489,7 +489,7 @@ try {
                             foreach ($liste_tags_restauration as $tag) { 
                                 if (!in_array($tag, $tag_names)) { ?>
                                     <li>
-                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <input type="checkbox" id="tags" name="tag" value="<?php echo htmlentities($tag); ?>">
                                         <?php echo htmlentities($tag); ?>
                                     </li>
                         <?php } } } else {
@@ -497,7 +497,7 @@ try {
                             foreach ($liste_tags as $tag) { 
                                 if (!in_array($tag, $tag_names)) { ?>
                                     <li>
-                                        <input type="checkbox" id="tags" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <input type="checkbox" id="tags" name="tag" value="<?php echo htmlentities($tag); ?>">
                                         <?php echo htmlentities($tag); ?>
                                     </li>
                         <?php } } } ?>
@@ -792,7 +792,7 @@ try {
                 $categorie = $_POST['lacat'];
             }
 
-
+            print_r($_POST[]);
             $tagsSelectionnes = [];
 
             if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
