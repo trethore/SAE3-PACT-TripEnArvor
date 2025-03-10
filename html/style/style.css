@@ -3229,7 +3229,6 @@ h3 {
     background: var(--blanc);
     border: 1px solid var(--blanc);
     border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(74, 23, 116, 0.5);
     z-index: 1000; 
 }
 
@@ -3240,14 +3239,15 @@ h3 {
 }
 
 .consulter-offre-front .popup-menu li {
-    padding: 8px 12px;
+    padding: 5px 10px;
     cursor: pointer;
     text-align: left;
     font-size: 14px;
 }
 
 .consulter-offre-front .popup-menu li:hover {
-    background: var(--blanc);
+    background: var(--violet-secondaire);
+    color: var(--blanc);
 }
 /**/
 
