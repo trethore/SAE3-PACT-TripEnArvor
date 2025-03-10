@@ -837,6 +837,15 @@ try {
                             </div>
                         </div>
                         <button><img src="/images/universel/icones/trois-points-violet.png"></button>
+
+                        <div class="popup-menu" id="popup-menu">
+                            <ul>
+                                <li>Signaler</li>
+                                <li>Blacklister</li>
+                                <li>Supprimer</li>
+                            </ul>
+                        </div>
+
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
@@ -991,6 +1000,22 @@ try {
             </a>
         </div>
     </div>
+
+    <script>
+        function toggleMenu(event) {
+            event.stopPropagation();
+            let menu = document.getElementById("popup-menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        document.addEventListener("click", function(event) {
+            let menu = document.getElementById("popup-menu");
+            if (menu.style.display === "block" && !event.target.closest(".menu-button")) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+
 </body>
 
 </html>
