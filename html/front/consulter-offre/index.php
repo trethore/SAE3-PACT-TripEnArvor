@@ -836,29 +836,21 @@ try {
 
                             </div>
                         </div>
-                        <button class="menu-button" onclick="toggleMenu(event, this)">
+                        <!-- Bouton menu -->
+                        <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
                             <img src="/images/universel/icones/trois-points-violet.png">
                         </button>
-                        
-                        <?php if(isset($_SESSION['id'])) {
-                            if ($a['id_membre'] == $_SESSION['id']) { 
-                                if ($membre[$compteur]['id_compte'] == $a['id_membre']) { ?>
-                                    <div class="popup-menu" id="popup-menu">
-                                        <ul> 
-                                            <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
-                                        </ul>
-                                    </div>
-                                <?php }
-                            } 
-                        } else { ?>
 
-                            <div class="popup-menu" id="popup-menu">
-                                <ul>
+                        <!-- Menu pop-up (ID unique par avis) -->
+                        <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
+                            <ul>
+                                <?php if (isset($_SESSION['id']) && $a['id_membre'] == $_SESSION['id']) { ?>
+                                    <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                <?php } else { ?>
                                     <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                </ul>
-                            </div>
-
-                        <?php } ?>
+                                <?php } ?>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
@@ -1014,34 +1006,32 @@ try {
         </div>
     </div>
 
-    
     <script>
-        function toggleMenu(event, button) {
+        function toggleMenu(event, button, compteur) {
             event.stopPropagation();
-            const menu = document.getElementById("popup-menu");
-            
+            let menu = document.getElementById(`popup-menu-${compteur}`);
+
+            // Fermer tous les autres menus avant d'afficher le bon
+            document.querySelectorAll(".popup-menu").forEach(m => {
+                if (m !== menu) m.style.display = "none";
+            });
+
             if (menu.style.display === "block") {
                 menu.style.display = "none";
                 return;
             }
-            
-            const rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.bottom + window.scrollY - 15}px`;
-            menu.style.left = `${rect.left + window.scrollX - 100}px`;
+
+            let rect = button.getBoundingClientRect();
+            menu.style.top = `${rect.top + window.scrollY - 20}px`;
+            menu.style.left = `${rect.left + window.scrollX - 000}px`;
             menu.style.display = "block";
         }
 
-        document.addEventListener("click", function(event) {
-            const menu = document.getElementById("popup-menu");
-            if (menu.style.display === "block" && !event.target.closest(".menu-button")) {
+        document.addEventListener("click", function() {
+            document.querySelectorAll(".popup-menu").forEach(menu => {
                 menu.style.display = "none";
-            }
+            });
         });
-
-        function handleMenuAction(action) {
-            alert(action + ' cliqué');
-            document.getElementById("popup-menu").style.display = "none";
-        }
     </script>
 
 </body>
