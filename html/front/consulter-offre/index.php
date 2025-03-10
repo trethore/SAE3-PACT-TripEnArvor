@@ -1015,8 +1015,8 @@ try {
             }
             
             const rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.bottom + window.scrollY - 5}px`;
-            menu.style.left = `${rect.left + window.scrollX - 90}px`;
+            menu.style.top = `${rect.bottom + window.scrollY - 15}px`;
+            menu.style.left = `${rect.left + window.scrollX - 100}px`;
             menu.style.display = "block";
         }
 
