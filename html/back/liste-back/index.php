@@ -69,7 +69,27 @@ try {
             </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            $nbrAvisNonRepondus = 0;
+
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $nbrAvis = getAvis($row['id_offre']);
+                $nbrReponses = getReponse($row['id_offre']);
+
+                $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
+            }
+        ?>
+        <a href="/back/mon-compte" class="icon-container">
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <?php if ($nbrAvisNonRepondus > 0) { ?>
+                <span class="notification-badge"><?php echo $nbrAvisNonRepondus; ?></span>
+            <?php } ?>
+        </a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
