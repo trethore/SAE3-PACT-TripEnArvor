@@ -3191,7 +3191,7 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front .fond-blocs-avis > .button > strong {
+.consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
     color: var(--violet-principal);
 }
 
@@ -3628,7 +3628,7 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
-.consulter-offre-back .fond-blocs-avis > .button > strong {
+.consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
     color: var(--orange-principale);
 }
 
