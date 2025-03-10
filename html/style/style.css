@@ -3213,10 +3213,11 @@ h3 {
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
-    width: 100px;
-    height: 100px;
-    background-image: radial-gradient(circle, var(--violet-principal) 3px, transparent 11px);
-    background-size: 100% 33.33%;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    background-color: var(--blanc);
+    border: 0;
 }
 
 .consulter-offre-front #avis>button,
@@ -3653,8 +3654,11 @@ h3 {
 }
 
 .consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
-    background-image: radial-gradient(circle, var(--orange-principale) 3px, transparent 11px);
-    background-size: 100% 33.33%;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    background-color: var(--blanc);
+    border: 0;
 }
 
 .consulter-offre-back .titre-avis {

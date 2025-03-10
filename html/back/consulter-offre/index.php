@@ -649,7 +649,7 @@ try {
                     ?>
 
                     <div class="fond-blocs-avis">
-                        <div class="display-ligne-espace">
+                        < class="display-ligne-espace">
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                                 <div class="display-ligne">
@@ -661,7 +661,7 @@ try {
                                     <?php } ?>
                                 </div>
                             </div>
-                            <button><div></div></button>
+                            <button><img src="/images/universel/icones/trois-points-violet.png"></button>
                         </div>
 
                         <div class="display-ligne">
