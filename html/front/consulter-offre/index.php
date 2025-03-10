@@ -463,7 +463,7 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                     $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                     $jour_actuel = $jours[date('w')];
-                    $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                    $ouverture = "Indéterminé";
 
                 foreach ($horaire as $h) {
 
@@ -472,16 +472,19 @@ try {
                         $ouvert_ferme = date('H:i');
                         $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
                         $ouverture = "Fermé";
+                        $result = "F";
 
                         if ($h['nom_jour'] == $jour_actuel) {
 
                             if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
 
                                 $ouverture = "Ouvert";
+                                $result = "O";
 
                             } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
 
                                 $ouverture = "Ferme bientôt";
+                                $result = "FB";
 
                             }
 

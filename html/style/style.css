@@ -2896,12 +2896,16 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front .Ouvert {
+.consulter-offre-front .O {
     color: green;
 }
 
-.consulter-offre-front .Fermé {
+.consulter-offre-front .F {
     color: red;
+}
+
+.consulter-offre-front .FB {
+    color: orange;
 }
 
 /********************************
