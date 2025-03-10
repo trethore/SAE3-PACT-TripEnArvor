@@ -784,14 +784,14 @@ try {
             }
 
 
-            if ($categorie !== "restauration") {
+            if ($categorie != "restauration") {
                 if (isset($_POST[$tag])) {
                     foreach ($liste_tags as $tag) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
                     }
                 }
             }
-            if ($categorie === "restauration") {
+            if ($categorie == "restauration") {
                 foreach ($liste_tags_restauration as $tag) {
                     if (isset($_POST[$tag])) {
                         $tagsSelectionnes[] = $tag;// Ajoute uniquement le nom du tag
