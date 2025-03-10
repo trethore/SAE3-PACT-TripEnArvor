@@ -841,15 +841,15 @@ try {
                         </button>
                         
                         <?php if(isset($_SESSION['id'])) {
-                            if ($a['id_membre'] == $_SESSION['id']) { ?>
-
-                                <div class="popup-menu" id="popup-menu">
-                                    <ul> 
-                                        <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
-                                    </ul>
-                                </div>
-
-                        <?php } 
+                            if ($a['id_membre'] == $_SESSION['id']) { 
+                                if ($membre[$compteur]['id_compte'] == $a['id_membre']) { ?>
+                                    <div class="popup-menu" id="popup-menu">
+                                        <ul> 
+                                            <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                        </ul>
+                                    </div>
+                                <?php }
+                            } 
                         } else { ?>
 
                             <div class="popup-menu" id="popup-menu">
