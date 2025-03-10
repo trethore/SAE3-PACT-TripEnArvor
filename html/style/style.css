@@ -3212,6 +3212,8 @@ h3 {
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
+    width: 100px;
+    height: 100px;
     background-image: radial-gradient(circle, var(--violet-principal) 3px, transparent 11px);
     background-size: 100% 33.33%;
 }
