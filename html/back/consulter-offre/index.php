@@ -661,7 +661,7 @@ try {
                                     <?php } ?>
                                 </div>
                             </div>
-                            <button>⋮</button>
+                            <button><strong>⋮</strong></button>
                         </div>
 
                         <div class="display-ligne">
