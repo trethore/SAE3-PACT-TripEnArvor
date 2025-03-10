@@ -16,6 +16,7 @@
     --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
+    --jaune-relief: #ffbf00;
 
     --fond-bouton: rgba(217, 217, 217, 0.73);
     --transparent: rgba(255, 255, 255, 0);
@@ -1548,15 +1549,15 @@ h3 {
     width: 16em;
 }
 
-.compte-front table td+td,
-.compte-front-modif table td+td {
+.compte-front table td + td,
+.compte-front-modif table td + td {
     text-align: right;
     width: 28em;
     color: var(--violet-principal);
 }
 
-.compte-front td>div,
-.compte-front-modif td>div {
+.compte-front td > div,
+.compte-front-modif td > div {
     text-align: justify;
     /* Justifie uniquement le contenu interne */
     display: inline-block;
@@ -1567,8 +1568,8 @@ h3 {
 /********************
         BOUTON
 *********************/
-.compte-front main>section a,
-.compte-front-modif main>section a {
+.compte-front main > section a,
+.compte-front-modif main > section a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
@@ -3297,11 +3298,14 @@ h3 {
 }
 
 .consulter-offre-back h1 {
-    font-size: 45px;
-    font-weight: bold;
-    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
     color: var(--orange-principale);
-    margin-top: 0;
+    background: var(--blanc);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
 }
 
 .consulter-offre-back p {
@@ -4406,7 +4410,11 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .sous-offre {
-    border: 5px solid red;
+    border: 5px solid var;
+}
+
+.liste-front .en-relief-offre .sous-offre .prix span {
+    color: var(--noir);
 }
 
 .liste-front .offre .sous-offre {
@@ -4614,7 +4622,7 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .prix {
-    background: red;
+    background: var(--jaune-relief);
 }
 
 .liste-front .fond-filtres {
