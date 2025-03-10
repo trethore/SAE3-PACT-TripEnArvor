@@ -1007,21 +1007,21 @@ try {
     <script>
         function toggleMenu(event, button) {
             event.stopPropagation();
-            let menu = document.getElementById("popup-menu");
+            const menu = document.getElementById("popup-menu");
             
             if (menu.style.display === "block") {
                 menu.style.display = "none";
                 return;
             }
             
-            let rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.bottom + window.scrollY}px`;
-            menu.style.left = `${rect.left + window.scrollX}px`;
+            const rect = button.getBoundingClientRect();
+            menu.style.top = `${rect.bottom + window.scrollY - 5}px`;
+            menu.style.left = `${rect.left + window.scrollX - 90}px`;
             menu.style.display = "block";
         }
 
         document.addEventListener("click", function(event) {
-            let menu = document.getElementById("popup-menu");
+            const menu = document.getElementById("popup-menu");
             if (menu.style.display === "block" && !event.target.closest(".menu-button")) {
                 menu.style.display = "none";
             }
