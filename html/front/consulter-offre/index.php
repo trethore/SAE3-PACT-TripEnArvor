@@ -836,13 +836,15 @@ try {
 
                             </div>
                         </div>
-                        <button class="menu-button" onclick="toggleMenu(event)"><img src="/images/universel/icones/trois-points-violet.png"></button>
-
+                        <button class="menu-button" onclick="toggleMenu(event)">
+                            <img src="/images/universel/icones/trois-points-violet.png">
+                        </button>
+                        
                         <div class="popup-menu" id="popup-menu">
                             <ul>
-                                <li>Signaler</li>
-                                <li>Blacklister</li>
-                                <li>Supprimer</li>
+                                <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                <li onclick="handleMenuAction('Blacklister')">Blacklister</li>
+                                <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
                             </ul>
                         </div>
 
@@ -1001,11 +1003,12 @@ try {
         </div>
     </div>
 
+    
     <script>
         function toggleMenu(event) {
             event.stopPropagation();
             let menu = document.getElementById("popup-menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
         document.addEventListener("click", function(event) {
@@ -1014,6 +1017,11 @@ try {
                 menu.style.display = "none";
             }
         });
+
+        function handleMenuAction(action) {
+            alert(action + ' cliqué');
+            document.getElementById("popup-menu").style.display = "none";
+        }
     </script>
 
 </body>
