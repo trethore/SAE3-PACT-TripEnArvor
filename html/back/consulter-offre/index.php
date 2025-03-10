@@ -394,16 +394,19 @@ try {
                         $ouvert_ferme = date('H:i');
                         $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
                         $ouverture = "Fermé";
+                        $result = "F";
 
                         if ($h['nom_jour'] == $jour_actuel) {
 
                             if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
 
                                 $ouverture = "Ouvert";
+                                $result = "O";
 
                             } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
 
                                 $ouverture = "Ferme bientôt";
+                                $result = "FB";
 
                             }
 
@@ -413,7 +416,7 @@ try {
 
                 } ?>
 
-                <p><?php echo htmlentities($ouverture); ?></p>
+                <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
 
             </div>
 

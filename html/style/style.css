@@ -2936,7 +2936,7 @@ h3 {
     margin: 0 0;
 }
 
-.consulter-offre-front .display-ligne > p :last-child {
+.consulter-offre-front .ouverture-decalage {
     margin-left: 2px;
 }
 
@@ -3377,6 +3377,22 @@ h3 {
 
 .consulter-offre-back .bordure {
     border-bottom: 3px solid var(--orange-principale);
+}
+
+.consulter-offre-back .ouverture-decalage {
+    margin-left: 2px;
+}
+
+.consulter-offre-back .O {
+    color: green;
+}
+
+.consulter-offre-back .F {
+    color: red;
+}
+
+.consulter-offre-back .FB {
+    color: orange;
 }
 
 /********************************

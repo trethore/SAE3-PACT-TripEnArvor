@@ -494,7 +494,7 @@ try {
 
                 } ?>
 
-                <p class="<?php echo htmlentities($result) ?>"><?php echo htmlentities($ouverture); ?></p>
+                <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
 
             </div>
 
