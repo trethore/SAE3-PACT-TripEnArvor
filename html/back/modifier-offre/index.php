@@ -792,34 +792,13 @@ try {
                 $categorie = $_POST['lacat'];
             }
 
-            print_r($_POST['tag']);
-            $tagsSelectionnes = [];
-            foreach ($_POST['tag'] as $tag) {
-                $tagsSelectionnes[] = $tag;
-            }
-            print_r($tagsSelectionnes);
-            
-
-            if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
-                if ($categorie !== "restauration") {
-                    foreach ($_POST['tag'] as $tag) {
-                        if (in_array($tag, $liste_tags)) { // Vérifie si le tag appartient bien à la liste des tags valides
-                            $tagsSelectionnes[] = $tag;
-                        }
-                    }
-                } else {
-                    foreach ($_POST['tag'] as $tag) {
-                        if (in_array($tag, $liste_tags_restauration)) { // Vérifie si le tag appartient à la liste des tags restauration
-                            $tagsSelectionnes[] = $tag;
-                        }
-                    }
+            if (!empty($_POST['tag'])){
+                $tagsSelectionnes = [];
+                foreach ($_POST['tag'] as $tag) {
+                    $tagsSelectionnes[] = $tag;
                 }
             }
-
-           foreach ($tagsSelectionnes as $tags){
-                echo $tags; 
-           }
-            
+        
 
             $descriptionL = $_POST['descriptionL'];
             $abonnement = $offre_bonne_cat['abonnement'];
