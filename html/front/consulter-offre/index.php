@@ -836,7 +836,7 @@ try {
 
                             </div>
                         </div>
-                        <button class="menu-button" onclick="toggleMenu(event)">
+                        <button class="menu-button" onclick="toggleMenu(event, this)">
                             <img src="/images/universel/icones/trois-points-violet.png">
                         </button>
                         
@@ -1005,10 +1005,19 @@ try {
 
     
     <script>
-        function toggleMenu(event) {
+        function toggleMenu(event, button) {
             event.stopPropagation();
             let menu = document.getElementById("popup-menu");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+            
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+                return;
+            }
+            
+            let rect = button.getBoundingClientRect();
+            menu.style.top = `${rect.bottom + window.scrollY}px`;
+            menu.style.left = `${rect.left + window.scrollX}px`;
+            menu.style.display = "block";
         }
 
         document.addEventListener("click", function(event) {

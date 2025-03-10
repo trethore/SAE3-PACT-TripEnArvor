@@ -3225,8 +3225,6 @@ h3 {
 .popup-menu {
     display: none;
     position: absolute;
-    right: 0;
-    top: 40px;
     background: white;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -3251,7 +3249,6 @@ h3 {
 .popup-menu li:hover {
     background: #f0f0f0;
 }
-
 /**/
 
 .consulter-offre-front #avis>button,
