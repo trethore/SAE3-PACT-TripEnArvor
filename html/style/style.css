@@ -4620,6 +4620,10 @@ input[type="tel"] {
     background: #ffbf00;
 }
 
+.liste-front .en-relief-offre .prix span {
+    color: var(--noir);
+}
+
 .liste-front .fond-filtres {
     overflow: hidden;
     /* Permet l'effet de rétractation */
