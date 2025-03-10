@@ -2896,6 +2896,14 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
+.consulter-offre-front .Ouvert {
+    color: green;
+}
+
+.consulter-offre-front .Fermé {
+    color: red;
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
