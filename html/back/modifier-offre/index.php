@@ -795,16 +795,16 @@ try {
 
             $tagsSelectionnes = [];
 
-            if (isset($_POST['tag']) && is_array($_POST['tag'])) {
+            if (!empty($_POST['tag']) && is_array($_POST['tag'])) {
                 if ($categorie !== "restauration") {
-                    foreach ($liste_tags as $tag) {
-                        if (in_array($tag, $_POST['tag'])) {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags)) { // Vérifie si le tag appartient bien à la liste des tags valides
                             $tagsSelectionnes[] = $tag;
                         }
                     }
                 } else {
-                    foreach ($liste_tags_restauration as $tag) {
-                        if (in_array($tag, $_POST['tag'])) {
+                    foreach ($_POST['tag'] as $tag) {
+                        if (in_array($tag, $liste_tags_restauration)) { // Vérifie si le tag appartient à la liste des tags restauration
                             $tagsSelectionnes[] = $tag;
                         }
                     }
