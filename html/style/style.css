@@ -3939,9 +3939,6 @@ h3 {
   cursor: pointer;
 } */
 
-
-
-
 /****A PROPOS DE L'OFFRE****/
 .creer-offre .apropos tr+td,
 .creer-offre .important tr+td {
@@ -3967,13 +3964,9 @@ input[type="tel"] {
 
 /****Tarif****/
 
-
-
 /* #options{
   display: none;
 } */
-
-
 
 
 /***Boutons***/
