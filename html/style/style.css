@@ -2845,7 +2845,7 @@ h3 {
 }
 
 .consulter-offre-front h1 {
-    font-size: 64px;
+    font-size: 32px;
     font-weight: bold;
     text-align: center;
     color: var(--violet-principal);
@@ -2857,7 +2857,7 @@ h3 {
 }
 
 .consulter-offre-front h2 {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--violet-principal);
     margin: 5px 0;
@@ -3297,7 +3297,7 @@ h3 {
 }
 
 .consulter-offre-back h1 {
-    font-size: 64px;
+    font-size: 32px;
     font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
@@ -3309,7 +3309,7 @@ h3 {
 }
 
 .consulter-offre-back h2 {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--orange-principale);
     margin: 5px 0;
