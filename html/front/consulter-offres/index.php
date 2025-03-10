@@ -243,6 +243,11 @@ try {
                         <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
                             <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
                                 <div class="sous-offre">
+                                    <?php
+                                        if (isOffreEnRelief($tab['id_offre'])) {
+                                            echo '<img class="image-en-relief" src="/images/frontOffice/icones/en-relief-noir.png">';
+                                        }
+                                    ?>
                                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
                                     <?php $horaire = getHorairesOuverture($tab['id_offre']);
                                     setlocale(LC_TIME, 'fr_FR.UTF-8'); 
