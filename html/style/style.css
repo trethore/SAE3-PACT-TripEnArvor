@@ -4506,6 +4506,15 @@ input[type="tel"] {
     border-radius: 5px 5px 0px 0px;
 }
 
+.image-en-relief {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: auto;
+}
+
 .liste-front .titre-offre {
     position: absolute;
     left: 2%;
