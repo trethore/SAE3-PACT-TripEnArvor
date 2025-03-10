@@ -649,16 +649,19 @@ try {
                     ?>
 
                     <div class="fond-blocs-avis">
-                        <div class="display-ligne">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                        <div class="display-ligne-espace">
                             <div class="display-ligne">
-                                <?php for ($etoileJaune = 0; $etoileJaune != $a['note']; $etoileJaune++) { ?>
-                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php }
-                                for ($etoileGrise = 0; $etoileGrise != (5 - $a['note']); $etoileGrise++) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                <?php } ?>
+                                <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                                <div class="display-ligne">
+                                    <?php for ($etoileJaune = 0; $etoileJaune != $a['note']; $etoileJaune++) { ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php }
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $a['note']); $etoileGrise++) { ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php } ?>
+                                </div>
                             </div>
+                            <button>⋮</button>
                         </div>
 
                         <div class="display-ligne">
