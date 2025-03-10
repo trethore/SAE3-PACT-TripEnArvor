@@ -840,23 +840,25 @@ try {
                             <img src="/images/universel/icones/trois-points-violet.png">
                         </button>
                         
-                        <?php if ($a['id_membre'] == $_SESSION['id']) { ?>
+                        <?php if(isset($_SESSION['id'])) {
+                            if ($a['id_membre'] == $_SESSION['id']) { ?>
 
-                            <div class="popup-menu" id="popup-menu">
-                                <ul> 
-                                    <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
-                                </ul>
-                            </div>
+                                <div class="popup-menu" id="popup-menu">
+                                    <ul> 
+                                        <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                    </ul>
+                                </div>
 
-                        <?php } else { ?>
+                            <?php } else { ?>
 
-                            <div class="popup-menu" id="popup-menu">
-                                <ul>
-                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                </ul>
-                            </div>
+                                <div class="popup-menu" id="popup-menu">
+                                    <ul>
+                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                    </ul>
+                                </div>
 
-                        <?php } ?>
+                            <?php } 
+                        } ?>
                     </div>
 
                     <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
