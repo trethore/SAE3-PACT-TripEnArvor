@@ -16,6 +16,7 @@
     --orange-principale: rgba(217, 102, 54, 1);
     --orange-secondaire-1: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
+    --jaune-relief: #ffbf00;
 
     --fond-bouton: rgba(217, 217, 217, 0.73);
     --transparent: rgba(255, 255, 255, 0);
@@ -1548,15 +1549,15 @@ h3 {
     width: 16em;
 }
 
-.compte-front table td+td,
-.compte-front-modif table td+td {
+.compte-front table td + td,
+.compte-front-modif table td + td {
     text-align: right;
     width: 28em;
     color: var(--violet-principal);
 }
 
-.compte-front td>div,
-.compte-front-modif td>div {
+.compte-front td > div,
+.compte-front-modif td > div {
     text-align: justify;
     /* Justifie uniquement le contenu interne */
     display: inline-block;
@@ -1567,8 +1568,8 @@ h3 {
 /********************
         BOUTON
 *********************/
-.compte-front main>section a,
-.compte-front-modif main>section a {
+.compte-front main > section a,
+.compte-front-modif main > section a {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
@@ -2896,18 +2897,6 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
-.consulter-offre-front .O {
-    color: green;
-}
-
-.consulter-offre-front .F {
-    color: red;
-}
-
-.consulter-offre-front .FB {
-    color: orange;
-}
-
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
@@ -2934,6 +2923,22 @@ h3 {
 
 .consulter-offre-front .display-ligne>p {
     margin: 0 0;
+}
+
+.consulter-offre-front .display-ligne > p :last-child {
+    margin-left: 2px;
+}
+
+.consulter-offre-front .O {
+    color: green;
+}
+
+.consulter-offre-front .F {
+    color: red;
+}
+
+.consulter-offre-front .FB {
+    color: orange;
 }
 
 /**********************************
@@ -3309,11 +3314,14 @@ h3 {
 }
 
 .consulter-offre-back h1 {
-    font-size: 45px;
-    font-weight: bold;
-    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
     color: var(--orange-principale);
-    margin-top: 0;
+    background: var(--blanc);
+    border-radius: 15px;
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 55pt;
 }
 
 .consulter-offre-back p {
@@ -3935,9 +3943,6 @@ h3 {
   cursor: pointer;
 } */
 
-
-
-
 /****A PROPOS DE L'OFFRE****/
 .creer-offre .apropos tr+td,
 .creer-offre .important tr+td {
@@ -3963,13 +3968,9 @@ input[type="tel"] {
 
 /****Tarif****/
 
-
-
 /* #options{
   display: none;
 } */
-
-
 
 
 /***Boutons***/
@@ -4417,26 +4418,6 @@ input[type="tel"] {
     border-radius: 15px 15px 10px 10px;
 }
 
-.liste-front .en-relief-offre .sous-offre {
-    border: 5px solid #ffbf00;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 #ffbf00;
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
-    }
-}
-
 .liste-front .offre .sous-offre {
     border: 3px solid var(--violet-principal);
 }
@@ -4649,10 +4630,6 @@ input[type="tel"] {
     text-decoration: none;
     color: var(--blanc);
     margin-top: 16px;
-}
-
-.liste-front .en-relief-offre .prix {
-    background: #ffbf00;
 }
 
 .liste-front .fond-filtres {
