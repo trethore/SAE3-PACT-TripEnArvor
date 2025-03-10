@@ -46,10 +46,35 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
  3. Lancer le serveur une première fois : dans un terminal, placez-vous dans le dossier `docker/`, 
     puis exécutez `docker compose up --build && docker compose logs -f`.
 
- 4. Ouvrez un outil de gestion de bases de données comme `pgAdmin` ou `SQLWorkbench` 
-    et connectez-vous à la base de données.
+ 4. Ouvrez pgAdmin à l'adresse `http://localhost:${PGADMIN_PORT}/`. 
+    Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env`.
+      - Identifiant : `${EQUIPE}@dbadmin-sae.com`
+        Remplacez `${EQUIPE}` par la valeur de `EQUIPE` dans `docker/.env`, 
+        utilisez la valeur que vous avez définit à la place de `equipe` dans l'identifiant.
+      - Mot de passe :  Valeur de `PGADMIN_PASSWORD` dans `docker/.env` (par défaut `8081`).
 
- 5. Exécutez le contenu de `sql/createdb.sql` puis de `sql/populate.sql`.
+ 5. Ajoutez un serveur avec les information suivantes :
+
+      - Onglet `Général`
+          - Nom : Choisissez un nom, par exemple `test_sae_34`.
+
+      - Onglet `Connexion`
+          - `Nom d'hôte / Adresse` : `postgresdb`
+          - `Base de données de maintenance` : Valeur de `DB_NAME` dans `docker/.env`.
+          - `Identifiant` : Valeur de `DB_USER` dans `docker/.env`.
+          - `Mot de passe` : Valeur de `DB_ROOT_PASSWORD` dans `docker/.env`.
+    
+        Laissez les valeurs par défaut pour le reste.
+
+ 6. Ouvrez l'éditeur de requêtes (`Alt` + `Shift` + `Q`)<br>
+    ![C'est le bouton avec une icône de BDD avec une flèche devant](readme-images/query-editor.webp)
+
+ 7. Copier le contenu de `sql/createdb.sql` dans l'éditeur de requêtes puis exécutez le script (`F5`).<br>
+    ![C'est le bouton avec la flèche](readme-images/execute-script.webp)
+
+ 8. Faites de même avec le contenu de `sql/populate.sql`.
+
+Après avoir effectuer ces étapes, le serveur local devrait être prêt.
 
 ### Lancement du serveur
 
@@ -58,15 +83,13 @@ Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez
 
 ### Accéder au site
 
-Le site sera accessible à l’adresse `http://localhost:8080/`.<br>
-Si vous avez changé la valeur de `PORT_WEB` dans `docker/.env`, 
-utilisez la valeur que vous avez définit à la place de `8080` dans l'URL.
+Le site sera accessible à l’adresse `http://localhost:${PORT_WEB}/`.<br>
+Remplacez `${PORT_WEB}` par la valeur de `PORT_WEB` dans `docker/.env` (par défaut `8080`).
 
 ### Arrêter le serveur
 
-  - Pour arrêter le serveur sans supprimer les données du conteneur, 
-    ouvrez un terminal dans `docker/` et  exécutez `docker compose down`.
-
-  - Pour arrêter le serveur et supprimer les données du conteneur, 
-    ouvrez un terminal dans `docker/` et  exécutez `docker compose down -v`.
+Pour arrêter le serveur sans supprimer les données du conteneur, 
+ouvrez un terminal dans `docker/` et  exécutez `docker compose down`.<br>
+Pour arrêter le serveur et supprimer les données du conteneur, 
+ouvrez un terminal dans `docker/` et  exécutez `docker compose down -v`.
 

@@ -28,5 +28,20 @@ services:
     depends_on:
       - postgresdb
 
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 0.0.0.0:${PGADMIN_PORT}:80
+    environment:
+      VIRTUAL_HOST: localhost
+      PGADMIN_DEFAULT_EMAIL: ${EQUIPE}@dbadmin-sae.com
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_DISABLE_POSTFIX: true
+    networks:
+      - sae
+    depends_on:
+      - postgresdb
+
 networks:
   sae:
