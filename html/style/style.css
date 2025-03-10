@@ -2845,7 +2845,7 @@ h3 {
 }
 
 .consulter-offre-front h1 {
-    font-size: 32px;
+    font-size: 45px;
     font-weight: bold;
     text-align: center;
     color: var(--violet-principal);
@@ -3297,7 +3297,7 @@ h3 {
 }
 
 .consulter-offre-back h1 {
-    font-size: 32px;
+    font-size: 45px;
     font-weight: bold;
     text-align: center;
     color: var(--orange-principale);
