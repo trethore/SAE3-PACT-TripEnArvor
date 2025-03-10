@@ -244,7 +244,7 @@ try {
                                 <div class="sous-offre">
                                     <?php
                                         if (isOffreEnRelief($tab['id_offre'])) {
-                                            echo '<img class="image-en-relief" src="/images/frontOffice/icones/en-relief-noir.png">';
+                                            echo '<img class="image-en-relief" src="/images/frontOffice/icones/en-relief-heart.png">';
                                         }
                                     ?>
                                     <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
