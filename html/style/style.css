@@ -4632,6 +4632,14 @@ input[type="tel"] {
     margin-top: 16px;
 }
 
+.liste-front .en-relief-offre .prix {
+    background: #ffbf00;
+}
+
+.liste-front .en-relief-offre .prix span {
+    color: var(--noir);
+}
+
 .liste-front .fond-filtres {
     overflow: hidden;
     /* Permet l'effet de rétractation */
