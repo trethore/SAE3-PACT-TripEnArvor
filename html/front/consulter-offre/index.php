@@ -491,7 +491,7 @@ try {
 
                 } ?>
 
-                <p><?php echo htmlentities($ouverture); ?></p>
+                <p class="<?php echo htmlentities($ouverture) ?>"><?php echo htmlentities($ouverture); ?></p>
 
             </div>
 
