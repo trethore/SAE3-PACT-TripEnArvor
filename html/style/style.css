@@ -1142,7 +1142,16 @@ h3 {
 
 .mes-avis .avis-en-exergue {
     border: 15px;
-    animation: pulse 2s infinite;
+    animation: pulse 2s infinite ease-out;
+}
+
+#infobulle {
+    background-color: #ffcc00;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
 }
 
 

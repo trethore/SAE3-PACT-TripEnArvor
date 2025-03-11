@@ -228,7 +228,8 @@ if ($typeCompte === 'proPrive') {
 
                      
                         <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-
+                        
+                            <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
                             
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
@@ -242,7 +243,7 @@ if ($typeCompte === 'proPrive') {
                                         <?php } ?>
                                     </div>
                                 </div>
-                                <button><img src="/images/universel/icones/trois-points-violet.png"></button>
+
                             </div>
 
                             <div class="display-ligne">
@@ -286,7 +287,7 @@ if ($typeCompte === 'proPrive') {
                                 </div>
                             </div>
                             <br>
-                            <a href='/back/consulter-offre/index.php?id=$id_offre'> Acceder a l'avis</a>
+                            <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
                         </div>
                 <?php $compteur++; } }?>       
             
