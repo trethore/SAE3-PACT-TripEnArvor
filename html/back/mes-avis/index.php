@@ -184,7 +184,7 @@ if ($typeCompte === 'proPrive') {
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
             
-        <section>
+        <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
             
             <h2> 
