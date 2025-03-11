@@ -195,8 +195,11 @@ if ($typeCompte === 'proPrive') {
                     echo "il faut mettre la note moyenne pour chaque offre";
 
                     $categorie = getTypeOffre($offre);
+                    echo "test";
                     $avis = getAvis($offre);
+                    echo "test";
                     $membre = getInformationsMembre($offre);
+                    echo "test";
                     $compteur = 0;
 
                     foreach ($avis as $lavis) {
