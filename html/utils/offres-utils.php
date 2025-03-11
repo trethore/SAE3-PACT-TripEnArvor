@@ -188,11 +188,6 @@
 // ===== GESTION DES OFFRES ===== //
 
 
-            $stmtOffre = $conn->prepare($reqOffre);
-            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-            $stmtOffre->execute();
-
-
     // ===== Fonction qui exécute une requête SQL pour récupérer toutes les offres d'un professionel ===== //
     function getToutesLesOffres($id_utilisateur){
         global $driver, $server, $dbname, $user, $pass;
