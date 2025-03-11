@@ -4546,6 +4546,7 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .sous-offre {
+    border: 5px solid var(--violet-principal);
     animation: pulse 2s infinite;
 }
 
@@ -4554,10 +4555,10 @@ input[type="tel"] {
         box-shadow: 0 0 0 0 var(--violet-principal);
     }
     50% {
-        box-shadow: 0 0 0 10px rgba(52, 152, 218, 0);
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(52, 152, 218, 0);
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
     }
 }
 
@@ -4776,12 +4777,11 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .prix {
-    background: #ffbf00;
-    color: var(--noir);
+    background: var(--violet-principal);
 }
 
 .liste-front .en-relief-offre .prix span {
-    color: var(--noir);
+    color: var(--blanc);
 }
 
 .liste-front .fond-filtres {
