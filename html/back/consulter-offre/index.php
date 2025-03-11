@@ -649,7 +649,7 @@ try {
                     ?>
 
                     <div class="fond-blocs-avis">
-                        < class="display-ligne-espace">
+                        <div class="display-ligne-espace">
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                                 <div class="display-ligne">
@@ -661,7 +661,18 @@ try {
                                     <?php } ?>
                                 </div>
                             </div>
-                            <button><img src="/images/universel/icones/trois-points-violet.png"></button>
+                            <!-- Bouton menu -->
+                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                                <img src="/images/universel/icones/trois-points-orange.png">
+                            </button>
+
+                            <!-- Menu pop-up (ID unique par avis) -->
+                            <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
+                                <ul>
+                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                    <li onclick="handleMenuAction('Blacklister')">Blacklister</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="display-ligne">
@@ -813,6 +824,32 @@ try {
         </div>
         
     </footer>
+
+    <script>
+        function toggleMenu(event, button, compteur) {
+            event.stopPropagation();
+            let menu = document.getElementById(`popup-menu-${compteur}`);
+            document.querySelectorAll(".popup-menu").forEach(m => {
+                if (m !== menu) m.style.display = "none";
+            });
+
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+                return;
+            }
+
+            let rect = button.getBoundingClientRect();
+            menu.style.top = `${rect.top + window.scrollY - 18}px`;
+            menu.style.left = `${rect.left + window.scrollX - 100}px`;
+            menu.style.display = "block";
+        }
+
+        document.addEventListener("click", function() {
+            document.querySelectorAll(".popup-menu").forEach(menu => {
+                menu.style.display = "none";
+            });
+        });
+    </script>
 
 </body>
 

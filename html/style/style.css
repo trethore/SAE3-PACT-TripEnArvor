@@ -3692,6 +3692,34 @@ h3 {
     cursor: pointer;
 }
 
+.consulter-offre-back .popup-menu {
+    width: 120px;
+    display: none;
+    position: absolute;
+    background: var(--blanc);
+    color: var(--noir);
+    border-radius: 8px;
+    z-index: 1000; 
+}
+
+.consulter-offre-back .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.consulter-offre-back .popup-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+}
+
+.consulter-offre-back .popup-menu li:hover {
+    background: var(--orange-secondaire-2);
+    color: var(--blanc);
+}
+
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
