@@ -101,6 +101,7 @@ try {
     <main>
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
+            <a class="ici" href="/back/mes-avis">Mes avis</a>
             <a class="ici" href="/back/mes-factures">Mes factures</a>
             <a href="/se-connecter">Se déconnecter</a>
         </nav>
