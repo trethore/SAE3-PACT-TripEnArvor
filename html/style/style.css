@@ -1145,6 +1145,15 @@ h3 {
     animation: pulse 2s infinite ease-out;
 }
 
+#infobulle {
+    background-color: #ffcc00;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
 
 /**************************************************************************************
                                     BACK FACTURES
