@@ -227,9 +227,8 @@ if ($typeCompte === 'proPrive') {
                     } ?>
 
                      
-                        <div class="fond-blocs-avis 
-                            <?php   if ($lavis['lu'] == false) { echo ' class="avis-en-exergue"'; } ?>
-                            " >
+                        <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+
                             
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
