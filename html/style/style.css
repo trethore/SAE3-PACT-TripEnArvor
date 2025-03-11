@@ -1145,18 +1145,20 @@ h3 {
     animation: pulse 2s infinite ease-out;
 }
 
-.mes-avis .avis-en-exergue:hover #infobulle {
-    display: block;
-}
-
 #infobulle {
-    background-color: #ffcc00;
+    background-color:var(--orange-principale);
     color: black;
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
     display: none;
 }
+
+.mes-avis .avis-en-exergue:hover #infobulle {
+    display: block;
+}
+
+
 
 
 /**************************************************************************************
