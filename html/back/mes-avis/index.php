@@ -196,8 +196,8 @@ if ($typeCompte === 'proPrive') {
                     if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                         continue;
                     }
-                    echo "Avis sur l'offre : " . $offre['titre'];
-                    echo "<br>";
+                    echo "Avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                   <?php  echo "<br>"; 
                     echo "il faut mettre la note moyenne pour chaque offre";
 
                     $categorie = getTypeOffre($id_offre);
@@ -280,7 +280,7 @@ if ($typeCompte === 'proPrive') {
                                 </div>
                         </div>
                 <?php $compteur += 1; } }?>       
-            </h2>
+            
             
         </section>
     </main>
