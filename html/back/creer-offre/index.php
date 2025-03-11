@@ -150,7 +150,7 @@ try {
                     <table border="0">
                         <tr>
                             <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                            <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre" required /></td>
+                            <td colspan="3"><input type="text" maxlength="40" id="titre" name="titre" placeholder="Insérer un titre" required /></td>
                         </tr>
                         <tr>
                             <td><label for="categorie">Catégorie <span class="required">*</span></label></td>

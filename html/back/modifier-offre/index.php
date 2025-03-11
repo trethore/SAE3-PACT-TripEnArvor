@@ -339,7 +339,7 @@ try {
                         <table border="0">
                             <tr>
                                 <td><label for="titre">Titre <span class="required">*</span></label> </td>
-                                <td colspan="3"><input type="text" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($offre['titre']) ?> " required/></td>
+                                <td colspan="3"><input type="text" maxlength="40" id="titre" name="titre" placeholder="Insérer un titre"  value="<?php echo htmlentities($offre['titre']) ?> " required/></td>
                             </tr>
                             <tr>
                                 <td><label for="categorie">Catégorie</label> <?php echo $categorie ?></td>
@@ -479,7 +479,7 @@ try {
                         if (!empty($tags)) {
                             foreach ($tags as $tag) { ?>
                                 <li>
-                                    <input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag[]" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked>
+                                    <input type="checkbox" id="<?php echo htmlentities($tag['nom_tag']); ?>" name="tag" value="<?php echo htmlentities($tag['nom_tag']); ?>" checked>
                                     <?php echo htmlentities($tag['nom_tag']); ?>
                                 </li>
                         <?php } } 
@@ -489,7 +489,7 @@ try {
                             foreach ($liste_tags_restauration as $tag) { 
                                 if (!in_array($tag, $tag_names)) { ?>
                                     <li>
-                                        <input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag" value="<?php echo htmlentities($tag); ?>">
                                         <?php echo htmlentities($tag); ?>
                                     </li>
                         <?php } } } else {
@@ -497,7 +497,7 @@ try {
                             foreach ($liste_tags as $tag) { 
                                 if (!in_array($tag, $tag_names)) { ?>
                                     <li>
-                                        <input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag[]" value="<?php echo htmlentities($tag); ?>">
+                                        <input type="checkbox" id="<?php echo htmlentities($tag); ?>" name="tag" value="<?php echo htmlentities($tag); ?>">
                                         <?php echo htmlentities($tag); ?>
                                     </li>
                         <?php } } } ?>
