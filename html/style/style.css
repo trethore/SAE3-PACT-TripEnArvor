@@ -1927,7 +1927,7 @@ h3 {
     padding: 3px 8px;
     font-size: 12px;
     font-weight: bold;
-    border: solid black 2px;
+    border: solid black 1px;
 }
 
 .front .notification-badge {
