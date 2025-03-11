@@ -131,7 +131,7 @@ VALUES
 
 
 -- Insertion dans offre_activite
-INSERT INTO offre_activite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, age_min)
+INSERT INTO offre_activite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, nom_abonnement, duree, age_min)
 VALUES 
 ('Balade sur la Côte Sauvage', 'Découvrez les paysages magnifiques de la Côte Sauvage à Quiberon, une expérience mêlant nature, air marin et détente.', 'Quiberon', 'Plongez au cœur de la Bretagne lors d’une balade sur la célèbre Côte Sauvage de Quiberon. Ce circuit pédestre vous offre une immersion dans des paysages maritimes spectaculaires, où falaises abruptes, plages secrètes et eaux turquoise s’entremêlent. Accompagné par un guide passionné, vous découvrirez l’histoire et les légendes locales, tout en observant la flore et la faune spécifiques à ce littoral unique. Cette aventure est ponctuée de pauses pour admirer le panorama, prendre des photos et déguster des produits locaux comme les célèbres crêpes bretonnes ou le cidre artisanal. Une activité idéale pour se ressourcer, tout en découvrant le patrimoine naturel et culturel de la Bretagne.', 'https://www.cotesauvage.bzh', 1, 2, 'premium', 300, 10),
 ('Atelier de Tissage Breton', 'Initiez-vous à l’art du tissage traditionnel breton.', 'Vannes', 'Participez à un atelier unique où vous apprendrez les bases du tissage breton avec un artisan local. Découvrez les techniques ancestrales et repartez avec votre création.', 'https://www.tissagebzh.com', 2, 3,'standard', 120, 8);
@@ -151,7 +151,7 @@ INSERT INTO _offre_activite_propose_prestation (nom_prestation, id_offre_activit
 -- ####################################################################
 
 -- Insertion dans offre_visite
-INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree,date_evenement)
+INSERT INTO offre_visite(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, nom_abonnement, duree,date_evenement)
 VALUES 
 ('Visite de la Ville Close', 'Découvrez la Ville Close de Concarneau, un joyau historique entouré de remparts.', 'Concarneau', 'La Ville Close, située au cœur de Concarneau, est une cité médiévale fortifiée entourée par les eaux. Ce site emblématique de Bretagne offre une plongée dans l’histoire avec ses remparts bien préservés et ses ruelles pavées. Vous pourrez visiter le musée de la Pêche, qui retrace l’histoire maritime de la région, et profiter des nombreuses boutiques d’artisans et cafés locaux. Depuis les remparts, admirez une vue imprenable sur le port et les environs. Une promenade incontournable pour les amateurs d’histoire et de paysages pittoresques.', 'https://www.concarneau-visite.bzh', 1, 2, 'standard', 120,14),
 ('Découverte des Alignements de Carnac', 'Explorez les mystérieux alignements de Carnac, un site mégalithique unique en Europe.', 'Carnac', 'Les alignements de Carnac sont une série impressionnante de plus de 3 000 menhirs érigés il y a des milliers d’années. Ce site archéologique, unique au monde, intrigue par son ampleur et son mystère. Accompagné d’un guide, découvrez les théories sur leur origine et leur usage, ainsi que les légendes qui entourent ces pierres. Le parcours inclut une balade à travers les principaux alignements, tels que Le Ménec et Kermario, ainsi que la visite d’un tumulus. Une expérience fascinante pour les passionnés d’histoire, de culture celtique et de patrimoine breton.', 'https://www.carnac-aligne.bzh', 2, 3, 'standard', 180,15),
@@ -162,7 +162,7 @@ VALUES
 -- ####################################################################visite
 
 -- Insertion dans offre_spectacle
-INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, duree, capacite, date_evenement)
+INSERT INTO offre_spectacle(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, nom_abonnement, duree, capacite, date_evenement)
 VALUES 
 ('Fest-Noz Traditionnel', 'Plongez dans une soirée bretonne festive, avec danses et musique traditionnelle en live.', 'Quimper', 'Le Fest-Noz, inscrit au patrimoine immatériel de l’UNESCO, est une véritable célébration de la culture bretonne. Lors de cette soirée animée, laissez-vous emporter par les rythmes envoûtants de la musique traditionnelle jouée en live par des groupes locaux, avec des instruments tels que la bombarde, le biniou et l’accordéon. Les danses bretonnes, faciles à apprendre, invitent tout le monde, débutants ou experts, à se joindre à la ronde. Les pauses sont l’occasion de déguster des spécialités bretonnes comme le cidre et les crêpes. Un événement unique pour vivre la convivialité et la richesse culturelle de la Bretagne.', 'https://www.festnoz-quimper.bzh', 1, 1, 'standard', 180, 200,11),
 ('Spectacle Son et Lumière', 'Découvrez l’histoire bretonne à travers un spectacle captivant mêlant projections lumineuses et musique.', 'Saint-Malo', 'Ce spectacle son et lumière, organisé dans les remparts de Saint-Malo, offre une immersion spectaculaire dans l’histoire bretonne. Les projections animées illuminent les vieilles pierres, racontant des récits captivants sur les corsaires, les batailles maritimes et les légendes locales. Accompagné d’une bande-son envoûtante et parfois de performances en direct, ce spectacle est une expérience unique pour petits et grands. Une belle façon de redécouvrir Saint-Malo sous un angle artistique et immersif.', 'https://www.saintmalo-spectacle.bzh', 2, 2, 'premium', 90, 300,12),
@@ -173,7 +173,7 @@ VALUES
 -- ####################################################################
 
 -- Insertion dans offre_parc_attraction
-INSERT INTO offre_parc_attraction(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, nb_attractions, age_min, plan)
+INSERT INTO offre_parc_attraction(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, nom_abonnement, nb_attractions, age_min, plan)
 VALUES 
 ('Parc de l’Armorique', 'Explorez le Parc Naturel Régional d’Armorique : nature, découvertes et aventures pour tous !', 'Brest', 'Le Parc Naturel Régional d’Armorique est un lieu unique où la nature et les activités ludiques se rencontrent. Avec ses sentiers de randonnée, ses circuits thématiques et ses zones dédiées à la faune et la flore bretonnes, le parc est idéal pour les amoureux de la nature. Petits et grands peuvent participer à des ateliers sur l’environnement, explorer des villages traditionnels et découvrir les légendes locales à travers des parcours interactifs. Le parc propose également des aires de jeux, des zones de pique-nique et des attractions éducatives. Une destination parfaite pour une journée en famille, mêlant détente et apprentissage dans un cadre exceptionnel.', 'https://www.parc-armorique.bzh', 1, 1, 'standard', 10, 3, 'plan-armorique.webp'),
 ('La Récré des 3 Curés', 'Venez vivre des sensations fortes et des moments de détente dans ce parc familial breton !', 'Milizac', 'Situé à Milizac, près de Brest, La Récré des 3 Curés est un parc d’attractions familial proposant des activités variées pour tous les âges. Avec ses montagnes russes, ses manèges aquatiques et son célèbre bateau pirate, le parc offre des sensations fortes aux amateurs d’adrénaline. Les plus jeunes profiteront d’espaces adaptés, avec des structures gonflables, des petits trains et des zones de jeux. Entre deux attractions, les visiteurs peuvent se détendre dans les aires de pique-nique ou savourer des spécialités bretonnes dans les restaurants du parc. La Récré des 3 Curés garantit une journée mémorable dans un cadre verdoyant et convivial.', 'https://www.larecredes3cures.com', 2, 2, 'premium', 15, 5, 'plan-recre.webp'),
@@ -184,7 +184,7 @@ VALUES
 -- ####################################################################
 
 -- Insertion dans offre_restauration
-INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement, gamme_prix, carte)
+INSERT INTO offre_restauration(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, nom_abonnement, gamme_prix, carte)
 VALUES 
 ('Festin Breton', 'Découvrez un festin breton mettant à l’honneur les spécialités locales dans une ambiance chaleureuse et conviviale.', 'Quimper', 'Plongez au cœur des traditions culinaires bretonnes dans notre restaurant. Chaque plat célèbre les richesses de la Bretagne : galettes de sarrasin croustillantes, crêpes sucrées délicates, fruits de mer fraîchement pêchés et cidres artisanaux. Préparée avec soin par notre chef, notre cuisine met en avant des produits locaux et de saison, issus directement des producteurs de la région. Dans un cadre rustique et authentique, savourez une expérience unique où la convivialité est à l’honneur. Que vous veniez pour un repas en famille ou une soirée entre amis, notre établissement promet un moment inoubliable.', 'https://www.festinbreton.bzh', 1, 1, 'standard', '€€', 'festin-breton.webp'),
 ('Restaurant Gastronomique Breton', 'Savourez une cuisine bretonne raffinée dans un cadre élégant, avec des produits de la mer et des terres bretonnes sublimés.', 'Saint-Malo', 'Notre restaurant gastronomique breton vous invite à une expérience culinaire unique, alliant tradition et modernité. À travers une carte imaginée par notre chef étoilé, découvrez des créations mettant en valeur des produits locaux d’exception : homard de Bretagne, coquilles Saint-Jacques, algues marines et légumes de saison. Chaque assiette est un hommage aux saveurs authentiques de la région, sublimées par des techniques culinaires modernes. Dans une salle élégante avec vue sur la mer, profitez d’un service attentif et personnalisé. Une adresse incontournable pour les amateurs de gastronomie et les curieux en quête de nouvelles sensations gustatives.', 'https://www.gastrobreton.com', 2, 2, 'premium', '€€€', 'gastro-breton.webp'),
@@ -417,23 +417,31 @@ VALUES
 ('En Relief'), 
 ('À la Une');
 
-INSERT INTO sae._historique_prix_abonnements(nom_abonnement, prix_ht_jour_abonnement) VALUES 
-('gratuit', 0),
-('standard', 167),
-('premium', 334);
+INSERT INTO sae._historique_prix_abonnements(nom_abonnement, prix_ht_jour_abonnement, date_maj) VALUES 
+('gratuit', 0, '2024-09-16'),
+('standard', 167, '2024-11-04'),
+('premium', 334, '2025-01-17');
 
-INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_abonnement) VALUES 
-('En Relief', 834),
-('À la Une', 1668);
+INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_option, date_maj) VALUES 
+('En Relief', 834, '2024-11-04'),
+('À la Une', 1668, '2025-01-17');
+
+INSERT INTO sae._date_souscription_option(date_debut, nb_semaines) VALUES
+('2025-01-01', 1),
+('2025-01-07', 2),
+('2025-01-14', 3),
+('2025-01-21', 4),
+('2025-02-04', 3),
+('2025-02-11', 2);
 
 INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription)
 VALUES
-(2, 'En Relief',5),
-(4, 'En Relief', 6),
-(6, 'En Relief', 7),
-(5, 'À la Une',8),
-(7, 'À la Une', 9),
-(8, 'À la Une', 10);
+(2, 'En Relief',1),
+(4, 'En Relief', 2),
+(6, 'En Relief', 3),
+(5, 'À la Une', 4),
+(7, 'À la Une', 5),
+(8, 'À la Une', 6);
 
 INSERT INTO _offre_dates_mise_en_ligne(id_offre, id_date)
 VALUES 
