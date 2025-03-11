@@ -3713,10 +3713,16 @@ h3 {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
+    border-radius: 8px;
 }
 
 .consulter-offre-back .popup-menu li:hover {
     background: var(--orange-secondaire-2);
+    color: var(--blanc);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type:hover {
+    background: var(--noir);
     color: var(--blanc);
 }
 

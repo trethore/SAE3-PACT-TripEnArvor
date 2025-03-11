@@ -840,7 +840,7 @@ try {
 
             let rect = button.getBoundingClientRect();
             menu.style.top = `${rect.top + window.scrollY - 18}px`;
-            menu.style.left = `${rect.left + window.scrollX - 100}px`;
+            menu.style.left = `${rect.left + window.scrollX - 105}px`;
             menu.style.display = "block";
         }
 
