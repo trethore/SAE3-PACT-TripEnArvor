@@ -120,16 +120,7 @@ try {
         </script>
     </header>
     <main>
-        <div class="toast">
-            <div class="toast-content">
-                <div class="message">
-                    <span class="message-text text-1">Titre Offre</span>
-                    <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
-                </div>
-            </div>
-            <i class="uil uil-multiply toast-close"></i>
-            <div class="progress"></div>
-        </div>
+        <div class="toast-container"></div>
 
         <button class="toast-btn">Show success toast</button>
 
