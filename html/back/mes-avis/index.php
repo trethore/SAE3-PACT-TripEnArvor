@@ -205,7 +205,7 @@ if ($typeCompte === 'proPrive') {
                         if($lavis['lu'] == false){
                             echo "mettre en exergue";
                         }
-                    }
+                    
 
                     ?>
 
@@ -267,7 +267,7 @@ if ($typeCompte === 'proPrive') {
                             </div>
                         </div>
                <?php $conpteur += 1;
-                        } ?>       
+                        } }?>       
                   </h2>
             
         </section>
