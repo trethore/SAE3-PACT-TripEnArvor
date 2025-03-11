@@ -54,7 +54,7 @@ try {
 }
 ?>
 
-<header>
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -120,6 +120,20 @@ try {
         </script>
     </header>
     <main>
+        <div class="toast">
+            <div class="toast-content">
+                <i class="uil uil-check toast-check"></i>
+                <div class="message">
+                    <span class="message-text text-1">Titre Offre</span>
+                    <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
+                </div>
+            </div>
+            <i class="uil uil-multiply toast-close"></i>
+            <div class="progress"></div>
+        </div>
+
+        <button class="toast-btn">Show success toast</button>
+
         <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
