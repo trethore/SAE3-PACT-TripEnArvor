@@ -198,7 +198,7 @@
             $stmtOffre = $conn->prepare($reqOffre);
             $stmtOffre->bindParam(':id_compte', $id_utilisateur, PDO::PARAM_INT);
             $stmtOffre->execute();
-            $offres = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+            $offres = $stmtOffre->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $offres;
         } catch (Exception $e) {
