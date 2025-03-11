@@ -189,7 +189,7 @@ if ($typeCompte === 'proPrive') {
             
             <h2> <?php
                 foreach ($touteslesoffres as $offre) {
-                    $offre = getOffre($id_offre_cible);
+                    // $offre = getOffre($id_offre_cible);
                     echo $offre['titre'];
                 }        
                 ?>  </h2>
