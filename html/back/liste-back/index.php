@@ -122,8 +122,6 @@ try {
     <main>
         <div class="toast-container"></div>
 
-        <button class="toast-btn">Show success toast</button>
-
         <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
@@ -449,13 +447,37 @@ try {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Function to create a new toast
+            <?php
+                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+                $stmtOffre = $conn->prepare($reqOffre);
+                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+                $stmtOffre->execute();
+
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $nbrAvis = getAvis($row['id_offre']);
+                    $nbrReponses = getReponse($row['id_offre']);
+                
+                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                
+                    if ($nbrAvisNonRepondus > 0) {
+                        // Ajouter les données de la toast au tableau
+                        $toastsData[] = [
+                            'title' => $row['titre_offre'], // Titre de l'offre
+                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.", // Message du toast
+                        ];
+                    }
+                }
+
+                $toastsDataJson = json_encode($toastsData);
+            ?>
+            
+            // Fonction pour créer un nouveau toast
             function createToast(title, message) {
-                // Create the toast element
+                // Créer l'élément toast
                 const toast = document.createElement("div");
                 toast.classList.add("toast");
 
-                // Create the toast content
+                // Créer le contenu du toast
                 const toastContent = document.createElement("div");
                 toastContent.classList.add("toast-content");
 
@@ -474,50 +496,53 @@ try {
                 messageDiv.appendChild(messageSpan);
                 toastContent.appendChild(messageDiv);
 
-                // Create the close button
+                // Créer le bouton de fermeture
                 const closeIcon = document.createElement("i");
                 closeIcon.classList.add("uil", "uil-multiply", "toast-close");
                 closeIcon.addEventListener("click", () => {
-                    toast.remove(); // Remove the toast when close is clicked
+                    toast.remove(); // Supprimer le toast lors du clic
                 });
 
-                // Create the progress bar
+                // Créer la barre de progression
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
 
-                // Append everything to the toast
+                // Ajouter tout au toast
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
 
-                // Append the toast to the toast container
+                // Ajouter le toast au conteneur
                 const toastContainer = document.querySelector(".toast-container");
                 toastContainer.appendChild(toast);
 
-                // Activate the toast and progress bar
+                // Activer le toast et la barre de progression
                 setTimeout(() => {
                     toast.classList.add("active");
                     progress.classList.add("active");
-                }, 10); // Small delay to allow CSS transition
+                }, 10); // Petit délai pour permettre la transition CSS
 
-                // Remove the toast after 5 seconds
+                // Supprimer le toast après 5 secondes
                 setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
-                        toast.remove(); // Remove the toast from the DOM after animation
-                    }, 300); // Wait for the animation to finish
+                        toast.remove(); // Supprimer le toast du DOM après l'animation
+                    }, 300); // Attendre la fin de l'animation
                 }, 5000);
 
-                // Remove the progress bar after 5.3 seconds
+                // Supprimer la barre de progression après 5.3 secondes
                 setTimeout(() => {
                     progress.classList.remove("active");
                 }, 5300);
             }
 
-            // Example: Create multiple toasts
-            createToast("Titre Offre 1", "Vous avez 3 nouveaux avis.");
-            createToast("Titre Offre 2", "Vous avez 5 nouveaux avis.");
-            createToast("Titre Offre 3", "Vous avez 2 nouveaux avis.");
+            // Récupérer les données PHP encodées en JSON
+            const toastsData = <?php echo $toastsDataJson; ?>;
+
+            // Créer un toast pour chaque offre avec des avis non répondus
+            toastsData.forEach((toast) => {
+                createToast(toast.title, toast.message);
+            });
         });
 
         document.addEventListener("DOMContentLoaded", () => {
