@@ -191,6 +191,79 @@ if ($typeCompte === 'proPrive') {
                 foreach ($touteslesoffres as $offre) {
                     // $offre = getOffre($id_offre_cible);
                     echo $offre['titre'];
+                    echo "<br>";
+                    echo "il faut mettre la note moyenne pour chaque offre";
+
+                    $categorie = getTypeOffre($offre);
+                    $avis = getAvis($offre);
+                    $membre = getInformationsMembre($offre);
+
+                    foreach ($avis as $lavis) {
+                        print("avis");
+                        if($lavis['lu'] == false){
+                            echo "mettre en exergue";
+                        }
+                    }
+
+                    ?>
+
+                     // Fonction pour afficher les avis
+                    <div class="fond-blocs-avis">
+                        < class="display-ligne-espace">
+                            <div class="display-ligne">
+                                <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                                <div class="display-ligne">
+                                    <?php for ($etoileJaune = 0; $etoileJaune != $a['note']; $etoileJaune++) { ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php }
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $a['note']); $etoileGrise++) { ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <button><img src="/images/universel/icones/trois-points-violet.png"></button>
+                        </div>
+
+                        <div class="display-ligne">
+                            <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                            $datePass = explode('-', $passage[0]); ?>
+                            <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                        </div>
+
+                        <?php if ($categorie == "Restauration") { ?>
+                            <div class="display-ligne">
+                                <?php foreach ($noteDetaillee as $n) {
+                                    if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
+                                        <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
+                                        <?php for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { ?>
+                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                        <?php }
+                                        for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { ?>
+                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                        <?php } ?>
+                                    <?php }
+                                } ?>
+                            </div>
+                        <?php } ?>
+
+                        <div class="display-ligne">
+                            <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
+                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier']); ?>">
+                            <?php } ?>
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
+                        </div>
+
+                        <div class="display-ligne-espace">
+                            <div class="petite-mention">
+                                <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                $datePub = explode('-', $publication[0]); ?>
+                                <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                            </div>
+                            <div class="display-ligne">
+                                <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                                <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                            </div>
+                        </div>
                 }        
                 ?>  </h2>
             
