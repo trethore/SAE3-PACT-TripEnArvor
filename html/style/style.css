@@ -4419,21 +4419,17 @@ input[type="tel"] {
 }
 
 .liste-front .en-relief-offre .sous-offre {
-    border: 5px solid #ffbf00;
-    animation: pulse 2.5s forwards;
+    animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 #ffbf00;
+        box-shadow: 0 0 0 0 var(--violet-principal);
     }
     50% {
-        transform: scale(1.03);
         box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
     }
     100% {
-        transform: scale(1);
         box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
     }
 }
