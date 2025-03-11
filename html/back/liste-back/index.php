@@ -122,9 +122,18 @@ try {
     <main>
         <div class="toast">
             <div class="toast-content">
-                <i class="uil uil-check toast-check"></i>
                 <div class="message">
                     <span class="message-text text-1">Titre Offre</span>
+                    <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
+                </div>
+            </div>
+            <i class="uil uil-multiply toast-close"></i>
+            <div class="progress"></div>
+        </div>
+        <div class="toast">
+            <div class="toast-content">
+                <div class="message">
+                    <span class="message-text text-1">Titre Offre 2</span>
                     <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
                 </div>
             </div>
@@ -458,33 +467,33 @@ try {
     </footer>
 
     <script>
-        var toast = document.querySelector(".toast");
-        var btn = document.querySelector(".toast-btn");
-        var close = document.querySelector(".toast-close");
-        var progress = document.querySelector(".progress");
-
-        btn.addEventListener("click", () =>{
-        toast.classList.add("active");
-        progress.classList.add("active");
-
-        setTimeout(() =>{
-            toast.classList.remove("active");
-        }, 5000)
-
-        setTimeout(() =>{
-            progress.classList.remove("active");
-        }, 5300)
-        })
-
-        close.addEventListener("click", () =>{
-        toast.classList.remove("active");
-
-        setTimeout(() =>{
-            progress.classList.remove("active");
-        }, 300)
-        })
-
         document.addEventListener("DOMContentLoaded", () => {
+            var toast = document.querySelector(".toast");
+            var btn = document.querySelector(".toast-btn");
+            var close = document.querySelector(".toast-close");
+            var progress = document.querySelector(".progress");
+
+            btn.addEventListener("click", () =>{
+            toast.classList.add("active");
+            progress.classList.add("active");
+
+            setTimeout(() =>{
+                toast.classList.remove("active");
+            }, 5000)
+
+            setTimeout(() =>{
+                progress.classList.remove("active");
+            }, 5300)
+            })
+
+            close.addEventListener("click", () =>{
+            toast.classList.remove("active");
+
+            setTimeout(() =>{
+                progress.classList.remove("active");
+            }, 300)
+            })
+
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
