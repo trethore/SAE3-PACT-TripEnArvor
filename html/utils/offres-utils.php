@@ -187,6 +187,32 @@
 
 // ===== GESTION DES OFFRES ===== //
 
+
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer toutes les offres d'un professionel ===== //
+    function getToutesLesOffres($id_utilisateur){
+        global $driver, $server, $dbname, $user, $pass;
+        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_utilisateur, PDO::PARAM_INT);
+            $stmtOffre->execute();
+            $offres = $stmtOffre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $offres;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'une offre ===== //
     function getOffre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
