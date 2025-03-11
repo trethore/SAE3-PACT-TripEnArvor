@@ -37,7 +37,7 @@ try {
     // ===== GESTION DES OFFRES ===== //
     
         // ===== Requête SQL pour récupérer les informations d'une offre ===== //
-        $offre = getOffre($id_offre_cible);
+        
 
         $touteslesoffres = getToutesLesOffres($id_compte);
         
@@ -45,34 +45,34 @@ try {
     // ===== GESTION DES IMAGES ===== //
     
         // ===== Requête SQL pour récuéprer les images d'une offre ===== //
-        $images = getIMGbyId($id_offre_cible);
+        // $images = getIMGbyId($id_offre_cible);
     
     
     
     // ===== GESTION DES AVIS ===== //
     
         // ===== Requête SQL pour récupérer les avis d'une offre ===== //
-        $avis = getAvis($id_offre_cible);
+    //     $avis = getAvis($id_offre_cible);
     
-        // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
-        $noteDetaillee = getAvisDetaille($id_offre_cible);
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
+    //     $noteDetaillee = getAvisDetaille($id_offre_cible);
     
-        // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
-        $membre = getInformationsMembre($id_offre_cible);
+    //     // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    //     $membre = getInformationsMembre($id_offre_cible);
     
-        // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
-        $dateAvis = getDatePublication($id_offre_cible);
+    //     // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
+    //     $dateAvis = getDatePublication($id_offre_cible);
     
-        // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
-        $datePassage = getDatePassage($id_offre_cible);
+    //     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    //     $datePassage = getDatePassage($id_offre_cible);
     
-    // ===== GESTION DES RÉPONSES ===== //
+    // // ===== GESTION DES RÉPONSES ===== //
     
-        // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
-        $reponse = getReponse($id_offre_cible);
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    //     $reponse = getReponse($id_offre_cible);
     
-        // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
-        $dateReponse = getDatePublicationReponse($id_offre_cible);
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    //     $dateReponse = getDatePublicationReponse($id_offre_cible);
     
     
     $dbh = null;
@@ -183,13 +183,14 @@ if ($typeCompte === 'proPrive') {
             
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
-        
+            
+        <section>
             <h1>Mes Avis</h1>
             
-            <section>
             <h2> <?php
-                foreach ($touteslesoffres as $loffre) {
-                    echo $loffre['titre'];
+                foreach ($touteslesoffres as $offre) {
+                    $offre = getOffre($id_offre_cible);
+                    echo $offre['titre'];
                 }        
                 ?>  </h2>
             
