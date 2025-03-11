@@ -231,6 +231,9 @@ if (!isset($_SESSION)) {
 
         </section>
 
+        <?php
+            if (count($ids_consulte) != 0) {
+        ?>
         <h2>Consultés Récemment</h2>
 
         <section>
@@ -285,6 +288,9 @@ if (!isset($_SESSION)) {
                 <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
             </div>
         </section>
+        <?php
+            }
+        ?>
     </main>
 
     <footer>

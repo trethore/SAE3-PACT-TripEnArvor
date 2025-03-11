@@ -1,14 +1,17 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
-require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
-require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
 startSession();
 if (!isset($_SESSION["id"])) {
     header("Location: /se-connecter/");
 }
 $id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessaryPro($id_compte);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 
@@ -30,10 +33,52 @@ try {
     $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
     $stmt->execute([$_SESSION['id']]);
     $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    
+    // ===== GESTION DES OFFRES ===== //
+    
+        // ===== Requête SQL pour récupérer les informations d'une offre ===== //
+        
+
+        $touteslesoffres = getToutesLesOffres($id_compte);
+        
+    
+    // ===== GESTION DES IMAGES ===== //
+    
+        // ===== Requête SQL pour récuéprer les images d'une offre ===== //
+        // $images = getIMGbyId($id_offre_cible);
+    
+    
+    
+    // ===== GESTION DES AVIS ===== //
+    
+        // ===== Requête SQL pour récupérer les avis d'une offre ===== //
+    //     $avis = getAvis($id_offre_cible);
+    
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer la note détaillée d'une offre de restauration ===== //
+    //     $noteDetaillee = getAvisDetaille($id_offre_cible);
+    
+    //     // ===== Requête SQL pour récupérer les informations des membres ayant publié un avis sur une offre ===== //
+    //     $membre = getInformationsMembre($id_offre_cible);
+    
+    //     // ===== Requête SQL pour récupérer la date de publication d'un avis sur une offre ===== //
+    //     $dateAvis = getDatePublication($id_offre_cible);
+    
+    //     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
+    //     $datePassage = getDatePassage($id_offre_cible);
+    
+    // // ===== GESTION DES RÉPONSES ===== //
+    
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    //     $reponse = getReponse($id_offre_cible);
+    
+    //     // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
+    //     $dateReponse = getDatePublicationReponse($id_offre_cible);
+    
+    
     $dbh = null;
 } catch (PDOException $e) {
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-    print_r("y a un probleme");
+    echo "Erreur : " . $e->getMessage();
+    die();
 }
 
 
@@ -127,128 +172,28 @@ if ($typeCompte === 'proPrive') {
     </header>
     <main>
         <nav>
-            <a class="ici" href="/back/mon-compte">Mes infos</a>
+            <a href="/back/mon-compte">Mes infos</a>
+
+            <a class="ici" href="/back/mes-avis">Mes avis</a> 
+            <!-- mettre if sur les autres pages si l'utilisateur a des avis -->
+
             <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
             <?php } ?>
+            
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
+            
         <section>
-            <h1>Détails du compte</h1>
-            <article style="display: none;">
-                <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
-                <a>Importer une photo de profil</a>
-            </article>
-            <h2>Vue d'ensemble</h2>
-            <table>
-                <tr>
-                    <td>Dénomination Sociale</td>
-                    <td><?php echo htmlentities($detailCompte["denomination"] ?? '');?></td>
-                </tr>
-                <?php if ($typeCompte == 'proPrive') {?>
-                <tr>
-                    <td>N° SIREN</td>
-                    <td><?php echo htmlentities($detailCompte["siren"] ?? '');?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td>A propos</td>
-                    <td>
-                        <div><?php echo htmlentities($detailCompte["a_propos"] ?? '');?></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site web</td>
-                    <td><?php echo htmlentities($detailCompte["site_web"] ?? '');?></td>
-                </tr>
-            </table>
-            <h2>Informations personnelles</h2>
-            <table>
-                <tr>
-                    <td>Nom</td>
-                    <td><?php echo htmlentities($detailCompte["nom_compte"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Prenom</td>
-                    <td><?php echo htmlentities($detailCompte["prenom"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Adresse mail</td>
-                    <td><?php echo htmlentities($detailCompte["email"]);?></td>
-                </tr>
-                <tr>
-                    <td>N° de téléphone</td>
-                    <td><?php echo htmlentities($detailCompte["tel"] ?? '');?></td>
-                </tr>
-
-            </table>
-            <h2>Mon adresse</h2>
-            <table>
-                <tr>
-                    <td>Adresse postale</td>
-                    <td><?php echo htmlentities($detailCompte["num_et_nom_de_voie"] ?? '');?></td>
-                </tr>
-                <?php  if (isset($detailCompte["complement_adresse"])) { ?>
-                    <tr>
-                        <td>Complément d'adresse</td>
-                        <td><?php echo htmlentities($detailCompte["complement_adresse"]); ?></td>
-                    </tr> 
-                <?php } ?>
-                <tr>
-                    <td>Code postal</td>
-                    <td><?php echo htmlentities($detailCompte["code_postal"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Ville</td>
-                    <td><?php echo htmlentities($detailCompte["ville"] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Pays</td>
-                    <td><?php echo htmlentities($detailCompte["pays"] ?? '');?></td>
-                </tr>
-            </table>
-<?php
-if ($typeCompte === 'proPrive') {
-?>
-            <h2>Informations bancaires</h2>
-            <table>
-                <tr>
-                    <td>Nom</td>
-                    <td><?php echo htmlentities($informationsBancaires['nom_creancier'] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>Identifiant</td>
-                    <td><?php echo htmlentities($informationsBancaires['id_crancier'] ?? ''); ?></td>
-                </tr>
-                <tr>
-                    <td>IBAN</td>
-                    <td><?php echo htmlentities($informationsBancaires['iban_creancier'] ?? '');?></td>
-                </tr>
-                <tr>
-                    <td>BIC</td>
-                    <td><?php echo htmlentities($informationsBancaires['bic_creancier'] ?? '');?></td>
-                </tr>
-            </table>
-<?php
-}
-?>
-            <div>
-                <a href="/back/modifier-compte">Modifier les informations</a>
-            </div>
-            <div>
-                <?php
-                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
-                ?>
-                <script>
-                    function copyAPIKey() {
-                        var apiKey = "<?php echo addslashes($APIKey); ?>";
-                        navigator.clipboard.writeText(apiKey);
-                        alert("Clé d'API Tchatator copiée dans le presse-papier!");
-                    }
-                </script>
-                <h2>Clé d'accès au Tchatator : </h2>
-                <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
-            </div>
+            <h1>Mes Avis</h1>
+            
+            <h2> <?php
+                foreach ($touteslesoffres as $offre) {
+                    // $offre = getOffre($id_offre_cible);
+                    echo $offre['titre'];
+                }        
+                ?>  </h2>
+            
         </section>
     </main>
     <footer>

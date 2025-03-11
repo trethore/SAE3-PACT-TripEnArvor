@@ -463,7 +463,7 @@ try {
                 <?php setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                     $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                     $jour_actuel = $jours[date('w')];
-                    $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                    $ouverture = "Indéterminé";
 
                 foreach ($horaire as $h) {
 
@@ -472,16 +472,19 @@ try {
                         $ouvert_ferme = date('H:i');
                         $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
                         $ouverture = "Fermé";
+                        $result = "F";
 
                         if ($h['nom_jour'] == $jour_actuel) {
 
                             if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
 
                                 $ouverture = "Ouvert";
+                                $result = "O";
 
                             } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
 
                                 $ouverture = "Ferme bientôt";
+                                $result = "FB";
 
                             }
 
@@ -491,7 +494,7 @@ try {
 
                 } ?>
 
-                <p><?php echo htmlentities($ouverture); ?></p>
+                <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
 
             </div>
 
@@ -811,24 +814,42 @@ try {
             foreach ($avis as $a) { ?>
 
                 <div class="fond-blocs-avis">
-                    <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
-                    <div class="display-ligne">
-                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                        <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+
+                    <div class="display-ligne-espace">
+                        <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                         <div class="display-ligne">
+                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                            <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                            <div class="display-ligne">
 
-                            <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
+                                <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
 
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
 
-                            <?php } 
+                                <?php } 
 
-                            for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
+                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
 
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
 
-                            <?php } ?>
+                                <?php } ?>
 
+                            </div>
+                        </div>
+                        <!-- Bouton menu -->
+                        <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                            <img src="/images/universel/icones/trois-points-violet.png">
+                        </button>
+
+                        <!-- Menu pop-up (ID unique par avis) -->
+                        <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
+                            <ul>
+                                <?php if (isset($_SESSION['id']) && $a['id_membre'] == $_SESSION['id']) { ?>
+                                    <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                <?php } else { ?>
+                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                <?php } ?>
+                            </ul>
                         </div>
                     </div>
 
@@ -984,6 +1005,33 @@ try {
             </a>
         </div>
     </div>
+
+    <script>
+        function toggleMenu(event, button, compteur) {
+            event.stopPropagation();
+            let menu = document.getElementById(`popup-menu-${compteur}`);
+            document.querySelectorAll(".popup-menu").forEach(m => {
+                if (m !== menu) m.style.display = "none";
+            });
+
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+                return;
+            }
+
+            let rect = button.getBoundingClientRect();
+            menu.style.top = `${rect.top + window.scrollY - 18}px`;
+            menu.style.left = `${rect.left + window.scrollX - 100}px`;
+            menu.style.display = "block";
+        }
+
+        document.addEventListener("click", function() {
+            document.querySelectorAll(".popup-menu").forEach(menu => {
+                menu.style.display = "none";
+            });
+        });
+    </script>
+
 </body>
 
 </html>

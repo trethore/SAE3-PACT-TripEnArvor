@@ -66,10 +66,11 @@ $reqFactureAbonnement = "SELECT o.titre, o.abonnement, prix_ht_jour_abonnement, 
                         join sae._date d on oml.id_date = d.id_date
                         where f.numero_facture = :nu_facture;";
 
-$reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix from sae._offre_souscrit_option os
+$reqOption = "SELECT f.id_offre, os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix from sae._offre_souscrit_option os
                 join sae._date d on d.id_date = os.id_date_souscription
                 join sae._historique_prix_options ho on ho.nom_option = os.nom_option
-                where id_offre = :id_offre;"
+                join sae._facture f on f.id_offre = os.id_offre
+                where f.numero_facture = :nu_facture;"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -223,11 +224,10 @@ $reqOption = "SELECT os.nom_option, d.date, ho.prix_ht_hebdo_abonnement as prix 
                 <?php try {
                     // Préparation et exécution de la requête
                     $stmt = $conn->prepare($reqOption);
-                    $stmt->bindParam(':id_offre', $id_offre, PDO::PARAM_INT); // Lié à l'ID de l'offre
+                    $stmt->bindParam(':nu_facture', $num_facture, PDO::PARAM_INT); // Lié à l'ID de l'offre
                     $stmt->execute();
                     $factOptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     // Vérifiez si $factOptions est un tableau avant de le parcourir
-                    echo $id_offre;
                     if ($factOptions && is_array($factOptions)) {
                         foreach($factOptions as $factOption) { ?>
                         <tr>

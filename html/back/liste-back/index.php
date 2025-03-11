@@ -54,7 +54,7 @@ try {
 }
 ?>
 
-<header>
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -69,7 +69,27 @@ try {
             </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            $nbrAvisNonRepondus = 0;
+
+            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $nbrAvis = getAvis($row['id_offre']);
+                $nbrReponses = getReponse($row['id_offre']);
+
+                $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
+            }
+        ?>
+        <a href="/back/mon-compte" class="icon-container">
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <?php if ($nbrAvisNonRepondus > 0) { ?>
+                <span class="notification-badge"><?php echo $nbrAvisNonRepondus; ?></span>
+            <?php } ?>
+        </a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
@@ -100,6 +120,20 @@ try {
         </script>
     </header>
     <main>
+        <div class="toast">
+            <div class="toast-content">
+                <i class="uil uil-check toast-check"></i>
+                <div class="message">
+                    <span class="message-text text-1">Titre Offre</span>
+                    <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
+                </div>
+            </div>
+            <i class="uil uil-multiply toast-close"></i>
+            <div class="progress"></div>
+        </div>
+
+        <button class="toast-btn">Show success toast</button>
+
         <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
@@ -221,10 +255,31 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article class="offre">
+            <article class="<?php if (getDateOffreHorsLigne($row['id_offre']) > getDateOffreEnLigne($row['id_offre'])) { echo 'hors-ligne-offre'; } else { echo 'offre'; } ?>">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
+
+                    <?php $horaire = getHorairesOuverture($row['id_offre']);
+                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                    $jour_actuel = $jours[date('w')];
+                                    $ouverture = "Indét.";
+                                    foreach ($horaire as $h) {
+                                        if (!empty($horaire)) {
+                                            $ouvert_ferme = date('H:i');
+                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                            $ouverture = "Fermé";
+                                            if ($h['nom_jour'] == $jour_actuel) {
+                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                    $ouverture = "Ouvert";
+                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                    $ouverture = "Ferme Bnt.";
+                                                }
+                                            }
+                                        } 
+                                    } ?>
+
+                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture) ?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
@@ -403,6 +458,32 @@ try {
     </footer>
 
     <script>
+        var toast = document.querySelector(".toast");
+        var btn = document.querySelector(".toast-btn");
+        var close = document.querySelector(".toast-close");
+        var progress = document.querySelector(".progress");
+
+        btn.addEventListener("click", () =>{
+        toast.classList.add("active");
+        progress.classList.add("active");
+
+        setTimeout(() =>{
+            toast.classList.remove("active");
+        }, 5000)
+
+        setTimeout(() =>{
+            progress.classList.remove("active");
+        }, 5300)
+        })
+
+        close.addEventListener("click", () =>{
+        toast.classList.remove("active");
+
+        setTimeout(() =>{
+            progress.classList.remove("active");
+        }, 300)
+        })
+
         document.addEventListener("DOMContentLoaded", () => {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
@@ -523,7 +604,7 @@ try {
                     offers.forEach(offer => offersContainer.appendChild(offer));
                 } if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
-                        let dateA = a.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateA == "date indisponible.") {
                             dateA = "0";
                         } else {
@@ -532,7 +613,7 @@ try {
                             const dateObject = new Date(year, month - 1, day);
                             dateA = dateObject.getTime();
                         }
-                        let dateB = b.querySelector(".date_publication_offre article").textContent.trim();
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateB == "date indisponible.") {
                             dateB = "0";
                         } else {
