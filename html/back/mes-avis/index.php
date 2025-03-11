@@ -170,7 +170,7 @@ if ($typeCompte === 'proPrive') {
             });
         </script>
     </header>
-    <main>
+    <main class="mes-avis">
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
 
@@ -228,7 +228,7 @@ if ($typeCompte === 'proPrive') {
 
                      
                         <div class="fond-blocs-avis 
-                            <?php   if ($lavis['lu'] == false) { echo ' class="image-en-relief" style = "border=15px"'; } ?>
+                            <?php   if ($lavis['lu'] == false) { echo ' class="avis-en-exergue"'; } ?>
                             " >
                             
                             <div class="display-ligne-espace">
