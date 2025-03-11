@@ -130,16 +130,6 @@ try {
             <i class="uil uil-multiply toast-close"></i>
             <div class="progress"></div>
         </div>
-        <div class="toast">
-            <div class="toast-content">
-                <div class="message">
-                    <span class="message-text text-1">Titre Offre 2</span>
-                    <span class="message-text text-2">Vous avez NBR nouveaux avis.</span>
-                </div>
-            </div>
-            <i class="uil uil-multiply toast-close"></i>
-            <div class="progress"></div>
-        </div>
 
         <button class="toast-btn">Show success toast</button>
 
@@ -468,32 +458,78 @@ try {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            var toast = document.querySelector(".toast");
-            var btn = document.querySelector(".toast-btn");
-            var close = document.querySelector(".toast-close");
-            var progress = document.querySelector(".progress");
+            // Function to create a new toast
+            function createToast(title, message) {
+                // Create the toast element
+                const toast = document.createElement("div");
+                toast.classList.add("toast");
 
-            btn.addEventListener("click", () =>{
-            toast.classList.add("active");
-            progress.classList.add("active");
+                // Create the toast content
+                const toastContent = document.createElement("div");
+                toastContent.classList.add("toast-content");
 
-            setTimeout(() =>{
-                toast.classList.remove("active");
-            }, 5000)
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("message");
 
-            setTimeout(() =>{
-                progress.classList.remove("active");
-            }, 5300)
-            })
+                const titleSpan = document.createElement("span");
+                titleSpan.classList.add("message-text", "text-1");
+                titleSpan.textContent = title;
 
-            close.addEventListener("click", () =>{
-            toast.classList.remove("active");
+                const messageSpan = document.createElement("span");
+                messageSpan.classList.add("message-text", "text-2");
+                messageSpan.textContent = message;
 
-            setTimeout(() =>{
-                progress.classList.remove("active");
-            }, 300)
-            })
+                messageDiv.appendChild(titleSpan);
+                messageDiv.appendChild(messageSpan);
+                toastContent.appendChild(messageDiv);
 
+                // Create the close button
+                const closeIcon = document.createElement("i");
+                closeIcon.classList.add("uil", "uil-multiply", "toast-close");
+                closeIcon.addEventListener("click", () => {
+                    toast.remove(); // Remove the toast when close is clicked
+                });
+
+                // Create the progress bar
+                const progress = document.createElement("div");
+                progress.classList.add("progress");
+
+                // Append everything to the toast
+                toast.appendChild(toastContent);
+                toast.appendChild(closeIcon);
+                toast.appendChild(progress);
+
+                // Append the toast to the toast container
+                const toastContainer = document.querySelector(".toast-container");
+                toastContainer.appendChild(toast);
+
+                // Activate the toast and progress bar
+                setTimeout(() => {
+                    toast.classList.add("active");
+                    progress.classList.add("active");
+                }, 10); // Small delay to allow CSS transition
+
+                // Remove the toast after 5 seconds
+                setTimeout(() => {
+                    toast.classList.remove("active");
+                    setTimeout(() => {
+                        toast.remove(); // Remove the toast from the DOM after animation
+                    }, 300); // Wait for the animation to finish
+                }, 5000);
+
+                // Remove the progress bar after 5.3 seconds
+                setTimeout(() => {
+                    progress.classList.remove("active");
+                }, 5300);
+            }
+
+            // Example: Create multiple toasts
+            createToast("Titre Offre 1", "Vous avez 3 nouveaux avis.");
+            createToast("Titre Offre 2", "Vous avez 5 nouveaux avis.");
+            createToast("Titre Offre 3", "Vous avez 2 nouveaux avis.");
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
 
