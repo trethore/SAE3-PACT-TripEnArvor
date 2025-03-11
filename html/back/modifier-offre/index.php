@@ -792,10 +792,10 @@ try {
                 $categorie = $_POST['lacat'];
             }
 
-            print_r($_POST['tag']);
+            print_r($_POST);
 
             if (!empty($_POST['tag'])){
-                $tagsSelectionnes = [];
+                
                 foreach ($_POST['tag'] as $tag) {
                     $tagsSelectionnes[] = $tag;
                 }
