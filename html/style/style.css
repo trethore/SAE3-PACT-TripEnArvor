@@ -4908,18 +4908,6 @@ input[type="tel"] {
     justify-content: center;
     align-items: center;
 }
-  
-.toast-check{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 35px;
-    width: 35px;
-    background-color: var(--orange-principale);
-    border-radius: 50%;
-    color: #fff;
-    font-size: 20px;
-}
 
 .message{
     display: flex;
