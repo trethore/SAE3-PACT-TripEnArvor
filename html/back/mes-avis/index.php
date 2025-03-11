@@ -278,8 +278,9 @@ if ($typeCompte === 'proPrive') {
                                     <p><?php echo htmlentities($lavis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                                     <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                                 </div>
+                            </div>
                         </div>
-                <?php $compteur += 1; } }?>       
+                <?php $compteur++; } }?>       
             
             
         </section>
