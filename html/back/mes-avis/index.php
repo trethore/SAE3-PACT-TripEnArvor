@@ -175,7 +175,6 @@ if ($typeCompte === 'proPrive') {
             <a href="/back/mon-compte">Mes infos</a>
 
             <a class="ici" href="/back/mes-avis">Mes avis</a> 
-            <!-- mettre if sur les autres pages si l'utilisateur a des avis -->
 
             <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
@@ -189,13 +188,20 @@ if ($typeCompte === 'proPrive') {
             
             <h2> 
             <?php
+                $nb_offres = 0;
                 foreach ($touteslesoffres as $offre) {
                     // $offre = getOffre($id_offre_cible);
                     $id_offre = $offre['id_offre'];
                     $avis = getAvis($id_offre);
                     if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
-                        continue;
+                        $nb_offres++;
+                        if (count($touteslesoffres) == $nb_offres) {
+                            print("Aucun avis n'a été laissé sur vos offres");
+                        }else {
+                            continue;
+                        }
                     }
+
                     echo "Avis sur l'offre : " . $offre['titre'];  ?> </h2>
                    <?php  echo "<br>"; 
                     echo "il faut mettre la note moyenne pour chaque offre";
@@ -223,7 +229,7 @@ if ($typeCompte === 'proPrive') {
                     } ?>
 
                      
-                        <div class="fond-blocs-avis">
+                        <div class="fond-blocs-avis" width="100%">
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
