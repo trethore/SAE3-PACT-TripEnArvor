@@ -222,13 +222,14 @@ if ($typeCompte === 'proPrive') {
                     $compteur = 0;
 
                     foreach ($avis as $lavis) {
-                        print("avis");
                         if($lavis['lu'] == false){
                             echo "mettre en exergue";
                     } ?>
 
                      
-                        <div class="fond-blocs-avis" width="100%">
+                        <div class="fond-blocs-avis 
+                            <?php   if ($lavis['lu'] == false) { echo ' class="image-en-relief" style = "border=3px"'; } ?>
+                            " >
                             
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
