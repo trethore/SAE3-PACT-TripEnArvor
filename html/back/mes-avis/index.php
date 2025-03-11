@@ -204,7 +204,6 @@ if ($typeCompte === 'proPrive') {
 
                     echo "Avis sur l'offre : " . $offre['titre'];  ?> </h2>
                    <?php  echo "<br>"; 
-                    echo "il faut mettre la note moyenne pour chaque offre";
 
                     $categorie = getTypeOffre($id_offre);
 
@@ -230,6 +229,7 @@ if ($typeCompte === 'proPrive') {
 
                      
                         <div class="fond-blocs-avis" width="100%">
+                            <a href='/back/consulter-offre/index.php?id=$id_offre'></a>
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
