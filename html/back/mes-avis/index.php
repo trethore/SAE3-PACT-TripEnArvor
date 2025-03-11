@@ -1,8 +1,11 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
-require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
-require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+
 startSession();
 if (!isset($_SESSION["id"])) {
     header("Location: /se-connecter/");
@@ -185,8 +188,8 @@ if ($typeCompte === 'proPrive') {
             
             <section>
             <h2> <?php
-                foreach ($touteslesoffres as $offre) {
-                    echo $offre['titre'];
+                foreach ($touteslesoffres as $loffre) {
+                    echo $loffre['titre'];
                 }        
                 ?>  </h2>
             
