@@ -3696,8 +3696,8 @@ h3 {
     width: 120px;
     display: none;
     position: absolute;
-    background: var(--violet-principal);
-    color: var(--blanc);
+    background: var(--blanc);
+    color: var(--noir);
     border-radius: 8px;
     z-index: 1000; 
 }
@@ -3705,7 +3705,7 @@ h3 {
 .consulter-offre-back .popup-menu ul {
     list-style: none;
     margin: 0;
-    padding: 5px 0;
+    padding: 0;
 }
 
 .consulter-offre-back .popup-menu li {
@@ -3716,7 +3716,7 @@ h3 {
 }
 
 .consulter-offre-back .popup-menu li:hover {
-    background: var(--violet-secondaire);
+    background: var(--orange-secondaire-2);
     color: var(--blanc);
 }
 
