@@ -649,7 +649,7 @@ try {
                     ?>
 
                     <div class="fond-blocs-avis">
-                        < class="display-ligne-espace">
+                        <div class="display-ligne-espace">
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                                 <div class="display-ligne">
@@ -669,11 +669,8 @@ try {
                             <!-- Menu pop-up (ID unique par avis) -->
                             <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                                 <ul>
-                                    <?php if (isset($_SESSION['id']) && $a['id_membre'] == $_SESSION['id']) { ?>
-                                        <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
-                                    <?php } else { ?>
-                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                    <?php } ?>
+                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                    <li onclick="handleMenuAction('Blacklister')">Blacklister</li>
                                 </ul>
                             </div>
                         </div>
