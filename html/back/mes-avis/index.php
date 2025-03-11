@@ -197,6 +197,7 @@ if ($typeCompte === 'proPrive') {
                     $categorie = getTypeOffre($offre);
                     $avis = getAvis($offre);
                     $membre = getInformationsMembre($offre);
+                    $compteur = 0;
 
                     foreach ($avis as $lavis) {
                         print("avis");
@@ -264,8 +265,9 @@ if ($typeCompte === 'proPrive') {
                                 <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                             </div>
                         </div>
-                }        
-                ?>  </h2>
+               <?php $conpteur += 1;
+                        } ?>       
+                  </h2>
             
         </section>
     </main>
