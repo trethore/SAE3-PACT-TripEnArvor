@@ -229,7 +229,7 @@ if ($typeCompte === 'proPrive') {
 
                      
                         <div class="fond-blocs-avis" width="100%">
-                            <a href='/back/consulter-offre/index.php?id=$id_offre'></a>
+                            
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
@@ -285,6 +285,7 @@ if ($typeCompte === 'proPrive') {
                                     <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                                 </div>
                             </div>
+                            <a href='/back/consulter-offre/index.php?id=$id_offre'> Acceder a l'avis</a>
                         </div>
                 <?php $compteur++; } }?>       
             
