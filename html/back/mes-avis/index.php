@@ -228,7 +228,7 @@ if ($typeCompte === 'proPrive') {
 
                      
                         <div class="fond-blocs-avis 
-                            <?php   if ($lavis['lu'] == false) { echo ' class="image-en-relief" style = "border=3px"'; } ?>
+                            <?php   if ($lavis['lu'] == false) { echo ' class="image-en-relief" style = "border=15px"'; } ?>
                             " >
                             
                             <div class="display-ligne-espace">

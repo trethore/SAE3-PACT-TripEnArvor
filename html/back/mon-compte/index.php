@@ -128,7 +128,7 @@ if ($typeCompte === 'proPrive') {
     <main>
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
-            <a class="ici" href="/back/mes-avis">Mes avis</a>
+            <a href="/back/mes-avis">Mes avis</a>
             <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
             <?php } ?>
