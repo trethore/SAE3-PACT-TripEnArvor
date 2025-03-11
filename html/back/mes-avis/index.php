@@ -11,7 +11,7 @@ if (!isset($_SESSION["id"])) {
     header("Location: /se-connecter/");
 }
 $id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessaryPro($id_compte);
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 
