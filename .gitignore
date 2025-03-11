@@ -2,3 +2,5 @@ html/php/connect_params.php
 .vscode/
 html/images/universel/photos/
 *test*
+data/
+docker/.env
