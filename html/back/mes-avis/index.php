@@ -222,13 +222,14 @@ if ($typeCompte === 'proPrive') {
                     $compteur = 0;
 
                     foreach ($avis as $lavis) {
-                        print("avis");
                         if($lavis['lu'] == false){
                             echo "mettre en exergue";
                     } ?>
 
                      
-                        <div class="fond-blocs-avis" width="100%">
+                        <div class="fond-blocs-avis 
+                            <?php   if ($lavis['lu'] == false) { echo ' class="image-en-relief" style = "border=15px"'; } ?>
+                            " >
                             
                             <div class="display-ligne-espace">
                                 <div class="display-ligne">
@@ -285,6 +286,7 @@ if ($typeCompte === 'proPrive') {
                                     <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                                 </div>
                             </div>
+                            <br>
                             <a href='/back/consulter-offre/index.php?id=$id_offre'> Acceder a l'avis</a>
                         </div>
                 <?php $compteur++; } }?>       
