@@ -285,6 +285,7 @@ if ($typeCompte === 'proPrive') {
                                     <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                                 </div>
                             </div>
+                            <br>
                             <a href='/back/consulter-offre/index.php?id=$id_offre'> Acceder a l'avis</a>
                         </div>
                 <?php $compteur++; } }?>       
