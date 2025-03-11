@@ -187,7 +187,8 @@ if ($typeCompte === 'proPrive') {
         <section>
             <h1>Mes Avis</h1>
             
-            <h2> <?php
+            <h2> 
+            <?php
                 foreach ($touteslesoffres as $offre) {
                     // $offre = getOffre($id_offre_cible);
                     $id_offre = $offre['id_offre'];
@@ -196,22 +197,30 @@ if ($typeCompte === 'proPrive') {
                     echo "il faut mettre la note moyenne pour chaque offre";
 
                     $categorie = getTypeOffre($id_offre);
+
+                    // ===== GESTION DES AVIS ===== //
                     $avis = getAvis($id_offre);
                     $membre = getInformationsMembre($id_offre);
+                    $datePassage = getDatePassage($id_offre);
+                    $dateAvis = getDatePublication($id_offre);
+                    $noteDetaillee = getAvisDetaille($id_offre);
+
+                    
+
+                
+
+                
                     $compteur = 0;
 
                     foreach ($avis as $lavis) {
                         print("avis");
                         if($lavis['lu'] == false){
                             echo "mettre en exergue";
-                        }
-                    
+                    } ?>
 
-                    ?>
-
-                     // Fonction pour afficher les avis
+                     
                     <div class="fond-blocs-avis">
-                        < class="display-ligne-espace">
+                        <div class="display-ligne-espace">
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                                 <div class="display-ligne">
@@ -249,8 +258,8 @@ if ($typeCompte === 'proPrive') {
                         <?php } ?>
 
                         <div class="display-ligne">
-                            <?php if (isset(getImageAvis($id_offre_cible, $lavis['id_membre'])[0]['lien_fichier'])) { ?>
-                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $lavis['id_membre'])[0]['lien_fichier']); ?>">
+                            <?php if (isset(getImageAvis($id_offre, $lavis['id_membre'])[0]['lien_fichier'])) { ?>
+                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre, $lavis['id_membre'])[0]['lien_fichier']); ?>">
                             <?php } ?>
                             <p><?php echo htmlentities(html_entity_decode(ucfirst($lavis['commentaire']))); ?></p>
                         </div>
@@ -265,10 +274,9 @@ if ($typeCompte === 'proPrive') {
                                 <p><?php echo htmlentities($lavis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
                                 <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                             </div>
-                        </div>
-               <?php $conpteur += 1;
-                        } }?>       
-                  </h2>
+                    </div>
+            <?php $compteur += 1; } }?>       
+            </h2>
             
         </section>
     </main>
