@@ -1151,11 +1151,12 @@ h3 {
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
-    display: none;
+    text-align: center;
+    display: block;
 }
 
 .mes-avis .avis-en-exergue:hover #infobulle {
-    display: block;
+    display: none;
 }
 
 
