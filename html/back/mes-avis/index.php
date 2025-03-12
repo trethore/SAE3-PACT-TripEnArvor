@@ -268,7 +268,7 @@ if ($typeCompte === 'proPrive') {
                                 <br>
                                 <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
                             </div>
-                    <?php $compteur++; } }?>       
+                    <?php $compteur++;  }?>       
             </div>
             
         </section>
