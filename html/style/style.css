@@ -3741,6 +3741,10 @@ h3 {
 }
 
 .consulter-offre-back .confirmation-popup button {
+    border: 0;
+}
+
+.consulter-offre-back .confirmation-popup button:hover {
     border-radius: 8px;
     color: var(--blanc);
     background-color: var(--noir);
