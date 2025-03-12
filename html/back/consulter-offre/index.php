@@ -202,7 +202,7 @@ try {
 
 <body class="back consulter-offre-back">
     
-<header>
+<header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -848,15 +848,24 @@ try {
 
         function confirmerBlacklister(compteur) {
             document.getElementById("confirmation-popup").style.display = "block";
+            document.getElementById("header").classList.add("blurred");
+            document.getElementById("body").classList.add("blurred");
+            document.getElementById("footer").classList.add("blurred");
         }
 
         function validerBlacklister() {
             alert("L'avis a été blacklisté.");
             document.getElementById("confirmation-popup").style.display = "none";
+            document.getElementById("header").classList.remove("blurred");
+            document.getElementById("body").classList.remove("blurred");
+            document.getElementById("footer").classList.remove("blurred");
         }
 
         function annulerBlacklister() {
             document.getElementById("confirmation-popup").style.display = "none";
+            document.getElementById("header").classList.remove("blurred");
+            document.getElementById("body").classList.remove("blurred");
+            document.getElementById("footer").classList.remove("blurred");
         }
 
         document.addEventListener("click", function() {
