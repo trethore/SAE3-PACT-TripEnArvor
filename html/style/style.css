@@ -3742,13 +3742,13 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button {
     border-radius: 8px;
-    color: var(--noir);
-    background-color: var(--orange-secondaire-1);
-}
-
-.consulter-offre-back .confirmation-popup button:first-of-type:hover {
     color: var(--blanc);
     background-color: var(--noir);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--blanc);
+    background-color: var(--orange-secondaire-1);
 }
 
 .consulter-offre-back .titre-avis {
