@@ -6,6 +6,7 @@
       COULEURS
   *****************/
     --noir: rgba(0, 0, 0, 1);
+    --noir-leger : rgba(48, 50, 52, 1);
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
@@ -145,13 +146,7 @@ h3 {
 
 /* Titres */
 .connecter h1 {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 32px;
-
-    color: var(--noir);
-
-    margin: 0;
+    margin-top: 0.8em;
 }
 
 .connecter h2 {
@@ -1494,6 +1489,10 @@ h3 {
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
+    margin-top: 0.5em;
+    float: right;
+    position: relative;
+    bottom: -3em;
  }
 
 #delButton:hover {
@@ -1809,7 +1808,14 @@ h3 {
 }
 
 .creer-compte input[type="submit"] {
-    padding: 1rem 5rem;
+    width: 100%;
+    margin: 2em;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 40px;
+    text-align: center;
+    color: var(--blanc-leger);
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 .creer-compte input[type="submit"]:enabled {
@@ -1906,7 +1912,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     width: 100%;
     min-width: 900px;
     min-height: 100vh;
@@ -3308,7 +3314,9 @@ h3 {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
+    border-radius: 2px;
 }
+
 
 .consulter-offre-front .popup-menu li:hover {
     background: var(--violet-secondaire);
@@ -3656,6 +3664,7 @@ h3 {
     background-color: var(--orange-principale);
     padding: 5px 20px;
     border-radius: 8px;
+    width: 160px;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
@@ -3758,12 +3767,12 @@ h3 {
 }
 
 .consulter-offre-back .popup-menu {
-    width: 120px;
+    width: 85px;
     display: none;
     position: absolute;
     background: var(--blanc);
     color: var(--noir);
-    border-radius: 8px;
+    border-radius: 4px;
     z-index: 1000; 
 }
 
@@ -3778,7 +3787,12 @@ h3 {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 2px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
 }
 
 .consulter-offre-back .popup-menu li:hover {
@@ -3791,15 +3805,21 @@ h3 {
     color: var(--blanc);
 }
 
+.consulter-offre-back .blurred {
+    filter: blur(4px);
+    pointer-events: none;
+}
+
 .consulter-offre-back .confirmation-popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--blanc);
-    padding: 20px 15px;
+    padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
+    filter: blur(0);
 }
 
 .consulter-offre-back .confirmation-popup p {
@@ -3808,16 +3828,24 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button {
     border: 0;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: var(--noir);
     color: var(--blanc);
     font-size: 16px;
     padding: 4px 6px;
 }
 
+.consulter-offre-back .confirmation-popup button:first-of-type:hover {
+    background-color: var(--noir-leger);
+}
+
 .consulter-offre-back .confirmation-popup button:last-of-type {
     background-color: var(--blanc);
     color: var(--noir);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--orange-principale);
 }
 
 .consulter-offre-back .titre-avis {
@@ -3959,8 +3987,14 @@ h3 {
     }
 }
 
+.mes-avis{
+    justify-content: normal;
+}
+
 .mes-avis .fond-blocs-avis {
     margin: 15px;
+    min-width: 700px;
+    display: inline;
 }
 
 #infobulle {
@@ -3980,7 +4014,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
-    min-width: 1000px;
+    min-width: 800px;
 }
 
 .mes-avis h1 {
@@ -3999,6 +4033,7 @@ h3 {
     color: var(--noir);
     margin-top: 5px;
 }
+
 
 
 /**************************************************************************************
