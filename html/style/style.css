@@ -3903,7 +3903,10 @@ h3 {
 
 .consulter-offre-back .blurred {
     filter: blur(4px);
-    pointer-events: none;
+}
+
+.consulter-offre-back .unblurred {
+    filter: blur(0);
 }
 
 .consulter-offre-back .confirmation-popup {
@@ -3915,7 +3918,6 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
-    filter: blur(0);
 }
 
 .consulter-offre-back .confirmation-popup p {
