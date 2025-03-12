@@ -186,9 +186,11 @@ if ($typeCompte === 'proPrive') {
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
             <div class="contenu-aligne-gauche">
-            
-           
+        
+
                 <?php
+
+
                     echo "<br>";
                     $nb_offres = 0;
                     foreach ($touteslesoffres as $offre) { 
@@ -199,7 +201,7 @@ if ($typeCompte === 'proPrive') {
                         // $offre = getOffre($id_offre_cible);
                         $id_offre = $offre['id_offre'];
                         $avis = getAvis($id_offre);
-                        $avisNonLus = getLu($id_offre);
+                        
                         if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                             $nb_offres++;
                             if (count($touteslesoffres) == $nb_offres) {
@@ -208,10 +210,16 @@ if ($typeCompte === 'proPrive') {
                                 continue;
                             }
                         }
-
+                        $nb_non_lu = 0;
                         $nb_avis = count($avis);
+                        foreach ($avis as $lavis) {
+                            if($lavis['lu'] == false){
+                                $nb_non_lu++;
+                            }
+                        }
+                        
 
-                        echo $avisNonLus . "nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                        echo $nb_non_lu . "nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h2>
                     <?php 
 
                         $categorie = getTypeOffre($id_offre);
