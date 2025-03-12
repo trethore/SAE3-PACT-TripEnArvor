@@ -1779,7 +1779,7 @@ h3 {
 
 .creer-compte form>label {
     text-align: center;
-    width: 50%;
+    width: 100%;
 }
 
 .creer-compte textarea,
@@ -1809,7 +1809,7 @@ h3 {
 
 .creer-compte input[type="submit"] {
     width: 100%;
-    margin: 2em;
+    margin: 1em;
     border-radius: 30px;
     font-weight: 600;
     font-size: 40px;
