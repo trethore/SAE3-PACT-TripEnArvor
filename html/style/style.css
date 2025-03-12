@@ -3730,7 +3730,6 @@ h3 {
     border-top: 0;
 }
 
-
 .consulter-offre-back .popup-menu li:hover {
     background: var(--orange-secondaire-2);
     color: var(--blanc);
@@ -3776,6 +3775,11 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button:last-of-type:hover {
     color: var(--orange-principale);
+}
+
+.consulter-offre-back .blurred {
+    filter: blur(5px);
+    pointer-events: none;
 }
 
 .consulter-offre-back .titre-avis {
