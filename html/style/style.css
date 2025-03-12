@@ -323,8 +323,7 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton,
-.compte-back #delButton {
+.compte-back #apibutton {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border: var(--orange-principale) 2px solid;
@@ -333,8 +332,7 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
-.compte-back #apibutton:hover,
-.compte-back #delButton:hover {
+.compte-back #apibutton:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
      border: var(--orange-principale) 2px solid;
@@ -1565,8 +1563,7 @@ h3 {
     margin: 1em;
 }
 
-.compte-front #apibutton,
-.compte-front #delButton {
+.compte-front #apibutton {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1575,11 +1572,30 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover,
-.compte-front #delButton:hover {
+.compte-front #apibutton:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+#delButton {
+    color:var(--blanc-leger);
+    background-color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+ }
+
+#delButton:hover {
+    background-color: var(--blanc-leger);
+    color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
