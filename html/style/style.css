@@ -4045,6 +4045,7 @@ h3 {
 .mes-avis .fond-blocs-avis {
     margin: 15px;
     min-width: 800px;
+    display: inline;
 }
 
 #infobulle {
