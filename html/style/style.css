@@ -3738,10 +3738,19 @@ h3 {
     transform: translate(-50%, -50%);
     background: var(--blanc);
     padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--orange-principale);
+}
+
+.consulter-offre-back .confirmation-popup p {
+    font-size: 14px;
 }
 
 .consulter-offre-back .confirmation-popup button {
     border: 0;
+    border-radius: 8px;
+    background-color: var(--blanc);
+    font-size: 14px;
 }
 
 .consulter-offre-back .confirmation-popup button:hover {
