@@ -189,7 +189,7 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
-                    echo "<br>";
+                    
                     $nb_offres = 0;
                     foreach ($touteslesoffres as $offre) { 
                     
@@ -282,7 +282,9 @@ if ($typeCompte === 'proPrive') {
                                 <br>
                                 <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
                             </div>
-                    <?php $compteur++; } }?>       
+                    <?php $compteur++; }
+                echo "<br>";
+                }?>       
             </div>
             
         </section>
