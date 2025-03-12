@@ -250,9 +250,6 @@ if ($typeCompte === 'proPrive') {
                 <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
-            <div>
-                <button onclick="deleteCompte()", id="delButton"><h3>Supprimer le compte</h3></button>
-            </div>
         </section>
     </main>
     <footer>
