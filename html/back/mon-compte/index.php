@@ -1,16 +1,18 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
-require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+
 startSession();
 if (!isset($_SESSION["id"])) {
     header("Location: /se-connecter/");
 }
 $id_compte = $_SESSION["id"];
 redirectToConnexionIfNecessaryPro($id_compte);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -19,9 +21,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 startSession();
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
