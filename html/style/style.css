@@ -3306,6 +3306,51 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
+.consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--blanc);
+    border: 0;
+    cursor: pointer;
+}
+
+/**/
+
+.consulter-offre-front .popup-menu {
+    width: 120px;
+    display: none;
+    position: absolute;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    border-radius: 8px;
+    z-index: 1000; 
+}
+
+.consulter-offre-front .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.consulter-offre-front .popup-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
+}
+
+.consulter-offre-front .popup-menu li:hover {
+    background: var(--violet-secondaire);
+    color: var(--blanc);
+}
+/**/
+
 .consulter-offre-front #avis>button,
 .consulter-offre-front #avis>form>button {
     color: var(--blanc);
