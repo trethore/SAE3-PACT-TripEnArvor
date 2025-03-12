@@ -146,13 +146,7 @@ h3 {
 
 /* Titres */
 .connecter h1 {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 32px;
-
-    color: var(--noir);
-
-    margin: 0;
+    margin-top: 0.7;
 }
 
 .connecter h2 {
@@ -1814,7 +1808,14 @@ h3 {
 }
 
 .creer-compte input[type="submit"] {
-    padding: 1rem 5rem;
+    width: 100%;
+    margin: 2em;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 40px;
+    text-align: center;
+    color: var(--blanc-leger);
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 .creer-compte input[type="submit"]:enabled {
