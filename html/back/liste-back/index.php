@@ -430,12 +430,13 @@ try {
                 echo '</pre>';
 
                 forEach($avisNonLus as $avis) {
-                    if (empty($avis['lu'])) {
-                        $remainingAvis++;
+                    if (!empty($avis)) {
+                        if (empty($avis['lu'])) {
+                            $remainingAvis++;
+                        }
+                        $remainingOffres++;
                     }
                 }
-
-                $remainingOffres++;
             }
 
             if ($remainingOffres > 3) {
