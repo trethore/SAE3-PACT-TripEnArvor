@@ -1447,6 +1447,33 @@ h3 {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+#delButton {
+    color:var(--blanc-leger);
+    background-color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 0.5em;
+    float: right;
+    position: relative;
+    bottom: -3em;
+ }
+
+#delButton:hover {
+    background-color: var(--blanc-leger);
+    color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+>>>>>>> fb819089e8fceba4b6cd4676fb4fb726a513618b
 /********************
         NAV
 *********************/
@@ -1889,6 +1916,42 @@ h3 {
     height: 60px;
     object-fit: cover;
 
+<<<<<<< HEAD
+=======
+.back .icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.liste-back .notification-badge {
+    position: absolute;
+    top: -10px;
+    right: -2px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: solid black 1px;
+}
+
+.front .notification-badge {
+    display: none;
+}
+
+.compte-back .notification-badge {
+    position: absolute;
+    top: 85px;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: solid black 1px;
+>>>>>>> fb819089e8fceba4b6cd4676fb4fb726a513618b
 }
 
 .back .ICON-accueil {
@@ -3152,6 +3215,50 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
+<<<<<<< HEAD
+=======
+.consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--blanc);
+    border: 0;
+    cursor: pointer;
+}
+
+/**/
+
+.consulter-offre-front .popup-menu {
+    width: 120px;
+    display: none;
+    position: absolute;
+    background: var(--violet-principal);
+    color: var(--blanc);
+    border-radius: 8px;
+    z-index: 1000; 
+}
+
+.consulter-offre-front .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.consulter-offre-front .popup-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 2px;
+}
+
+
+.consulter-offre-front .popup-menu li:hover {
+    background: var(--violet-secondaire);
+    color: var(--blanc);
+}
+/**/
+
+>>>>>>> fb819089e8fceba4b6cd4676fb4fb726a513618b
 .consulter-offre-front #avis>button,
 .consulter-offre-front #avis>form>button {
     color: var(--blanc);
@@ -3566,6 +3673,94 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
+<<<<<<< HEAD
+=======
+.consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--blanc);
+    border: 0;
+    cursor: pointer;
+}
+
+.consulter-offre-back .popup-menu {
+    width: 85px;
+    display: none;
+    position: absolute;
+    background: var(--blanc);
+    color: var(--noir);
+    border-radius: 4px;
+    z-index: 1000; 
+}
+
+.consulter-offre-back .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.consulter-offre-back .popup-menu li {
+    padding: 4px 6px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
+}
+
+
+.consulter-offre-back .popup-menu li:hover {
+    background: var(--orange-secondaire-2);
+    color: var(--blanc);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type:hover {
+    background: var(--noir);
+    color: var(--blanc);
+}
+
+.consulter-offre-back .confirmation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+}
+
+.consulter-offre-back .confirmation-popup p {
+    font-size: 16px;
+}
+
+.consulter-offre-back .confirmation-popup button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--noir);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+}
+
+.consulter-offre-back .confirmation-popup button:first-of-type:hover {
+    background-color: var(--noir-leger);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--orange-principale);
+}
+
+>>>>>>> fb819089e8fceba4b6cd4676fb4fb726a513618b
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
@@ -3685,6 +3880,77 @@ h3 {
 }
 
 /**************************************************************************************
+<<<<<<< HEAD
+=======
+                                    BACK MES AVIS
+***************************************************************************************/
+
+.fond-blocs-avis.avis-en-exergue {
+    animation: pulse_orange 2s infinite ease-out;
+}
+
+@keyframes pulse_orange {
+    0% {
+        box-shadow: 0 0 0 0 var(--orange-principale);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
+.mes-avis{
+    justify-content: none;
+}
+
+.mes-avis .fond-blocs-avis {
+    margin: 15px;
+    min-width: 700px;
+    display: inline;
+}
+
+#infobulle {
+    background-color:var(--orange-principale);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+.mes-avis .avis-en-exergue:hover  {
+    animation: none;
+}
+
+.contenu-aligne-gauche {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Tout aligne à gauche */
+    min-width: 800px;
+}
+
+.mes-avis h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--bold);
+    color: var(--noir);
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 40pt;
+}
+
+.mes-avis h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--medium);
+    font-size: 23pt;
+    color: var(--noir);
+    margin-top: 5px;
+}
+
+
+/**************************************************************************************
+>>>>>>> fb819089e8fceba4b6cd4676fb4fb726a513618b
                                     Créer offre
 ***************************************************************************************/
 
