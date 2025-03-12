@@ -3987,6 +3987,10 @@ h3 {
     display: none;
 }
 
+.mes-avis {
+    align-content: left;
+}
+
 .mes-avis h1 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--bold);
@@ -4001,7 +4005,6 @@ h3 {
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    text-align: left;
 }
 
 
