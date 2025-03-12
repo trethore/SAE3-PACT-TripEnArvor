@@ -189,6 +189,7 @@ if ($typeCompte === 'proPrive') {
             
            
                 <?php
+                    echo "<br>";
                     $nb_offres = 0;
                     foreach ($touteslesoffres as $offre) { ?>
                         <h2>
@@ -208,7 +209,7 @@ if ($typeCompte === 'proPrive') {
                         $nb_avis = count($avis);
 
                         echo $nb_avis . " avis sur l'offre : " . $offre['titre'];  ?> </h2>
-                    <?php  echo "<br>"; 
+                    <?php 
 
                         $categorie = getTypeOffre($id_offre);
 
@@ -273,22 +274,12 @@ if ($typeCompte === 'proPrive') {
                                     </div>
                                 <?php } ?>
 
-                                <div class="display-ligne">
-                                    <?php if (isset(getImageAvis($id_offre, $lavis['id_membre'])[0]['lien_fichier'])) { ?>
-                                        <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre, $lavis['id_membre'])[0]['lien_fichier']); ?>">
-                                    <?php } ?>
-                                    <p><?php echo htmlentities(html_entity_decode(ucfirst($lavis['commentaire']))); ?></p>
-                                </div>
 
                                 <div class="display-ligne-espace">
                                     <div class="petite-mention">
                                         <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
                                         $datePub = explode('-', $publication[0]); ?>
                                         <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                                    </div>
-                                    <div class="display-ligne">
-                                        <p><?php echo htmlentities($lavis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                                        <p><?php echo htmlentities($lavis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                                     </div>
                                 </div>
                                 <br>
