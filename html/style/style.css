@@ -323,7 +323,8 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton {
+.compte-back #apibutton,
+.compte-back #delButton {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border: var(--orange-principale) 2px solid;
@@ -332,7 +333,8 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
- .compte-back #apibutton:hover {
+.compte-back #apibutton:hover,
+.compte-back #delButton:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
      border: var(--orange-principale) 2px solid;
@@ -531,7 +533,8 @@ h3 {
 #validerModifCompte,
 #annulerModifCompte,
 #popupRetourAccueil,
-#popupRetourCompte {
+#popupRetourCompte,
+#validerDeleteCompte {
     position: fixed;
     z-index: 11;
     flex-direction: column;
@@ -551,7 +554,8 @@ h3 {
 #validerModifCompte h3,
 #annulerModifCompte h3,
 #popupRetourAccueil h3,
-#popupRetourCompte h3 {
+#popupRetourCompte h3,
+#validerDeleteCompte h3 {
     font-weight: var(--semi-bold);
     margin-bottom: 0;
     font-size: 24pt;
@@ -562,7 +566,8 @@ h3 {
 #validerModifCompte p,
 #annulerModifCompte p,
 #popupRetourAccueil p,
-#popupRetourCompte p {
+#popupRetourCompte p,
+#validerDeleteCompte p {
     color: var(--noir);
     font-size: 14pt;
     margin-bottom: 20px;
@@ -572,7 +577,8 @@ h3 {
 .compte-back-modif #validerModifCompte button,
 .compte-back-modif #annulerModifCompte button,
 .compte-back-modif #popupRetourAccueil button,
-.compte-back-modif #popupRetourCompte button {
+.compte-back-modif #popupRetourCompte button,
+#validerDeleteCompte button {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
@@ -591,7 +597,8 @@ h3 {
 .compte-back-modif #validerModifCompte button:hover,
 .compte-back-modif #annulerModifCompte button:hover,
 .compte-back-modif #popupRetourAccueil button:hover,
-.compte-back-modif #popupRetourCompte button:hover {
+.compte-back-modif #popupRetourCompte button:hover,
+#validerDeleteCompte button:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
