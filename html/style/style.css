@@ -3740,6 +3740,11 @@ h3 {
     color: var(--blanc);
 }
 
+.consulter-offre-back .blurred {
+    filter: blur(1.5rem);
+    pointer-events: none;
+}
+
 .consulter-offre-back .confirmation-popup {
     position: fixed;
     top: 50%;
@@ -3749,6 +3754,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
+    filter: blur(0);
 }
 
 .consulter-offre-back .confirmation-popup p {
@@ -3775,11 +3781,6 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button:last-of-type:hover {
     color: var(--orange-principale);
-}
-
-.consulter-offre-back .blurred {
-    filter: blur(1.5rem);
-    pointer-events: none;
 }
 
 .consulter-offre-back .titre-avis {
