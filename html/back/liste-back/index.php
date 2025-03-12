@@ -435,7 +435,7 @@ try {
                             'title' => $row['titre'],
                             'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
                         ];
-                    } elseif ($count == 5) {
+                    } elseif ($count == 2) {
                         $remainingAvis = $nbrAvisNonRepondus;
                         $remainingOffres = 1;
                         
