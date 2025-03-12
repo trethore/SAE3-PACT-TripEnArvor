@@ -422,27 +422,22 @@ try {
             $stmtOffre->execute();
 
             $toastsData = [];
-            $nonLusCount = 0;
             $remainingAvis = 0;
             $remainingOffres = 0;
 
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
-                echo '<pre>';
-                print_r($avisNonLus);
-                echo '</pre>';
-                                
-                /*if ($nbrAvisNonRepondus > 0) {
-                    $count++;
-                    $remainingAvis += $nbrAvisNonRepondus;
-                    $remainingOffres++;
-                }*/
+                forEach($avisNonLus as $avis) {
+                    if (empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
+                }
 
-                
+                $remainingOffres++;
             }
 
-            if ($count > 3) {
+            if ($remainingOffres > 3) {
                 $toastsData[] = [
                     'title' => "Avis restants",
                     'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
@@ -450,15 +445,18 @@ try {
             } else {
                 $stmtOffre->execute();
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $nbrAvis = getAvis($row['id_offre']);
-                    $nbrReponses = getReponse($row['id_offre']);
-                    
-                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                    
-                    if ($nbrAvisNonRepondus > 0) {
+                    $avisNonLus = getLu($row['id_offre']);
+
+                    forEach($avisNonLus as $avis) {
+                        if (empty($avis['lu'])) {
+                            $remainingAvis++;
+                        }
+                    }
+
+                    if ($remainingAvis > 0) {
                         $toastsData[] = [
                             'title' => $row['titre'],
-                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                            'message' => "Vous avez $remainingAvis avis non lus.",
                         ];
                     }
                 }
