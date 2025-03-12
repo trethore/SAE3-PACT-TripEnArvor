@@ -3822,6 +3822,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
+    z-index: 1001;
 }
 
 .consulter-offre-back .confirmation-popup p {
