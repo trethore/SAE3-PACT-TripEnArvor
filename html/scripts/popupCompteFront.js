@@ -13,7 +13,7 @@ const boutonReprendre = document.getElementById("boutonReprendre");
 const boutonRetour = document.getElementById("boutonQuitter");
 
 // constante de la popup pour retourner à l'accueil
-const declencherPopupAccueil = document.querySelectorAll(".retourAccueil")
+const declencherPopupAccueil = document.querySelectorAll(".retourAccueil");
 const popupAccueil = document.getElementById("popupRetourAccueil");
 const boutonReprendreAccueil = document.getElementById("boutonReprendreAccueil");
 const boutonRetourAccueil = document.getElementById("boutonRetourAccueil");
