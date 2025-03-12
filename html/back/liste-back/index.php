@@ -566,8 +566,6 @@ try {
             // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
-            console.log(toastsData);
-
             toastsData.forEach((toast) => {
                 createToast(toast.title, toast.message);
             });
