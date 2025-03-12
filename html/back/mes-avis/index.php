@@ -199,9 +199,9 @@ if ($typeCompte === 'proPrive') {
                         // $offre = getOffre($id_offre_cible);
                         $id_offre = $offre['id_offre'];
                         $avis = getAvis($id_offre);
-                        
+                        $nb_offres++;
                         if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
-                            $nb_offres++;
+                            
                             if (count($touteslesoffres) == $nb_offres) {
                                 print("Aucun avis n'a été laissé sur vos offres");
                             }else {
