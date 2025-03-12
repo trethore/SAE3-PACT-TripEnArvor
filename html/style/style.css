@@ -6,6 +6,7 @@
       COULEURS
   *****************/
     --noir: rgba(0, 0, 0, 1);
+    --noir-leger : rgba(48 50 52, 1);
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
@@ -3698,12 +3699,12 @@ h3 {
 }
 
 .consulter-offre-back .popup-menu {
-    width: 120px;
+    width: 80px;
     display: none;
     position: absolute;
     background: var(--blanc);
     color: var(--noir);
-    border-radius: 8px;
+    border-radius: 4px;
     z-index: 1000; 
 }
 
@@ -3737,7 +3738,7 @@ h3 {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--blanc);
-    padding: 20px 15px;
+    padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
 }
@@ -3748,16 +3749,24 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button {
     border: 0;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: var(--noir);
     color: var(--blanc);
     font-size: 16px;
     padding: 4px 6px;
 }
 
+.consulter-offre-back .confirmation-popup button:first-of-type:hover {
+    background-color: var(--noir-leger);
+}
+
 .consulter-offre-back .confirmation-popup button:last-of-type {
     background-color: var(--blanc);
     color: var(--noir);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--orange-principale);
 }
 
 .consulter-offre-back .titre-avis {
