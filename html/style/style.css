@@ -3947,6 +3947,57 @@ h3 {
 }
 
 /**************************************************************************************
+                                    BACK MES AVIS
+***************************************************************************************/
+
+.fond-blocs-avis.avis-en-exergue {
+    border: 10px;
+    animation: pulse_orange 2s infinite ease-out;
+}
+
+@keyframes pulse_orange {
+    0% {
+        box-shadow: 0 0 0 0 var(--orange-principale);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
+#infobulle {
+    background-color:var(--orange-principale);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+.mes-avis .avis-en-exergue:hover #infobulle {
+    display: none;
+}
+
+.mes-avis h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--bold);
+    color: var(--noir);
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 40pt;
+}
+
+.mes-avis h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--medium);
+    font-size: 23pt;
+    color: var(--noir);
+}
+
+
+/**************************************************************************************
                                     Créer offre
 ***************************************************************************************/
 
