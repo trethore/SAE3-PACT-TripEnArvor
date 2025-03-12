@@ -191,6 +191,11 @@ if ($typeCompte === 'proPrive') {
                 <?php
                     
                     $nb_offres = 0;
+                    if (!$touteslesoffres) {
+                        echo "Vous n'avez aucune offre"; ?>
+                        <a href="/back/creer-offre/index.php>"> Créer une offre ! </a>
+
+                    <?php }
                     foreach ($touteslesoffres as $offre) { 
                     
                     ?>
@@ -204,6 +209,7 @@ if ($typeCompte === 'proPrive') {
                             
                             if (count($touteslesoffres) == $nb_offres) {
                                 print("Aucun avis n'a été laissé sur vos offres");
+                                
                             }else {
                                 continue;
                             }
