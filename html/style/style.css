@@ -6,7 +6,7 @@
       COULEURS
   *****************/
     --noir: rgba(0, 0, 0, 1);
-    --noir-leger : rgba(48 50 52, 1);
+    --noir-leger : rgba(48, 50, 52, 1);
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
@@ -3759,7 +3759,7 @@ h3 {
 }
 
 .consulter-offre-back .popup-menu {
-    width: 80px;
+    width: 85px;
     display: none;
     position: absolute;
     background: var(--blanc);
