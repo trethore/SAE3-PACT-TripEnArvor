@@ -1974,7 +1974,7 @@ h3 {
     display: inline-block;
 }
 
-.back .notification-badge {
+.liste-back .notification-badge {
     position: absolute;
     top: -10px;
     right: -2px;
@@ -1991,7 +1991,7 @@ h3 {
     display: none;
 }
 
-.back .notification-badge {
+.compte-back .notification-badge {
     position: absolute;
     top: 85px;
     right: 3px;
