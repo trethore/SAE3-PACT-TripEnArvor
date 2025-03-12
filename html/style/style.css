@@ -1701,8 +1701,7 @@ h3 {
 .compte-front-modif #validerModifCompte button,
 .compte-front-modif #annulerModifCompte button,
 .compte-front-modif #popupRetourAccueil button,
-.compte-front-modif #popupRetourCompte button,
-.compte-front #validerDeleteCompte button {
+.compte-front-modif #popupRetourCompte button {
     background-color: var(--violet-principal);
     border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
@@ -1721,11 +1720,32 @@ h3 {
 .compte-front-modif #validerModifCompte button:hover,
 .compte-front-modif #annulerModifCompte button:hover,
 .compte-front-modif #popupRetourAccueil button:hover,
-.compte-front-modif #popupRetourCompte button:hover,
-.compte-front #validerDeleteCompte button:hover {
+.compte-front-modif #popupRetourCompte button:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
+}
+
+#validerDeleteCompte button {
+    background-color: rgb(229, 3, 3);
+    border: 2px solid rgb(229, 3, 3);
+    color: var(--blanc-leger);
+    font-weight: var(--bold);
+    font-size: 12pt;
+    width: 200px;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#validerDeleteCompte button:hover {
+    color: rgb(229, 3, 3);
+    background-color: var(--blanc-leger);
+    border: 2px solid rgb(229, 3, 3);
 }
 
 /**************************************************************************************
