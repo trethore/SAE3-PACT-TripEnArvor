@@ -418,27 +418,50 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
 
+            $toastsData = [];
+            $count = 0;
+
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $nbrAvis = getAvis($row['id_offre']);
                 $nbrReponses = getReponse($row['id_offre']);
-                    
+                
                 $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                    
+                
                 if ($nbrAvisNonRepondus > 0) {
-                    $toastsData[] = [
-                        'title' => $row['titre'],
-                        'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
-                    ];
+                    $count++;
+                    
+                    if ($count <= 4) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                        ];
+                    } elseif ($count == 5) {
+                        $remainingAvis = $nbrAvisNonRepondus;
+                        $remainingOffres = 1;
+                        
+                        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                            $nbrAvis = getAvis($row['id_offre']);
+                            $nbrReponses = getReponse($row['id_offre']);
+                            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                            
+                            if ($nbrAvisNonRepondus > 0) {
+                                $remainingAvis += $nbrAvisNonRepondus;
+                                $remainingOffres++;
+                            }
+                        }
+                        
+                        $toastsData[] = [
+                            'title' => "Avis restants",
+                            'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
+                        ];
+
+                        break;
+                    }
                 }
             }
-            echo '<pre>';
-            print_r($toastsData);
-            echo '</pre>';
+
             $toastsDataJson = json_encode($toastsData);
-            echo '<pre>';
-            print_r($toastsDataJson);
-            echo '</pre>';
-        ?>
+            ?>
     </main>
     <footer>
         <div class="footer-top">
