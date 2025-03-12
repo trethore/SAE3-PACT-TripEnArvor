@@ -208,7 +208,7 @@ if ($typeCompte === 'proPrive') {
                             if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                                 
                                 if (count($touteslesoffres) == $nb_offres) {
-                                    print("Aucun avis n'a été laissé sur vos offres");
+                                    echo "Aucun avis n'a été laissé sur vos offres";  ?> </h2> <?php
                                     break;
                                     
                                 }else {
