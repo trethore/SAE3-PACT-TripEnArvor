@@ -179,7 +179,7 @@ $reqCompte = "SELECT * from sae.compte_membre
 
                 // Ouvre la popup et stocke l'ID du compte
                 function delCompteMembre(event, id) {
-                    event.preventDefault(); // Empêche le bouton de continer le lien
+                    event.preventDefault(); // Empêche le bouton de continuer le lien
                     compteId = id;
                     popupOverlay.style.display = "block";
                     popupValider.style.display = "flex";
@@ -202,7 +202,7 @@ $reqCompte = "SELECT * from sae.compte_membre
                         .then(response => response.text())
                         .then(data => {
                             alert(data); // Affiche la réponse du serveur
-                            window.location.href = "index.php"; // Redirection après suppression
+                            window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
                         })
                         .catch(error => console.error("Erreur :", error));
                     }
