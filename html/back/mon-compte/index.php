@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
 
 startSession();
 if (!isset($_SESSION["id"])) {
