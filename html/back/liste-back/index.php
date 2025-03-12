@@ -75,22 +75,19 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
 
-            $nonLusCount = 0;
+            $nbrAvisNonRepondus = 0;
 
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $avisNonLus = getLu($row['id_offre']);
+                $nbrAvis = getAvis($row['id_offre']);
+                $nbrReponses = getReponse($row['id_offre']);
 
-                forEach($avisNonLus as $avis) {
-                    if (empty($avis['lu'])) {
-                        $nonLusCount++;
-                    }
-                }
+                $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
             <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
-            <?php if ($nonLusCount > 0) { ?>
-                <span class="notification-badge"><?php echo $nonLusCount; ?></span>
+            <?php if ($nbrAvisNonRepondus > 0) { ?>
+                <span class="notification-badge"><?php echo $nbrAvisNonRepondus; ?></span>
             <?php } ?>
         </a>
         <script>
@@ -291,7 +288,7 @@ try {
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
                     <img src=" <?php
-                    switch ($row["abonnement"]) {
+                    switch ($row["nom_abonnement"]) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
@@ -346,7 +343,7 @@ try {
                     </div>
                     <div>
                         <!-------------------------------------- 
-                        Affichage des avis non lus
+                        Affichage des avis non lues
                         ---------------------------------------->
                         <?php
                             $avisNonLus = getLu($row['id_offre']);
@@ -361,7 +358,7 @@ try {
                         <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
-                        Affichage des avis non répondus
+                        Affichage des avis non répondues
                         ---------------------------------------->
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
@@ -443,7 +440,8 @@ try {
                     'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
                 ];
             } else {
-                $stmtOffre->execute();
+                // Sinon, on affiche les toasts individuels
+                $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                     $avisNonLus = getLu($row['id_offre']);
 
