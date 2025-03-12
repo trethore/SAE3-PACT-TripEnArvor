@@ -3239,12 +3239,8 @@ h3 {
     text-align: left;
     font-size: 14px;
     border-radius: 2px;
-    border: 1px solid var(--gris);
 }
 
-.consulter-offre-back .popup-menu li:last-of-type {
-    border-top: 0;
-}
 
 .consulter-offre-front .popup-menu li:hover {
     background: var(--violet-secondaire);
@@ -3665,6 +3661,91 @@ h3 {
     border-radius: 15px;
     color: var(--noir);
     border: 3px solid var(--orange-principale);
+}
+
+.consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--blanc);
+    border: 0;
+    cursor: pointer;
+}
+
+.consulter-offre-back .popup-menu {
+    width: 85px;
+    display: none;
+    position: absolute;
+    background: var(--blanc);
+    color: var(--noir);
+    border-radius: 4px;
+    z-index: 1000; 
+}
+
+.consulter-offre-back .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.consulter-offre-back .popup-menu li {
+    padding: 4px 6px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
+}
+
+
+.consulter-offre-back .popup-menu li:hover {
+    background: var(--orange-secondaire-2);
+    color: var(--blanc);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type:hover {
+    background: var(--noir);
+    color: var(--blanc);
+}
+
+.consulter-offre-back .confirmation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+}
+
+.consulter-offre-back .confirmation-popup p {
+    font-size: 16px;
+}
+
+.consulter-offre-back .confirmation-popup button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--noir);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+}
+
+.consulter-offre-back .confirmation-popup button:first-of-type:hover {
+    background-color: var(--noir-leger);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir);
+}
+
+.consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--orange-principale);
 }
 
 .consulter-offre-back .titre-avis {
