@@ -1495,6 +1495,10 @@ h3 {
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
+    margin-top: 0.5em;
+    float: right;
+    position: relative;
+    bottom: -3em;
  }
 
 #delButton:hover {
