@@ -3958,7 +3958,7 @@ h3 {
 ***************************************************************************************/
 
 .fond-blocs-avis.avis-en-exergue {
-    border: 8px solid var(--orange-principale);
+    border: 5px solid var(--orange-principale);
     animation: pulse_orange 2s infinite ease-out;
 }
 
