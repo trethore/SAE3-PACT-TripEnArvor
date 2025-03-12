@@ -3884,8 +3884,10 @@ h3 {
     display: none;
 }
 
-.mes-avis {
-    align-content: left;
+.contenu-aligne-gauche {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Tout aligne à gauche */
 }
 
 .mes-avis h1 {
