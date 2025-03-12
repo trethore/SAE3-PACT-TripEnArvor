@@ -848,10 +848,10 @@ try {
 
         function confirmerBlacklister(compteur) {
             document.getElementById("confirmation-popup").style.display = "block";
-            document.getElementById("header").classList.add("blurred");
+            /*document.getElementById("header").classList.add("blurred");
             document.getElementById("body").classList.add("blurred");
             document.getElementById("footer").classList.add("blurred");
-            document.getElementById("confirmation-popup").classList.add("unblurred");
+            document.getElementById("confirmation-popup").classList.add("unblurred");*/
         }
 
         function validerBlacklister() {
@@ -861,10 +861,10 @@ try {
 
         function annulerBlacklister() {
             document.getElementById("confirmation-popup").style.display = "none";
-            document.getElementById("header").classList.remove("blurred");
+            /*document.getElementById("header").classList.remove("blurred");
             document.getElementById("body").classList.remove("blurred");
             document.getElementById("footer").classList.remove("blurred");
-            document.getElementById("confirmation-popup").classList.remove("unblurred");
+            document.getElementById("confirmation-popup").classList.remove("unblurred");*/
         }
 
         document.addEventListener("click", function() {
