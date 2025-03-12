@@ -280,7 +280,7 @@ if ($typeCompte === 'proPrive') {
                                     </div>
                                 </div>
                                 <br>
-                                <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
+                                <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>> Accéder à l&#39avis'</a>
                             </div>
                     <?php $compteur++; }
                 echo "<br>";
