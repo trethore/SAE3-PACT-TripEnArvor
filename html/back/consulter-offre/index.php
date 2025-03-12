@@ -655,16 +655,25 @@ try {
                                 </div>
                             </div>
                             <!-- Bouton menu -->
-                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)">
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
                             <!-- Menu pop-up (ID unique par avis) -->
                             <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                                 <ul>
-                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                    <li onclick="handleMenuAction('Blacklister')">Blacklister</li>
+                                    <li>Signaler</li>
+                                    <li onclick="confirmerBlacklister(<?php echo $compteur; ?>)">Blacklister</li>
                                 </ul>
+                            </div>
+
+                            <!-- Boîte de confirmation -->
+                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+                                <div class="confirmation-content">
+                                    <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
+                                    <button onclick="validerBlacklister()">Blacklister</button>
+                                    <button onclick="annulerBlacklister()">Annuler</button>
+                                </div>
                             </div>
                         </div>
 
@@ -819,9 +828,9 @@ try {
     </footer>
 
     <script>
-        function toggleMenu(event, button, compteur) {
+        function afficherMenu(event, button, compteur) {
             event.stopPropagation();
-            let menu = document.getElementById(`popup-menu-${compteur}`);
+            const menu = document.getElementById(`popup-menu-${compteur}`);
             document.querySelectorAll(".popup-menu").forEach(m => {
                 if (m !== menu) m.style.display = "none";
             });
@@ -831,10 +840,23 @@ try {
                 return;
             }
 
-            let rect = button.getBoundingClientRect();
+            const rect = button.getBoundingClientRect();
             menu.style.top = `${rect.top + window.scrollY - 2}px`;
             menu.style.left = `${rect.left + window.scrollX - 120}px`;
             menu.style.display = "block";
+        }
+
+        function confirmerBlacklister(compteur) {
+            document.getElementById("confirmation-popup").style.display = "block";
+        }
+
+        function validerBlacklister() {
+            alert("L'avis a été blacklisté.");
+            document.getElementById("confirmation-popup").style.display = "none";
+        }
+
+        function annulerBlacklister() {
+            document.getElementById("confirmation-popup").style.display = "none";
         }
 
         document.addEventListener("click", function() {
