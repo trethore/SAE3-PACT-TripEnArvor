@@ -189,13 +189,58 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
+                foreach ($touteslesoffres as $offre) { 
+                    $id_offre = $offre['id_offre'];
+                    $avis = getAvis($id_offre);
+                    $nb_offres++;
+
+                    $nb_non_lu = 0;
+                    $nb_avis = count($avis);
+                    foreach ($avis as $lavis) {
+                        if($lavis['lu'] == false){
+                            $nb_non_lu++;
+                        }
+                    }
+                    
+
+                }
+
+
+
+                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+                $stmtOffre = $conn->prepare($reqOffre);
+                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+                $stmtOffre->execute();
+
+                $count = 0;
+                $remainingAvis = 0;
+                $remainingOffres = 0;
+
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $nbrAvis = getAvis($id_offre);
+                    $nbrReponses = getReponse($id_offre);
+                    
+                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                    
+                    if ($nbrAvisNonRepondus > 0) {
+                        $count++;
+                        $remainingAvis += $nbrAvisNonRepondus;
+                        $remainingOffres++;
+                    }
+                }
                     
                     $nb_offres = 0;
                     if (!$touteslesoffres) {
                         echo "Vous n'avez aucune offre"; ?>
                         <a href="/back/creer-offre/index.php"> Créer une offre ! </a>
 
-                    <?php } else {
+                    <?php } else { ?>
+
+                        <h2> <?php
+                            echo "vous avez " .$nb_non_lu. "avis non lus";
+                            echo "vous avez " .$nbrAvisNonRepondus. "avis non repondus"; ?>
+                        </h2> <?php
+
                         foreach ($touteslesoffres as $offre) { 
                         
                         ?>
@@ -215,13 +260,7 @@ if ($typeCompte === 'proPrive') {
                                     continue;
                                 }
                             }
-                            $nb_non_lu = 0;
-                            $nb_avis = count($avis);
-                            foreach ($avis as $lavis) {
-                                if($lavis['lu'] == false){
-                                    $nb_non_lu++;
-                                }
-                            }
+                            
                             if($nb_non_lu == 1){
                                 echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h2> <?php 
                             }else{
