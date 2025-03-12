@@ -1142,7 +1142,7 @@ h3 {
 
 .mes-avis .avis-en-exergue {
     border: 15px;
-    animation: pulse 2s infinite ease-out;
+    animation: pulse_orange 2s infinite ease-out;
 }
 
 @keyframes pulse_orange {
