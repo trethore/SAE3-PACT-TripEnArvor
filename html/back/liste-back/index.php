@@ -288,7 +288,7 @@ try {
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
                     <img src=" <?php
-                    switch ($row["mon_abonnement"]) {
+                    switch ($row["nom_abonnement"]) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
