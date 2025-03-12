@@ -445,8 +445,7 @@ try {
         </div>
     </footer>
 
-    <script>
-        <?php
+    <?php
                 $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
                 $stmtOffre = $conn->prepare($reqOffre);
                 $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
@@ -466,9 +465,12 @@ try {
                         ];
                     }
                 }
+        console.log($toastsData);
+        $toastsDataJson = json_encode($toastsData);
+        console.log($toastsDataJson);
+    ?>
 
-                $toastsDataJson = json_encode($toastsData);
-            ?>
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Fonction pour créer un nouveau toast
             function createToast(title, message) {
