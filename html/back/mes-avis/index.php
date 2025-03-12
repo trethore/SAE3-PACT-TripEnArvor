@@ -227,15 +227,12 @@ if ($typeCompte === 'proPrive') {
                     
                         $compteur = 0;
 
-                        foreach ($avis as $lavis) {
-                            if($lavis['lu'] == false){
-                                echo "mettre en exergue";
-                        } ?>
+                        foreach ($avis as $lavis) { ?>
 
-                        
+                        <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
                             <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
                             
-                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
+                                
                                 
                                 <div class="display-ligne-espace">
                                     <div class="display-ligne">
@@ -258,20 +255,6 @@ if ($typeCompte === 'proPrive') {
                                     <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                 </div>
 
-                                <?php if ($categorie == "Restauration") { ?>
-                                    <div class="display-ligne">
-                                        <?php foreach ($noteDetaillee as $lanote) {
-                                            if (($lanote['id_membre'] == $lavis['id_membre']) && ($lanote['id_offre'] == $lavis['id_offre'])) { ?>
-                                                <p><?php echo htmlentities($lanote['nom_note']) . " : " ?></p>
-                                                <?php for ($etoileJaune = 0; $etoileJaune != $lanote['note']; $etoileJaune++) { ?>
-                                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                                <?php }
-                                                for ($etoileGrise = 0; $etoileGrise != (5 - $lanote['note']); $etoileGrise++) { ?>
-                                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                                <?php } ?>
-                                            <?php }
-                                        } ?>
-                                    </div>
                                 <?php } ?>
 
 
