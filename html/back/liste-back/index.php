@@ -420,6 +420,8 @@ try {
 
             $toastsData = [];
             $count = 0;
+            $remainingAvis = 0;
+            $remainingOffres = 0;
 
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $nbrAvis = getAvis($row['id_offre']);
@@ -429,39 +431,37 @@ try {
                 
                 if ($nbrAvisNonRepondus > 0) {
                     $count++;
+                    $remainingAvis += $nbrAvisNonRepondus;
+                    $remainingOffres++;
+                }
+            }
+
+            // Si plus de 3 offres avec des avis non répondus, on affiche uniquement le toast groupé
+            if ($count > 3) {
+                $toastsData[] = [
+                    'title' => "Avis restants",
+                    'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
+                ];
+            } else {
+                // Sinon, on affiche les toasts individuels
+                $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $nbrAvis = getAvis($row['id_offre']);
+                    $nbrReponses = getReponse($row['id_offre']);
                     
-                    if ($count <= 2) {
+                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                    
+                    if ($nbrAvisNonRepondus > 0) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
                         ];
-                    } elseif ($count > 2) {
-                        $remainingAvis = $nbrAvisNonRepondus;
-                        $remainingOffres = 1;
-                        
-                        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                            $nbrAvis = getAvis($row['id_offre']);
-                            $nbrReponses = getReponse($row['id_offre']);
-                            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                            
-                            if ($nbrAvisNonRepondus > 0) {
-                                $remainingAvis += $nbrAvisNonRepondus;
-                                $remainingOffres++;
-                            }
-                        }
-                        
-                        $toastsData[] = [
-                            'title' => "Avis restants",
-                            'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
-                        ];
-
-                        break;
                     }
                 }
             }
 
             $toastsDataJson = json_encode($toastsData);
-            ?>
+        ?>
     </main>
     <footer>
         <div class="footer-top">
