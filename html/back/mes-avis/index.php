@@ -255,7 +255,7 @@ if ($typeCompte === 'proPrive') {
                                     <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                 </div>
 
-                                <?php } ?>
+                                <?php  ?>
 
 
                                 <div class="display-ligne-espace">
@@ -268,7 +268,7 @@ if ($typeCompte === 'proPrive') {
                                 <br>
                                 <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
                             </div>
-                    <?php $compteur++;  }?>       
+                    <?php $compteur++; } }?>       
             </div>
             
         </section>
