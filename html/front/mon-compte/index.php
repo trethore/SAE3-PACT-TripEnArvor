@@ -169,10 +169,21 @@ $reqCompte = "SELECT * from sae.compte_membre
 
                 // Affiche la popup
                 function deleteCompte(event) {
-                    event.preventDefault(); // Empêche l'envoi du formulaire
                     popupOverlay.style.display = "block";
                     popupValider.style.display = "flex";
                 };
+
+                // Ferme la popup sans valider
+                boutonAnnuler.addEventListener("click", function() {
+                    popupOverlay.style.display = "none";
+                    popupValider.style.display = "none";
+                });
+
+                // Valide les modifications et soumet le formulaire
+                boutonValider.addEventListener("click", function() {
+                    popupOverlay.style.display = "none";
+                    popupValider.style.display = "none";
+                });
             </script>
             <button onclick="deleteCompte()", id="delButton">Supprimer le compte</button>
         </section>

@@ -578,7 +578,7 @@ h3 {
 .compte-back-modif #annulerModifCompte button,
 .compte-back-modif #popupRetourAccueil button,
 .compte-back-modif #popupRetourCompte button,
-#validerDeleteCompte button {
+.compte-back #validerDeleteCompte button {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
@@ -598,7 +598,7 @@ h3 {
 .compte-back-modif #annulerModifCompte button:hover,
 .compte-back-modif #popupRetourAccueil button:hover,
 .compte-back-modif #popupRetourCompte button:hover,
-#validerDeleteCompte button:hover {
+.compte-back #validerDeleteCompte button:hover {
     color: var(--orange-principale);
     background-color: var(--blanc-leger);
     border: 2px solid var(--orange-principale);
@@ -1501,7 +1501,8 @@ h3 {
     margin: 1em;
 }
 
-.compte-front #apibutton {
+.compte-front #apibutton,
+.compte-front #delButton {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1510,7 +1511,8 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover {
+.compte-front #apibutton:hover,
+.compte-front #delButton:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
@@ -1699,7 +1701,8 @@ h3 {
 .compte-front-modif #validerModifCompte button,
 .compte-front-modif #annulerModifCompte button,
 .compte-front-modif #popupRetourAccueil button,
-.compte-front-modif #popupRetourCompte button {
+.compte-front-modif #popupRetourCompte button,
+.compte-front #validerDeleteCompte button {
     background-color: var(--violet-principal);
     border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
@@ -1718,7 +1721,8 @@ h3 {
 .compte-front-modif #validerModifCompte button:hover,
 .compte-front-modif #annulerModifCompte button:hover,
 .compte-front-modif #popupRetourAccueil button:hover,
-.compte-front-modif #popupRetourCompte button:hover {
+.compte-front-modif #popupRetourCompte button:hover,
+.compte-front #validerDeleteCompte button:hover {
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
