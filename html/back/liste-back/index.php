@@ -550,7 +550,7 @@ try {
                 }, 10); // Petit délai pour permettre la transition CSS
 
                 // Supprimer le toast après 5 secondes
-                setTimeout(() => {
+                /*setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
                         toast.remove(); // Supprimer le toast du DOM après l'animation
@@ -560,7 +560,7 @@ try {
                 // Supprimer la barre de progression après 5.3 secondes
                 setTimeout(() => {
                     progress.classList.remove("active");
-                }, 5300);
+                }, 5300);*/
             }
 
             // Récupérer les données PHP encodées en JSON
