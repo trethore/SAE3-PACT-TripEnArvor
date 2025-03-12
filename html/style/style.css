@@ -1140,9 +1140,9 @@ h3 {
                                     BACK MES AVIS
 ***************************************************************************************/
 
-.mes-avis .avis-en-exergue {
-    border: 15px;
-    animation: pulse 2s infinite ease-out;
+.fond-blocs-avis.avis-en-exergue {
+    border: 10px;
+    animation: pulse_orange 2s infinite ease-out;
 }
 
 @keyframes pulse_orange {
@@ -1159,12 +1159,12 @@ h3 {
 
 #infobulle {
     background-color:var(--orange-principale);
-    color: black;
+    color: white;
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
-    display: block;
+    display: inline-block;
 }
 
 .mes-avis .avis-en-exergue:hover #infobulle {
