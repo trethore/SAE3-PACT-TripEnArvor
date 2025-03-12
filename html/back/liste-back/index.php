@@ -411,6 +411,34 @@ try {
             <?php } ?>
         </section>
         <a href="/back/creer-offre/">Créer une offre</a>
+
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $nbrAvis = getAvis($row['id_offre']);
+                $nbrReponses = getReponse($row['id_offre']);
+                    
+                $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                    
+                if ($nbrAvisNonRepondus > 0) {
+                    $toastsData[] = [
+                        'title' => $row['titre'],
+                        'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                    ];
+                }
+            }
+            echo '<pre>';
+            print_r($toastsData);
+            echo '</pre>';
+            $toastsDataJson = json_encode($toastsData);
+            echo '<pre>';
+            print_r($toastsDataJson);
+            echo '</pre>';
+        ?>
     </main>
     <footer>
         <div class="footer-top">
@@ -444,30 +472,6 @@ try {
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
-
-    <?php
-        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-        $stmtOffre = $conn->prepare($reqOffre);
-        $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-        $stmtOffre->execute();
-
-        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-            $nbrAvis = getAvis($row['id_offre']);
-            $nbrReponses = getReponse($row['id_offre']);
-                
-            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                
-            if ($nbrAvisNonRepondus > 0) {
-                $toastsData[] = [
-                    'title' => $row['titre'],
-                    'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
-                ];
-            }
-        }
-        console.log($toastsData);
-        $toastsDataJson = json_encode($toastsData);
-        console.log($toastsDataJson);
-    ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
