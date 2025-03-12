@@ -847,16 +847,18 @@ try {
         }
 
         function confirmerBlacklister(compteur) {
-            document.getElementById("confirmation-popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+            document.body.classList.add("blurred");
         }
 
         function validerBlacklister() {
-            alert("L'avis a été blacklisté.");
-            document.getElementById("confirmation-popup").style.display = "none";
+            alert("L'utilisateur a été blacklisté.");
+            fermerConfirmation();
         }
 
-        function annulerBlacklister() {
-            document.getElementById("confirmation-popup").style.display = "none";
+        function fermerConfirmation() {
+            document.getElementById("overlay").style.display = "none";
+            document.body.classList.remove("blurred");
         }
 
         document.addEventListener("click", function() {
