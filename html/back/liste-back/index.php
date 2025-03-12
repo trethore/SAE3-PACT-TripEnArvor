@@ -446,25 +446,25 @@ try {
     </footer>
 
     <?php
-                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-                $stmtOffre = $conn->prepare($reqOffre);
-                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-                $stmtOffre->execute();
+        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+        $stmtOffre = $conn->prepare($reqOffre);
+        $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+        $stmtOffre->execute();
 
-                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $nbrAvis = getAvis($row['id_offre']);
-                    $nbrReponses = getReponse($row['id_offre']);
+        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+            $nbrAvis = getAvis($row['id_offre']);
+            $nbrReponses = getReponse($row['id_offre']);
                 
-                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                 
-                    if ($nbrAvisNonRepondus > 0) {
-                        // Ajouter les données de la toast au tableau
-                        $toastsData[] = [
-                            'title' => $row['titre_offre'], // Titre de l'offre
-                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.", // Message du toast
-                        ];
-                    }
-                }
+            if ($nbrAvisNonRepondus > 0) {
+                // Ajouter les données de la toast au tableau
+                $toastsData[] = [
+                    'title' => $row['titre'],
+                    'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                ];
+            }
+        }
         console.log($toastsData);
         $toastsDataJson = json_encode($toastsData);
         console.log($toastsDataJson);
