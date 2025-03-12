@@ -247,27 +247,26 @@ if ($typeCompte === 'proPrive') {
                             <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
                             <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
                                 
+                                
                                 <div class="display-ligne-espace">
-                                    <div class="display-ligne-espace">
-                                        <div class="display-ligne">
-                                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                                            <div class="display-ligne">
-                                                <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                                <?php }
-                                                for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
                                     <div class="display-ligne">
-                                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                                        $datePass = explode('-', $passage[0]); ?>
-                                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                                        <div class="display-ligne">
+                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                            <?php }
+                                            for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                            <?php } ?>
+                                        </div>
                                     </div>
+
+                                </div>
+
+                                <div class="display-ligne">
+                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                    $datePass = explode('-', $passage[0]); ?>
+                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                 </div>
 
                                 <?php  ?>
@@ -281,7 +280,7 @@ if ($typeCompte === 'proPrive') {
                                     </div>
                                 </div>
                                 <br>
-                                <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre ?>'> Acceder a l'avis</a>
+                                <a href='/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>> Accéder à l&#39avis'</a>
                             </div>
                     <?php $compteur++; }
                 echo "<br>";
