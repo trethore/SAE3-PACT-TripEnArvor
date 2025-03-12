@@ -3790,7 +3790,7 @@ h3 {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 2px;
     border: 1px solid var(--gris);
 }
 
