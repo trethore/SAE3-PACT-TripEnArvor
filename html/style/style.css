@@ -3902,7 +3902,7 @@ h3 {
 }
 
 .consulter-offre-back .blurred {
-    filter: blur(1.5rem);
+    filter: blur(4px);
     pointer-events: none;
 }
 
