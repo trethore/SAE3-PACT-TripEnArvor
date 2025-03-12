@@ -34,13 +34,13 @@ CREATE TABLE _abonnement (
 
 CREATE TABLE _historique_prix_abonnements (
     id_prix                     SERIAL,
-    nom_abonnement              VARCHAR(63) NOT NULL,
+    abonnement              VARCHAR(63) NOT NULL,
     prix_ht_jour_abonnement     INT NOT  NULL,
     date_maj                    DATE NOT NULL,
     CONSTRAINT _historique_prix_abonnements_pk
         PRIMARY KEY (id_prix),
     CONSTRAINT _historique_prix_abonnements_fk_abonnement
-        FOREIGN KEY (nom_abonnement)
+        FOREIGN KEY (abonnement)
         REFERENCES _abonnement(nom_abonnement)
 );
 
@@ -164,7 +164,7 @@ CREATE TABLE _offre (
     lon                     DOUBLE PRECISION,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (nom_abonnement) REFERENCES _abonnement(nom_abonnement)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
 );
 
 
