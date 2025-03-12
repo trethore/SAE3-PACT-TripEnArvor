@@ -419,25 +419,22 @@ try {
             $stmtOffre->execute();
 
             $toastsData = [];
-            $count = 0;
             $remainingAvis = 0;
             $remainingOffres = 0;
 
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $nbrAvis = getAvis($row['id_offre']);
-                $nbrReponses = getReponse($row['id_offre']);
-                
-                $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                
-                if ($nbrAvisNonRepondus > 0) {
-                    $count++;
-                    $remainingAvis += $nbrAvisNonRepondus;
-                    $remainingOffres++;
+                $avisNonLus = getLu($row['id_offre']);
+
+                forEach($avisNonLus as $avis) {
+                    if (empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
                 }
+
+                $remainingOffres++;
             }
 
-            // Si plus de 3 offres avec des avis non répondus, on affiche uniquement le toast groupé
-            if ($count > 3) {
+            if ($remainingOffres > 3) {
                 $toastsData[] = [
                     'title' => "Avis restants",
                     'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
@@ -446,15 +443,18 @@ try {
                 // Sinon, on affiche les toasts individuels
                 $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $nbrAvis = getAvis($row['id_offre']);
-                    $nbrReponses = getReponse($row['id_offre']);
-                    
-                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                    
-                    if ($nbrAvisNonRepondus > 0) {
+                    $avisNonLus = getLu($row['id_offre']);
+
+                    forEach($avisNonLus as $avis) {
+                        if (empty($avis['lu'])) {
+                            $remainingAvis++;
+                        }
+                    }
+
+                    if ($remainingAvis > 0) {
                         $toastsData[] = [
                             'title' => $row['titre'],
-                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                            'message' => "Vous avez $remainingAvis avis non lus.",
                         ];
                     }
                 }
