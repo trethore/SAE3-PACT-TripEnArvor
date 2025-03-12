@@ -534,6 +534,12 @@ try {
 
             }
 
+
+            // Connexion à la base de données
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $dbh->prepare("SET SCHEMA 'sae';")->execute();
+            $dbh->beginTransaction();
             
             try {
 
@@ -541,16 +547,6 @@ try {
                 if (!$id_compte) {
                     die("Erreur : utilisateur non connecté.");
                 }
-
-                // Connexion à la base de données
-                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-
-                
-                $dbh->prepare("SET SCHEMA 'sae';")->execute();          
-
-
-                
-
             
                 //INSERTION IMAGE dans _image
                 $time = 'p' . strval(time());
@@ -602,7 +598,7 @@ try {
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
-                        $dbh->beginTransaction();
+                        // $dbh->beginTransaction();
 
 
                         $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
@@ -637,9 +633,9 @@ try {
 
                     case 'parc':
                         try {
-                            if (!$dbh->inTransaction()) {
-                                $dbh->beginTransaction();
-                            }
+                            // if (!$dbh->inTransaction()) {
+                            //     $dbh->beginTransaction();
+                            // }
 
                         $file = $_FILES['plan'];
                         $file_extension = get_file_extension($file['type']);
@@ -670,23 +666,23 @@ try {
                         $stmt_plan_offre->execute([$id_offre, $fichier_plan]);
 
                         // Commit de la transaction
-                        $dbh->commit();
-                    } catch (PDOException $e) {
-                        if ($dbh->inTransaction()) {
-                            $dbh->rollBack();
+                        // $dbh->commit();
+                        } catch (PDOException $e) {
+                            if ($dbh->inTransaction()) {
+                                $dbh->rollBack();
+                            }
+                            print "Erreur PDO : " . $e->getMessage() . "<br/>";
+                            exit;
                         }
-                        print "Erreur PDO : " . $e->getMessage() . "<br/>";
-                        exit;
-                    }
 
                         break;
 
                     case 'spectacle':
                     
                             try {
-                                if (!$dbh->inTransaction()) {
-                                    $dbh->beginTransaction();
-                                }
+                                // if (!$dbh->inTransaction()) {
+                                //     $dbh->beginTransaction();
+                                // }
 
                                 
                             
@@ -729,7 +725,7 @@ try {
                             
                             
                                 // Commit de la transaction
-                                $dbh->commit();
+                                // $dbh->commit();
                             } catch (PDOException $e) {
                                 if ($dbh->inTransaction()) {
                                     $dbh->rollBack();
@@ -755,7 +751,7 @@ try {
 
                     case 'visite':
                         try {
-                                $dbh->beginTransaction();
+                                // $dbh->beginTransaction();
                             
                         
                             // Insertion de la date dans la table _date
@@ -797,7 +793,7 @@ try {
                         
                         
                             // Commit de la transaction
-                            $dbh->commit();
+                            // $dbh->commit();
                         } catch (PDOException $e) {
                             // if ($dbh->inTransaction()) {
                             //     $dbh->rollBack();
@@ -818,7 +814,7 @@ try {
 
 
                     case 'restaurant':
-                        $dbh->beginTransaction();
+                        // $dbh->beginTransaction();
                         $file = $_FILES['carte'];
                         $file_extension = get_file_extension($file['type']);
                         $time = 'p' . strval(time());
@@ -856,17 +852,17 @@ try {
                         die("Erreur de categorie!");
                     }
 
-                    if ($dbh->inTransaction()) {
-                        $dbh->commit();
-                    }
+                    // if ($dbh->inTransaction()) {
+                    //     $dbh->commit();
+                    // }
 
                     //insertion la date de mise en ligne de date
                     $date_en_ligne = date('Y-m-d H:i:s');
 
                     try {
-                        if (!$dbh->inTransaction()) {
-                            $dbh->beginTransaction();
-                        }
+                        // if (!$dbh->inTransaction()) {
+                        //     $dbh->beginTransaction();
+                        // }
 
                     $requete_date= 'INSERT INTO sae._date(date) VALUES (?) RETURNING id_date';
                     $stmt_date = $dbh->prepare($requete_date);
@@ -889,7 +885,7 @@ try {
 
                     }
                         // Commit de la transaction
-                        $dbh->commit();
+                        // $dbh->commit();
                     } catch (PDOException $e) {
                         if ($dbh->inTransaction()) {
                             $dbh->rollBack();
@@ -923,9 +919,14 @@ try {
 
                     //options payantes
                     if ($optionP != null) {
+                        date_default_timezone_set('Europe/Paris');
+                        $requete_date_option = 'INSERT INTO sae._date_souscription_option (date_debut, nb_semaines) VALUES (?, ?) RETURNING id_date_souscription;';
+                        $stmt_date_option = $dbh->prepare($requete_date_option);
+                        $id_date_souscription = $stmt_date_option->execute([date('Y-m-d'), 1]);
+
                         $requete_option = 'INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription) VALUES (?, ?, ?);';
                         $stmt_option = $dbh->prepare($requete_option);
-                        $stmt_option -> execute([$id_offre, $optionP, $id_date_en_ligne]);
+                        $stmt_option -> execute([$id_offre, $optionP, $id_date_souscription]);
                         print("option payante mise dans la bdd");
                     } 
                     // il faut aussi resumé le prix de l'abonnement a la création 
@@ -999,13 +1000,7 @@ try {
                         $dbh->commit();
                     }
                     
-                    
-                    // Fermeture de la connexion
-                    $dbh = null;
-
-
-
-                echo  "  <script>
+                    echo  "  <script>
                         const redirect = confirm('Offre créée ! Cliquez sur OK pour continuer.');
                         if (redirect) {
                             window.location.href = '/back/consulter-offre/index.php?id=$id_offre'
@@ -1025,12 +1020,14 @@ try {
 
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
-                print "Erreur !: " . $e->getMessage() . "<br/>";
+                print 'Erreur à la ligne '. $e->getLine() . ' : ' . $e->getMessage() . "<br/>";
                 $dbh->rollBack();
                 die();
                     
                 }
             }
+            // Fermeture de la connexion
+            $dbh = null;
         ?>
 
         <script>

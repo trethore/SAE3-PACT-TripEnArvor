@@ -202,7 +202,7 @@ try {
 
 <body class="back consulter-offre-back">
     
-<header>
+<header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -565,13 +565,6 @@ try {
             
         </section>
 
-        <section id="carte" class="fond-blocs">
-
-            <h1>Localisation</h1>
-            <div id="map" class="carte"></div>
-
-        </section>
-
         <section id="avis" class="fond-blocs bordure-top">
             <!-- AFFICHAGE DE LA NOTE MOYENNE DES AVIS -->
             <div class="display-ligne">
@@ -615,11 +608,11 @@ try {
             $avisAvecReponse = [];
 
             // Diviser les avis en deux groupes : avec et sans réponse
-            foreach ($avis as $index => $a) {
+            foreach ($avis as $index => $unAvis) {
                 if (!empty($reponse[$index]['texte'])) {
-                    $avisAvecReponse[] = ['avis' => $a, 'index' => $index];
+                    $avisAvecReponse[] = ['avis' => $unAvis, 'index' => $index];
                 } else {
-                    $avisSansReponse[] = ['avis' => $a, 'index' => $index];
+                    $avisSansReponse[] = ['avis' => $unAvis, 'index' => $index];
                 }
             }
 
@@ -629,21 +622,21 @@ try {
                 $pdo = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 foreach ($avisGroupe as $item) {
-                    $a = $item['avis'];
+                    $unAvis = $item['avis'];
                     $compteur = $item['index'];
 
                     $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id_membre = :id_membre AND id_offre = :id_offre");
                     $stmt->execute([
-                        'id_membre' => $a['id_membre'],
-                        'id_offre' => $a['id_offre']
+                        'id_membre' => $unAvis['id_membre'],
+                        'id_offre' => $unAvis['id_offre']
                     ]);
                     $consulted = $stmt->fetchColumn();
 
                     if (!$consulted) {
                         $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
                         $updateStmt->execute([
-                            'id_membre' => $a['id_membre'],
-                            'id_offre' => $a['id_offre']
+                            'id_membre' => $unAvis['id_membre'],
+                            'id_offre' => $unAvis['id_offre']
                         ]);
                     }
                     ?>
@@ -653,38 +646,47 @@ try {
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                                 <div class="display-ligne">
-                                    <?php for ($etoileJaune = 0; $etoileJaune != $a['note']; $etoileJaune++) { ?>
+                                    <?php for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                     <?php }
-                                    for ($etoileGrise = 0; $etoileGrise != (5 - $a['note']); $etoileGrise++) { ?>
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                     <?php } ?>
                                 </div>
                             </div>
                             <!-- Bouton menu -->
-                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)">
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
                             <!-- Menu pop-up (ID unique par avis) -->
                             <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                                 <ul>
-                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                    <li onclick="handleMenuAction('Blacklister')">Blacklister</li>
+                                    <li>Signaler</li>
+                                    <li onclick="confirmerBlacklister(<?php echo $compteur; ?>)">Blacklister</li>
                                 </ul>
+                            </div>
+
+                            <!-- Boîte de confirmation -->
+                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+                                <div class="confirmation-content">
+                                    <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
+                                    <button onclick="validerBlacklister()">Blacklister</button>
+                                    <button onclick="annulerBlacklister()">Annuler</button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="display-ligne">
                             <?php $passage = explode(' ', $datePassage[$compteur]['date']);
                             $datePass = explode('-', $passage[0]); ?>
-                            <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
+                            <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($unAvis['contexte_visite'])); ?></strong></p>
                         </div>
 
                         <?php if ($categorie == "Restauration") { ?>
                             <div class="display-ligne">
                                 <?php foreach ($noteDetaillee as $n) {
-                                    if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
+                                    if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { ?>
                                         <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
                                         <?php for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { ?>
                                             <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
@@ -698,10 +700,10 @@ try {
                         <?php } ?>
 
                         <div class="display-ligne">
-                            <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
-                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier']); ?>">
+                            <?php if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { ?>
+                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
                             <?php } ?>
-                            <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
                         </div>
 
                         <div class="display-ligne-espace">
@@ -711,8 +713,8 @@ try {
                                 <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                             </div>
                             <div class="display-ligne">
-                                <p><?php echo htmlentities($a['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                                <p><?php echo htmlentities($a['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                                <p><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                                <p><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
                             </div>
                         </div>
 
@@ -760,7 +762,7 @@ try {
                                     // Insérer la réponse liée à l'avis
                                     $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
                                     $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                    $stmtInsertionReponse->execute([$a['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
+                                    $stmtInsertionReponse->execute([$unAvis['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
 
                                 } catch (PDOException $e) {
 
@@ -826,9 +828,9 @@ try {
     </footer>
 
     <script>
-        function toggleMenu(event, button, compteur) {
+        function afficherMenu(event, button, compteur) {
             event.stopPropagation();
-            let menu = document.getElementById(`popup-menu-${compteur}`);
+            const menu = document.getElementById(`popup-menu-${compteur}`);
             document.querySelectorAll(".popup-menu").forEach(m => {
                 if (m !== menu) m.style.display = "none";
             });
@@ -838,10 +840,32 @@ try {
                 return;
             }
 
-            let rect = button.getBoundingClientRect();
+            const rect = button.getBoundingClientRect();
             menu.style.top = `${rect.top + window.scrollY - 2}px`;
-            menu.style.left = `${rect.left + window.scrollX - 120}px`;
+            menu.style.left = `${rect.left + window.scrollX - 100}px`;
             menu.style.display = "block";
+        }
+
+        function confirmerBlacklister(compteur) {
+            document.getElementById("confirmation-popup").style.display = "block";
+            document.getElementById("header").classList.add("blurred");
+            document.getElementById("body").classList.add("blurred");
+            document.getElementById("footer").classList.add("blurred");
+        }
+
+        function validerBlacklister() {
+            alert("L'avis a été blacklisté.");
+            document.getElementById("confirmation-popup").style.display = "none";
+            document.getElementById("header").classList.remove("blurred");
+            document.getElementById("body").classList.remove("blurred");
+            document.getElementById("footer").classList.remove("blurred");
+        }
+
+        function annulerBlacklister() {
+            document.getElementById("confirmation-popup").style.display = "none";
+            document.getElementById("header").classList.remove("blurred");
+            document.getElementById("body").classList.remove("blurred");
+            document.getElementById("footer").classList.remove("blurred");
         }
 
         document.addEventListener("click", function() {

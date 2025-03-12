@@ -288,7 +288,7 @@ try {
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
                     <img src=" <?php
-                    switch ($row["abonnement"]) {
+                    switch ($row["nom_abonnement"]) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
@@ -411,6 +411,57 @@ try {
             <?php } ?>
         </section>
         <a href="/back/creer-offre/">Créer une offre</a>
+
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            $toastsData = [];
+            $count = 0;
+            $remainingAvis = 0;
+            $remainingOffres = 0;
+
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $nbrAvis = getAvis($row['id_offre']);
+                $nbrReponses = getReponse($row['id_offre']);
+                
+                $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                
+                if ($nbrAvisNonRepondus > 0) {
+                    $count++;
+                    $remainingAvis += $nbrAvisNonRepondus;
+                    $remainingOffres++;
+                }
+            }
+
+            // Si plus de 3 offres avec des avis non répondus, on affiche uniquement le toast groupé
+            if ($count > 3) {
+                $toastsData[] = [
+                    'title' => "Avis restants",
+                    'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
+                ];
+            } else {
+                // Sinon, on affiche les toasts individuels
+                $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $nbrAvis = getAvis($row['id_offre']);
+                    $nbrReponses = getReponse($row['id_offre']);
+                    
+                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                    
+                    if ($nbrAvisNonRepondus > 0) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
+                        ];
+                    }
+                }
+            }
+
+            $toastsDataJson = json_encode($toastsData);
+        ?>
     </main>
     <footer>
         <div class="footer-top">
@@ -444,31 +495,6 @@ try {
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
-
-    <?php
-                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-                $stmtOffre = $conn->prepare($reqOffre);
-                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-                $stmtOffre->execute();
-
-                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $nbrAvis = getAvis($row['id_offre']);
-                    $nbrReponses = getReponse($row['id_offre']);
-                
-                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                
-                    if ($nbrAvisNonRepondus > 0) {
-                        // Ajouter les données de la toast au tableau
-                        $toastsData[] = [
-                            'title' => $row['titre_offre'], // Titre de l'offre
-                            'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.", // Message du toast
-                        ];
-                    }
-                }
-        console.log($toastsData);
-        $toastsDataJson = json_encode($toastsData);
-        console.log($toastsDataJson);
-    ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -540,7 +566,6 @@ try {
             // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
-            // Créer un toast pour chaque offre avec des avis non répondus
             toastsData.forEach((toast) => {
                 createToast(toast.title, toast.message);
             });

@@ -1,16 +1,20 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
+
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
-require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . COMPTE_UTILS);
+require_once($_SERVER['DOCUMENT_ROOT'] . DEBUG_UTILS);
+
 startSession();
 if (!isset($_SESSION["id"])) {
     header("Location: /se-connecter/");
 }
 $id_compte = $_SESSION["id"];
 redirectToConnexionIfNecessaryPro($id_compte);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/compte-utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/site-utils.php');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -19,9 +23,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 startSession();
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -80,7 +81,7 @@ if ($typeCompte === 'proPrive') {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back compte-back">
-<header>
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -128,7 +129,25 @@ if ($typeCompte === 'proPrive') {
     <main>
         <nav>
             <a class="ici" href="/back/mon-compte">Mes infos</a>
+            <?php
+                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+                $stmtOffre = $conn->prepare($reqOffre);
+                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+                $stmtOffre->execute();
+
+                $nbrAvisNonRepondus = 0;
+
+                while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $nbrAvis = getAvis($row['id_offre']);
+                    $nbrReponses = getReponse($row['id_offre']);
+
+                    $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
+                }
+            ?>
             <a href="/back/mes-avis">Mes avis</a>
+            <?php if ($nbrAvisNonRepondus > 0) { ?>
+                <span class="notification-badge"><?php echo $nbrAvisNonRepondus; ?></span>
+            <?php } ?>
             <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
             <?php } ?>

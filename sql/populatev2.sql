@@ -417,23 +417,31 @@ VALUES
 ('En Relief'), 
 ('À la Une');
 
-INSERT INTO sae._historique_prix_abonnements(nom_abonnement, prix_ht_jour_abonnement) VALUES 
-('gratuit', 0),
-('standard', 167),
-('premium', 334);
+INSERT INTO sae._historique_prix_abonnements(abonnement, prix_ht_jour_abonnement, date_maj) VALUES 
+('gratuit', 0, '2024-09-16'),
+('standard', 167, '2024-11-04'),
+('premium', 334, '2025-01-17');
 
-INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_abonnement) VALUES 
-('En Relief', 834),
-('À la Une', 1668);
+INSERT INTO sae._historique_prix_options(nom_option, prix_ht_hebdo_option, date_maj) VALUES 
+('En Relief', 834, '2024-11-04'),
+('À la Une', 1668, '2025-01-17');
+
+INSERT INTO sae._date_souscription_option(date_debut, nb_semaines) VALUES
+('2025-01-01', 1),
+('2025-01-07', 2),
+('2025-01-14', 3),
+('2025-01-21', 4),
+('2025-02-04', 3),
+('2025-02-11', 2);
 
 INSERT INTO sae._offre_souscrit_option(id_offre, nom_option, id_date_souscription)
 VALUES
-(2, 'En Relief',5),
-(4, 'En Relief', 6),
-(6, 'En Relief', 7),
-(5, 'À la Une',8),
-(7, 'À la Une', 9),
-(8, 'À la Une', 10);
+(2, 'En Relief',1),
+(4, 'En Relief', 2),
+(6, 'En Relief', 3),
+(5, 'À la Une', 4),
+(7, 'À la Une', 5),
+(8, 'À la Une', 6);
 
 INSERT INTO _offre_dates_mise_en_ligne(id_offre, id_date)
 VALUES 

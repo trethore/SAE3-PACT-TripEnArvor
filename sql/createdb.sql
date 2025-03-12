@@ -34,13 +34,13 @@ CREATE TABLE _abonnement (
 
 CREATE TABLE _historique_prix_abonnements (
     id_prix                     SERIAL,
-    nom_abonnement              VARCHAR(63) NOT NULL,
+    abonnement              VARCHAR(63) NOT NULL,
     prix_ht_jour_abonnement     INT NOT  NULL,
     date_maj                    DATE NOT NULL,
     CONSTRAINT _historique_prix_abonnements_pk
         PRIMARY KEY (id_prix),
     CONSTRAINT _historique_prix_abonnements_fk_abonnement
-        FOREIGN KEY (nom_abonnement)
+        FOREIGN KEY (abonnement)
         REFERENCES _abonnement(nom_abonnement)
 );
 
@@ -70,13 +70,8 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
-    cle_api         CHAR(64),
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
-
-CREATE UNIQUE INDEX cle_api_unique
-ON _compte(cle_api)
-WHERE cle_api IS NOT NULL;
 
 
 /* =================== COMPTE PROFESSIONNEL ABSTRAIT =================== */
@@ -164,10 +159,10 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
-    nom_abonnement          VARCHAR(63) NOT NULL,
+    abonnement          VARCHAR(63) NOT NULL,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (nom_abonnement) REFERENCES _abonnement(nom_abonnement)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
 );
 
 
@@ -301,6 +296,15 @@ CREATE TABLE _reponse (
     CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
+);
+
+
+CREATE TABLE _blacklister (
+    id_offre        INTEGER,
+    id_membre       INTEGER,
+    blackliste_le   TIMESTAMP NOT NULL,
+    CONSTRAINT _blacklister_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
 

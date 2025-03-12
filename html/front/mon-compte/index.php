@@ -117,6 +117,10 @@ $reqCompte = "SELECT * from sae.compte_membre
             $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
             ?>
             <h1>Détails du compte</h1>
+            <article style="display: none;">
+                <img src="/images/universel/icones/avatar-homme-1.png" alt="Avatar du profil">
+                <a>Importer une photo de profil</a>
+            </article>
             <h2>Informations personnelles</h2>
             <table>
                 <tr>
@@ -157,60 +161,43 @@ $reqCompte = "SELECT * from sae.compte_membre
                 <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
-            <button onclick="delCompteMembre(event, <?= $id_compte ?>)" id="delButton">Supprimer le compte</button>
-            <div id="popupOverlay" style="display: none;"></div>
-            <div id="validerDeleteCompte" style="display: none;">
-                <h3>Supprimer le compte</h3>
-                <p>Voulez-vous vraiment supprimer votre compte ?</p>
-                <div>
-                    <button id="boutonAnnuler">Annuler</button>
-                    <button id="boutonValider">Supprimer</button>
-                </div>
+            <button onclick="deleteCompte()" id="delButton">Supprimer le compte</button>
+        </section>
+        <div id="popupOverlay" style="display: none;"></div>
+        <div id="validerDeleteCompte" style="display: none;">
+            <h3>Supprimer le compte</h3>
+            <p>Voulez-vous vraiment supprimer votre compte ?</p>
+            <div>
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Supprimer </button>
             </div>
-
-            <script>
+        </div>
+    </main>
+    <script>
+                // constante pour valider les modifications du compte
                 const popupOverlay = document.getElementById("popupOverlay");
                 const popupValider = document.getElementById("validerDeleteCompte");
                 const boutonAnnuler = document.getElementById("boutonAnnuler");
                 const boutonValider = document.getElementById("boutonValider");
-                const boutonDel = document.getElementById("delButton");
 
-                let compteId = null;
-
-                // Ouvre la popup et stocke l'ID du compte
-                function delCompteMembre(event, id) {
-                    event.preventDefault(); // Empêche le bouton de continuer le lien
-                    compteId = id;
+                // Affiche la popup
+                function deleteCompte(event) {
                     popupOverlay.style.display = "block";
                     popupValider.style.display = "flex";
-                }
+                };
 
-                // Ferme la popup sans supprimer
-                boutonAnnuler.addEventListener("click", function () {
+                // Ferme la popup sans valider
+                boutonAnnuler.addEventListener("click", function() {
                     popupOverlay.style.display = "none";
                     popupValider.style.display = "none";
                 });
 
-                // Supprime le compte en AJAX
-                boutonValider.addEventListener("click", function () {
-                    if (compteId !== null) {
-                        fetch("supprimer_compte.php", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                            body: `id_compte=${compteId}`
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            alert(data); // Affiche la réponse du serveur
-                            window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
-                        })
-                        .catch(error => console.error("Erreur :", error));
-                    }
-
+                // Valide les modifications et soumet le formulaire
+                boutonValider.addEventListener("click", function() {
                     popupOverlay.style.display = "none";
                     popupValider.style.display = "none";
                 });
-            </script>
+    </script>
     <footer>
         <div class="footer-top">
             <div class="footer-top-left">

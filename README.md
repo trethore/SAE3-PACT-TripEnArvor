@@ -48,7 +48,9 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
     ```
 
  4. Lancer le serveur une première fois : dans un terminal, placez-vous dans le dossier `docker/`,
-    puis exécutez `docker compose up --build && docker compose logs -f`.
+    puis exécutez :
+      - Linux (bash) : `docker compose up --build && docker compose logs -f`.
+      - Windows (Powershell) : `docker compose up --build; if ($?) { docker compose logs -f }`
 
  5. Ouvrez pgAdmin à l'adresse `http://localhost:${PGADMIN_PORT}/`.
     Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env` (par défaut `8081`).
@@ -83,6 +85,8 @@ Après avoir effectuer ces étapes, le serveur local devrait être prêt.
 
 Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez
 `docker compose up && docker compose logs -f`.
+- Linux (bash) : `docker compose up && docker compose logs -f`.
+- Windows (Powershell) : `docker compose up; if ($?) { docker compose logs -f }`
 
 ### Accéder au site
 
