@@ -3784,31 +3784,27 @@ h3 {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--blanc);
-    padding: 20px;
+    padding: 20px 15px;
     border-radius: 8px;
-    border: 1px solid var(--orange-principale);
+    border: 2px solid var(--orange-principale);
 }
 
 .consulter-offre-back .confirmation-popup p {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .consulter-offre-back .confirmation-popup button {
     border: 0;
     border-radius: 8px;
-    background-color: var(--blanc);
-    font-size: 14px;
-}
-
-.consulter-offre-back .confirmation-popup button:hover {
-    border-radius: 8px;
-    color: var(--blanc);
     background-color: var(--noir);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
 }
 
-.consulter-offre-back .confirmation-popup button:last-of-type:hover {
-    color: var(--blanc);
-    background-color: var(--orange-secondaire-1);
+.consulter-offre-back .confirmation-popup button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir);
 }
 
 .consulter-offre-back .titre-avis {
