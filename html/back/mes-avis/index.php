@@ -198,13 +198,14 @@ if ($typeCompte === 'proPrive') {
                     <?php } else {
                         foreach ($touteslesoffres as $offre) { 
                         
-                        ?>
-                            <h2>
-                            <?php
+                        
                             // $offre = getOffre($id_offre_cible);
                             $id_offre = $offre['id_offre'];
                             $avis = getAvis($id_offre);
                             $nb_offres++;
+                            ?> <h2> <?php
+                            
+                            
                             if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                                 
                                 if (count($touteslesoffres) == $nb_offres) {
