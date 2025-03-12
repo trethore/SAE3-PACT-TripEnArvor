@@ -3958,6 +3958,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
+    min-width: 1000px;
 }
 
 .mes-avis h1 {
