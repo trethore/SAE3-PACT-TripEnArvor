@@ -3731,15 +3731,30 @@ h3 {
     color: var(--blanc);
 }
 
-.confirmation-popup {
+.consulter-offre-back .confirmation-popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: var(--blanc);
     padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.consulter-offre-back .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.consulter-offre-back .blurred {
+    filter: blur(5px);
+    pointer-events: none;
 }
 
 .consulter-offre-back .titre-avis {
