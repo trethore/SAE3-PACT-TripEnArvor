@@ -229,9 +229,9 @@ if ($typeCompte === 'proPrive') {
 
                         foreach ($avis as $lavis) { ?>
 
-                        <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
+                        
                             <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                            
+                            <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
                                 
                                 
                                 <div class="display-ligne-espace">
