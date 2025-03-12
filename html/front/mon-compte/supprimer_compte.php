@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
-
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_compte"])) {
