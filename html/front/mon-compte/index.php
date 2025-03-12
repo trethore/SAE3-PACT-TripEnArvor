@@ -163,17 +163,16 @@ $reqCompte = "SELECT * from sae.compte_membre
             </div>
             <script>
                 // constante pour valider les modifications du compte
-                const declencherPopup = document.getElementById("apibutton");
                 const popupValider = document.getElementById("validerDeleteCompte");
                 const boutonAnnuler = document.getElementById("boutonAnnuler");
                 const boutonValider = document.getElementById("boutonValider");
 
                 // Affiche la popup
-                form.addEventListener("submit", function(event) {
+                function deleteCompte(event) {
                     event.preventDefault(); // Empêche l'envoi du formulaire
                     popupOverlay.style.display = "block";
                     popupValider.style.display = "flex";
-                });
+                };
             </script>
             <button onclick="deleteCompte()", id="delButton">Supprimer le compte</button>
         </section>
