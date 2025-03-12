@@ -458,7 +458,6 @@ try {
             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                 
             if ($nbrAvisNonRepondus > 0) {
-                // Ajouter les données de la toast au tableau
                 $toastsData[] = [
                     'title' => $row['titre'],
                     'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
@@ -540,7 +539,8 @@ try {
             // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
-            // Créer un toast pour chaque offre avec des avis non répondus
+            console.log(toastsData);
+
             toastsData.forEach((toast) => {
                 createToast(toast.title, toast.message);
             });
