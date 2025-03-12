@@ -304,6 +304,15 @@ CREATE TABLE _reponse (
 );
 
 
+CREATE TABLE _blacklister (
+    id_offre        INTEGER,
+    id_membre       INTEGER,
+    blackliste_le   TIMESTAMP NOT NULL,
+    CONSTRAINT _blacklister_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
+
+
 /* ========================== NOTE DÉTAILLÉE =========================== */
 CREATE TABLE _note_detaillee (
     id_note   SERIAL,  
