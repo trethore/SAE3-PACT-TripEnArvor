@@ -3942,7 +3942,7 @@ h3 {
 }
 
 .mes-avis{
-    justify-content: none;
+    justify-content: normal;
 }
 
 .mes-avis .fond-blocs-avis {
@@ -3986,7 +3986,6 @@ h3 {
     font-size: 23pt;
     color: var(--noir);
     margin-top: 5px;
-    justify-content: normal;
 }
 
 
