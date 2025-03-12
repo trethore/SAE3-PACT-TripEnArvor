@@ -1980,6 +1980,7 @@ h3 {
     font-size: 12px;
     font-weight: bold;
     border: solid black 1px;
+    -webkit-text-stroke: 2px black;
 }
 
 .front .notification-badge {
@@ -1997,6 +1998,7 @@ h3 {
     font-size: 12px;
     font-weight: bold;
     border: solid black 1px;
+    -webkit-text-stroke: 2px black;
 }
 
 .back .ICON-accueil {
