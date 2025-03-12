@@ -3313,6 +3313,12 @@ h3 {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
 }
 
 .consulter-offre-front .popup-menu li:hover {
