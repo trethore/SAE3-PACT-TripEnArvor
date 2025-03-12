@@ -204,7 +204,9 @@ if ($typeCompte === 'proPrive') {
                         }
                     }
 
-                    echo "Avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                    $nb_avis = count($avis);
+
+                    echo $nb_avis . "Avis sur l'offre : " . $offre['titre'];  ?> </h2>
                    <?php  echo "<br>"; 
 
                     $categorie = getTypeOffre($id_offre);

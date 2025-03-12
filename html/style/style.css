@@ -3862,7 +3862,7 @@ h3 {
 ***************************************************************************************/
 
 .fond-blocs-avis.avis-en-exergue {
-    border: 8px solid var(--orange-principale);
+    border: 5px solid var(--orange-principale);
     animation: pulse_orange 2s infinite ease-out;
 }
 
@@ -3891,6 +3891,10 @@ h3 {
     display: none;
 }
 
+.mes-avis {
+    align-content: left;
+}
+
 .mes-avis h1 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--bold);
@@ -3905,7 +3909,6 @@ h3 {
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    text-align: left;
 }
 
 
