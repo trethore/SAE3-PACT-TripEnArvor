@@ -3250,12 +3250,8 @@ h3 {
     text-align: left;
     font-size: 14px;
     border-radius: 2px;
-    border: 1px solid var(--gris);
 }
 
-.consulter-offre-back .popup-menu li:last-of-type {
-    border-top: 0;
-}
 
 .consulter-offre-front .popup-menu li:hover {
     background: var(--violet-secondaire);
@@ -3726,7 +3722,13 @@ h3 {
     text-align: left;
     font-size: 14px;
     border-radius: 8px;
+    border: 1px solid var(--gris);
 }
+
+.consulter-offre-back .popup-menu li:last-of-type {
+    border-top: 0;
+}
+
 
 .consulter-offre-back .popup-menu li:hover {
     background: var(--orange-secondaire-2);
