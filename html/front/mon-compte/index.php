@@ -158,60 +158,59 @@ $reqCompte = "SELECT * from sae.compte_membre
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
             <button onclick="delCompteMembre(event, <?= $id_compte ?>)" id="delButton">Supprimer le compte</button>
-        </section>
-        <div id="popupOverlay" style="display: none;"></div>
-        <div id="validerDeleteCompte" style="display: none;">
-            <h3>Supprimer le compte</h3>
-            <p>Voulez-vous vraiment supprimer votre compte ?</p>
-            <div>
-                <button id="boutonAnnuler">Annuler</button>
-                <button id="boutonValider">Supprimer</button>
+            <div id="popupOverlay" style="display: none;"></div>
+            <div id="validerDeleteCompte" style="display: none;">
+                <h3>Supprimer le compte</h3>
+                <p>Voulez-vous vraiment supprimer votre compte ?</p>
+                <div>
+                    <button id="boutonAnnuler">Annuler</button>
+                    <button id="boutonValider">Supprimer</button>
+                </div>
             </div>
-        </div>
-    </main>
-    <script>
-    const popupOverlay = document.getElementById("popupOverlay");
-    const popupValider = document.getElementById("validerDeleteCompte");
-    const boutonAnnuler = document.getElementById("boutonAnnuler");
-    const boutonValider = document.getElementById("boutonValider");
-    const boutonDel = document.getElementById("delButton");
 
-    let compteId = null;
+            <script>
+                const popupOverlay = document.getElementById("popupOverlay");
+                const popupValider = document.getElementById("validerDeleteCompte");
+                const boutonAnnuler = document.getElementById("boutonAnnuler");
+                const boutonValider = document.getElementById("boutonValider");
+                const boutonDel = document.getElementById("delButton");
 
-    // Ouvre la popup et stocke l'ID du compte
-    function delCompteMembre(event, id) {
-        event.preventDefault(); // Empêche le bouton de suivre un éventuel lien ou formulaire
-        compteId = id;
-        popupOverlay.style.display = "block";
-        popupValider.style.display = "flex";
-    }
+                let compteId = null;
 
-    // Ferme la popup sans supprimer
-    boutonAnnuler.addEventListener("click", function () {
-        popupOverlay.style.display = "none";
-        popupValider.style.display = "none";
-    });
+                // Ouvre la popup et stocke l'ID du compte
+                function delCompteMembre(event, id) {
+                    event.preventDefault(); // Empêche le bouton de continer le lien
+                    compteId = id;
+                    popupOverlay.style.display = "block";
+                    popupValider.style.display = "flex";
+                }
 
-    // Supprime le compte en AJAX
-    boutonValider.addEventListener("click", function () {
-        if (compteId !== null) {
-            fetch("supprimer_compte.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `id_compte=${compteId}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data); // Affiche la réponse du serveur
-                window.location.href = "index.php"; // Redirection après suppression
-            })
-            .catch(error => console.error("Erreur :", error));
-        }
+                // Ferme la popup sans supprimer
+                boutonAnnuler.addEventListener("click", function () {
+                    popupOverlay.style.display = "none";
+                    popupValider.style.display = "none";
+                });
 
-        popupOverlay.style.display = "none";
-        popupValider.style.display = "none";
-    });
-</script>
+                // Supprime le compte en AJAX
+                boutonValider.addEventListener("click", function () {
+                    if (compteId !== null) {
+                        fetch("supprimer_compte.php", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: `id_compte=${compteId}`
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            alert(data); // Affiche la réponse du serveur
+                            window.location.href = "index.php"; // Redirection après suppression
+                        })
+                        .catch(error => console.error("Erreur :", error));
+                    }
+
+                    popupOverlay.style.display = "none";
+                    popupValider.style.display = "none";
+                });
+            </script>
     <footer>
         <div class="footer-top">
             <div class="footer-top-left">

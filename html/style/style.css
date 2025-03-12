@@ -1447,6 +1447,28 @@ h3 {
     cursor: pointer;
 }
 
+#delButton {
+    color:var(--blanc-leger);
+    background-color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 0.5em;
+    float: right;
+ }
+
+#delButton:hover {
+    background-color: var(--blanc-leger);
+    color: rgb(229, 3, 3);
+    border: rgb(229, 3, 3) 2px solid;
+    border-radius: 15px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
 /********************
         NAV
 *********************/
