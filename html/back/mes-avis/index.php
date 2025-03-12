@@ -189,8 +189,6 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
-
-
                     echo "<br>";
                     $nb_offres = 0;
                     foreach ($touteslesoffres as $offre) { 
