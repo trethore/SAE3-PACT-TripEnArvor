@@ -161,8 +161,21 @@ $reqCompte = "SELECT * from sae.compte_membre
                 <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
             </div>
-            <script>
+            <button onclick="deleteCompte()" id="delButton">Supprimer le compte</button>
+        </section>
+        <div id="popupOverlay" style="display: none;"></div>
+        <div id="validerDeleteCompte" style="display: none;">
+            <h3>Supprimer le compte</h3>
+            <p>Voulez-vous vraiment supprimer votre compte ?</p>
+            <div>
+                <button id="boutonAnnuler"> Annuler </button>
+                <button id="boutonValider"> Supprimer </button>
+            </div>
+        </div>
+    </main>
+    <script>
                 // constante pour valider les modifications du compte
+                const popupOverlay = document.getElementById("popupOverlay");
                 const popupValider = document.getElementById("validerDeleteCompte");
                 const boutonAnnuler = document.getElementById("boutonAnnuler");
                 const boutonValider = document.getElementById("boutonValider");
@@ -184,19 +197,7 @@ $reqCompte = "SELECT * from sae.compte_membre
                     popupOverlay.style.display = "none";
                     popupValider.style.display = "none";
                 });
-            </script>
-            <button onclick="deleteCompte()", id="delButton">Supprimer le compte</button>
-        </section>
-        <div id="popupOverlay" style="display: none;"></div>
-        <div id="validerDeleteCompte" style="display: none;">
-            <h3>Supprimer le compte</h3>
-            <p>Voulez-vous vraiment supprimer votre compte ?</p>
-            <div>
-                <button id="boutonAnnuler"> Annuler </button>
-                <button id="boutonValider"> Supprimer </button>
-            </div>
-        </div>
-    </main>
+    </script>
     <footer>
         <div class="footer-top">
             <div class="footer-top-left">
