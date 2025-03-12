@@ -856,9 +856,6 @@ try {
         function validerBlacklister() {
             alert("L'avis a été blacklisté.");
             document.getElementById("confirmation-popup").style.display = "none";
-            document.getElementById("header").classList.remove("blurred");
-            document.getElementById("body").classList.remove("blurred");
-            document.getElementById("footer").classList.remove("blurred");
         }
 
         function annulerBlacklister() {
