@@ -428,6 +428,10 @@ try {
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
+                echo '<pre>';
+                print_r($avisNonLus);
+                echo '</pre>';
+
                 forEach($avisNonLus as $avis) {
                     if (empty($avis['lu'])) {
                         $remainingAvis++;
@@ -440,7 +444,7 @@ try {
             if ($remainingOffres > 3) {
                 $toastsData[] = [
                     'title' => "Avis restants",
-                    'message' => "Vous avez $remainingAvis avis non répondus sur $remainingOffres offres.",
+                    'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
                 ];
             } else {
                 $stmtOffre->execute();
