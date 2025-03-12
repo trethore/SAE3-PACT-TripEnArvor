@@ -207,7 +207,7 @@ $reqCompte = "SELECT * from sae.compte_membre
             .then(response => response.text())
             .then(data => {
                 alert(data); // Affiche la réponse du serveur
-                window.location.href = "index.php"; // Redirection après suppression
+                window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
             })
             .catch(error => console.error("Erreur :", error));
         }
