@@ -3855,7 +3855,7 @@ h3 {
 ***************************************************************************************/
 
 .fond-blocs-avis.avis-en-exergue {
-    border: 5px solid var(--orange-principale);
+    border: 4px solid var(--orange-principale);
     animation: pulse_orange 2s infinite ease-out;
 }
 
@@ -3880,8 +3880,8 @@ h3 {
     display: inline-block;
 }
 
-.mes-avis .avis-en-exergue:hover #infobulle {
-    display: none;
+.mes-avis .avis-en-exergue:hover  {
+    animation: none;
 }
 
 .contenu-aligne-gauche {
