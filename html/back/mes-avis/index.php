@@ -186,10 +186,12 @@ if ($typeCompte === 'proPrive') {
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
             
-            <h2> 
+           
             <?php
                 $nb_offres = 0;
-                foreach ($touteslesoffres as $offre) {
+                foreach ($touteslesoffres as $offre) { ?>
+                    <h2>
+                    <?php
                     // $offre = getOffre($id_offre_cible);
                     $id_offre = $offre['id_offre'];
                     $avis = getAvis($id_offre);
