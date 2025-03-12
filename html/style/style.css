@@ -4042,6 +4042,10 @@ h3 {
     }
 }
 
+.mes-avis .fond-blocs-avis {
+    margin: 15px;
+}
+
 #infobulle {
     background-color:var(--orange-principale);
     color: white;
