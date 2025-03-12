@@ -430,7 +430,7 @@ try {
                 if ($nbrAvisNonRepondus > 0) {
                     $count++;
                     
-                    if ($count <= 4) {
+                    if ($count <= 2) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $nbrAvisNonRepondus avis non répondus.",
