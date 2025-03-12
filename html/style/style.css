@@ -1136,102 +1136,6 @@ h3 {
     transition: 0.3s ease-in-out;
 }
 
-#map {
-    
-    width: 95vw;
-    height: 400px;
-    margin: auto auto;              
-    border: 5px solid var(--violet-principal);
-    border-radius: 5px;
-    box-sizing: border-box;       
-}
-
-.custom-cluster {
-    background-color: transparent;
-    border: none;
-}
-
-.cluster-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: white;
-}
-
-.cluster-icon.small {
-    width: 30px;
-    height: 30px;
-    background-color: rgba(36, 171, 47, 1);
-}
-
-.cluster-icon.medium {
-      width: 40px;
-      height: 40px;
-      background-color: rgba(171, 166, 36, 1);
-}
-
-.cluster-icon.large {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(194, 123, 47, 1);
-}
-
-.cluster-icon span {
-    font-size: 14px;
-    font-weight: bold;
-}
-  
-
-/**************************************************************************************
-                                    BACK MES AVIS
-***************************************************************************************/
-
-.fond-blocs-avis.avis-en-exergue {
-    border: 10px;
-    animation: pulse_orange 2s infinite ease-out;
-}
-
-@keyframes pulse_orange {
-    0% {
-        box-shadow: 0 0 0 0 var(--orange-principale);
-    }
-    50% {
-        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
-    }
-}
-
-#infobulle {
-    background-color:var(--orange-principale);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-align: center;
-    display: inline-block;
-}
-
-.mes-avis .avis-en-exergue:hover #infobulle {
-    display: none;
-}
-
-.mes-avis h1 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--bold);
-    color: var(--noir);
-    margin: 0.5em 0.2em;
-    text-align: center;
-    font-size: 40pt;
-}
-
-.mes-avis h2 {
-    font-family: "Poppins", sans-serif;
-    font-weight: var(--medium);
-    font-size: 23pt;
-    color: var(--noir);
-}
 
 
 
@@ -4064,6 +3968,7 @@ h3 {
 ***************************************************************************************/
 
 .fond-blocs-avis.avis-en-exergue {
+    border: 10px;
     animation: pulse_orange 2s infinite ease-out;
 }
 
@@ -4079,16 +3984,6 @@ h3 {
     }
 }
 
-.mes-avis{
-    justify-content: normal;
-}
-
-.mes-avis .fond-blocs-avis {
-    margin: 15px;
-    min-width: 700px;
-    display: inline;
-}
-
 #infobulle {
     background-color:var(--orange-principale);
     color: white;
@@ -4098,15 +3993,8 @@ h3 {
     display: inline-block;
 }
 
-.mes-avis .avis-en-exergue:hover  {
-    animation: none;
-}
-
-.contenu-aligne-gauche {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Tout aligne à gauche */
-    min-width: 800px;
+.mes-avis .avis-en-exergue:hover #infobulle {
+    display: none;
 }
 
 .mes-avis h1 {
@@ -4123,9 +4011,7 @@ h3 {
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    margin-top: 5px;
 }
-
 
 
 /**************************************************************************************
