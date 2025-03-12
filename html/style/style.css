@@ -1145,6 +1145,18 @@ h3 {
     animation: pulse 2s infinite ease-out;
 }
 
+@keyframes pulse_orange {
+    0% {
+        box-shadow: 0 0 0 0 var(--orange-principale);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
 #infobulle {
     background-color:var(--orange-principale);
     color: black;
@@ -4579,10 +4591,10 @@ input[type="tel"] {
 
 .liste-front .en-relief-offre .sous-offre {
     border: 5px solid var(--violet-principal);
-    animation: pulse 2s infinite;
+    animation: pulse_violet 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulse_violet {
     0% {
         box-shadow: 0 0 0 0 var(--violet-principal);
     }
