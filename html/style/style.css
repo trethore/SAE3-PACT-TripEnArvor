@@ -1217,6 +1217,24 @@ h3 {
     display: none;
 }
 
+.mes-avis h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--bold);
+    color: var(--noir);
+    margin: 0.5em 0.2em;
+    text-align: center;
+    font-size: 40pt;
+}
+
+.mes-avis h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: var(--medium);
+    font-size: 23pt;
+    color: var(--noir);
+}
+
+
+
 
 
 
