@@ -465,9 +465,9 @@ try {
                         ];
                     }
                 }
-
-        $toastsDataJson = json_encode($toastsData);
         console.log($toastsData);
+        $toastsDataJson = json_encode($toastsData);
+        console.log($toastsDataJson);
     ?>
 
     <script>
