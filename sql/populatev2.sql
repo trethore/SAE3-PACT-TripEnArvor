@@ -109,6 +109,7 @@ INSERT INTO compte_membre(nom_compte, prenom, email, tel, mot_de_passe, pseudo)
 VALUES 
 ('Leclerc', 'Antoine', 'antoine.leclerc@example.com', '0708091011', '$2y$10$6lDiPqJbAcacgXfecLdDEuTgLz.L/xGq.IbId41o/ZeskeJTwh1Da', 'AntoineL'), --password789
 ('Durand', 'Sophie', 'sophie.durand@example.com', '0611223344', '$2y$10$VQaHqRmTUDhykg3cxdvn1eYibleNDLs23eOFSbhVMrFI6SwTbYb6y', 'SophieD'); --password321
+('anonyme', 'anonyme', 'anonyme@ano.com', '9999999999', '', 'Ancien Utilisateur')
 
 -- ####################################################################
 -- INSERTION DE COMPTES PRO PRIVE
