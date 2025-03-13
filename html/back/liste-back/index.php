@@ -75,13 +75,16 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
 
-            $nbrAvisNonRepondus = 0;
+            $remainingAvis = 0;
 
-            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $nbrAvis = getAvis($row['id_offre']);
-                $nbrReponses = getReponse($row['id_offre']);
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $avisNonLus = getLu($row['id_offre']);
 
-                $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
+                }
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
