@@ -5071,7 +5071,7 @@ input[type="tel"] {
 
 .toast-container {
     position: fixed;
-    top: 100px;
+    top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
