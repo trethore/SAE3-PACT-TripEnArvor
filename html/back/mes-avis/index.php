@@ -205,10 +205,14 @@ if ($typeCompte === 'proPrive') {
                         if($lavis['lu'] == false){
                             $nb_non_lu++;
                         }
+                        print_r($lavis);
+                        echo "<br>";
                     }
                     
 
                   $reponses = getReponse($id_offre);
+
+                  
                   
                   echo " nombre d'avis ". $nb_avis ."<br>";
                   $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
