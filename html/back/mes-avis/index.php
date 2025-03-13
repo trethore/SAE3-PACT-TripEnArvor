@@ -213,6 +213,14 @@ if ($typeCompte === 'proPrive') {
                   $reponses = getReponse($id_offre);
                   print_r($reponses);
 
+                  foreach($reponses as $lareponse){
+                    if($lareponse==$lavis['id_membre']){
+                        echo $lavis['titre']. " est repondu";
+                    }
+                    else {
+                        echo $lavis['titre']. " n'est pas repondu";
+                    }
+                  }
                   
                   
                   echo " nombre d'avis ". $nb_avis ."<br>";
