@@ -852,11 +852,12 @@ try {
 
         function validerBlacklister(compteur) {
             // Récupérer les données depuis les attributs data-* du bouton
+            const blacklistUrl = "<?php echo $_SERVER['DOCUMENT_ROOT']; ?>/util/blacklist.php";
             const button = document.querySelector(`[onclick="afficherMenu(event, this, ${compteur})"]`);
             const idOffre = button.getAttribute('data-id-offre');
             const idMembre = button.getAttribute('data-id-membre');
 
-            fetch("blacklist.php", {
+            fetch(blacklistUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `id_offre=${idOffre}&id_membre=${idMembre}`
