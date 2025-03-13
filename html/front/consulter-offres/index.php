@@ -38,7 +38,11 @@ try {
         if (getPrixPlusPetit($offre['id_offre']) == null) {
             $offre['prix'] = 0;
         }
+        if ($offre["categorie"] == "Restauration") {
+            $offre["gammedeprix"] = getRestaurant($offre['id_offre'])["gamme_prix"];
+        }
     }
+    
 
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -59,7 +63,6 @@ try {
     <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css"/>
     <script src="/lib/leaflet/leaflet.js"></script>
     <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
-    <script src="/lib/cluster/dist/leaflet.markercluster.js.map"></script>
 
     <script src="map.js"></script>
 </head>

@@ -3,7 +3,15 @@ let map;
 let markerCluster;
 
 function addMap() {
-  map = L.map('map', { minZoom: 3 }).setView([48.8566, 2.3522], 5);
+  const southWest = L.latLng(-85, -180);
+  const northEast = L.latLng(85, 180);
+  const bounds = L.latLngBounds(southWest, northEast);
+
+  map = L.map('map', {
+    minZoom: 5,
+    maxBounds: bounds, 
+    maxBoundsViscosity: 1.0 
+  }).setView([48.8566, 2.3522], 5);
 
   markerCluster = L.markerClusterGroup({
     iconCreateFunction: function (cluster) {
@@ -30,12 +38,32 @@ function addMap() {
 }
 
 function addOffreMarqueur(offer) {
-  const marker = L.marker([offer.lat, offer.lon])
-    .bindPopup(
-      `<b>${offer.titre || 'Offer'}</b><br>${offer.ville || ''}, ${offer.pays || ''}`
-    );
+  const note = isNaN(parseFloat(offer.note)) ? "Note Indisponible" : `${parseFloat(offer.note).toFixed(1)}/5`;
+
+  const addressParts = [
+    offer.num_et_nom_de_voie,
+    offer.complement_adresse,
+    offer.code_postal,
+    offer.ville,
+    offer.pays
+  ];
+  const address = addressParts.filter(part => part && part.trim() !== '').join(', ');
+
+  const priceInfo = (offer.prix && offer.prix > 0) ? `Prix: ${offer.prix} €` : (offer.gammedeprix ? `Gamme de prix: ${offer.gammedeprix}` : 'Gratuit');
+
+  const popupContent = `
+    <b>${offer.titre || 'Offer'}${offer.categorie ? ` - ${offer.categorie}` : ''}</b><br>
+    ${address ? `${address}<br>` : ''}
+    ${note}<br>
+    ${priceInfo}<br>
+    <a href="/front/consulter-offre/index.php?id=${offer.id_offre}" target="_blank">Voir plus</a>
+  `;
+
+  const marker = L.marker([offer.lat, offer.lon]).bindPopup(popupContent);
   markerCluster.addLayer(marker);
 }
+
+
 
 async function addOffersWithAddresses(offers) {
   for (const offer of offers) {
@@ -82,7 +110,6 @@ async function addOffersWithAddresses(offers) {
       addOffreMarqueur(offer);
 
       try {
-        console.log("toot");
         const response = await fetch('update_coords.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
