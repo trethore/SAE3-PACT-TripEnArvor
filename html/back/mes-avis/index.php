@@ -206,6 +206,7 @@ if ($typeCompte === 'proPrive') {
                     
 
                   $reponses = getReponse($id_offre);
+                  print_r($reponses);
                   $nbrAvisNonRepondus = $nb_avis - count($reponses);
 
  
