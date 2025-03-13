@@ -205,20 +205,12 @@ if ($typeCompte === 'proPrive') {
                     }
                     
 
-                    $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-                    $stmtOffre = $conn->prepare($reqOffre);
-                    $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-                    $stmtOffre->execute();
+                  $reponses = getReponse($id_offre);
+                  $nbrAvisNonRepondus = $nb_avis - count($reponses);
 
-                    $count = 0;
+ 
 
-                    while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                        $nbrAvis = getAvis($id_offre);
-                        $nbrReponses = getReponse($id_offre);
-                        
-                        $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                        
-                    }
+                    
                 }
                     
                     $nb_offres = 0;
