@@ -189,12 +189,14 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
+                $nb_non_lu = 0;
+                $nb_offres = 0;
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
                     $avis = getAvis($id_offre);
                     $nb_offres++;
 
-                    $nb_non_lu = 0;
+                    
                     $nb_avis = count($avis);
                     foreach ($avis as $lavis) {
                         if($lavis['lu'] == false){
@@ -213,8 +215,6 @@ if ($typeCompte === 'proPrive') {
                 $stmtOffre->execute();
 
                 $count = 0;
-                $remainingAvis = 0;
-                $remainingOffres = 0;
 
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                     $nbrAvis = getAvis($id_offre);
@@ -222,11 +222,6 @@ if ($typeCompte === 'proPrive') {
                     
                     $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                     
-                    if ($nbrAvisNonRepondus > 0) {
-                        $count++;
-                        $remainingAvis += $nbrAvisNonRepondus;
-                        $remainingOffres++;
-                    }
                 }
                     
                     $nb_offres = 0;
