@@ -18,20 +18,11 @@ try {
         echo "Erreur : compte inexistant.";
         exit;
     }
-    
-    $conn->beginTransaction();
 
     // Suppression du compte membre
-    $stmt = $conn->prepare("DELETE FROM sae._compte_membre WHERE id_compte = :id;");
+    $stmt = $conn->prepare("DELETE FROM sae.compte_membre WHERE id_compte = :id;");
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
-
-    // Suppression du compte
-    $stmt = $conn->prepare("DELETE FROM sae._compte WHERE id_compte = :id;");
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-    $stmt->execute();
-
-    $conn->commit();
 
     echo "Compte supprimé avec succès.";
 } catch (Exception $e) {
