@@ -304,16 +304,17 @@ if ($typeCompte === 'proPrive') {
                             
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
                                 <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} 
-                                foreach($reponses as $lareponse){
-                                    $compteur = 0;
+                                $compteur = 0;
+                                foreach($reponses as $lareponse){    
+                                    $compteur++;
                                     if($lareponse['id_membre']==$lavis['id_membre']){
                                         echo $lavis['titre']. " est repondu";
                                         
-                                    }
-                                    if ($compteur == count($reponses)) {
+                                    }elseif ($compteur == count($reponses)) {
                                         echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                     }
-                                    $compteur++;
+                                    
+                                    
                                 } 
                                 ?>
                                     
