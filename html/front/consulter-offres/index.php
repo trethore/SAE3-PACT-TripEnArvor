@@ -13,7 +13,11 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT * from sae._offre JOIN _compte ON _offre.id_compte_professionnel = _compte.id_compte');
+    $stmt = $dbh->prepare('SELECT o.*, a.num_et_nom_de_voie, a.complement_adresse, a.code_postal, a.ville, a.pays
+                            FROM sae._offre o
+                            JOIN sae._compte c ON o.id_compte_professionnel = c.id_compte
+                            LEFT JOIN sae._adresse a ON o.id_adresse = a.id_adresse;
+                        ');
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
@@ -51,6 +55,13 @@ try {
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css"/>
+    <script src="/lib/leaflet/leaflet.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js.map"></script>
+
+    <script src="map.js"></script>
 </head>
 <body class="front liste-front">
     <?php
@@ -231,7 +242,7 @@ try {
                 </div>
             </div>
         </article>
-
+        <div id="map"></div>
         <!-- Offres -->
         <section class="section-offres">
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
@@ -387,23 +398,6 @@ try {
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
 
-            /*const input1 = document.getElementById('start-date');
-            const input2 = document.getElementById('end-date');
-            const input3 = document.getElementById('open-date');
-
-            input1.addEventListener('focus', () => {
-                input3.value = '';
-            });
-
-            input2.addEventListener('focus', () => {
-                input3.value = '';
-            });
-
-            input3.addEventListener('focus', () => {
-                input1.value = '';
-                input2.value = '';
-            });*/
-
             const initialOrder = offers.slice();
 
             h2.addEventListener("click", () => {
@@ -457,28 +451,7 @@ try {
                     }
                 });
 
-                // Filter by Date (Visite et Spectacle)
-                /*const startDateInput = document.getElementById('start-date');
-                const endDateInput = document.getElementById('end-date');
-
-                const startDate = new Date(startDateInput.value);
-                const endDate = new Date(endDateInput.value);
-
-                visibleOffers = visibleOffers.filter(offer =>{
-                    let category = offer.querySelector(".categorie-offre").textContent.trim();
-                    let id = offer.querySelector(".id").textContent.trim();
-                    let validCategories = ['Visite', 'Spectacle'];
-                    let categoryOK = validCategories.includes(category);
-                    if (category == "Visite") {
-                        let eventDate = new Date(getDateVisite(id));
-                    } else if (category == "Spectacle") {
-                        let eventDate = new Date(getDateSpectacle(id));
-                    }
-                    const dateOK = eventDate >= startDate && eventDate <= endDate;
-
-                    return categoryOK && dateOK;
-                });*/
-
+            
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
                 if (searchLocation) {
@@ -506,6 +479,8 @@ try {
                         offer.style.display = "none";
                     }
                 });
+                
+                
 
                 // Show/Hide "No Offers" Message
                 noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
@@ -567,6 +542,14 @@ try {
             </a>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var offres = <?php echo json_encode($offres); ?>;
+            addMap();
+            addOffersWithAddresses(offres);
+        });
+    </script>
+
 </body>
 
 
