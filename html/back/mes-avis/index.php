@@ -297,11 +297,23 @@ if ($typeCompte === 'proPrive') {
                         
                             $compteur = 0;
 
-                            foreach ($avis as $lavis) { ?>
+                            foreach ($avis as $lavis) { 
 
+                            ?>
                             
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
+                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} 
+                                foreach($reponses as $lareponse){
+                                    $compteur = 0;
+                                    if($lareponse['id_membre']==$lavis['id_membre']){
+                                        echo $lavis['titre']. " est repondu";
+                                        $compteur++;
+                                    }
+                                    if ($compteur == count($reponses)) {
+                                        echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                    }
+                                } 
+                                ?>
                                     
                                     
                                     <div class="display-ligne-espace">
