@@ -856,7 +856,7 @@ try {
             const idOffre = button.getAttribute('data-id-offre');
             const idMembre = button.getAttribute('data-id-membre');
 
-            fetch("blacklist.php", {
+            fetch("/utils/blacklist.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `id_offre=${idOffre}&id_membre=${idMembre}`
