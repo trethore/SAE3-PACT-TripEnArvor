@@ -211,6 +211,7 @@ if ($typeCompte === 'proPrive') {
                     
 
                   $reponses = getReponse($id_offre);
+                  print_r($reponse);
 
                   
                   
