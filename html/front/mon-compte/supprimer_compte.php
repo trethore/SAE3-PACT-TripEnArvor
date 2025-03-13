@@ -35,6 +35,8 @@ try {
 
     echo "Compte supprimé avec succès.";
     session_destroy();
+    // Rediriger immédiatement vers la page d'accueil
+    header("Location: https://redden.ventsdouest.dev/front/accueil/");
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
 }
