@@ -849,6 +849,7 @@ try {
         function confirmerBlacklister(compteur) {
             console.log(document.getElementById("confirmation-popup"));
             document.getElementById("confirmation-popup").style.display = "block";
+            console.log(document.getElementById("confirmation-popup"));
             document.getElementById("header").classList.add("blurred");
             document.getElementById("body").classList.add("blurred");
             document.getElementById("footer").classList.add("blurred");
