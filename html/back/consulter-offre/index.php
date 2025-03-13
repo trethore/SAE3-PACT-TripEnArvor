@@ -655,7 +655,7 @@ try {
                                 </div>
                             </div>
                             <!-- Bouton menu -->
-                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$compteur]['id_compte']; ?>">>
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
@@ -671,7 +671,7 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
                                 <div class="confirmation-content">
                                     <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
-                                    <button onclick="validerBlacklister()">Blacklister</button>
+                                    <button onclick="validerBlacklister(<?php echo $compteur; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister()">Annuler</button>
                                 </div>
                             </div>
@@ -850,9 +850,23 @@ try {
             document.getElementById("confirmation-popup").style.display = "block";
         }
 
-        function validerBlacklister() {
-            alert("L'avis a été blacklisté.");
-            document.getElementById("confirmation-popup").style.display = "none";
+        function validerBlacklister(compteur) {
+            // Récupérer les données depuis les attributs data-* du bouton
+            const button = document.querySelector(`[onclick="afficherMenu(event, this, ${compteur})"]`);
+            const idOffre = button.getAttribute('data-id-offre');
+            const idMembre = button.getAttribute('data-id-membre');
+
+            fetch("blacklist.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id_offre=${idOffre}&id_membre=${idMembre}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Affiche la réponse du serveur
+                document.getElementById("confirmation-popup").style.display = "none";
+            })
+            .catch(error => console.error("Erreur :", error));
         }
 
         function annulerBlacklister() {
