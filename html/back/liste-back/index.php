@@ -89,8 +89,8 @@ try {
         ?>
         <a href="/back/mon-compte" class="icon-container">
             <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
-            <?php if ($nonLusCount > 0) { ?>
-                <span class="notification-badge"><?php echo $nonLusCount; ?></span>
+            <?php if ($remainingAvis > 0) { ?>
+                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
         </a>
         <script>

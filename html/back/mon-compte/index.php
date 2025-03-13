@@ -135,21 +135,21 @@ if ($typeCompte === 'proPrive') {
                 $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
                 $stmtOffre->execute();
 
-                $nonLusCount = 0;
+                $remainingAvis = 0;
 
-                while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                     $avisNonLus = getLu($row['id_offre']);
 
-                    forEach($avisNonLus as $avis) {
-                        if (empty($avis['lu'])) {
-                            $nonLusCount++;
+                    foreach ($avisNonLus as $avis) {
+                        if (!empty($avis) && empty($avis['lu'])) {
+                            $remainingAvis++;
                         }
                     }
                 }
             ?>
             <a href="/back/mes-avis">Mes avis</a>
-            <?php if ($nonLusCount > 0) { ?>
-                <span class="notification-badge"><?php echo $nonLusCount; ?></span>
+            <?php if ($remainingAvis > 0) { ?>
+                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
             <?php if ($typeCompte == 'proPrive') { ?>
             <a href="/back/mes-factures">Mes factures</a>
