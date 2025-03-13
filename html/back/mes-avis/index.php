@@ -209,11 +209,10 @@ if ($typeCompte === 'proPrive') {
                     
 
                   $reponses = getReponse($id_offre);
-                  print_r($reponses);
-                  print(count($reponses));
-                  print($nb_avis);
+                  
+                  echo " nombre d'avis ". $nb_avis ."<br>";
                   $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                  $nbrAvisNonRepondus += $nbrAvisNonRepondus;
+                  $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
  
 
