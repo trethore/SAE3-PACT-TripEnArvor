@@ -847,14 +847,7 @@ try {
         }
 
         function confirmerBlacklister(compteur) {
-            console.log(document.getElementById("confirmation-popup"));
             document.getElementById("confirmation-popup").style.display = "block";
-            console.log(document.getElementById("confirmation-popup"));
-            document.getElementById("header").classList.add("blurred");
-            document.getElementById("body").classList.add("blurred");
-            document.getElementById("footer").classList.add("blurred");
-            document.getElementById("confirmation-popup").classList.add("unblurred");
-            console.log(document.getElementById("confirmation-popup"));
         }
 
         function validerBlacklister() {
@@ -863,10 +856,6 @@ try {
         }
 
         function annulerBlacklister() {
-            document.getElementById("header").classList.remove("blurred");
-            document.getElementById("body").classList.remove("blurred");
-            document.getElementById("footer").classList.remove("blurred");
-            document.getElementById("confirmation-popup").classList.remove("unblurred");
             document.getElementById("confirmation-popup").style.display = "none";
         }
 
