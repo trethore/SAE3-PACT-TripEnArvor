@@ -232,8 +232,9 @@ if ($typeCompte === 'proPrive') {
                     <?php } else { ?>
 
                         <h2> <?php
-                            echo "vous avez " .$nb_non_lu. "avis non lus";
-                            echo "vous avez " .$nbrAvisNonRepondus. "avis non repondus"; ?>
+                            echo "Vous avez " .$nb_non_lu. " avis non lus";
+                            echo "<br>";
+                            echo "Vous avez " .$nbrAvisNonRepondus. " avis non repondus"; ?>
                         </h2> <?php
 
                         foreach ($touteslesoffres as $offre) { 
@@ -254,6 +255,13 @@ if ($typeCompte === 'proPrive') {
                                     
                                 }else {
                                     continue;
+                                }
+                            }
+                            
+                            $nb_non_lu = 0;
+                            foreach ($avis as $lavis) {
+                                if($lavis['lu'] == false){
+                                    $nb_non_lu++;
                                 }
                             }
                             
