@@ -3805,14 +3805,6 @@ h3 {
     color: var(--blanc);
 }
 
-.consulter-offre-back .blurred {
-    filter: blur(4px);
-}
-
-.consulter-offre-back .unblurred {
-    filter: blur(0);
-}
-
 .consulter-offre-back .confirmation-popup {
     display: block;
     position: fixed;
