@@ -290,7 +290,7 @@ if ($typeCompte === 'proPrive') {
                             $dateAvis = getDatePublication($id_offre);
                             $noteDetaillee = getAvisDetaille($id_offre);
 
-                            
+                            $reponses = getReponse($id_offre);
 
                         
 
@@ -304,7 +304,7 @@ if ($typeCompte === 'proPrive') {
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
                                 <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} 
                                 $compteur_reponse = 0;
-                                if (!$reponse) {
+                                if (!$reponses) {
                                     echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                 }else {
                                     foreach($reponses as $lareponse){    
