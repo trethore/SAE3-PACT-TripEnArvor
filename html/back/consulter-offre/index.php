@@ -847,11 +847,12 @@ try {
         }
 
         function confirmerBlacklister(compteur) {
+            console.log(document.getElementById("confirmation-popup"));
+            document.getElementById("confirmation-popup").style.display = "flex";
             document.getElementById("header").classList.add("blurred");
             document.getElementById("body").classList.add("blurred");
             document.getElementById("footer").classList.add("blurred");
             document.getElementById("confirmation-popup").classList.add("unblurred");
-            document.getElementById("confirmation-popup").style.display = "flex";
         }
 
         function validerBlacklister() {
