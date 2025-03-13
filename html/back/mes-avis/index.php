@@ -193,7 +193,7 @@ if ($typeCompte === 'proPrive') {
                 $nb_offres = 0;
 
                 $nbrAvisNonRepondus = 0;
-
+                $reponses = getReponse($id_offre);
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
                     $avis = getAvis($id_offre);
@@ -210,12 +210,12 @@ if ($typeCompte === 'proPrive') {
                                 echo $lavis['titre']. " est repondu";
                             }
                           }
-                          
+
                         echo "<br>";
                     }
                     
 
-                  $reponses = getReponse($id_offre);
+                  
                   print_r($reponses);
 
                   
