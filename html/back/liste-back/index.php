@@ -464,10 +464,15 @@ try {
                         }
                     }
 
-                    if ($remainingAvis > 0) {
+                    if ($remainingAvis == 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
-                            'message' => "Vous avez $remainingAvis avis non lus.",
+                            'message' => "Vous avez $remainingAvis avis non lu.",
+                        ];
+                    } elseif ($remainingAvis > 1) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $remainingAvis avis non lu.",
                         ];
                     }
                 }
