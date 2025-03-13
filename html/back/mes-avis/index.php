@@ -205,7 +205,6 @@ if ($typeCompte === 'proPrive') {
                         if($lavis['lu'] == false){
                             $nb_non_lu++;
                         }
-                        print_r($lavis);
                         echo "<br>";
                     }
                     
