@@ -191,6 +191,9 @@ if ($typeCompte === 'proPrive') {
                 <?php
                 $nb_non_lu = 0;
                 $nb_offres = 0;
+
+                $nbrAvisNonRepondus = 0;
+
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
                     $avis = getAvis($id_offre);
@@ -209,7 +212,8 @@ if ($typeCompte === 'proPrive') {
                   print_r($reponses);
                   print(count($reponses));
                   print($nb_avis);
-                  $nbrAvisNonRepondus = $nb_avis - count($reponses);
+                  $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
+                  $nbrAvisNonRepondus += $nbrAvisNonRepondus;
 
  
 
