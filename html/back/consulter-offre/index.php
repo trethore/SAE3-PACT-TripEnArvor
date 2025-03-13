@@ -854,6 +854,7 @@ try {
             document.getElementById("body").classList.add("blurred");
             document.getElementById("footer").classList.add("blurred");
             document.getElementById("confirmation-popup").classList.add("unblurred");
+            console.log(document.getElementById("confirmation-popup"));
         }
 
         function validerBlacklister() {
