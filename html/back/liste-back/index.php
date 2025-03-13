@@ -432,13 +432,17 @@ try {
                 print_r($avisNonLus);
                 echo '</pre>';
 
-                forEach($avisNonLus as $avis) {
-                    if (!empty($avis)) {
-                        if (empty($avis['lu'])) {
-                            $remainingAvis++;
-                        }
-                        $remainingOffres++;
+                $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
+
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                        $hasUnreadAvis = true; // Set the flag to true if an unread review is found
                     }
+                }
+
+                if ($hasUnreadAvis) {
+                    $remainingOffres++; // Increment only if the offer has at least one unread review
                 }
             }
 
@@ -452,8 +456,10 @@ try {
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                     $avisNonLus = getLu($row['id_offre']);
 
-                    forEach($avisNonLus as $avis) {
-                        if (empty($avis['lu'])) {
+                    $remainingAvis = 0; // Reset the counter for each offer
+
+                    foreach ($avisNonLus as $avis) {
+                        if (!empty($avis) && empty($avis['lu'])) {
                             $remainingAvis++;
                         }
                     }
@@ -468,7 +474,7 @@ try {
             }
 
             $toastsDataJson = json_encode($toastsData);
-        ?>
+            ?>
     </main>
     <footer>
         <div class="footer-top">
