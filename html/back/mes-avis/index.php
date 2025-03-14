@@ -191,8 +191,12 @@ if ($typeCompte === 'proPrive') {
                 <?php
                 $nb_non_lu = 0;
                 $nb_offres = 0;
+                $avis_lu = [];
+                $avis_non_lu = [];
 
                 $nbrAvisNonRepondus = 0;
+                $avis_repondu = [];
+                $avis_non_repondu = [];
                 
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
@@ -200,11 +204,33 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
 
-                    
+                    //on compte le nombre total n'avis et on range les avis dans des listes (lu, non lu, repondu, non repondu)
                     $nb_avis = count($avis);
                     foreach ($avis as $lavis) {
                         if($lavis['lu'] == false){
                             $nb_non_lu++;
+                            $avis_non_lu[] = $lavis;
+                            $avis_non_repondu[] = $lavis;
+                            
+                        }else{
+                            $avis_lu[] = $lavis;
+
+                            $compteur_reponse = 0;
+                                    if (!$reponses) {
+                                        $avis_non_repondu[] = $lavis;
+                                    }else {
+                                        foreach($reponses as $lareponse){    
+                                            $compteur_reponse++;
+                                            if($lareponse['id_membre']==$lavis['id_membre']){
+                                                $avis_repondu[] = $lavis;
+                                                break;
+                                                
+                                            }elseif ($compteur_reponse == count($reponses)) {
+                                                $avis_non_repondu[] = $lavis;;
+                                            }
+                                        }
+                                        
+                                    } 
                         }
                     }
                     
@@ -236,7 +262,7 @@ if ($typeCompte === 'proPrive') {
                         </h2> <?php
 
                         foreach ($touteslesoffres as $offre) { 
-                        
+                            echo 'tri par offre';
                         ?>
                             <h3>
                             <?php
@@ -256,10 +282,12 @@ if ($typeCompte === 'proPrive') {
                             }
                             
                             $nb_non_lu = 0;
-                            foreach ($avis as $lavis) {
+                            foreach ($avis as $lavis) { //compter le nombre d'avis non lus sur l'offre
                                 if($lavis['lu'] == false){
                                     $nb_non_lu++;
                                 }
+
+
                             }
                             
                             if($nb_non_lu == 1){
@@ -297,7 +325,7 @@ if ($typeCompte === 'proPrive') {
                                 }else{ //si l'avis a ete lu on met sil a une reponse ou pas
                                 $compteur_reponse = 0;
                                     if (!$reponses) {
-                                        echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                        echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                     }else {
                                         foreach($reponses as $lareponse){    
                                             $compteur_reponse++;
@@ -305,11 +333,9 @@ if ($typeCompte === 'proPrive') {
                                                 break;
                                                 
                                             }elseif ($compteur_reponse == count($reponses)) {
-                                                echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                             }
                                         }
-                                    
-                                        
                                         
                                     } 
                                 }
@@ -352,7 +378,52 @@ if ($typeCompte === 'proPrive') {
                                 </div>
                         <?php $compteur++; }
                          echo "<br>";
-                        } }?>       
+                        } }?> 
+                        
+                        <?php 
+                            foreach ($avis_non_lu as $lavis) { 
+                                echo "avis non lus";
+                                ?>
+                                <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                    
+                                    
+                                    <div class="display-ligne-espace">
+                                        <div class="display-ligne">
+                                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']); echo ' ' ;?></p>
+                                            <div class="display-ligne">
+                                                <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                                <?php }
+                                                for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="display-ligne">
+                                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                        $datePass = explode('-', $passage[0]); ?>
+                                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                    </div>
+
+                                    <?php  ?>
+
+
+                                    <div class="display-ligne-espace">
+                                        <div class="petite-mention">
+                                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                            $datePub = explode('-', $publication[0]); ?>
+                                            <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
+                                </div>
+                        <?php $compteur++; }
+                         
+                        ?>
             </div>
             
         </section>
