@@ -296,11 +296,11 @@ if ($typeCompte === 'proPrive') {
                             ?>
                             
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle_nouveau">Nouveau !</div>';
+                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                 }else{ //si l'avis a ete lu on met sil a une reponse ou pas
                                 $compteur_reponse = 0;
                                     if (!$reponses) {
-                                        echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu !</div>';
+                                        echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                     }else {
                                         foreach($reponses as $lareponse){    
                                             $compteur_reponse++;
@@ -308,7 +308,7 @@ if ($typeCompte === 'proPrive') {
                                                 break;
                                                 
                                             }elseif ($compteur_reponse == count($reponses)) {
-                                                echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu !</div>';
+                                                echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                             }
                                         }
                                     
