@@ -5189,7 +5189,7 @@ input[type="tel"] {
     }
 
     .connecter h1 {
-        margin-top: 30px;
+        margin-top: 0;
     }
 
     .connecter input[type="email"],
@@ -5293,7 +5293,8 @@ input[type="tel"] {
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
-        padding-bottom: 0;
+        padding: 0;
+        margin: 0;
     }
 
     .creer-compte #div-type-compte {
@@ -5736,10 +5737,6 @@ input[type="tel"] {
         width: 100%;
     }
 
-    .connecter h1 {
-        margin-top: 70px;
-    }
-
     .connecter input[type="submit"] {
         font-size: 30px;
     }
@@ -5753,10 +5750,6 @@ input[type="tel"] {
 }
 
 @media screen and (max-width: 380px) {
-
-    .connecter h1 {
-        margin-top: 130px;
-    }
 
     .liste-front .offre .sous-offre {
         width: 322px;
