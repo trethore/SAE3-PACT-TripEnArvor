@@ -106,6 +106,7 @@ $reqCompte = "SELECT * from sae.compte_membre
     <main>
         <nav>
             <a class="ici" href="/front/mon-compte">Mes infos</a>
+            <a href="/front/mes-avis/">Mes avis</a>
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
