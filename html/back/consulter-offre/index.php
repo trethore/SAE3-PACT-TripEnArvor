@@ -675,7 +675,7 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
                                 <div class="confirmation-content">
                                     <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
-                                    <button onclick="validerBlacklister(<?php echo $compteur; ?>)">Blacklister</button>
+                                    <button id="confirmer-blacklister" onclick="validerBlacklister(<?php echo $compteur; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister()">Annuler</button>
                                 </div>
                             </div>
@@ -856,7 +856,7 @@ try {
             const idOffre = element.getAttribute("data-id-offre");
             const idMembre = element.getAttribute("data-id-membre");
             document.getElementById("confirmation-popup").style.display = "block";
-            document.getElementById("confirm-button").onclick = function() {
+            document.getElementById("confirmer-blacklister").onclick = function() {
                 validerBlacklister(compteur, idOffre, idMembre);
             };
         }
