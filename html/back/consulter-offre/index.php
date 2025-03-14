@@ -654,7 +654,8 @@ try {
                                     <?php }
                                     for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php } ?>
+                                    <?php } 
+                                    echo $membre[$compteur]['id_compte'];?>
                                 </div>
                             </div>
                             <!-- Bouton menu -->
