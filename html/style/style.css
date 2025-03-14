@@ -3114,6 +3114,7 @@ h3 {
     background-color: var(--violet-principal);
     padding: 5px 20px;
     border-radius: 8px;
+    width: 180px;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
@@ -3657,7 +3658,7 @@ h3 {
     background-color: var(--orange-principale);
     padding: 5px 20px;
     border-radius: 8px;
-    width: 160px;
+    width: 180px;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
