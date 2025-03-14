@@ -455,7 +455,6 @@ try {
                     }
                 });
 
-            
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
                 if (searchLocation) {
@@ -508,7 +507,6 @@ try {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
-
                 }
             };
 
