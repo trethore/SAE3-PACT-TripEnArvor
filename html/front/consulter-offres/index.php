@@ -222,12 +222,14 @@ try {
                     </div>
 
                     <!-- Contient avis -->
+                    <?php if (isset($_SESSION['id']) && isset($_GET['id'])) { ?>
                     <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
                             <label><input type="checkbox" name="oui_avis"> Oui</label>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </article>
