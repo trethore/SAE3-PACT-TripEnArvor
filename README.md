@@ -1,5 +1,7 @@
 # SAÉ 3 & 4 - PACT by TripEnArvor
 
+--------------------------------------------------------------------------------------------------------------------------
+
 ## Tuto comment se connecté au projet
 
 - Aller sur vsc 3ème onglet puis 1er bouton
@@ -8,19 +10,19 @@
 
 - puis pacer dans votre dossier de travail
 
-dans le terminal :
+dans le terminal&nbsp;:
 
 - `git config --global user.name "<nomGithub>"`
 
 - `git config --global user.email "<emailGithub>"`
 
-Pour changer de branche :
+Pour changer de branche&nbsp;:
 
 - `git pull`
 
 - puis en bas a gauche on peut changer de branche
 
----------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 
 ## Serveur local de test avec `docker compose`
 
@@ -38,7 +40,7 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
     donc ne le modifiez pas et n'y mettez aucunes informations sensibles.
 
  3. Créez le fichier `html/php/connect_params.php` avec les information de
-    `docker/.env` sous la forme suivante :
+    `docker/.env` sous la forme suivante&nbsp;:
 
     ```php
     <?php
@@ -49,28 +51,28 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
     $pass   = 'test_password'; // Valeur de `DB_ROOT_PASSWORD` dans `docker/.env`.
     ```
 
- 4. Lancer le serveur une première fois : dans un terminal, placez-vous dans le dossier `docker/`,
-    puis exécutez :
-      - Linux (bash) : `docker compose up --build && docker compose logs -f`.
-      - Windows (Powershell en mode administrateur) : `docker compose up --build; if ($?) { docker compose logs -f }`
+ 4. Lancer le serveur une première fois&nbsp;: dans un terminal, placez-vous dans le dossier `docker/`,
+    puis exécutez&nbsp;:
+      - Linux (bash)&nbsp;: `docker compose up --build && docker compose logs -f`.
+      - Windows (Powershell en mode administrateur)&nbsp;: `docker compose up --build; if ($?) { docker compose logs -f }`
 
  5. Ouvrez pgAdmin à l'adresse `http://localhost:${PGADMIN_PORT}/`.
     Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env` (par défaut `8081`).
-      - Identifiant : `${EQUIPE}@dbadmin-sae.com`
+      - Identifiant&nbsp;: `${EQUIPE}@dbadmin-sae.com`
         Remplacez `${EQUIPE}` par la valeur de `EQUIPE` dans `docker/.env`.
-      - Mot de passe :  Valeur de `PGADMIN_PASSWORD` dans `docker/.env`.
+      - Mot de passe&nbsp;:  Valeur de `PGADMIN_PASSWORD` dans `docker/.env`.
 
- 6. Ajoutez un serveur avec les information suivantes :
+ 6. Ajoutez un serveur avec les information suivantes&nbsp;:
 
       - Onglet `Général`
-          - Nom : Choisissez un nom, par exemple `test_sae_34`.
+          - Nom&nbsp;: Choisissez un nom, par exemple `test_sae_34`.
 
       - Onglet `Connexion`
-          - `Nom d'hôte / Adresse` : `postgresdb`
-          - `Port` : `5432`
-          - `Base de données de maintenance` : Valeur de `DB_NAME` dans `docker/.env`.
-          - `Identifiant` : Valeur de `DB_USER` dans `docker/.env`.
-          - `Mot de passe` : Valeur de `DB_ROOT_PASSWORD` dans `docker/.env`.
+          - `Nom d'hôte / Adresse`&nbsp;: `postgresdb`
+          - `Port`&nbsp;: `5432`
+          - `Base de données de maintenance`&nbsp;: Valeur de `DB_NAME` dans `docker/.env`.
+          - `Identifiant`&nbsp;: Valeur de `DB_USER` dans `docker/.env`.
+          - `Mot de passe`&nbsp;: Valeur de `DB_ROOT_PASSWORD` dans `docker/.env`.
 
         Laissez les valeurs par défaut pour le reste.
 
@@ -88,10 +90,10 @@ Après avoir effectuer ces étapes, le serveur local devrait être prêt.
 
 ### Lancement du serveur
 
-Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez :
+Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez&nbsp;:
 
-- Linux (bash) : `docker compose up && docker compose logs -f`.
-- Windows (Powershell) : `docker compose up; if ($?) { docker compose logs -f }`
+- Linux (bash)&nbsp;: `docker compose up && docker compose logs -f`.
+- Windows (Powershell)&nbsp;: `docker compose up; if ($?) { docker compose logs -f }`
 
 ### Accéder au site
 
