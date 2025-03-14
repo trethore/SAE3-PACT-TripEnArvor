@@ -3996,7 +3996,7 @@ h3 {
     display: inline;
 }
 
-#infobulle {
+#infobulle_nouveau {
     background-color:var(--orange-principale);
     color: white;
     padding: 5px 10px;
