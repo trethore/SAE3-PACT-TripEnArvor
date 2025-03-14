@@ -4014,6 +4014,7 @@ h3 {
     padding: 5px 10px;
     border-radius: 5px;
     border: 2px solid var(--orange-principale);
+    display: inline-block;
 }
 
 
