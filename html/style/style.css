@@ -4009,6 +4009,10 @@ h3 {
 #infobulle_non_repondu {
     color: var(--orange-principale);
     font-weight: bold;
+    font-size: 15pt;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: var(--orange-principale);
 }
 
 .mes-avis .avis-en-exergue:hover  {
