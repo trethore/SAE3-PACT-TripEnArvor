@@ -31,7 +31,11 @@ try {
 </head>
 <body class="connecter">
     <!-- Logo -->
-    <img src="/images/universel/logo/Logo_couleurs.png">
+    <header>
+        <a href="/front/accueil/">
+            <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
+        </a>
+    </header>
     <!-- Main -->
     <main>
         <!-- Titres -->
