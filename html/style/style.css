@@ -4016,9 +4016,6 @@ h3 {
     border: 2px solid var(--orange-principale);
 }
 
-.mes-avis .avis-en-exergue:hover  {
-    animation: none;
-}
 
 .contenu-aligne-gauche {
     display: flex;
