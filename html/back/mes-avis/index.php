@@ -189,50 +189,30 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
-                $nb_non_lu = 0;
-                $nb_offres = 0;
-                $avis_lu = [];
-                $avis_non_lu = [];
-
-                $nbrAvisNonRepondus = 0;
-                $avis_repondu = [];
-                $avis_non_repondu = [];
-                
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
-                    $reponses = getReponse($id_offre);
+                    $reponses = getReponse($id_offre); // Récupère la réponse associée à l'offre
                     $avis = getAvis($id_offre);
                     $nb_offres++;
-
-                    //on compte le nombre total n'avis et on range les avis dans des listes (lu, non lu, repondu, non repondu)
-                    $nb_avis = count($avis);
+                
                     foreach ($avis as $lavis) {
-                        if($lavis['lu'] == false){
+                        if (!$lavis['lu']) {
                             $nb_non_lu++;
                             $avis_non_lu[] = $lavis;
-                            $avis_non_repondu[] = $lavis;
-                            
-                        }else{
+                            $avis_non_repondu[] = $lavis; // On suppose qu'il n'a pas de réponse
+                        } else {
                             $avis_lu[] = $lavis;
-
-                            $compteur_reponse = 0;
-                                    if (!$reponses) {
-                                        $avis_non_repondu[] = $lavis;
-                                    }else {
-                                        foreach($reponses as $lareponse){    
-                                            $compteur_reponse++;
-                                            if($lareponse['id_membre']==$lavis['id_membre']){
-                                                $avis_repondu[] = $lavis;
-                                                break;
-                                                
-                                            }elseif ($compteur_reponse == count($reponses)) {
-                                                $avis_non_repondu[] = $lavis;;
-                                            }
-                                        }
-                                        
-                                    } 
+                
+                            // Vérifie s'il y a une réponse pour cet avis
+                            if ($reponses && isset($reponses[$lavis['id_membre']])) {
+                                $avis_repondu[] = $lavis;
+                            } else {
+                                $avis_non_repondu[] = $lavis;
+                            }
                         }
                     }
+                
+                
                     
 
 
