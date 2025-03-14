@@ -870,6 +870,7 @@ try {
             .then(response => response.text())
             .then(data => {
                 document.getElementById("confirmation-popup").style.display = "none";
+                location.reload();
             })
             .catch(error => console.error("Erreur :", error));
         }
