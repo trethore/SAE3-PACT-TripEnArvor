@@ -882,8 +882,7 @@ try {
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
 
                                     <?php } ?>
-
-                                    <p><?php echo htmlentities("     ") ?></p>
+                                    <br>
 
                                 <?php } ?>
 
