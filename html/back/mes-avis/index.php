@@ -218,9 +218,7 @@ if ($typeCompte === 'proPrive') {
 
 
                   
-                  
-                  
-                  echo " nombre d'avis ". $nb_avis ."<br>";
+                
                   $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                   $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
@@ -230,8 +228,10 @@ if ($typeCompte === 'proPrive') {
                 }
                     
                     $nb_offres = 0;
-                    if (!$touteslesoffres) {
-                        echo "Vous n'avez aucune offre"; ?>
+                    if (!$touteslesoffres) { ?>
+                        <h2>   
+                        <?php echo "Vous n'avez aucune offre"; ?>
+                        </h2>
                         <a href="/back/creer-offre/index.php"> Créer une offre ! </a>
 
                     <?php } else { ?>
