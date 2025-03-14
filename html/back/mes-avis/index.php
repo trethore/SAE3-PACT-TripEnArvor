@@ -206,13 +206,6 @@ if ($typeCompte === 'proPrive') {
                         if($lavis['lu'] == false){
                             $nb_non_lu++;
                         }
-                        foreach($reponses as $lareponse){
-                            if($lareponse['id_membre']==$lavis['id_membre']){
-                                echo $lavis['titre']. " est repondu";
-                            }
-                          }
-
-                        echo "<br>";
                     }
                     
 
@@ -244,7 +237,9 @@ if ($typeCompte === 'proPrive') {
 
                         foreach ($touteslesoffres as $offre) { 
                         
-                        
+                        ?>
+                            <h3>
+                            <?php
                             // $offre = getOffre($id_offre_cible);
                             $id_offre = $offre['id_offre'];
                             $avis = getAvis($id_offre);
@@ -271,9 +266,9 @@ if ($typeCompte === 'proPrive') {
                             }
                             
                             if($nb_non_lu == 1){
-                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h2> <?php 
+                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h3> <?php 
                             }else{
-                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h3>
                             <?php } ?>
                             
 
@@ -310,7 +305,6 @@ if ($typeCompte === 'proPrive') {
                                         foreach($reponses as $lareponse){    
                                             $compteur_reponse++;
                                             if($lareponse['id_membre']==$lavis['id_membre']){
-                                                echo $lavis['titre']. " est repondu";
                                                 break;
                                                 
                                             }elseif ($compteur_reponse == count($reponses)) {
