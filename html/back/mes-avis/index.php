@@ -189,6 +189,15 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
+                $nb_non_lu = 0;
+                $nb_offres = 0;
+                $avis_lu = [];
+                $avis_non_lu = [];
+
+                $nbrAvisNonRepondus = 0;
+                $avis_repondu = [];
+                $avis_non_repondu = [];
+                
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
                     $reponses = getReponse($id_offre); // Récupère la réponse associée à l'offre
