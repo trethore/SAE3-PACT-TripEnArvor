@@ -297,7 +297,7 @@ if ($typeCompte === 'proPrive') {
                                 }else{ //si l'avis a ete lu on met sil a une reponse ou pas
                                 $compteur_reponse = 0;
                                     if (!$reponses) {
-                                        echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                        echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                     }else {
                                         foreach($reponses as $lareponse){    
                                             $compteur_reponse++;
@@ -305,7 +305,7 @@ if ($typeCompte === 'proPrive') {
                                                 break;
                                                 
                                             }elseif ($compteur_reponse == count($reponses)) {
-                                                echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                             }
                                         }
                                     
