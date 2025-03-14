@@ -4012,12 +4012,9 @@ h3 {
     font-size: 15pt;
     padding: 5px 10px;
     border-radius: 5px;
-    border: var(--orange-principale);
+    border: 2px solid var(--orange-principale);
 }
 
-.mes-avis .avis-en-exergue:hover  {
-    animation: none;
-}
 
 .contenu-aligne-gauche {
     display: flex;
