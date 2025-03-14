@@ -206,23 +206,12 @@ if ($typeCompte === 'proPrive') {
                         if($lavis['lu'] == false){
                             $nb_non_lu++;
                         }
-                        foreach($reponses as $lareponse){
-                            if($lareponse['id_membre']==$lavis['id_membre']){
-                                echo $lavis['titre']. " est repondu";
-                            }
-                          }
-
-                        echo "<br>";
                     }
                     
 
-                  
-                  print_r($reponses);
 
                   
-                  
-                  
-                  echo " nombre d'avis ". $nb_avis ."<br>";
+                
                   $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                   $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
@@ -232,8 +221,10 @@ if ($typeCompte === 'proPrive') {
                 }
                     
                     $nb_offres = 0;
-                    if (!$touteslesoffres) {
-                        echo "Vous n'avez aucune offre"; ?>
+                    if (!$touteslesoffres) { ?>
+                        <h2>   
+                        <?php echo "Vous n'avez aucune offre"; ?>
+                        </h2>
                         <a href="/back/creer-offre/index.php"> Créer une offre ! </a>
 
                     <?php } else { ?>
@@ -247,7 +238,7 @@ if ($typeCompte === 'proPrive') {
                         foreach ($touteslesoffres as $offre) { 
                         
                         ?>
-                            <h2>
+                            <h3>
                             <?php
                             // $offre = getOffre($id_offre_cible);
                             $id_offre = $offre['id_offre'];
@@ -272,9 +263,9 @@ if ($typeCompte === 'proPrive') {
                             }
                             
                             if($nb_non_lu == 1){
-                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h2> <?php 
+                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h3> <?php 
                             }else{
-                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h3>
                             <?php } ?>
                             
 
@@ -302,25 +293,26 @@ if ($typeCompte === 'proPrive') {
                             ?>
                             
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} 
+                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle_nouveau">Nouveau !</div>';
+                                }else{ //si l'avis a ete lu on met sil a une reponse ou pas
                                 $compteur_reponse = 0;
-                                if (!$reponses) {
-                                    echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
-                                }else {
-                                    foreach($reponses as $lareponse){    
-                                        $compteur++;
-                                        if($lareponse['id_membre']==$lavis['id_membre']){
-                                            echo $lavis['titre']. " est repondu";
-                                            break;
-                                            
-                                        }elseif ($compteur == count($reponses)) {
-                                            echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                    if (!$reponses) {
+                                        echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu !</div>';
+                                    }else {
+                                        foreach($reponses as $lareponse){    
+                                            $compteur_reponse++;
+                                            if($lareponse['id_membre']==$lavis['id_membre']){
+                                                break;
+                                                
+                                            }elseif ($compteur_reponse == count($reponses)) {
+                                                echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu !</div>';
+                                            }
                                         }
-                                    }
-                                
                                     
-                                    
-                                } 
+                                        
+                                        
+                                    } 
+                                }
                                 ?>
                                     
                                     
