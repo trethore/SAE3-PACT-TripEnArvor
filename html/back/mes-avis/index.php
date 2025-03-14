@@ -309,12 +309,12 @@ if ($typeCompte === 'proPrive') {
                                     echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                 }else {
                                     foreach($reponses as $lareponse){    
-                                        $compteur++;
+                                        $compteur_reponse++;
                                         if($lareponse['id_membre']==$lavis['id_membre']){
                                             echo $lavis['titre']. " est repondu";
                                             break;
                                             
-                                        }elseif ($compteur == count($reponses)) {
+                                        }elseif ($compteur_reponse == count($reponses)) {
                                             echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
                                         }
                                     }
