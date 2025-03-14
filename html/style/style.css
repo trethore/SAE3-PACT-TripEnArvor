@@ -1752,7 +1752,8 @@ h3 {
     padding: 2rem;
 }
 
-.creer-compte header img {
+.creer-compte header img,
+.connecter header img {
     height: 8rem;
 }
 
