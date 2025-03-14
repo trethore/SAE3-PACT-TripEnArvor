@@ -20,6 +20,8 @@ Pour changer de branche :
 
 - puis en bas a gauche on peut changer de branche
 
+---------------------------------------------------------------------------------------------------------------------
+
 ## Serveur local de test avec `docker compose`
 
 Si vous avez une ancienne version de Docker (inférieur à `20.10.13`),
@@ -50,7 +52,7 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
  4. Lancer le serveur une première fois : dans un terminal, placez-vous dans le dossier `docker/`,
     puis exécutez :
       - Linux (bash) : `docker compose up --build && docker compose logs -f`.
-      - Windows (Powershell) : `docker compose up --build; if ($?) { docker compose logs -f }`
+      - Windows (Powershell en mode administrateur) : `docker compose up --build; if ($?) { docker compose logs -f }`
 
  5. Ouvrez pgAdmin à l'adresse `http://localhost:${PGADMIN_PORT}/`.
     Remplacez `${PGADMIN_PORT}` par la valeur de `PGADMIN_PORT` dans `docker/.env` (par défaut `8081`).
@@ -65,16 +67,19 @@ utilisez `docker-compose` avec un tiret au lieu de `docker compose` sans tiret.
 
       - Onglet `Connexion`
           - `Nom d'hôte / Adresse` : `postgresdb`
+          - `Port` : `5432`
           - `Base de données de maintenance` : Valeur de `DB_NAME` dans `docker/.env`.
           - `Identifiant` : Valeur de `DB_USER` dans `docker/.env`.
           - `Mot de passe` : Valeur de `DB_ROOT_PASSWORD` dans `docker/.env`.
 
         Laissez les valeurs par défaut pour le reste.
 
- 7. Ouvrez l'éditeur de requêtes (`Alt` + `Shift` + `Q`)<br>
+ 7. Ouvrez l'éditeur de requêtes (`Alt` + `Shift` + `Q`)
+
     ![C'est le bouton avec une icône de BDD avec une flèche devant](readme-images/query-editor.webp)
 
- 8. Copier le contenu de `sql/createdb.sql` dans l'éditeur de requêtes puis exécutez le script (`F5`).<br>
+ 8. Copier le contenu de `sql/createdb.sql` dans l'éditeur de requêtes puis exécutez le script (`F5`).
+
     ![C'est le bouton avec la flèche](readme-images/execute-script.webp)
 
  9. Faites de même avec le contenu de `sql/populate.sql`.
@@ -85,6 +90,7 @@ Après avoir effectuer ces étapes, le serveur local devrait être prêt.
 
 Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez
 `docker compose up && docker compose logs -f`.
+
 - Linux (bash) : `docker compose up && docker compose logs -f`.
 - Windows (Powershell) : `docker compose up; if ($?) { docker compose logs -f }`
 
