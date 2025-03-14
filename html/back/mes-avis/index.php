@@ -216,8 +216,6 @@ if ($typeCompte === 'proPrive') {
                     }
                     
 
-                  
-                  print_r($reponses);
 
                   
                   
@@ -316,7 +314,7 @@ if ($typeCompte === 'proPrive') {
                                                 break;
                                                 
                                             }elseif ($compteur_reponse == count($reponses)) {
-                                                echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                                echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu !</div>';
                                             }
                                         }
                                     
