@@ -222,12 +222,14 @@ try {
                     </div>
 
                     <!-- Contient avis -->
+                    <?php if (isset($_SESSION['id'])) { ?>
                     <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
                             <label><input type="checkbox" name="oui_avis"> Oui</label>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </article>
@@ -387,23 +389,6 @@ try {
             const noOffersMessage = document.querySelector(".no-offers-message");
             const locationInput = document.getElementById("search-location");
 
-            /*const input1 = document.getElementById('start-date');
-            const input2 = document.getElementById('end-date');
-            const input3 = document.getElementById('open-date');
-
-            input1.addEventListener('focus', () => {
-                input3.value = '';
-            });
-
-            input2.addEventListener('focus', () => {
-                input3.value = '';
-            });
-
-            input3.addEventListener('focus', () => {
-                input1.value = '';
-                input2.value = '';
-            });*/
-
             const initialOrder = offers.slice();
 
             h2.addEventListener("click", () => {
@@ -426,7 +411,6 @@ try {
 
                 // Filter by Availability
                 const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
-                console.log(availabilityInput);
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
@@ -456,28 +440,6 @@ try {
                         return price >= minPrice && price <= maxPrice;
                     }
                 });
-
-                // Filter by Date (Visite et Spectacle)
-                /*const startDateInput = document.getElementById('start-date');
-                const endDateInput = document.getElementById('end-date');
-
-                const startDate = new Date(startDateInput.value);
-                const endDate = new Date(endDateInput.value);
-
-                visibleOffers = visibleOffers.filter(offer =>{
-                    let category = offer.querySelector(".categorie-offre").textContent.trim();
-                    let id = offer.querySelector(".id").textContent.trim();
-                    let validCategories = ['Visite', 'Spectacle'];
-                    let categoryOK = validCategories.includes(category);
-                    if (category == "Visite") {
-                        let eventDate = new Date(getDateVisite(id));
-                    } else if (category == "Spectacle") {
-                        let eventDate = new Date(getDateSpectacle(id));
-                    }
-                    const dateOK = eventDate >= startDate && eventDate <= endDate;
-
-                    return categoryOK && dateOK;
-                });*/
 
                 // Filter by Location
                 const searchLocation = locationInput.value.trim().toLowerCase();
@@ -518,8 +480,8 @@ try {
 
                 if (selectedValue === "price-asc" || selectedValue === "price-desc") {
                     offers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '0').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '0').trim());
                         return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
                     });
 
@@ -528,7 +490,6 @@ try {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
-
                 }
             };
 

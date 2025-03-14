@@ -189,12 +189,18 @@ if ($typeCompte === 'proPrive') {
         
 
                 <?php
+                $nb_non_lu = 0;
+                $nb_offres = 0;
+
+                $nbrAvisNonRepondus = 0;
+                
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
+                    $reponses = getReponse($id_offre);
                     $avis = getAvis($id_offre);
                     $nb_offres++;
 
-                    $nb_non_lu = 0;
+                    
                     $nb_avis = count($avis);
                     foreach ($avis as $lavis) {
                         if($lavis['lu'] == false){
@@ -203,48 +209,36 @@ if ($typeCompte === 'proPrive') {
                     }
                     
 
-                }
 
+                  
+                
+                  $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
+                  $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
+ 
 
-                $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-                $stmtOffre = $conn->prepare($reqOffre);
-                $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-                $stmtOffre->execute();
-
-                $count = 0;
-                $remainingAvis = 0;
-                $remainingOffres = 0;
-
-                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $nbrAvis = getAvis($id_offre);
-                    $nbrReponses = getReponse($id_offre);
                     
-                    $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                    
-                    if ($nbrAvisNonRepondus > 0) {
-                        $count++;
-                        $remainingAvis += $nbrAvisNonRepondus;
-                        $remainingOffres++;
-                    }
                 }
                     
                     $nb_offres = 0;
-                    if (!$touteslesoffres) {
-                        echo "Vous n'avez aucune offre"; ?>
+                    if (!$touteslesoffres) { ?>
+                        <h2>   
+                        <?php echo "Vous n'avez aucune offre"; ?>
+                        </h2>
                         <a href="/back/creer-offre/index.php"> Créer une offre ! </a>
 
                     <?php } else { ?>
 
                         <h2> <?php
-                            echo "vous avez " .$nb_non_lu. "avis non lus";
-                            echo "vous avez " .$nbrAvisNonRepondus. "avis non repondus"; ?>
+                            echo "Vous avez " .$nb_non_lu. " avis non lus";
+                            echo "<br>";
+                            echo "Vous avez " .$nbrAvisNonRepondus. " avis non repondus"; ?>
                         </h2> <?php
 
                         foreach ($touteslesoffres as $offre) { 
                         
                         ?>
-                            <h2>
+                            <h3>
                             <?php
                             // $offre = getOffre($id_offre_cible);
                             $id_offre = $offre['id_offre'];
@@ -261,10 +255,17 @@ if ($typeCompte === 'proPrive') {
                                 }
                             }
                             
+                            $nb_non_lu = 0;
+                            foreach ($avis as $lavis) {
+                                if($lavis['lu'] == false){
+                                    $nb_non_lu++;
+                                }
+                            }
+                            
                             if($nb_non_lu == 1){
-                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h2> <?php 
+                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h3> <?php 
                             }else{
-                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h2>
+                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h3>
                             <?php } ?>
                             
 
@@ -280,18 +281,39 @@ if ($typeCompte === 'proPrive') {
                             $dateAvis = getDatePublication($id_offre);
                             $noteDetaillee = getAvisDetaille($id_offre);
 
-                            
+                            $reponses = getReponse($id_offre);
 
                         
 
                         
                             $compteur = 0;
 
-                            foreach ($avis as $lavis) { ?>
+                            foreach ($avis as $lavis) { 
 
+                            ?>
                             
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';} ?>
+                                <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
+                                }else{ //si l'avis a ete lu on met sil a une reponse ou pas
+                                $compteur_reponse = 0;
+                                    if (!$reponses) {
+                                        echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                    }else {
+                                        foreach($reponses as $lareponse){    
+                                            $compteur_reponse++;
+                                            if($lareponse['id_membre']==$lavis['id_membre']){
+                                                break;
+                                                
+                                            }elseif ($compteur_reponse == count($reponses)) {
+                                                echo '<div role="tooltip" id="infobulle">Non répondu !</div>';
+                                            }
+                                        }
+                                    
+                                        
+                                        
+                                    } 
+                                }
+                                ?>
                                     
                                     
                                     <div class="display-ligne-espace">

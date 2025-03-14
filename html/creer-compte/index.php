@@ -117,7 +117,7 @@ if (!$submitted) {
             </div>
         </div>
         <hr>
-        <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="/cgu/" target="_blank">conditions générales d'utilisation</a> et la <a href="/confidentialité/" target="_blank">politique de confidentialité</a>.</label>
+        <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="/droit/CGU-1.pdf" target="_blank">conditions générales d'utilisation</a>.</label>
         <input type="submit" value="Créer un compte" disabled>
     </form>
 <?php

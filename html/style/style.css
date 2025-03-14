@@ -135,15 +135,6 @@ h3 {
     width: 100%;
 }
 
-/* Logo */
-.connecter img {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    max-width: 63px;
-    max-height: 95px;
-}
-
 /* Titres */
 .connecter h1 {
     margin-top: 0.8em;
@@ -221,7 +212,8 @@ h3 {
 }
 
 /* Bouton */
-.connecter input[type="submit"] {
+.connecter input[type="submit"],
+.creer-compte input[type="submit"] {
     width: 50%;
     height: 73px;
 
@@ -237,7 +229,7 @@ h3 {
     font-style: normal;
     font-weight: 600;
     font-size: 40px;
-    line-height: 50px;
+    line-height: 40px;
 
     text-align: center;
 
@@ -293,7 +285,8 @@ h3 {
 
 /* Transition bouton */
 .connecter button:hover,
-.connecter input[type="submit"]:hover {
+.connecter input[type="submit"]:hover,
+.creer-compte input[type="submit"]:hover {
     background: var(--blanc-leger);
     color: var(--violet-principal);
 }
@@ -1740,12 +1733,14 @@ h3 {
     border: 1px solid black;
 } */
 
-.creer-compte header {
+.creer-compte header,
+.connecter header {
     position: fixed;
     padding: 2rem;
 }
 
-.creer-compte header img {
+.creer-compte header img,
+.connecter header img {
     height: 8rem;
 }
 
@@ -1796,8 +1791,6 @@ h3 {
     margin-top: 5px;
     margin-left: 5px;
 
-    font: inherit;
-
     color: var(--noir);
 }
 
@@ -1810,12 +1803,6 @@ h3 {
 .creer-compte input[type="submit"] {
     width: 100%;
     margin: 1em;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 40px;
-    text-align: center;
-    color: var(--blanc-leger);
-    transition: background 0.5s ease, color 0.5s ease;
 }
 
 .creer-compte input[type="submit"]:enabled {
@@ -1872,7 +1859,6 @@ h3 {
     background: none;
     background-color: lightgray;
     color: dimgray;
-    border: 2px solid lightgray;
 }
 
 .creer-compte #div-name-and-first-name {
@@ -3259,9 +3245,9 @@ h3 {
     background: var(--violet-secondaire);
 }
 
-.consulter-offre-front span {
+/* .consulter-offre-front span {
     color: var(--violet-principal);
-}
+} */
 
 .consulter-offre-front input,
 .consulter-offre-front select {
@@ -3281,6 +3267,7 @@ h3 {
     color: var(--noir);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
+    width: 90%;
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
@@ -4019,10 +4006,16 @@ h3 {
     text-align: center;
     display: inline-block;
 }
-
-.mes-avis .avis-en-exergue:hover  {
-    animation: none;
+#infobulle_non_repondu {
+    color: var(--orange-principale);
+    font-weight: bold;
+    font-size: 15pt;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid var(--orange-principale);
+    display: inline-block;
 }
+
 
 .contenu-aligne-gauche {
     display: flex;
@@ -5089,7 +5082,7 @@ input[type="tel"] {
 
 .toast-container {
     position: fixed;
-    top: 25px;
+    top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
@@ -5220,7 +5213,7 @@ input[type="tel"] {
     }
 
     .connecter h1 {
-        margin-top: 30px;
+        margin-top: 0;
     }
 
     .connecter input[type="email"],
@@ -5237,7 +5230,8 @@ input[type="tel"] {
         width: 90%;
     }
 
-    .creer-compte a {
+    .creer-compte a,
+    .connecter a {
         transform: none;
     }
 
@@ -5316,14 +5310,16 @@ input[type="tel"] {
         padding-bottom: 1.5em;
     }
 
-    .creer-compte header {
+    .creer-compte header,
+    .connecter header{
         position: static;
         display: grid;
         width: 100%;
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
-        padding-bottom: 0;
+        padding: 0;
+        margin: 0;
     }
 
     .creer-compte #div-type-compte {
@@ -5766,10 +5762,6 @@ input[type="tel"] {
         width: 100%;
     }
 
-    .connecter h1 {
-        margin-top: 70px;
-    }
-
     .connecter input[type="submit"] {
         font-size: 30px;
     }
@@ -5783,10 +5775,6 @@ input[type="tel"] {
 }
 
 @media screen and (max-width: 380px) {
-
-    .connecter h1 {
-        margin-top: 130px;
-    }
 
     .liste-front .offre .sous-offre {
         width: 322px;

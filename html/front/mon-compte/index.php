@@ -106,6 +106,7 @@ $reqCompte = "SELECT * from sae.compte_membre
     <main>
         <nav>
             <a class="ici" href="/front/mon-compte">Mes infos</a>
+            <a href="/front/mes-avis/">Mes avis</a>
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
@@ -206,8 +207,10 @@ $reqCompte = "SELECT * from sae.compte_membre
             })
             .then(response => response.text())
             .then(data => {
-                alert(data); // Affiche la réponse du serveur
-                window.location.href = "index.php"; // Redirection après suppression
+                if (data.includes("Compte supprimé avec succès")) {
+                    alert(data); // Affiche la réponse du serveur
+                    window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
+                }
             })
             .catch(error => console.error("Erreur :", error));
         }

@@ -75,19 +75,22 @@ try {
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
 
-            $nbrAvisNonRepondus = 0;
+            $remainingAvis = 0;
 
-            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $nbrAvis = getAvis($row['id_offre']);
-                $nbrReponses = getReponse($row['id_offre']);
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $avisNonLus = getLu($row['id_offre']);
 
-                $nbrAvisNonRepondus += count($nbrAvis) - count($nbrReponses);
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
+                }
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
             <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
-            <?php if ($nbrAvisNonRepondus > 0) { ?>
-                <span class="notification-badge"><?php echo $nbrAvisNonRepondus; ?></span>
+            <?php if ($remainingAvis > 0) { ?>
+                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
         </a>
         <script>
@@ -429,13 +432,17 @@ try {
                 print_r($avisNonLus);
                 echo '</pre>';
 
-                forEach($avisNonLus as $avis) {
-                    if (!empty($avis)) {
-                        if (empty($avis['lu'])) {
-                            $remainingAvis++;
-                        }
-                        $remainingOffres++;
+                $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
+
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                        $hasUnreadAvis = true; // Set the flag to true if an unread review is found
                     }
+                }
+
+                if ($hasUnreadAvis) {
+                    $remainingOffres++; // Increment only if the offer has at least one unread review
                 }
             }
 
@@ -450,23 +457,30 @@ try {
                 while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                     $avisNonLus = getLu($row['id_offre']);
 
-                    forEach($avisNonLus as $avis) {
-                        if (empty($avis['lu'])) {
+                    $remainingAvis = 0; // Reset the counter for each offer
+
+                    foreach ($avisNonLus as $avis) {
+                        if (!empty($avis) && empty($avis['lu'])) {
                             $remainingAvis++;
                         }
                     }
 
-                    if ($remainingAvis > 0) {
+                    if ($remainingAvis == 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
-                            'message' => "Vous avez $remainingAvis avis non lus.",
+                            'message' => "Vous avez $remainingAvis avis non lu.",
+                        ];
+                    } elseif ($remainingAvis > 1) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $remainingAvis avis non lu.",
                         ];
                     }
                 }
             }
 
             $toastsDataJson = json_encode($toastsData);
-        ?>
+            ?>
     </main>
     <footer>
         <div class="footer-top">
