@@ -1502,5 +1502,27 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
 
+-- Création de la fonction d'anonymisation
+CREATE OR REPLACE FUNCTION update_avis_before_delete() RETURNS TRIGGER AS $$
+DECLARE
+	new_id INT;
+BEGIN
+	-- Utiliser le compte anonyme par défaut
+	SELECT id_compte INTO new_id FROM compte_membre
+	WHERE email = 'anonyme@ano.com';
+
+    -- update des avis concernés
+	UPDATE _avis SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+	UPDATE _avis_contient_image SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+
+	RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+-- Création du trigger BEFORE DELETE sur _compte_membre
+CREATE TRIGGER trg_update_avis_on_delete
+BEFORE DELETE ON _compte_membre
+FOR EACH ROW
+EXECUTE FUNCTION update_avis_before_delete();
 
 COMMIT;
