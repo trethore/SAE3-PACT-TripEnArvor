@@ -203,7 +203,8 @@ if ($typeCompte === 'proPrive') {
                     $reponses = getReponse($id_offre); // Récupère la réponse associée à l'offre
                     $avis = getAvis($id_offre);
                     $nb_offres++;
-                
+                    $nb_avis = count($avis);
+                    
                     foreach ($avis as $lavis) {
                         if (!$lavis['lu']) {
                             $nb_non_lu++;
