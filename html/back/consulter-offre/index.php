@@ -871,7 +871,7 @@ try {
             .then(response => response.text())
             .then(data => {
                 document.getElementById("confirmation-popup").style.display = "none";
-                console.log(idOffre, idMembre)
+                console.log(idOffre, idMembre);
                 location.reload();
             })
             .catch(error => console.error("Erreur :", error));
