@@ -235,7 +235,7 @@ try {
                     </div>
 
                     <!-- Contient avis -->
-                    <?php if (isset($_SESSION['id']) && isset($_GET['id'])) { ?>
+                    <?php if (isset($_SESSION['id'])) { ?>
                     <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
