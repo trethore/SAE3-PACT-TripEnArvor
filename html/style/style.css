@@ -5285,7 +5285,8 @@ input[type="tel"] {
         padding-bottom: 1.5em;
     }
 
-    .creer-compte header {
+    .creer-compte header,
+    .connecter header{
         position: static;
         display: grid;
         width: 100%;
