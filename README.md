@@ -88,8 +88,7 @@ Après avoir effectuer ces étapes, le serveur local devrait être prêt.
 
 ### Lancement du serveur
 
-Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez
-`docker compose up && docker compose logs -f`.
+Pour lancer le serveur, ouvrez un terminal dans `docker/` et exécutez :
 
 - Linux (bash) : `docker compose up && docker compose logs -f`.
 - Windows (Powershell) : `docker compose up; if ($?) { docker compose logs -f }`
