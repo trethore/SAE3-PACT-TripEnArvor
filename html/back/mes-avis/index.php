@@ -221,6 +221,14 @@ if ($typeCompte === 'proPrive') {
                             }
                         }
                     }
+                    print_r($avis_lu);
+                    echo "<br>";
+                    print_r($avis_non_lu);
+                    echo "<br>";
+                    print_r($avis_repondu);
+                    echo "<br>";
+                    print_r($avis_non_repondu);
+                    echo "<br>";
                 
                 
                     
