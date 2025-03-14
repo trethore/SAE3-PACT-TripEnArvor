@@ -229,7 +229,7 @@ h3 {
     font-style: normal;
     font-weight: 600;
     font-size: 40px;
-    line-height: 50px;
+    line-height: 40px;
 
     text-align: center;
 
@@ -1803,12 +1803,6 @@ h3 {
 .creer-compte input[type="submit"] {
     width: 100%;
     margin: 1em;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 40px;
-    text-align: center;
-    color: var(--blanc-leger);
-    transition: background 0.5s ease, color 0.5s ease;
 }
 
 .creer-compte input[type="submit"]:enabled {
@@ -1865,7 +1859,6 @@ h3 {
     background: none;
     background-color: lightgray;
     color: dimgray;
-    border: 2px solid lightgray;
 }
 
 .creer-compte #div-name-and-first-name {
