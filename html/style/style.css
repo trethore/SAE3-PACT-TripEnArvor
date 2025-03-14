@@ -1740,7 +1740,8 @@ h3 {
     border: 1px solid black;
 } */
 
-.creer-compte header {
+.creer-compte header,
+.connecter header {
     position: fixed;
     padding: 2rem;
 }
