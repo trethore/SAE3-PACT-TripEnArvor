@@ -3744,7 +3744,24 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
+.consulter-offre-back .fond-blocs-avis-blackliste {
+    background: var(--gris-etoile);
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 15px;
+    color: var(--noir);
+    border: 3px dashed var(--noir);
+}
+
 .consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--blanc);
+    border: 0;
+    cursor: pointer;
+}
+
+.consulter-offre-back .fond-blocs-avis-blackliste > .display-ligne-espace > button {
     width: 25px;
     height: 25px;
     background-color: var(--blanc);
@@ -3979,13 +3996,17 @@ h3 {
     display: inline;
 }
 
-#infobulle {
+#infobulle_nouveau {
     background-color:var(--orange-principale);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
+}
+#infobulle_non_repondu {
+    color: var(--orange-principale);
+    font-weight: bold;
 }
 
 .mes-avis .avis-en-exergue:hover  {

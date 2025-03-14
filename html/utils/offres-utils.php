@@ -543,6 +543,25 @@
             die();
         }
     }
+
+    function getDateBlacklistage($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDateBlacklistage = "SELECT * FROM _avis NATURAL JOIN _blacklister WHERE _blacklister.id_membre = :id_membre AND _blacklister.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDateBlacklistage = $conn->prepare($reqDateBlacklistage);
+            $stmtDateBlacklistage->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateBlacklistage->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtDateBlacklistage->execute();
+            $DateBlacklistage = $stmtDateBlacklistage->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $DateBlacklistage;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
     
 // ===== GESTION DES RÉPONSES ===== //
 
