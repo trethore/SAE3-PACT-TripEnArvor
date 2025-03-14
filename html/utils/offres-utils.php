@@ -506,6 +506,21 @@
         }
     }
 
+    function deleteAvis(int $id_membre, int $id_offre) : void {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisDetaille = "delete_avis(?, ?);";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
+            $stmtAvisDetaille->execute([$id_offre, $id_membre]);
+            $conn = null;
+        } catch (Exception $e) {
+            print" Erreur " .  $e->getFile() . " à la ligne " . $e->getLine() . " : " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     function getInformationsMembre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
