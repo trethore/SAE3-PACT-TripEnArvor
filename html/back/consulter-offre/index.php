@@ -639,9 +639,12 @@ try {
                             'id_offre' => $unAvis['id_offre']
                         ]);
                     }
-                    ?>
-
-                    <div class="fond-blocs-avis">
+                    
+                    if (!empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
+                        <div class="fond-blocs-avis">
+                    <?php } else { ?>
+                        <div class="fond-blocs-avis-blackliste">
+                    <?php } ?>
                         <div class="display-ligne-espace">
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
@@ -655,7 +658,7 @@ try {
                                 </div>
                             </div>
                             <!-- Bouton menu -->
-                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$compteur]['id_compte']; ?>">>
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$compteur]['id_compte']; ?>">
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
@@ -853,7 +856,6 @@ try {
         function validerBlacklister(compteur) {
             // Récupérer les données depuis les attributs data-* du bouton
             const blacklistUrl = "/utils/blacklist.php";
-            console.log(blacklistUrl);
             const button = document.querySelector(`[onclick="afficherMenu(event, this, ${compteur})"]`);
             const idOffre = button.getAttribute('data-id-offre');
             const idMembre = button.getAttribute('data-id-membre');
@@ -865,7 +867,6 @@ try {
             })
             .then(response => response.text())
             .then(data => {
-                alert(data); // Affiche la réponse du serveur
                 document.getElementById("confirmation-popup").style.display = "none";
             })
             .catch(error => console.error("Erreur :", error));
