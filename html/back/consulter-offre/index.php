@@ -198,6 +198,7 @@ try {
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
+    <script src="/scripts/blacklist.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
