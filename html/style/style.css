@@ -5227,7 +5227,8 @@ input[type="tel"] {
         width: 90%;
     }
 
-    .creer-compte a {
+    .creer-compte a,
+    .connecter a {
         transform: none;
     }
 
