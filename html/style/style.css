@@ -212,7 +212,8 @@ h3 {
 }
 
 /* Bouton */
-.connecter input[type="submit"] {
+.connecter input[type="submit"],
+.creer-compte input[type="submit"] {
     width: 50%;
     height: 73px;
 
@@ -284,7 +285,8 @@ h3 {
 
 /* Transition bouton */
 .connecter button:hover,
-.connecter input[type="submit"]:hover {
+.connecter input[type="submit"]:hover,
+.creer-compte input[type="submit"]:hover {
     background: var(--blanc-leger);
     color: var(--violet-principal);
 }
