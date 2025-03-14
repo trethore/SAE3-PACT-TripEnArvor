@@ -411,7 +411,6 @@ try {
 
                 // Filter by Availability
                 const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
-                console.log(availabilityInput);
                 if (availabilityInput) {
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
@@ -481,8 +480,8 @@ try {
 
                 if (selectedValue === "price-asc" || selectedValue === "price-desc") {
                     offers.sort((a, b) => {
-                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
-                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
+                        const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '0').trim());
+                        const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '0').trim());
                         return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
                     });
 
