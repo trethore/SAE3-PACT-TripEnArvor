@@ -640,7 +640,7 @@ try {
                         ]);
                     }
                     
-                    if (!empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
+                    if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
                         <div class="fond-blocs-avis">
                     <?php } else { ?>
                         <div class="fond-blocs-avis-blackliste">
@@ -734,46 +734,48 @@ try {
                                     <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                                 </div>
                             </div>
-                        <?php } else { ?>
-                            <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']) ?>" method="post" enctype="multipart/form-data">
-                                <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
-                                <div class="display-ligne">
-                                    <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
-                                </div>
-                                <button type="submit" name="submit-reponse" value="true">Répondre</button>
-                            </form>
+                        <?php } else { 
+                            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
+                                <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']) ?>" method="post" enctype="multipart/form-data">
+                                    <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
+                                    <div class="display-ligne">
+                                        <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                                    </div>
+                                    <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                                </form>
 
-                            <?php if (isset($_POST['reponse'])) {
-                                $reponse = htmlentities($_POST['reponse']);
-                                print_r($reponse); 
+                                <?php if (isset($_POST['reponse'])) {
+                                    $reponse = htmlentities($_POST['reponse']);
+                                    print_r($reponse); 
 
-                                $publie_le = date('Y-m-d H:i:s');  
+                                    $publie_le = date('Y-m-d H:i:s');  
 
-                                try {
+                                    try {
 
-                                    // Connexion à la base de données
-                                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                        // Connexion à la base de données
+                                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    // Insérer la date de publication
-                                    $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                    $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                                    $stmtInsertionDateReponse->execute([$publie_le]);
-                                    $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
+                                        // Insérer la date de publication
+                                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
+                                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
+                                        $stmtInsertionDateReponse->execute([$publie_le]);
+                                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
 
-                                    // Insérer la réponse liée à l'avis
-                                    $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
-                                    $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                    $stmtInsertionReponse->execute([$unAvis['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
+                                        // Insérer la réponse liée à l'avis
+                                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
+                                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
+                                        $stmtInsertionReponse->execute([$unAvis['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
 
-                                } catch (PDOException $e) {
+                                    } catch (PDOException $e) {
 
-                                    echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
+                                        echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
 
+                                    } 
                                 } 
-                            } ?>
-                        <?php } ?>
+                            }
+                        } ?>
                     </div>
                     <?php
                 }
