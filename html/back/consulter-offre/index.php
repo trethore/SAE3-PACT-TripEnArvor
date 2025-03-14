@@ -667,7 +667,7 @@ try {
                             <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                                 <ul>
                                     <li>Signaler</li>
-                                    <li onclick="confirmerBlacklister(<?php echo $compteur; ?>)">Blacklister</li>
+                                    <li onclick="confirmerBlacklister(this, <?php echo $compteur; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$compteur]['id_compte']); ?>">Blacklister</li>
                                 </ul>
                             </div>
 
@@ -852,17 +852,17 @@ try {
             menu.style.display = "block";
         }
 
-        function confirmerBlacklister(compteur) {
+        function confirmerBlacklister(element, compteur) {
+            const idOffre = element.getAttribute("data-id-offre");
+            const idMembre = element.getAttribute("data-id-membre");
             document.getElementById("confirmation-popup").style.display = "block";
+            document.getElementById("confirm-button").onclick = function() {
+                validerBlacklister(compteur, idOffre, idMembre);
+            };
         }
 
-        function validerBlacklister(compteur) {
-            // Récupérer les données depuis les attributs data-* du bouton
+        function validerBlacklister(compteur, idOffre, idMembre) {
             const blacklistUrl = "/utils/blacklist.php";
-            const button = document.querySelector(`[onclick="afficherMenu(event, this, ${compteur})"]`);
-            const idOffre = button.getAttribute('data-id-offre');
-            const idMembre = button.getAttribute('data-id-membre');
-
             fetch(blacklistUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
