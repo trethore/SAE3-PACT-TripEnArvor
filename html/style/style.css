@@ -3986,13 +3986,17 @@ h3 {
     display: inline;
 }
 
-#infobulle {
+#infobulle_nouveau {
     background-color:var(--orange-principale);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
+}
+#infobulle_non_repondu {
+    color: var(--orange-principale);
+    font-weight: bold;
 }
 
 .mes-avis .avis-en-exergue:hover  {
