@@ -73,6 +73,12 @@ $stmt = $conn->prepare($reqAvis);
 $stmt->execute([$id_compte]);
 $mesAvis = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+foreach ($mesAvis as $key => $avis) {
+    if (avisEstDetaille($avis['id_offre'], $id_compte)) {
+        $mesAvis[$key]['note_detaillee'] = getNotesDetailleeAvis($avis['id_offre'], $id_compte);
+    }
+}
+
 $reqMembre = 'SELECT * FROM sae.compte_membre WHERE id_compte = ?';
 $stmt = $conn->prepare($reqMembre);
 $stmt->execute([$id_compte]);
@@ -134,6 +140,11 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
             });
         </script>
     </header>
+    <!-- <pre>
+<?php
+// print_r($mesAvis);
+?>
+    </pre> -->
     <main class="mes-avis">
         <nav>
             <a href="/front/mon-compte">Mes infos</a>
@@ -191,6 +202,31 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
                                         ?>
                                         <p><em>Visité le <?php echo htmlentities($date); ?></em></p>
                                     </div>
+                                </div>
+                                <div class="display-ligne">
+                                    <?php
+                                    if (isset($lavis['note_detaillee'])) {
+                                        foreach ($lavis['note_detaillee'] as $note_detaillee) {
+                                            ?>
+                                            <div class="display-ligne">
+                                                <p><?php echo($note_detaillee['nom_note']); ?>&nbsp;:</p>
+                                                <?php
+                                                for ($etoileJaune = 0; $etoileJaune < $note_detaillee['note']; $etoileJaune++) {
+                                                    ?>
+                                                    <img src="/images/universel/icones/etoile-jaune.png" alt="Étoile pleine" class="etoile_detail">
+                                                    <?php
+                                                }
+                                                for ($etoileGrise = 0; $etoileGrise < 5 - $note_detaillee['note']; $etoileGrise++) {
+                                                    ?>
+                                                    <img src="/images/universel/icones/etoile-grise.png" alt="Étoile grise" class="etoile_detail">
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </div>
                                 <div class="display-ligne">
                                     <p><?php echo($lavis['commentaire']); ?></p>
