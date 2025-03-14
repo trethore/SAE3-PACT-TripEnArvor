@@ -385,6 +385,7 @@ if ($typeCompte === 'proPrive') {
                         } }?> 
                         
                         <?php 
+                        print_r($avis_non_lu);
                             foreach ($avis_non_lu as $lavis) { 
                                 echo "avis non lus";
                                 ?>
@@ -432,9 +433,7 @@ if ($typeCompte === 'proPrive') {
                             foreach ($avis_non_repondu as $lavis) { 
                                 echo "avis non repondus";
                                 ?>
-                                <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                    
-                                    
+                                <div class="fond-blocs-avis ">
                                     <div class="display-ligne-espace">
                                         <div class="display-ligne">
                                             <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']); echo ' ' ;?></p>
@@ -469,7 +468,8 @@ if ($typeCompte === 'proPrive') {
                                     <br>
                                     <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
                                 </div>
-                        <?php $compteur++; }
+                        <?php $compteur++; 
+                            }
                          
                         ?>
             </div>
