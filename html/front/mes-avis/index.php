@@ -134,11 +134,6 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
             });
         </script>
     </header>
-    <pre>
-<?php
-print_r($mesAvis);
-?>
-    </pre>
     <main class="mes-avis">
         <nav>
             <a href="/front/mon-compte">Mes infos</a>
@@ -167,7 +162,11 @@ print_r($mesAvis);
                             <div class="fond-blocs-avis">                                
                                 
                                 <div class="display-ligne-espace">
-                                    <p class="titre-avis"><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_offre']))) ?> - <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?></strong></p>
+                                    <?php
+                                    preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_publication'], $matches);
+                                    $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
+                                    ?>
+                                    <p><span class="titre-avis"><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_offre']))) ?></span> - Écrit le <?php echo htmlentities($date); ?></p>
                                     <div class="display-ligne">
                                         <div class="display-ligne">
                                             <?php for ($etoileJaune = 0; $etoileJaune < $lavis['note']; $etoileJaune++) { ?>
@@ -182,26 +181,21 @@ print_r($mesAvis);
                                 </div>
 
                                 <div class="display-ligne">
-                                    <?php
-                                    preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_visite'], $matches);
-                                    $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
-                                    ?>
-                                    <span>Visité le <?php echo htmlentities($date); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
+                                    <span><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?></strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
                                 </div>
-                                <?php  ?>
-                                <div class="display-ligne">
-                                    <p><?php echo($lavis['commentaire']); ?></p>
-                                </div>
-
                                 <div class="display-ligne-espace">
                                     <div class="petite-mention">
                                         <?php 
                                         preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_visite'], $matches);
                                         $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
                                         ?>
-                                        <p><em>Écrit le <?php echo htmlentities($date); ?></em></p>
+                                        <p><em>Visité le <?php echo htmlentities($date); ?></em></p>
                                     </div>
                                 </div>
+                                <div class="display-ligne">
+                                    <p><?php echo($lavis['commentaire']); ?></p>
+                                </div>
+
                                 <br>
                                 <a href="/front/consulter-offre/index.php?id=<?php echo $lavis['id_offre'] . '#avis' ?>">Accéder à l&#39;avis</a>
                             </div>

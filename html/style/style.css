@@ -3254,9 +3254,9 @@ h3 {
     background: var(--violet-secondaire);
 }
 
-.consulter-offre-front span {
+/* .consulter-offre-front span {
     color: var(--violet-principal);
-}
+} */
 
 .consulter-offre-front input,
 .consulter-offre-front select {
@@ -3276,6 +3276,7 @@ h3 {
     color: var(--noir);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
+    width: 90%;
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
