@@ -204,7 +204,7 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
                     $nb_avis = count($avis);
-                    
+
                     foreach ($avis as $lavis) {
                         if (!$lavis['lu']) {
                             $nb_non_lu++;
@@ -420,8 +420,11 @@ if ($typeCompte === 'proPrive') {
                          
                         ?>
                         <?php 
+                        echo "avis non repondus";
+
+                        $compteur = 0;
                             foreach ($avis_non_repondu as $lavis) { 
-                                echo "avis non repondus";
+                                
                                 ?>
                                 <div class="fond-blocs-avis ">
                                     <div class="display-ligne-espace">
