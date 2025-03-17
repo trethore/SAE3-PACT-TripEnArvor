@@ -607,14 +607,19 @@ try {
         <?php
             $avisSansReponse = [];
             $avisAvecReponse = [];
+            $toutLesAvis = [];
 
             // Diviser les avis en deux groupes : avec et sans réponse
-            foreach ($avis as $index => $unAvis) {
+            /*foreach ($avis as $index => $unAvis) {
                 if (!empty($reponse[$index]['texte'])) {
                     $avisAvecReponse[] = ['avis' => $unAvis, 'index' => $index];
                 } else {
                     $avisSansReponse[] = ['avis' => $unAvis, 'index' => $index];
                 }
+            }*/
+
+            foreach ($avis as $index => $unAvis) {
+                $toutLesAvis[] = ['avis' => $unAvis, 'index' => $index];
             }
 
             // Fonction pour afficher les avis
@@ -645,6 +650,7 @@ try {
                         <div class="fond-blocs-avis">
                     <?php } else { ?>
                         <div class="fond-blocs-avis-blackliste">
+                        <?php $compteur++; ?>
                     <?php } ?>
                         <div class="display-ligne-espace">
                             <div class="display-ligne">
@@ -759,7 +765,7 @@ try {
             // Afficher ensuite les avis avec réponses
             //afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);*/
 
-            afficherAvis($avis, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+            afficherAvis($toutLesAvis, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                
