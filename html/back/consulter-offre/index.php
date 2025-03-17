@@ -714,7 +714,8 @@ try {
                     <?php }
                 } ?>
             </div>
-            <?php } ?>
+            <?php $compteur++; ?>
+        <?php } ?>
 
         </section>                
          
