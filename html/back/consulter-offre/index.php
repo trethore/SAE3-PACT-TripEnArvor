@@ -690,6 +690,7 @@ try {
                 </div>
 
                 <?php if (empty($reponse)) { 
+                    print_r($reponse);
                     if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
                             <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
                                 <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
