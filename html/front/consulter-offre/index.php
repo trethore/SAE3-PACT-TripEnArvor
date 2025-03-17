@@ -946,7 +946,11 @@ try {
                 <form action="/front/supprimer-avis/" method="post">
                     <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
                     <input type="hidden" name="id-membre" value="<?php echo($_SESSION['id']); ?>">
-                    <span>Voulez-vous vraiment supprimer cet avis&nbsp;?</span>
+                    <h3>Supprimer un avis</h3>
+                    <p>
+                        Voulez-vous vraiment supprimer cet avis&nbsp;?<br>
+                        Cette action est définitive et ne peut pas être annulée.
+                    </p>
                     <div>
                         <button type="button" id="bouton-fermer-popup">Annuler</button>
                         <button type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
