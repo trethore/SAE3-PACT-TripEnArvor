@@ -738,10 +738,10 @@ try {
                         <?php } else { 
                             if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
 
-                                <form id="form-reponse" class="avis-form">
+                                <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $membre[$compteur]['id_compte']; ?>)">
                                     <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
                                     <div class="display-ligne">
-                                        <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                                        <textarea id="texte-reponse-<?php echo $compteur; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
                                     <button onclick="validerReponse(<?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $membre[$compteur]['id_compte']; ?>)">Répondre</button>
                                 </form>
@@ -858,20 +858,32 @@ try {
         });
 
         function validerReponse(event, compteur, idOffre, idMembre) {
-            event.preventDefault(); // Empêche la soumission classique du formulaire
-            const texteReponse = document.getElementById("reponse").value;
+            event.preventDefault(); // Empêche la redirection
+
+            const texteReponse = document.getElementById(`texte-reponse-${compteur}`).value.trim();
             const reponseURL = "/utils/reponse.php";
+            const formData = new URLSearchParams();
+            formData.append("id_offre", idOffre);
+            formData.append("id_membre", idMembre);
+            formData.append("reponse", texteReponse);
+
             fetch(reponseURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `id_offre=${idOffre}&id_membre=${idMembre}&reponse=${encodeURIComponent(texteReponse)}`
+                body: formData.toString()
             })
             .then(response => response.text())
             .then(data => {
-                location.reload();
+                console.log("Réponse envoyée :", data);
+                if (data.includes("Réponse enregistrée avec succès")) {
+                    location.reload(); // Recharge la page si l'insertion a réussi
+                } else {
+                    alert("Erreur lors de l'envoi de la réponse.");
+                }
             })
             .catch(error => console.error("Erreur :", error));
         }
+
 
     </script>
 
