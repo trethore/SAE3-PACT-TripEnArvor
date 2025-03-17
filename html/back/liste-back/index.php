@@ -466,13 +466,13 @@ try {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => $row['id_offre'],
+                            'link' => "/back/consulter-offre/index.php?id=" + $row['id_offre'],
                         ];
                     } elseif ($remainingAvis > 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => $row['id_offre'],
+                            'link' => "/back/consulter-offre/index.php?id=" + $row['id_offre'],
                         ];
                     }
                 }
@@ -518,9 +518,11 @@ try {
         document.addEventListener("DOMContentLoaded", () => {
             function createToast(title, message, link) {
                 // Créer l'élément <a> pour le toast
-                const toastLink = document.createElement("a");
-                toastLink.href = link;
-                toastLink.classList.add("toast-link");
+                if (link != "none") {
+                    const toastLink = document.createElement("a");
+                    toastLink.href = link;
+                    toastLink.classList.add("toast-link");
+                }
 
                 // Créer l'élément toast
                 const toast = document.createElement("div");
