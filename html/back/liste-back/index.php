@@ -518,11 +518,9 @@ try {
         document.addEventListener("DOMContentLoaded", () => {
             function createToast(title, message, link) {
                 // Créer l'élément <a> pour le toast
-                if (link != "none") {
-                    const toastLink = document.createElement("a");
-                    toastLink.href = link;
-                    toastLink.classList.add("toast-link");
-                }
+                const toastLink = document.createElement("a");
+                toastLink.href = link;
+                toastLink.classList.add("toast-link");
 
                 // Créer l'élément toast
                 const toast = document.createElement("div");
