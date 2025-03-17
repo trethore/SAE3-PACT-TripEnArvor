@@ -1484,7 +1484,7 @@ h3 {
     cursor: pointer;
     margin-top: 2.5em;
     align-self: end;
-    
+    margin: 1em;
  }
 
 #delButton:hover {
@@ -1551,7 +1551,7 @@ h3 {
     display: flex;
     flex-direction: column;
     max-width: 50em;
-    width: max-content;
+    width: fit-content;
 }
 
 .compte-front section h3,
