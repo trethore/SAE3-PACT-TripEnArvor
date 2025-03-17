@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
-
+document.addEventListener("DOMContentLoaded", function () {
     const pouceHauts = document.querySelectorAll('.pouceHaut');
     const pouceBas = document.querySelectorAll('.pouceBas');
 
@@ -13,64 +12,74 @@ document.addEventListener("DOMContentLoaded", function() {
             inactif: '/images/universel/icones/pouce-down.png',
         },
     };
-        
-    let etatsPouces = {};
 
-    pouceHauts.forEach((pouceHaut) => {
+    // Function to handle thumb clicks
+    function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, activeImage, inactiveImage, otherActiveImage, otherInactiveImage) {
+        const id = thumb.getAttribute('data-id');
+        console.log(thumb);
+        console.log(otherThumb);
+        console.log(countElement);
+        console.log(otherCountElement);
 
-        pouceHaut.addEventListener('click', () => {
+        // If the thumb is already active, deactivate it
+        if (thumb.src.includes(activeImage)) {
+            thumb.src = inactiveImage;
+            countElement.textContent = parseInt(countElement.textContent) - 1;
+        } else {
+            // Activate the clicked thumb
+            thumb.src = activeImage;
+            countElement.textContent = parseInt(countElement.textContent) + 1;
 
-            const avisId = pouceHaut.getAttribute('data-id');
-            const nbPouceHaut = pouceHaut.previousElementSibling;
-            const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling;
-
-            if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-
-            if (etatsPouces[avisId] === "haut") {
-                nbPouceHaut.textContent = currentHaut - 1;
-                pouceHaut.src = images.haut.inactif;
-                etatsPouces[avisId] = null;
-            } else {
-                nbPouceHaut.textContent = currentHaut + 1;
-                pouceHaut.src = images.haut.actif;
-                if (etatsPouces[avisId] === "bas") {
-                    nbPouceBas.textContent = currentBas - 1;
-                    pouceBas.src = images.bas.inactif;
-                }
-                etatsPouces[avisId] = "haut";
+            // Deactivate the other thumb if it's active
+            if (otherThumb.src.includes(otherActiveImage)) {
+                otherThumb.src = otherInactiveImage;
+                otherCountElement.textContent = parseInt(otherCountElement.textContent) - 1;
             }
+        }
+
+        // Optionally send an AJAX request to update the server
+        // updateThumbCount(id, thumb.classList.contains('pouceHaut') ? 'haut' : 'bas');
+    }
+
+    // Add event listeners for thumbs up
+    pouceHauts.forEach(pouceHaut => {
+        pouceHaut.addEventListener('click', function () {
+            const id = pouceHaut.getAttribute('data-id');
+            const nbPouceHaut = pouceHaut.previousElementSibling; // Count for thumbs up
+            const pouceBas = pouceHaut.nextElementSibling.nextElementSibling; // Thumbs down button
+            const nbPouceBas = pouceBas.previousElementSibling; // Count for thumbs down
+
+            handleThumbClick(
+                pouceHaut,
+                pouceBas,
+                nbPouceHaut,
+                nbPouceBas,
+                images.haut.actif,
+                images.haut.inactif,
+                images.bas.actif,
+                images.bas.inactif
+            );
         });
     });
 
-    pouceBas.forEach((pouceBas) => {
+    // Add event listeners for thumbs down
+    pouceBas.forEach(pouceBas => {
+        pouceBas.addEventListener('click', function () {
+            const id = pouceBas.getAttribute('data-id');
+            const nbPouceBas = pouceBas.previousElementSibling; // Count for thumbs down
+            const pouceHaut = pouceBas.previousElementSibling.previousElementSibling; // Thumbs up button
+            const nbPouceHaut = pouceHaut.previousElementSibling; // Count for thumbs up
 
-        pouceBas.addEventListener('click', () => {
-
-            const avisId = pouceBas.getAttribute('data-id');
-            const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling;
-            const nbPouceBas = pouceBas.previousElementSibling;
-
-            if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-
-            if (etatsPouces[avisId] === "bas") {
-                nbPouceBas.textContent = currentBas - 1;
-                pouceBas.src = images.bas.inactif;
-                etatsPouces[avisId] = null;
-            } else {
-                nbPouceBas.textContent = currentBas + 1;
-                pouceBas.src = images.bas.actif;
-                if (etatsPouces[avisId] === "haut") {
-                    nbPouceHaut.textContent = currentHaut - 1;
-                    pouceHaut.src = images.haut.inactif;
-                }
-                etatsPouces[avisId] = "bas";
-            }
+            handleThumbClick(
+                pouceBas,
+                pouceHaut,
+                nbPouceBas,
+                nbPouceHaut,
+                images.bas.actif,
+                images.bas.inactif,
+                images.haut.actif,
+                images.haut.inactif
+            );
         });
     });
 });

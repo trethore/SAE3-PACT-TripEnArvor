@@ -274,5 +274,24 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
+    <div class="telephone-nav">
+        <div class="nav-content">
+            <a href="/front/accueil">
+                <div class="btOff">
+                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
+                </div>
+            </a>
+            <a href="/front/consulter-offres">
+                <div class="btOff">
+                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
+                </div>
+            </a>
+            <a href="/front/mon-compte">
+                <div class="btOn">
+                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
+                </div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
