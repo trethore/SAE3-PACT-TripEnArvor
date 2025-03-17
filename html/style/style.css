@@ -549,6 +549,14 @@ h3 {
     color: var(--noir);
 }
 
+#popup-supprimer-avis form {
+    background: unset;
+    border: unset;
+    border-radius: unset;
+    padding: unset;
+    align-items: unset;
+}
+
 /* Texte de la popup */
 #validerModifCompte p,
 #annulerModifCompte p,
