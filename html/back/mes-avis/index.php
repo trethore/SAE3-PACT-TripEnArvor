@@ -200,39 +200,30 @@ if ($typeCompte === 'proPrive') {
                 
                 foreach ($touteslesoffres as $offre) { 
                     $id_offre = $offre['id_offre'];
-                    $reponses = getReponse($id_offre);
+                    $reponses = getReponse($id_offre); // Récupère la réponse associée à l'offre
                     $avis = getAvis($id_offre);
                     $nb_offres++;
-
-                    //on compte le nombre total n'avis et on range les avis dans des listes (lu, non lu, repondu, non repondu)
                     $nb_avis = count($avis);
+
                     foreach ($avis as $lavis) {
-                        if($lavis['lu'] == false){
+                        if (!$lavis['lu']) {
                             $nb_non_lu++;
                             $avis_non_lu[] = $lavis;
-                            $avis_non_repondu[] = $lavis;
-                            
-                        }else{
+                            $avis_non_repondu[] = $lavis; // On suppose qu'il n'a pas de réponse
+                        } else {
                             $avis_lu[] = $lavis;
-
-                            $compteur_reponse = 0;
-                                    if (!$reponses) {
-                                        $avis_non_repondu[] = $lavis;
-                                    }else {
-                                        foreach($reponses as $lareponse){    
-                                            $compteur_reponse++;
-                                            if($lareponse['id_membre']==$lavis['id_membre']){
-                                                $avis_repondu[] = $lavis;
-                                                break;
-                                                
-                                            }elseif ($compteur_reponse == count($reponses)) {
-                                                $avis_non_repondu[] = $lavis;;
-                                            }
-                                        }
-                                        
-                                    } 
+                
+                            // Vérifie s'il y a une réponse pour cet avis
+                            if ($reponses && isset($reponses[$lavis['id_membre']])) {
+                                $avis_repondu[] = $lavis;
+                            } else {
+                                $avis_non_repondu[] = $lavis;
+                            }
                         }
                     }
+                    
+                
+                
                     
 
 
@@ -245,7 +236,19 @@ if ($typeCompte === 'proPrive') {
 
                     
                 }
-                    
+                    echo "avis lu : ";
+                    print_r($avis_lu);
+                    echo "<br>";
+                    echo "<br>";echo "<br>";
+                    echo "avis non lu : ";
+                    print_r($avis_non_lu);
+                    echo "<br>";echo "<br>";echo "<br>";
+                    echo "avis repondu : ";
+                    print_r($avis_repondu);
+                    echo "<br>";echo "<br>";echo "<br>";
+                    echo "avis non repondu : ";
+                    print_r($avis_non_repondu);
+                    echo "<br>";echo "<br>";echo "<br>";
                     $nb_offres = 0;
                     if (!$touteslesoffres) { ?>
                         <h2>   
@@ -427,8 +430,11 @@ if ($typeCompte === 'proPrive') {
                          
                         ?>
                         <?php 
+                        echo "avis non repondus";
+
+                        $compteur = 0;
                             foreach ($avis_non_repondu as $lavis) { 
-                                echo "avis non repondus";
+                                
                                 ?>
                                 <div class="fond-blocs-avis ">
                                     <div class="display-ligne-espace">

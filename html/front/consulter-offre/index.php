@@ -811,135 +811,138 @@ try {
 
             $compteur = 0;
 
-            foreach ($avis as $a) { ?>
+            foreach ($avis as $unAvis) { 
 
-                <div class="fond-blocs-avis">
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
 
-                    <div class="display-ligne-espace">
-                        <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
-                        <div class="display-ligne">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
-                            <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                    <div class="fond-blocs-avis">
+
+                        <div class="display-ligne-espace">
+                            <!-- AFFICHAGE DES PSEUDONYMES DES AVIS -->
                             <div class="display-ligne">
+                                <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
+                                <!--AFFICHAGE DES TITRES, DES NOTES ET DES DATES DE PUBLICATION DES AVIS -->
+                                <div class="display-ligne">
 
-                                <?php for ($etoileJaune = 0 ; $etoileJaune != $a['note'] ; $etoileJaune++) { ?>
-
-                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-
-                                <?php } 
-
-                                for ($etoileGrise = 0 ; $etoileGrise != (5 - $a['note']) ; $etoileGrise++) { ?>
-
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-
-                                <?php } ?>
-
-                            </div>
-                        </div>
-                        <!-- Bouton menu -->
-                        <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
-                            <img src="/images/universel/icones/trois-points-violet.png">
-                        </button>
-
-                        <!-- Menu pop-up (ID unique par avis) -->
-                        <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
-                            <ul>
-                                <?php if (isset($_SESSION['id']) && $a['id_membre'] == $_SESSION['id']) { ?>
-                                    <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
-                                <?php } else { ?>
-                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                <?php } ?>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
-                    <div class="display-ligne">
-                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                              $datePass = explode('-', $passage[0]); ?>
-                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($a['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($a['contexte_visite'])); ?></strong></p>
-                    </div>
-
-                    <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
-                    <?php if ($categorie == "Restauration") { ?>
-
-                        <div class="display-ligne">
-
-                            <?php foreach ($noteDetaillee as $n) { ?>
-
-                                <?php if (($n['id_membre'] == $a['id_membre']) && ($n['id_offre'] == $a['id_offre'])) { ?>
-
-                                    <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
-
-                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+                                    <?php for ($etoileJaune = 0 ; $etoileJaune != $unAvis['note'] ; $etoileJaune++) { ?>
 
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
 
                                     <?php } 
 
-                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $unAvis['note']) ; $etoileGrise++) { ?>
 
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
 
                                     <?php } ?>
-                                    <br>
+
+                                </div>
+                            </div>
+                            <!-- Bouton menu -->
+                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                                <img src="/images/universel/icones/trois-points-violet.png">
+                            </button>
+
+                            <!-- Menu pop-up (ID unique par avis) -->
+                            <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
+                                <ul>
+                                    <?php if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { ?>
+                                        <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                    <?php } else { ?>
+                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
+                        <div class="display-ligne">
+                            <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                $datePass = explode('-', $passage[0]); ?>
+                            <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($unAvis['contexte_visite'])); ?></strong></p>
+                        </div>
+
+                        <!--AFFICHAGES DES NOTES DES AVIS POUR LES OFFRES DE RESTAURATION -->
+                        <?php if ($categorie == "Restauration") { ?>
+
+                            <div class="display-ligne">
+
+                                <?php foreach ($noteDetaillee as $n) { ?>
+
+                                    <?php if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { ?>
+
+                                        <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
+
+                                        <?php for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { ?>
+
+                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+
+                                        <?php } 
+
+                                        for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { ?>
+
+                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+
+                                        <?php } ?>
+                                        <br>
+
+                                    <?php } ?>
 
                                 <?php } ?>
 
-                            <?php } ?>
-
-                        </div>
-
-                    <?php } ?>
-
-                    <div class="display-ligne">                        
-
-                        <?php if (isset(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier'])) { ?>
-
-                            <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $a['id_membre'])[0]['lien_fichier']); ?>">
+                            </div>
 
                         <?php } ?>
 
-                        <p><?php echo htmlentities(html_entity_decode(ucfirst($a['commentaire']))); ?></p>
-                    </div>
+                        <div class="display-ligne">                        
 
-                    <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
-                    <div class="display-ligne-espace">
-                        <div class="petite-mention">
-                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                                $datePub = explode('-', $publication[0]); ?>
-                            <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                            <?php if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { ?>
+
+                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
+
+                            <?php } ?>
+
+                            <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
                         </div>
 
-                        <div class="display-ligne">
-                            <p class="nbPouceHaut"><?php echo htmlentities($a['nb_pouce_haut']); ?></p>
-                            <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $compteur; ?>">
+                        <!-- AFFICHAGE DES RÉACTIONS DES AVIS -->
+                        <div class="display-ligne-espace">
+                            <div class="petite-mention">
+                                <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                    $datePub = explode('-', $publication[0]); ?>
+                                <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                            </div>
 
-                            <p class="nbPouceBas"><?php echo htmlentities($a['nb_pouce_bas']); ?></p>
-                            <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $compteur; ?>">
-                        </div>
-                    </div>
-
-                    <?php if(!empty($reponse[$compteur]['texte'])) { ?>
-
-                        <div class="reponse">
                             <div class="display-ligne">
-                                <img src="/images/universel/icones/reponse-violet.png">
-                                <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
-                            </div>
+                                <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
+                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $compteur; ?>">
 
-                            <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
-
-                            <div class="display-ligne marge-reponse petite-mention">
-                                <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
-                                      $dateRep = explode('-', $rep[0]); 
-                                      $heureRep = explode(':', $rep[1]); ?>
-                                <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
+                                <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
+                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $compteur; ?>">
                             </div>
                         </div>
-                    <?php } ?>
-                </div>  
-            <?php $compteur++; 
+
+                        <?php if(!empty($reponse[$compteur]['texte'])) { ?>
+
+                            <div class="reponse">
+                                <div class="display-ligne">
+                                    <img src="/images/universel/icones/reponse-violet.png">
+                                    <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
+                                </div>
+
+                                <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
+
+                                <div class="display-ligne marge-reponse petite-mention">
+                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                        $dateRep = explode('-', $rep[0]); 
+                                        $heureRep = explode(':', $rep[1]); ?>
+                                    <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>  
+                <?php }
+                $compteur++; 
             } ?>  
         </section>        
 
