@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Activate the clicked thumb
             thumb.src = activeImage;
             countElement.textContent = parseInt(countElement.textContent) + 1;
+            console.log(otherThumb);
 
             // Deactivate the other thumb if it's active
             if (otherThumb.src.includes(otherActiveImage)) {
