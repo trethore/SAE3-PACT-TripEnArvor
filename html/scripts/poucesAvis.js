@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-
     const pouceHauts = document.querySelectorAll('.pouceHaut');
     const pouceBas = document.querySelectorAll('.pouceBas');
 
@@ -13,64 +12,44 @@ document.addEventListener("DOMContentLoaded", function() {
             inactif: '/images/universel/icones/pouce-down.png',
         },
     };
-        
-    let etatsPouces = {};
 
-    pouceHauts.forEach((pouceHaut) => {
+    // Function to handle the thumb up click
+    pouceHauts.forEach(pouceHaut => {
+        pouceHaut.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const nbPouceHaut = this.previousElementSibling; // Assuming the count is in the previous sibling element
 
-        pouceHaut.addEventListener('click', () => {
-
-            const avisId = pouceHaut.getAttribute('data-id');
-            const nbPouceHaut = pouceHaut.previousElementSibling;
-            const nbPouceBas = pouceHaut.nextElementSibling.nextElementSibling;
-
-            if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-
-            if (etatsPouces[avisId] === "haut") {
-                nbPouceHaut.textContent = currentHaut - 1;
-                pouceHaut.src = images.haut.inactif;
-                etatsPouces[avisId] = null;
+            // Toggle the active state
+            if (this.src === images.haut.actif) {
+                this.src = images.haut.inactif;
+                nbPouceHaut.textContent = parseInt(nbPouceHaut.textContent) - 1;
             } else {
-                nbPouceHaut.textContent = currentHaut + 1;
-                pouceHaut.src = images.haut.actif;
-                if (etatsPouces[avisId] === "bas") {
-                    nbPouceBas.textContent = currentBas - 1;
-                    pouceBas.src = images.bas.inactif;
-                }
-                etatsPouces[avisId] = "haut";
+                this.src = images.haut.actif;
+                nbPouceHaut.textContent = parseInt(nbPouceHaut.textContent) + 1;
             }
+
+            // You can also send an AJAX request here to update the count on the server
+            // updateThumbCount(id, 'haut');
         });
     });
 
-    pouceBas.forEach((pouceBas) => {
+    // Function to handle the thumb down click
+    pouceBas.forEach(pouceBas => {
+        pouceBas.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const nbPouceBas = this.previousElementSibling; // Assuming the count is in the previous sibling element
 
-        pouceBas.addEventListener('click', () => {
-
-            const avisId = pouceBas.getAttribute('data-id');
-            const nbPouceHaut = pouceBas.previousElementSibling.previousElementSibling;
-            const nbPouceBas = pouceBas.previousElementSibling;
-
-            if (!etatsPouces[avisId]) etatsPouces[avisId] = null;
-
-            let currentHaut = parseInt(nbPouceHaut.textContent);
-            let currentBas = parseInt(nbPouceBas.textContent);
-
-            if (etatsPouces[avisId] === "bas") {
-                nbPouceBas.textContent = currentBas - 1;
-                pouceBas.src = images.bas.inactif;
-                etatsPouces[avisId] = null;
+            // Toggle the active state
+            if (this.src === images.bas.actif) {
+                this.src = images.bas.inactif;
+                nbPouceBas.textContent = parseInt(nbPouceBas.textContent) - 1;
             } else {
-                nbPouceBas.textContent = currentBas + 1;
-                pouceBas.src = images.bas.actif;
-                if (etatsPouces[avisId] === "haut") {
-                    nbPouceHaut.textContent = currentHaut - 1;
-                    pouceHaut.src = images.haut.inactif;
-                }
-                etatsPouces[avisId] = "bas";
+                this.src = images.bas.actif;
+                nbPouceBas.textContent = parseInt(nbPouceBas.textContent) + 1;
             }
+
+            // You can also send an AJAX request here to update the count on the server
+            // updateThumbCount(id, 'bas');
         });
     });
 });
