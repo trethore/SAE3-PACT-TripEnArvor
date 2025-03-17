@@ -1482,10 +1482,9 @@ h3 {
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
-    margin-top: 0.5em;
-    float: right;
-    position: relative;
-    bottom: -3em;
+    margin-top: 2.5em;
+    align-self: end;
+    
  }
 
 #delButton:hover {
@@ -1504,13 +1503,12 @@ h3 {
 .compte-front nav {
     display: flex;
     flex-direction: column;
-
     position: sticky;
     top: 1em;
     background-color: var(--violet-principal);
     border-radius: 15px;
     width: 15em;
-    height: 100vh;
+    height: auto;
     margin-right: 1em;
 }
 
@@ -1550,6 +1548,8 @@ h3 {
     background-color: var(--blanc);
     border-radius: 15px;
     padding: 0 1em 1em;
+    display: flex;
+    flex-direction: column;
 }
 
 .compte-front section h3,
