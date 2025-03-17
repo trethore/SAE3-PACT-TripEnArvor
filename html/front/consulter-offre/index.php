@@ -847,12 +847,13 @@ try {
                         <!-- Menu pop-up (ID unique par avis) -->
                         <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                             <ul>
-                                <?php if (isset($_SESSION['id']) && $a['id_membre'] == $_SESSION['id']) { ?>
+                                <?php if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { ?>
                                     <li id="bouton-supprimer-avis">Supprimer</li>
                                 <?php } else { ?>
                                     <li onclick="handleMenuAction('Signaler')">Signaler</li>
                                 <?php } ?>
                             </ul>
+                        </div>
 
                         <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
                         <div class="display-ligne">
