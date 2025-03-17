@@ -3351,7 +3351,7 @@ h3 {
 }
 
 .consulter-offre-front .titre-avis {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -5479,7 +5479,8 @@ input[type="tel"] {
     .compte-front main>section a,
     .compte-front-modif main>section a {
         padding: 0.4em 1em;
-        font-size: 30pt;
+        font-size: 14pt;
+        text-align: center;
     }
 
     /********************************************
@@ -5647,6 +5648,7 @@ input[type="tel"] {
         flex-direction: column;
         margin: 5% 0;
         padding: 2%;
+        width: auto;
     }
 
     .consulter-offre-front .display-ligne {
@@ -5727,8 +5729,8 @@ input[type="tel"] {
     }
 
     .consulter-offre-front h1 {
-        font-size: 40pt;
-        margin-top: 0;
+        font-size: 33pt;
+        margin-top: 1em;
 
         
     }
