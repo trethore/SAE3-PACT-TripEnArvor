@@ -735,8 +735,8 @@ try {
                                     <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                                 </div>
                             </div>
-                        <?php } else { 
-                            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
+                        <?php } //else { 
+                            //if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
 
                                 <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $membre[$compteur]['id_compte']; ?>)">
                                     <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
@@ -746,8 +746,8 @@ try {
                                     <button type="submit">Répondre</button>
                                 </form>
 
-                            <?php }
-                        } ?>
+                            <?php //}
+                        //} ?>
                     </div>
                     <?php
                 }
