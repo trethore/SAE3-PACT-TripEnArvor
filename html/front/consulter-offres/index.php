@@ -63,7 +63,6 @@ try {
     <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css"/>
     <script src="/lib/leaflet/leaflet.js"></script>
     <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
-
     <script src="map.js"></script>
 </head>
 <body class="front liste-front">
@@ -487,6 +486,7 @@ try {
 
                 // Show/Hide "No Offers" Message
                 noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
+                applyMapFilters();
             };
 
             // Sort Offers

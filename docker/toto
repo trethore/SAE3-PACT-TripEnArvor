@@ -1,0 +1,2092 @@
+Compose now can delegate build to bake for better performances
+Just set COMPOSE_BAKE=true
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 382B done
+#1 DONE 0.0s
+
+#2 [web internal] load metadata for docker.io/library/php:8.2-apache
+#2 DONE 0.6s
+
+#3 [web internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [web 1/8] FROM docker.io/library/php:8.2-apache@sha256:619bc3d00a1789595edc10c1ed86b74618182999e65a464ce5e344eb4315c1a5
+#4 DONE 0.0s
+
+#5 [web internal] load build context
+#5 transferring context: 60B done
+#5 DONE 0.0s
+
+#6 [web 2/8] RUN a2enmod rewrite
+#6 CACHED
+
+#7 [web 4/8] RUN apt-get install -y libpq-dev
+#7 CACHED
+
+#8 [web 6/8] RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
+#8 CACHED
+
+#9 [web 7/8] COPY files/startup /usr/local/bin
+#9 CACHED
+
+#10 [web 3/8] RUN apt-get update
+#10 CACHED
+
+#11 [web 5/8] RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+#11 CACHED
+
+#12 [web 8/8] RUN chmod +x /usr/local/bin/startup
+#12 CACHED
+
+#13 [web] exporting to image
+#13 exporting layers done
+#13 writing image sha256:cc65cc38e3172d886d496b48e926cdbf3408733e8bb9c25ada516a16030baa14 done
+#13 naming to docker.io/library/docker-web done
+#13 DONE 0.0s
+
+#14 [web] resolving provenance for metadata file
+#14 DONE 0.0s
+ web  Built
+ Container postgresdb  Created
+ Container web  Created
+ Container docker-pgadmin-1  Created
+Attaching to pgadmin-1, postgresdb, web
+postgresdb  | 
+postgresdb  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgresdb  | 
+postgresdb  | 2025-03-14 08:47:10.497 UTC [1] LOG:  starting PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgresdb  | 2025-03-14 08:47:10.497 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgresdb  | 2025-03-14 08:47:10.497 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgresdb  | 2025-03-14 08:47:10.503 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgresdb  | 2025-03-14 08:47:10.515 UTC [29] LOG:  database system was interrupted; last known up at 2025-03-14 08:46:48 UTC
+web         | Creation logs/ OK
+web         | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.23.0.4. Set the 'ServerName' directive globally to suppress this message
+web         | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.23.0.4. Set the 'ServerName' directive globally to suppress this message
+web         | [Fri Mar 14 08:47:10.859068 2025] [mpm_prefork:notice] [pid 8:tid 8] AH00163: Apache/2.4.62 (Debian) PHP/8.2.27 configured -- resuming normal operations
+web         | [Fri Mar 14 08:47:10.859124 2025] [core:notice] [pid 8:tid 8] AH00094: Command line: 'apache2 -D FOREGROUND'
+postgresdb  | 2025-03-14 08:47:11.574 UTC [29] LOG:  database system was not properly shut down; automatic recovery in progress
+postgresdb  | 2025-03-14 08:47:11.578 UTC [29] LOG:  redo starts at 0/208A9D8
+postgresdb  | 2025-03-14 08:47:11.578 UTC [29] LOG:  invalid record length at 0/208AA10: expected at least 24, got 0
+postgresdb  | 2025-03-14 08:47:11.578 UTC [29] LOG:  redo done at 0/208A9D8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+postgresdb  | 2025-03-14 08:47:11.583 UTC [27] LOG:  checkpoint starting: end-of-recovery immediate wait
+postgresdb  | 2025-03-14 08:47:11.602 UTC [27] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.005 s, total=0.022 s; sync files=2, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=0 kB; lsn=0/208AA10, redo lsn=0/208AA10
+postgresdb  | 2025-03-14 08:47:11.607 UTC [1] LOG:  database system is ready to accept connections
+pgadmin-1   | [2025-03-14 08:47:14 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:47:14 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:47:14 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:47:14 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:47:18,995: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:47:19,004: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:47:19 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084719'
+pgadmin-1   | [2025-03-14 08:47:19 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:47:19 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:47:19 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:47:19 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 0
+pgadmin-1   | [2025-03-14 08:47:22 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:47:22 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:47:22 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:47:22 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:47:28,259: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:47:28,268: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:47:28 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084728'
+pgadmin-1   | [2025-03-14 08:47:28 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:47:28 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:47:28 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:47:28 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3
+pgadmin-1   | [2025-03-14 08:47:32 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:47:32 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:47:32 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:47:32 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:47:37,592: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:47:37,595: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:47:37 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084737'
+pgadmin-1   | [2025-03-14 08:47:37 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:47:37 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:47:37 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:47:37 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3
+pgadmin-1   | [2025-03-14 08:47:41 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:47:41 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:47:41 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:47:41 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:47:46,841: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:47:46,844: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:47:46 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084746'
+pgadmin-1   | [2025-03-14 08:47:46 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:47:47 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:47:47 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:47:47 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3
+pgadmin-1   | [2025-03-14 08:47:53 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:47:53 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:47:53 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:47:53 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:47:56,423: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:47:56,426: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:47:56 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084756'
+pgadmin-1   | [2025-03-14 08:47:56 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:47:56 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:47:56 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:47:56 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3
+pgadmin-1   | [2025-03-14 08:48:04 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:48:04 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:48:04 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:48:04 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:48:06,807: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:48:06,816: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:48:06 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084806'
+pgadmin-1   | [2025-03-14 08:48:06 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:48:07 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:48:07 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:48:07 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3
+pgadmin-1   | [2025-03-14 08:48:14 +0000] [1] [INFO] Starting gunicorn 22.0.0
+pgadmin-1   | [2025-03-14 08:48:14 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin-1   | [2025-03-14 08:48:14 +0000] [1] [INFO] Using worker: gthread
+pgadmin-1   | [2025-03-14 08:48:14 +0000] [12] [INFO] Booting worker with pid: 12
+pgadmin-1   | 2025-03-14 08:48:19,390: ERROR	pgadmin:	Database migration failed
+pgadmin-1   | 2025-03-14 08:48:19,399: ERROR	pgadmin:	Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | [2025-03-14 08:48:19 +0000] [12] [ERROR] Exception in worker process
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlite3.OperationalError: unable to open database file
+pgadmin-1   | 
+pgadmin-1   | The above exception was the direct cause of the following exception:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 388, in upgrade_db
+pgadmin-1   |     db_upgrade(app)
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/db_upgrade.py", line 25, in db_upgrade
+pgadmin-1   |     flask_migrate.upgrade(migration_folder)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 111, in wrapped
+pgadmin-1   |     f(*args, **kwargs)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/flask_migrate/__init__.py", line 200, in upgrade
+pgadmin-1   |     command.upgrade(config, revision, sql=sql, tag=tag)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/command.py", line 406, in upgrade
+pgadmin-1   |     script.run_env()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/script/base.py", line 586, in run_env
+pgadmin-1   |     util.load_python_file(self.dir, "env.py")
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+pgadmin-1   |     module = load_module_py(module_id, path)
+pgadmin-1   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+pgadmin-1   |     spec.loader.exec_module(module)  # type: ignore
+pgadmin-1   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 95, in <module>
+pgadmin-1   |     run_migrations_online()
+pgadmin-1   |   File "/pgadmin4/pgadmin/setup/../../migrations/env.py", line 79, in run_migrations_online
+pgadmin-1   |     connection = engine.connect()
+pgadmin-1   |                  ^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+pgadmin-1   |     return self._connection_cls(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+pgadmin-1   |     Connection._handle_dbapi_exception_noconnection(
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+pgadmin-1   |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+pgadmin-1   |     self._dbapi_connection = engine.raw_connection()
+pgadmin-1   |                              ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+pgadmin-1   |     return self.pool.connect()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+pgadmin-1   |     return _ConnectionFairy._checkout(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+pgadmin-1   |     fairy = _ConnectionRecord.checkout(pool)
+pgadmin-1   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+pgadmin-1   |     rec = pool._do_get()
+pgadmin-1   |           ^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 308, in _do_get
+pgadmin-1   |     return self._create_connection()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+pgadmin-1   |     return _ConnectionRecord(self)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+pgadmin-1   |     self.__connect()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+pgadmin-1   |     with util.safe_reraise():
+pgadmin-1   |          ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+pgadmin-1   |     raise exc_value.with_traceback(exc_tb)
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+pgadmin-1   |     self.dbapi_connection = connection = pool._invoke_creator(self)
+pgadmin-1   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+pgadmin-1   |     return dialect.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 622, in connect
+pgadmin-1   |     return self.loaded_dbapi.connect(*cargs, **cparams)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   | sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+pgadmin-1   | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+pgadmin-1   | 
+pgadmin-1   | During handling of the above exception, another exception occurred:
+pgadmin-1   | 
+pgadmin-1   | Traceback (most recent call last):
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+pgadmin-1   |     worker.init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/gthread.py", line 95, in init_process
+pgadmin-1   |     super().init_process()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+pgadmin-1   |     self.load_wsgi()
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+pgadmin-1   |     self.wsgi = self.app.wsgi()
+pgadmin-1   |                 ^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+pgadmin-1   |     self.callable = self.load()
+pgadmin-1   |                     ^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+pgadmin-1   |     return self.load_wsgiapp()
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+pgadmin-1   |     return util.import_app(self.app_uri)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/venv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+pgadmin-1   |     mod = importlib.import_module(module)
+pgadmin-1   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+pgadmin-1   |     return _bootstrap._gcd_import(name[level:], package, level)
+pgadmin-1   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+pgadmin-1   |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+pgadmin-1   |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+pgadmin-1   |   File "/pgadmin4/run_pgadmin.py", line 4, in <module>
+pgadmin-1   |     from pgAdmin4 import app
+pgadmin-1   |   File "/pgadmin4/pgAdmin4.py", line 93, in <module>
+pgadmin-1   |     app = create_app()
+pgadmin-1   |           ^^^^^^^^^^^^
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 476, in create_app
+pgadmin-1   |     run_migration_for_sqlite()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 411, in run_migration_for_sqlite
+pgadmin-1   |     upgrade_db()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 393, in upgrade_db
+pgadmin-1   |     backup_db_file()
+pgadmin-1   |   File "/pgadmin4/pgadmin/__init__.py", line 370, in backup_db_file
+pgadmin-1   |     os.rename(SQLITE_PATH, backup_file_name)
+pgadmin-1   | PermissionError: [Errno 13] Permission denied: '/var/lib/pgadmin/pgadmin4.db' -> '/var/lib/pgadmin/pgadmin4.db.20250314084819'
+pgadmin-1   | [2025-03-14 08:48:19 +0000] [12] [INFO] Worker exiting (pid: 12)
+pgadmin-1   | [2025-03-14 08:48:19 +0000] [1] [ERROR] Worker (pid:12) exited with code 3
+pgadmin-1   | [2025-03-14 08:48:19 +0000] [1] [ERROR] Shutting down: Master
+pgadmin-1   | [2025-03-14 08:48:19 +0000] [1] [ERROR] Reason: Worker failed to boot.
+[Kpgadmin-1 exited with code 3

@@ -42,6 +42,9 @@ services:
       - sae
     depends_on:
       - postgresdb
+    user: "${UID}:${GID}"
+
+
 
 networks:
   sae:
