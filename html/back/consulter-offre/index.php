@@ -693,7 +693,7 @@ try {
                         </div>
                         <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))) ?></p>
                         <div class="display-ligne marge-reponse petite-mention">
-                            <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                            <?php $rep = explode(' ', $reponse['date']);
                             $dateRep = explode('-', $rep[0]); ?>
                             <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                         </div>
