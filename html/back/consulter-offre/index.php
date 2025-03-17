@@ -650,6 +650,7 @@ try {
                         <div class="fond-blocs-avis">
                     <?php } else { ?>
                         <div class="fond-blocs-avis-blackliste">
+                        <?php $compteur++ ?>
                     <?php } ?>
                         <div class="display-ligne-espace">
                             <div class="display-ligne">
