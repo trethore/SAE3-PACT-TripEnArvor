@@ -221,14 +221,19 @@ if ($typeCompte === 'proPrive') {
                             }
                         }
                     }
+                    echo "avis lu : ";
                     print_r($avis_lu);
                     echo "<br>";
+                    echo "<br>";echo "<br>";
+                    echo "avis non lu : ";
                     print_r($avis_non_lu);
-                    echo "<br>";
+                    echo "<br>";echo "<br>";echo "<br>";
+                    echo "avis repondu : ";
                     print_r($avis_repondu);
-                    echo "<br>";
+                    echo "<br>";echo "<br>";echo "<br>";
+                    echo "avis repondu : ";
                     print_r($avis_non_repondu);
-                    echo "<br>";
+                    echo "<br>";echo "<br>";echo "<br>";
                 
                 
                     
