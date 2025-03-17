@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pouceBas.addEventListener('click', function () {
             const id = pouceBas.getAttribute('data-id');
             const nbPouceBas = pouceBas.previousElementSibling; // Count for thumbs down
-            const pouceHaut = pouceBas.previousElementSibling.previousElementSibling.previousElementSibling; // Thumbs up button
+            const pouceHaut = pouceBas.previousElementSibling.previousElementSibling; // Thumbs up button
             const nbPouceHaut = pouceHaut.previousElementSibling; // Count for thumbs up
 
             handleThumbClick(
