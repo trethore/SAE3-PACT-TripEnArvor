@@ -273,6 +273,7 @@ try {
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
+    <script src="/scripts/popupAvis.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -847,7 +848,7 @@ try {
                             <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
                                 <ul>
                                     <?php if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { ?>
-                                        <li onclick="handleMenuAction('Supprimer')">Supprimer</li>
+                                        <li id="bouton-supprimer-avis">Supprimer</li>
                                     <?php } else { ?>
                                         <li onclick="handleMenuAction('Signaler')">Signaler</li>
                                     <?php } ?>
@@ -944,6 +945,20 @@ try {
                 <?php }
                 $compteur++; 
             } ?>  
+            <div id="popup-supprimer-avis" style="display: none;">
+                <form action="/front/supprimer-avis/" method="post">
+                    <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
+                    <h3>Supprimer un avis</h3>
+                    <p>
+                        Voulez-vous vraiment supprimer cet avis&nbsp;?<br>
+                        Cette action est définitive et ne peut pas être annulée.
+                    </p>
+                    <div>
+                        <button type="button" id="bouton-fermer-popup">Annuler</button>
+                        <button type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
+                    </div>
+                </form>
+            </div>
         </section>        
 
         <!-- BOUTONS DE NAVIGATION -->
