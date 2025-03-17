@@ -424,7 +424,7 @@ if ($typeCompte === 'proPrive') {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                        <?php $passage = explode(' ', $lavis['datePassage']);
                                         $datePass = explode('-', $passage[0]); ?>
                                         <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                     </div>
@@ -434,7 +434,7 @@ if ($typeCompte === 'proPrive') {
 
                                     <div class="display-ligne-espace">
                                         <div class="petite-mention">
-                                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                            <?php $publication = explode(' ', $lavis['dateAvis']);
                                             $datePub = explode('-', $publication[0]); ?>
                                             <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                                         </div>
@@ -455,7 +455,7 @@ if ($typeCompte === 'proPrive') {
                                 <div class="fond-blocs-avis ">
                                     <div class="display-ligne-espace">
                                         <div class="display-ligne">
-                                            <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']); echo ' ' ;?></p>
+                                            <p class="titre-avis"><?php echo htmlentities($lavis['pseudo']); echo ' ' ;?></p>
                                             <div class="display-ligne">
                                                 <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
                                                     <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
@@ -469,7 +469,7 @@ if ($typeCompte === 'proPrive') {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                        <?php $passage = explode(' ', $lavis['datePassage']);
                                         $datePass = explode('-', $passage[0]); ?>
                                         <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                     </div>
@@ -479,7 +479,7 @@ if ($typeCompte === 'proPrive') {
 
                                     <div class="display-ligne-espace">
                                         <div class="petite-mention">
-                                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                            <?php $publication = explode(' ', $lavis['dateAvis']);
                                             $datePub = explode('-', $publication[0]); ?>
                                             <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                                         </div>
