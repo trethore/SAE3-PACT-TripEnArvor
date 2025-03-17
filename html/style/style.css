@@ -5371,7 +5371,7 @@ input[type="tel"] {
         font-size: 28px;
     }
 
-    .compte-front {
+    .compte-front div{
         padding: none;
     }
 
