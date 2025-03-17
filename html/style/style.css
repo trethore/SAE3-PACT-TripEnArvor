@@ -5359,22 +5359,28 @@ input[type="tel"] {
     }
 
     .creer-offre input[type="url"],
-input[type="tel"] {
-    width: 100%;
-}
+    input[type="tel"] {
+        width: 100%;
+    }
 
-.compte-front {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
+    .compte-front,
+    .mes-avis {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        font-size: 28px;
+    }
 
-.compte-front main {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column-reverse;
-    margin: 0;
-}
+    .compte-front {
+        padding: none;
+    }
+
+    .compte-front main {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin: 0;
+    }
     /********************
             NAV
     *********************/
