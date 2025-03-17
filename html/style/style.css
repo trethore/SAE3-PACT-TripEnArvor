@@ -5519,8 +5519,12 @@ input[type="tel"] {
     .compte-front main>section a,
     .compte-front-modif main>section a {
         padding: 0.4em 1em;
-        font-size: 20px;
+        font-size: 34;
         text-align: center;
+    }
+
+    .compte-front .mes-avis main > section a{
+        font-size: 20;
     }
 
     /********************************************
