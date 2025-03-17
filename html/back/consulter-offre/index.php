@@ -737,13 +737,15 @@ try {
                             </div>
                         <?php } else { 
                             if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
-                                <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']) ?>" method="post" enctype="multipart/form-data">
-                                    <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
+
+                                <form id="form-reponse" class="avis-form">
+                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
                                     <div class="display-ligne">
                                         <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                                    <button type="submit">Répondre</button>
                                 </form>
+
 
                                 <?php if (isset($_POST['reponse'])) {
                                     $reponse = htmlentities($_POST['reponse']);
@@ -884,6 +886,26 @@ try {
         document.addEventListener("click", function() {
             document.querySelectorAll(".popup-menu").forEach(menu => {
                 menu.style.display = "none";
+            });
+        });
+
+        document.getElementById("form-reponse").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            const formData = new FormData(this);
+            
+            fetch("/utils/reponse.php", { 
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text()) // 🔥 On traite la réponse comme du texte brut
+            .then(data => {
+                const message = document.getElementById("message");
+                message.innerHTML = data; // On affiche directement le message envoyé par PHP
+                message.style.color = "green"; // Tu peux ajuster selon la réponse
+            })
+            .catch(error => {
+                console.error("Erreur AJAX :", error);
             });
         });
     </script>
