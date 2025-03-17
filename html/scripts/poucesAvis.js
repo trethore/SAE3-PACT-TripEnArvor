@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to handle thumb clicks
     function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, activeImage, inactiveImage, otherActiveImage, otherInactiveImage) {
         const id = thumb.getAttribute('data-id');
+        console.log(thumb);
+        console.log(otherThumb);
+        console.log(countElement);
+        console.log(otherCountElement);
 
         // If the thumb is already active, deactivate it
         if (thumb.src.includes(activeImage)) {
@@ -25,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Activate the clicked thumb
             thumb.src = activeImage;
             countElement.textContent = parseInt(countElement.textContent) + 1;
-            console.log(otherThumb);
 
             // Deactivate the other thumb if it's active
             if (otherThumb.src.includes(otherActiveImage)) {
