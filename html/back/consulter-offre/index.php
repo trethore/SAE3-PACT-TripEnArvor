@@ -743,7 +743,7 @@ try {
                                     <div class="display-ligne">
                                         <textarea id="texte-reponse-<?php echo $compteur; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button onclick="validerReponse(<?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $membre[$compteur]['id_compte']; ?>)">Répondre</button>
+                                    <button type="submit">Répondre</button>
                                 </form>
 
                             <?php }
