@@ -5380,6 +5380,7 @@ input[type="tel"] {
         flex-wrap: wrap;
         flex-direction: column-reverse;
         margin: 0;
+        background-color: var(--blanc);
     }
     /********************
             NAV
@@ -5390,12 +5391,35 @@ input[type="tel"] {
         top: 0;
 
         position: relative;
-        background-color: var(--violet-principal);
+        background-color: var(--blanc);
         border-radius: 0;
-        width: auto;
+        width: 80%;
         height: auto;
         margin: 0;
+        margin-bottom: 3em;
+        align-self: center;
     }
+
+    #delButton {
+        font-size: 34px;
+        margin: 0;
+    }
+
+    .compte-front #apibutton {
+        font-size: 34px;
+    }
+
+
+
+    .compte-front nav a:first-of-type {
+        display: none;
+        text-decoration: none;
+        color: var(--blanc-leger);
+        background-color: var(--violet-principal);
+        border: 2px solid var(--violet-principal);
+        border-radius: 15px;
+        margin: 1em 0;
+    }    
 
     .mes-avis nav {
         display: none;
@@ -5479,7 +5503,7 @@ input[type="tel"] {
     .compte-front main>section a,
     .compte-front-modif main>section a {
         padding: 0.4em 1em;
-        font-size: 14pt;
+        font-size: 34px;
         text-align: center;
     }
 
