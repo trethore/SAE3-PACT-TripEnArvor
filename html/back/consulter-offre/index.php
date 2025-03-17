@@ -859,14 +859,8 @@ try {
 
         function validerReponse(event, compteur, idOffre, idMembre) {
             event.preventDefault(); // Empêche la redirection
-
             const texteReponse = document.getElementById(`texte-reponse-${compteur}`).value.trim();
             const reponseURL = "/utils/reponse.php";
-            const formData = new URLSearchParams();
-            formData.append("id_offre", idOffre);
-            formData.append("id_membre", idMembre);
-            formData.append("reponse", texteReponse);
-
             fetch(reponseURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -879,7 +873,6 @@ try {
             })
             .catch(error => console.error("Erreur :", error));
         }
-
 
     </script>
 
