@@ -737,45 +737,16 @@ try {
                             </div>
                         <?php } else { 
                             if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
-                                <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']) ?>" method="post" enctype="multipart/form-data">
-                                    <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
+
+                                <form id="form-reponse" class="avis-form">
+                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
                                     <div class="display-ligne">
                                         <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                                    <button type="submit">Répondre</button>
                                 </form>
 
-                                <?php if (isset($_POST['reponse'])) {
-                                    $reponse = htmlentities($_POST['reponse']);
-                                    print_r($reponse); 
-
-                                    $publie_le = date('Y-m-d H:i:s');  
-
-                                    try {
-
-                                        // Connexion à la base de données
-                                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                        // Insérer la date de publication
-                                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                                        $stmtInsertionDateReponse->execute([$publie_le]);
-                                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                                        // Insérer la réponse liée à l'avis
-                                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
-                                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                        $stmtInsertionReponse->execute([$unAvis['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
-
-                                    } catch (PDOException $e) {
-
-                                        echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
-
-                                    } 
-                                } 
-                            }
+                            <?php }
                         } ?>
                     </div>
                     <?php
@@ -884,6 +855,26 @@ try {
         document.addEventListener("click", function() {
             document.querySelectorAll(".popup-menu").forEach(menu => {
                 menu.style.display = "none";
+            });
+        });
+
+        document.getElementById("form-reponse").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            const formData = new FormData(this);
+            
+            fetch("/utils/reponse.php", { 
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text()) // 🔥 On traite la réponse comme du texte brut
+            .then(data => {
+                const message = document.getElementById("message");
+                message.innerHTML = data; // On affiche directement le message envoyé par PHP
+                message.style.color = "green"; // Tu peux ajuster selon la réponse
+            })
+            .catch(error => {
+                console.error("Erreur AJAX :", error);
             });
         });
     </script>
