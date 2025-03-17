@@ -1462,7 +1462,7 @@ h3 {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    margin: 1em;
+    margin: 2em;
 }
 
 .compte-front #apibutton {
@@ -1492,10 +1492,9 @@ h3 {
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
-    margin-top: 0.5em;
-    float: right;
-    position: relative;
-    bottom: -3em;
+    margin-top: 2.5em;
+    align-self: end;
+    margin: 1em;
  }
 
 #delButton:hover {
@@ -1514,13 +1513,12 @@ h3 {
 .compte-front nav {
     display: flex;
     flex-direction: column;
-
     position: sticky;
     top: 1em;
     background-color: var(--violet-principal);
     border-radius: 15px;
-    width: 15em;
-    height: 100vh;
+    width: auto;
+    height: auto;
     margin-right: 1em;
 }
 
@@ -1535,7 +1533,7 @@ h3 {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     margin: 1em 0.5em 1em;
-    padding: 0.5em 1em;
+    padding: 0.5em 3em;
     border: 2px solid var(--violet-principal);
     border-radius: 15px;
     height: 3em;
@@ -1560,6 +1558,10 @@ h3 {
     background-color: var(--blanc);
     border-radius: 15px;
     padding: 0 1em 1em;
+    display: flex;
+    flex-direction: column;
+    max-width: 50em;
+    width: fit-content;
 }
 
 .compte-front section h3,
@@ -1576,7 +1578,7 @@ h3 {
 
 .compte-front table,
 .compte-front-modif table {
-    width: 40em;
+    width: auto;
     border-spacing: 2em 0.5em;
 }
 
@@ -1632,6 +1634,10 @@ h3 {
 .compte-front table+div,
 .compte-front-modif table+div {
     text-align: right;
+}
+
+.compte-front div {
+    margin: 1em;
 }
 
 .compte-front table+div>a,
@@ -2311,7 +2317,6 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    margin-top: 30px;
 }
 
 /* Section supérieure avec le gradient */
@@ -3120,6 +3125,7 @@ h3 {
     background-color: var(--violet-principal);
     padding: 5px 20px;
     border-radius: 8px;
+    width: 180px;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
@@ -3663,7 +3669,7 @@ h3 {
     background-color: var(--orange-principale);
     padding: 5px 20px;
     border-radius: 8px;
-    width: 160px;
+    width: 180px;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
@@ -4006,7 +4012,6 @@ h3 {
 
 .mes-avis .fond-blocs-avis {
     margin: 15px;
-    min-width: 700px;
     display: inline;
 }
 
@@ -4033,7 +4038,6 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
-    min-width: 800px;
 }
 
 .mes-avis h1 {

@@ -198,6 +198,7 @@ try {
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
+    <script src="/scripts/blacklist.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -654,8 +655,7 @@ try {
                                     <?php }
                                     for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php } 
-                                    echo $membre[$compteur]['id_compte'];?>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <!-- Bouton menu -->
@@ -737,45 +737,16 @@ try {
                             </div>
                         <?php } else { 
                             if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
-                                <form id="reponse" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']) ?>" method="post" enctype="multipart/form-data">
-                                    <p class="titre-avis">Répondre à <?php echo htmlentities($membre[$compteur]['pseudo']); ?></p>
+
+                                <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
+                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
                                     <div class="display-ligne">
-                                        <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                                        <textarea id="texte-reponse-<?php echo $compteur; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button type="submit" name="submit-reponse" value="true">Répondre</button>
+                                    <button type="submit">Répondre</button>
                                 </form>
 
-                                <?php if (isset($_POST['reponse'])) {
-                                    $reponse = htmlentities($_POST['reponse']);
-                                    print_r($reponse); 
-
-                                    $publie_le = date('Y-m-d H:i:s');  
-
-                                    try {
-
-                                        // Connexion à la base de données
-                                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                        // Insérer la date de publication
-                                        $reqInsertionDateReponse = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-                                        $stmtInsertionDateReponse = $dbh->prepare($reqInsertionDateReponse);
-                                        $stmtInsertionDateReponse->execute([$publie_le]);
-                                        $idDateReponse = $stmtInsertionDateReponse->fetch(PDO::FETCH_ASSOC)['id_date'];
-
-                                        // Insérer la réponse liée à l'avis
-                                        $reqInsertionReponse = "INSERT INTO sae._reponse(id_membre, id_offre, texte, publie_le) VALUES (?, ?, ?, ?)";
-                                        $stmtInsertionReponse = $dbh->prepare($reqInsertionReponse);
-                                        $stmtInsertionReponse->execute([$unAvis['id_membre'], $id_offre_cible, $reponse, $idDateReponse]);
-
-                                    } catch (PDOException $e) {
-
-                                        echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
-
-                                    } 
-                                } 
-                            }
+                            <?php }
                         } ?>
                     </div>
                     <?php
@@ -783,11 +754,12 @@ try {
             }
 
             // Afficher les avis sans réponses en premier
-            afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+            //afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);*/
 
             // Afficher ensuite les avis avec réponses
-            afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+            //afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);*/
 
+            afficherAvis($avis, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                
@@ -871,7 +843,6 @@ try {
             .then(response => response.text())
             .then(data => {
                 document.getElementById("confirmation-popup").style.display = "none";
-                console.log(idOffre, idMembre);
                 location.reload();
             })
             .catch(error => console.error("Erreur :", error));
@@ -886,6 +857,24 @@ try {
                 menu.style.display = "none";
             });
         });
+
+        function validerReponse(event, compteur, idOffre, idMembre) {
+            event.preventDefault(); // Empêche la redirection
+            const texteReponse = document.getElementById(`texte-reponse-${compteur}`).value.trim();
+            const reponseURL = "/utils/reponse.php";
+            fetch(reponseURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id_offre=${idOffre}&id_membre=${idMembre}&reponse=${texteReponse}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Réponse envoyée :", data);
+                location.reload();
+            })
+            .catch(error => console.error("Erreur :", error));
+        }
+
     </script>
 
 </body>
