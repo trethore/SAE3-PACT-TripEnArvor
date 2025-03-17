@@ -945,7 +945,6 @@ try {
             <div id="popup-supprimer-avis" style="display: none;">
                 <form action="/front/supprimer-avis/" method="post">
                     <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
-                    <input type="hidden" name="id-membre" value="<?php echo($_SESSION['id']); ?>">
                     <h3>Supprimer un avis</h3>
                     <p>
                         Voulez-vous vraiment supprimer cet avis&nbsp;?<br>
