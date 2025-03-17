@@ -400,7 +400,7 @@ if ($typeCompte === 'proPrive') {
                         
                         <?php 
                         print_r($avis_non_lu);
-                        foreach ($touteslesoffre as $offre) {
+                        foreach ($touteslesoffres as $offre) {
                             $id_offre = $offre['id_offre'];
                             $categorie = getTypeOffre($id_offre);
 
