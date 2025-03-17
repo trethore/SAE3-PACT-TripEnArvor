@@ -3013,6 +3013,7 @@ h3 {
     display: flex;
     align-items: center;
     margin: 5px 0;
+    flex-wrap: wrap;
 }
 
 .consulter-offre-front .display-ligne>p {
