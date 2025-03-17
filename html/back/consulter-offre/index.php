@@ -743,7 +743,7 @@ try {
                                     <div class="display-ligne">
                                         <textarea id="reponse" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button type="submit">Répondre</button>
+                                    <button onclick="validerReponse(<?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $membre[$compteur]['id_compte']; ?>)">Répondre</button>
                                 </form>
 
                             <?php }
@@ -842,7 +842,6 @@ try {
             .then(response => response.text())
             .then(data => {
                 document.getElementById("confirmation-popup").style.display = "none";
-                console.log(idOffre, idMembre);
                 location.reload();
             })
             .catch(error => console.error("Erreur :", error));
@@ -858,25 +857,22 @@ try {
             });
         });
 
-        document.getElementById("form-reponse").addEventListener("submit", function(event) {
-            event.preventDefault(); // Empêche le rechargement de la page
-
-            const formData = new FormData(this);
-            
-            fetch("/utils/reponse.php", { 
+        function validerReponse(event, compteur, idOffre, idMembre) {
+            event.preventDefault(); // Empêche la soumission classique du formulaire
+            const texteReponse = document.getElementById("reponse").value;
+            const reponseURL = "/utils/reponse.php";
+            fetch(reponseURL, {
                 method: "POST",
-                body: formData
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id_offre=${idOffre}&id_membre=${idMembre}&reponse=${encodeURIComponent(texteReponse)}`
             })
-            .then(response => response.text()) // 🔥 On traite la réponse comme du texte brut
+            .then(response => response.text())
             .then(data => {
-                const message = document.getElementById("message");
-                message.innerHTML = data; // On affiche directement le message envoyé par PHP
-                message.style.color = "green"; // Tu peux ajuster selon la réponse
+                location.reload();
             })
-            .catch(error => {
-                console.error("Erreur AJAX :", error);
-            });
-        });
+            .catch(error => console.error("Erreur :", error));
+        }
+
     </script>
 
 </body>

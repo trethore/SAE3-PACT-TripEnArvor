@@ -466,13 +466,13 @@ try {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => $row['id_offre'],
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
                         ];
                     } elseif ($remainingAvis > 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => $row['id_offre'],
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
                         ];
                     }
                 }
