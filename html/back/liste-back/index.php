@@ -428,10 +428,6 @@ try {
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
-                echo '<pre>';
-                print_r($avisNonLus);
-                echo '</pre>';
-
                 $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
 
                 foreach ($avisNonLus as $avis) {
@@ -450,6 +446,7 @@ try {
                 $toastsData[] = [
                     'title' => "Avis restants",
                     'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
+                    'link' => "none",
                 ];
             } else {
                 // Sinon, on affiche les toasts individuels
@@ -469,11 +466,13 @@ try {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => $row['id_offre'],
                         ];
                     } elseif ($remainingAvis > 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => $row['id_offre'],
                         ];
                     }
                 }
@@ -517,8 +516,12 @@ try {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Fonction pour créer un nouveau toast
-            function createToast(title, message) {
+            function createToast(title, message, link) {
+                // Créer l'élément <a> pour le toast
+                const toastLink = document.createElement("a");
+                toastLink.href = link;
+                toastLink.classList.add("toast-link");
+
                 // Créer l'élément toast
                 const toast = document.createElement("div");
                 toast.classList.add("toast");
@@ -545,8 +548,9 @@ try {
                 // Créer le bouton de fermeture
                 const closeIcon = document.createElement("i");
                 closeIcon.classList.add("uil", "uil-multiply", "toast-close");
-                closeIcon.addEventListener("click", () => {
-                    toast.remove(); // Supprimer le toast lors du clic
+                closeIcon.addEventListener("click", (e) => {
+                    e.preventDefault(); // Empêcher le comportement par défaut du lien
+                    toastLink.remove(); // Supprimer le toast lors du clic
                 });
 
                 // Créer la barre de progression
@@ -558,9 +562,12 @@ try {
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
 
-                // Ajouter le toast au conteneur
+                // Ajouter le toast à l'élément <a>
+                toastLink.appendChild(toast);
+
+                // Ajouter l'élément <a> au conteneur
                 const toastContainer = document.querySelector(".toast-container");
-                toastContainer.appendChild(toast);
+                toastContainer.appendChild(toastLink);
 
                 // Activer le toast et la barre de progression
                 setTimeout(() => {
@@ -572,7 +579,7 @@ try {
                 setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
-                        toast.remove(); // Supprimer le toast du DOM après l'animation
+                        toastLink.remove(); // Supprimer le toast du DOM après l'animation
                     }, 300); // Attendre la fin de l'animation
                 }, 5000);
 
@@ -586,7 +593,7 @@ try {
             const toastsData = <?php echo $toastsDataJson; ?>;
 
             toastsData.forEach((toast) => {
-                createToast(toast.title, toast.message);
+                createToast(toast.title, toast.message, toast.link);
             });
         });
 
