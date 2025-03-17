@@ -689,7 +689,17 @@ try {
                     </div>
                 </div>
 
-                <?php if (!empty($reponse) && isset($reponse[$compteur]) && $reponse[$compteur]['id_offre'] == $unAvis['id_offre']) { ?>
+                <?php if (empty($reponse)) { 
+                    print_r($reponse);
+                    if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
+                            <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
+                                <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
+                                <div class="display-ligne">
+                                    <textarea id="texte-reponse-<?php echo $compteur; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                                </div>
+                                <button type="submit">Répondre</button>
+                            </form>
+                <?php } else { ?>
                 <div class="reponse">
                     <div class="display-ligne">
                         <img src="/images/universel/icones/reponse-orange.png">
@@ -702,17 +712,8 @@ try {
                         <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                     </div>
                 </div>
-                <?php } else { 
-                    if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$compteur]['id_compte']))) { ?>
-                        <form id="reponse-form-<?php echo $compteur; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $compteur; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
-                            <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
-                            <div class="display-ligne">
-                                <textarea id="texte-reponse-<?php echo $compteur; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
-                            </div>
-                            <button type="submit">Répondre</button>
-                        </form>
-                    <?php }
-                } ?>
+                <?php }
+            } ?>
             </div>
             <?php $compteur++; ?>
         <?php } ?>
