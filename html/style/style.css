@@ -5692,7 +5692,7 @@ input[type="tel"] {
         flex-direction: column;
         margin: 5% 0;
         padding: 2%;
-        width: auto;
+        width: -moz-available;
     }
 
     .consulter-offre-front .display-ligne {
