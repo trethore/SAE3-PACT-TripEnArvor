@@ -754,11 +754,12 @@ try {
             }
 
             // Afficher les avis sans réponses en premier
-            afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+            //afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);*/
 
             // Afficher ensuite les avis avec réponses
-            afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+            //afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);*/
 
+            afficherAvis($avis, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                
