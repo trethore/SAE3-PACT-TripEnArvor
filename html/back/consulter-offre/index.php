@@ -689,7 +689,7 @@ try {
                     </div>
                 </div>
 
-                <?php if (!empty($reponse[$compteur]['texte'])) { ?>
+                <?php if (!empty($reponse) && isset($reponse[$compteur]) && $reponse[$compteur]['id_offre'] == $unAvis['id_offre']) { ?>
                 <div class="reponse">
                     <div class="display-ligne">
                         <img src="/images/universel/icones/reponse-orange.png">
