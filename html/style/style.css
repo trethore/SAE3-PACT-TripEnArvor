@@ -1507,7 +1507,7 @@ h3 {
     top: 1em;
     background-color: var(--violet-principal);
     border-radius: 15px;
-    width: 240px;
+    width: auto;
     height: auto;
     margin-right: 1em;
 }
@@ -1523,7 +1523,7 @@ h3 {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     margin: 1em 0.5em 1em;
-    padding: 0.5em 1em;
+    padding: 0.5em 3em;
     border: 2px solid var(--violet-principal);
     border-radius: 15px;
     height: 3em;
@@ -1568,7 +1568,7 @@ h3 {
 
 .compte-front table,
 .compte-front-modif table {
-    width: max-content;
+    width: auto;
     border-spacing: 2em 0.5em;
 }
 
