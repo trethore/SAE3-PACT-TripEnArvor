@@ -1507,7 +1507,7 @@ h3 {
     top: 1em;
     background-color: var(--violet-principal);
     border-radius: 15px;
-    width: 15em;
+    width: 240px;
     height: auto;
     margin-right: 1em;
 }
@@ -3995,7 +3995,6 @@ h3 {
 
 .mes-avis .fond-blocs-avis {
     margin: 15px;
-    min-width: 700px;
     display: inline;
 }
 
