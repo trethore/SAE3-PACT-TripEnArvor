@@ -205,7 +205,19 @@ if ($typeCompte === 'proPrive') {
                     $nb_offres++;
                     $nb_avis = count($avis);
 
+                      // ===== GESTION DES AVIS ===== //
+                            
+                      $membre = getInformationsMembre($id_offre);
+                      $datePassage = getDatePassage($id_offre);
+                      $dateAvis = getDatePublication($id_offre);
+                      $noteDetaillee = getAvisDetaille($id_offre);
+
                     foreach ($avis as $lavis) {
+                        $lavis['membre'] = $membre;
+                        $lavis['datePassage'] = $datePassage;
+                        $lavis['dateAvis'] = $dateAvis;
+                        $lavis['noteDetaillee'] = $noteDetaillee;
+
                         if (!$lavis['lu']) {
                             $nb_non_lu++;
                             $avis_non_lu[] = $lavis;
@@ -222,6 +234,8 @@ if ($typeCompte === 'proPrive') {
                         }
                     }
                     
+                          
+
                 
                 
                     
@@ -387,6 +401,8 @@ if ($typeCompte === 'proPrive') {
                         <?php 
                         print_r($avis_non_lu);
                             foreach ($avis_non_lu as $lavis) { 
+
+                                
                                 echo "avis non lus";
                                 ?>
                                 <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
