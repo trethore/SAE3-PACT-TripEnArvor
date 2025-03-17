@@ -229,17 +229,74 @@ async function addOffersWithAddresses(offers) {
 
 
 function applyMapFilters() {
-  let offers = allOffers;
+  let offers = [...allOffers];
+
+  // Filter by Category
   const categoryCheckboxes = document.querySelectorAll(".categorie input[type='checkbox']:checked");
   const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.parentElement.textContent.trim());
   if (selectedCategories.length > 0) {
-    offers = offers.filter(offer => {
-      return selectedCategories.includes(offer.categorie);
-    })
+    offers = offers.filter(offer => selectedCategories.includes(offer.categorie));
   }
   
+  // Filter by Availability
+  const availabilityInput = document.querySelector(".disponibilite input[type='checkbox']:checked");
+  if (availabilityInput) {
+    const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
+    offers = offers.filter(offer => {
+      const offerAvailability = offer.ouverture ? offer.ouverture : "";
+      return offerAvailability.toLowerCase() === availability || (availability === "ouvert" && offerAvailability === "ferme bnt.");
+    });
+  }
+
+  // Filter by Note (minimum star rating)
+  const minNoteSelect = document.querySelector(".note");
+  const selectedNote = minNoteSelect.value ? minNoteSelect.selectedIndex : null;
+  if (selectedNote) {
+    offers = offers.filter(offer => offer.note >= selectedNote);
+  }
+
+  const minPrice = parseFloat(document.querySelector(".min").value || "0");
+  const maxPrice = parseFloat(document.querySelector(".max").value || "Infinity");
+  if (minPrice > 0 || maxPrice !== Infinity) {
+    offers = offers.filter(offer => {
+      if (offer.categorie.trim() === "Restauration") {
+        return false;
+      } else {
+        return offer.prix >= minPrice && offer.prix <= maxPrice;
+      }
+    });  
+  }
+  
+  const locationInput = document.querySelector("#search-location");
+  const searchLocation = locationInput ? locationInput.value.trim().toLowerCase() : "";
+  if (searchLocation) {
+    offers = offers.filter(offer =>{
+        const addressParts = [
+          offer.num_et_nom_de_voie,
+          offer.complement_adresse,
+          offer.code_postal,
+          offer.ville,
+          offer.pays
+        ];
+        const address = addressParts.filter(Boolean).join(' ');
+        return address.trim().toLowerCase().includes(searchLocation);
+      });
+  }
+
+  const avisInput = document.querySelector(".oui_avis input[type='checkbox']:checked");
+  if (avisInput) {
+      const contientAvis = avisInput.parentElement.textContent.trim().toLowerCase();
+      offers = offers.filter(offer => {
+          if (typeof offer.avis === 'undefined') {
+            return false;
+          }
+          return contientAvis.toLowerCase() === offer.avis.toLowerCase();
+      });
+  }
+
   updateMap(offers);
 }
+
 
 function updateMap(offers) {
   markerCluster.clearLayers();

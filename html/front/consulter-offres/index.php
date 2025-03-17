@@ -252,6 +252,7 @@ try {
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
                 <?php
                 foreach ($offres as $tab) {
+                    $offres[$tab['id_offre']]['avis'] = "Non";
                     if ((getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre']) || getDateOffreHorsLigne($tab['id_offre']) == null)) {
                     ?>
                         <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
@@ -273,11 +274,15 @@ try {
                                             $ouvert_ferme = date('H:i');
                                             $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
                                             $ouverture = "Fermé";
+                                            $offres[$tab['id_offre']]['ouverture'] = "Fermé"; 
                                             if ($h['nom_jour'] == $jour_actuel) {
                                                 if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
                                                     $ouverture = "Ouvert";
+                                                    $offres[$tab['id_offre']]['ouverture'] = "Ouvert"; 
                                                 } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
                                                     $ouverture = "Ferme Bnt.";
+                                                    $offres[$tab['id_offre']]['ouverture'] = "Ferme Bnt."; 
+
                                                 }
                                             }
                                         } 
@@ -290,6 +295,7 @@ try {
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
                                     <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
                                     <?php
+                                    $offres[$tab['id_offre']]['avis'] = "Non";
                                     if (isset($_SESSION['id'])) {
                                         $idMembres = getIdMembresContientAvis($tab['id_offre']);
                                         $userId = intval($_SESSION['id']);
@@ -299,8 +305,10 @@ try {
                                         echo '<p style="display: none;" class="contientavisspot">';
                                         if (in_array($userId, $idMembresSimplified)) {
                                             echo "Oui";
+                                            $offres[$tab['id_offre']]['avis'] = "Oui";
                                         } else {
                                             echo "Non";
+                                            $offres[$tab['id_offre']]['avis'] = "Non";
                                         }
                                         echo "</p>";
                                     }
