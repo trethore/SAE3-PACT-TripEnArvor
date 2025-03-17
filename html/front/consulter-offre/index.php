@@ -839,20 +839,21 @@ try {
 
                                 </div>
                             </div>
-                        <!-- Bouton menu -->
-                        <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
-                            <img src="/images/universel/icones/trois-points-violet.png">
-                        </button>
+                            <!-- Bouton menu -->
+                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
+                                <img src="/images/universel/icones/trois-points-violet.png">
+                            </button>
 
-                        <!-- Menu pop-up (ID unique par avis) -->
-                        <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
-                            <ul>
-                                <?php if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { ?>
-                                    <li id="bouton-supprimer-avis">Supprimer</li>
-                                <?php } else { ?>
-                                    <li onclick="handleMenuAction('Signaler')">Signaler</li>
-                                <?php } ?>
-                            </ul>
+                            <!-- Menu pop-up (ID unique par avis) -->
+                            <div class="popup-menu" id="popup-menu-<?php echo $compteur; ?>">
+                                <ul>
+                                    <?php if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { ?>
+                                        <li id="bouton-supprimer-avis">Supprimer</li>
+                                    <?php } else { ?>
+                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- AFFICHAGE DES DATES DE PUBLICATION DES AVIS -->
