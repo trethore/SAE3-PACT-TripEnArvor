@@ -5428,6 +5428,10 @@ input[type="tel"] {
     .compte-front nav a {
         display: flex;
         font-size: 30pt;
+        color: var(--blanc-leger);
+        background-color: var(--violet-principal);
+        border: 2px solid var(--violet-principal);
+        border-radius: 15px;
     }
 
 
