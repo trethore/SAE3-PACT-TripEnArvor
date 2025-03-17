@@ -416,7 +416,7 @@ if ($typeCompte === 'proPrive') {
                             echo "avis non lu";
                             foreach ($avis as $lavis) { 
                                 while($compteur != count($avis)){
-                                    if(in_array($lavis, $avis_non_lu)){
+                                    if(in_array($lavis['id_membre'], $avis_non_lu['id_membre'])){
                                         echo "avis non lus";
                                     ?>
                                     <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
@@ -464,7 +464,7 @@ if ($typeCompte === 'proPrive') {
                                 echo "avis non repondu";
                                 foreach ($avis as $lavis) { 
                                     while($compteur != count($avis)){
-                                        if(in_array($lavis, $avis_non_repondu)){
+                                        if(in_array($lavis['id_membre'], $avis_non_repondu['id_membre'])){
                                             echo "avis non lus";
                                         ?>
                                         <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
