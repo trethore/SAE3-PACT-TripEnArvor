@@ -1452,7 +1452,7 @@ h3 {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    margin: 1em;
+    margin: 2em;
 }
 
 .compte-front #apibutton {
@@ -1550,6 +1550,8 @@ h3 {
     padding: 0 1em 1em;
     display: flex;
     flex-direction: column;
+    max-width: 50em;
+    width: max-content;
 }
 
 .compte-front section h3,
@@ -1566,7 +1568,7 @@ h3 {
 
 .compte-front table,
 .compte-front-modif table {
-    width: 40em;
+    width: max-content;
     border-spacing: 2em 0.5em;
 }
 
@@ -1622,6 +1624,10 @@ h3 {
 .compte-front table+div,
 .compte-front-modif table+div {
     text-align: right;
+}
+
+.compte-fron {
+    margin: 1em;
 }
 
 .compte-front table+div>a,
@@ -2299,7 +2305,6 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    margin-top: 30px;
 }
 
 /* Section supérieure avec le gradient */
