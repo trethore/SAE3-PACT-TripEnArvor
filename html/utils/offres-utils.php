@@ -508,7 +508,7 @@
 
     function deleteAvis(int $id_membre, int $id_offre) : void {
         global $driver, $server, $dbname, $user, $pass;
-        $reqAvisDetaille = "delete_avis(?, ?);";
+        $reqAvisDetaille = "SELECT delete_avis(?, ?);";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
