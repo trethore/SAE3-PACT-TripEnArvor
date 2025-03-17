@@ -5368,7 +5368,7 @@ input[type="tel"] {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
-        font-size: 28px;
+        font-size: 20px;
     }
 
     .compte-front div{
@@ -5394,6 +5394,11 @@ input[type="tel"] {
         border-radius: 0;
         width: auto;
         height: auto;
+        margin: 0;
+    }
+
+    .mes-avis nav{
+        display: none;
     }
 
     .compte-front nav a {
