@@ -621,7 +621,7 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
     function getReponse($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqReponse = "SELECT _reponse.texte, _reponse.publie_le FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre WHERE _avis.id_offre = :id_offre AND _reponse.id_membre = :id_membre";
+        $reqReponse = "SELECT _reponse.texte, _date.date FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_offre = :id_offre AND _reponse.id_membre = :id_membre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
