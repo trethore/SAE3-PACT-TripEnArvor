@@ -5174,8 +5174,6 @@ input[type="tel"] {
 .progress::before {
     content: "";
     position: absolute;
-    top: 0; /* Start at the top */
-    left: 0; /* Start at the left */
     height: 100%;
     width: 100%;
     background-color: var(--orange-principale);
