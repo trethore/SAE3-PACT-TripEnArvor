@@ -923,18 +923,18 @@ try {
                             </div>
                         </div>
 
-                        <?php if(!empty($reponse[$compteur]['texte'])) { ?>
-
+                        <?php if(!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) { 
+                            $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])?>
                             <div class="reponse">
                                 <div class="display-ligne">
                                     <img src="/images/universel/icones/reponse-violet.png">
                                     <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                                 </div>
 
-                                <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
+                                <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))) ?></p>
 
                                 <div class="display-ligne marge-reponse petite-mention">
-                                    <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                                    <?php $rep = explode(' ', $reponse['date']);
                                         $dateRep = explode('-', $rep[0]); 
                                         $heureRep = explode(':', $rep[1]); ?>
                                     <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
