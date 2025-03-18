@@ -5188,7 +5188,7 @@ input[type="tel"] {
         transform: scaleX(0); /* Start with no width */
     }
     33% {
-        transform: scaleX(1); /* Expand to full width along the top edge */
+        transform: scaleX(0.8); /* Expand to full width along the top edge */
         transform-origin: left top;
     }
     66% {
