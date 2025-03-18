@@ -238,14 +238,6 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
-// ===== GESTION DES RÉPONSES ===== //
-
-    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
-    $reponse = getReponse($id_offre_cible);
-
-    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
-    $dateReponse = getDatePublicationReponse($id_offre_cible);
-
 // ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
