@@ -5174,12 +5174,12 @@ input[type="tel"] {
 .progress::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; /* Start at the top */
+    left: 0; /* Start at the left */
     height: 100%;
     width: 100%;
     background-color: var(--orange-principale);
-    transform-origin: left;
+    transform-origin: left top; /* Set the origin to the top-left corner */
 }
 
 .progress.active::before {
@@ -5188,19 +5188,19 @@ input[type="tel"] {
 
 @keyframes progress {
     0% {
-        transform: scaleX(0); /* Start from the top-left corner */
+        transform: scaleX(0); /* Start with no width */
     }
     33% {
-        transform: scaleX(1); /* Move along the top edge */
-        transform-origin: left;
+        transform: scaleX(1); /* Expand to full width along the top edge */
+        transform-origin: left top;
     }
     66% {
-        transform: scaleY(1); /* Move along the right edge */
-        transform-origin: top;
+        transform: scaleY(1); /* Expand to full height along the right edge */
+        transform-origin: right top;
     }
     100% {
-        transform: scaleY(1); /* Move along the bottom edge */
-        transform-origin: top;
+        transform: scaleX(1) scaleY(1); /* Expand to full width and height along the bottom edge */
+        transform-origin: right bottom;
     }
 }
 
