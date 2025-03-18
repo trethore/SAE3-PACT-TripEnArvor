@@ -342,7 +342,7 @@ if ($typeCompte === 'proPrive') {
                                 <?php if($lavis['lu'] == false){ echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                 }else{ //si l'avis a ete lu on met sil a une reponse ou pas
                                 
-                                    if (empty(getReponse($id_offre, $membre['id_membre']))) {
+                                    if (empty(getReponse($id_offre, $membre[$compteur]['id']))) {
                                         echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                     }
                                 }
