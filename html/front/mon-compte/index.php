@@ -54,10 +54,10 @@ $reqCompte = "SELECT * from sae.compte_membre
     ?>
 
     <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
@@ -68,8 +68,8 @@ $reqCompte = "SELECT * from sae.compte_membre
             </datalist>
 
         </div>
-        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte"></a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
@@ -255,17 +255,17 @@ $reqCompte = "SELECT * from sae.compte_membre
         <div class="nav-content">
             <a href="/front/accueil">
                 <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png" alt="Accueil">
                 </div>
             </a>
             <a href="/front/consulter-offres">
                 <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png" alt="Rechercher">
                 </div>
             </a>
             <a href="/front/mon-compte">
                 <div class="btOn">
-                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png" alt="Mon compte">
                 </div>
             </a>
         </div>
