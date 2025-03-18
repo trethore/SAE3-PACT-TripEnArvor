@@ -2,7 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
 
@@ -188,6 +187,7 @@ try {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
+    <script src="/scripts/header.js"></script>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
@@ -196,7 +196,7 @@ try {
 
 <body class="back consulter-offre-back">
     
-<header id="header">
+    <header id="header">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -212,34 +212,6 @@ try {
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const inputSearch = document.querySelector(".input-search");
-                const datalist = document.querySelector("#cont");
-                // Événement sur le champ de recherche
-                inputSearch.addEventListener("input", () => {
-                    // Rechercher l'option correspondante dans le datalist
-                    const selectedOption = Array.from(datalist.options).find(
-                        option => option.value === inputSearch.value
-                    );
-                    if (selectedOption) {
-                        const idOffre = selectedOption.getAttribute("data-id");
-                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-                        // Rediriger si un ID valide est trouvé
-                        if (idOffre) {
-                            // TD passer du back au front quand fini
-                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-                        }
-                    }
-                });
-                // Debugging pour vérifier les options disponibles
-                const options = Array.from(datalist.options).map(option => ({
-                    value: option.value,
-                    id: option.getAttribute("data-id")
-                }));
-                //console.log("Options disponibles dans le datalist :", options);
-            });
-        </script>
     </header>
 
     <main id="body">
