@@ -5112,20 +5112,60 @@ input[type="tel"] {
     background: #fff;
     padding: 20px 35px 20px 25px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-left: 8px solid var(--orange-principale);
     overflow: hidden;
     transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);
 }
 
-.toast.active{
+.toast.active {
     transform: translateX(0);
 }
 
-.toast-content{
+.toast-content {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Border animation */
+.toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 8px solid transparent;
+    border-radius: 6px;
+    box-sizing: border-box;
+    animation: borderAnimation 5s linear forwards;
+}
+
+@keyframes borderAnimation {
+    0% {
+        border-top-color: var(--orange-principale);
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    33% {
+        border-top-color: var(--orange-principale);
+        border-right-color: var(--orange-principale);
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+    66% {
+        border-top-color: var(--orange-principale);
+        border-right-color: var(--orange-principale);
+        border-bottom-color: var(--orange-principale);
+        border-left-color: transparent;
+    }
+    100% {
+        border-top-color: var(--orange-principale);
+        border-right-color: var(--orange-principale);
+        border-bottom-color: var(--orange-principale);
+        border-left-color: transparent;
+    }
 }
 
 .message{
