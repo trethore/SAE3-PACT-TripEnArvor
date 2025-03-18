@@ -365,7 +365,7 @@ try {
                         ---------------------------------------->
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
-                            $nbrReponses = getReponse($row['id_offre'], $id_compte);
+                            $nbrReponses = getAllReponses($row['id_offre']);
 
                             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                         ?>
@@ -564,7 +564,7 @@ try {
 
                 // Ajouter le toast à l'élément <a>
                 toastLink.appendChild(toast);
-
+                 
                 // Ajouter l'élément <a> au conteneur
                 const toastContainer = document.querySelector(".toast-container");
                 toastContainer.appendChild(toastLink);
