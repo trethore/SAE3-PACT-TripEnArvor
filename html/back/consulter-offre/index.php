@@ -264,8 +264,8 @@ try {
                     ?>
                 </div>
 
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
 
             </div>
 
@@ -273,7 +273,7 @@ try {
 
                 <div class="display-ligne">
 
-                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
+                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - '; ?></p>
 
                     <div class="display-ligne">
                         <?php 
