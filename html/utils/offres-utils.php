@@ -647,7 +647,7 @@
             $stmtReponse = $conn->prepare($reqReponse);
             $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtReponse->execute();
-            $reponse = $stmtReponse->fetch(PDO::FETCH_ASSOC);
+            $reponse = $stmtReponse->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $reponse;
         } catch (Exception $e) {
