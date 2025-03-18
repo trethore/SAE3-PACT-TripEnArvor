@@ -618,7 +618,7 @@
     
 // ===== GESTION DES RÉPONSES ===== //
 
-    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    // ===== Fonction qui exécute une requête SQL pour récupérer la réponses d'un avis d'une offre ===== //
     function getReponse($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqReponse = "SELECT _reponse.texte, _date.date FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_offre = :id_offre AND _reponse.id_membre = :id_membre";
@@ -628,6 +628,24 @@
             $stmtReponse = $conn->prepare($reqReponse);
             $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtReponse->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtReponse->execute();
+            $reponse = $stmtReponse->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
+    function getAllReponses($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre WHERE _avis.id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtReponse = $conn->prepare($reqReponse);
+            $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtReponse->execute();
             $reponse = $stmtReponse->fetch(PDO::FETCH_ASSOC);
             $conn = null;
