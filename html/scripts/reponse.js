@@ -1,5 +1,5 @@
 function validerReponse(event, compteur, idOffre, idMembre) {
-    event.preventDefault(); // Empêche la redirection
+    event.preventDefault(); 
     const texteReponse = document.getElementById(`texte-reponse-${compteur}`).value.trim();
     const reponseURL = "/utils/reponse.php";
     fetch(reponseURL, {
