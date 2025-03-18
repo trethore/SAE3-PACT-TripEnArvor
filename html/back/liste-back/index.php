@@ -365,7 +365,7 @@ try {
                         ---------------------------------------->
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
-                            $nbrReponses = getReponse($row['id_offre']);
+                            $nbrReponses = getReponse($row['id_offre'], $id_compte);
 
                             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                         ?>
