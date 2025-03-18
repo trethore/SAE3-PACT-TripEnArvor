@@ -366,10 +366,6 @@ try {
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
                             $nbrReponses = getAllReponses($row['id_offre']);
-                            echo '<pre>';
-                            print_r(count($nbrAvis));
-                            print_r($nbrReponses);
-                            echo '</pre>';
 
                             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                         ?>
