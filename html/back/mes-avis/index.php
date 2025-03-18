@@ -121,7 +121,7 @@ if ($typeCompte === 'proPrive') {
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
-    <title>Mon compte</title>
+    <title>Mes Avis</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="back compte-back">
@@ -250,19 +250,7 @@ if ($typeCompte === 'proPrive') {
 
                     
                 }
-                    echo "avis lu : ";
-                    print_r($avis_lu);
-                    echo "<br>";
-                    echo "<br>";echo "<br>";
-                    echo "avis non lu : ";
-                    print_r($avis_non_lu);
-                    echo "<br>";echo "<br>";echo "<br>";
-                    echo "avis repondu : ";
-                    print_r($avis_repondu);
-                    echo "<br>";echo "<br>";echo "<br>";
-                    echo "avis non repondu : ";
-                    print_r($avis_non_repondu);
-                    echo "<br>";echo "<br>";echo "<br>";
+                   
                     $nb_offres = 0;
                     if (!$touteslesoffres) { ?>
                         <h2>   
@@ -388,7 +376,6 @@ if ($typeCompte === 'proPrive') {
                         } }?> 
                         
                         <?php 
-                        print_r($avis_non_lu);
                         foreach ($touteslesoffres as $offre) {
                             $id_offre = $offre['id_offre'];
                             $categorie = getTypeOffre($id_offre);
