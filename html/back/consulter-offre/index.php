@@ -159,14 +159,6 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
-// ===== GESTION DES RÉPONSES ===== //
-
-    // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
-    $reponse = getReponse($id_offre_cible);
-
-    // ===== Fonction qui exécute une requête SQL pour récupérer la date de publication de la réponse à un avis sur une offre ===== //
-    $dateReponse = getDatePublicationReponse($id_offre_cible);
-
 // ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
@@ -199,6 +191,7 @@ try {
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
+    <script src="/scripts/reponse.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -689,16 +682,16 @@ try {
                     </div>
                 </div>
 
-                <?php if (!empty($reponse)) { 
-                    print_r($reponse); ?>
+                <?php if (!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) { 
+                    $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])?>
                     <div class="reponse">
                         <div class="display-ligne">
                             <img src="/images/universel/icones/reponse-orange.png">
                             <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                         </div>
-                        <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse[$compteur]['texte']))) ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))) ?></p>
                         <div class="display-ligne marge-reponse petite-mention">
-                            <?php $rep = explode(' ', $dateReponse[$compteur]['date']);
+                            <?php $rep = explode(' ', $reponse['date']);
                             $dateRep = explode('-', $rep[0]); ?>
                             <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                         </div>
@@ -760,78 +753,6 @@ try {
         </div>
         
     </footer>
-
-    <script>
-        function afficherMenu(event, button, compteur) {
-            event.stopPropagation();
-            const menu = document.getElementById(`popup-menu-${compteur}`);
-            document.querySelectorAll(".popup-menu").forEach(m => {
-                if (m !== menu) m.style.display = "none";
-            });
-
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-                return;
-            }
-
-            const rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.top + window.scrollY - 2}px`;
-            menu.style.left = `${rect.left + window.scrollX - 100}px`;
-            menu.style.display = "block";
-        }
-
-        function confirmerBlacklister(element, compteur) {
-            const idOffre = element.getAttribute("data-id-offre");
-            const idMembre = element.getAttribute("data-id-membre");
-            document.getElementById("confirmation-popup").style.display = "block";
-            document.getElementById("confirmer-blacklister").onclick = function() {
-                validerBlacklister(compteur, idOffre, idMembre);
-            };
-        }
-
-        function validerBlacklister(compteur, idOffre, idMembre) {
-            const blacklistUrl = "/utils/blacklist.php";
-            fetch(blacklistUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `id_offre=${idOffre}&id_membre=${idMembre}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("confirmation-popup").style.display = "none";
-                location.reload();
-            })
-            .catch(error => console.error("Erreur :", error));
-        }
-
-        function annulerBlacklister() {
-            document.getElementById("confirmation-popup").style.display = "none";
-        }
-
-        document.addEventListener("click", function() {
-            document.querySelectorAll(".popup-menu").forEach(menu => {
-                menu.style.display = "none";
-            });
-        });
-
-        function validerReponse(event, compteur, idOffre, idMembre) {
-            event.preventDefault(); // Empêche la redirection
-            const texteReponse = document.getElementById(`texte-reponse-${compteur}`).value.trim();
-            const reponseURL = "/utils/reponse.php";
-            fetch(reponseURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `id_offre=${idOffre}&id_membre=${idMembre}&reponse=${texteReponse}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log("Réponse envoyée :", data);
-                location.reload();
-            })
-            .catch(error => console.error("Erreur :", error));
-        }
-
-    </script>
 
 </body>
 
