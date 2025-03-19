@@ -4014,6 +4014,13 @@ h3 {
     display: inline;
 }
 
+.avis-container {
+    display: flex; /* Utilise flexbox */
+    flex-wrap: wrap; /* Permet le passage à la ligne si nécessaire */
+    gap: 20px; /* Espace entre les avis */
+    justify-content: space-between; /* Répartit les avis */
+}
+
 #infobulle {
     background-color:var(--orange-principale);
     color: white;
@@ -4059,6 +4066,8 @@ h3 {
 .mes-avis h3 {
     color: var(--orange-principale);
 }
+
+
 
 
 /**************************************************************************************
