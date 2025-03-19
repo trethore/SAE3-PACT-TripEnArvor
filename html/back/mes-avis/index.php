@@ -296,7 +296,7 @@ if ($typeCompte === 'proPrive') {
 
                             }
                             if ($nb_non_lu == 0) {
-                                echo  $offre['titre'];
+                                echo  $offre['titre']; ?> </h3> <?php 
                             }
                             else if($nb_non_lu == 1){
                                 echo  $offre['titre']." :  ".$nb_non_lu ." nouvel avis sur l'offre "  ;  ?> </h3> <?php 
