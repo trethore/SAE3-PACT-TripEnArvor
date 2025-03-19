@@ -295,11 +295,13 @@ if ($typeCompte === 'proPrive') {
 
 
                             }
-                            
-                            if($nb_non_lu == 1){
-                                echo $nb_non_lu . " nouvel avis sur l'offre : " . $offre['titre'];  ?> </h3> <?php 
+                            if ($nb_non_lu == 0) {
+                                echo  $offre['titre'];
+                            }
+                            else if($nb_non_lu == 1){
+                                echo  $offre['titre']." :  ".$nb_non_lu ." nouvel avis sur l'offre "  ;  ?> </h3> <?php 
                             }else{
-                                echo $nb_non_lu . " nouveaux avis sur l'offre : " . $offre['titre'];  ?> </h3>
+                                echo $offre['titre']." :  ".$nb_non_lu ." nouveux avis sur l'offre "  ;  ?> </h3>
                             <?php } ?>
                             
 
