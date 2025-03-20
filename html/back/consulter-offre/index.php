@@ -30,53 +30,6 @@ try {
 // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
     $dateMEL = getDateOffreEnLigne($id_offre_cible);
 
-if (isset($_POST['mettre_hors_ligne'])) {
-
-    $date = date('Y-m-d H:i:s');
-
-    if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            //Insertion de la date de mise hors ligne
-            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-            $stmtInsertionDateMHL->execute([$date]);
-            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-        
-            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
-            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'insertion : " . $e->getMessage();
-        }
-    
-    } else if ($dateMHL > $dateMEL) {
-    
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            //Insertion de la date de mise en ligne
-            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-            $stmtInsertionDateMEL->execute([$date]);
-            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
-        
-            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
-            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'insertion : " . $e->getMessage();
-        }
-    }
-} 
-
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -216,35 +169,22 @@ try {
 
     <main id="body">
 
-        <section class=" fond-blocs zone boutons">
+        <section class="fond-blocs zone boutons">
 
-            <div class="display-ligne-espace">
+            <?php 
+            $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
+            $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
+            ?>
+            
+            <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
+                <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
+            </form>
 
-                <div>
-                    <?php 
-                    if (($dateMEL > $dateMHL) || ($dateMHL == null)) { 
-                    ?>
-                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
-                        </form>
-                    <?php 
-                    } else if ($dateMHL > $dateMEL) { 
-                    ?>
-                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
-                        </form>
-                    <?php 
-                    } 
-                    ?>
-                </div>
-
-                <div class="bouton-modif-mise">
-                    <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
-                </div>
-
+            <div class="bouton-modif-mise">
+                <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
             </div>
 
-        </section>  
+        </section> 
 
         <section class="fond-blocs bordure pur">
 
