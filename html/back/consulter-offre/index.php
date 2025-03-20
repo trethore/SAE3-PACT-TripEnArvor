@@ -170,18 +170,20 @@ try {
     <main id="body">
 
         <section class="fond-blocs zone boutons">
-
-            <?php 
-            $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
-            $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
-            ?>
             
-            <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
-                <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
-            </form>
+            <div class="display-ligne">
+                <?php 
+                $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
+                $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
+                ?>
 
-            <div class="bouton-modif-mise">
-                <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
+                    <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
+                </form>
+
+                <div class="bouton-modif-mise">
+                    <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                </div>
             </div>
 
         </section> 
