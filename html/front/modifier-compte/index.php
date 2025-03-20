@@ -37,6 +37,7 @@ $reqCompte = "SELECT * from sae.compte_membre
     <link rel="stylesheet" href="/style/style.css">
     <title>Modifier mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <script src="/scripts/header.js"></script>
 </head>
 
 <body class="front compte-front-modif">
@@ -76,38 +77,6 @@ $reqCompte = "SELECT * from sae.compte_membre
             </div>
             <a href="/front/accueil" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
             <a href="/front/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    const inputSearch = document.querySelector(".input-search");
-                    const datalist = document.querySelector("#cont");
-
-                    // Événement sur le champ de recherche
-                    inputSearch.addEventListener("input", () => {
-                        // Rechercher l'option correspondante dans le datalist
-                        const selectedOption = Array.from(datalist.options).find(
-                            option => option.value === inputSearch.value
-                        );
-
-                        if (selectedOption) {
-                            const idOffre = selectedOption.getAttribute("data-id");
-
-                            //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
-                            // Rediriger si un ID valide est trouvé
-                            if (idOffre) {
-                                window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
-                            }
-                        }
-                    });
-
-                    // Debugging pour vérifier les options disponibles
-                    const options = Array.from(datalist.options).map(option => ({
-                        value: option.value,
-                        id: option.getAttribute("data-id")
-                    }));
-                    //console.log("Options disponibles dans le datalist :", options);
-                });
-            </script>
         </header>
         <main>
             <?php
