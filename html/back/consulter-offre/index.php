@@ -700,7 +700,7 @@ try {
                     if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
                 ?>
                         <form id="reponse-form-<?php echo $identifiant; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
-                            <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
+                            <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo $membre[$identifiant]['pseudo']; ?></span></p>
 
                             <div class="display-ligne">
                                 <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>

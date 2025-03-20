@@ -3921,15 +3921,16 @@ h3 {
 
 .consulter-offre-back textarea {
     background: var(--blanc);
-    border: 1px solid var(--gris);
-    border-radius: 12px;
+    border: 1px solid var(--noir);
+    border-radius: 6px;
     width: 100%;
     height: 60px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
+    resize: none;
 }
 
-.consulter-offre-back #reponse > button {
+.consulter-offre-back .avis-form > button {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
@@ -3938,7 +3939,7 @@ h3 {
     border: 0;
 }
 
-.consulter-offre-back #reponse > button:hover {
+.consulter-offre-back .avis-form > button:hover {
     background-color: var(--orange-secondaire-2);
 }
 
