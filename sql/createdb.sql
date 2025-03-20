@@ -27,8 +27,7 @@ CREATE TABLE _date (
 
 CREATE TABLE _abonnement (
     nom_abonnement     VARCHAR(63),
-    CONSTRAINT _abonnement_pk
-        PRIMARY KEY (nom_abonnement)
+    CONSTRAINT _abonnement_pk PRIMARY KEY (nom_abonnement)
 );
 
 
@@ -159,8 +158,8 @@ CREATE TABLE _offre (
     site_web                VARCHAR(255),
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
-    abonnement          VARCHAR(63) NOT NULL,
-    nb_jetons               INTEGER,
+    abonnement              VARCHAR(63) NOT NULL,
+    /*nb_jetons               INTEGER CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL)),*/
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
     CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
