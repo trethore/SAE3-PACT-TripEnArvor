@@ -3127,6 +3127,7 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
+    text-align: center;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
@@ -3553,6 +3554,7 @@ h3 {
     padding: 5px 15px;
     border-radius: 8px;
     border: 0;
+    width: 145px;
 }
 
 .consulter-offre-back .bouton-modif-mise > button:hover {
@@ -3671,6 +3673,7 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
+    text-align: center;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
