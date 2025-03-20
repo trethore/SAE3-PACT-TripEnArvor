@@ -169,7 +169,7 @@ try {
 
     <main id="body">
 
-        <section class="fond-blocs zone boutons">
+        <section class="fond-blocs zone-boutons">
             
             <div class="display-ligne">
                 <?php 
