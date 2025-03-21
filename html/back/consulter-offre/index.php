@@ -201,12 +201,12 @@ try {
                         <?php
                         for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
                         ?>
-                            <img class="etoile" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
+                            <img class="jeton" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
                         <?php
                         }
                         for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
                         ?>
-                            <img class="etoile" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
+                            <img class="jeton" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
                         <?php
                             }
                         ?>
