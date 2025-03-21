@@ -566,18 +566,25 @@ try {
                 // if (file_exists($target_file)) {
                 //     die("Erreur : Le fichier existe déjà dans le répertoire.");
                 // }
-                    
 
+                
+                if ($abonnement == "premium") {
+                    $nb_jetons = 3;
+                } else {
+                    $nb_jetons = null;
+                }
+                    
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
                         // $dbh->beginTransaction();
 
 
-                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, nb_jetons, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement, $id_adresse]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement, $nb_jetons, $id_adresse]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -625,10 +632,10 @@ try {
                             $stmt_plan->execute([$fichier_plan]);
 
                         }
-                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, nb_jetons, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement, $id_adresse]);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement, $nb_jetons, $id_adresse]);
                            
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -670,10 +677,10 @@ try {
                                 }
                             
                                 // Insertion dans la vue offre_spectacle
-                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement, id_adresse)
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, nb_jetons, date_evenement, id_adresse)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent, $id_adresse]); 
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $nb_jetons, $idDateEvent, $id_adresse]); 
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -738,10 +745,10 @@ try {
                             }
                         
                             // Insertion dans la table offre_visite
-                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement, id_adresse)
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, nb_jetons, date_evenement, id_adresse)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent, $id_adresse]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $nb_jetons, $idDateEvent, $id_adresse]);
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
@@ -804,9 +811,9 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, nb_jetons, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $id_adresse]); 
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $nb_jetons, $id_adresse]); 
 
 
                         }
