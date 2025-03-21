@@ -2963,7 +2963,7 @@ h3 {
 }
 
 .consulter-offre-front h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--violet-principal);
     margin: 5px 0;
@@ -3387,6 +3387,7 @@ h3 {
 .consulter-offre-front .pouce {
     width: 20px;
     height: 20px;
+    margin: 0 5px 0 2px;
 }
 
 /* Style réponse avis */
@@ -3470,7 +3471,7 @@ h3 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .consulter-offre-back p {
@@ -3478,7 +3479,7 @@ h3 {
 }
 
 .consulter-offre-back h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--orange-principale);
     margin: 5px 0;
@@ -5715,7 +5716,7 @@ input[type="tel"] {
     }
 
     .consulter-offre-front h1 {
-        font-size: 58px;
+        font-size: 40px;
         text-align: center;
     }
 
