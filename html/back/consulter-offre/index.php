@@ -1,4 +1,4 @@
-<?php
+<div?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . OFFRES_UTILS);
@@ -170,39 +170,52 @@ try {
     <main id="body">
 
         <section class="fond-blocs zone-boutons">
-            
-            <div class="display-ligne">
-                <?php 
-                $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
-                $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
-                ?>
-
-                <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
-                    <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
-                </form>
-
-                <div class="bouton-modif-mise">
-                    <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
-                </div>
-            </div>
 
             <?php
             if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
             ?>
+                <div class="display-ligne-espace">
+            <?php
+            }
+            ?>
+            
                 <div class="display-ligne">
-                    <?php
-                    for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
+                    <?php 
+                    $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
+                    $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
                     ?>
-                        <img class="etoile" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
-                    <?php
-                    }
-                    for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
-                    ?>
-                        <img class="etoile" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
-                    <?php
+
+                    <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
+                        <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
+                    </form>
+
+                    <div class="bouton-modif-mise">
+                        <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                    </div>
+                </div>
+
+                <?php
+                if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+                ?>
+                    <div class="display-ligne">
+                        <?php
+                        for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
+                        ?>
+                            <img class="etoile" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
+                        <?php
                         }
-                    ?>
-                    <p class="petite-mention">Vous avez <?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</p>
+                        for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
+                        ?>
+                            <img class="etoile" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
+                        <?php
+                            }
+                        ?>
+                        <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</em></p>
+                    </div>
+            <?php
+                }
+            if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+            ?>
                 </div>
             <?php
             }
