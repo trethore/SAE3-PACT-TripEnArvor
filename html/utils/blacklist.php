@@ -17,19 +17,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($id_offre) && isset($id_membre)) {
 
-        try {
-            //Connexion à la base de données
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        if (getOffre($id_offre)['nb_jetons'] > 0) {
 
-            //Insertion de la date de blacklistage
-            $reqInsertionDateBlacklist = "INSERT INTO sae._blacklister(id_offre, id_membre, blackliste_le) VALUES (?, ?, ?)";
-            $stmtInsertionDateBlacklist = $dbh->prepare($reqInsertionDateBlacklist);
-            $stmtInsertionDateBlacklist->execute([$id_offre, $id_membre, $dateBlacklist]);
+            $nb_jetons = getOffre($id_offre)['nb_jetons'] - 1;
 
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'insertion : " . $e->getMessage();
+            try {
+                //Connexion à la base de données
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                //Insertion de la date de blacklistage
+                $reqInsertionDateBlacklist = "INSERT INTO sae._blacklister(id_offre, id_membre, blackliste_le) VALUES (?, ?, ?)";
+                $stmtInsertionDateBlacklist = $dbh->prepare($reqInsertionDateBlacklist);
+                $stmtInsertionDateBlacklist->execute([$id_offre, $id_membre, $dateBlacklist]);
+
+                //Update du nombre de jetons de blacklistage
+                $reqUpdateJetons = "UPDATE sae._offre SET nb_jetons = :nb_jetons WHERE id_offre = :id_offre";
+                $stmtUpdateJetons = $dbh->prepare($reqUpdateJetons);
+                $stmtUpdateJetons->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
+
+            } catch (PDOException $e) {
+                echo "Erreur lors de l'insertion : " . $e->getMessage();
+            }
         }
     }
 }
