@@ -322,6 +322,25 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour déterminer le type d'abonnement d'une offre ===== //
+    function getCompteTypeAbonnement($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTypeAbonnement = "SELECT abonnement FROM sae._offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtTypeAbonnement = $conn->prepare($reqTypeAbonnement);
+            $stmtTypeAbonnement->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTypeAbonnement->execute();
+            $resultat = $stmtTypeAbonnement->fetchColumn();
+            $conn = null;
+            return $resultat;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 // ===== GESTION DES ADRESSES ===== //
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
@@ -363,7 +382,6 @@
             die();
         }
     }
-
 
 // ===== GESTION DES TAGS ===== //
 

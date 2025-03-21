@@ -532,7 +532,13 @@ try {
                         <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                             <ul>
                                 <li>Signaler</li>
-                                <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                <?php
+                                if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+                                ?>
+                                    <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                <?php 
+                                }
+                                ?>
                             </ul>
                         </div>
 
