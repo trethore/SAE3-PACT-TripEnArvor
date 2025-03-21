@@ -186,20 +186,27 @@ try {
                 </div>
             </div>
 
-            <div class="display-ligne">
-                <?php
-                for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
-                ?>
-                    <img class="etoile" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
-                <?php
-                }
-                for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
-                ?>
-                    <img class="etoile" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
-                <?php
-                }
-                ?>
-            </div>
+            <?php
+            if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+            ?>
+                <div class="display-ligne">
+                    <?php
+                    for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
+                    ?>
+                        <img class="etoile" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
+                    <?php
+                    }
+                    for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
+                    ?>
+                        <img class="etoile" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
+                    <?php
+                        }
+                    ?>
+                    <p class="petite-mention">Vous avez <?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</p>
+                </div>
+            <?php
+            }
+            ?>
 
         </section> 
 
