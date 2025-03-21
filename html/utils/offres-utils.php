@@ -486,6 +486,43 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour vérifier si un avis est blacklisté ===== //
+    function isAvisBlackliste($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisBlackliste = "SELECT EXISTS (SELECT 1 FROM sae._blacklister WHERE id_offre = :id_offre AND id_membre = :id_membre)";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisBlackliste = $conn->prepare($reqAvisBlackliste);
+            $stmtAvisBlackliste->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAvisBlackliste->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtAvisBlackliste->execute();
+            $avisBlackliste = $stmtAvisBlackliste->fetchColumn();
+            $conn = null;
+            return $avisBlackliste;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }    
+
+    // ===== Fonction qui exécute une requête SQL pour mettre à jour le nombre de jetons de blacklistage d'une offre (+1) ===== //
+    function updateJetons($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqUpdateJetons = "UPDATE sae._offre SET nb_jetons = :nb_jetons WHERE id_offre = :id_offre";
+        $nb_jetons = getOffre($id_offre)['nb_jetons'] + 1;
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtUpdateJetons = $conn->prepare($reqUpdateJetons);
+            $stmtUpdateJetons->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
+            $conn = null;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }   
+
     function avisEstDetaille(int $id_offre, int $id_compte) : bool {
         global $driver, $server, $dbname, $user, $pass;
         $reqAvisDetaille = "SELECT COUNT(*) FROM sae._note_detaillee WHERE _note_detaillee.id_membre = ? AND _note_detaillee.id_offre = ?;";

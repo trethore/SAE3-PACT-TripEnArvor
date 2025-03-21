@@ -564,18 +564,24 @@ try {
                             <img src="/images/universel/icones/trois-points-orange.png">
                         </button>
 
-                        <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
-                            <ul>
-                                <li>Signaler</li>
-                                <?php
-                                if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && ($offre['nb_jetons'] > 0)) {
-                                ?>
-                                    <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
-                                <?php 
-                                }
-                                ?>
-                            </ul>
-                        </div>
+                        <?php
+                        if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                        ?>
+                            <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
+                                <ul>
+                                    <li>Signaler</li>
+                                    <?php
+                                    if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && ($offre['nb_jetons'] > 0)) {
+                                    ?>
+                                        <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                    <?php 
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
                         <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
 
