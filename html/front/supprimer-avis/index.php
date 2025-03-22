@@ -13,11 +13,10 @@ else if (!isset($_POST['id-offre'])) {
 }
 else {
     try {
-        deleteAvis(intval($_SESSION['id']), intval($_POST['id-offre']));
-
         if (isAvisBlackliste(intval($_POST['id-offre']), intval($_SESSION['id']))) {
             updateJetons(intval($_POST['id-offre']));
         }
+        deleteAvis(intval($_SESSION['id']), intval($_POST['id-offre']));
     }
     catch (Exception $exception) {
         http_response_code(500);
