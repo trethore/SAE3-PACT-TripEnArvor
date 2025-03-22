@@ -58,10 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `id_offre=${id_offre}`
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            location.reload();
+            if (data.success) {
+                location.reload();
+            }
         })
         .catch(error => console.error("Erreur :", error));
-    }, 30000); // Toutes les minutes
+    }, 10000); // Toutes les 10 secondes
 });
