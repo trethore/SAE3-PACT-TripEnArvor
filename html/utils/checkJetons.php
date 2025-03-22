@@ -29,9 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtUpdateJetonDate = $dbh->prepare($reqUpdateJetonDate);
                 $stmtUpdateJetonDate->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
 
+                echo json_encode(['success' => true]);
+
             } catch (PDOException $e) {
                 echo "Erreur lors de l'insertion : " . $e->getMessage();
             }
+            
+        } else {
+            echo json_encode(['success' => false]);
         }
     }
 }
