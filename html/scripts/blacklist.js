@@ -35,7 +35,6 @@ function validerBlacklister(compteur, idOffre, idMembre) {
     .then(response => response.text())
     .then(data => {
         document.getElementById("confirmation-popup").style.display = "none";
-        console.log(idOffre, idMembre);
         location.reload();
     })
     .catch(error => console.error("Erreur :", error));
@@ -50,3 +49,17 @@ document.addEventListener("click", function() {
         menu.style.display = "none";
     });
 });
+
+const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
+setInterval(() => {
+    fetch('/utils/checkJetons.php', {
+        method: "POST", 
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${id_offre}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        location.reload();
+    })
+    .catch(error => console.error("Erreur :", error));
+}, 30000); // Toutes les minutes

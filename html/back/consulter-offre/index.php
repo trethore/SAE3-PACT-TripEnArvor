@@ -149,7 +149,7 @@ try {
 
 <body class="back consulter-offre-back">
     
-    <header id="header">
+    <header id="header" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
