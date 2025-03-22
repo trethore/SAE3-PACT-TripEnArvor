@@ -14,7 +14,9 @@ else if (!isset($_POST['id-offre'])) {
 else {
     try {
         if (isAvisBlackliste(intval($_POST['id-offre']), intval($_SESSION['id']))) {
-            updateJetons(intval($_POST['id-offre']));
+            if (getOffre($_POST['id-offre'])['nb_jetons'] < 3) {
+                updateJetons(intval($_POST['id-offre']));
+            }
         }
         deleteAvis(intval($_SESSION['id']), intval($_POST['id-offre']));
     }
