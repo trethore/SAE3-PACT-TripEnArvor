@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($id_offre)) {
 
+        echo json_encode(['success' => false]);
+
         if (getOffre($id_offre)['nb_jetons'] < 3) {
 
             $nb_jetons = getOffre($id_offre)['nb_jetons'] + 1;
@@ -34,9 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } catch (PDOException $e) {
                 echo "Erreur lors de l'insertion : " . $e->getMessage();
             }
-            
-        } else {
-            echo json_encode(['success' => false]);
-        }
+        } 
     }
 }
