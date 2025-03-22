@@ -37,6 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtUpdateJetons = $dbh->prepare($reqUpdateJetons);
                 $stmtUpdateJetons->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
 
+                if (getOffre($id_offre)['jeton_perdu_le'] != null) {
+                    //Update de la date de perte du jeton de blacklistage
+                    $reqUpdateDatePerteJeton = "UPDATE sae._offre SET jeton_perdu_le = :jeton_perdu_le WHERE id_offre = :id_offre";
+                    $stmtUpdateDatePerteJeton = $dbh->prepare($reqUpdateDatePerteJeton);
+                    $stmtUpdateDatePerteJeton->execute([':jeton_perdu_le' => $dateBlacklist, ':id_offre' => $id_offre]);
+                }
+
             } catch (PDOException $e) {
                 echo "Erreur lors de l'insertion : " . $e->getMessage();
             }
