@@ -53,6 +53,7 @@ document.addEventListener("click", function() {
 document.addEventListener("DOMContentLoaded", function () {
     const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
     setInterval(() => {
+        console.log("Vérification effectuée")
         fetch('/utils/checkJetons.php', {
             method: "POST", 
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
