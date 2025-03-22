@@ -50,6 +50,7 @@ document.addEventListener("click", function() {
     });
 });
 
+var isJetonUpdated = false;
 document.addEventListener("DOMContentLoaded", function () {
     const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
     setInterval(() => {
@@ -61,7 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.success && !isJetonUpdated) {
+                isJetonUpdated = true;
                 location.reload();
             }
         })
