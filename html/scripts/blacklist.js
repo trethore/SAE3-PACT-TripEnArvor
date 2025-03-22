@@ -50,16 +50,18 @@ document.addEventListener("click", function() {
     });
 });
 
-const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
-setInterval(() => {
-    fetch('/utils/checkJetons.php', {
-        method: "POST", 
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id_offre=${id_offre}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        location.reload();
-    })
-    .catch(error => console.error("Erreur :", error));
-}, 30000); // Toutes les minutes
+document.addEventListener("DOMContentLoaded", function () {
+    const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
+    setInterval(() => {
+        fetch('/utils/checkJetons.php', {
+            method: "POST", 
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `id_offre=${id_offre}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            location.reload();
+        })
+        .catch(error => console.error("Erreur :", error));
+    }, 30000); // Toutes les minutes
+});
