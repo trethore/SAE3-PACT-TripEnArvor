@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($id_offre)) {
 
-        echo json_encode(['success' => false]);
+        $response = ['success' => false];
 
         if (getOffre($id_offre)['nb_jetons'] < 3) {
 
@@ -31,11 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtUpdateJetonDate = $dbh->prepare($reqUpdateJetonDate);
                 $stmtUpdateJetonDate->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
 
-                echo json_encode(['success' => true]);
+                $response = ['success' => true];
 
             } catch (PDOException $e) {
                 echo "Erreur lors de l'insertion : " . $e->getMessage();
             }
         } 
+        echo json_encode($response);
     }
 }
