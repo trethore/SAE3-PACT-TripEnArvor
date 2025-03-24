@@ -4088,6 +4088,7 @@ h3 {
 .mes-avis .fond-blocs-avis a:hover {
     background: var(--orange-secondaire-2);
     color: var(--blanc);
+    border: 0;
 } 
 
 
