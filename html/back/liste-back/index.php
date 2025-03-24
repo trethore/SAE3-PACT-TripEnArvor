@@ -86,14 +86,6 @@ try {
                         $remainingAvis++;
                     }
                 }
-            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $avisNonLus = getLu($row['id_offre']);
-
-                foreach ($avisNonLus as $avis) {
-                    if (!empty($avis) && empty($avis['lu'])) {
-                        $remainingAvis++;
-                    }
-                }
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
@@ -495,7 +487,6 @@ try {
 
 
             $toastsDataJson = json_encode($toastsData);
-            ?>
             ?>
     </main>
     <footer>
