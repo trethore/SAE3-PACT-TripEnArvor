@@ -4040,12 +4040,17 @@ h3 {
 }
 
 #infobulle {
-    background-color:var(--orange-principale);
-    color: white;
+    /* background-color:var(--orange-principale); */
+    /* color: white; */
+    background-color: var(--blanc);
+    color: var(--orange-principale);
+    border: var(--blanc);
     padding: 5px 10px;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
+    z-index: 1;
+    position: absolute;
 }
 #infobulle_non_repondu {
     color: var(--orange-principale);
