@@ -7,6 +7,7 @@
   *****************/
     --noir: rgba(0, 0, 0, 1);
     --noir-leger : rgba(48, 50, 52, 1);
+    --noir-leger : rgba(48, 50, 52, 1);
     --blanc: rgba(255, 255, 255, 1);
     --blanc-leger: rgba(236, 236, 236, 1);
     --beige: rgba(234, 226, 218, 1);
@@ -214,6 +215,8 @@ h3 {
 /* Bouton */
 .connecter input[type="submit"],
 .creer-compte input[type="submit"] {
+.connecter input[type="submit"],
+.creer-compte input[type="submit"] {
     width: 50%;
     height: 73px;
 
@@ -229,6 +232,7 @@ h3 {
     font-style: normal;
     font-weight: 600;
     font-size: 40px;
+    line-height: 40px;
     line-height: 40px;
 
     text-align: center;
@@ -287,6 +291,8 @@ h3 {
 .connecter button:hover,
 .connecter input[type="submit"]:hover,
 .creer-compte input[type="submit"]:hover {
+.connecter input[type="submit"]:hover,
+.creer-compte input[type="submit"]:hover {
     background: var(--blanc-leger);
     color: var(--violet-principal);
 }
@@ -320,6 +326,7 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
+.compte-back #apibutton:hover {
 .compte-back #apibutton:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
@@ -543,6 +550,8 @@ h3 {
 #popupRetourAccueil h3,
 #popupRetourCompte h3,
 #validerDeleteCompte h3 {
+#popupRetourCompte h3,
+#validerDeleteCompte h3 {
     font-weight: var(--semi-bold);
     margin-bottom: 0;
     font-size: 24pt;
@@ -575,6 +584,8 @@ h3 {
 .compte-back-modif #popupRetourAccueil button,
 .compte-back-modif #popupRetourCompte button,
 .compte-back #validerDeleteCompte button {
+.compte-back-modif #popupRetourCompte button,
+.compte-back #validerDeleteCompte button {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
@@ -593,6 +604,8 @@ h3 {
 .compte-back-modif #validerModifCompte button:hover,
 .compte-back-modif #annulerModifCompte button:hover,
 .compte-back-modif #popupRetourAccueil button:hover,
+.compte-back-modif #popupRetourCompte button:hover,
+.compte-back #validerDeleteCompte button:hover {
 .compte-back-modif #popupRetourCompte button:hover,
 .compte-back #validerDeleteCompte button:hover {
     color: var(--orange-principale);
@@ -1139,6 +1152,52 @@ h3 {
     transition: 0.3s ease-in-out;
 }
 
+
+#map {
+    width: 95vw;
+    height: 400px;
+    margin: auto auto;              
+    border: 5px solid var(--violet-principal);
+    border-radius: 5px;
+    box-sizing: border-box;       
+}
+
+.custom-cluster {
+    background-color: transparent;
+    border: none;
+}
+
+.cluster-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+}
+
+.cluster-icon.small {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(36, 171, 47, 1);
+}
+
+.cluster-icon.medium {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(171, 166, 36, 1);
+}
+
+.cluster-icon.large {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(194, 123, 47, 1);
+}
+
+.cluster-icon span {
+    font-size: 14px;
+    font-weight: bold;
+}
+  
 
 
 
@@ -1741,6 +1800,28 @@ h3 {
     border: 2px solid rgb(229, 3, 3);
 }
 
+#validerDeleteCompte button {
+    background-color: rgb(229, 3, 3);
+    border: 2px solid rgb(229, 3, 3);
+    color: var(--blanc-leger);
+    font-weight: var(--bold);
+    font-size: 12pt;
+    width: 200px;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#validerDeleteCompte button:hover {
+    color: rgb(229, 3, 3);
+    background-color: var(--blanc-leger);
+    border: 2px solid rgb(229, 3, 3);
+}
+
 /**************************************************************************************
                                      CREER COMPTE
 ***************************************************************************************/
@@ -1752,10 +1833,14 @@ h3 {
 
 .creer-compte header,
 .connecter header {
+.creer-compte header,
+.connecter header {
     position: fixed;
     padding: 2rem;
 }
 
+.creer-compte header img,
+.connecter header img {
 .creer-compte header img,
 .connecter header img {
     height: 8rem;
@@ -1792,6 +1877,7 @@ h3 {
 .creer-compte form>label {
     text-align: center;
     width: 100%;
+    width: 100%;
 }
 
 .creer-compte textarea,
@@ -1818,6 +1904,8 @@ h3 {
 }
 
 .creer-compte input[type="submit"] {
+    width: 100%;
+    margin: 1em;
     width: 100%;
     margin: 1em;
 }
@@ -1916,6 +2004,7 @@ h3 {
     flex-direction: column;
     align-items: center;
     /*justify-content: space-between;*/
+    /*justify-content: space-between;*/
     width: 100%;
     min-width: 900px;
     min-height: 100vh;
@@ -1979,6 +2068,7 @@ h3 {
 }
 
 .liste-back .notification-badge {
+.liste-back .notification-badge {
     position: absolute;
     top: -10px;
     right: -2px;
@@ -1993,6 +2083,19 @@ h3 {
 
 .front .notification-badge {
     display: none;
+}
+
+.compte-back .notification-badge {
+    position: absolute;
+    top: 85px;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: solid black 1px;
 }
 
 .compte-back .notification-badge {
@@ -3265,7 +3368,9 @@ h3 {
 }
 
 /* .consulter-offre-front span {
+/* .consulter-offre-front span {
     color: var(--violet-principal);
+} */
 } */
 
 .consulter-offre-front input,
@@ -3286,6 +3391,7 @@ h3 {
     color: var(--noir);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
+    width: 90%;
     width: 100%;
 }
 
@@ -3321,7 +3427,9 @@ h3 {
     text-align: left;
     font-size: 14px;
     border-radius: 2px;
+    border-radius: 2px;
 }
+
 
 
 .consulter-offre-front .popup-menu li:hover {
@@ -3786,6 +3894,16 @@ h3 {
     border: 3px solid var(--noir);
 }
 
+.consulter-offre-back .fond-blocs-avis-blackliste {
+    filter: grayscale(1);
+    background-color: #d3d3d3;
+    margin: 30px 0;
+    padding: 15px;
+    border-radius: 15px;
+    color: var(--noir);
+    border: 3px solid var(--noir);
+}
+
 .consulter-offre-back .fond-blocs-avis > .display-ligne-espace > button {
     width: 25px;
     height: 25px;
@@ -3802,12 +3920,22 @@ h3 {
     cursor: pointer;
 }
 
+.consulter-offre-back .fond-blocs-avis-blackliste > .display-ligne-espace > button {
+    width: 25px;
+    height: 25px;
+    background-color: #d3d3d3;
+    border: 0;
+    cursor: pointer;
+}
+
 .consulter-offre-back .popup-menu {
+    width: 85px;
     width: 85px;
     display: none;
     position: absolute;
     background: var(--blanc);
     color: var(--noir);
+    border-radius: 4px;
     border-radius: 4px;
     z-index: 1000; 
 }
@@ -5149,6 +5277,7 @@ input[type="tel"] {
 .toast-container {
     position: fixed;
     top: 110px;
+    top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
@@ -5340,6 +5469,7 @@ input[type="tel"] {
 
     .connecter h1 {
         margin-top: 0;
+        margin-top: 0;
     }
 
     .connecter input[type="email"],
@@ -5356,6 +5486,8 @@ input[type="tel"] {
         width: 90%;
     }
 
+    .creer-compte a,
+    .connecter a {
     .creer-compte a,
     .connecter a {
         transform: none;
@@ -5438,12 +5570,16 @@ input[type="tel"] {
 
     .creer-compte header,
     .connecter header{
+    .creer-compte header,
+    .connecter header{
         position: static;
         display: grid;
         width: 100%;
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
+        padding: 0;
+        margin: 0;
         padding: 0;
         margin: 0;
     }

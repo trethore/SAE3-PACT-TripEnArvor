@@ -733,6 +733,7 @@ try {
                 /*if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { */?>
 
                     <div class="fond-blocs-avis">
+                    <div class="fond-blocs-avis">
 
                         <div class="display-ligne-espace">
                             

@@ -76,7 +76,16 @@ try {
             $stmtOffre->execute();
 
             $remainingAvis = 0;
+            $remainingAvis = 0;
 
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $avisNonLus = getLu($row['id_offre']);
+
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
+                }
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
@@ -89,6 +98,8 @@ try {
         ?>
         <a href="/back/mon-compte" class="icon-container">
             <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <?php if ($remainingAvis > 0) { ?>
+                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php if ($remainingAvis > 0) { ?>
                 <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
@@ -346,7 +357,7 @@ try {
                     </div>
                     <div>
                         <!-------------------------------------- 
-                        Affichage des avis non lues
+                        Affichage des avis non lus
                         ---------------------------------------->
                         <?php
                             $avisNonLus = getLu($row['id_offre']);
@@ -361,7 +372,7 @@ try {
                         <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
-                        Affichage des avis non répondues
+                        Affichage des avis non répondus
                         ---------------------------------------->
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
@@ -425,6 +436,10 @@ try {
             $remainingAvis = 0;
             $remainingOffres = 0;
 
+            $toastsData = [];
+            $remainingAvis = 0;
+            $remainingOffres = 0;
+
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
@@ -478,7 +493,9 @@ try {
                 }
             }
 
+
             $toastsDataJson = json_encode($toastsData);
+            ?>
             ?>
     </main>
     <footer>
