@@ -4047,8 +4047,7 @@ h3 {
     text-align: center;
     display: inline-block;
     z-index: 1;
-    bottom: -5px;
-    left: 10px;
+    left: 15px;
     position: relative;
     animation: pulse_orange 2s infinite ease-out;
 }
