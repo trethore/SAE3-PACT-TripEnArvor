@@ -4084,7 +4084,7 @@ h3 {
     text-align: center;
 }
 
-.mes-avis .fond-blocs-avis a:hover {
+.compte-back .mes-avis .fond-blocs-avis a:hover {
     background: var(--orange-secondaire-2);
 } 
 
