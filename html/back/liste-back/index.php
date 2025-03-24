@@ -555,11 +555,11 @@ try {
 
                 // Créer la barre de progression
                 const progress = document.createElement("div");
-                progress.classList.add("progress");
+                progress.classList.add("progress active");
                 const progressbottom = document.createElement("div");
-                progress.classList.add("progress-bottom");
+                progress.classList.add("progress-bottom active");
                 const progressright = document.createElement("div");
-                progress.classList.add("progress-right");
+                progress.classList.add("progress-right active");
 
                 // Ajouter tout au toast
                 toast.appendChild(toastContent);
