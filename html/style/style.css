@@ -215,8 +215,6 @@ h3 {
 /* Bouton */
 .connecter input[type="submit"],
 .creer-compte input[type="submit"] {
-.connecter input[type="submit"],
-.creer-compte input[type="submit"] {
     width: 50%;
     height: 73px;
 
