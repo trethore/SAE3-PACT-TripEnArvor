@@ -728,8 +728,8 @@ try {
 
             } 
         }
-        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                
