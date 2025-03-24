@@ -298,15 +298,7 @@ if ($typeCompte === 'proPrive') {
                         <?php foreach ($avis as $lavis) {  ?>
 
                             <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if ($lavis['lu'] == false) {
-                                                            echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
-                                                        } else { //si l'avis a ete lu on met sil a une reponse ou pas
-
-                                                            if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
-                                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
-                                                            }
-                                                        }
-                                ?>
+                                
 
 
                                 <div class="display-ligne-espace">
@@ -343,6 +335,15 @@ if ($typeCompte === 'proPrive') {
                                 </div>
                                 <br>
                                 <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                                <?php if ($lavis['lu'] == false) {
+                                                            echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
+                                                        } else { //si l'avis a ete lu on met sil a une reponse ou pas
+
+                                                            if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
+                                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
+                                                            }
+                                                        }
+                                ?>
                             </div>
 
                         <?php $compteur++;
