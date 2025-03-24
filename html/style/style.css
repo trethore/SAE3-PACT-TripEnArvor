@@ -4066,6 +4066,10 @@ h3 {
     font-size: 40pt;
 }
 
+.compte-front .mes-avis .contenu-aligne-gauche{
+    align-self: baseline;
+  }
+
 .mes-avis h2 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--medium);
@@ -5555,6 +5559,10 @@ input[type="tel"] {
 
     .compte-front .mes-avis main > section a{
         font-size: 20;
+    }
+
+    .mes-avis .fond-blocs-avis a {
+
     }
 
     /********************************************
