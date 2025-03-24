@@ -4047,8 +4047,12 @@ h3 {
     text-align: center;
     display: inline-block;
     z-index: 1;
+    position: absolute;
+    left: 2%;
+    transform: translate(0, -3.5em);
     animation: pulse_orange 2s infinite ease-out;
 }
+
 #infobulle_non_repondu {
     color: var(--orange-principale);
     font-weight: bold;
