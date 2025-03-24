@@ -833,7 +833,7 @@ try {
                             </div>
                             <!-- Bouton menu -->
                             <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $compteur; ?>)">
-                                <img src="/images/universel/icones/trois-points-violet.png" alt="Symbole de menu ou d'options avec trois points violets">
+                                <img src="/images/universel/icones/trois-points-violet.png" alt="Menu déroulant">
                             </button>
 
                             <!-- Menu pop-up (ID unique par avis) -->

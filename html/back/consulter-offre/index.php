@@ -197,10 +197,10 @@ try {
 <body class="back consulter-offre-back">
     
 <header id="header">
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($of as $o) { ?>
@@ -210,8 +210,8 @@ try {
                 <?php } ?>
             </datalist>
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte"></a>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const inputSearch = document.querySelector(".input-search");
@@ -274,7 +274,7 @@ try {
                 foreach ($images as $image) {
                 ?>
                     <div class="slide">
-                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                        <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Photo de l'offre">
                     </div>
                 <?php
                 }
@@ -300,19 +300,19 @@ try {
                             
                             for ($i = 0; $i < $etoilesPleines; $i++) { ?>
 
-                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png" alt="Étoile jaune">
 
                             <?php }
 
                             if ($demiEtoile) { ?>
 
-                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png" alt="Demi étoile">
 
                             <?php }
 
                             for ($i = 0; $i < $etoilesVides; $i++) { ?>
 
-                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png" alt="Étoile grise">
 
                             <?php }
 
@@ -572,19 +572,19 @@ try {
                         
                     for ($i = 0; $i < $etoilesPleines; $i++) { ?>
 
-                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png" alt="Étoile jaune">
 
                     <?php }
 
                     if ($demiEtoile) { ?>
 
-                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png" alt="Demi étoile">
 
                     <?php }
 
                     for ($i = 0; $i < $etoilesVides; $i++) { ?>
 
-                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png" alt="Étoile grise">
 
                     <?php }
 
@@ -610,17 +610,17 @@ try {
                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']) ?></p>
                         <div class="display-ligne">
                         <?php for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { ?>
-                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail" alt="Étoile jaune">
                         <?php }
                         for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { ?>
-                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail" alt="Étoile grise">
                         <?php } ?>
                         </div>
                     </div>
 
                     <!-- Bouton menu -->
                     <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $compteur; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$compteur]['id_compte']; ?>">
-                        <img src="/images/universel/icones/trois-points-orange.png">
+                        <img src="/images/universel/icones/trois-points-orange.pn" alt="Menu déroulant">
                     </button>
 
                     <!-- Menu pop-up (ID unique par avis) -->
@@ -653,10 +653,10 @@ try {
                         if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { ?>
                             <p><?php echo htmlentities($n['nom_note']) . " : " ?></p>
                             <?php for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail" alt="Étoile jaune">
                             <?php }
                             for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { ?>
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail" alt="Étoile grise">
                             <?php } ?>
                         <?php }
                     } ?>
@@ -665,7 +665,7 @@ try {
 
                 <div class="display-ligne">
                     <?php if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { ?>
-                        <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
+                        <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>" alt="Image de l'avis">
                     <?php } ?>
                     <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
                 </div>
@@ -677,8 +677,8 @@ try {
                         <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                     </div>
                     <div class="display-ligne">
-                        <p><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                        <p><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                        <p><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce" alt="Pouce haut">
+                        <p><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce" alt="Pouce bas">
                     </div>
                 </div>
 
@@ -686,7 +686,7 @@ try {
                     $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])?>
                     <div class="reponse">
                         <div class="display-ligne">
-                            <img src="/images/universel/icones/reponse-orange.png">
+                            <img src="/images/universel/icones/reponse-orange.png" alt="">
                             <p class="titre-reponse"><?php echo htmlentities($compte['denomination']) ?></p>
                         </div>
                         <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))) ?></p>
@@ -715,7 +715,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.pn" alt="Retour en haut"></button>
         </div>
 
     </main>
