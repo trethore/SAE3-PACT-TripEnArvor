@@ -3539,7 +3539,9 @@ h3 {
 ******************************/
 .consulter-offre-back .zone-boutons {
     padding: 30px 30px 0 24px;
-
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .consulter-offre-back .bouton-modifier {
@@ -4021,7 +4023,7 @@ h3 {
     justify-content: normal;
 }
 
-.mes-avis .offre-titre {
+.back .mes-avis .offre-titre {
     color: var(--orange-principale);
 }
 
@@ -4030,6 +4032,10 @@ h3 {
     flex-wrap: wrap; /* Permet le passage à la ligne si nécessaire */
     gap: 20px; /* Espace entre les avis */
     justify-content: space-between; /* Répartit les avis */
+}
+
+.back .mes-avis .fond-blocs-avis {
+    margin-top: 5px;
 }
 
 #infobulle {
@@ -4078,18 +4084,21 @@ h3 {
     margin-top: 5px;
 }
 
-.mes-avis .fond-blocs-avis a {
+.back .mes-avis .fond-blocs-avis a {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
     padding: 5px 20px;
+    border: 0;
     border-radius: 8px;
     width: 180px;
     text-align: center;
 }
 
-.compte-back .mes-avis .fond-blocs-avis a:hover {
+.back .mes-avis .fond-blocs-avis a:hover {
     background: var(--orange-secondaire-2);
+    color: var(--blanc);
+    border: 0;
 } 
 
 
@@ -5199,7 +5208,7 @@ input[type="tel"] {
 
 .progress{
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     height: 3px;
     width: 100%;
@@ -5213,16 +5222,76 @@ input[type="tel"] {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--orange-principale);
+    background-color: rgba(217, 102, 54, 1);
 }
 
 .progress.active::before{
-    animation: progress 5s linear forwards;
+    animation: progress-right 3s linear forwards; /* Starts after 10s (5s left + 5s vertical) */
 }
 
-@keyframes progress {
-    100%{
-      left: 100%;
+/* Bottom progress bar (LEFT) */
+.progress-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #ddd;
+}
+
+.progress-bottom::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(217, 102, 54, 1);
+}
+
+.progress-bottom.active::before {
+    animation: progress-left 3s linear forwards 4.5s; /* First animation (0s delay) */
+}
+
+/* Right progress bar (VERTICAL) */
+.progress-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background: #ddd;
+}
+
+.progress-right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(217, 102, 54, 1);
+}
+
+.progress-right.active::before {
+    animation: progress-vertical 1.5s linear forwards 3s; /* Starts after 5s (left duration) */
+}
+
+@keyframes progress-left {
+    100% {
+        right: 100%;
+    }
+}
+
+@keyframes progress-right {
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes progress-vertical {
+    100% {
+        top: 100%;
     }
 }
 

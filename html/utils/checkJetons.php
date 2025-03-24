@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $reqUpdateJetonDate = "UPDATE sae._offre SET nb_jetons = :nb_jetons, jeton_perdu_le = NOW() AT TIME ZONE 'Europe/Paris' WHERE jeton_perdu_le <= NOW() AT TIME ZONE 'Europe/Paris' - INTERVAL '1 MINUTE' AND id_offre = :id_offre;";
+                $reqUpdateJetonDate = "UPDATE sae._offre SET nb_jetons = :nb_jetons, jeton_perdu_le = NOW() AT TIME ZONE 'Europe/Paris' WHERE jeton_perdu_le <= NOW() AT TIME ZONE 'Europe/Paris' - INTERVAL '7 DAY' AND id_offre = :id_offre;";
                 $stmtUpdateJetonDate = $dbh->prepare($reqUpdateJetonDate);
                 $stmtUpdateJetonDate->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
 

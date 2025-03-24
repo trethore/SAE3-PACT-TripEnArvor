@@ -296,9 +296,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                         <?php foreach ($avis as $lavis) {  ?>
-
-                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if ($lavis['lu'] == false) {
+                            <?php if ($lavis['lu'] == false) {
                                                             echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                         } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
@@ -307,6 +305,9 @@ if ($typeCompte === 'proPrive') {
                                                             }
                                                         }
                                 ?>
+
+                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                
 
 
                                 <div class="display-ligne-espace">
