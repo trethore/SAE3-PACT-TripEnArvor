@@ -4079,13 +4079,15 @@ h3 {
     text-decoration: none;
     background-color: var(--orange-principale);
     padding: 5px 20px;
+    border: 0;
     border-radius: 8px;
     width: 180px;
     text-align: center;
 }
 
-.compte-back .mes-avis .fond-blocs-avis a:hover {
+.mes-avis .fond-blocs-avis a:hover {
     background: var(--orange-secondaire-2);
+    color: var(--blanc);
 } 
 
 
