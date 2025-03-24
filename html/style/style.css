@@ -4049,7 +4049,7 @@ h3 {
     z-index: 1;
     bottom: -5px;
     left: 10px;
-    position: absolute;
+    position: relative;
     animation: pulse_orange 2s infinite ease-out;
 }
 #infobulle_non_repondu {
