@@ -4043,6 +4043,8 @@ h3 {
     border-radius: 5px;
     text-align: center;
     display: inline-block;
+    z-index: 1;
+    position: absolute;
 }
 #infobulle_non_repondu {
     color: var(--orange-principale);
