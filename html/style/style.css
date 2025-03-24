@@ -5205,8 +5205,8 @@ input[type="tel"] {
 .progress::before{
     content: "";
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     background-color: var(--orange-principale);
@@ -5218,7 +5218,7 @@ input[type="tel"] {
 
 @keyframes progress {
     100%{
-      right: 100%;
+      left: 100%;
     }
 }
 
