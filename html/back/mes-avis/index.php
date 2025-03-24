@@ -270,9 +270,9 @@ if ($typeCompte === 'proPrive') {
                                         <?php if ($nb_non_lu == 0) { ?>
                                             <span class="offre-titre"><?php echo $offre['titre']; ?></span>
                                         <?php } else if ($nb_non_lu == 1) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
                                         <?php } else { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
                                         <?php } ?>
                                     </h3>
 
