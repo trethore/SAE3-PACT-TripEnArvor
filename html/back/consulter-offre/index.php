@@ -30,53 +30,6 @@ try {
 // ===== Fonction qui exécute une requête SQL pour vérifier si une date de mise en ligne existe pour une offre ===== //
     $dateMEL = getDateOffreEnLigne($id_offre_cible);
 
-if (isset($_POST['mettre_hors_ligne'])) {
-
-    $date = date('Y-m-d H:i:s');
-
-    if (($dateMEL > $dateMHL) || ($dateMHL == null)) {
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            //Insertion de la date de mise hors ligne
-            $reqInsertionDateMHL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-            $stmtInsertionDateMHL->execute([$date]);
-            $idDateMHL = $stmtInsertionDateMHL->fetch(PDO::FETCH_ASSOC)['id_date'];
-        
-            $reqInsertionDateMHL = "INSERT INTO sae._offre_dates_mise_hors_ligne(id_offre, id_date) VALUES (?, ?)";
-            $stmtInsertionDateMHL = $dbh->prepare($reqInsertionDateMHL);
-            $stmtInsertionDateMHL->execute([$id_offre_cible, $idDateMHL]);
-
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'insertion : " . $e->getMessage();
-        }
-    
-    } else if ($dateMHL > $dateMEL) {
-    
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            //Insertion de la date de mise en ligne
-            $reqInsertionDateMEL = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
-            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-            $stmtInsertionDateMEL->execute([$date]);
-            $idDateMEL = $stmtInsertionDateMEL->fetch(PDO::FETCH_ASSOC)['id_date'];
-        
-            $reqInsertionDateMEL = "INSERT INTO sae._offre_dates_mise_en_ligne(id_offre, id_date) VALUES (?, ?)";
-            $stmtInsertionDateMEL = $dbh->prepare($reqInsertionDateMEL);
-            $stmtInsertionDateMEL->execute([$id_offre_cible, $idDateMEL]);
-
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'insertion : " . $e->getMessage();
-        }
-    }
-} 
-
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -196,7 +149,7 @@ try {
 
 <body class="back consulter-offre-back">
     
-    <header id="header">
+    <header id="header" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
@@ -216,35 +169,59 @@ try {
 
     <main id="body">
 
-        <section class=" fond-blocs zone boutons">
+        <section class="fond-blocs zone-boutons">
 
-            <div class="display-ligne-espace">
+            <?php
+            if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+            ?>
+                <div class="display-ligne-espace">
+            <?php
+            }
+            ?>
+            
+                <div class="display-ligne">
+                    <?php 
+                    $isMiseEnLigne = ($dateMEL > $dateMHL) || is_null($dateMHL);
+                    $actionText = $isMiseEnLigne ? "Mettre hors ligne" : "Mettre en ligne";
+                    ?>
 
-                <div>
-                    <?php 
-                    if (($dateMEL > $dateMHL) || ($dateMHL == null)) { 
-                    ?>
-                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseHorsLigne()">Mettre hors ligne</button>
-                        </form>
-                    <?php 
-                    } else if ($dateMHL > $dateMEL) { 
-                    ?>
-                        <form method="post" enctype="multipart/form-data" class="bouton-modif-mise">
-                            <button id="boutonMHL-MEL" type="submit" name="mettre_hors_ligne" onclick="miseEnLigne()">Mettre en ligne</button>
-                        </form>
-                    <?php 
-                    } 
-                    ?>
+                    <form method="post" enctype="multipart/form-data" class="bouton-modif-mise" onsubmit="validerDate(event, <?php echo $id_offre_cible; ?>)">
+                        <button id="boutonMHL-MEL" type="submit" name="action"><?php echo $actionText; ?></button>
+                    </form>
+
+                    <div class="bouton-modif-mise">
+                        <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                    </div>
                 </div>
 
-                <div class="bouton-modif-mise">
-                    <button onclick="location.href='/back/modifier-offre/index.php?id=<?php echo htmlentities($id_offre_cible); ?>'">Modifier l'offre</button>
+                <?php
+                if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+                ?>
+                    <div class="display-ligne">
+                        <?php
+                        for ($nb_jetons_pleins = 0 ; $nb_jetons_pleins != $offre['nb_jetons'] ; $nb_jetons_pleins++) {
+                        ?>
+                            <img class="jeton" src="/images/universel/icones/jeton-plein.png" alt="Jeton plein">
+                        <?php
+                        }
+                        for ($nb_jetons_vides = 0 ; $nb_jetons_vides != (3 - $offre['nb_jetons']) ; $nb_jetons_vides++) {
+                        ?>
+                            <img class="jeton" src="/images/universel/icones/jeton-vide.png" alt="Jeton vide">
+                        <?php
+                            }
+                        ?>
+                        <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</em></p>
+                    </div>
+            <?php
+                }
+            if (getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') {
+            ?>
                 </div>
+            <?php
+            }
+            ?>
 
-            </div>
-
-        </section>  
+        </section> 
 
         <section class="fond-blocs bordure pur">
 
@@ -264,8 +241,8 @@ try {
                     ?>
                 </div>
 
-            <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-            <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
 
             </div>
 
@@ -273,7 +250,7 @@ try {
 
                 <div class="display-ligne">
 
-                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - ' ?></p>
+                    <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - '; ?></p>
 
                     <div class="display-ligne">
                         <?php 
@@ -550,174 +527,209 @@ try {
             </div>
 
         <?php 
-        $identifiant = 0;
-        foreach ($avis as $unAvis) {
-            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+        $avisSansReponse = [];
+        $avisAvecReponse = [];
+
+        foreach ($avis as $index => $unAvis) {
+            if (!empty($reponse[$index]['texte'])) {
+                $avisAvecReponse[] = ['avis' => $unAvis, 'index' => $index];
+            } else {
+                $avisSansReponse[] = ['avis' => $unAvis, 'index' => $index];
+            }
+        }
+
+        function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass){
+            $pdo = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            foreach ($avisGroupe as $item) {
+                $unAvis = $item['avis'];
+                $identifiant = $item['index'];
+                $stmt = $pdo->prepare("SELECT lu FROM sae._avis WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                $stmt->execute(['id_membre' => $unAvis['id_membre'], 'id_offre' => $unAvis['id_offre']]);
+                $consulted = $stmt->fetchColumn();
+                if (!$consulted) {
+                    $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
+                    $updateStmt->execute(['id_membre' => $unAvis['id_membre'],'id_offre' => $unAvis['id_offre']]);
+                }
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
         ?>
+                    <div class="fond-blocs-avis">
+                <?php 
+                } else { 
+                ?>
+                    <div class="fond-blocs-avis-blackliste">
+                <?php 
+                } 
+                ?>
+                        <div class="display-ligne-espace">
 
-            <div class="fond-blocs-avis">
-            <?php 
-            } else { 
-            ?>
-                <div class="fond-blocs-avis-blackliste">
-            <?php 
-            } 
-            ?>
-                    <div class="display-ligne-espace">
-
-                        <div class="display-ligne">
-                            <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
                             <div class="display-ligne">
+                                <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
+                                <div class="display-ligne">
+                                    <?php 
+                                    for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { 
+                                    ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php 
+                                    }
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { 
+                                    ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php 
+                                    } 
+                                    ?>
+                                </div>
+                            </div>
+
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$identifiant]['id_compte']; ?>">
+                                <img src="/images/universel/icones/trois-points-orange.png">
+                            </button>
+
+                            <?php
+                            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                            ?>
+                                <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
+                                    <ul>
+                                        <li>Signaler</li>
+                                        <?php
+                                        if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
+                                        ?>
+                                            <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                        <?php 
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
+                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+
+                                <div class="confirmation-content">
+                                    <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
+                                    <button id="confirmer-blacklister" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
+                                    <button onclick="annulerBlacklister()">Annuler</button>
+                                </div>
+
+                            </div>
+                    </div>
+
+                <div class="display-ligne">
+                    <?php 
+                    $passage = explode(' ', $datePassage[$identifiant]['date']);
+                    $datePass = explode('-', $passage[0]); 
+                    ?>
+                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['titre']))); ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($unAvis['contexte_visite'])); ?></strong></p>
+                </div>
+
+                <?php 
+                if ($categorie == "Restauration") { 
+                ?>
+                    <div class="display-ligne">
+                        <?php 
+                        foreach ($noteDetaillee as $n) {
+                            if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
+                        ?>
+                                <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
                                 <?php 
-                                for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { 
+                                for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
                                 ?>
                                     <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                 <?php 
                                 }
-                                for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) { 
+                                for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { 
                                 ?>
                                     <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                 <?php 
                                 } 
                                 ?>
-                            </div>
-                        </div>
+                        <?php 
+                            }
+                        } 
+                        ?>
+                    </div>
 
-                        <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$identifiant]['id_compte']; ?>">
-                            <img src="/images/universel/icones/trois-points-orange.png">
-                        </button>
-
-                        <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
-                            <ul>
-                                <li>Signaler</li>
-                                <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
-                            </ul>
-                        </div>
-
-                        <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
-
-                            <div class="confirmation-content">
-                                <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
-                                <button id="confirmer-blacklister" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
-                                <button onclick="annulerBlacklister()">Annuler</button>
-                            </div>
-
-                        </div>
-                </div>
-
-            <div class="display-ligne">
                 <?php 
-                $passage = explode(' ', $datePassage[$identifiant]['date']);
-                $datePass = explode('-', $passage[0]); 
+                } 
                 ?>
-                <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['titre']))); ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($unAvis['contexte_visite'])); ?></strong></p>
-            </div>
 
-            <?php 
-            if ($categorie == "Restauration") { 
-            ?>
                 <div class="display-ligne">
                     <?php 
-                    foreach ($noteDetaillee as $n) {
-                        if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
+                    if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { 
                     ?>
-                            <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
+                        <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
+                    <?php
+                    } 
+                    ?>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
+                </div>
+
+                <div class="display-ligne-espace">
+
+                    <div class="petite-mention">
+                        <?php 
+                        $publication = explode(' ', $dateAvis[$identifiant]['date']);
+                        $datePub = explode('-', $publication[0]); 
+                        ?>
+                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                    </div>
+
+                    <div class="display-ligne">
+                        <p><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
+                        <p><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
+                    </div>
+
+                </div>
+
+                <?php 
+                if (!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) { 
+                    $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])
+                ?>
+                    <div class="reponse">
+
+                        <div class="display-ligne">
+                            <img src="/images/universel/icones/reponse-orange.png">
+                            <p class="titre-reponse"><?php echo htmlentities($compte['denomination']); ?></p>
+                        </div>
+
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))); ?></p>
+
+                        <div class="display-ligne marge-reponse petite-mention">
                             <?php 
-                            for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
+                            $rep = explode(' ', $reponse['date']);
+                            $dateRep = explode('-', $rep[0]); 
                             ?>
-                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                            <?php 
-                            }
-                            for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { 
-                            ?>
-                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                            <?php 
-                            } 
-                            ?>
+                            <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
+                        </div>
+
+                    </div>
+
+                    <?php 
+                    } else { 
+                        if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                    ?>
+                            <form id="reponse-form-<?php echo $identifiant; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
+                                <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo $membre[$identifiant]['pseudo']; ?></span></p>
+
+                                <div class="display-ligne">
+                                    <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
+                                </div>
+
+                                <button type="submit">Répondre</button>
+                            </form>
                     <?php 
                         }
                     } 
                     ?>
+
                 </div>
 
             <?php 
+
             } 
-            ?>
-
-            <div class="display-ligne">
-                <?php 
-                if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { 
-                ?>
-                    <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
-                <?php
-                } 
-                ?>
-                    <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
-            </div>
-
-            <div class="display-ligne-espace">
-
-                <div class="petite-mention">
-                    <?php 
-                    $publication = explode(' ', $dateAvis[$identifiant]['date']);
-                    $datePub = explode('-', $publication[0]); 
-                    ?>
-                    <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                </div>
-
-                <div class="display-ligne">
-                    <p><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p><img src="/images/universel/icones/pouce-up.png" class="pouce">
-                    <p><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p><img src="/images/universel/icones/pouce-down.png" class="pouce">
-                </div>
-
-            </div>
-
-            <?php 
-            if (!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) { 
-                $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])
-            ?>
-                <div class="reponse">
-
-                    <div class="display-ligne">
-                        <img src="/images/universel/icones/reponse-orange.png">
-                        <p class="titre-reponse"><?php echo htmlentities($compte['denomination']); ?></p>
-                    </div>
-
-                    <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))); ?></p>
-
-                    <div class="display-ligne marge-reponse petite-mention">
-                        <?php 
-                        $rep = explode(' ', $reponse['date']);
-                        $dateRep = explode('-', $rep[0]); 
-                        ?>
-                        <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
-                    </div>
-
-                </div>
-
-                <?php 
-                } else { 
-                    if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
-                ?>
-                        <form id="reponse-form-<?php echo $identifiant; ?>" class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
-                            <p class="titre-avis">Répondre à <span id="pseudo-membre"></span></p>
-
-                            <div class="display-ligne">
-                                <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
-                            </div>
-
-                            <button type="submit">Répondre</button>
-                        </form>
-                <?php 
-                    }
-                } 
-                ?>
-
-            </div>
-
-        <?php 
-            $identifiant++; 
-        } 
+        }
+        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                

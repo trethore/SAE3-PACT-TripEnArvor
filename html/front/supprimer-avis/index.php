@@ -13,6 +13,11 @@ else if (!isset($_POST['id-offre'])) {
 }
 else {
     try {
+        if (isAvisBlackliste(intval($_POST['id-offre']), intval($_SESSION['id']))) {
+            if (getOffre($_POST['id-offre'])['nb_jetons'] < 3) {
+                updateJetons(intval($_POST['id-offre']));
+            }
+        }
         deleteAvis(intval($_SESSION['id']), intval($_POST['id-offre']));
     }
     catch (Exception $exception) {
@@ -38,6 +43,7 @@ else {
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
+    <script src="/scripts/header.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -76,38 +82,6 @@ else {
         </div>
         <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const inputSearch = document.querySelector(".input-search");
-                const datalist = document.querySelector("#cont");
-
-                // Événement sur le champ de recherche
-                inputSearch.addEventListener("input", () => {
-                    // Rechercher l'option correspondante dans le datalist
-                    const selectedOption = Array.from(datalist.options).find(
-                        option => option.value === inputSearch.value
-                    );
-
-                    if (selectedOption) {
-                        const idOffre = selectedOption.getAttribute("data-id");
-
-                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-
-                        // Rediriger si un ID valide est trouvé
-                        if (idOffre) {
-                            window.location.href = `/front/consulter-offre/index.php?id=${idOffre}`;
-                        }
-                    }
-                });
-
-                // Debugging pour vérifier les options disponibles
-                const options = Array.from(datalist.options).map(option => ({
-                    value: option.value,
-                    id: option.getAttribute("data-id")
-                }));
-                //console.log("Options disponibles dans le datalist :", options);
-            });
-        </script>
     </header>
 
     <main id="body">

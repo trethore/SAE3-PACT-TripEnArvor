@@ -79,6 +79,7 @@ if ($typeCompte === 'proPrive') {
     <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <script src="/scripts/header.js"></script>
 </head>
 <body class="back compte-back">
     <header>
@@ -97,34 +98,6 @@ if ($typeCompte === 'proPrive') {
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const inputSearch = document.querySelector(".input-search");
-                const datalist = document.querySelector("#cont");
-                // Événement sur le champ de recherche
-                inputSearch.addEventListener("input", () => {
-                    // Rechercher l'option correspondante dans le datalist
-                    const selectedOption = Array.from(datalist.options).find(
-                        option => option.value === inputSearch.value
-                    );
-                    if (selectedOption) {
-                        const idOffre = selectedOption.getAttribute("data-id");
-                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-                        // Rediriger si un ID valide est trouvé
-                        if (idOffre) {
-                            // TD passer du back au front quand fini
-                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-                        }
-                    }
-                });
-                // Debugging pour vérifier les options disponibles
-                const options = Array.from(datalist.options).map(option => ({
-                    value: option.value,
-                    id: option.getAttribute("data-id")
-                }));
-                //console.log("Options disponibles dans le datalist :", options);
-            });
-        </script>
     </header>
     <main>
         <nav>

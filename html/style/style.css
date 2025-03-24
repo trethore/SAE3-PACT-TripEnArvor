@@ -1536,7 +1536,6 @@ h3 {
     padding: 0.5em 3em;
     border: 2px solid var(--violet-principal);
     border-radius: 15px;
-    height: 3em;
 }
 
 .compte-front nav a:last-child {
@@ -2952,7 +2951,7 @@ h3 {
 }
 
 .consulter-offre-front h1 {
-    font-size: 45px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
     color: var(--violet-principal);
@@ -2964,7 +2963,7 @@ h3 {
 }
 
 .consulter-offre-front h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--violet-principal);
     margin: 5px 0;
@@ -3126,6 +3125,7 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
+    text-align: center;
 }
 
 .consulter-offre-front .display-ligne-espace>a:hover,
@@ -3387,6 +3387,7 @@ h3 {
 .consulter-offre-front .pouce {
     width: 20px;
     height: 20px;
+    margin: 0 5px 0 2px;
 }
 
 /* Style réponse avis */
@@ -3397,7 +3398,7 @@ h3 {
 
 .consulter-offre-front .titre-reponse {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -3470,7 +3471,7 @@ h3 {
     border-radius: 15px;
     margin: 0.5em 0.2em;
     text-align: center;
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .consulter-offre-back p {
@@ -3478,7 +3479,7 @@ h3 {
 }
 
 .consulter-offre-back h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--orange-principale);
     margin: 5px 0;
@@ -3537,7 +3538,7 @@ h3 {
         BOUTONS POP-UP                
 ******************************/
 .consulter-offre-back .zone-boutons {
-    padding: 30px 30px 0 30px;
+    padding: 30px 30px 0 24px;
 
 }
 
@@ -3552,6 +3553,8 @@ h3 {
     padding: 5px 15px;
     border-radius: 8px;
     border: 0;
+    width: 145px;
+    margin-right: 15px;
 }
 
 .consulter-offre-back .bouton-modif-mise > button:hover {
@@ -3584,6 +3587,12 @@ h3 {
 
 .consulter-offre-back .ouverture-decalage {
     margin-left: 2px;
+}
+
+.consulter-offre-back .jeton {
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 /**********************************
@@ -3670,6 +3679,7 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
+    text-align: center;
 }
 
 .consulter-offre-back .display-ligne-espace>a:hover,
@@ -3818,12 +3828,12 @@ h3 {
     border-top: 0;
 }
 
-.consulter-offre-back .popup-menu li:hover {
+.consulter-offre-back .popup-menu li:first-of-type:hover {
     background: var(--orange-secondaire-2);
     color: var(--blanc);
 }
 
-.consulter-offre-back .popup-menu li:last-of-type:hover {
+.consulter-offre-back .popup-menu li:hover {
     background: var(--noir);
     color: var(--blanc);
 }
@@ -3920,24 +3930,25 @@ h3 {
 
 .consulter-offre-back textarea {
     background: var(--blanc);
-    border: 1px solid var(--gris);
-    border-radius: 12px;
+    border: 1px solid var(--noir);
+    border-radius: 6px;
     width: 100%;
     height: 60px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
+    resize: none;
 }
 
-.consulter-offre-back #reponse > button {
+.consulter-offre-back .avis-form > button {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
     padding: 5px 15px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 0;
 }
 
-.consulter-offre-back #reponse > button:hover {
+.consulter-offre-back .avis-form > button:hover {
     background-color: var(--orange-secondaire-2);
 }
 
@@ -4010,9 +4021,15 @@ h3 {
     justify-content: normal;
 }
 
-.mes-avis .fond-blocs-avis {
-    margin: 15px;
-    display: inline;
+.mes-avis .offre-titre {
+    color: var(--orange-principale);
+}
+
+.avis-container {
+    display: flex; /* Utilise flexbox */
+    flex-wrap: wrap; /* Permet le passage à la ligne si nécessaire */
+    gap: 20px; /* Espace entre les avis */
+    justify-content: space-between; /* Répartit les avis */
 }
 
 #infobulle {
@@ -4056,6 +4073,20 @@ h3 {
     color: var(--noir);
     margin-top: 5px;
 }
+
+.mes-avis a {
+    color: var(--blanc);
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 20px;
+    border-radius: 8px;
+    width: 180px;
+    text-align: center;
+}
+
+.mes-avis .fond-blocs-avis a:hover {
+    background: var(--orange-secondaire-2);
+} 
 
 
 
@@ -5682,7 +5713,7 @@ input[type="tel"] {
     }
 
     .consulter-offre-front h1 {
-        font-size: 58px;
+        font-size: 40px;
         text-align: center;
     }
 
