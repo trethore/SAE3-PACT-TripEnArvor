@@ -256,7 +256,7 @@ if ($typeCompte === 'proPrive') {
                                         continue;
                                     }
                                 }
-
+ 
                                 
                                     $nb_non_lu = 0;
                                     foreach ($avis as $lavis) { // Compter le nombre d'avis non lus sur l'offre
