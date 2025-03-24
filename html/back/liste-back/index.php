@@ -556,11 +556,17 @@ try {
                 // Créer la barre de progression
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
+                const progressbottom = document.createElement("div");
+                progress.classList.add("progress-bottom");
+                const progressright = document.createElement("div");
+                progress.classList.add("progress-right");
 
                 // Ajouter tout au toast
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
+                toast.appendChild(progressbottom);
+                toast.appendChild(progressright);
 
                 // Ajouter le toast à l'élément <a>
                 toastLink.appendChild(toast);
