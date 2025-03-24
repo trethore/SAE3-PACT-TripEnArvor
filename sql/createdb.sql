@@ -34,13 +34,11 @@ CREATE TABLE _abonnement (
 CREATE TABLE _historique_prix_abonnements (
     id_prix                     SERIAL,
     abonnement              VARCHAR(63) NOT NULL,
-    abonnement              VARCHAR(63) NOT NULL,
     prix_ht_jour_abonnement     INT NOT  NULL,
     date_maj                    DATE NOT NULL,
     CONSTRAINT _historique_prix_abonnements_pk
         PRIMARY KEY (id_prix),
     CONSTRAINT _historique_prix_abonnements_fk_abonnement
-        FOREIGN KEY (abonnement)
         FOREIGN KEY (abonnement)
         REFERENCES _abonnement(nom_abonnement)
 );
