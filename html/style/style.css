@@ -289,8 +289,6 @@ h3 {
 .connecter button:hover,
 .connecter input[type="submit"]:hover,
 .creer-compte input[type="submit"]:hover {
-.connecter input[type="submit"]:hover,
-.creer-compte input[type="submit"]:hover {
     background: var(--blanc-leger);
     color: var(--violet-principal);
 }
