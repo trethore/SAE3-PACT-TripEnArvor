@@ -4050,6 +4050,7 @@ h3 {
     bottom: -5px;
     left: 10px;
     position: absolute;
+    animation: pulse_orange 2s infinite ease-out;
 }
 #infobulle_non_repondu {
     color: var(--orange-principale);
