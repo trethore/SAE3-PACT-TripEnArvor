@@ -730,7 +730,8 @@ try {
             }
             $identifiant = 0;
             foreach ($avis as $unAvis) { 
-                /*if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { */?>
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte'])) || getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']) == $_SESSION['id']) { 
+            ?>
 
                     <div class="fond-blocs-avis">
                     <div class="fond-blocs-avis">
@@ -879,7 +880,7 @@ try {
                     </div>  
 
             <?php 
-                /*}*/
+                }
                 $identifiant++; 
             } 
             ?>
