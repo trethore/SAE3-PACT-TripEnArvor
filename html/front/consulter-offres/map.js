@@ -190,7 +190,7 @@ async function addOfferWithAddress(offer) {
   if (offer.lat !== null && offer.lon !== null) {
     addOffreMarqueur(offer);
     try {
-      const response = await fetch('update_coords.php', {
+      const response = await fetch('../../php/update_coords.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -206,8 +206,9 @@ async function addOfferWithAddress(offer) {
     }
   }
 
-  return offer; // Return the updated offer
+  return offer;
 }
+
 
 async function addOffersWithAddresses(offers) {
   for (const offer of offers) {
