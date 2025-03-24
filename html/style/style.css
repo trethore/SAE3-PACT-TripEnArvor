@@ -4032,6 +4032,10 @@ h3 {
     justify-content: space-between; /* Répartit les avis */
 }
 
+.back .mes-avis .fond-blocs-avis {
+    border-top: 5px;
+}
+
 #infobulle {
     background-color:var(--orange-principale);
     color: white;
