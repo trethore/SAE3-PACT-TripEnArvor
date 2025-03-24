@@ -290,10 +290,7 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                    <div class="conteneur-avis"> <?php
-                                                    foreach ($avis as $lavis) {
-
-                                                    ?>
+                        <?php foreach ($avis as $lavis) {  ?>
 
                             <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
                                 <?php if ($lavis['lu'] == false) {
@@ -344,8 +341,7 @@ if ($typeCompte === 'proPrive') {
                             </div>
 
                         <?php $compteur++;
-                                                    } ?>
-                    </div>
+                        } ?>
                     <br>
             <?php       }
                         } ?>
