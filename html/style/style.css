@@ -4021,7 +4021,7 @@ h3 {
     justify-content: normal;
 }
 
-.mes-avis .offre-titre {
+.back .mes-avis .offre-titre {
     color: var(--orange-principale);
 }
 
@@ -4074,7 +4074,7 @@ h3 {
     margin-top: 5px;
 }
 
-.mes-avis .fond-blocs-avis a {
+.back .mes-avis .fond-blocs-avis a {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
@@ -4085,7 +4085,7 @@ h3 {
     text-align: center;
 }
 
-.mes-avis .fond-blocs-avis a:hover {
+.back .mes-avis .fond-blocs-avis a:hover {
     background: var(--orange-secondaire-2);
     color: var(--blanc);
     border: 0;
