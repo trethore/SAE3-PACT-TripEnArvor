@@ -89,8 +89,8 @@
     }
 
     function saveOTP(PDO $pdo, $id_compte, $hashedOTP) {
-        // Définir l'expiration, par exemple dans 5 minutes
-        $expire_le = date("Y-m-d H:i:s", strtotime("+5 minutes"));
+        // Définir l'expiration, 1 minutes
+        $expire_le = date("Y-m-d H:i:s", strtotime("+1 minutes"));
     
         $sql = "INSERT INTO _compte_otp (id_compte, code_otp, expire_le) VALUES (:id_compte, :code_otp, :expire_le)";
         $stmt = $pdo->prepare($sql);

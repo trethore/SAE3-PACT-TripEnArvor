@@ -1576,7 +1576,7 @@ EXECUTE FUNCTION update_avis_before_delete();
 CREATE TABLE _compte_otp (
     id_otp INT AUTO_INCREMENT PRIMARY KEY,
     id_compte INT NOT NULL,
-    code_otp VARCHAR(255) NOT NULL,
+    code_otp VARCHAR(7) NOT NULL,
     expire_le DATETIME NOT NULL,
     utiliser TINYINT(1) DEFAULT 0,
     tentatives INT DEFAULT 0,
