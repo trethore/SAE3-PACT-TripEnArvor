@@ -545,8 +545,6 @@ h3 {
 #popupRetourAccueil h3,
 #popupRetourCompte h3,
 #validerDeleteCompte h3 {
-#popupRetourCompte h3,
-#validerDeleteCompte h3 {
     font-weight: var(--semi-bold);
     margin-bottom: 0;
     font-size: 24pt;
@@ -579,8 +577,6 @@ h3 {
 .compte-back-modif #popupRetourAccueil button,
 .compte-back-modif #popupRetourCompte button,
 .compte-back #validerDeleteCompte button {
-.compte-back-modif #popupRetourCompte button,
-.compte-back #validerDeleteCompte button {
     background-color: var(--orange-principale);
     border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
@@ -599,8 +595,6 @@ h3 {
 .compte-back-modif #validerModifCompte button:hover,
 .compte-back-modif #annulerModifCompte button:hover,
 .compte-back-modif #popupRetourAccueil button:hover,
-.compte-back-modif #popupRetourCompte button:hover,
-.compte-back #validerDeleteCompte button:hover {
 .compte-back-modif #popupRetourCompte button:hover,
 .compte-back #validerDeleteCompte button:hover {
     color: var(--orange-principale);
