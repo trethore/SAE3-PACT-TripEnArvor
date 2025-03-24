@@ -1568,4 +1568,20 @@ BEFORE DELETE ON _compte_membre
 FOR EACH ROW
 EXECUTE FUNCTION update_avis_before_delete();
 
+
+/* ##################################################################### */
+/*                      CODE OTP POUR AUTHENTIKATOR                      */
+/* ##################################################################### */
+
+CREATE TABLE _compte_otp (
+    id_otp INT AUTO_INCREMENT PRIMARY KEY,
+    id_compte INT NOT NULL,
+    code_otp VARCHAR(255) NOT NULL,
+    expire_le DATETIME NOT NULL,
+    utiliser TINYINT(1) DEFAULT 0,
+    tentatives INT DEFAULT 0,
+    cree_le DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 COMMIT;
