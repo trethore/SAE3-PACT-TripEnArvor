@@ -538,7 +538,7 @@ try {
             }
         }
 
-        function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass){
+        function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass){
             $pdo = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             foreach ($avisGroupe as $item) {
                 $unAvis = $item['avis'];
@@ -692,7 +692,7 @@ try {
                             <p class="titre-reponse"><?php echo htmlentities($compte['denomination']); ?></p>
                         </div>
 
-                        <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst(getReponse($unAvis['id_offre'], $unAvis['id_membre'])['texte']))); ?></p>
 
                         <div class="display-ligne marge-reponse petite-mention">
                             <?php 
@@ -728,8 +728,8 @@ try {
 
             } 
         }
-        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
-        afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                
