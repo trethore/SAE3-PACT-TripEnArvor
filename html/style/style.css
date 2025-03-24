@@ -4074,7 +4074,7 @@ h3 {
     margin-top: 5px;
 }
 
-.mes-avis a {
+.mes-avis .fond-blocs-avis a {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
