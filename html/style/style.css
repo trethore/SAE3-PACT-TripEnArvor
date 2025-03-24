@@ -1822,14 +1822,10 @@ h3 {
 
 .creer-compte header,
 .connecter header {
-.creer-compte header,
-.connecter header {
     position: fixed;
     padding: 2rem;
 }
 
-.creer-compte header img,
-.connecter header img {
 .creer-compte header img,
 .connecter header img {
     height: 8rem;
@@ -3355,11 +3351,6 @@ h3 {
     background: var(--violet-secondaire);
 }
 
-/* .consulter-offre-front span {
-/* .consulter-offre-front span {
-    color: var(--violet-principal);
-} */
-} */
 
 .consulter-offre-front input,
 .consulter-offre-front select {
@@ -5480,8 +5471,6 @@ input[type="tel"] {
 
     .creer-compte a,
     .connecter a {
-    .creer-compte a,
-    .connecter a {
         transform: none;
     }
 
@@ -5560,8 +5549,6 @@ input[type="tel"] {
         padding-bottom: 1.5em;
     }
 
-    .creer-compte header,
-    .connecter header{
     .creer-compte header,
     .connecter header{
         position: static;
