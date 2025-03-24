@@ -210,7 +210,16 @@ try {
                         <?php
                             }
                         ?>
-                        <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</em></p>
+                        <div>
+                            <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jeton(s) de blacklistage restant(s)</em></p>
+                            <?php
+                            if (getOffre($id_offre)['nb_jetons'] < 3) {
+                            ?>
+                                <p>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
                     </div>
             <?php
                 }
