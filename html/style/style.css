@@ -5193,43 +5193,32 @@ input[type="tel"] {
     opacity: 1;
 }
 
-.progress {
+.progress{
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     height: 3px;
     width: 100%;
     background: #ddd;
 }
 
-.progress::before {
+.progress::before{
     content: "";
     position: absolute;
+    bottom: 0;
+    right: 0;
     height: 100%;
     width: 100%;
     background-color: var(--orange-principale);
-    transform-origin: left top; /* Set the origin to the top-left corner */
 }
 
-.progress.active::before {
+.progress.active::before{
     animation: progress 5s linear forwards;
 }
 
 @keyframes progress {
-    0% {
-        transform: scaleX(0); /* Start with no width */
-    }
-    33% {
-        transform: scaleX(0.8); /* Expand to full width along the top edge */
-        transform-origin: left top;
-    }
-    66% {
-        transform: scaleY(1); /* Expand to full height along the right edge */
-        transform-origin: right top;
-    }
-    100% {
-        transform: scaleX(1) scaleY(1); /* Expand to full width and height along the bottom edge */
-        transform-origin: right bottom;
+    100%{
+      right: 100%;
     }
 }
 
