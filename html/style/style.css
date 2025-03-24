@@ -4890,7 +4890,7 @@ input[type="tel"] {
     transform: translate(-50%, -50%);
     width: 65px;
     height: auto;
-    z-index: 1000;
+    z-index: 79;
 }
 
 .liste-front .titre-offre {
@@ -5549,7 +5549,7 @@ input[type="tel"] {
     .compte-front main>section a,
     .compte-front-modif main>section a {
         padding: 0.4em 1em;
-        font-size: 34;
+        font-size: 34px;
         text-align: center;
     }
 
