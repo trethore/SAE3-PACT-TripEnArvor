@@ -257,19 +257,24 @@ if ($typeCompte === 'proPrive') {
                                     }
                                 }
 
-                                $nb_non_lu = 0;
-                                foreach ($avis as $lavis) { //compter le nombre d'avis non lus sur l'offre
-                                    if ($lavis['lu'] == false) {
-                                        $nb_non_lu++;
+                                
+                                    $nb_non_lu = 0;
+                                    foreach ($avis as $lavis) { // Compter le nombre d'avis non lus sur l'offre
+                                        if ($lavis['lu'] == false) {
+                                            $nb_non_lu++;
+                                        }
                                     }
-                                }
-                                if ($nb_non_lu == 0) {
-                                    echo  $offre['titre']; ?> </h3> <?php
-                                                            } else if ($nb_non_lu == 1) {
-                                                                echo  $offre['titre'] . " :  " . $nb_non_lu . " nouvel avis sur l'offre ";  ?> </h3> <?php
-                                                                                                                } else {
-                                                                                                                    echo $offre['titre'] . " :  " . $nb_non_lu . " nouveux avis sur l'offre ";  ?> </h3>
-                    <?php } ?>
+                                    ?>
+
+                                    <h3>
+                                        <?php if ($nb_non_lu == 0) { ?>
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>
+                                        <?php } else if ($nb_non_lu == 1) { ?>
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
+                                        <?php } else { ?>
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
+                                        <?php } ?>
+                                    </h3>
 
 
 

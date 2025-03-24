@@ -4021,7 +4021,9 @@ h3 {
     justify-content: normal;
 }
 
-
+.mes-avis .offre-titre {
+    color: var(--orange-principale);
+}
 
 .avis-container {
     display: flex; /* Utilise flexbox */
@@ -4072,9 +4074,7 @@ h3 {
     margin-top: 5px;
 }
 
-.mes-avis h3 {
-    color: var(--orange-principale);
-}
+
 
 
 
