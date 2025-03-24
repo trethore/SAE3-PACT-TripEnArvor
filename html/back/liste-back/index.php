@@ -545,6 +545,14 @@ try {
                 messageDiv.appendChild(messageSpan);
                 toastContent.appendChild(messageDiv);
 
+                // Créer le bouton de fermeture
+                const closeIcon = document.createElement("i");
+                closeIcon.classList.add("uil", "uil-multiply", "toast-close");
+                closeIcon.addEventListener("click", (e) => {
+                    e.preventDefault(); // Empêcher le comportement par défaut du lien
+                    toastLink.remove(); // Supprimer le toast lors du clic
+                });
+
                 // Créer la barre de progression
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
