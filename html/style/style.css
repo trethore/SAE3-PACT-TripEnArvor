@@ -3024,6 +3024,7 @@ h3 {
     display: flex;
     align-items: center;
     margin: 5px 0;
+    flex-wrap: wrap;
 }
 
 .consulter-offre-front .display-ligne>p {
@@ -3285,7 +3286,7 @@ h3 {
     color: var(--noir);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
-    width: 90%;
+    width: 100%%;
 }
 
 .consulter-offre-front .fond-blocs-avis > .display-ligne-espace > button {
