@@ -210,7 +210,16 @@ try {
                         <?php
                             }
                         ?>
-                        <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</em></p>
+                        <div>
+                            <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jeton(s) de blacklistage restant(s)</em></p>
+                            <?php
+                            if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
+                            ?>
+                                <p>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
                     </div>
             <?php
                 }
@@ -489,6 +498,7 @@ try {
                 ?>
             </div> 
             
+            
         </section>
 
         <section id="avis" class="fond-blocs bordure-top">
@@ -728,8 +738,8 @@ try {
 
             } 
         }
-        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                

@@ -270,9 +270,9 @@ if ($typeCompte === 'proPrive') {
                                         <?php if ($nb_non_lu == 0) { ?>
                                             <span class="offre-titre"><?php echo $offre['titre']; ?></span>
                                         <?php } else if ($nb_non_lu == 1) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
                                         <?php } else { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span> : <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
+                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
                                         <?php } ?>
                                     </h3>
 
@@ -296,9 +296,8 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                         <?php foreach ($avis as $lavis) {  ?>
-
-                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                <?php if ($lavis['lu'] == false) {
+                            <article>
+                            <?php if ($lavis['lu'] == false) {
                                                             echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                         } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
@@ -307,6 +306,9 @@ if ($typeCompte === 'proPrive') {
                                                             }
                                                         }
                                 ?>
+
+                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                            
 
 
                                 <div class="display-ligne-espace">
@@ -344,7 +346,7 @@ if ($typeCompte === 'proPrive') {
                                 <br>
                                 <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                             </div>
-
+                            </article>
                         <?php $compteur++;
                         } ?>
                     <br>

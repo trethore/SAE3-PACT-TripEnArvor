@@ -93,7 +93,6 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-    <script src="/scripts/header.js"></script>
 </head>
 <body class="front compte-front">
 <header>
@@ -112,6 +111,34 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <a href="/front/accueil/"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/front/mon-compte/"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
     <!-- <pre>
 <?php
@@ -247,24 +274,5 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
-    <div class="telephone-nav">
-        <div class="nav-content">
-            <a href="/front/accueil">
-                <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
-                </div>
-            </a>
-            <a href="/front/consulter-offres">
-                <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
-                </div>
-            </a>
-            <a href="/front/mon-compte">
-                <div class="btOn">
-                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
-                </div>
-            </a>
-        </div>
-    </div>
 </body>
 </html>

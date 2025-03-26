@@ -229,6 +229,7 @@ try {
     <link rel="stylesheet" href="/style/style.css" />
     <title>Modifier offre</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <script src = "../../scripts/modifieroffre.js"></script>
     <script src="/scripts/header.js"></script>
 </head>
     <body class="back modifier-offre">
@@ -622,6 +623,9 @@ try {
     </footer>
         <?php } else {
             $id_offre = $id_offre_cible;
+            ?><script>
+                geolocaliseOffer(<?php echo json_encode($id_offre); ?>);
+            </script><?php
             $id_compte = $_SESSION['id'];
             if (isset($_POST['titre'])) {
                 $titre = $_POST['titre'];
