@@ -160,6 +160,15 @@ if ($typeCompte === 'proPrive') {
 
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
+            <h3>Trier</h3>
+            <div>
+                <select class="tris">
+                    <option value="default">Trier par :</option>
+                    <option value="recent">Plus récent</option>
+                    <option value="ancien">Plus ancient</option>
+                    <option value="tri_offre">Offre</option>
+                </select>
+            </div>
             <div class="contenu-aligne-gauche">
 
 
@@ -302,7 +311,7 @@ if ($typeCompte === 'proPrive') {
                                                         } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
                                                             if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
-                                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
+                                                                echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu</div>';
                                                             }
                                                         }
                                 ?>
@@ -368,6 +377,7 @@ if ($typeCompte === 'proPrive') {
                 $reponses = getAllReponses($id_offre);
                 $compteur = 0;
                 echo "avis non lu";
+                
                 foreach ($avis as $lavis) {
                     while ($compteur != count($avis)) {
                         if (in_array($lavis['id_membre'], $avis_non_lu['id_membre'])) {
@@ -417,6 +427,16 @@ if ($typeCompte === 'proPrive') {
                 }
                 echo "avis non repondu";
                 foreach ($avis as $lavis) {
+                    $id_offre = $offre['id_offre'];
+                $categorie = getTypeOffre($id_offre);
+
+                // ===== GESTION DES AVIS ===== //
+
+                $membre = getInformationsMembre($id_offre);
+                $datePassage = getDatePassage($id_offre);
+                $dateAvis = getDatePublication($id_offre);
+                $noteDetaillee = getAvisDetaille($id_offre);
+
                     while ($compteur != count($avis)) {
                         if (in_array($lavis['id_membre'], $avis_non_repondu['id_membre'])) {
                             echo "avis non lus";
@@ -549,6 +569,33 @@ if ($typeCompte === 'proPrive') {
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
+    
+
+    <script> 
+    const avisContainer = document.querySelectorAll("contenu-aligne-gauche");
+    const avis = document.querySelectorAll("article");
+        // Sort Offers
+        const sortAvis = () => {
+            const selectElement = document.querySelector(".tris");
+            const selectedValue = selectElement.value;
+
+            if (selectedValue === "recent" || selectedValue === "ancien") {
+                avis.sort((a, b) => {
+                    const dateA = json_encode($datePub)
+                    const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '0').trim());
+                    const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '0').trim());
+                    return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                });
+
+                offers.forEach(offer => offersContainer.appendChild(offer));
+            } if (selectedValue === "default") {
+                offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+
+                offers.forEach(offer => offersContainer.appendChild(offer));
+            }
+        };
+
+    </script>
 </body>
 
 </html>

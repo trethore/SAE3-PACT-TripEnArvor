@@ -4154,6 +4154,10 @@ h3 {
 .back .mes-avis .fond-blocs-avis {
     margin-top: 5px;
 }
+
+.mes-avis article{
+    position: relative;
+}
  
 #infobulle {
     /* background-color:var(--orange-principale); */
@@ -4167,19 +4171,21 @@ h3 {
     display: inline-block;
     z-index: 1;
     position: absolute;
-    left: 2%;
-    transform: translate(0, -3.5em);
+    bottom: 5px;
     animation: pulse_orange 2s infinite ease-out;
 }
 
 #infobulle_non_repondu {
+    background-color: var(--blanc);
     color: var(--orange-principale);
-    font-weight: bold;
-    font-size: 15pt;
+    border: var(--blanc);
     padding: 5px 10px;
     border-radius: 5px;
-    border: 2px solid var(--orange-principale);
+    text-align: center;
     display: inline-block;
+    z-index: 1;
+    bottom: 5px;
+    position: absolute;
 }
 
 
