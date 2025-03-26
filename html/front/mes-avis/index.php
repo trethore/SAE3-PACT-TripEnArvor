@@ -126,13 +126,12 @@ if ($typeCompte === 'proPrive') {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="/scripts/header.js"></script>
 </head>
-
-<body class="back compte-back">
-    <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
+<body class="front compte-front">
+<header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
+        <div class="text-wrapper-17"><a href="/front/accueil/">PACT</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
@@ -142,8 +141,36 @@ if ($typeCompte === 'proPrive') {
                 <?php } ?>
             </datalist>
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/accueil/"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
+        <a href="/front/mon-compte/"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte"></a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
     <main class="mes-avis">
         <nav>
@@ -316,11 +343,11 @@ if ($typeCompte === 'proPrive') {
                                         <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
                                                                 echo ' '; ?></p>
                                         <div class="display-ligne">
-                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                            <?php for ($etoileJaune = 0; $etoileJaune < $lavis['note']; $etoileJaune++) { ?>
+                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail" alt="Étoile jaune">
                                             <?php }
-                                                        for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                            for ($etoileGrise = 0; $etoileGrise < (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail" alt="Étoile grise">
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -549,6 +576,25 @@ if ($typeCompte === 'proPrive') {
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
+    <div class="telephone-nav">
+        <div class="nav-content">
+            <a href="/front/accueil">
+                <div class="btOff">
+                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png" alt="Accueil">
+                </div>
+            </a>
+            <a href="/front/consulter-offres">
+                <div class="btOff">
+                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png" alt="Rechercher">
+                </div>
+            </a>
+            <a href="/front/mon-compte">
+                <div class="btOn">
+                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png" alt="Mon compte">
+                </div>
+            </a>
+        </div>
+    </div>
 </body>
 
 </html>

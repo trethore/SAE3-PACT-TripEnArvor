@@ -55,10 +55,10 @@ try {
 ?>
 
     <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
@@ -68,7 +68,7 @@ try {
                 <?php } ?>
             </datalist>
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
         <?php
             $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
             $stmtOffre = $conn->prepare($reqOffre);
@@ -97,7 +97,7 @@ try {
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
-            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte">
             <?php if ($remainingAvis > 0) { ?>
                 <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php if ($remainingAvis > 0) { ?>
@@ -286,7 +286,7 @@ try {
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
                     ---------------------------------------->
-                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="Image de l'offre">
 
                     <!---------------------------------------
                     Récuperer le titre liée à l'offre
@@ -301,8 +301,8 @@ try {
                     <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src=" <?php
-                    switch ($row["abonnement"]) {
+                    <img src="<?php
+                    switch ($row['abonnement']) {
                         case 'gratuit':
                             echo htmlentities("/images/backOffice/icones/gratuit.png");
                             break;
@@ -314,7 +314,7 @@ try {
                         case 'premium':
                             echo htmlentities("/images/backOffice/icones/premium.png");
                             break;
-                    } ?>">
+                    } ?>" alt="<?php echo($row['abonnement']); ?>">
 
                     <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
@@ -337,19 +337,19 @@ try {
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                 ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png" alt="Étoile jaune">
                                 <?php
                             }
 
                             if ($demiEtoile) {
                                 ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png" alt="Demi-étoile">
                                 <?php
                             }
 
                             for ($i = 0; $i < $etoilesVides; $i++) {
                                 ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png" alt="Étoile grise">
                                 <?php
                             }
                         ?>

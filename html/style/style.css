@@ -969,6 +969,33 @@ h3 {
     border-radius: 20px !important;
 }
 
+.menu-button img {
+    position: relative;
+    color: transparent;
+    overflow: visible;
+}
+
+/* Attribut alt */
+.menu-button img::before {
+    color: black;
+    content: attr(alt);
+    position: absolute;
+}
+
+@supports (-webkit-appearance: none) {
+    .menu-button img::before {
+        right: 40px;
+        top: -12px;
+    }
+}
+
+@supports (-moz-appearance: none) {
+    .menu-button img::before {
+        right: -25px;
+        top: -12px;
+    }
+}
+
 .liste-back .lesOffres article>a div+img {
     position: absolute;
     width: 321px;

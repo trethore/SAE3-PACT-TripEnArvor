@@ -251,10 +251,10 @@ try {
 ?>
 
 <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offreT) { ?>
@@ -264,8 +264,8 @@ try {
                 <?php } ?>
             </datalist>
         </div>
-        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte"></a>
     </header>
         
         <?php if (!$submitted) { ?>
@@ -368,7 +368,7 @@ try {
                         <td><label for="photo"> Photo <span class="required">*</span> (maximum 5)</label></td>
                         <td><div>
                             <?php foreach ($images as $image) { ?>
-                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image" >
+                                <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Image">
                             <?php } ?>
                                 <!-- <label for="file-upload">
                                     <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
@@ -436,11 +436,11 @@ try {
                     <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number" id="nbattraction" name="nbattraction" value="<?php if(isset($offre_bonne_cat['nb_attractions'])){
                                                                                                                                                                                             echo htmlentities($offre_bonne_cat['nb_attractions']); } ?>">
                     <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>  <?php if(isset($offre_bonne_cat['plan'])){ ?> <img src="/images/universel/photos/ <?php
-                                                                                                                                                            echo htmlentities($offre_bonne_cat['plan']);  ?>"  > <?php } ?> <input type="file" id="plan" name="plan" />
+                                                                                                                                                            echo htmlentities($offre_bonne_cat['plan']);  ?>" alt="Plan du parc"> <?php } ?> <input type="file" id="plan" name="plan" />
                     <br>
                     <!-- restauration -->
                     <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <?php if(isset($offre_bonne_cat['carte'])){ ?> <img src="/images/universel/photos/ <?php 
-                                                                                                                                                                    echo htmlentities($offre_bonne_cat['carte']); ?>"> <?php } ?> <input type="file" id="carte" name="carte" />
+                                                                                                                                                                    echo htmlentities($offre_bonne_cat['carte']); ?>" alt="Carte du restaurant"> <?php } ?> <input type="file" id="carte" name="carte" />
                     
                 </div>
                 
