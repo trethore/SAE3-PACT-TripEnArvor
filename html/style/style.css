@@ -4700,7 +4700,7 @@ input[type="tel"] {
 }
 
 .filtre-tri .fond-filtres > div {
-    width: max-content;
+    width: 90%;
     display: flex;
     flex-direction: column;
     max-width: 15rem;
@@ -4719,6 +4719,7 @@ input[type="tel"] {
 .liste-front .filtre-tri h3 {
     margin: 0 0 0.1em;
     color: var(--violet-principal);
+    text-align: center;
 }
 
 .liste-front .filtre-tri label {
@@ -5609,13 +5610,6 @@ input[type="tel"] {
     .liste-front .filtre-tri {
         margin: 0;
     }
-
-    .fond-filtres {
-        margin-left: 1.1rem;
-        margin-right: 1.1rem;
-    }
-
-
 
     .compte-front nav a:first-of-type {
         display: none;
