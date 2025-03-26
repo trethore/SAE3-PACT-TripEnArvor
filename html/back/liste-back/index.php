@@ -585,7 +585,7 @@ try {
                     setTimeout(() => {
                         toastLink.remove();
                     }, 300);
-                }, 7500);
+                }, 8000);
             }
 
             const toastsData = <?php echo $toastsDataJson; ?>;
