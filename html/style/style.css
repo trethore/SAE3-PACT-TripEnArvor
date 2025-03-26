@@ -3998,7 +3998,7 @@ h3 {
     resize: none;
 }
 
-.consulter-offre-back .bouton-reponse .avis-form > button {
+.consulter-offre-back .avis-form > button {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
