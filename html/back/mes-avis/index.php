@@ -361,7 +361,9 @@ if ($typeCompte === 'proPrive') {
                     <br>
             <?php       }
                         } 
+                        echo "<pre>";
                         print_r($avis_non_lu);
+                        echo "</pre>";
                         ?>
 
                         
@@ -499,7 +501,7 @@ if ($typeCompte === 'proPrive') {
                 <div class="fond-blocs-avis ">
                     <div class="display-ligne-espace">
                         <div class="display-ligne">
-                            <p class="titre-avis"><?php echo htmlentities($lavis['membre']['pseudo']);
+                            <p class="titre-avis"><?php echo htmlentities($lavis[$compteur]['pseudo']);
                                                     echo ' '; ?></p>
                             <div class="display-ligne">
                                 <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
