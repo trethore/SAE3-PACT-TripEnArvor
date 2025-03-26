@@ -56,6 +56,7 @@ function confirmerSignaler(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idSignale = element.getAttribute("data-id-signale");
     const idSignalant = element.getAttribute("data-id-signalant");
+    document.getElementById("overlay").style.display = "block";
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "block";
     document.getElementById(`confirmer-signaler-${identifiant}`).onclick = function() {
         validerSignaler(identifiant, idOffre, idSignale, idSignalant);
@@ -75,6 +76,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     })
     .then(response => response.text())
     .then(data => {
+        document.getElementById("overlay").style.display = "none";
         document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
         location.reload();
     })
@@ -82,6 +84,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
 }
 
 function annulerSignaler(identifiant) {
+    document.getElementById("overlay").style.display = "none";
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
 }
 

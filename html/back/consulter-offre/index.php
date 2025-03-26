@@ -148,6 +148,8 @@ try {
 </head>
 
 <body class="back consulter-offre-back">
+
+    <div id="overlay"></div>
     
     <header id="header" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
