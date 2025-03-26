@@ -66,8 +66,8 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     var selectedRadio = document.querySelector('input[name="motif"]:checked');
     var motif = selectedRadio.value;
     console.log(idOffre, idSignale, idSignalant, motif);
-    const blacklistUrl = "/utils/signaler.php";
-    fetch(blacklistUrl, {
+    const signalerUrl = "/utils/signaler.php";
+    fetch(signalerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `id_offre=${idOffre}&id_signaler=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
