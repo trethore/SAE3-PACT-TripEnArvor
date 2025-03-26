@@ -32,7 +32,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTPInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/assert/lib/Assert/Assert.php');
+/*require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/assert/lib/Assert/Assert.php');*/
 
 class_alias('OTPHP\TOTP', 'TOTP');
 
