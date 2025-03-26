@@ -56,7 +56,6 @@ function confirmerSignaler(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idSignale = element.getAttribute("data-id-signale");
     const idSignalant = element.getAttribute("data-id-signalant");
-    const motif = element.getAttribute("data-motif");
     document.getElementById("confirmation-popup-signaler").style.display = "block";
     document.getElementById("confirmer-signaler").onclick = function() {
         validerSignaler(identifiant, idOffre, idSignale, idSignalant);
@@ -66,6 +65,7 @@ function confirmerSignaler(element, identifiant) {
 function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     var selectedRadio = document.querySelector('input[name="motif"]:checked');
     var motif = selectedRadio.value;
+    console.log(idOffre, idSignale, idSignalant, motif);
     const blacklistUrl = "/utils/signaler.php";
     fetch(blacklistUrl, {
         method: "POST",
