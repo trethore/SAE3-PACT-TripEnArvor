@@ -918,6 +918,14 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
+.offre, .en-relief-offre {
+    transition: transform 500ms ease;
+}
+
+.offre:hover, .en-relief-offre:hover {
+    transform: scale(1.05);
+}
+
 .liste-back .offre > a {
     border: 3px solid var(--orange-principale);
 }
@@ -4158,7 +4166,8 @@ h3 {
 .mes-avis article{
     position: relative;
 }
- 
+
+
 #infobulle {
     /* background-color:var(--orange-principale); */
     /* color: white; */
@@ -4193,7 +4202,9 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
+    max-width: 1200px;
 }
+
 
 .mes-avis h1 {
     font-family: "Poppins", sans-serif;
