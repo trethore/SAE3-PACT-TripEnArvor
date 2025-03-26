@@ -4655,6 +4655,7 @@ input[type="tel"] {
     color: var(--blanc);
     background-color: var(--blanc);
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 
