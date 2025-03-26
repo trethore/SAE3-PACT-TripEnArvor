@@ -2403,6 +2403,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    margin-top: 4rem;
 }
 
 /* Section supérieure avec le gradient */
@@ -3089,6 +3090,14 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
+#map {
+    width: 82%;
+    margin-top: 2rem;
+    border: 3px solid var(--violet-principal);
+    border-radius: 15px;
+    z-index: 30;
+}
+
 /********************************
         BLOC PRÉSENTATION                
 ********************************/
@@ -3266,7 +3275,7 @@ h3 {
 
 /*****************************
             BLOC OUVERTURE                                       
-    *****************************/
+*****************************/
 
 .consulter-offre-front .liste-ouverture {
     align-items: center;
@@ -5645,6 +5654,15 @@ input[type="tel"] {
         font-size: 34px;
     }
 
+    .liste-front .filtre-tri {
+        margin: 0;
+    }
+
+    .fond-filtres {
+        margin-left: 1.1rem;
+        margin-right: 1.1rem;
+    }
+
 
 
     .compte-front nav a:first-of-type {
@@ -6095,15 +6113,7 @@ input[type="tel"] {
 }
 
 @media screen and (max-width: 330px) {
-
-    .creer-compte #div-adresse .row div {
-        width: 100%;
-    }
-
-
-}
-
-@media screen and (orientation: portrait) {
-
-    
+	.creer-compte #div-adresse .row div {
+		width: 100%;
+	}
 }

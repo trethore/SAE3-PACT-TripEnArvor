@@ -28,7 +28,7 @@ try {
     foreach ($offres as &$offre) {
         $offre['note'] = getNoteMoyenne($offre['id_offre']);
     }
-    
+
     foreach ($offres as &$offre) {
         $offre['nombre_notes'] = getNombreNotes($offre['id_offre']);
     }
@@ -42,8 +42,6 @@ try {
             $offre["gammedeprix"] = getRestaurant($offre['id_offre'])["gamme_prix"];
         }
     }
-    
-
 } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
@@ -52,19 +50,21 @@ try {
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/style/style.css">
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
-    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css"/>
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css" />
     <script src="/lib/leaflet/leaflet.js"></script>
     <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
     <script src="map.js"></script>
 </head>
+
 <body class="front liste-front">
     <?php
     try {
@@ -107,86 +107,83 @@ try {
         <article class="filtre-tri">
             <h2>Filtres et Tris</h2>
             <div class="fond-filtres hidden">
-                <div>
-                    <!-- Catégorie -->
-                    <div class="categorie">
-                        <h3>Catégorie</h3>
-                        <div>
-                            <label><input type="checkbox"> Parc attraction</label>
-                            <label><input type="checkbox"> Restauration</label>
-                            <label><input type="checkbox"> Visite</label>
-                            <label><input type="checkbox"> Spectacle</label>
-                            <label><input type="checkbox"> Activité</label>
-                        </div>
+                <!-- Catégorie -->
+                <div class="categorie">
+                    <h3>Catégorie</h3>
+                    <div>
+                        <label><input type="checkbox"> Parc attraction</label>
+                        <label><input type="checkbox"> Restauration</label>
+                        <label><input type="checkbox"> Visite</label>
+                        <label><input type="checkbox"> Spectacle</label>
+                        <label><input type="checkbox"> Activité</label>
                     </div>
+                </div>
 
-                    <!-- Disponibilité -->
-                    <div class="disponibilite">
-                        <h3>Disponibilité</h3>
-                        <div>
-                            <label><input type="checkbox" name="disponibilite"> Ouvert</label>
-                            <label><input type="checkbox" name="disponibilite"> Fermé</label>
-                        </div>
+                <!-- Disponibilité -->
+                <div class="disponibilite">
+                    <h3>Disponibilité</h3>
+                    <div>
+                        <label><input type="checkbox" name="disponibilite"> Ouvert</label>
+                        <label><input type="checkbox" name="disponibilite"> Fermé</label>
                     </div>
+                </div>
 
-                    <!-- Trier -->
-                    <div class="trier">
-                        <h3>Note et prix</h3>
+                <!-- Trier -->
+                <div class="trier">
+                    <h3>Note et prix</h3>
+                    <div>
                         <div>
-                            <div>
-                                <label>Note minimum :</label>
-                                <select class="note">
-                                    <option></option>
-                                    <option>★</option>
-                                    <option>★★</option>
-                                    <option>★★★</option>
-                                    <option>★★★★</option>
-                                    <option>★★★★★</option>
-                                </select>
-                            </div>
-                            
+                            <label>Note minimum :</label>
+                            <select class="note">
+                                <option></option>
+                                <option>★</option>
+                                <option>★★</option>
+                                <option>★★★</option>
+                                <option>★★★★</option>
+                                <option>★★★★★</option>
+                            </select>
+                        </div>
+
+                        <div>
                             <div>
                                 <div>
-                                    <div>
-                                        <label>Prix minimum &nbsp;:</label>
-                                        <input class="min" type="number" min="0">
-                                    </div>
-                                    <div>
-                                        <label>Prix maximum :</label>
-                                        <input class="max" type="number" min="0">
-                                    </div>
+                                    <label>Prix minimum &nbsp;:</label>
+                                    <input class="min" type="number" min="0">
+                                </div>
+                                <div>
+                                    <label>Prix maximum :</label>
+                                    <input class="max" type="number" min="0">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="trier2">
-                        <h3>Trier</h3>
+                <div class="trier2">
+                    <h3>Trier</h3>
+                    <div>
+                        <select class="tris">
+                            <option value="default">Trier par :</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Localisation -->
+                <div class="localisation">
+                    <h3>Localisation</h3>
+                    <div>
+                        <!--<label><input type="radio" name="localisation"> Autour de moi</label>-->
                         <div>
-                            <select class="tris">
-                                <option value="default">Trier par :</option>
-                                <option value="price-asc">Prix croissant</option>
-                                <option value="price-desc">Prix décroissant</option>
-                            </select>
+                            <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                            <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                         </div>
                     </div>
                 </div>
-                <div>
-                    <!-- Localisation -->
-                    <div class="localisation">
-                        <h3>Localisation</h3>
-                        <div>
-                            <!--<label><input type="radio" name="localisation"> Autour de moi</label>-->
-                            <div>
-                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
-                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Date -->
-                    <div class="date">
-                        <!-- <h3>Date</h3>
+
+                <!-- Date -->
+                <!--<div class="date">
+                     <h3>Date</h3>
                         <div>
                             <div>
                                 <label>Période &nbsp;: du </label>
@@ -198,165 +195,163 @@ try {
                                 <label>Date d'ouverture :</label>
                                 <input id="open-date" type="date">
                             </div>
-                        </div> -->
-                    </div>
+                        </div> 
+                </div>-->
 
-                    <!-- Contient avis -->
-                    <?php if (isset($_SESSION['id'])) { ?>
+                <!-- Contient avis -->
+                <?php if (isset($_SESSION['id'])) { ?>
                     <div class="oui_avis">
                         <h3>Contient un de vos avis</h3>
                         <div>
                             <label><input type="checkbox" name="oui_avis"> Oui</label>
                         </div>
                     </div>
-                    <?php } ?>
-                </div>
+                <?php } ?>
             </div>
         </article>
         <div id="map"></div>
         <!-- Offres -->
         <section class="section-offres">
             <p class="no-offers-message" style="display: none;">Aucun résultat ne correspond à vos critères.</p>
-                <?php
-                foreach ($offres as $tab) {
-                    $offres[$tab['id_offre']]['avis'] = "Non";
-                    if ((getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre']) || getDateOffreHorsLigne($tab['id_offre']) == null)) {
-                    ?>
-                        <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
-                            <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
-                                <div class="sous-offre">
-                                    <?php
-                                        if (isOffreEnRelief($tab['id_offre'])) {
-                                            echo '<img class="image-en-relief" src="/images/frontOffice/icones/en-relief-heart.png">';
-                                        }
-                                    ?>
-                                    <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
-                                    <?php $horaire = getHorairesOuverture($tab['id_offre']);
-                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                                    $jour_actuel = $jours[date('w')];
-                                    $ouverture = "Indét.";
-                                    foreach ($horaire as $h) {
-                                        if (!empty($horaire)) {
-                                            $ouvert_ferme = date('H:i');
-                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                                            $ouverture = "Fermé";
-                                            $offres[$tab['id_offre']]['ouverture'] = "Fermé"; 
-                                            if ($h['nom_jour'] == $jour_actuel) {
-                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                                    $ouverture = "Ouvert";
-                                                    $offres[$tab['id_offre']]['ouverture'] = "Ouvert"; 
-                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                                    $ouverture = "Ferme Bnt.";
-                                                    $offres[$tab['id_offre']]['ouverture'] = "Ferme Bnt."; 
-
-                                                }
+            <?php
+            foreach ($offres as $tab) {
+                $offres[$tab['id_offre']]['avis'] = "Non";
+                if ((getDateOffreHorsLigne($tab['id_offre']) < getDateOffreEnLigne($tab['id_offre']) || getDateOffreHorsLigne($tab['id_offre']) == null)) {
+            ?>
+                    <div class="<?php echo isOffreEnRelief($tab['id_offre']) ? 'en-relief-offre' : 'offre'; ?>">
+                        <a href="/front/consulter-offre/index.php?id=<?php echo urlencode($tab['id_offre']); ?>">
+                            <div class="sous-offre">
+                                <?php
+                                if (isOffreEnRelief($tab['id_offre'])) {
+                                    echo '<img class="image-en-relief" src="/images/frontOffice/icones/en-relief-heart.png">';
+                                }
+                                ?>
+                                <div class="lieu-offre"><?php echo $tab["ville"] ?></div>
+                                <?php $horaire = getHorairesOuverture($tab['id_offre']);
+                                setlocale(LC_TIME, 'fr_FR.UTF-8');
+                                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                $jour_actuel = $jours[date('w')];
+                                $ouverture = "Indét.";
+                                foreach ($horaire as $h) {
+                                    if (!empty($horaire)) {
+                                        $ouvert_ferme = date('H:i');
+                                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                        $ouverture = "Fermé";
+                                        $offres[$tab['id_offre']]['ouverture'] = "Fermé";
+                                        if ($h['nom_jour'] == $jour_actuel) {
+                                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                $ouverture = "Ouvert";
+                                                $offres[$tab['id_offre']]['ouverture'] = "Ouvert";
+                                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                $ouverture = "Ferme Bnt.";
+                                                $offres[$tab['id_offre']]['ouverture'] = "Ferme Bnt.";
                                             }
-                                        } 
-                                    } ?>
-
-                                    <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
-                                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
-                                    <p class="titre-offre"><?php echo $tab["titre"] ?></p>
-                                    <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
-                                    <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
-                                    <?php
-                                    $offres[$tab['id_offre']]['avis'] = "Non";
-                                    if (isset($_SESSION['id'])) {
-                                        $idMembres = getIdMembresContientAvis($tab['id_offre']);
-                                        $userId = intval($_SESSION['id']);
-
-                                        $idMembresSimplified = array_column($idMembres, 'id_membre');
-
-                                        echo '<p style="display: none;" class="contientavisspot">';
-                                        if (in_array($userId, $idMembresSimplified)) {
-                                            echo "Oui";
-                                            $offres[$tab['id_offre']]['avis'] = "Oui";
-                                        } else {
-                                            echo "Non";
-                                            $offres[$tab['id_offre']]['avis'] = "Non";
                                         }
-                                        echo "</p>";
                                     }
-                                    ?>
-                                    <div class="bas-offre">
-                                        <div class="etoiles">
+                                } ?>
+
+                                <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
+                                <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($tab['id_offre'])) ?>">
+                                <p class="titre-offre"><?php echo $tab["titre"] ?></p>
+                                <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
+                                <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
+                                <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                <?php
+                                $offres[$tab['id_offre']]['avis'] = "Non";
+                                if (isset($_SESSION['id'])) {
+                                    $idMembres = getIdMembresContientAvis($tab['id_offre']);
+                                    $userId = intval($_SESSION['id']);
+
+                                    $idMembresSimplified = array_column($idMembres, 'id_membre');
+
+                                    echo '<p style="display: none;" class="contientavisspot">';
+                                    if (in_array($userId, $idMembresSimplified)) {
+                                        echo "Oui";
+                                        $offres[$tab['id_offre']]['avis'] = "Oui";
+                                    } else {
+                                        echo "Non";
+                                        $offres[$tab['id_offre']]['avis'] = "Non";
+                                    }
+                                    echo "</p>";
+                                }
+                                ?>
+                                <div class="bas-offre">
+                                    <div class="etoiles">
+                                        <?php
+                                        if (empty($tab["note"])) {
+                                        ?>
+                                            <p style="color: var(--noir);">Pas d'avis disponibles.</p>
                                             <?php
-                                                if (empty($tab["note"])) {
-                                                    ?>
-                                                        <p style="color: var(--noir);">Pas d'avis disponibles.</p>
-                                                    <?php
-                                                } else {
-                                                    $note = $tab["note"];
-                                                    $etoilesPleines = floor($note);
-                                                    $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
-                                                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                                        } else {
+                                            $note = $tab["note"];
+                                            $etoilesPleines = floor($note);
+                                            $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                            $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
 
-                                                    for ($i = 0; $i < $etoilesPleines; $i++) {
-                                                        ?>
-                                                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                                        <?php
-                                                    }
-
-                                                    if ($demiEtoile) {
-                                                        ?>
-                                                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                                                        <?php
-                                                    }
-
-                                                    for ($i = 0; $i < $etoilesVides; $i++) {
-                                                        ?>
-                                                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                                        <?php
-                                                    }
-                                                }
+                                            for ($i = 0; $i < $etoilesPleines; $i++) {
                                             ?>
-                                            <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
-                                        </div>
+                                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                            <?php
+                                            }
 
-                                        <?php if ($tab["categorie"] == "Restauration") { ?>
-                                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
-                                        <?php } else { ?>
-                                            <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
-                                        <?php } ?>
+                                            if ($demiEtoile) {
+                                            ?>
+                                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                            <?php
+                                            }
+
+                                            for ($i = 0; $i < $etoilesVides; $i++) {
+                                            ?>
+                                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                        <p class="nombre-notes">(<?php echo $tab["nombre_notes"] ?>)</p>
                                     </div>
+
+                                    <?php if ($tab["categorie"] == "Restauration") { ?>
+                                        <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
+                                    <?php } else { ?>
+                                        <p class="prix">A partir de <span><?php echo htmlentities($tab["prix"]); ?>€</span></p>
+                                    <?php } ?>
                                 </div>
-                            </a>
-                        </div>
-                <?php
-                    }
+                            </div>
+                        </a>
+                    </div>
+            <?php
                 }
+            }
             ?>
 
     </main>
 
     <footer>
         <div class="footer-top">
-        <div class="footer-top-left">
-            <span class="footer-subtitle">P.A.C.T</span>
-            <span class="footer-title">TripEnArmor</span>
-        </div>
-        <div class="footer-top-right">
-            <span class="footer-connect">Restons connectés !</span>
-            <div class="social-icons">
-            <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-            </a>
-            <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-            </a>
-            <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-            </a>
-            <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-            </a>
+            <div class="footer-top-left">
+                <span class="footer-subtitle">P.A.C.T</span>
+                <span class="footer-title">TripEnArmor</span>
             </div>
-        </div>
+            <div class="footer-top-right">
+                <span class="footer-connect">Restons connectés !</span>
+                <div class="social-icons">
+                    <a href="https://x.com/?locale=fr">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+                    </a>
+                    <a href="https://www.facebook.com/?locale=fr_FR">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+                    </a>
+                </div>
+            </div>
 
 
-        <!-- Barre en bas du footer incluse ici -->
+            <!-- Barre en bas du footer incluse ici -->
 
         </div>
         <div class="footer-bottom">
@@ -456,8 +451,8 @@ try {
                         offer.style.display = "none";
                     }
                 });
-                
-                
+
+
 
                 // Show/Hide "No Offers" Message
                 noOffersMessage.style.display = visibleOffers.length > 0 ? "none" : "block";
@@ -477,7 +472,8 @@ try {
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
-                } if (selectedValue === "default") {
+                }
+                if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
