@@ -19,14 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($id_offre) && isset($id_signale) && isset($id_signalant) && isset($motif) && isset($date_signalement)) {
 
-        var_dump([
-            "id_offre" => $id_offre,
-            "id_signale" => $id_signale,
-            "id_signalant" => $id_signalant,
-            "motif" => $motif,
-            "date_signalement" => $date_signalement
-        ]);
-
         try {
             //Connexion à la base de données
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);

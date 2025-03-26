@@ -70,7 +70,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     fetch(signalerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id_offre=${idOffre}&id_signaler=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
     })
     .then(response => response.text())
     .then(data => {
