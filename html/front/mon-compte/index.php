@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     
     if ($newAuthStatus) {
         // When enabling 2FA, generate TOTP secret and QR code
-        $totp = new TOTP('PACT-' . $detailCompte["pseudo"], $APIKey);
+        $totp = TOTP::create($APIKey, 30, 'sha1', 6, 'PACT-' . $detailCompte["pseudo"]);
         $qrCodeUri = $totp->getProvisioningUri();
         // We'll use a simple QR code generator URL
         $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=' . urlencode($qrCodeUri);
