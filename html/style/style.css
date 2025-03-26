@@ -4120,7 +4120,7 @@ h3 {
     text-decoration: none;
 }
 
-.consulter-offre-back #carte {
+.consulter-offre-back #map {
     display: none;
 }
 
@@ -5787,7 +5787,7 @@ input[type="tel"] {
         background: var(--blanc);
     }
 
-    #carte {
+    #map {
         width: 75%;
     }
 
