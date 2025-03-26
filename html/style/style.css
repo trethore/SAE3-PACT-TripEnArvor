@@ -5286,12 +5286,11 @@ input[type="tel"] {
 .toast-container {
     position: fixed;
     top: 110px;
-    top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between toasts */
-    z-index: 1000; /* Ensure toasts are on top */
+    gap: 10px;
+    z-index: 1000;
 }
 
 .toast {
