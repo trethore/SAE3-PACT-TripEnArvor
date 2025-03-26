@@ -617,7 +617,7 @@ try {
                             }
                             ?>
 
-                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler" style="display: none;">
+                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
                                     <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
@@ -635,7 +635,7 @@ try {
                                             <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses">Il contient des informations fausses ou trompeuses
                                         </label><br>
                                     </form>
-                                    <button id="confirmer-signaler" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
                                     <button onclick="annulerSignaler()">Annuler</button>
                                 </div>
 
