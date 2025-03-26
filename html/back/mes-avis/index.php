@@ -360,8 +360,11 @@ if ($typeCompte === 'proPrive') {
                         } ?>
                     <br>
             <?php       }
-                        } ?>
+                        } 
+                        print_r($avis_non_lu);
+                        ?>
 
+                        
             <?php
             foreach ($touteslesoffres as $offre) {
                 $id_offre = $offre['id_offre'];
