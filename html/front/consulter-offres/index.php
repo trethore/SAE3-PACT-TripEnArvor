@@ -192,8 +192,8 @@ try {
                 </div>
 
                 <!-- Date -->
-                <div class="date">
-                    <!-- <h3>Date</h3>
+                <!--<div class="date">
+                     <h3>Date</h3>
                         <div>
                             <div>
                                 <label>Période &nbsp;: du </label>
@@ -205,8 +205,8 @@ try {
                                 <label>Date d'ouverture :</label>
                                 <input id="open-date" type="date">
                             </div>
-                        </div> -->
-                </div>
+                        </div> 
+                </div>-->
 
                 <!-- Contient avis -->
                 <?php if (isset($_SESSION['id'])) { ?>
