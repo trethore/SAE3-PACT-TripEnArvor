@@ -1198,7 +1198,7 @@ try {
                 const file = event.target.files[0];
                 
                 if (file) {
-                    const reader = new FileReader();
+                    const reader = new FileReader(); 
                     
                     reader.onload = function(e) {
                         preview.src = e.target.result;
