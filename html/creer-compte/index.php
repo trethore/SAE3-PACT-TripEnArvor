@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 
+
 startSession();
 
 $submitted = isset($_POST['type-compte']);
@@ -12,19 +13,19 @@ $submitted = isset($_POST['type-compte']);
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
     <title>Créer un compte</title>
-    <link rel="stylesheet" href="/style/style-creer-compte.css">
-    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/style.css">
     <script src="/scripts/creer-compte.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body>
+<body class="creer-compte">
 <?php
 if (!$submitted) {
 ?>
     <header>
-        <a href="/html/front/consulter-offres/">
+        <a href="/front/accueil/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
         </a>
     </header>
@@ -58,7 +59,7 @@ if (!$submitted) {
         <hr>
         <div id="div-pseudo">
             <label for="pseudo">Pseudo<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span><span id="pseudo-already-exist"> Ce pseudo existe déjà</span></label>
-            <input type="text" name="pseudo" id="pseudo" placeholder="MonSuperPseudo22" maxlength="254">
+            <input type="text" name="pseudo" id="pseudo" placeholder="Votre pseudonyme" maxlength="254">
         </div>
         <div id="div-name-and-first-name">
             <div id="div-name">
@@ -84,7 +85,7 @@ if (!$submitted) {
         </div>
         <div id="div-site-web">
             <label for="site-web">Site web<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
-            <input type="url" name="site-web" id="site-web" placeholder="votre.site-web.fr">
+            <input type="url" name="site-web" id="site-web" placeholder="https://votre.site-web.fr">
         </div>
         <div id="div-siren">
             <label for="siren">Numéro de SIREN<span> *</span><span class="required-message"> Veuillez renseigner ce champs</span></label>
@@ -116,7 +117,7 @@ if (!$submitted) {
             </div>
         </div>
         <hr>
-        <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="">conditions générales d'utilisation</a> et la <a href="">politique de confidentialité</a>.</label>
+        <label for="cgu"><input type="checkbox" name="cgu" id="cgu"> J'ai lu et j'accepte les <a href="/droit/CGU-1.pdf" target="_blank">conditions générales d'utilisation</a>.</label>
         <input type="submit" value="Créer un compte" disabled>
     </form>
 <?php
@@ -248,7 +249,7 @@ if (!$submitted) {
                 redirectTo('/front/consulter-offres/');
             }
         } catch(PDOException $e) {
-            http_response_code(400);
+             http_response_code(400);
         }
     } else {
         http_response_code(500);

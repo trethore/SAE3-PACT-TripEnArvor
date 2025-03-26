@@ -7,8 +7,10 @@ const boutonAnnuler = document.getElementById("boutonAnnuler");
 const boutonValider = document.getElementById("boutonValider");
 
 // constante pour annuler les modifications du compte
+const declencherPopupAnnuler = document.getElementById("retour");
 const popupAnnuler = document.getElementById("annulerModifCompte");
-
+const boutonReprendre = document.getElementById("boutonReprendre");
+const boutonRetour = document.getElementById("boutonQuitter");
 
 // constante de la popup pour retourner à l'accueil
 const declencherPopupAccueil = document.querySelectorAll(".retourAccueil")
@@ -99,4 +101,19 @@ boutonReprendreCompte.addEventListener("click", function() {
     popupCompte.style.display = "none";
 });
 
+declencherPopupAnnuler.addEventListener("click", function(event) {
+    event.preventDefault(); // Empêche le changement de page
+    popupOverlay.style.display = "block";
+    popupCompte.style.display = "flex";
+});
 
+// Redirection vers la page du compte sans enregistrer les modification
+boutonRetour.addEventListener("click", function() {
+    // Redirige vers l'URL initiale
+    window.location.href = '/back/mon-compte';
+});
+
+boutonReprendre.addEventListener("click", function() {
+    popupOverlay.style.display = "none";
+    popupCompte.style.display = "none";
+});

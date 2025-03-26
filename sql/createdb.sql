@@ -17,7 +17,6 @@ CREATE TYPE type_repas_t AS ENUM ('Petit-déjeuner', 'Brunch', 'Déjeuner', 'Dî
 CREATE TYPE jour_t AS ENUM ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
 CREATE TYPE type_offre_t AS ENUM ('gratuite', 'standard', 'premium');
 CREATE TYPE contexte_visite_t AS ENUM ('affaires', 'couple', 'famille', 'amis', 'solo');
-CREATE TYPE nom_option_t AS ENUM ('En Relief', 'À la Une');
 
 
 CREATE TABLE _date (
@@ -26,20 +25,34 @@ CREATE TABLE _date (
     CONSTRAINT _date_pk PRIMARY KEY (id_date)
 );
 
-
-CREATE TABLE _prix (
-    id_prix SERIAL,
-    prix_ht INTEGER NOT NULL,
-    CONSTRAINT _prix_pk PRIMARY KEY (id_prix)
+CREATE TABLE _abonnement (
+    nom_abonnement     VARCHAR(63),
+    CONSTRAINT _abonnement_pk
+        PRIMARY KEY (nom_abonnement)
 );
 
-CREATE TABLE _abonnement (
-    nom     VARCHAR(63),
-    id_prix INTEGER NOT NULL,
-    CONSTRAINT _abonnement_pk
-        PRIMARY KEY (nom),
-    CONSTRAINT _abonnement_fk_prix
-        FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+
+CREATE TABLE _historique_prix_abonnements (
+    id_prix                     SERIAL,
+    abonnement              VARCHAR(63) NOT NULL,
+    prix_ht_jour_abonnement     INT NOT  NULL,
+    date_maj                    DATE NOT NULL,
+    CONSTRAINT _historique_prix_abonnements_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_abonnements_fk_abonnement
+        FOREIGN KEY (abonnement)
+        REFERENCES _abonnement(nom_abonnement)
+);
+
+
+CREATE TABLE _adresse (
+    id_adresse          SERIAL,
+    num_et_nom_de_voie  VARCHAR(255) NOT NULL,
+    complement_adresse  VARCHAR(255),
+    code_postal         VARCHAR(6) NOT NULL,
+    ville               VARCHAR(255) NOT NULL,
+    pays                VARCHAR(255) NOT NULL,
+    CONSTRAINT _adresse_pk PRIMARY KEY (id_adresse)
 );
 
 
@@ -57,7 +70,6 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
-    id_adresse      INTEGER,
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
 
@@ -67,10 +79,17 @@ CREATE TABLE _compte (
 CREATE TABLE _compte_professionnel (
     id_compte       INTEGER,
     denomination    VARCHAR(255) NOT NULL,
-    a_propos         VARCHAR(255) NOT NULL,
-    site_web         VARCHAR(255) NOT NULL,
-    CONSTRAINT _compte_professionnel_pk PRIMARY KEY (id_compte),
-    CONSTRAINT _compte_professionnel_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
+    a_propos        VARCHAR(255) NOT NULL,
+    site_web        VARCHAR(255) NOT NULL,
+    id_adresse      INTEGER NOT NULL,
+    CONSTRAINT _compte_professionnel_pk 
+        PRIMARY KEY (id_compte),
+    CONSTRAINT _compte_professionnel_fk_compte 
+        FOREIGN KEY (id_compte) 
+        REFERENCES _compte(id_compte),
+    CONSTRAINT _compte_professionnel_fk_adresse
+        FOREIGN KEY (id_adresse)
+        REFERENCES _adresse(id_adresse)
 );
 
 
@@ -141,10 +160,15 @@ CREATE TABLE _offre (
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
     abonnement              VARCHAR(63) NOT NULL,
+    nb_jetons               INTEGER CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL)),
+    jeton_perdu_le          TIMESTAMP,
+    lat                     DOUBLE PRECISION,
+    lon                     DOUBLE PRECISION,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
 );
+
 
 
 /* ====================== OFFRE ACTIVITÉ CONCRETE ====================== */
@@ -239,10 +263,8 @@ CREATE VIEW offre_restauration AS
 /* ============================== OPTIONS ============================== */
 
 CREATE TABLE _option (
-    nom_option  nom_option_t,
-    id_prix INTEGER NOT NULL,
-    CONSTRAINT _option_pk PRIMARY KEY (nom_option),
-    CONSTRAINT _option_fk_prix FOREIGN KEY (id_prix) REFERENCES _prix(id_prix)
+    nom_option  VARCHAR(63),
+    CONSTRAINT _option_pk PRIMARY KEY (nom_option)
 );
 
 
@@ -252,9 +274,8 @@ CREATE TABLE _option (
 
 
 CREATE TABLE _avis (
-    id_avis         SERIAL, -- // TODO Supprimer id_avis et mettre (id_membre, id_offre) comme clé primaire
-    id_membre       INTEGER NOT NULL,
-    id_offre        INTEGER NOT NULL,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     note            INTEGER NOT NULL,
     titre           VARCHAR(128) NOT NULL,
     commentaire     VARCHAR(1024) NOT NULL,
@@ -263,8 +284,8 @@ CREATE TABLE _avis (
     contexte_visite contexte_visite_t NOT NULL,
     publie_le       INTEGER NOT NULL,
     visite_le       INTEGER NOT NULL,
-    CONSTRAINT _avis_pk PRIMARY KEY (id_avis),
-    -- CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
+    lu              BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
     CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
     CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
@@ -273,13 +294,34 @@ CREATE TABLE _avis (
 
 
 CREATE TABLE _reponse (
-    id_avis     INTEGER,
+    id_membre   INTEGER,
+    id_offre    INTEGER,
     texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
-    CONSTRAINT _reponse_pk PRIMARY KEY (id_avis),
-    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis),
+    CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
+
+
+CREATE TABLE _blacklister (
+    id_offre        INTEGER,
+    id_membre       INTEGER,
+    blackliste_le   TIMESTAMP NOT NULL,
+    CONSTRAINT _blacklister_pk PRIMARY KEY (id_membre, id_offre),
+    CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
+
+-- Fonction de suppression d'un avis
+CREATE FUNCTION delete_avis(_id_offre INTEGER, _id_membre INTEGER) RETURNS VOID AS $$
+BEGIN
+    DELETE FROM sae._blacklister WHERE id_offre = _id_offre AND id_membre = _id_membre;
+    DELETE FROM sae._reponse WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._note_detaillee WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._avis_contient_image WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._avis WHERE id_membre = _id_membre AND id_offre = _id_offre;
+END;
+$$ LANGUAGE 'plpgsql';
 
 
 /* ========================== NOTE DÉTAILLÉE =========================== */
@@ -287,27 +329,27 @@ CREATE TABLE _note_detaillee (
     id_note   SERIAL,  
     nom_note  VARCHAR(30) NOT NULL,
     note      INTEGER NOT NULL,
-    id_avis   INTEGER NOT NULL,
+    id_membre   INTEGER NOT NULL,
+    id_offre    INTEGER NOT NULL,
     CONSTRAINT _note_pk PRIMARY KEY (id_note),
-    CONSTRAINT _note_fk_avis FOREIGN KEY (id_avis) REFERENCES _avis(id_avis)
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
+
+CREATE TABLE _signaler (
+    id_offre            INTEGER,
+    id_signale          INTEGER,
+    id_signalant        INTEGER,
+    motif               VARCHAR(250),
+    date_signalement    TIMESTAMP NOT NULL,
+    CONSTRAINT _signaler_pk PRIMARY KEY (id_signale, id_offre),
+    CONSTRAINT _signaler_fk_avis FOREIGN KEY (id_signale, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
 
 
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
 /* ##################################################################### */
-
-
-CREATE TABLE _adresse (
-    id_adresse          SERIAL,
-    num_et_nom_de_voie  VARCHAR(255) NOT NULL,
-    complement_adresse  VARCHAR(255),
-    code_postal         VARCHAR(6) NOT NULL,
-    ville               VARCHAR(255) NOT NULL,
-    pays                VARCHAR(255) NOT NULL,
-    CONSTRAINT _adresse_pk PRIMARY KEY (id_adresse)
-);
 
 
 CREATE TABLE _prestation (
@@ -368,6 +410,32 @@ CREATE TABLE _tag (
     nom_tag  VARCHAR(64),
     CONSTRAINT _tag_pk PRIMARY KEY (nom_tag)
 );
+
+
+CREATE TABLE _mandat_prelevement_sepa (
+    rum                     VARCHAR(255) NOT NULL,
+    nom_creancier           VARCHAR(255) NOT NULL,
+    iban_creancier          VARCHAR(255) NOT NULL,
+    bic_creancier           VARCHAR(255) NOT NULL,
+    id_crancier             VARCHAR(255) NOT NULL,
+    nom_debiteur            VARCHAR(255) NOT NULL,
+    iban_debiteur           VARCHAR(255) NOT NULL,
+    bic_debiteur            VARCHAR(255) NOT NULL,
+    nature_prelevement      VARCHAR(255) NOT NULL,
+    periodicite             VARCHAR(255) NOT NULL,
+    signature_mandat        VARCHAR(255) NOT NULL,
+    date_signature          DATE NOT NULL,
+    date_premiere_echeance  DATE NOT NULL,
+    id_compte_pro_prive     INTEGER NOT NULL,
+    CONSTRAINT _mandat_prelevement_sepa_pk
+        PRIMARY KEY (rum),
+    CONSTRAINT _mandat_prelevement_sepa_fk_compte_pro_prive
+        FOREIGN KEY (id_compte_pro_prive)
+        REFERENCES _compte_professionnel_prive(id_compte)
+);
+
+
+
 /* ##################################################################### */
 /*                                FACTURES                               */
 /* ##################################################################### */
@@ -401,7 +469,7 @@ CREATE TABLE _facture(
 
 /* ======================= COMPTE HABITE ADRESSE ======================= */
 
-ALTER TABLE _compte
+ALTER TABLE _compte_professionnel
     ADD CONSTRAINT _compte_fk_adresse 
     FOREIGN KEY (id_adresse) REFERENCES _adresse(id_adresse)
 ;
@@ -431,20 +499,47 @@ CREATE TABLE _offre_dates_mise_hors_ligne (
 
 /* ======================= OFFRE SOUSCRIT OPTION ======================= */
 
+CREATE TABLE _date_souscription_option (
+    id_date_souscription    SERIAL,
+    date_debut              DATE NOT NULL,
+    nb_semaines             INTEGER NOT NULL DEFAULT 1,
+    CONSTRAINT _date_souscription_option_pk
+        PRIMARY KEY (id_date_souscription),
+    CONSTRAINT _date_souscription_option_1_a_4_semaines
+        CHECK ((nb_semaines >= 1) AND (nb_semaines <= 4))
+);
+
+
 CREATE TABLE _offre_souscrit_option (
-    id_offre    INTEGER,
-    nom_option  nom_option_t,
-    nb_semaine  INTEGER NOT NULL,
-    id_date     INTEGER NOT NULL,
+    id_offre                INTEGER,
+    nom_option              VARCHAR(63),
+    id_date_souscription    INTEGER NOT NULL,
     CONSTRAINT _offre_souscrit_option_pk
-        PRIMARY KEY (id_offre, nom_option),
+        PRIMARY KEY (id_offre, nom_option, id_date_souscription),
     CONSTRAINT _offre_souscrit_option_fk_offre
         FOREIGN KEY (id_offre)
         REFERENCES _offre(id_offre),
     CONSTRAINT _offre_souscrit_option_fk_option
         FOREIGN KEY (nom_option)
+        REFERENCES _option(nom_option),
+    CONSTRAINT _offre_souscrit_option_fk_date_souscription_option
+        FOREIGN KEY (id_date_souscription)
+        REFERENCES _date_souscription_option(id_date_souscription)
+);
+
+
+CREATE TABLE _historique_prix_options (
+    id_prix                     SERIAL,
+    nom_option                  VARCHAR(63) NOT NULL,
+    prix_ht_hebdo_option        INT NOT  NULL,
+    date_maj                    DATE NOT NULL,
+    CONSTRAINT _historique_prix_options_pk
+        PRIMARY KEY (id_prix),
+    CONSTRAINT _historique_prix_options_fk_option
+        FOREIGN KEY (nom_option)
         REFERENCES _option(nom_option)
 );
+
 
 
 /* ====================== OFFRE SE SITUE ADRESSE ======================= */
@@ -513,13 +608,14 @@ CREATE TABLE _offre_possede_tag (
 /* ======================== AVIS CONTIENT IMAGE ======================== */
 
 CREATE TABLE _avis_contient_image (
-    id_avis         INTEGER,
+    id_membre       INTEGER,
+    id_offre        INTEGER,
     lien_fichier    VARCHAR(255),
     CONSTRAINT _avis_contient_image_pk
-        PRIMARY KEY (id_avis, lien_fichier),
+        PRIMARY KEY (id_membre, id_offre, lien_fichier),
     CONSTRAINT _avis_contient_image_fk_avis
-        FOREIGN KEY (id_avis)
-        REFERENCES _avis(id_avis),
+        FOREIGN KEY (id_membre, id_offre)
+        REFERENCES _avis(id_membre, id_offre),
     CONSTRAINT _avis_contient_image_fk_image
         FOREIGN KEY (lien_fichier)
         REFERENCES _image(lien_fichier)
@@ -627,7 +723,471 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE _offre_is_abstract();
 
+/* ========================== OFFRE ACTIVITÉ =========================== */
 
+/* CREATE */
+CREATE FUNCTION create_offre_activite() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(
+        titre, resume, ville, description_detaille, site_web,
+        id_compte_professionnel, id_adresse, abonnement,
+        nb_jetons, jeton_perdu_le, lat, lon)
+    VALUES (
+        NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web,
+        NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement,
+        NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon)
+    RETURNING id_offre INTO id_offre_temp;
+
+    INSERT INTO _offre_activite(id_offre, duree, age_min)
+    VALUES (id_offre_temp, NEW.duree, NEW.age_min);
+
+    RETURN ROW(
+        id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville,
+        NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse,
+        NEW.abonnement, NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_create_offre_activite
+INSTEAD OF INSERT
+ON offre_activite
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_activite();
+
+/* UPDATE */
+CREATE FUNCTION update_offre_activite() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre               = NEW.titre,
+        resume              = NEW.resume,
+        ville               = NEW.ville,
+        description_detaille= NEW.description_detaille,
+        site_web            = NEW.site_web,
+        id_adresse          = NEW.id_adresse,
+        abonnement          = NEW.abonnement,
+        nb_jetons           = NEW.nb_jetons,
+        jeton_perdu_le      = NEW.jeton_perdu_le,
+        lat                 = NEW.lat,
+        lon                 = NEW.lon
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_activite
+    SET duree = NEW.duree,
+        age_min = NEW.age_min
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_update_offre_activite
+INSTEAD OF UPDATE
+ON offre_activite
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_activite();
+
+/* DELETE */
+CREATE FUNCTION delete_offre_activite() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_activite
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_delete_offre_activite
+INSTEAD OF DELETE
+ON offre_activite
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_activite();
+
+
+/* ========================== OFFRE VISITE =========================== */
+
+/* CREATE */
+CREATE FUNCTION create_offre_visite() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(
+        titre, resume, ville, description_detaille, site_web,
+        id_compte_professionnel, id_adresse, abonnement,
+        nb_jetons, jeton_perdu_le, lat, lon)
+    VALUES (
+        NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web,
+        NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement,
+        NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon)
+    RETURNING id_offre INTO id_offre_temp;
+
+    INSERT INTO _offre_visite(id_offre, duree, date_evenement)
+    VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
+
+    RETURN ROW(
+        id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville,
+        NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse,
+        NEW.abonnement, NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_create_offre_visite
+INSTEAD OF INSERT
+ON offre_visite
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_visite();
+
+/* UPDATE */
+CREATE FUNCTION update_offre_visite() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre               = NEW.titre,
+        resume              = NEW.resume,
+        ville               = NEW.ville,
+        description_detaille= NEW.description_detaille,
+        site_web            = NEW.site_web,
+        id_adresse          = NEW.id_adresse,
+        abonnement          = NEW.abonnement,
+        nb_jetons           = NEW.nb_jetons,
+        jeton_perdu_le      = NEW.jeton_perdu_le,
+        lat                 = NEW.lat,
+        lon                 = NEW.lon
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_visite
+    SET duree         = NEW.duree,
+        date_evenement= NEW.date_evenement
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_update_offre_visite
+INSTEAD OF UPDATE
+ON offre_visite
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_visite();
+
+/* DELETE */
+CREATE FUNCTION delete_offre_visite() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_visite
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_delete_offre_visite
+INSTEAD OF DELETE
+ON offre_visite
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_visite();
+
+
+/* ========================== OFFRE SPECTACLE =========================== */
+
+/* CREATE */
+CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(
+        titre, resume, ville, description_detaille, site_web,
+        id_compte_professionnel, id_adresse, abonnement,
+        nb_jetons, jeton_perdu_le, lat, lon)
+    VALUES (
+        NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web,
+        NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement,
+        NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon)
+    RETURNING id_offre INTO id_offre_temp;
+
+    INSERT INTO _offre_spectacle(id_offre, duree, capacite, date_evenement)
+    VALUES (id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement);
+
+    RETURN ROW(
+        id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville,
+        NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse,
+        NEW.abonnement, NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_create_offre_spectacle
+INSTEAD OF INSERT
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_spectacle();
+
+/* UPDATE */
+CREATE FUNCTION update_offre_spectacle() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre               = NEW.titre,
+        resume              = NEW.resume,
+        ville               = NEW.ville,
+        description_detaille= NEW.description_detaille,
+        site_web            = NEW.site_web,
+        id_adresse          = NEW.id_adresse,
+        abonnement          = NEW.abonnement,
+        nb_jetons           = NEW.nb_jetons,
+        jeton_perdu_le      = NEW.jeton_perdu_le,
+        lat                 = NEW.lat,
+        lon                 = NEW.lon
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_spectacle
+    SET duree         = NEW.duree,
+        capacite      = NEW.capacite,
+        date_evenement= NEW.date_evenement
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_update_offre_spectacle
+INSTEAD OF UPDATE
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_spectacle();
+
+/* DELETE */
+CREATE FUNCTION delete_offre_spectacle() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_spectacle
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_delete_offre_spectacle
+INSTEAD OF DELETE
+ON offre_spectacle
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_spectacle();
+
+
+/* ========================== OFFRE PARC ATTRACTION =========================== */
+
+/* CREATE */
+CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(
+        titre, resume, ville, description_detaille, site_web,
+        id_compte_professionnel, id_adresse, abonnement,
+        nb_jetons, jeton_perdu_le, lat, lon)
+    VALUES (
+        NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web,
+        NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement,
+        NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon)
+    RETURNING id_offre INTO id_offre_temp;
+
+    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
+    VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
+
+    RETURN ROW(
+        id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville,
+        NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse,
+        NEW.abonnement, NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_create_offre_parc_attraction
+INSTEAD OF INSERT
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_parc_attraction();
+
+/* UPDATE */
+CREATE FUNCTION update_offre_parc_attraction() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre               = NEW.titre,
+        resume              = NEW.resume,
+        ville               = NEW.ville,
+        description_detaille= NEW.description_detaille,
+        site_web            = NEW.site_web,
+        id_adresse          = NEW.id_adresse,
+        abonnement          = NEW.abonnement,
+        nb_jetons           = NEW.nb_jetons,
+        jeton_perdu_le      = NEW.jeton_perdu_le,
+        lat                 = NEW.lat,
+        lon                 = NEW.lon
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_parc_attraction
+    SET nb_attractions = NEW.nb_attractions,
+        age_min        = NEW.age_min,
+        plan           = NEW.plan
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_update_offre_parc_attraction
+INSTEAD OF UPDATE
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_parc_attraction();
+
+/* DELETE */
+CREATE FUNCTION delete_offre_parc_attraction() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_parc_attraction
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_delete_offre_parc_attraction
+INSTEAD OF DELETE
+ON offre_parc_attraction
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_parc_attraction();
+
+
+/* ========================== OFFRE RESTAURATION =========================== */
+
+/* CREATE */
+CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
+DECLARE
+    id_offre_temp _offre.id_offre%type;
+BEGIN
+    INSERT INTO _offre(
+        titre, resume, ville, description_detaille, site_web,
+        id_compte_professionnel, id_adresse, abonnement,
+        nb_jetons, jeton_perdu_le, lat, lon)
+    VALUES (
+        NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web,
+        NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement,
+        NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon)
+    RETURNING id_offre INTO id_offre_temp;
+
+    INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
+    VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
+
+    RETURN ROW(
+        id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville,
+        NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse,
+        NEW.abonnement, NEW.nb_jetons, NEW.jeton_perdu_le, NEW.lat, NEW.lon
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_create_offre_restauration
+INSTEAD OF INSERT
+ON offre_restauration
+FOR EACH ROW
+EXECUTE PROCEDURE create_offre_restauration();
+
+/* UPDATE */
+CREATE FUNCTION update_offre_restauration() RETURNS TRIGGER AS $$
+BEGIN
+    IF (NEW.id_offre <> OLD.id_offre) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
+    END IF;
+    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
+        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
+    END IF;
+
+    UPDATE _offre
+    SET titre               = NEW.titre,
+        resume              = NEW.resume,
+        ville               = NEW.ville,
+        description_detaille= NEW.description_detaille,
+        site_web            = NEW.site_web,
+        id_adresse          = NEW.id_adresse,
+        abonnement          = NEW.abonnement,
+        nb_jetons           = NEW.nb_jetons,
+        jeton_perdu_le      = NEW.jeton_perdu_le,
+        lat                 = NEW.lat,
+        lon                 = NEW.lon
+    WHERE id_offre = NEW.id_offre;
+
+    UPDATE _offre_restauration
+    SET gamme_prix = NEW.gamme_prix,
+        carte      = NEW.carte
+    WHERE id_offre = NEW.id_offre;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_update_offre_restauration
+INSTEAD OF UPDATE
+ON offre_restauration
+FOR EACH ROW
+EXECUTE PROCEDURE update_offre_restauration();
+
+/* DELETE */
+CREATE FUNCTION delete_offre_restauration() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM _offre_restauration
+    WHERE id_offre = OLD.id_offre;
+
+    DELETE FROM _offre
+    WHERE id_offre = OLD.id_offre;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_delete_offre_restauration
+INSTEAD OF DELETE
+ON offre_restauration
+FOR EACH ROW
+EXECUTE PROCEDURE delete_offre_restauration();
 
 /* ##################################################################### */
 /*                                  CRUD                                 */
@@ -642,14 +1202,14 @@ CREATE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
-        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_prive(id_compte, siren)
         VALUES (id_compte_temp, NEW.siren);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.siren);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse, NEW.siren);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -677,14 +1237,14 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
     SET denomination = NEW.denomination,
         a_propos = NEW.a_propos,
-        site_web = NEW.site_web
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel_prive
@@ -734,14 +1294,14 @@ CREATE FUNCTION create_compte_professionnel_publique() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web) 
-        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web);
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+        VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_publique(id_compte)
         VALUES (id_compte_temp);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.denomination, NEW.a_propos, NEW.site_web);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -769,14 +1329,14 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
     SET denomination = NEW.denomination,
         a_propos = NEW.a_propos,
-        site_web = NEW.site_web
+        site_web = NEW.site_web,
+        id_adresse = NEW.id_adresse
     WHERE id_compte = NEW.id_compte;
 
     RETURN NEW;
@@ -822,12 +1382,12 @@ CREATE FUNCTION create_compte_membre() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, id_adresse)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
         RETURNING id_compte INTO id_compte_temp;
     INSERT INTO _compte_membre(id_compte, pseudo)
         VALUES (id_compte_temp, NEW.pseudo);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.id_adresse, NEW.pseudo);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.pseudo);
 END;
 $$ LANGUAGE 'plpgsql';
 
@@ -855,8 +1415,7 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe,
-        id_adresse = NEW.id_adresse
+        mot_de_passe = NEW.mot_de_passe
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_membre
@@ -894,449 +1453,6 @@ ON compte_membre
 FOR EACH ROW
 EXECUTE PROCEDURE delete_compte_membre();
 
-
-/* ========================== OFFRE ACTIVITÉ =========================== */
-
--- CREATE
-
-CREATE FUNCTION create_offre_activite() RETURNS TRIGGER AS $$
-DECLARE
-    id_offre_temp _offre.id_offre%type;
-BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
-        RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_activite(id_offre, duree, age_min)
-        VALUES (id_offre_temp, NEW.duree, NEW.age_min);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.age_min, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_offre_activite
-INSTEAD OF INSERT
-ON offre_activite
-FOR EACH ROW
-EXECUTE PROCEDURE create_offre_activite();
-
-
--- READ
-
-/* SELECT * FROM offre_activite; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_offre_activite() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_offre <> OLD.id_offre) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
-    END IF;
-
-    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
-    END IF;
-
-    UPDATE _offre
-    SET titre = NEW.titre,
-        resume = NEW.resume,
-        ville = NEW.ville,
-        description_detaille = NEW.description_detaille,
-        site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse,
-        abonnement = NEW.abonnement
-    WHERE id_offre = NEW.id_offre;
-
-    UPDATE _offre_activite
-    SET duree = NEW.duree,
-        age_min = NEW.age_min
-    WHERE id_offre = NEW.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_offre_activite
-INSTEAD OF UPDATE
-ON offre_activite
-FOR EACH ROW
-EXECUTE PROCEDURE update_offre_activite();
-
-
--- DELETE
-
-CREATE FUNCTION delete_offre_activite() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _offre_activite
-    WHERE id_offre = OLD.id_offre;
-
-    DELETE FROM _offre
-    WHERE id_offre = OLD.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_offre_activite
-INSTEAD OF DELETE
-ON offre_activite
-FOR EACH ROW
-EXECUTE PROCEDURE delete_offre_activite();
-
-
-/* =========================== OFFRE VISITE ============================ */
-
--- CREATE
-
-CREATE FUNCTION create_offre_visite() RETURNS TRIGGER AS $$
-DECLARE
-    id_offre_temp _offre.id_offre%type;
-BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
-        RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_visite(id_offre, duree,date_evenement)
-        VALUES (id_offre_temp, NEW.duree, NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_offre_visite
-INSTEAD OF INSERT
-ON offre_visite
-FOR EACH ROW
-EXECUTE PROCEDURE create_offre_visite();
-
-
--- READ
-
-/* SELECT * FROM offre_visite; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_offre_visite() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_offre <> OLD.id_offre) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
-    END IF;
-
-    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
-    END IF;
-
-    UPDATE _offre
-    SET titre = NEW.titre,
-        resume = NEW.resume,
-        ville = NEW.ville,
-        description_detaille = NEW.description_detaille,
-        site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse,
-        abonnement = NEW.abonnement
-    WHERE id_offre = NEW.id_offre;
-
-    UPDATE _offre_visite
-    SET duree = NEW.duree,
-        date_evenement = NEW.date_evenement
-    WHERE id_offre = NEW.id_offre;
-    
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_offre_visite
-INSTEAD OF UPDATE
-ON offre_visite
-FOR EACH ROW
-EXECUTE PROCEDURE update_offre_visite();
-
-
--- DELETE
-
-CREATE FUNCTION delete_offre_visite() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _offre_visite
-    WHERE id_offre = OLD.id_offre;
-
-    DELETE FROM _offre
-    WHERE id_offre = OLD.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_offre_visite
-INSTEAD OF DELETE
-ON offre_visite
-FOR EACH ROW
-EXECUTE PROCEDURE delete_offre_visite();
-
-
-/* ========================== OFFRE SPECTACLE ========================== */
-
--- CREATE
-
-CREATE FUNCTION create_offre_spectacle() RETURNS TRIGGER AS $$
-DECLARE
-    id_offre_temp _offre.id_offre%type;
-BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
-        RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_spectacle(id_offre, duree, capacite,date_evenement)
-        VALUES (id_offre_temp, NEW.duree, NEW.capacite,NEW.date_evenement);
-    RETURN ROW(id_offre_temp, NEW.duree, NEW.capacite, NEW.date_evenement, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_offre_spectacle
-INSTEAD OF INSERT
-ON offre_spectacle
-FOR EACH ROW
-EXECUTE PROCEDURE create_offre_spectacle();
-
-
--- READ
-
-/* SELECT * FROM offre_spectacle; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_offre_spectacle() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_offre <> OLD.id_offre) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
-    END IF;
-
-    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
-    END IF;
-
-    UPDATE _offre
-    SET titre = NEW.titre,
-        resume = NEW.resume,
-        ville = NEW.ville,
-        description_detaille = NEW.description_detaille,
-        site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse,
-        prix_offre = prix_offre,
-        type_offre = type_offre,
-        abonnement = NEW.abonnement
-    WHERE id_offre = NEW.id_offre;
-
-    UPDATE _offre_spectacle
-    SET duree = NEW.duree,
-        capacite = NEW.capacite,
-        date_evenement = NEW.date_evenement
-    WHERE id_offre = NEW.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_offre_spectacle
-INSTEAD OF UPDATE
-ON offre_spectacle
-FOR EACH ROW
-EXECUTE PROCEDURE update_offre_spectacle();
-
-
--- DELETE
-
-CREATE FUNCTION delete_offre_spectacle() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _offre_spectacle
-    WHERE id_offre = OLD.id_offre;
-
-    DELETE FROM _offre
-    WHERE id_offre = OLD.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_offre_spectacle
-INSTEAD OF DELETE
-ON offre_spectacle
-FOR EACH ROW
-EXECUTE PROCEDURE delete_offre_spectacle();
-
-
-/* ===================== OFFRE PARC D'ATTRACTIONS ====================== */
-
--- CREATE
-
-CREATE FUNCTION create_offre_parc_attraction() RETURNS TRIGGER AS $$
-DECLARE
-    id_offre_temp _offre.id_offre%type;
-BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
-        RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_parc_attraction(id_offre, nb_attractions, age_min, plan)
-        VALUES (id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan);
-    RETURN ROW(id_offre_temp, NEW.nb_attractions, NEW.age_min, NEW.plan, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_offre_parc_attraction
-INSTEAD OF INSERT
-ON offre_parc_attraction
-FOR EACH ROW
-EXECUTE PROCEDURE create_offre_parc_attraction();
-
-
--- READ
-
-/* SELECT * FROM offre_parc_attraction; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_offre_parc_attraction() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_offre <> OLD.id_offre) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
-    END IF;
-
-    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
-    END IF;
-
-    UPDATE _offre
-    SET titre = NEW.titre,
-        resume = NEW.resume,
-        ville = NEW.ville,
-        description_detaille = NEW.description_detaille,
-        site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse,
-        abonnement = NEW.abonnement
-    WHERE id_offre = NEW.id_offre;
-
-    UPDATE _offre_parc_attraction
-    SET nb_attractions = NEW.nb_attractions,
-        age_min = NEW.age_min,
-        plan = NEW.plan
-    WHERE id_offre = NEW.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_offre_parc_attraction
-INSTEAD OF UPDATE
-ON offre_parc_attraction
-FOR EACH ROW
-EXECUTE PROCEDURE update_offre_parc_attraction();
-
-
--- DELETE
-
-CREATE FUNCTION delete_offre_parc_attraction() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _offre_parc_attraction
-    WHERE id_offre = OLD.id_offre;
-
-    DELETE FROM _offre
-    WHERE id_offre = OLD.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_offre_parc_attraction
-INSTEAD OF DELETE
-ON offre_parc_attraction
-FOR EACH ROW
-EXECUTE PROCEDURE delete_offre_parc_attraction();
-
-
-/* ======================== OFFRE RESTAURATION ========================= */
-
--- CREATE
-
-CREATE FUNCTION create_offre_restauration() RETURNS TRIGGER AS $$
-DECLARE
-    id_offre_temp _offre.id_offre%type;
-BEGIN
-    INSERT INTO _offre(titre, resume, ville, description_detaille, site_web, id_compte_professionnel, id_adresse, abonnement)
-        VALUES (NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement)
-        RETURNING id_offre INTO id_offre_temp;
-    INSERT INTO _offre_restauration(id_offre, gamme_prix, carte)
-        VALUES (id_offre_temp, NEW.gamme_prix, NEW.carte);
-    RETURN ROW(id_offre_temp, NEW.gamme_prix, NEW.carte, NEW.titre, NEW.resume, NEW.ville, NEW.description_detaille, NEW.site_web, NEW.id_compte_professionnel, NEW.id_adresse, NEW.abonnement);
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_create_offre_restauration
-INSTEAD OF INSERT
-ON offre_restauration
-FOR EACH ROW
-EXECUTE PROCEDURE create_offre_restauration();
-
-
--- READ
-
-/* SELECT * FROM offre_restauration; */
-
-
--- UPDATE
-
-CREATE FUNCTION update_offre_restauration() RETURNS TRIGGER AS $$
-BEGIN
-    IF (NEW.id_offre <> OLD.id_offre) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''une offre.';
-    END IF;
-
-    IF (NEW.id_compte_professionnel <> OLD.id_compte_professionnel) THEN
-        RAISE EXCEPTION 'Vous ne pouvez pas modifier l''auteur d''une offre.';
-    END IF;
-
-    UPDATE _offre
-    SET titre = NEW.titre,
-        resume = NEW.resume,
-        ville = NEW.ville,
-        description_detaille = NEW.description_detaille,
-        site_web = NEW.site_web,
-        id_adresse = NEW.id_adresse,
-        abonnement = NEW.abonnement
-    WHERE id_offre = NEW.id_offre;
-
-    UPDATE _offre_restauration
-    SET gamme_prix = NEW.gamme_prix,
-        carte = NEW.carte
-    WHERE id_offre = NEW.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_update_offre_restauration
-INSTEAD OF UPDATE
-ON offre_restauration
-FOR EACH ROW
-EXECUTE PROCEDURE update_offre_restauration();
-
-
--- DELETE
-
-CREATE FUNCTION delete_offre_restauration() RETURNS TRIGGER AS $$
-BEGIN
-    DELETE FROM _offre_restauration
-    WHERE id_offre = OLD.id_offre;
-
-    DELETE FROM _offre
-    WHERE id_offre = OLD.id_offre;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER tg_delete_offre_restauration
-INSTEAD OF DELETE
-ON offre_restauration
-FOR EACH ROW
-EXECUTE PROCEDURE delete_offre_restauration();
 
 
 
@@ -1422,8 +1538,10 @@ BEGIN
     nb := (SELECT COUNT(*)
             FROM _avis
             INNER JOIN _note_detaillee
-            ON _avis.id_avis = _note_detaillee.id_avis
-            WHERE _avis.id_avis = NEW.id_avis);
+            ON _avis.id_membre = _note_detaillee.id_membre
+            AND _avis.id_offre = _note_detaillee.id_offre
+            WHERE _avis.id_membre = NEW.id_membre
+            AND _avis.id_offre = NEW.id_offre);
     
     PERFORM *
     FROM _offre_restauration
@@ -1449,5 +1567,27 @@ DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
 
+-- Création de la fonction d'anonymisation
+CREATE OR REPLACE FUNCTION update_avis_before_delete() RETURNS TRIGGER AS $$
+DECLARE
+	new_id INT;
+BEGIN
+	-- Utiliser le compte anonyme par défaut
+	SELECT id_compte INTO new_id FROM compte_membre
+	WHERE email = 'anonyme@ano.com';
+
+    -- update des avis concernés
+	UPDATE _avis SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+	UPDATE _avis_contient_image SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+
+	RETURN NEW;
+END;
+$$ LANGUAGE 'plpgsql';
+
+-- Création du trigger BEFORE DELETE sur _compte_membre
+CREATE TRIGGER trg_update_avis_on_delete
+BEFORE DELETE ON _compte_membre
+FOR EACH ROW
+EXECUTE FUNCTION update_avis_before_delete();
 
 COMMIT;

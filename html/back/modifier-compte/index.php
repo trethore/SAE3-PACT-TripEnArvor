@@ -11,6 +11,7 @@ $id_compte = $_SESSION["id"];
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $conn->prepare('SET SCHEMA \'sae\';')->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
@@ -22,22 +23,51 @@ $typeCompte = getTypeCompte($id_compte);
 
 switch ($typeCompte) {
     case 'proPublique':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse 
+        $reqCompte = "SELECT * from sae.compte_professionnel_publique cp 
+                        join sae._adresse a on cp.id_adresse = a.id_adresse 
                         where cp.id_compte = :id_compte;";
         break;
 
     case 'proPrive':
-        $reqCompte = "SELECT * from sae._compte_professionnel cp 
-                        join sae._compte c on c.id_compte = cp.id_compte 
-                        join sae._adresse a on c.id_adresse = a.id_adresse
-                        join sae._compte_professionnel_prive cpp on c.id_compte = cpp.id_compte
+        $reqCompte = "SELECT * from sae.compte_professionnel_prive cp 
+                        join sae._adresse a on cp.id_adresse = a.id_adresse
                         where cp.id_compte = :id_compte;";
         break;
-    
+
     default:
         break;
+}
+
+if (!$submitted) {
+?>
+   <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+
+// Préparation et exécution de la requête
+$stmt = $conn->prepare($reqCompte);
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->execute();
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$informationsBancaires;
+if ($typeCompte === 'proPrive') {
+    $query = "SELECT * FROM sae._mandat_prelevement_sepa INNER JOIN sae._compte_professionnel_prive ON _mandat_prelevement_sepa.id_compte_pro_prive = _compte_professionnel_prive.id_compte WHERE _compte_professionnel_prive.id_compte = ?;";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$detailCompte['id_compte']]);
+    $informationsBancaires = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 <!DOCTYPE html>
@@ -45,40 +75,35 @@ switch ($typeCompte) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backCompte.css">
-    <link rel="stylesheet" href="/style/style_backCompteModif.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/styleguide.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Modifier mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
+    <script src="/scripts/header.js"></script>
 
 </head>
-<body>
-<?php
-if (!$submitted) {
-?>
-    <header>
+<body class="back compte-back-modif">
+
+<header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back" class="retourAccueil">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back" class="retourAccueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte" id="retourCompte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <main>
-        <?php 
-            // Préparation et exécution de la requête
-            $stmt = $conn->prepare($reqCompte);
-            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-            $stmt->execute();
-            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
-        ?>
-        <h1>Détails du compte</h1>
-        <h2>Mon entreprise</h2>
-        
+        <h1>Modification du compte</h1>
         <form action="/back/modifier-compte/" method="POST" id="myForm">
+            <h2>Mon entreprise</h2>
             <table>
                 <tr>
                     <td>Dénomination Sociale</td>
@@ -164,9 +189,40 @@ if (!$submitted) {
                     <td><input type="text" name="pays" id="pays" value="<?= htmlentities($detailCompte["pays"]);?>"></td>
                 </tr>
             </table>
+            <?php
+if ($typeCompte === 'proPrive') {
+    if ($informationsBancaires == null) {
+?>
+            <input type="hidden" name="creer-infos-bancaires" value="true">
+<?php
+    }
+?>
+            <h2>Informations bancaires</h2>
+            <table>
+                <tr>
+                    <td>Nom</td>
+                    <td><input type="text" name="nom_creancier" id="nom_creancier" value="<?php echo htmlentities($informationsBancaires['nom_creancier'] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>Identifiant</td>
+                    <td><input type="text" name="id_crancier" id="id_crancier" value="<?php echo(htmlentities($informationsBancaires['id_crancier'] ?? '')); ?>"></td>
+                </tr>
+                <tr>
+                    <td>IBAN</td>
+                    <td><input type="text" name="iban_creancier" id="iban_creancier" value="<?php echo htmlentities($informationsBancaires['iban_creancier'] ?? '');?>"></td>
+                </tr>
+                <tr>
+                    <td>BIC</td>
+                    <td><input type="text" name="bic_creancier" id="bic_creancier" value="<?php echo htmlentities($informationsBancaires['bic_creancier'] ?? '');?>"></td>
+                </tr>
+            </table>
+<?php
+}
+?>
             <div>
-            <input type="submit" value="Valider les modifications">
-        </div>
+                <a href="/back/mon-compte" id="retour">Revenir au compte</a>
+                <input type="submit" value="Valider les modifications">
+            </div>
         </form> 
         <div id="popupOverlay" style="display: none;"></div>
         <div id="validerModifCompte" style="display: none;">
@@ -179,7 +235,7 @@ if (!$submitted) {
         </div>
         <div id="annulerModifCompte" style="display: none;">
             <h3>Annuler les modifications</h3>
-            <p>Voulez-vous annuler les modifications apporter à votre compte ?</p>
+            <p>Si vous retournez sur votre compte, vous annulez les modifications faites pour l'instant</p>
             <div>
                 <button id="boutonReprendre"> Reprendre </button>
                 <button id="boutonQuitter"> Quitter </button>
@@ -231,9 +287,7 @@ if (!$submitted) {
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
     <?php
@@ -291,6 +345,12 @@ if (!$submitted) {
         $name = $_POST['nom'];
         $first_name = $_POST['prenom'];
         $tel = $_POST['tel'];
+
+        $conn->prepare('SET SCHEMA \'sae\';')->execute();
+        $stmt = $conn->prepare($reqCompte);
+        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+        $stmt->execute();
+        $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($ok) {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -308,7 +368,7 @@ if (!$submitted) {
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
@@ -334,14 +394,52 @@ if (!$submitted) {
                     $city = $_POST['ville'];
                     $country = $_POST['pays'];
                     if ($address_complement === '') $address_complement = null;
+
+                    $nomCreancier = $_POST['nom_creancier'];
+                    $idCreancier = $_POST['id_crancier'];
+                    $ibanCreancier = $_POST['iban_creancier'];
+                    $bicCreancier = $_POST['bic_creancier'];
+
+                    if (isset($nomCreancier) && isset($idCreancier) && isset($ibanCreancier) && isset($bicCreancier)) {
+                        if (isset($_POST['creer-infos-bancaires'])) {
+                            $query = 'INSERT INTO sae._mandat_prelevement_sepa
+(
+  rum,
+  nom_creancier,
+  iban_creancier,
+  bic_creancier,
+  id_crancier,
+  nom_debiteur,
+  iban_debiteur,
+  bic_debiteur,
+  nature_prelevement,
+  periodicite,
+  signature_mandat,
+  date_signature,
+  date_premiere_echeance,
+  id_compte_pro_prive
+)
+VALUES
+(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([uniqid(), $nomCreancier, $ibanCreancier, $bicCreancier, $idCreancier, 'TripEnArvor', '0123456789', '12345', 'récurrent', 'mensuel', uniqid(), '01-04-2025', '01-04-2025', $detailCompte['id_compte']]);
+                        } else {
+                            $query = 'UPDATE sae._mandat_prelevement_sepa SET nom_creancier = ?, iban_creancier = ?, bic_creancier = ?, id_crancier = ? WHERE id_compte_pro_prive = ?;';
+                            $stmt = $conn->prepare($query);
+                            $stmt->execute([$nomCreancier, $ibanCreancier, $bicCreancier, $idCreancier, $detailCompte['id_compte']]);
+                        }
+                    }
+
+
                     // Requete SQL pour modifier la table adresse
                     $query = "UPDATE sae._adresse 
                                 set (num_et_nom_de_voie, complement_adresse, code_postal, ville, pays) = (?, ?, ?, ?, ?) 
-                                    where id_adresse = (select id_adresse from sae._compte where id_compte = ?) returning id_adresse;";
+                                    where id_adresse = (select id_adresse from sae._compte_professionnel where id_compte = ?) returning id_adresse;";
                     $stmt = $conn->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country, $id_compte]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
     
+                    $conn->prepare('SET SCHEMA \'sae\';')->execute();
                     // Requete SQL pour modifier la vue compte_professionnel_prive
                     $query = "UPDATE sae.compte_professionnel_prive 
                                 set (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 

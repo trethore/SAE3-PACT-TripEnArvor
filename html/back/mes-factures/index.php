@@ -7,43 +7,26 @@ require_once($_SERVER['DOCUMENT_ROOT'] . AUTH_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SITE_UTILS);
 require_once($_SERVER['DOCUMENT_ROOT'] . SESSION_UTILS);
 
-/*try {
+try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
-}*/
+}
 
 startSession();
-$id_compte = $_SESSION["id"];
-redirectToConnexionIfNecessaryPro($id_compte);
+$id_compte = $_SESSION["id"]; 
+if (isset($id_compte)) {
+    redirectToConnexionIfNecessaryPro($id_compte);
+} else {
+    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+}
 
-$factures = [
-    [
-        "date" => "12/09/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/09/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-    [
-        "date" => "15/08/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/08/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-    [
-        "date" => "15/07/2024",
-        "nom_offre" => "Côté plage"
-    ],
-    [
-        "date" => "04/07/2024",
-        "nom_offre" => "La cité Médiévale"
-    ],
-]
+$reqFacture = "SELECT * from sae._facture f
+                join sae._date d on d.id_date = f.id_date_emission
+                join sae._offre o on f.id_offre = o.id_offre
+                join sae.compte_professionnel_prive cp on cp.id_compte = o.id_compte_professionnel
+                where cp.id_compte = :id_compte;"
 
 ?>
 <!DOCTYPE html> 
@@ -51,20 +34,39 @@ $factures = [
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_mesFactures.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/styleguide.css">
-    <title>Mon compte</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <title>Mes factures</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-
+    <script src="/scripts/header.js"></script>
 </head>
-<body>
+<body class="back factures">
+<?php
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
@@ -72,16 +74,17 @@ $factures = [
     <main>
         <nav>
             <a href="/back/mon-compte">Mes infos</a>
+            <a href="/back/mes-avis">Mes avis</a>
             <a class="ici" href="/back/mes-factures">Mes factures</a>
             <a href="/se-connecter">Se déconnecter</a>
         </nav>
         <section>
             <?php 
                 // Préparation et exécution de la requête
-                /*$stmt = $conn->prepare($reqCompte);
+                $stmt = $conn->prepare($reqFacture);
                 $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
                 $stmt->execute();
-                $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)*/
+                $factures = $stmt->fetchAll(PDO::FETCH_ASSOC)
             ?>
             <h1>Mes factures</h1>
             <ul>
@@ -89,8 +92,12 @@ $factures = [
                 foreach ($factures as $facture) {
                 ?>
                     <li>
-                        <a href="/images/universel/facture.pdf" target="_blank"><p>Facture du <?php echo $facture["date"] ?> - Abonnement de "<?php echo $facture["nom_offre"] ?>"</p></a>
+                        <a href="/back/generer-facture/index.php?numero_facture=<?php echo urlencode($facture["numero_facture"]); ?>" target="_blank">Facture N°<?php echo htmlentities($facture["numero_facture"]); ?> - <?php echo htmlentities($facture["titre"]); ?> - pour le <?php 
+                            $date_formater = new DateTime($facture["date"]);
+                            $date_formater = $date_formater->format('d-m-Y');
+                            echo htmlentities($date_formater); ?></a>
                     </li>
+                    <hr>
                 <?php
                 }
                 ?>
@@ -126,10 +133,7 @@ $factures = [
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
 </body>
-</html>

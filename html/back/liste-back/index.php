@@ -13,16 +13,15 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
-/*
+
 startSession();
 $id_compte = $_SESSION["id"];
 if (isset($id_compte)) {
-    redirectToListOffreIfNecessary($id_compte);
+    redirectToConnexionIfNecessaryPro($id_compte);
 } else {
     redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
 }
-*/
-$id_compte= 1;
+
 $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
 ?>
@@ -30,26 +29,103 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_backListe.css">
-    <link rel="stylesheet" href="/style/style_HFB.css">
-    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="/style/style.css">
+
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
-<body>
+<body class="back liste-back">
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+startSession();
+try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh->prepare("SET SCHEMA 'sae';")->execute();
+    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+    $stmt->execute([$_SESSION['id']]);
+    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+}
+?>
+
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input type="text" class="input-search" placeholder="Taper votre recherche...">
+            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($offres as $offre) { ?>
+                    <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
+                        <?php echo htmlspecialchars($offre['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            $remainingAvis = 0;
+            $remainingAvis = 0;
+
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $avisNonLus = getLu($row['id_offre']);
+
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                    }
+                }
+            }
+        ?>
+        <a href="/back/mon-compte" class="icon-container">
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte">
+            <?php if ($remainingAvis > 0) { ?>
+                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
+            <?php } ?>
+        </a>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const inputSearch = document.querySelector(".input-search");
+                const datalist = document.querySelector("#cont");
+                // Événement sur le champ de recherche
+                inputSearch.addEventListener("input", () => {
+                    // Rechercher l'option correspondante dans le datalist
+                    const selectedOption = Array.from(datalist.options).find(
+                        option => option.value === inputSearch.value
+                    );
+                    if (selectedOption) {
+                        const idOffre = selectedOption.getAttribute("data-id");
+                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
+                        // Rediriger si un ID valide est trouvé
+                        if (idOffre) {
+                            // TD passer du back au front quand fini
+                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
+                        }
+                    }
+                });
+                // Debugging pour vérifier les options disponibles
+                const options = Array.from(datalist.options).map(option => ({
+                    value: option.value,
+                    id: option.getAttribute("data-id")
+                }));
+                //console.log("Options disponibles dans le datalist :", options);
+            });
+        </script>
     </header>
     <main>
+        <div class="toast-container"></div>
+
         <h1>Liste de vos Offres</h1>
         <!--------------- 
         Filtrer et trier
@@ -117,6 +193,8 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                                 <option value="default">Trier par :</option>
                                 <option value="price-asc">Prix croissant</option>
                                 <option value="price-desc">Prix décroissant</option>
+                                <option value="create-desc">Créé récemment</option>
+                                <option value="note-asc">Meilleure note</option>
                             </select>
                         </div>
                     </div>
@@ -126,7 +204,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <div class="localisation">
                         <h3>Localisation</h3>
                         <div>
-                            <label><input type="radio" name="localisation"> Autour de moi</label>
+                            <label style="display: none;"><input type="radio" name="localisation"> Autour de moi</label>
                             <div>
                                 <label><!--<input type="radio" name="localisation">--> Rechercher</label>
                                 <input type="text" name="location" id="search-location" placeholder="Rechercher...">
@@ -144,7 +222,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     </div>
         
                     <!-- Date -->
-                    <div class="date">
+                    <div class="date" style="display: none;">
                         <h3>Date</h3>
                         <div>
                             <div>
@@ -169,10 +247,31 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
             while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article class="offre">
+            <article class="<?php if (getDateOffreHorsLigne($row['id_offre']) > getDateOffreEnLigne($row['id_offre'])) { echo 'hors-ligne-offre'; } else { echo 'offre'; } ?>">
                 <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
                     <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
-                    <div class="ouverture-offre"><?php  echo 'Ouvert'?></div>
+
+                    <?php $horaire = getHorairesOuverture($row['id_offre']);
+                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
+                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                                    $jour_actuel = $jours[date('w')];
+                                    $ouverture = "Indét.";
+                                    foreach ($horaire as $h) {
+                                        if (!empty($horaire)) {
+                                            $ouvert_ferme = date('H:i');
+                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                            $ouverture = "Fermé";
+                                            if ($h['nom_jour'] == $jour_actuel) {
+                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                                    $ouverture = "Ouvert";
+                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                                    $ouverture = "Ferme Bnt.";
+                                                }
+                                            }
+                                        } 
+                                    } ?>
+
+                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture) ?></div>
 
                     <!---------------------------------------
                     Récuperer la premère image liée à l'offre
@@ -213,54 +312,180 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     <div class="etoiles">
                         <?php 
                             $note = getNoteMoyenne($row['id_offre']);
-                            $etoilesPleines = $note;
-                            $etoilesVides = 5 - $note;
+                        ?>
+                        <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
+                        <?php
+                            if ($note != 0) {
+                                $etoilesPleines = floor($note);
+                                $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
+                                $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                            } else {
+                                $etoilesPleines = 0;
+                                $demiEtoile = 0;
+                                $etoilesVides = 5;
+                            }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
                                 ?>
-                                    <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <?php
+                            }
+
+                            if ($demiEtoile) {
+                                ?>
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
                                 <?php
                             }
 
                             for ($i = 0; $i < $etoilesVides; $i++) {
                                 ?>
-                                    <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
                                 <?php
                             }
                         ?>
                         <p><?php echo getNombreNotes($row['id_offre']) ?></p>
                     </div>
-                    <div style="display: none;">
+                    <div>
                         <!-------------------------------------- 
-                        Affichage des avis non lues
+                        Affichage des avis non lus
                         ---------------------------------------->
-                        <p>Avis non lus : <span><b>4</b></span></p>
+                        <?php
+                            $avisNonLus = getLu($row['id_offre']);
+                            $nonLusCount = 0;
+
+                            forEach($avisNonLus as $avis) {
+                                if (empty($avis['lu'])) {
+                                    $nonLusCount++;
+                                }
+                            }
+                        ?>
+                        <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
-                        Affichage des avis non répondues
+                        Affichage des avis non répondus
                         ---------------------------------------->
-                        <p>Avis non répondus : <span><b>1</b></span></p>
+                        <?php
+                            $nbrAvis = getAvis($row['id_offre']);
+                            $nbrReponses = getAllReponses($row['id_offre']);
+
+                            $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
+                        ?>
+                        <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
 
                         <!-------------------------------------- 
                         Affichage des avis blacklistés 
                         ---------------------------------------->
-                        <p>Avis blacklistés : <span><b>0</b></span></p>
+                        <!-- <p>Avis blacklistés : <span><b>0</b></span></p> -->
                     </div>
+
+                    <?php
+                        if (!getDatePublicationOffre($row['id_offre'])) {
+                            $row['date'] = "0-0-0 0:0:0";
+                        } else {
+                            $row['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
+                        }
+                        
+                        if ($row['date'] == "0-0-0 0:0:0") {
+                            $date = "date indisponible.";
+                        } else {
+                            $publication = explode(' ', $row["date"]);
+                            $datePub = explode('-', $publication[0]);
+                            $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
+                        }
+                    ?>
+
+                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
                     <!-------------------------------------- 
                     Affichage du prix 
-                    ---------------------------------------->  
-                    <p class="prix">A partir de <span><?php         
-                    $offre['prix'] = getPrixPlusPetit($row['id_offre']);
-                    if (getPrixPlusPetit($row['id_offre']) == null) {
-                        $offre['prix'] = 0;
-                    }
-                    echo htmlentities($offre['prix']); ?>€</span></p>
+                    ---------------------------------------->
+                    <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
+                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
+                    <?php } else { ?>
+                            <p class="prix">A partir de <span><?php
+                            $prix['prix'] = getPrixPlusPetit($row['id_offre']);
+                            if (getPrixPlusPetit($row['id_offre']) == null) {
+                                $prix['prix'] = 0;
+                            }
+                            echo htmlentities($prix['prix']); ?>€</span></p>
+                    <?php } ?>
+
                 </a>
             </article>
             <?php } ?>
         </section>
         <a href="/back/creer-offre/">Créer une offre</a>
+
+        <?php
+            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+            $stmtOffre = $conn->prepare($reqOffre);
+            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtOffre->execute();
+
+            $toastsData = [];
+            $remainingAvis = 0;
+            $remainingOffres = 0;
+
+            $toastsData = [];
+            $remainingAvis = 0;
+            $remainingOffres = 0;
+
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                $avisNonLus = getLu($row['id_offre']);
+
+                $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
+
+                foreach ($avisNonLus as $avis) {
+                    if (!empty($avis) && empty($avis['lu'])) {
+                        $remainingAvis++;
+                        $hasUnreadAvis = true; // Set the flag to true if an unread review is found
+                    }
+                }
+
+                if ($hasUnreadAvis) {
+                    $remainingOffres++; // Increment only if the offer has at least one unread review
+                }
+            }
+
+            if ($remainingOffres > 3) {
+                $toastsData[] = [
+                    'title' => "Avis restants",
+                    'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
+                    'link' => "none",
+                ];
+            } else {
+                // Sinon, on affiche les toasts individuels
+                $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
+                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+                    $avisNonLus = getLu($row['id_offre']);
+
+                    $remainingAvis = 0; // Reset the counter for each offer
+
+                    foreach ($avisNonLus as $avis) {
+                        if (!empty($avis) && empty($avis['lu'])) {
+                            $remainingAvis++;
+                        }
+                    }
+
+                    if ($remainingAvis == 1) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
+                        ];
+                    } elseif ($remainingAvis > 1) {
+                        $toastsData[] = [
+                            'title' => $row['titre'],
+                            'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
+                        ];
+                    }
+                }
+            }
+
+
+            $toastsDataJson = json_encode($toastsData);
+            ?>
     </main>
     <footer>
         <div class="footer-top">
@@ -291,13 +516,89 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 
         </div>
         <div class="footer-bottom">
-        Politique de confidentialité - Politique RGPD - <a href="mention_legal.html">Mentions légales</a> - Plan du site -
-        Conditions générales - ©
-        Redden's, Inc.
+            <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            function createToast(title, message, link) {
+                const toastLink = document.createElement("a");
+                toastLink.href = link;
+                toastLink.classList.add("toast-link");
+
+                const toast = document.createElement("div");
+                toast.classList.add("toast");
+
+                const toastContent = document.createElement("div");
+                toastContent.classList.add("toast-content");
+
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("message");
+
+                const titleSpan = document.createElement("span");
+                titleSpan.classList.add("message-text", "text-1");
+                titleSpan.textContent = title;
+
+                const messageSpan = document.createElement("span");
+                messageSpan.classList.add("message-text", "text-2");
+                messageSpan.textContent = message;
+
+                messageDiv.appendChild(titleSpan);
+                messageDiv.appendChild(messageSpan);
+                toastContent.appendChild(messageDiv);
+
+                const closeIcon = document.createElement("i");
+                closeIcon.classList.add("uil", "uil-multiply", "toast-close");
+                closeIcon.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    toastLink.remove();
+                });
+
+                const progress = document.createElement("div");
+                progress.classList.add("progress");
+                const progressbottom = document.createElement("div");
+                progressbottom.classList.add("progress-bottom");
+                const progressright = document.createElement("div");
+                progressright.classList.add("progress-right");
+                const progressleft = document.createElement("div");
+                progressleft.classList.add("progress-left");
+
+                toast.appendChild(toastContent);
+                toast.appendChild(closeIcon);
+                toast.appendChild(progress);
+                toast.appendChild(progressbottom);
+                toast.appendChild(progressright);
+                toast.appendChild(progressleft);
+
+                toastLink.appendChild(toast);
+                 
+                const toastContainer = document.querySelector(".toast-container");
+                toastContainer.appendChild(toastLink);
+
+                setTimeout(() => {
+                    toast.classList.add("active");
+                    progress.classList.add("active");
+                    progressbottom.classList.add("active");
+                    progressright.classList.add("active");
+                    progressleft.classList.add("active");
+                }, 10);
+
+                setTimeout(() => {
+                    toast.classList.remove("active");
+                    setTimeout(() => {
+                        toastLink.remove();
+                    }, 300);
+                }, 9500);
+            }
+
+            const toastsData = <?php echo $toastsDataJson; ?>;
+
+            toastsData.forEach((toast) => {
+                createToast(toast.title, toast.message, toast.link);
+            });
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
             const h2 = document.querySelector(".filtre-tri h2");
             const fondFiltres = document.querySelector(".fond-filtres");
@@ -334,7 +635,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                     const availability = availabilityInput.parentElement.textContent.trim().toLowerCase();
                     visibleOffers = visibleOffers.filter(offer => {
                         const offerAvailability = offer.querySelector(".ouverture-offre").textContent.trim().toLowerCase();
-                        return offerAvailability === availability;
+                        return offerAvailability === availability || (availability === "Ouvert" && offerAvailability === "Ferme Bnt.");
                     });
                 }
 
@@ -400,6 +701,43 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                         const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '').trim());
                         const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '').trim());
                         return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "default") {
+                    offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+
+                } if (selectedValue === "note-asc") {
+                    offers.sort((a, b) => {
+                        let noteA = a.querySelector(".note-avis").textContent.trim();
+                        let noteB = b.querySelector(".note-avis").textContent.trim();
+                        return noteB - noteA;
+                    });
+
+                    offers.forEach(offer => offersContainer.appendChild(offer));
+                } if (selectedValue === "create-desc") {
+                    offers.sort((a, b) => {
+                        let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateA == "date indisponible.") {
+                            dateA = "0";
+                        } else {
+                            const [day, month, year] = dateA.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateA = dateObject.getTime();
+                        }
+                        let dateB = b.querySelector(".date_publication_offre span").textContent.trim();
+                        if (dateB == "date indisponible.") {
+                            dateB = "0";
+                        } else {
+                            const [day, month, year] = dateB.split("/").map(Number);
+
+                            const dateObject = new Date(year, month - 1, day);
+                            dateB = dateObject.getTime();
+                        }
+                        return dateB - dateA;
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));

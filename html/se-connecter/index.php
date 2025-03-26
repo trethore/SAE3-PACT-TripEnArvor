@@ -26,13 +26,16 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Se connecter</title>
-    <link rel="stylesheet" href="/style/style-se-connecter.css">
-    <link rel="stylesheet" href="/style/styleguide.css"/>
+    <link rel="stylesheet" href="/style/style.css">
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 <body class="connecter">
     <!-- Logo -->
-    <img src="/images/universel/logo/Logo_couleurs.png">
+    <header>
+        <a href="/front/accueil/">
+            <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
+        </a>
+    </header>
     <!-- Main -->
     <main>
         <!-- Titres -->
@@ -57,9 +60,9 @@ try {
 
             if ($trouve) {
                 if (isIdMember($id)) {
-                    redirectTo('https://redden.ventsdouest.dev/front/consulter-offres/');
+                    redirectTo('/front/consulter-offres/');
                 } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                    redirectTo('https://redden.ventsdouest.dev/back/liste-back/');
+                    redirectTo('/back/liste-back/');
                 }
             } else {
                 unset($_POST["email"]);
