@@ -599,7 +599,7 @@ try {
                             ?>
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
-                                        <li>Signaler</li>
+                                        <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)">Signaler</li>
                                         <?php
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
                                         ?>
@@ -613,8 +613,8 @@ try {
                             }
                             ?>
 
-                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
-                                <div class="confirmation-content">
+                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler" style="display: none;">
+                                <div>
                                     <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
                                     <form id="signalement-form">
                                         <label>
@@ -811,6 +811,19 @@ try {
     </footer>
 
     <script>
+        // Masquer la popup de signalement
+        function annulerSignalement() {
+            let popup = document.getElementById("confirmation-popup-signaler");
+            popup.style.display = "none";
+
+            // Supprimer le textarea s'il est affiché
+            let existingTextarea = document.getElementById("dynamic-textarea");
+            if (existingTextarea) {
+                existingTextarea.remove();
+            }
+        }
+
+        // Ajouter un textarea sous le bouton radio sélectionné
         function toggleTextarea(selectedRadio) {
             // Supprime l'ancienne zone de texte s'il y en a une
             let existingTextarea = document.getElementById("dynamic-textarea");
@@ -831,9 +844,15 @@ try {
             selectedRadio.parentNode.appendChild(textarea);
         }
 
+        // Envoyer le signalement
         function validerSignalement(identifiant) {
             // Récupérer le motif sélectionné
             let selectedRadio = document.querySelector('input[name="motif"]:checked');
+            if (!selectedRadio) {
+                alert("Veuillez sélectionner un motif.");
+                return;
+            }
+
             let motif = selectedRadio.value;
 
             // Récupérer la valeur du textarea s'il existe
@@ -846,10 +865,11 @@ try {
                 return;
             }
 
-            // Envoyer le signalement (exemple avec console.log)
+            // Simulation d'envoi du signalement (à remplacer par une requête AJAX vers le backend)
             console.log("Signalement envoyé pour l'ID:", identifiant, "Motif:", motif, "Détails:", details);
 
-            // Ici, tu peux envoyer une requête AJAX pour traiter le signalement côté serveur
+            // Fermer la popup après soumission
+            annulerSignalement();
         }
     </script>
 
