@@ -1555,6 +1555,13 @@ h3 {
     cursor: pointer;
 }
 
+.status-enabled {
+    color: green;
+}
+
+.status-disabled {
+    color: red;
+}
 /********************
         NAV
 *********************/

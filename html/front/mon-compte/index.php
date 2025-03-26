@@ -23,6 +23,35 @@ try {
 
 $reqCompte = "SELECT * from sae.compte_membre
                 where id_compte = :id_compte;";
+
+// auth toggle
+
+$stmt_get = $conn->prepare("SELECT auth FROM _compte WHERE id_compte = :id");
+$stmt_get->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+$stmt_get->execute();
+$currentStatusRow = $stmt_get->fetch(PDO::FETCH_ASSOC);
+$currentAuthStatus = false;
+if (!$currentStatusRow) {
+    header("Location: /se-connecter/");
+}
+$currentAuthStatus = (bool)$currentStatusRow['auth'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
+    $newAuthStatus = !$currentAuthStatus;
+
+    $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
+    $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
+    $stmt_update->bindParam(':id', $userId, PDO::PARAM_INT);
+
+    if ($stmt_update->execute()) {
+        $message = "Authentication status updated successfully!";
+        $currentAuthStatus = $newAuthStatus;
+    } else {
+        $message = "Error updating authentication status.";
+    }
+}
+$statusText = $currentAuthStatus ? "Activé" : "Desactivé";
+$buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authentifikator";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -47,7 +76,7 @@ $reqCompte = "SELECT * from sae.compte_membre
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
         $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
         $stmt->execute();
-        $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $offres = $stmt->fetchAll();
         $dbh = null;
     } catch (PDOException $e) {
         echo "Erreur lors de la récupération des titres : " . $e->getMessage();
@@ -115,7 +144,7 @@ $reqCompte = "SELECT * from sae.compte_membre
             </div>
             <div>
                 <?php
-                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
+                $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
                 ?>
                 <script>
                     function copyAPIKey() {
@@ -126,6 +155,15 @@ $reqCompte = "SELECT * from sae.compte_membre
                 </script>
                 <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
+            </div>
+            <div class="container-authentificator">
+                <h2>Authentificateur</h2>
+                <p>L'Authentificateur est: <span class="status-<?php echo $currentAuthStatus ? 'enabled' : 'disabled'?>"> <?php echo htmlspecialchars($statusText); ?></span></p>
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <button type="submit" name="toggle_auth" id="auth_toggle_button">
+                        <?php echo htmlspecialchars($buttonText); ?>
+                    </button>
+                </form>
             </div>
             <button onclick="delCompteMembre(event, <?= $id_compte ?>)" id="delButton">Supprimer le compte</button>
         </section>
@@ -140,50 +178,52 @@ $reqCompte = "SELECT * from sae.compte_membre
         </div>
     </main>
     <script>
-    const popupOverlay = document.getElementById("popupOverlay");
-    const popupValider = document.getElementById("validerDeleteCompte");
-    const boutonAnnuler = document.getElementById("boutonAnnuler");
-    const boutonValider = document.getElementById("boutonValider");
-    const boutonDel = document.getElementById("delButton");
+        const popupOverlay = document.getElementById("popupOverlay");
+        const popupValider = document.getElementById("validerDeleteCompte");
+        const boutonAnnuler = document.getElementById("boutonAnnuler");
+        const boutonValider = document.getElementById("boutonValider");
+        const boutonDel = document.getElementById("delButton");
 
-    let compteId = null;
+        let compteId = null;
 
-    // Ouvre la popup et stocke l'ID du compte
-    function delCompteMembre(event, id) {
-        event.preventDefault(); // Empêche le bouton de suivre un éventuel lien ou formulaire
-        compteId = id;
-        popupOverlay.style.display = "block";
-        popupValider.style.display = "flex";
-    }
-
-    // Ferme la popup sans supprimer
-    boutonAnnuler.addEventListener("click", function () {
-        popupOverlay.style.display = "none";
-        popupValider.style.display = "none";
-    });
-
-    // Supprime le compte en AJAX
-    boutonValider.addEventListener("click", function () {
-        if (compteId !== null) {
-            fetch("supprimer_compte.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `id_compte=${compteId}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data.includes("Compte supprimé avec succès")) {
-                    alert(data); // Affiche la réponse du serveur
-                    window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
-                }
-            })
-            .catch(error => console.error("Erreur :", error));
+        // Ouvre la popup et stocke l'ID du compte
+        function delCompteMembre(event, id) {
+            event.preventDefault(); // Empêche le bouton de suivre un éventuel lien ou formulaire
+            compteId = id;
+            popupOverlay.style.display = "block";
+            popupValider.style.display = "flex";
         }
 
-        popupOverlay.style.display = "none";
-        popupValider.style.display = "none";
-    });
-</script>
+        // Ferme la popup sans supprimer
+        boutonAnnuler.addEventListener("click", function() {
+            popupOverlay.style.display = "none";
+            popupValider.style.display = "none";
+        });
+
+        // Supprime le compte en AJAX
+        boutonValider.addEventListener("click", function() {
+            if (compteId !== null) {
+                fetch("supprimer_compte.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: `id_compte=${compteId}`
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.includes("Compte supprimé avec succès")) {
+                            alert(data); // Affiche la réponse du serveur
+                            window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
+                        }
+                    })
+                    .catch(error => console.error("Erreur :", error));
+            }
+
+            popupOverlay.style.display = "none";
+            popupValider.style.display = "none";
+        });
+    </script>
     <footer>
         <div class="footer-top">
             <div class="footer-top-left">
