@@ -210,7 +210,16 @@ try {
                         <?php
                             }
                         ?>
-                        <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jetons de blacklistage restant(s)</em></p>
+                        <div>
+                            <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jeton(s) de blacklistage restant(s)</em></p>
+                            <?php
+                            if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
+                            ?>
+                                <p>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
                     </div>
             <?php
                 }
@@ -489,6 +498,7 @@ try {
                 ?>
             </div> 
             
+            
         </section>
 
         <section id="avis" class="fond-blocs bordure-top">
@@ -538,7 +548,7 @@ try {
             }
         }
 
-        function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass){
+        function afficherAvis($avisGroupe, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass){
             $pdo = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             foreach ($avisGroupe as $item) {
                 $unAvis = $item['avis'];
@@ -692,7 +702,7 @@ try {
                             <p class="titre-reponse"><?php echo htmlentities($compte['denomination']); ?></p>
                         </div>
 
-                        <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))); ?></p>
+                        <p><?php echo htmlentities(html_entity_decode(ucfirst(getReponse($unAvis['id_offre'], $unAvis['id_membre'])['texte']))); ?></p>
 
                         <div class="display-ligne marge-reponse petite-mention">
                             <?php 
@@ -728,8 +738,8 @@ try {
 
             } 
         }
-        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
-        afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $reponse, $dateReponse, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisAvecReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
+        afficherAvis($avisSansReponse, $membre, $datePassage, $categorie, $noteDetaillee, $id_offre_cible, $dateAvis, $compte, $driver, $server, $dbname, $user, $pass);
         ?>
 
         </section>                

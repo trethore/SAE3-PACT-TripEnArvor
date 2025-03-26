@@ -50,23 +50,18 @@ document.addEventListener("click", function() {
     });
 });
 
-var isJetonUpdated = false;
 document.addEventListener("DOMContentLoaded", function () {
     const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
-    setInterval(() => {
-        console.log("Vérification effectuée")
-        fetch('/utils/checkJetons.php', {
-            method: "POST", 
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `id_offre=${id_offre}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && !isJetonUpdated) {
-                isJetonUpdated = true;
-                location.reload();
-            }
-        })
-        .catch(error => console.error("Erreur :", error));
-    }, 10000); // Toutes les 10 secondes
+    fetch('/utils/checkJetons.php', {
+        method: "POST", 
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${id_offre}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && !isJetonUpdated) {
+            location.reload();
+        }
+    })
+    .catch(error => console.error("Erreur :", error));
 });

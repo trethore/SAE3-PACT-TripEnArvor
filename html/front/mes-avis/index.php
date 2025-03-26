@@ -93,15 +93,15 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="/style/style.css">
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
-    <script src="/scripts/header.js"></script>
 </head>
-<body class="front compte-front">
-<header>
+
+<body class="back compte-back">
+    <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-        <div class="text-wrapper-17"><a href="/front/accueil/">PACT</a></div>
+        <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <input autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
@@ -110,8 +110,8 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
                 <?php } ?>
             </datalist>
         </div>
-        <a href="/front/accueil/"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte/"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
     <!-- <pre>
 <?php
@@ -146,17 +146,14 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
                             <div class="fond-blocs-avis">                                
                                 
                                 <div class="display-ligne-espace">
-                                    <?php
-                                    preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_publication'], $matches);
-                                    $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
-                                    ?>
-                                    <p><span class="titre-avis"><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_offre']))) ?></span> - Écrit le <?php echo htmlentities($date); ?></p>
                                     <div class="display-ligne">
+                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
+                                                                echo ' '; ?></p>
                                         <div class="display-ligne">
-                                            <?php for ($etoileJaune = 0; $etoileJaune < $lavis['note']; $etoileJaune++) { ?>
+                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
                                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
                                             <?php }
-                                            for ($etoileGrise = 0; $etoileGrise < (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                        for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
                                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                             <?php } ?>
                                         </div>
@@ -165,41 +162,116 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
 
                                 <div class="display-ligne">
-                                    <span><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?></strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
+                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                                        $datePass = explode('-', $passage[0]); ?>
+                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                 </div>
+
+                                <?php  ?>
+
+
                                 <div class="display-ligne-espace">
                                     <div class="petite-mention">
-                                        <?php 
-                                        preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_visite'], $matches);
-                                        $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
-                                        ?>
-                                        <p><em>Visité le <?php echo htmlentities($date); ?></em></p>
+                                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                                        $datePub = explode('-', $publication[0]); ?>
+                                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                                     </div>
                                 </div>
+                                <br>
+                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                            </div>
+                            </article>
+                        <?php $compteur++;
+                        } ?>
+                    <br>
+            <?php       }
+                        } ?>
+
+            <?php
+            foreach ($touteslesoffres as $offre) {
+                $id_offre = $offre['id_offre'];
+                $categorie = getTypeOffre($id_offre);
+
+                // ===== GESTION DES AVIS ===== //
+
+                $membre = getInformationsMembre($id_offre);
+                $datePassage = getDatePassage($id_offre);
+                $dateAvis = getDatePublication($id_offre);
+                $noteDetaillee = getAvisDetaille($id_offre);
+
+                $reponses = getAllReponses($id_offre);
+                $compteur = 0;
+                echo "avis non lu";
+                foreach ($avis as $lavis) {
+                    while ($compteur != count($avis)) {
+                        if (in_array($lavis['id_membre'], $avis_non_lu['id_membre'])) {
+                            echo "avis non lus";
+            ?>
+                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+
+
+                                <div class="display-ligne-espace">
+                                    <div class="display-ligne">
+                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
+                                                                echo ' '; ?></p>
+                                        <div class="display-ligne">
+                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                            <?php }
+                                            for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                                 <div class="display-ligne">
-                                    <?php
-                                    if (isset($lavis['note_detaillee'])) {
-                                        foreach ($lavis['note_detaillee'] as $note_detaillee) {
-                                            ?>
-                                            <div class="display-ligne">
-                                                <p><?php echo($note_detaillee['nom_note']); ?>&nbsp;:</p>
-                                                <?php
-                                                for ($etoileJaune = 0; $etoileJaune < $note_detaillee['note']; $etoileJaune++) {
-                                                    ?>
-                                                    <img src="/images/universel/icones/etoile-jaune.png" alt="Étoile pleine" class="etoile_detail">
-                                                    <?php
-                                                }
-                                                for ($etoileGrise = 0; $etoileGrise < 5 - $note_detaillee['note']; $etoileGrise++) {
-                                                    ?>
-                                                    <img src="/images/universel/icones/etoile-grise.png" alt="Étoile grise" class="etoile_detail">
-                                                    <?php
-                                                }
-                                                ?>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                    $datePass = explode('-', $passage[0]); ?>
+                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                </div>
+
+                                <?php  ?>
+
+
+                                <div class="display-ligne-espace">
+                                    <div class="petite-mention">
+                                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                        $datePub = explode('-', $publication[0]); ?>
+                                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                                    </div>
+                                </div>
+                                <br>
+                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
+                            </div>
+                        <?php $compteur++;
+                        }
+                    }
+                }
+                echo "avis non repondu";
+                foreach ($avis as $lavis) {
+                    while ($compteur != count($avis)) {
+                        if (in_array($lavis['id_membre'], $avis_non_repondu['id_membre'])) {
+                            echo "avis non lus";
+                        ?>
+                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+
+
+                                <div class="display-ligne-espace">
+                                    <div class="display-ligne">
+                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
+                                                                echo ' '; ?></p>
+                                        <div class="display-ligne">
+                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                            <?php }
+                                            for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="display-ligne">
                                     <p><?php echo($lavis['commentaire']); ?></p>
@@ -247,24 +319,5 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
-    <div class="telephone-nav">
-        <div class="nav-content">
-            <a href="/front/accueil">
-                <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
-                </div>
-            </a>
-            <a href="/front/consulter-offres">
-                <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
-                </div>
-            </a>
-            <a href="/front/mon-compte">
-                <div class="btOn">
-                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
-                </div>
-            </a>
-        </div>
-    </div>
 </body>
 </html>
