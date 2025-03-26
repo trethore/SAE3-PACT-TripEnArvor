@@ -13,11 +13,18 @@ try {
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $stmt = $dbh->prepare('SELECT o.*, a.num_et_nom_de_voie, a.complement_adresse, a.code_postal, a.ville, a.pays
-                            FROM sae._offre o
-                            JOIN sae._compte c ON o.id_compte_professionnel = c.id_compte
-                            LEFT JOIN sae._adresse a ON o.id_adresse = a.id_adresse;
-                        ');
+    $stmt = $dbh->prepare('
+        SELECT o.*, 
+        c.nom AS nom_compte, 
+        c.prenom AS prenom_compte,
+        a.num_et_nom_de_voie, 
+        a.complement_adresse, 
+        a.code_postal, 
+        a.ville, 
+        a.pays
+    FROM sae._offre o
+    JOIN sae._compte c ON o.id_compte_professionnel = c.id_compte
+    LEFT JOIN sae._adresse a ON o.id_adresse = a.id_adresse;');
     $stmt->execute();
     $offres = $stmt->fetchAll();
 
@@ -260,7 +267,7 @@ try {
                                     <p class="titre-offre"><?php echo $tab["titre"] ?></p>
                                     <p class="categorie-offre"><?php echo $tab["categorie"]; ?></p>
                                     <p class="description-offre"><?php echo $tab["resume"] . " " ?><span>En savoir plus</span></p>
-                                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom"] ?></p>
+                                    <p class="nom-offre"><?php echo $tab["nom_compte"] . " " . $tab["prenom_compte"] ?></p>
                                     <?php
                                     $offres[$tab['id_offre']]['avis'] = "Non";
                                     if (isset($_SESSION['id'])) {

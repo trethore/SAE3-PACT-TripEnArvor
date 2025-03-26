@@ -37,7 +37,7 @@ if (!isset($_SESSION)) {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
         $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
         $stmt->execute();
-        $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $offres = $stmt->fetchAll();
         $dbh = null;
     } catch (PDOException $e) {
         echo "Erreur lors de la récupération des titres : " . $e->getMessage();
