@@ -591,7 +591,7 @@ try {
                             </div>
 
                             <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$identifiant]['id_compte']; ?>">
-                                <img src="/images/universel/icones/trois-points-orange.pn" alt="Menu déroulant">
+                                <img src="/images/universel/icones/trois-points-orange.png" alt="Menu déroulant">
                             </button>
 
                             <?php
@@ -746,7 +746,7 @@ try {
          
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../back/liste-back/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.pn" alt="Retour en haut"></button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png" alt="Retour en haut"></button>
         </div>
 
     </main>
