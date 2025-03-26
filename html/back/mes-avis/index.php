@@ -308,8 +308,6 @@ if ($typeCompte === 'proPrive') {
                                             </div>
 
                                             <?php  ?>
-                                            <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($tab['id_offre'])["gamme_prix"]); ?><span></p>
-
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
                                                     <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
