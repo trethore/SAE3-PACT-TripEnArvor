@@ -623,16 +623,16 @@ try {
                                     <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
                                     <form id="signalement-form">
                                         <label>
-                                            <input type="radio" name="motif" value="inapproprie">Il contient des propos inappropriés
+                                            <input type="radio" name="motif" value="Il contient des propos inappropriés">Il contient des propos inappropriés
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="impersonnelle">Il ne décrit pas une expérience personnelle
+                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle">Il ne décrit pas une expérience personnelle
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="doublon">Il s'agit d'un doublon publié par le même membre
+                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre">Il s'agit d'un doublon publié par le même membre
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="faux">Il contient des informations fausses ou trompeuses
+                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses">Il contient des informations fausses ou trompeuses
                                         </label><br>
                                     </form>
                                     <button id="confirmer-signaler" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
