@@ -18,6 +18,34 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
+
+if (isset($_POST["email"]) && isset($_POST["mdp"])) {
+    $trouve = false;
+    $emailUtilisateur = $_POST["email"];
+    $mdpUtilisateur = $_POST["mdp"];
+    $id = -1;
+    foreach ($result as $entry) {
+        if ($emailUtilisateur == $entry['email'] && password_verify($mdpUtilisateur, $entry['mot_de_passe']) ) {
+            $id = $entry['id_compte'];
+            $trouve = true;
+            $_SESSION['id'] = $id;
+            break;
+        }
+    }
+
+    if ($trouve) {
+        if (isIdMember($id)) {
+            header("/front/consulter-offres/");
+        } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+            header("/back/liste-back/");
+        }
+    } else {
+        unset($_POST["email"]);
+        unset($_POST["mdp"]);
+        $loginFailed = true;
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,36 +70,7 @@ try {
         <h1>Se connecter</h1>
         <h2>Vous n'avez pas de compte ? <a href="/creer-compte/">Créez votre compte</a></h2>
 
-        <!-- Formulaire -->
-        <?php
-        if (isset($_POST["email"]) && isset($_POST["mdp"])) {
-            $trouve = false;
-            $emailUtilisateur = $_POST["email"];
-            $mdpUtilisateur = $_POST["mdp"];
-            $id = -1;
-            foreach ($result as $entry) {
-                if ($emailUtilisateur == $entry['email'] && password_verify($mdpUtilisateur, $entry['mot_de_passe']) ) {
-                    $id = $entry['id_compte'];
-                    $trouve = true;
-                    $_SESSION['id'] = $id;
-                    break;
-                }
-            }
-
-            if ($trouve) {
-                if (isIdMember($id)) {
-                    redirectTo('/front/consulter-offres/');
-                } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-                    redirectTo('/back/liste-back/');
-                }
-            } else {
-                unset($_POST["email"]);
-                unset($_POST["mdp"]);
-                $loginFailed = true;
-
-            }
-        }
-        ?>
+       
         <form action="/se-connecter/" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required/>
@@ -96,7 +95,7 @@ try {
             var x = document.getElementById("mdp");
             if (x.type === "password") {
                 x.type = "text";
-            } else {
+            } else {x
                 x.type = "password";
             }
         }
