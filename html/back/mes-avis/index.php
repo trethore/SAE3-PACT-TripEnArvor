@@ -307,7 +307,6 @@ if ($typeCompte === 'proPrive') {
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
-                                            <?php  ?>
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
                                                     <?php $publication = explode(' ', $dateAvis[$compteur]['date']);

@@ -474,6 +474,7 @@ try {
             const sortOffers = () => {
                 const selectElement = document.querySelector(".tris");
                 const selectedValue = selectElement.value;
+                console.log(selectedValue);
 
                 if (selectedValue === "price-asc" || selectedValue === "price-desc") {
                     offers.sort((a, b) => {
