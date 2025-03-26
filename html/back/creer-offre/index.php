@@ -172,7 +172,10 @@ try {
                             <!-- <label for="file-upload">
                                 <img src="/images/backOffice/icones/plus.png" alt="Uploader une image" class="upload-image" width="50px" height="50px">
                             </label> -->
-                            <input id="photo" type="file" name="photo" required />
+                            <input id="photo" type="file" name="photo" required onchange="previewImage(event)" />
+                            <div id="imagePreview" style="margin-top: 10px; display: none;">
+                                <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
+                            </div> 
                         </div>
                     </td>
                 </tr>
@@ -721,13 +724,6 @@ try {
                             }
                         
                             break;
-                            
-                            
-            
-
-
-
-
 
                     case 'visite':
                         try {
@@ -1203,6 +1199,26 @@ try {
             function closeQuitterValider() {
                 quitterDiv.style.display = "none";
                 alert("Modification valider avec succès");
+            }
+          
+            function previewImage(event) {
+                const preview = document.getElementById('preview');
+                const imagePreview = document.getElementById('imagePreview');
+                const file = event.target.files[0];
+                
+                if (file) {
+                    const reader = new FileReader(); 
+                    
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '#';
+                    imagePreview.style.display = 'none';
+                }
             }
         </script>
 
