@@ -17,14 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $motif = $_POST['motif'] ?? null;
     $date_signalement = date('Y-m-d H:i:s');
 
-    print_r($id_offre);
-    print_r($id_signale);
-    print_r($id_signalant);
-    print_r($motif);
-    print_r($date_signalement);
-
-
     if (isset($id_offre) && isset($id_signale) && isset($id_signalant) && isset($motif) && isset($date_signalement)) {
+
+        var_dump([
+            "id_offre" => $id_offre,
+            "id_signale" => $id_signale,
+            "id_signalant" => $id_signalant,
+            "motif" => $motif,
+            "date_signalement" => $date_signalement
+        ]);
 
         try {
             //Connexion à la base de données
