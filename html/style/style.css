@@ -5306,10 +5306,9 @@ input[type="tel"] {
 }
 
 .progress.active::before{
-    animation: progress-right 3s linear forwards 0.5s; /* Starts after 10s (5s left + 5s vertical) */
+    animation: progress-right 1.5s linear forwards 0.5s; /* Starts after 10s (5s left + 5s vertical) */
 }
 
-/* Bottom progress bar (LEFT) */
 .progress-bottom {
     position: absolute;
     bottom: 0;
@@ -5330,10 +5329,9 @@ input[type="tel"] {
 }
 
 .progress-bottom.active::before {
-    animation: progress-left 3s linear forwards 5s; /* First animation (0s delay) */
+    animation: progress-left 1.5s linear forwards 2.75s; /* First animation (0s delay) */
 }
 
-/* Right progress bar (VERTICAL) */
 .progress-right {
     position: absolute;
     top: 0;
@@ -5354,7 +5352,30 @@ input[type="tel"] {
 }
 
 .progress-right.active::before {
-    animation: progress-vertical 1.5s linear forwards 3.5s; /* Starts after 5s (left duration) */
+    animation: progress-bottom 0.75s linear forwards 2s; /* Starts after 5s (left duration) */
+}
+
+.progress-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: #ddd;
+}
+
+.progress-left::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(217, 102, 54, 1);
+}
+
+.progress-left.active::before {
+    animation: progress-top 0.75s linear forwards 4.25s; /* Starts after 5s (left duration) */
 }
 
 @keyframes progress-left {
@@ -5369,9 +5390,15 @@ input[type="tel"] {
     }
 }
 
-@keyframes progress-vertical {
+@keyframes progress-bottom {
     100% {
         top: 100%;
+    }
+}
+
+@keyframes progress-top {
+    100% {
+        bottom: 100%;
     }
 }
 

@@ -561,12 +561,15 @@ try {
                 progressbottom.classList.add("progress-bottom");
                 const progressright = document.createElement("div");
                 progressright.classList.add("progress-right");
+                const progressleft = document.createElement("div");
+                progressright.classList.add("progress-left");
 
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
                 toast.appendChild(progressbottom);
                 toast.appendChild(progressright);
+                toast.appendChild(progressleft);
 
                 toastLink.appendChild(toast);
                  
@@ -578,6 +581,7 @@ try {
                     progress.classList.add("active");
                     progressbottom.classList.add("active");
                     progressright.classList.add("active");
+                    progressleft.classList.add("active");
                 }, 10);
 
                 setTimeout(() => {
@@ -585,7 +589,7 @@ try {
                     setTimeout(() => {
                         toastLink.remove();
                     }, 300);
-                }, 8000);
+                }, 9500);
             }
 
             const toastsData = <?php echo $toastsDataJson; ?>;
