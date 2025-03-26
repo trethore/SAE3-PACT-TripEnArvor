@@ -384,6 +384,10 @@ if ($typeCompte === 'proPrive') {
                 echo "avis non lu";
                 
                 foreach ($avis as $lavis) {
+                    echo '<pre>';
+                    print_r($lavis['membre']);
+                    echo '</pre>';
+
                     while ($compteur != count($avis)) {
                         if (in_array($lavis['id_membre'], $avis_non_lu['id_membre'])) {
                             echo "avis non lus";
