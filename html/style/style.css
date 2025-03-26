@@ -628,13 +628,13 @@ h3 {
     box-sizing: border-box;
     background: var(--blanc);
     border-radius: 15px;
-    border: 3px solid var(--violet-principal);
+    border: 3px solid var(--orange-principale);
 }
 
 .liste-back .filtre-tri>h2 {
     color: var(--blanc);
     text-align: center;
-    background-color: var(--violet-principal);
+    background-color: var(--orange-principal);
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
