@@ -576,6 +576,8 @@ try {
                 setTimeout(() => {
                     toast.classList.add("active");
                     progress.classList.add("active");
+                    progressbottom.classList.add("active");
+                    progressright.classList.add("active");
                 }, 10);
 
                 setTimeout(() => {
