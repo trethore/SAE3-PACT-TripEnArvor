@@ -63,14 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
     
     if ($newAuthStatus) {
-        $totp = TOTP::create(
-            $APIKey,                      // Secret key
-            30,                           // Period (30 seconds)
-            'sha1',                       // Algorithm
-            6,                            // Digits (6)
-            0,                            // Epoch (0 for current time)
-            'PACT-' . $detailCompte["pseudo"]  // Label/issuer
-        );
+        $totp = new TOTP(null);
+        $totp->setSecret($APIKey);
+        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+        $totp->setIssuer('PACT');
+        $totp->setPeriod(30);
+        $totp->setDigest('sha1');
+        $totp->setDigits(6);
         $qrCodeUri = $totp->getProvisioningUri();
         $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=' . urlencode($qrCodeUri);
         $showQrModal = true;
