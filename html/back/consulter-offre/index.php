@@ -746,7 +746,7 @@ try {
                     } else { 
                         if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
                     ?>
-                            <button onclick="afficherFormReponse(event, this, <?php echo $identifiant; ?>)">Répondre</button>
+                            <button class="bouton-reponse" onclick="afficherFormReponse(event, this, <?php echo $identifiant; ?>)">Répondre</button>
                                 
                             <div id="reponse-form-<?php echo $identifiant; ?>" style="display: none;">
                                 <form class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
@@ -754,7 +754,7 @@ try {
                                     <div class="display-ligne">
                                         <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
-                                    <button type="submit"  onclick="validerReponse(<?php echo $identifiant; ?>)">Répondre</button>
+                                    <button type="submit" onclick="validerReponse(<?php echo $identifiant; ?>)">Répondre</button>
                                     <button onclick="annulerReponse(<?php echo $identifiant; ?>)">Annuler</button>
                                 </form>
                             </div>
