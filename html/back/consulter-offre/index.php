@@ -844,7 +844,7 @@ try {
             selectedRadio.parentNode.appendChild(textarea);
         }
 
-        function confirmerBlacklister(element, identifiant) {
+        function confirmerSignaler(element, identifiant) {
             const idOffre = element.getAttribute("data-id-offre");
             const idMembre = element.getAttribute("data-id-membre");
             document.getElementById("confirmation-popup-signaler").style.display = "block";
