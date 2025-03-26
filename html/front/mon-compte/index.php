@@ -146,7 +146,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
         <h3>Configurer l'authentification à deux facteurs</h3>
         <p>Scannez ce QR code avec Google Authenticator:</p>
-        <img src="<?= htmlspecialchars($qrCodeUri) ?>" alt="QR Code">
+        <img src="<?= htmlspecialchars($qrCodeImageUrl) ?>" alt="QR Code">
         <p>Ou entrez manuellement ce code:<br>
         <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
