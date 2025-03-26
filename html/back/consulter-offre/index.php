@@ -622,7 +622,7 @@ try {
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
-                                    <p>Signaler l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong></p>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
                                     <form id="signalement-form">
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
@@ -648,7 +648,7 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
-                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong></p>
+                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
