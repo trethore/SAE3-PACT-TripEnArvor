@@ -20,13 +20,13 @@ function afficherMenu(event, button, compteur) {
 function confirmerBlacklister(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idMembre = element.getAttribute("data-id-membre");
-    document.getElementById("confirmation-popup").style.display = "block";
-    document.getElementById("confirmer-blacklister").onclick = function() {
+    document.getElementById(`confirmation-popup-${identifiant}`).style.display = "block";
+    document.getElementById(`confirmer-blacklister-${identifiant}`).onclick = function() {
         validerBlacklister(identifiant, idOffre, idMembre);
     };
 }
 
-function validerBlacklister(compteur, idOffre, idMembre) {
+function validerBlacklister(identifiant, idOffre, idMembre) {
     const blacklistUrl = "/utils/blacklist.php";
     fetch(blacklistUrl, {
         method: "POST",
@@ -35,14 +35,14 @@ function validerBlacklister(compteur, idOffre, idMembre) {
     })
     .then(response => response.text())
     .then(data => {
-        document.getElementById("confirmation-popup").style.display = "none";
+        document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
         location.reload();
     })
     .catch(error => console.error("Erreur :", error));
 }
 
-function annulerBlacklister() {
-    document.getElementById("confirmation-popup").style.display = "none";
+function annulerBlacklister(identifiant) {
+    document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
 }
 
 document.addEventListener("click", function() {

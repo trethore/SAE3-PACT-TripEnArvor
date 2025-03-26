@@ -641,12 +641,12 @@ try {
 
                             </div>
 
-                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+                            <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
                                     <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
-                                    <button id="confirmer-blacklister" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
-                                    <button onclick="annulerBlacklister()">Annuler</button>
+                                    <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
+                                    <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
                                 </div>
 
                             </div>
