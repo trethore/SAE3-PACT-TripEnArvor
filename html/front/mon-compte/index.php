@@ -14,6 +14,10 @@ redirectToConnexionIfNecessaryMembre($id_compte);
 require_once('../../utils/compte-utils.php');
 require_once('../../utils/site-utils.php');
 
+// Include OTPHP library
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/vendor/autoload.php');
+use OTPHP\TOTP;
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -25,7 +29,6 @@ $reqCompte = "SELECT * from sae.compte_membre
                 where id_compte = :id_compte;";
 
 // auth toggle
-
 $stmt_get = $conn->prepare("SELECT auth FROM _compte WHERE id_compte = :id");
 $stmt_get->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
 $stmt_get->execute();
@@ -36,12 +39,30 @@ if (!$currentStatusRow) {
 }
 $currentAuthStatus = (bool)$currentStatusRow['auth'];
 
+$message = '';
+$qrCodeUri = '';
+$showQrModal = false;
+
+// Generate API key (used as secret)
+$APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
-
+    
+    if ($newAuthStatus) {
+        // When enabling 2FA, generate TOTP secret and QR code
+        $totp = TOTP::create($APIKey); // Using API key as secret
+        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+        $qrCodeUri = $totp->getQrCodeUri(
+            'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=',
+            '{CODE}'
+        );
+        $showQrModal = true;
+    }
+    
     $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
     $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
-    $stmt_update->bindParam(':id', $userId, PDO::PARAM_INT);
+    $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
 
     if ($stmt_update->execute()) {
         $message = "Authentication status updated successfully!";
@@ -50,8 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
         $message = "Error updating authentication status.";
     }
 }
+
 $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
 $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authentifikator";
+
+// Get account details
+$stmt = $conn->prepare($reqCompte);
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+$stmt->execute();
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -83,6 +111,17 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     }
     ?>
 
+    <!-- QR Code Modal -->
+    <div class="modal-overlay" id="qrModalOverlay" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>"></div>
+    <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
+        <h3>Configurer l'authentification à deux facteurs</h3>
+        <p>Scannez ce QR code avec Google Authenticator:</p>
+        <img src="<?= htmlspecialchars($qrCodeUri) ?>" alt="QR Code">
+        <p>Ou entrez manuellement ce code:<br>
+        <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
+        <button onclick="closeQrModal()">Fermer</button>
+    </div>
+
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
@@ -108,13 +147,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
             <a href="/se-deconnecter/index.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">Se déconnecter</a>
         </nav>
         <section>
-            <?php
-            // Préparation et exécution de la requête
-            $stmt = $conn->prepare($reqCompte);
-            $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
-            $stmt->execute();
-            $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC)
-            ?>
             <h1>Détails du compte</h1>
             <h2>Informations personnelles</h2>
             <table>
@@ -143,9 +175,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
                 <a href="/front/modifier-compte">Modifier les informations</a>
             </div>
             <div>
-                <?php
-                $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
-                ?>
                 <script>
                     function copyAPIKey() {
                         var apiKey = "<?php echo addslashes($APIKey); ?>";
@@ -188,7 +217,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
 
         // Ouvre la popup et stocke l'ID du compte
         function delCompteMembre(event, id) {
-            event.preventDefault(); // Empêche le bouton de suivre un éventuel lien ou formulaire
+            event.preventDefault();
             compteId = id;
             popupOverlay.style.display = "block";
             popupValider.style.display = "flex";
@@ -213,8 +242,8 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
                     .then(response => response.text())
                     .then(data => {
                         if (data.includes("Compte supprimé avec succès")) {
-                            alert(data); // Affiche la réponse du serveur
-                            window.location.href = "https://redden.ventsdouest.dev/front/accueil/"; // Redirection après suppression
+                            alert(data);
+                            window.location.href = "https://redden.ventsdouest.dev/front/accueil/";
                         }
                     })
                     .catch(error => console.error("Erreur :", error));
@@ -223,6 +252,12 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
             popupOverlay.style.display = "none";
             popupValider.style.display = "none";
         });
+
+        // QR Code Modal functions
+        function closeQrModal() {
+            document.getElementById('qrModalOverlay').style.display = 'none';
+            document.getElementById('qrModal').style.display = 'none';
+        }
     </script>
     <footer>
         <div class="footer-top">
@@ -247,10 +282,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
                     </a>
                 </div>
             </div>
-
-
-            <!-- Barre en bas du footer incluse ici -->
-
         </div>
         <div class="footer-bottom">
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
@@ -276,6 +307,4 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         </div>
     </div>
 </body>
-
-
 </html>
