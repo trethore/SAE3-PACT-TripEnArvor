@@ -3672,6 +3672,7 @@ h3 {
     border: 0;
     width: 145px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .bouton-modif-mise > button:hover {
@@ -3985,7 +3986,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
-    z-index: 9999;
+    z-index: 1001;
 }
 
 .consulter-offre-back .confirmation-popup p {
@@ -4012,6 +4013,23 @@ h3 {
 
 .consulter-offre-back .confirmation-popup button:last-of-type:hover {
     color: var(--orange-principale);
+}
+
+.consulter-offre-back .confirmation-popup-signaler {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+    z-index: 1001;
+}
+
+.consulter-offre-back .confirmation-popup-signaler p {
+    font-size: 16px;
 }
 
 .consulter-offre-back .titre-avis {
@@ -4084,6 +4102,11 @@ h3 {
     border-radius: 4px;
     border: 0;
     width: 100px;
+    cursor: pointer;
+}
+
+.consulter-offre-back .avis-form > button:hover {
+    background-color: var(--orange-secondaire-2);
 }
 
 .consulter-offre-back .bouton-reponse {
@@ -4094,9 +4117,10 @@ h3 {
     border-radius: 4px;
     border: 0;
     width: 100px;   
+    cursor: pointer;
 }
 
-.consulter-offre-back .avis-form > button:hover {
+.consulter-offre-back .bouton-reponse:hover {
     background-color: var(--orange-secondaire-2);
 }
 
