@@ -65,11 +65,13 @@ function confirmerSignaler(element, identifiant) {
 function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     var selectedRadio = document.querySelector('input[name="motif"]:checked');
     var motif = selectedRadio.value;
+    var justificationElement = document.getElementById(`justification-${identifiant}`);
+    var justification = justificationElement ? justificationElement.value.trim() : "";
     const signalerUrl = "/utils/signaler.php";
     fetch(signalerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}&justification=${justification}`
     })
     .then(response => response.text())
     .then(data => {
