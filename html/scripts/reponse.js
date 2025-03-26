@@ -21,7 +21,7 @@ function validerReponse(event, identifiant, idOffre, idMembre) {
     .catch(error => console.error("Erreur :", error));
 }
 
-function annulerSignaler(identifiant) {
+function annulerReponse(identifiant) {
     document.getElementById(`reponse-form-${identifiant}`).style.display = "none";
     document.querySelector(`button[onclick="afficherFormReponse(event, this, ${identifiant})"]`).style.display = "block";
 }
