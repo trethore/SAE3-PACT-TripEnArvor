@@ -14,9 +14,16 @@ redirectToConnexionIfNecessaryMembre($id_compte);
 require_once('../../utils/compte-utils.php');
 require_once('../../utils/site-utils.php');
 
-// Include OTPHP library
-require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/vendor/autoload.php');
-use OTPHP\TOTP;
+// Manually include OTPHP files (since autoload isn't available)
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTPInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/ParameterTrait.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTP.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTPInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTP.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
+
+// Create an alias since we can't use the namespace
+class_alias('OTPHP\TOTP', 'TOTP');
 
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -43,6 +50,12 @@ $message = '';
 $qrCodeUri = '';
 $showQrModal = false;
 
+// Get account details first since we need them for the API key
+$stmt = $conn->prepare($reqCompte);
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+$stmt->execute();
+$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
 // Generate API key (used as secret)
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
@@ -51,12 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     
     if ($newAuthStatus) {
         // When enabling 2FA, generate TOTP secret and QR code
-        $totp = TOTP::create($APIKey); // Using API key as secret
-        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
-        $qrCodeUri = $totp->getQrCodeUri(
-            'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=',
-            '{CODE}'
-        );
+        $totp = new TOTP('PACT-' . $detailCompte["pseudo"], $APIKey);
+        $qrCodeUri = $totp->getProvisioningUri();
+        // We'll use a simple QR code generator URL
+        $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=' . urlencode($qrCodeUri);
         $showQrModal = true;
     }
     
@@ -74,12 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
 
 $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
 $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authentifikator";
-
-// Get account details
-$stmt = $conn->prepare($reqCompte);
-$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-$stmt->execute();
-$detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
