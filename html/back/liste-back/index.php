@@ -586,10 +586,6 @@ try {
                         toastLink.remove();
                     }, 300);
                 }, 7500);
-
-                setTimeout(() => {
-                    progress.classList.remove("active");
-                }, 5300);
             }
 
             const toastsData = <?php echo $toastsDataJson; ?>;
