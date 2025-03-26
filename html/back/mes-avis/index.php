@@ -186,10 +186,8 @@ if ($typeCompte === 'proPrive') {
                     $nb_avis = count($avis);
 
                     foreach ($avis as $lavis) {
-                        if ($lavis['lu'] == false) {
-                            $nb_non_lu++;
-                        }elseif (!isset($reponses[$lavis['id_membre']])) {
-                            $nbrAvisNonRepondus++;
+                            if ($lavis['lu'] == false) {
+                                $nb_non_lu++;
                         }
                     }
 
@@ -249,13 +247,6 @@ if ($typeCompte === 'proPrive') {
                                     }
                                 }
  
-                                
-                                    $nb_non_lu = 0;
-                                    foreach ($avis as $lavis) { // Compter le nombre d'avis non lus sur l'offre
-                                        if ($lavis['lu'] == false) {
-                                            $nb_non_lu++;
-                                        }
-                                    }
                                     ?>
 
                                     <h3>
