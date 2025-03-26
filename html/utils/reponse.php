@@ -37,4 +37,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Erreur lors de l'insertion de la réponse : " . $e->getMessage();
         } 
     }
-} ?>
+    } 
+?>

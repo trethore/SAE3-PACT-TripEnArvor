@@ -1,55 +1,102 @@
-document.addEventListener("DOMContentLoaded", function() {
-
-    function afficherMenu(event, button, compteur) {
-        event.stopPropagation();
-        const menu = document.getElementById(`popup-menu-${compteur}`);
-        document.querySelectorAll(".popup-menu").forEach(m => {
-            if (m !== menu) m.style.display = "none";
-        });
-
-        if (menu.style.display === "block") {
-            menu.style.display = "none";
-            return;
-        }
-
-        const rect = button.getBoundingClientRect();
-        menu.style.top = `${rect.top + window.scrollY - 2}px`;
-        menu.style.left = `${rect.left + window.scrollX - 100}px`;
-        menu.style.display = "block";
-    }
-
-    function confirmerBlacklister(element, compteur) {
-        const idOffre = element.getAttribute("data-id-offre");
-        const idMembre = element.getAttribute("data-id-membre");
-        document.getElementById("confirmation-popup").style.display = "block";
-        document.getElementById("confirmer-blacklister").onclick = function() {
-            validerBlacklister(compteur, idOffre, idMembre);
-        };
-    }
-
-    function validerBlacklister(compteur, idOffre, idMembre) {
-        const blacklistUrl = "/utils/blacklist.php";
-        fetch(blacklistUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `id_offre=${idOffre}&id_membre=${idMembre}`
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("confirmation-popup").style.display = "none";
-            console.log(idOffre, idMembre);
-            location.reload();
-        })
-        .catch(error => console.error("Erreur :", error));
-    }
-
-    function annulerBlacklister() {
-        document.getElementById("confirmation-popup").style.display = "none";
-    }
-
-    document.addEventListener("click", function() {
-        document.querySelectorAll(".popup-menu").forEach(menu => {
-            menu.style.display = "none";
-        });
+function afficherMenu(event, button, compteur) {
+    event.stopPropagation();
+    const menu = document.getElementById(`popup-menu-${compteur}`);
+    document.querySelectorAll(".popup-menu").forEach(m => {
+        if (m !== menu) m.style.display = "none";
     });
+
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+        return;
+    }
+
+    const rect = button.getBoundingClientRect();
+    menu.style.top = `${rect.top + window.scrollY - 2}px`;
+    menu.style.left = `${rect.left + window.scrollX - 100}px`;
+    menu.style.display = "block";
+}
+
+// BLACKLISTAGE
+function confirmerBlacklister(element, identifiant) {
+    const idOffre = element.getAttribute("data-id-offre");
+    const idMembre = element.getAttribute("data-id-membre");
+    document.getElementById("confirmation-popup").style.display = "block";
+    document.getElementById("confirmer-blacklister").onclick = function() {
+        validerBlacklister(identifiant, idOffre, idMembre);
+    };
+}
+
+function validerBlacklister(compteur, idOffre, idMembre) {
+    const blacklistUrl = "/utils/blacklist.php";
+    fetch(blacklistUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${idOffre}&id_membre=${idMembre}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("confirmation-popup").style.display = "none";
+        location.reload();
+    })
+    .catch(error => console.error("Erreur :", error));
+}
+
+function annulerBlacklister() {
+    document.getElementById("confirmation-popup").style.display = "none";
+}
+
+document.addEventListener("click", function() {
+    document.querySelectorAll(".popup-menu").forEach(menu => {
+        menu.style.display = "none";
+    });
+});
+
+// SIGNALEMENT
+function confirmerSignaler(element, identifiant) {
+    const idOffre = element.getAttribute("data-id-offre");
+    const idSignale = element.getAttribute("data-id-signale");
+    const idSignalant = element.getAttribute("data-id-signalant");
+    const motif = element.getAttribute("data-motif");
+    document.getElementById("confirmation-popup-signaler").style.display = "block";
+    document.getElementById("confirmer-signaler").onclick = function() {
+        validerSignaler(identifiant, idOffre, idSignale, idSignalant);
+    };
+}
+
+function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
+    var selectedRadio = document.querySelector('input[name="motif"]:checked');
+    var motif = selectedRadio.value;
+    const blacklistUrl = "/utils/signaler.php";
+    fetch(blacklistUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${idOffre}&id_signaler=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("confirmation-popup-signaler").style.display = "none";
+        location.reload();
+    })
+    .catch(error => console.error("Erreur :", error));
+}
+
+function annulerSignaler() {
+    document.getElementById("confirmation-popup-signaler").style.display = "none";
+}
+
+// UPDATE JETONS SI DATE PASSÉE
+document.addEventListener("DOMContentLoaded", function () {
+    const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
+    fetch('/utils/checkJetons.php', {
+        method: "POST", 
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${id_offre}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && !isJetonUpdated) {
+            location.reload();
+        }
+    })
+    .catch(error => console.error("Erreur :", error));
 });

@@ -68,6 +68,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création offre</title>
     <link rel="stylesheet" href="/style/style.css" />
+    <script src="/scripts/header.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -111,34 +112,6 @@ try {
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const inputSearch = document.querySelector(".input-search");
-                const datalist = document.querySelector("#cont");
-                // Événement sur le champ de recherche
-                inputSearch.addEventListener("input", () => {
-                    // Rechercher l'option correspondante dans le datalist
-                    const selectedOption = Array.from(datalist.options).find(
-                        option => option.value === inputSearch.value
-                    );
-                    if (selectedOption) {
-                        const idOffre = selectedOption.getAttribute("data-id");
-                        //console.log("Option sélectionnée :", selectedOption.value, "ID:", idOffre);
-                        // Rediriger si un ID valide est trouvé
-                        if (idOffre) {
-                            // TD passer du back au front quand fini
-                            window.location.href = `/back/consulter-offre/index.php?id=${idOffre}`;
-                        }
-                    }
-                });
-                // Debugging pour vérifier les options disponibles
-                const options = Array.from(datalist.options).map(option => ({
-                    value: option.value,
-                    id: option.getAttribute("data-id")
-                }));
-                //console.log("Options disponibles dans le datalist :", options);
-            });
-        </script>
     </header>
     <!-- affichage formulaire si pas soumis -->
     <?php if (!$submitted) { ?>
@@ -593,18 +566,25 @@ try {
                 // if (file_exists($target_file)) {
                 //     die("Erreur : Le fichier existe déjà dans le répertoire.");
                 // }
-                    
 
+                
+                if ($abonnement == "premium") {
+                    $nb_jetons = 3;
+                } else {
+                    $nb_jetons = null;
+                }
+                    
                 //SWITCH CREATION REQUETE OFFRE
                 switch ($categorie) {
                     case 'activite':
                         // $dbh->beginTransaction();
 
 
-                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_activite(titre, resume, ville, duree, age_min, id_compte_professionnel, abonnement, nb_jetons, jeton_perdu_le, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+
                         
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement, $id_adresse]);
+                        $stmt->execute([$titre, $resume, $ville, $duree, $age,  $id_compte, $abonnement, $nb_jetons, null, $id_adresse]);
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
 
@@ -652,10 +632,10 @@ try {
                             $stmt_plan->execute([$fichier_plan]);
 
                         }
-                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                        $requete = "INSERT INTO sae.offre_parc_attraction(titre, resume, ville, age_min, nb_attractions, plan, id_compte_professionnel, abonnement, nb_jetons, jeton_perdu_le, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                     
                         $stmt = $dbh->prepare($requete);
-                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement, $id_adresse]);
+                        $stmt->execute([ $titre, $resume, $ville, intval($age), intval($nbattraction), $fichier_img, intval($id_compte), $abonnement, $nb_jetons, null, $id_adresse]);
                            
 
                         $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
@@ -697,10 +677,10 @@ try {
                                 }
                             
                                 // Insertion dans la vue offre_spectacle
-                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, date_evenement, id_adresse)
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                                $requete = "INSERT INTO sae.offre_spectacle (titre, resume, ville, duree, capacite, id_compte_professionnel, abonnement, nb_jetons, jeton_perdu_le, date_evenement, id_adresse)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                                 $stmt = $dbh->prepare($requete);
-                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $idDateEvent, $id_adresse]); 
+                                $stmt->execute([$titre, $resume, $ville, $duree, $capacite, $id_compte, $abonnement, $nb_jetons, null, $idDateEvent, $id_adresse]); 
                             
                                 $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                             
@@ -765,10 +745,10 @@ try {
                             }
                         
                             // Insertion dans la table offre_visite
-                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, date_evenement, id_adresse)
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_visite (titre, resume, ville, duree, id_compte_professionnel, abonnement, nb_jetons, jeton_perdu_le, date_evenement, id_adresse)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $idDateEvent, $id_adresse]);
+                            $stmt->execute([$titre, $resume, $ville, $duree, $id_compte, $abonnement, $nb_jetons, null, $idDateEvent, $id_adresse]);
                         
                             $id_offre = $stmt->fetch(PDO::FETCH_ASSOC)['id_offre'];
                         
@@ -831,9 +811,9 @@ try {
                             //Exécution de la requête pour insérer dans la table offre_ et récupérer l'ID
                             $stmt_carte->execute([$fichier_carte]);
 
-                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
+                            $requete = "INSERT INTO sae.offre_restauration(titre, resume, ville, gamme_prix, carte, id_compte_professionnel, abonnement, nb_jetons, jeton_perdu_le, id_adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning id_offre";
                             $stmt = $dbh->prepare($requete);
-                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $id_adresse]); 
+                            $stmt->execute([$titre, $resume, $ville, $gammedeprix, $fichier_carte, $id_compte, $abonnement, $nb_jetons, null, $id_adresse]); 
 
 
                         }

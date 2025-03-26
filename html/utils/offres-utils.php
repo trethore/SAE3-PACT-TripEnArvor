@@ -139,9 +139,8 @@
 
     function getNoteMoyenne($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT AVG(note)
-            FROM sae._avis
-            WHERE id_offre = :id_offre";
+        $reqNote = "SELECT AVG(_avis.note) FROM sae._avis WHERE _avis.id_offre = :id_offre AND NOT EXISTS (SELECT 1 FROM sae._blacklister WHERE _blacklister.id_offre = _avis.id_offre AND _blacklister.id_membre = _avis.id_membre)";
+        ;
         
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -322,6 +321,25 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour déterminer le type d'abonnement d'une offre ===== //
+    function getCompteTypeAbonnement($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqTypeAbonnement = "SELECT abonnement FROM sae._offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtTypeAbonnement = $conn->prepare($reqTypeAbonnement);
+            $stmtTypeAbonnement->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtTypeAbonnement->execute();
+            $resultat = $stmtTypeAbonnement->fetchColumn();
+            $conn = null;
+            return $resultat;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 // ===== GESTION DES ADRESSES ===== //
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations de l'adresse de l'offre ===== //
@@ -363,7 +381,6 @@
             die();
         }
     }
-
 
 // ===== GESTION DES TAGS ===== //
 
@@ -468,6 +485,43 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour vérifier si un avis est blacklisté ===== //
+    function isAvisBlackliste($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisBlackliste = "SELECT EXISTS (SELECT 1 FROM sae._blacklister WHERE id_offre = :id_offre AND id_membre = :id_membre)";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisBlackliste = $conn->prepare($reqAvisBlackliste);
+            $stmtAvisBlackliste->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtAvisBlackliste->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtAvisBlackliste->execute();
+            $avisBlackliste = $stmtAvisBlackliste->fetchColumn();
+            $conn = null;
+            return $avisBlackliste;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }    
+
+    // ===== Fonction qui exécute une requête SQL pour mettre à jour le nombre de jetons de blacklistage d'une offre (+1) ===== //
+    function updateJetons($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqUpdateJetons = "UPDATE sae._offre SET nb_jetons = :nb_jetons WHERE id_offre = :id_offre";
+        $nb_jetons = getOffre($id_offre)['nb_jetons'] + 1;
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtUpdateJetons = $conn->prepare($reqUpdateJetons);
+            $stmtUpdateJetons->execute([':nb_jetons' => $nb_jetons, ':id_offre' => $id_offre]);
+            $conn = null;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }   
+
     function avisEstDetaille(int $id_offre, int $id_compte) : bool {
         global $driver, $server, $dbname, $user, $pass;
         $reqAvisDetaille = "SELECT COUNT(*) FROM sae._note_detaillee WHERE _note_detaillee.id_membre = ? AND _note_detaillee.id_offre = ?;";
@@ -502,6 +556,21 @@
             return $avisDetaille;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function deleteAvis(int $id_membre, int $id_offre) : void {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisDetaille = "SELECT delete_avis(?, ?);";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisDetaille = $conn->prepare($reqAvisDetaille);
+            $stmtAvisDetaille->execute([$id_offre, $id_membre]);
+            $conn = null;
+        } catch (Exception $e) {
+            print" Erreur " .  $e->getFile() . " à la ligne " . $e->getLine() . " : " . $e->getMessage() . "<br>";
             die();
         }
     }
@@ -603,8 +672,27 @@
     
 // ===== GESTION DES RÉPONSES ===== //
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la réponses d'un avis d'une offre ===== //
+    function getReponse($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReponse = "SELECT _reponse.texte, _date.date FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre JOIN _date ON _reponse.publie_le = _date.id_date WHERE _avis.id_offre = :id_offre AND _reponse.id_membre = :id_membre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtReponse = $conn->prepare($reqReponse);
+            $stmtReponse->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtReponse->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtReponse->execute();
+            $reponse = $stmtReponse->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reponse;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
     // ===== Fonction qui exécute une requête SQL pour récupérer les réponses d'un avis d'une offre ===== //
-    function getReponse($id_offre) {
+    function getAllReponses($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqReponse = "SELECT * FROM _avis JOIN _reponse ON _avis.id_membre = _reponse.id_membre AND _avis.id_offre = _reponse.id_offre WHERE _avis.id_offre = :id_offre";
         try {

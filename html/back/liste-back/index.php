@@ -76,6 +76,7 @@ try {
             $stmtOffre->execute();
 
             $remainingAvis = 0;
+            $remainingAvis = 0;
 
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
@@ -88,7 +89,7 @@ try {
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
-            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte">
             <?php if ($remainingAvis > 0) { ?>
                 <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
@@ -346,7 +347,7 @@ try {
                     </div>
                     <div>
                         <!-------------------------------------- 
-                        Affichage des avis non lues
+                        Affichage des avis non lus
                         ---------------------------------------->
                         <?php
                             $avisNonLus = getLu($row['id_offre']);
@@ -361,11 +362,11 @@ try {
                         <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
                         <!-------------------------------------- 
-                        Affichage des avis non répondues
+                        Affichage des avis non répondus
                         ---------------------------------------->
                         <?php
                             $nbrAvis = getAvis($row['id_offre']);
-                            $nbrReponses = getReponse($row['id_offre']);
+                            $nbrReponses = getAllReponses($row['id_offre']);
 
                             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
                         ?>
@@ -425,12 +426,12 @@ try {
             $remainingAvis = 0;
             $remainingOffres = 0;
 
+            $toastsData = [];
+            $remainingAvis = 0;
+            $remainingOffres = 0;
+
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
-
-                echo '<pre>';
-                print_r($avisNonLus);
-                echo '</pre>';
 
                 $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
 
@@ -450,6 +451,7 @@ try {
                 $toastsData[] = [
                     'title' => "Avis restants",
                     'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
+                    'link' => "none",
                 ];
             } else {
                 // Sinon, on affiche les toasts individuels
@@ -469,15 +471,18 @@ try {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
                         ];
                     } elseif ($remainingAvis > 1) {
                         $toastsData[] = [
                             'title' => $row['titre'],
                             'message' => "Vous avez $remainingAvis avis non lu.",
+                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
                         ];
                     }
                 }
             }
+
 
             $toastsDataJson = json_encode($toastsData);
             ?>
@@ -517,13 +522,14 @@ try {
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Fonction pour créer un nouveau toast
-            function createToast(title, message) {
-                // Créer l'élément toast
+            function createToast(title, message, link) {
+                const toastLink = document.createElement("a");
+                toastLink.href = link;
+                toastLink.classList.add("toast-link");
+
                 const toast = document.createElement("div");
                 toast.classList.add("toast");
 
-                // Créer le contenu du toast
                 const toastContent = document.createElement("div");
                 toastContent.classList.add("toast-content");
 
@@ -542,51 +548,52 @@ try {
                 messageDiv.appendChild(messageSpan);
                 toastContent.appendChild(messageDiv);
 
-                // Créer le bouton de fermeture
                 const closeIcon = document.createElement("i");
                 closeIcon.classList.add("uil", "uil-multiply", "toast-close");
-                closeIcon.addEventListener("click", () => {
-                    toast.remove(); // Supprimer le toast lors du clic
+                closeIcon.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    toastLink.remove();
                 });
 
-                // Créer la barre de progression
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
+                const progressbottom = document.createElement("div");
+                progress.classList.add("progress-bottom");
+                const progressright = document.createElement("div");
+                progress.classList.add("progress-right");
 
-                // Ajouter tout au toast
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
+                toast.appendChild(progressbottom);
+                toast.appendChild(progressright);
 
-                // Ajouter le toast au conteneur
+                toastLink.appendChild(toast);
+                 
                 const toastContainer = document.querySelector(".toast-container");
-                toastContainer.appendChild(toast);
+                toastContainer.appendChild(toastLink);
 
-                // Activer le toast et la barre de progression
                 setTimeout(() => {
                     toast.classList.add("active");
                     progress.classList.add("active");
-                }, 10); // Petit délai pour permettre la transition CSS
+                }, 10);
 
-                // Supprimer le toast après 5 secondes
                 setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
-                        toast.remove(); // Supprimer le toast du DOM après l'animation
-                    }, 300); // Attendre la fin de l'animation
+                        toastLink.remove();
+                    }, 300);
                 }, 5000);
 
-                // Supprimer la barre de progression après 5.3 secondes
                 setTimeout(() => {
                     progress.classList.remove("active");
                 }, 5300);
             }
 
-            // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
             toastsData.forEach((toast) => {
-                createToast(toast.title, toast.message);
+                createToast(toast.title, toast.message, toast.link);
             });
         });
 
