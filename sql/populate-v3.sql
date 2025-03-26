@@ -46,7 +46,7 @@ BEGIN
         'RAULT',
         'lakrampouzerie-lannion@orange.fr',
         '+33296467186',
-        '',
+        '$2y$10$0G1RbctaFe1pig3ZSDO8DO3Vl/yr85JM3gRK0iBkHbL9IPX5XcNFO', -- 'Mot de passe de La Krampouzerie Lannion'
         'LA KRAMPOUZERIE',
         'Crêperie',
         'https://la-krampouzerie-creperie-lannion.eatbu.com/',
@@ -89,6 +89,3 @@ END $$;
 -- COMMIT;
 ROLLBACK;
 
-/* 
-
-*/
