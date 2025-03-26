@@ -325,6 +325,17 @@ CREATE TABLE _note_detaillee (
 );
 
 
+CREATE TABLE _signaler (
+    id_offre            INTEGER,
+    id_signale          INTEGER,
+    id_signalant        INTEGER,
+    motif               VARCHAR(250),
+    justification       VARCHAR(1024),
+    date_signalement    TIMESTAMP NOT NULL,
+    CONSTRAINT _signaler_pk PRIMARY KEY (id_membre_signale, id_offre),
+    CONSTRAINT _signaler_fk_avis FOREIGN KEY (id_membre_signale, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
+
 
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
