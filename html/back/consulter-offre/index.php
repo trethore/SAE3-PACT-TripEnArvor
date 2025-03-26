@@ -614,6 +614,28 @@ try {
                             ?>
 
                             <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+                                <div class="confirmation-content">
+                                    <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
+                                    <form id="signalement-form">
+                                        <label>
+                                            <input type="radio" name="motif" value="inapproprie" onclick="toggleTextarea(this)">Il contient des propos inappropriés
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="impersonnelle" onclick="toggleTextarea(this)">Il ne décrit pas une expérience personnelle
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="doublon" onclick="toggleTextarea(this)">Il s'agit d'un doublon publié par le même membre
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="faux" onclick="toggleTextarea(this)">Il contient des informations fausses ou trompeuses
+                                        </label><br>
+                                    </form>
+                                    <button id="confirmer-signalement" onclick="validerSignalement(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button onclick="annulerSignalement()">Annuler</button>
+                                </div>
+                            </div>
+
+                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
 
                                 <div class="confirmation-content">
                                     <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
@@ -787,6 +809,49 @@ try {
         </div>
         
     </footer>
+
+    <script>
+        function toggleTextarea(selectedRadio) {
+            // Supprime l'ancienne zone de texte s'il y en a une
+            let existingTextarea = document.getElementById("dynamic-textarea");
+            if (existingTextarea) {
+                existingTextarea.remove();
+            }
+
+            // Création du textarea
+            let textarea = document.createElement("textarea");
+            textarea.id = "dynamic-textarea";
+            textarea.name = "motif-details";
+            textarea.rows = 3;
+            textarea.cols = 30;
+            textarea.style.marginTop = "5px";
+            textarea.placeholder = "Veuillez préciser...";
+
+            // Ajout du textarea juste après le bouton radio sélectionné
+            selectedRadio.parentNode.appendChild(textarea);
+        }
+
+        function validerSignalement(identifiant) {
+            // Récupérer le motif sélectionné
+            let selectedRadio = document.querySelector('input[name="motif"]:checked');
+            let motif = selectedRadio.value;
+
+            // Récupérer la valeur du textarea s'il existe
+            let textarea = document.getElementById("dynamic-textarea");
+            let details = textarea ? textarea.value.trim() : "";
+
+            // Vérifier si le champ texte doit être rempli
+            if (!details) {
+                alert("Veuillez préciser le motif.");
+                return;
+            }
+
+            // Envoyer le signalement (exemple avec console.log)
+            console.log("Signalement envoyé pour l'ID:", identifiant, "Motif:", motif, "Détails:", details);
+
+            // Ici, tu peux envoyer une requête AJAX pour traiter le signalement côté serveur
+        }
+    </script>
 
 </body>
 
