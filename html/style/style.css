@@ -4032,6 +4032,28 @@ h3 {
     font-size: 16px;
 }
 
+.consulter-offre-back .confirmation-popup button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--orange-principale);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:first-of-type:hover {
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir); 
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type:hover {
+    color: var(--orange-principale);
+}
+
 .consulter-offre-back .titre-avis {
     font-size: 24px;
     font-weight: bold;
