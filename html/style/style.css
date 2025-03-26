@@ -5370,7 +5370,7 @@ input[type="tel"] {
 }
 
 .progress.active::before{
-    animation: progress-right 3s linear forwards; /* Starts after 10s (5s left + 5s vertical) */
+    animation: progress-right 3s linear forwards 1s; /* Starts after 10s (5s left + 5s vertical) */
 }
 
 /* Bottom progress bar (LEFT) */
@@ -5394,7 +5394,7 @@ input[type="tel"] {
 }
 
 .progress-bottom.active::before {
-    animation: progress-left 3s linear forwards 4.5s; /* First animation (0s delay) */
+    animation: progress-left 3s linear forwards 5.5s; /* First animation (0s delay) */
 }
 
 /* Right progress bar (VERTICAL) */
@@ -5418,7 +5418,7 @@ input[type="tel"] {
 }
 
 .progress-right.active::before {
-    animation: progress-vertical 1.5s linear forwards 3s; /* Starts after 5s (left duration) */
+    animation: progress-vertical 1.5s linear forwards 4s; /* Starts after 5s (left duration) */
 }
 
 @keyframes progress-left {
