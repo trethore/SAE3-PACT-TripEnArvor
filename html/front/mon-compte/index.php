@@ -25,6 +25,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/symfony/deprecation-contracts/fun
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/EncoderInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Base32.php');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/ParameterTrait.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTPInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/HOTPInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTPInterface.php');
@@ -34,7 +35,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/HOTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Factory.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/ParameterTrait.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/InternalClock.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
 
