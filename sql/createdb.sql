@@ -3,7 +3,7 @@ START TRANSACTION;
 
 
 DROP SCHEMA IF EXISTS sae CASCADE;
-CREATE SCHEMA sae;
+CREATE SCHEMA IF NOT EXISTS sae;
 SET SCHEMA 'sae';
 
 
@@ -70,6 +70,7 @@ CREATE TABLE _compte (
     email           VARCHAR(320) UNIQUE NOT NULL,
     tel             VARCHAR(12),
     mot_de_passe    VARCHAR(255) NOT NULL,
+    auth            BOOLEAN DEFAULT FALSE,
     CONSTRAINT _compte_pk PRIMARY KEY (id_compte)
 );
 
@@ -1198,22 +1199,22 @@ EXECUTE PROCEDURE delete_offre_restauration();
 
 -- CREATE
 
-CREATE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION create_compte_professionnel_prive() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, auth)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse)
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_prive(id_compte, siren)
         VALUES (id_compte_temp, NEW.siren);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse, NEW.siren);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse, NEW.siren);
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_create_compte_professionnel_prive
+CREATE OR REPLACE TRIGGER tg_create_compte_professionnel_prive
 INSTEAD OF INSERT
 ON compte_professionnel_prive FOR EACH ROW
 EXECUTE PROCEDURE create_compte_professionnel_prive();
@@ -1226,7 +1227,7 @@ EXECUTE PROCEDURE create_compte_professionnel_prive();
 
 -- UPDATE
 
-CREATE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION update_compte_professionnel_prive() RETURNS TRIGGER AS $$
 BEGIN
     IF (NEW.id_compte <> OLD.id_compte) THEN
         RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
@@ -1237,7 +1238,8 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe
+        mot_de_passe = NEW.mot_de_passe,
+        auth = NEW.auth
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
@@ -1255,7 +1257,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_update_compte_professionnel_prive
+CREATE OR REPLACE TRIGGER tg_update_compte_professionnel_prive
 INSTEAD OF UPDATE
 ON compte_professionnel_prive
 FOR EACH ROW
@@ -1264,7 +1266,7 @@ EXECUTE PROCEDURE update_compte_professionnel_prive();
 
 -- DELETE
 
-CREATE FUNCTION delete_compte_professionnel_prive() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION delete_compte_professionnel_prive() RETURNS TRIGGER AS $$
 BEGIN
     DELETE FROM _compte_professionnel_prive
     WHERE id_compte = OLD.id_compte;
@@ -1279,7 +1281,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_delete_compte_professionnel_prive
+CREATE OR REPLACE TRIGGER tg_delete_compte_professionnel_prive
 INSTEAD OF DELETE
 ON compte_professionnel_prive
 FOR EACH ROW
@@ -1290,22 +1292,22 @@ EXECUTE PROCEDURE delete_compte_professionnel_prive();
 
 -- CREATE
 
-CREATE FUNCTION create_compte_professionnel_publique() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION create_compte_professionnel_publique() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, auth)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth)
         RETURNING id_compte INTO id_compte_temp;
-    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse) 
+    INSERT INTO _compte_professionnel(id_compte, denomination, a_propos, site_web, id_adresse)
         VALUES (id_compte_temp, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
     INSERT INTO _compte_professionnel_publique(id_compte)
         VALUES (id_compte_temp);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth, NEW.denomination, NEW.a_propos, NEW.site_web, NEW.id_adresse);
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_create_compte_professionnel_publique
+CREATE OR REPLACE TRIGGER tg_create_compte_professionnel_publique
 INSTEAD OF INSERT
 ON compte_professionnel_publique FOR EACH ROW
 EXECUTE PROCEDURE create_compte_professionnel_publique();
@@ -1318,7 +1320,7 @@ EXECUTE PROCEDURE create_compte_professionnel_publique();
 
 -- UPDATE
 
-CREATE FUNCTION update_compte_professionnel_publique() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION update_compte_professionnel_publique() RETURNS TRIGGER AS $$
 BEGIN
     IF (NEW.id_compte <> OLD.id_compte) THEN
         RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
@@ -1329,7 +1331,8 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe
+        mot_de_passe = NEW.mot_de_passe,
+        auth = NEW.auth
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_professionnel
@@ -1343,7 +1346,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_update_compte_professionnel_publique
+CREATE OR REPLACE TRIGGER tg_update_compte_professionnel_publique
 INSTEAD OF UPDATE
 ON compte_professionnel_publique
 FOR EACH ROW
@@ -1352,7 +1355,7 @@ EXECUTE PROCEDURE update_compte_professionnel_publique();
 
 -- DELETE
 
-CREATE FUNCTION delete_compte_professionnel_publique() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION delete_compte_professionnel_publique() RETURNS TRIGGER AS $$
 BEGIN
     DELETE FROM _compte_professionnel_publique
     WHERE id_compte = OLD.id_compte;
@@ -1367,7 +1370,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_delete_compte_professionnel_publique
+CREATE OR REPLACE TRIGGER tg_delete_compte_professionnel_publique
 INSTEAD OF DELETE
 ON compte_professionnel_publique
 FOR EACH ROW
@@ -1378,20 +1381,20 @@ EXECUTE PROCEDURE delete_compte_professionnel_publique();
 
 -- CREATE
 
-CREATE FUNCTION create_compte_membre() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION create_compte_membre() RETURNS TRIGGER AS $$
 DECLARE
     id_compte_temp _compte.id_compte%type;
 BEGIN
-    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe)
-        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe)
+    INSERT INTO _compte(nom_compte, prenom, email, tel, mot_de_passe, auth)
+        VALUES (NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth)
         RETURNING id_compte INTO id_compte_temp;
     INSERT INTO _compte_membre(id_compte, pseudo)
         VALUES (id_compte_temp, NEW.pseudo);
-    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.pseudo);
+    RETURN ROW(id_compte_temp, NEW.nom_compte, NEW.prenom, NEW.email, NEW.tel, NEW.mot_de_passe, NEW.auth, NEW.pseudo);
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_create_compte_membre
+CREATE OR REPLACE TRIGGER tg_create_compte_membre
 INSTEAD OF INSERT
 ON compte_membre FOR EACH ROW
 EXECUTE PROCEDURE create_compte_membre();
@@ -1404,7 +1407,7 @@ EXECUTE PROCEDURE create_compte_membre();
 
 -- UPDATE
 
-CREATE FUNCTION update_compte_membre() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION update_compte_membre() RETURNS TRIGGER AS $$
 BEGIN
     IF (NEW.id_compte <> OLD.id_compte) THEN
         RAISE EXCEPTION 'Vous ne pouvez pas modifier l''identifiant d''un compte.';
@@ -1415,7 +1418,8 @@ BEGIN
         prenom = NEW.prenom,
         email = NEW.email,
         tel = NEW.tel,
-        mot_de_passe = NEW.mot_de_passe
+        mot_de_passe = NEW.mot_de_passe,
+        auth = NEW.auth
     WHERE id_compte = NEW.id_compte;
 
     UPDATE _compte_membre
@@ -1426,7 +1430,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_update_compte_membre
+CREATE OR REPLACE TRIGGER tg_update_compte_membre
 INSTEAD OF UPDATE
 ON compte_membre
 FOR EACH ROW
@@ -1435,7 +1439,7 @@ EXECUTE PROCEDURE update_compte_membre();
 
 -- DELETE
 
-CREATE FUNCTION delete_compte_membre() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION delete_compte_membre() RETURNS TRIGGER AS $$
 BEGIN
     DELETE FROM _compte_membre
     WHERE id_compte = OLD.id_compte;
@@ -1447,13 +1451,11 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
-CREATE TRIGGER tg_delete_compte_membre
+CREATE OR REPLACE TRIGGER tg_delete_compte_membre
 INSTEAD OF DELETE
 ON compte_membre
 FOR EACH ROW
 EXECUTE PROCEDURE delete_compte_membre();
-
-
 
 
 /* ##################################################################### */

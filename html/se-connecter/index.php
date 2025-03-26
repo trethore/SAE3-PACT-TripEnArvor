@@ -18,6 +18,7 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
+
 if (isset($_POST["email"]) && isset($_POST["mdp"])) {
     $trouve = false;
     $emailUtilisateur = $_POST["email"];
@@ -31,7 +32,20 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
             break;
         }
     }
+    if ($trouve) {
+        if (isIdMember($id)) {
+            header("/front/consulter-offres/");
+        } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+            header("/back/liste-back/");
+        }
+    } else {
+        unset($_POST["email"]);
+        unset($_POST["mdp"]);
+        $loginFailed = true;
 
+    }
+}
+?>
     if ($trouve) {
         if (isIdMember($id)) {
             header('Location: /front/consulter-offres/');
@@ -69,8 +83,7 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
         <!-- Titres -->
         <h1>Se connecter</h1>
         <h2>Vous n'avez pas de compte ? <a href="/creer-compte/">Créez votre compte</a></h2>
-
-
+      
         <form action="/se-connecter/" method="POST" enctype="multipart/form-data">
             <label for="email">Quelle est votre adresse mail ?</label>
             <input type="email" id="email" name="email" required />
@@ -95,7 +108,7 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
             var x = document.getElementById("mdp");
             if (x.type === "password") {
                 x.type = "text";
-            } else {
+            } else {x
                 x.type = "password";
             }
         }
