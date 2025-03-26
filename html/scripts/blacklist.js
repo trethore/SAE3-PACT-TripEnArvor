@@ -20,6 +20,7 @@ function afficherMenu(event, button, compteur) {
 function confirmerBlacklister(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idMembre = element.getAttribute("data-id-membre");
+    document.getElementById("overlay").style.display = "block";
     document.getElementById(`confirmation-popup-${identifiant}`).style.display = "block";
     document.getElementById(`confirmer-blacklister-${identifiant}`).onclick = function() {
         validerBlacklister(identifiant, idOffre, idMembre);
@@ -35,6 +36,7 @@ function validerBlacklister(identifiant, idOffre, idMembre) {
     })
     .then(response => response.text())
     .then(data => {
+        document.getElementById("overlay").style.display = "none";
         document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
         location.reload();
     })
@@ -42,6 +44,7 @@ function validerBlacklister(identifiant, idOffre, idMembre) {
 }
 
 function annulerBlacklister(identifiant) {
+    document.getElementById("overlay").style.display = "none";
     document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
 }
 
