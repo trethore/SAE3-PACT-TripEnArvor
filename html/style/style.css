@@ -4170,8 +4170,6 @@ h3 {
     text-align: center;
     display: inline-block;
     z-index: 1;
-    transform: translateY(2em);
-    transform: translateX(2em);
     position: absolute;
 }
 
