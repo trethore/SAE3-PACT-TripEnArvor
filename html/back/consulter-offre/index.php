@@ -600,7 +600,7 @@ try {
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
                                         <?php
-                                        if (isset($_SESSION['id']) && in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) {
+                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) {
                                         ?>
                                             <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                         <?php
