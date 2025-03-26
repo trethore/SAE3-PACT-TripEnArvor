@@ -27,39 +27,41 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
 
     <title>Liste de vos offres</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 
 </head>
+
 <body class="back liste-back">
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
-startSession();
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
-    $stmt->execute([$_SESSION['id']]);
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    $dbh = null;
-} catch (PDOException $e) {
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-}
-?>
+    <?php
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/session-utils.php');
+    startSession();
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+        $stmt = $dbh->prepare('SELECT * from sae._offre where id_compte_professionnel = ?');
+        $stmt->execute([$_SESSION['id']]);
+        $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $dbh = null;
+    } catch (PDOException $e) {
+        echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+    }
+    ?>
 
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
         <div class="search-box">
             <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-            <input  autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <input autocomplete="off" role="combobox" id="input" name="browsers" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
                     <option value="<?php echo htmlspecialchars($offre['titre']); ?>" data-id="<?php echo $offre['id_offre']; ?>">
@@ -70,26 +72,26 @@ try {
         </div>
         <a href="/back/liste-back"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
         <?php
-            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-            $stmtOffre = $conn->prepare($reqOffre);
-            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-            $stmtOffre->execute();
+        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+        $stmtOffre = $conn->prepare($reqOffre);
+        $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+        $stmtOffre->execute();
 
-            $remainingAvis = 0;
-            $remainingAvis = 0;
+        $remainingAvis = 0;
+        $remainingAvis = 0;
 
-            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $avisNonLus = getLu($row['id_offre']);
+        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+            $avisNonLus = getLu($row['id_offre']);
 
-                foreach ($avisNonLus as $avis) {
-                    if (!empty($avis) && empty($avis['lu'])) {
-                        $remainingAvis++;
-                    }
+            foreach ($avisNonLus as $avis) {
+                if (!empty($avis) && empty($avis['lu'])) {
+                    $remainingAvis++;
                 }
             }
+        }
         ?>
         <a href="/back/mon-compte" class="icon-container">
-            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
+            <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte">
             <?php if ($remainingAvis > 0) { ?>
                 <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
@@ -133,109 +135,108 @@ try {
         <article class="filtre-tri">
             <h2>Filtres et tris</h2>
             <div class="fond-filtres hidden">
-                <div>
-                    <!-- Catégorie -->
-                    <div class="categorie">
-                        <h3>Catégorie</h3>
-                        <div>
-                            <label><input type="checkbox"> Parc attraction</label>
-                            <label><input type="checkbox"> Restauration</label>
-                            <label><input type="checkbox"> Visite</label>
-                            <label><input type="checkbox"> Spectacle</label>
-                            <label><input type="checkbox"> Activité</label>
-                        </div>
-                    </div>
 
-                    <!-- Disponibilité -->
-                    <div class="disponibilite">
-                        <h3>Disponibilité</h3>
-                        <div>
-                            <label><input type="radio" name="disponibilite"> Ouvert</label>
-                            <label><input type="radio" name="disponibilite"> Fermé</label>
-                        </div>
+                <!-- Catégorie -->
+                <div class="categorie">
+                    <h3>Catégorie</h3>
+                    <div>
+                        <label><input type="checkbox"> Parc attraction</label>
+                        <label><input type="checkbox"> Restauration</label>
+                        <label><input type="checkbox"> Visite</label>
+                        <label><input type="checkbox"> Spectacle</label>
+                        <label><input type="checkbox"> Activité</label>
                     </div>
-                        
-                    <!-- Trier -->
-                    <div class="trier">
-                        <h3>Note et prix</h3>
+                </div>
+
+                <!-- Disponibilité -->
+                <div class="disponibilite">
+                    <h3>Disponibilité</h3>
+                    <div>
+                        <label><input type="radio" name="disponibilite"> Ouvert</label>
+                        <label><input type="radio" name="disponibilite"> Fermé</label>
+                    </div>
+                </div>
+
+                <!-- Trier -->
+                <div class="trier">
+                    <h3>Note et prix</h3>
+                    <div>
                         <div>
-                            <div>
-                                <label>Note minimum :</label>
-                                <select class="note">
-                                    <option></option>
-                                    <option>★</option>
-                                    <option>★★</option>
-                                    <option>★★★</option>
-                                    <option>★★★★</option>
-                                    <option>★★★★★</option>
-                                </select>
-                            </div>
-                            
+                            <label>Note minimum :</label>
+                            <select class="note">
+                                <option></option>
+                                <option>★</option>
+                                <option>★★</option>
+                                <option>★★★</option>
+                                <option>★★★★</option>
+                                <option>★★★★★</option>
+                            </select>
+                        </div>
+
+                        <div>
                             <div>
                                 <div>
-                                    <div>
-                                        <label>Prix minimum &nbsp;:</label>
-                                        <input class="min" type="number" min="0">
-                                    </div>
-                                    <div>
-                                        <label>Prix maximum :</label>
-                                        <input class="max" type="number" min="0">
-                                    </div>
+                                    <label>Prix minimum &nbsp;:</label>
+                                    <input class="min" type="number" min="0">
+                                </div>
+                                <div>
+                                    <label>Prix maximum :</label>
+                                    <input class="max" type="number" min="0">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="trier2">
-                        <h3>Trier</h3>
+                <div class="trier2">
+                    <h3>Trier</h3>
+                    <div>
+                        <select class="tris">
+                            <option value="default">Trier par :</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                            <option value="create-desc">Créé récemment</option>
+                            <option value="note-asc">Meilleure note</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Localisation -->
+                <div class="localisation">
+                    <h3>Localisation</h3>
+                    <div>
+                        <label style="display: none;"><input type="radio" name="localisation"> Autour de moi</label>
                         <div>
-                            <select class="tris">
-                                <option value="default">Trier par :</option>
-                                <option value="price-asc">Prix croissant</option>
-                                <option value="price-desc">Prix décroissant</option>
-                                <option value="create-desc">Créé récemment</option>
-                                <option value="note-asc">Meilleure note</option>
-                            </select>
+                            <label><!--<input type="radio" name="localisation">--> Rechercher</label>
+                            <input type="text" name="location" id="search-location" placeholder="Rechercher...">
                         </div>
                     </div>
                 </div>
-                <div>
-                    <!-- Localisation -->
-                    <div class="localisation">
-                        <h3>Localisation</h3>
-                        <div>
-                            <label style="display: none;"><input type="radio" name="localisation"> Autour de moi</label>
-                            <div>
-                                <label><!--<input type="radio" name="localisation">--> Rechercher</label>
-                                <input type="text" name="location" id="search-location" placeholder="Rechercher...">
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Type d'offre -->
-                    <div class="typeOffre">
-                        <h3>Type d'offre</h3>
-                        <div>
-                            <label><input type="radio" name="typeOffre"> Standard</label>
-                            <label><input type="radio" name="typeOffre"> Premium</label>
-                        </div>
+                <!-- Type d'offre -->
+                <div class="typeOffre">
+                    <h3>Type d'offre</h3>
+                    <div>
+                        <label><input type="radio" name="typeOffre"> Standard</label>
+                        <label><input type="radio" name="typeOffre"> Premium</label>
                     </div>
-        
-                    <!-- Date -->
-                    <div class="date" style="display: none;">
-                        <h3>Date</h3>
+                </div>
+
+                <!-- Date -->
+                <div class="date" style="display: none;">
+                    <h3>Date</h3>
+                    <div>
                         <div>
-                            <div>
-                                <label>Date de début &nbsp;:</label>
-                                <input type="date">
-                            </div>
-                            <div>
-                                <label>Date de fin &emsp;&emsp;:</label>
-                                <input type="date">
-                            </div>
+                            <label>Date de début &nbsp;:</label>
+                            <input type="date">
+                        </div>
+                        <div>
+                            <label>Date de fin &emsp;&emsp;:</label>
+                            <input type="date">
                         </div>
                     </div>
                 </div>
+
             </div>
         </article>
 
@@ -246,75 +247,79 @@ try {
             $stmtOffre = $conn->prepare($reqOffre);
             $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtOffre->execute();
-            while($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
-            <article class="<?php if (getDateOffreHorsLigne($row['id_offre']) > getDateOffreEnLigne($row['id_offre'])) { echo 'hors-ligne-offre'; } else { echo 'offre'; } ?>">
-                <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
-                    <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
+            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) { ?>
+                <article class="<?php if (getDateOffreHorsLigne($row['id_offre']) > getDateOffreEnLigne($row['id_offre'])) {
+                                    echo 'hors-ligne-offre';
+                                } else {
+                                    echo 'offre';
+                                } ?>">
+                    <a href="/back/consulter-offre/index.php?id=<?php echo urlencode($row['id_offre']); ?>">
+                        <div class="lieu-offre"><?php echo htmlentities($row["ville"]) ?></div>
 
-                    <?php $horaire = getHorairesOuverture($row['id_offre']);
-                                    setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                                    $jour_actuel = $jours[date('w')];
-                                    $ouverture = "Indét.";
-                                    foreach ($horaire as $h) {
-                                        if (!empty($horaire)) {
-                                            $ouvert_ferme = date('H:i');
-                                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
-                                            $ouverture = "Fermé";
-                                            if ($h['nom_jour'] == $jour_actuel) {
-                                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                                    $ouverture = "Ouvert";
-                                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                                    $ouverture = "Ferme Bnt.";
-                                                }
-                                            }
-                                        } 
-                                    } ?>
+                        <?php $horaire = getHorairesOuverture($row['id_offre']);
+                        setlocale(LC_TIME, 'fr_FR.UTF-8');
+                        $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                        $jour_actuel = $jours[date('w')];
+                        $ouverture = "Indét.";
+                        foreach ($horaire as $h) {
+                            if (!empty($horaire)) {
+                                $ouvert_ferme = date('H:i');
+                                $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour')); // Une heure avant la fermeture
+                                $ouverture = "Fermé";
+                                if ($h['nom_jour'] == $jour_actuel) {
+                                    if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                        $ouverture = "Ouvert";
+                                    } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                        $ouverture = "Ferme Bnt.";
+                                    }
+                                }
+                            }
+                        } ?>
 
-                    <div class="ouverture-offre"><?php  echo htmlentities($ouverture) ?></div>
+                        <div class="ouverture-offre"><?php echo htmlentities($ouverture) ?></div>
 
-                    <!---------------------------------------
+                        <!---------------------------------------
                     Récuperer la premère image liée à l'offre
                     ---------------------------------------->
-                    <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
+                        <img class="image-offre" src="/images/universel/photos/<?php echo htmlentities(getFirstIMG($row['id_offre'])) ?>" alt="image offre">
 
-                    <!---------------------------------------
+                        <!---------------------------------------
                     Récuperer le titre liée à l'offre
                     ---------------------------------------->
-                    <p class="titre-offre"><?php echo htmlentities($row["titre"]) ?></p>
+                        <p class="titre-offre"><?php echo htmlentities($row["titre"]) ?></p>
 
-                    <!--------------------------------------------------------
+                        <!--------------------------------------------------------
                     Choix du type de l'activité (Restaurant, parc, etc...
                     --------------------------------------------------------->
-                    <p class="categorie-offre"> <?php echo htmlentities(getTypeOffre($row['id_offre']));?> </p>
+                        <p class="categorie-offre"> <?php echo htmlentities(getTypeOffre($row['id_offre'])); ?> </p>
 
-                    <!---------------------------------------------------------------------- 
+                        <!---------------------------------------------------------------------- 
                     Choix de l'icone pour reconnaitre une offre gratuite, payante ou premium 
                     ------------------------------------------------------------------------>
-                    <img src=" <?php
-                    switch ($row["abonnement"]) {
-                        case 'gratuit':
-                            echo htmlentities("/images/backOffice/icones/gratuit.png");
-                            break;
-                        
-                        case 'standard':
-                            echo htmlentities("/images/backOffice/icones/payant.png");
-                            break;
-                            
-                        case 'premium':
-                            echo htmlentities("/images/backOffice/icones/premium.png");
-                            break;
-                    } ?>">
+                        <img src=" <?php
+                                    switch ($row["abonnement"]) {
+                                        case 'gratuit':
+                                            echo htmlentities("/images/backOffice/icones/gratuit.png");
+                                            break;
 
-                    <!-------------------------------------- 
+                                        case 'standard':
+                                            echo htmlentities("/images/backOffice/icones/payant.png");
+                                            break;
+
+                                        case 'premium':
+                                            echo htmlentities("/images/backOffice/icones/premium.png");
+                                            break;
+                                    } ?>">
+
+                        <!-------------------------------------- 
                     Affichage de la note globale de l'offre 
                     ---------------------------------------->
-                    <div class="etoiles">
-                        <?php 
+                        <div class="etoiles">
+                            <?php
                             $note = getNoteMoyenne($row['id_offre']);
-                        ?>
-                        <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
-                        <?php
+                            ?>
+                            <p class="note-avis" style="display: none;"><?php echo $note; ?></p>
+                            <?php
                             if ($note != 0) {
                                 $etoilesPleines = floor($note);
                                 $demiEtoile = ($note - $etoilesPleines) == 0.5 ? 1 : 0;
@@ -326,65 +331,65 @@ try {
                             }
 
                             for ($i = 0; $i < $etoilesPleines; $i++) {
-                                ?>
+                            ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                                <?php
+                            <?php
                             }
 
                             if ($demiEtoile) {
-                                ?>
+                            ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                                <?php
+                            <?php
                             }
 
                             for ($i = 0; $i < $etoilesVides; $i++) {
-                                ?>
+                            ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                                <?php
+                            <?php
                             }
-                        ?>
-                        <p><?php echo getNombreNotes($row['id_offre']) ?></p>
-                    </div>
-                    <div>
-                        <!-------------------------------------- 
+                            ?>
+                            <p><?php echo getNombreNotes($row['id_offre']) ?></p>
+                        </div>
+                        <div>
+                            <!-------------------------------------- 
                         Affichage des avis non lus
                         ---------------------------------------->
-                        <?php
+                            <?php
                             $avisNonLus = getLu($row['id_offre']);
                             $nonLusCount = 0;
 
-                            forEach($avisNonLus as $avis) {
+                            foreach ($avisNonLus as $avis) {
                                 if (empty($avis['lu'])) {
                                     $nonLusCount++;
                                 }
                             }
-                        ?>
-                        <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
+                            ?>
+                            <p>Avis non lus : <span><b><?php echo $nonLusCount; ?></b></span></p>
 
-                        <!-------------------------------------- 
+                            <!-------------------------------------- 
                         Affichage des avis non répondus
                         ---------------------------------------->
-                        <?php
+                            <?php
                             $nbrAvis = getAvis($row['id_offre']);
                             $nbrReponses = getAllReponses($row['id_offre']);
 
                             $nbrAvisNonRepondus = count($nbrAvis) - count($nbrReponses);
-                        ?>
-                        <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
+                            ?>
+                            <p>Avis non répondus : <span><b><?php echo $nbrAvisNonRepondus; ?></b></span></p>
 
-                        <!-------------------------------------- 
+                            <!-------------------------------------- 
                         Affichage des avis blacklistés 
                         ---------------------------------------->
-                        <!-- <p>Avis blacklistés : <span><b>0</b></span></p> -->
-                    </div>
+                            <!-- <p>Avis blacklistés : <span><b>0</b></span></p> -->
+                        </div>
 
-                    <?php
+                        <?php
                         if (!getDatePublicationOffre($row['id_offre'])) {
                             $row['date'] = "0-0-0 0:0:0";
                         } else {
                             $row['date'] = getDatePublicationOffre($offre['id_offre'])[0]['date'];
                         }
-                        
+
                         if ($row['date'] == "0-0-0 0:0:0") {
                             $date = "date indisponible.";
                         } else {
@@ -392,127 +397,127 @@ try {
                             $datePub = explode('-', $publication[0]);
                             $date = htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]);
                         }
-                    ?>
+                        ?>
 
-                    <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
+                        <p class="date_publication_offre">Créée le <span><?php echo $date; ?></span></p>
 
-                    <!-------------------------------------- 
+                        <!-------------------------------------- 
                     Affichage du prix 
                     ---------------------------------------->
-                    <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
+                        <?php if (getTypeOffre($row['id_offre']) == 'Restauration') { ?>
                             <p class="prix">Gamme prix <span><?php echo htmlentities(getRestaurant($row['id_offre'])["gamme_prix"]); ?><span></p>
-                    <?php } else { ?>
+                        <?php } else { ?>
                             <p class="prix">A partir de <span><?php
-                            $prix['prix'] = getPrixPlusPetit($row['id_offre']);
-                            if (getPrixPlusPetit($row['id_offre']) == null) {
-                                $prix['prix'] = 0;
-                            }
-                            echo htmlentities($prix['prix']); ?>€</span></p>
-                    <?php } ?>
+                                                                $prix['prix'] = getPrixPlusPetit($row['id_offre']);
+                                                                if (getPrixPlusPetit($row['id_offre']) == null) {
+                                                                    $prix['prix'] = 0;
+                                                                }
+                                                                echo htmlentities($prix['prix']); ?>€</span></p>
+                        <?php } ?>
 
-                </a>
-            </article>
+                    </a>
+                </article>
             <?php } ?>
         </section>
         <a href="/back/creer-offre/">Créer une offre</a>
 
         <?php
-            $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
-            $stmtOffre = $conn->prepare($reqOffre);
-            $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
-            $stmtOffre->execute();
+        $reqOffre = "SELECT * from sae._offre where id_compte_professionnel = :id_compte;";
+        $stmtOffre = $conn->prepare($reqOffre);
+        $stmtOffre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+        $stmtOffre->execute();
 
-            $toastsData = [];
-            $remainingAvis = 0;
-            $remainingOffres = 0;
+        $toastsData = [];
+        $remainingAvis = 0;
+        $remainingOffres = 0;
 
-            $toastsData = [];
-            $remainingAvis = 0;
-            $remainingOffres = 0;
+        $toastsData = [];
+        $remainingAvis = 0;
+        $remainingOffres = 0;
 
+        while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
+            $avisNonLus = getLu($row['id_offre']);
+
+            $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
+
+            foreach ($avisNonLus as $avis) {
+                if (!empty($avis) && empty($avis['lu'])) {
+                    $remainingAvis++;
+                    $hasUnreadAvis = true; // Set the flag to true if an unread review is found
+                }
+            }
+
+            if ($hasUnreadAvis) {
+                $remainingOffres++; // Increment only if the offer has at least one unread review
+            }
+        }
+
+        if ($remainingOffres > 3) {
+            $toastsData[] = [
+                'title' => "Avis restants",
+                'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
+                'link' => "none",
+            ];
+        } else {
+            // Sinon, on affiche les toasts individuels
+            $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
             while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
                 $avisNonLus = getLu($row['id_offre']);
 
-                $hasUnreadAvis = false; // Flag to check if the current offer has any unread reviews
+                $remainingAvis = 0; // Reset the counter for each offer
 
                 foreach ($avisNonLus as $avis) {
                     if (!empty($avis) && empty($avis['lu'])) {
                         $remainingAvis++;
-                        $hasUnreadAvis = true; // Set the flag to true if an unread review is found
                     }
                 }
 
-                if ($hasUnreadAvis) {
-                    $remainingOffres++; // Increment only if the offer has at least one unread review
-                }
-            }
-
-            if ($remainingOffres > 3) {
-                $toastsData[] = [
-                    'title' => "Avis restants",
-                    'message' => "Vous avez $remainingAvis avis non lus sur $remainingOffres offres.",
-                    'link' => "none",
-                ];
-            } else {
-                // Sinon, on affiche les toasts individuels
-                $stmtOffre->execute(); // Réexécuter la requête pour parcourir à nouveau les résultats
-                while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                    $avisNonLus = getLu($row['id_offre']);
-
-                    $remainingAvis = 0; // Reset the counter for each offer
-
-                    foreach ($avisNonLus as $avis) {
-                        if (!empty($avis) && empty($avis['lu'])) {
-                            $remainingAvis++;
-                        }
-                    }
-
-                    if ($remainingAvis == 1) {
-                        $toastsData[] = [
-                            'title' => $row['titre'],
-                            'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
-                        ];
-                    } elseif ($remainingAvis > 1) {
-                        $toastsData[] = [
-                            'title' => $row['titre'],
-                            'message' => "Vous avez $remainingAvis avis non lu.",
-                            'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
-                        ];
-                    }
+                if ($remainingAvis == 1) {
+                    $toastsData[] = [
+                        'title' => $row['titre'],
+                        'message' => "Vous avez $remainingAvis avis non lu.",
+                        'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
+                    ];
+                } elseif ($remainingAvis > 1) {
+                    $toastsData[] = [
+                        'title' => $row['titre'],
+                        'message' => "Vous avez $remainingAvis avis non lu.",
+                        'link' => "/back/consulter-offre/index.php?id=" . $row['id_offre'],
+                    ];
                 }
             }
+        }
 
 
-            $toastsDataJson = json_encode($toastsData);
-            ?>
+        $toastsDataJson = json_encode($toastsData);
+        ?>
     </main>
     <footer>
         <div class="footer-top">
-        <div class="footer-top-left">
-            <span class="footer-subtitle">P.A.C.T</span>
-            <span class="footer-title">TripEnArmor</span>
-        </div>
-        <div class="footer-top-right">
-            <span class="footer-connect">Restons connectés !</span>
-            <div class="social-icons">
-            <a href="https://x.com/?locale=fr">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-            </a>
-            <a href="https://www.facebook.com/?locale=fr_FR">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-            </a>
-            <a href="https://www.youtube.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-            </a>
-            <a href="https://www.instagram.com/">
-                <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-            </a>
+            <div class="footer-top-left">
+                <span class="footer-subtitle">P.A.C.T</span>
+                <span class="footer-title">TripEnArmor</span>
             </div>
-        </div>
+            <div class="footer-top-right">
+                <span class="footer-connect">Restons connectés !</span>
+                <div class="social-icons">
+                    <a href="https://x.com/?locale=fr">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+                    </a>
+                    <a href="https://www.facebook.com/?locale=fr_FR">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+                    </a>
+                </div>
+            </div>
 
 
-        <!-- Barre en bas du footer incluse ici -->
+            <!-- Barre en bas du footer incluse ici -->
 
         </div>
         <div class="footer-bottom">
@@ -523,16 +528,13 @@ try {
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             function createToast(title, message, link) {
-                // Créer l'élément <a> pour le toast
                 const toastLink = document.createElement("a");
                 toastLink.href = link;
                 toastLink.classList.add("toast-link");
 
-                // Créer l'élément toast
                 const toast = document.createElement("div");
                 toast.classList.add("toast");
 
-                // Créer le contenu du toast
                 const toastContent = document.createElement("div");
                 toastContent.classList.add("toast-content");
 
@@ -551,57 +553,50 @@ try {
                 messageDiv.appendChild(messageSpan);
                 toastContent.appendChild(messageDiv);
 
-                // Créer le bouton de fermeture
                 const closeIcon = document.createElement("i");
                 closeIcon.classList.add("uil", "uil-multiply", "toast-close");
                 closeIcon.addEventListener("click", (e) => {
-                    e.preventDefault(); // Empêcher le comportement par défaut du lien
-                    toastLink.remove(); // Supprimer le toast lors du clic
+                    e.preventDefault();
+                    toastLink.remove();
                 });
 
-                // Créer la barre de progression
                 const progress = document.createElement("div");
-                progress.classList.add("progress active");
+                progress.classList.add("progress");
                 const progressbottom = document.createElement("div");
-                progress.classList.add("progress-bottom active");
+                progressbottom.classList.add("progress-bottom");
                 const progressright = document.createElement("div");
-                progress.classList.add("progress-right active");
+                progressright.classList.add("progress-right");
+                const progressleft = document.createElement("div");
+                progressleft.classList.add("progress-left");
 
-                // Ajouter tout au toast
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
                 toast.appendChild(progressbottom);
                 toast.appendChild(progressright);
+                toast.appendChild(progressleft);
 
-                // Ajouter le toast à l'élément <a>
                 toastLink.appendChild(toast);
-                 
-                // Ajouter l'élément <a> au conteneur
+
                 const toastContainer = document.querySelector(".toast-container");
                 toastContainer.appendChild(toastLink);
 
-                // Activer le toast et la barre de progression
                 setTimeout(() => {
                     toast.classList.add("active");
                     progress.classList.add("active");
-                }, 10); // Petit délai pour permettre la transition CSS
+                    progressbottom.classList.add("active");
+                    progressright.classList.add("active");
+                    progressleft.classList.add("active");
+                }, 10);
 
-                // Supprimer le toast après 5 secondes
                 setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
-                        toastLink.remove(); // Supprimer le toast du DOM après l'animation
-                    }, 300); // Attendre la fin de l'animation
-                }, 5000);
-
-                // Supprimer la barre de progression après 5.3 secondes
-                setTimeout(() => {
-                    progress.classList.remove("active");
-                }, 5300);
+                        toastLink.remove();
+                    }, 300);
+                }, 9500);
             }
 
-            // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
             toastsData.forEach((toast) => {
@@ -714,12 +709,14 @@ try {
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
-                } if (selectedValue === "default") {
+                }
+                if (selectedValue === "default") {
                     offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
 
-                } if (selectedValue === "note-asc") {
+                }
+                if (selectedValue === "note-asc") {
                     offers.sort((a, b) => {
                         let noteA = a.querySelector(".note-avis").textContent.trim();
                         let noteB = b.querySelector(".note-avis").textContent.trim();
@@ -727,7 +724,8 @@ try {
                     });
 
                     offers.forEach(offer => offersContainer.appendChild(offer));
-                } if (selectedValue === "create-desc") {
+                }
+                if (selectedValue === "create-desc") {
                     offers.sort((a, b) => {
                         let dateA = a.querySelector(".date_publication_offre span").textContent.trim();
                         if (dateA == "date indisponible.") {
@@ -771,4 +769,5 @@ try {
         });
     </script>
 </body>
+
 </html>
