@@ -289,10 +289,10 @@ try {
 ?>
 
 <header>
-    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+    <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
     <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
     <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
         <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
         <datalist id="cont">
             <?php foreach ($of as $o) { ?>
@@ -302,8 +302,8 @@ try {
             <?php } ?>
         </datalist>
     </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Retour à l'accueil"></a>
+    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Information du compte"></a>
 </header>
 
     <main id="body">
@@ -319,7 +319,7 @@ try {
                     foreach ($images as $image) {
                     ?>
                         <div class="slide">
-                            <img src="/images/universel/photos/<?php echo htmlentities($image) ?>">
+                            <img src="/images/universel/photos/<?php echo htmlentities($image) ?>" alt="Photo de l'offre">
                         </div>
                     <?php
                     }
@@ -345,17 +345,17 @@ try {
                             $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
                             for ($i = 0; $i < $etoilesPleines; $i++) { 
                         ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-pleine.png" alt="Étoile jaune">
                             <?php 
                             }
                             if ($demiEtoile) { 
                             ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-moitie.png" alt="Demi étoile">
                             <?php 
                             }
                             for ($i = 0; $i < $etoilesVides; $i++) { 
                             ?>
-                                <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                                <img class="etoile" src="/images/frontOffice/etoile-vide.png" alt="Étoile grise">
                         <?php 
                             }
                         } 
@@ -586,16 +586,16 @@ try {
                         $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
                     for ($i = 0; $i < $etoilesPleines; $i++) { 
                     ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-pleine.png" alt="Étoile jaune">
                     <?php }
                     if ($demiEtoile) { 
                     ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-moitie.png" alt="Demi étoile">
                     <?php 
                     }
                     for ($i = 0; $i < $etoilesVides; $i++) { 
                     ?>
-                        <img class="etoile" src="/images/frontOffice/etoile-vide.png">
+                        <img class="etoile" src="/images/frontOffice/etoile-vide.png" alt="Étoile grise">
                 <?php 
                     }
                 } 
@@ -745,12 +745,12 @@ try {
                                     <?php 
                                     for ($etoileJaune = 0 ; $etoileJaune != $unAvis['note'] ; $etoileJaune++) { 
                                     ?>
-                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail" alt="Étoile jaune">
                                     <?php 
                                     } 
                                     for ($etoileGrise = 0 ; $etoileGrise != (5 - $unAvis['note']) ; $etoileGrise++) {
                                     ?>
-                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail" alt="Étoile grise">
                                     <?php 
                                     } 
                                     ?>
@@ -759,7 +759,7 @@ try {
                             </div>
                             
                             <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $identifiant; ?>)">
-                                <img src="/images/universel/icones/trois-points-violet.png">
+                                <img src="/images/universel/icones/trois-points-violet.png" alt="Menu déroulant">
                             </button>
 
                             <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
@@ -802,12 +802,12 @@ try {
                                         <?php 
                                         for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { 
                                         ?>
-                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail" alt="Étoile jaune">
                                         <?php 
                                         } 
                                         for ($etoileGrise = 0 ; $etoileGrise != (5 - $n['note']) ; $etoileGrise++) { 
                                         ?>
-                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail" alt="Étoile grise">
                                         <?php 
                                         } 
                                         ?>
@@ -824,7 +824,7 @@ try {
                             <?php 
                             if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { 
                             ?>
-                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
+                                <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>" alt="Image de l'avis">
                             <?php 
                             } 
                             ?>
@@ -842,9 +842,9 @@ try {
 
                             <div class="display-ligne">
                                 <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $identifiant; ?>">
+                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $identifiant; ?>" alt="Pouce vers le haut">
                                 <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $identifiant; ?>">
+                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $identifiant; ?>" alt="Pouce vers le bas">
                             </div>
 
                         </div>
@@ -856,7 +856,7 @@ try {
                             <div class="reponse">
 
                                 <div class="display-ligne">
-                                    <img src="/images/universel/icones/reponse-violet.png">
+                                    <img src="/images/universel/icones/reponse-violet.png" alt="">
                                     <p class="titre-reponse"><?php echo htmlentities($compte['denomination']); ?></p>
                                 </div>
 
@@ -904,7 +904,7 @@ try {
 
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
-            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png"></button>
+            <button id="remonte" onclick="location.href='#'"><img src="/images/universel/icones/fleche-haut.png" alt="↑"></button>
         </div>
 
     </main>
@@ -948,17 +948,17 @@ try {
         <div class="nav-content">
             <a href="/front/accueil">
                 <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/accueil.png" alt="Bouton accueil">
                 </div>
             </a>
             <a href="/front/consulter-offres">
                 <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/chercher.png" alt="Rechercher">
                 </div>
             </a>
             <a href="/front/mon-compte">
                 <div class="btOff">
-                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png">
+                    <img width="400" height="400" src="/images/frontOffice/icones/utilisateur.png" alt="Mon compte">
                 </div>
             </a>
         </div>

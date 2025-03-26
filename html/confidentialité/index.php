@@ -12,10 +12,10 @@
 
 <body class="front">
     <header>
-        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" alt="Logo de la PACT">
         <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
         <div class="search-box">
-            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" alt="Rechercher"></button>
             <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
             <datalist id="cont">
                 <?php foreach ($offres as $offre) { ?>
@@ -26,8 +26,8 @@
             </datalist>
 
         </div>
-        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" alt="Accueil"></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" alt="Mon compte"></a>
     </header>
     <main>
         <h1>Politique de confidentialité</h1>
