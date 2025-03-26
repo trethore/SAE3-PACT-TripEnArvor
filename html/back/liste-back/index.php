@@ -517,16 +517,13 @@ try {
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             function createToast(title, message, link) {
-                // Créer l'élément <a> pour le toast
                 const toastLink = document.createElement("a");
                 toastLink.href = link;
                 toastLink.classList.add("toast-link");
 
-                // Créer l'élément toast
                 const toast = document.createElement("div");
                 toast.classList.add("toast");
 
-                // Créer le contenu du toast
                 const toastContent = document.createElement("div");
                 toastContent.classList.add("toast-content");
 
@@ -545,15 +542,13 @@ try {
                 messageDiv.appendChild(messageSpan);
                 toastContent.appendChild(messageDiv);
 
-                // Créer le bouton de fermeture
                 const closeIcon = document.createElement("i");
                 closeIcon.classList.add("uil", "uil-multiply", "toast-close");
                 closeIcon.addEventListener("click", (e) => {
-                    e.preventDefault(); // Empêcher le comportement par défaut du lien
-                    toastLink.remove(); // Supprimer le toast lors du clic
+                    e.preventDefault();
+                    toastLink.remove();
                 });
 
-                // Créer la barre de progression
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
                 const progressbottom = document.createElement("div");
@@ -561,41 +556,34 @@ try {
                 const progressright = document.createElement("div");
                 progress.classList.add("progress-right");
 
-                // Ajouter tout au toast
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
                 toast.appendChild(progress);
                 toast.appendChild(progressbottom);
                 toast.appendChild(progressright);
 
-                // Ajouter le toast à l'élément <a>
                 toastLink.appendChild(toast);
                  
-                // Ajouter l'élément <a> au conteneur
                 const toastContainer = document.querySelector(".toast-container");
                 toastContainer.appendChild(toastLink);
 
-                // Activer le toast et la barre de progression
                 setTimeout(() => {
                     toast.classList.add("active");
                     progress.classList.add("active");
-                }, 10); // Petit délai pour permettre la transition CSS
+                }, 10);
 
-                // Supprimer le toast après 5 secondes
                 setTimeout(() => {
                     toast.classList.remove("active");
                     setTimeout(() => {
-                        toastLink.remove(); // Supprimer le toast du DOM après l'animation
-                    }, 300); // Attendre la fin de l'animation
+                        toastLink.remove();
+                    }, 300);
                 }, 5000);
 
-                // Supprimer la barre de progression après 5.3 secondes
                 setTimeout(() => {
                     progress.classList.remove("active");
                 }, 5300);
             }
 
-            // Récupérer les données PHP encodées en JSON
             const toastsData = <?php echo $toastsDataJson; ?>;
 
             toastsData.forEach((toast) => {
