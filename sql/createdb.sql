@@ -312,6 +312,17 @@ CREATE TABLE _blacklister (
     CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
+-- Fonction de suppression d'un avis
+CREATE FUNCTION delete_avis(_id_offre INTEGER, _id_membre INTEGER) RETURNS VOID AS $$
+BEGIN
+    DELETE FROM sae._blacklister WHERE id_offre = _id_offre AND id_membre = _id_membre;
+    DELETE FROM sae._reponse WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._note_detaillee WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._avis_contient_image WHERE id_membre = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._avis WHERE id_membre = _id_membre AND id_offre = _id_offre;
+END;
+$$ LANGUAGE 'plpgsql';
+
 
 /* ========================== NOTE DÉTAILLÉE =========================== */
 CREATE TABLE _note_detaillee (
