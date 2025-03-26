@@ -15,7 +15,7 @@ try {
 
     $stmt = $dbh->prepare('
         SELECT o.*, 
-        c.nom AS nom_compte, 
+        c.nom_compte, 
         c.prenom AS prenom_compte,
         a.num_et_nom_de_voie, 
         a.complement_adresse, 
