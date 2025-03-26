@@ -167,7 +167,7 @@ try {
         <a href="/back/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
     </header>
 
-    <main id="body">
+    <main id="body" class="blur-background">
 
         <section class="fond-blocs zone-boutons">
 
