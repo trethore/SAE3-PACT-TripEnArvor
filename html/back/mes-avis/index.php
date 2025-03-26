@@ -368,6 +368,7 @@ if ($typeCompte === 'proPrive') {
                 $reponses = getAllReponses($id_offre);
                 $compteur = 0;
                 echo "avis non lu";
+                
                 foreach ($avis as $lavis) {
                     while ($compteur != count($avis)) {
                         if (in_array($lavis['id_membre'], $avis_non_lu['id_membre'])) {
@@ -417,6 +418,16 @@ if ($typeCompte === 'proPrive') {
                 }
                 echo "avis non repondu";
                 foreach ($avis as $lavis) {
+                    $id_offre = $offre['id_offre'];
+                $categorie = getTypeOffre($id_offre);
+
+                // ===== GESTION DES AVIS ===== //
+
+                $membre = getInformationsMembre($id_offre);
+                $datePassage = getDatePassage($id_offre);
+                $dateAvis = getDatePublication($id_offre);
+                $noteDetaillee = getAvisDetaille($id_offre);
+
                     while ($compteur != count($avis)) {
                         if (in_array($lavis['id_membre'], $avis_non_repondu['id_membre'])) {
                             echo "avis non lus";
