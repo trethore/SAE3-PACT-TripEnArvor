@@ -3911,10 +3911,10 @@ h3 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Fond sombre semi-transparent */
-    backdrop-filter: blur(5px); /* Applique un flou */
-    z-index: 999; /* Derrière la pop-up */
-    display: none; /* Caché par défaut */
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    z-index: 999; 
+    display: none; /
 }
 
 .consulter-offre-back .confirmation-popup {
