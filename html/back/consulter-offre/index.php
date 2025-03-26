@@ -636,7 +636,7 @@ try {
                                         </label><br>
                                     </form>
                                     <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
-                                    <button onclick="annulerSignaler()">Annuler</button>
+                                    <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
                                 </div>
 
                             </div>

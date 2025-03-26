@@ -724,7 +724,6 @@ try {
                             }
                         
                             break;
-                            
 
                     case 'visite':
                         try {
@@ -992,6 +991,9 @@ try {
                 //     window.location.href = '/back/consulter-offre/index.php?id=$id_offre';
                 // }, 2000); // 2000 ms = 2 secondes" 
 
+                
+                
+
             } catch (PDOException $e) {
                 // Affichage de l'erreur en cas d'échec
                 print 'Erreur à la ligne '. $e->getLine() . ' : ' . $e->getMessage() . "<br/>";
@@ -1084,6 +1086,8 @@ try {
                 }
             });
 
+            
+
             function afficheSelonCat(catChoisie) {
                 obligatoireSelonCat.forEach(element => {
                     document.getElementById(element).style.display = 'none';
@@ -1096,6 +1100,10 @@ try {
                 }
             }
 
+
+           
+
+
             //pop up si pas de categorie selectionée
 
             const boutonValider = document.getElementById("valider");
@@ -1107,6 +1115,7 @@ try {
                     let pasDeCat = alert("Selectionner une categorie");
                 }
             });
+
 
             // const tarif = tarif.value; // Récupère la valeur de la tarif
 
@@ -1191,7 +1200,7 @@ try {
                 quitterDiv.style.display = "none";
                 alert("Modification valider avec succès");
             }
-
+          
             function previewImage(event) {
                 const preview = document.getElementById('preview');
                 const imagePreview = document.getElementById('imagePreview');
