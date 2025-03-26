@@ -918,6 +918,14 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
+.offre, .en-relief-offre {
+    transition: transform 500ms ease;
+}
+
+.offre:hover, .en-relief-offre:hover {
+    transform: scale(1.05);
+}
+
 .liste-back .offre > a {
     border: 3px solid var(--orange-principale);
 }
