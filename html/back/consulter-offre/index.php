@@ -599,7 +599,7 @@ try {
                             ?>
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
-                                        <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)">Signaler</li>
+                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)">Signaler</li>
                                         <?php
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
                                         ?>
@@ -842,6 +842,15 @@ try {
 
             // Ajout du textarea juste après le bouton radio sélectionné
             selectedRadio.parentNode.appendChild(textarea);
+        }
+
+        function confirmerBlacklister(element, identifiant) {
+            const idOffre = element.getAttribute("data-id-offre");
+            const idMembre = element.getAttribute("data-id-membre");
+            document.getElementById("confirmation-popup-signaler").style.display = "block";
+            document.getElementById("confirmer-signaler").onclick = function() {
+                validerBlacklister(compteur, idOffre, idMembre);
+            };
         }
 
         // Envoyer le signalement
