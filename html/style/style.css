@@ -5222,12 +5222,11 @@ input[type="tel"] {
 .toast-container {
     position: fixed;
     top: 110px;
-    top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between toasts */
-    z-index: 1000; /* Ensure toasts are on top */
+    gap: 10px;
+    z-index: 1000;
 }
 
 .toast {
@@ -5236,7 +5235,6 @@ input[type="tel"] {
     background: #fff;
     padding: 20px 35px 20px 25px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-left: 8px solid var(--orange-principale);
     overflow: hidden;
     transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);

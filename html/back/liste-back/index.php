@@ -567,7 +567,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
                 const progressright = document.createElement("div");
                 progressright.classList.add("progress-right");
                 const progressleft = document.createElement("div");
-                progressright.classList.add("progress-left");
+                progressleft.classList.add("progress-left");
 
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);

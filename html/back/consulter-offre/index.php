@@ -600,7 +600,7 @@ try {
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
                                         <?php
-                                        if (isset($_SESSION['id'])) {
+                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) {
                                         ?>
                                             <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                         <?php
@@ -617,36 +617,36 @@ try {
                             }
                             ?>
 
-                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler" style="display: none;">
+                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
                                     <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
                                     <form id="signalement-form">
                                         <label>
-                                            <input type="radio" name="motif" value="Il contient des propos inappropriés">Il contient des propos inappropriés
+                                            <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
+                                        </label><br>
+                                        <label> 
+                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle"> Il ne décrit pas une expérience personnelle
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle">Il ne décrit pas une expérience personnelle
+                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre"> Il s'agit d'un doublon publié par le même membre
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre">Il s'agit d'un doublon publié par le même membre
-                                        </label><br>
-                                        <label>
-                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses">Il contient des informations fausses ou trompeuses
+                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
                                         </label><br>
                                     </form>
-                                    <button id="confirmer-signaler" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
-                                    <button onclick="annulerSignaler()">Annuler</button>
+                                    <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
                                 </div>
 
                             </div>
 
-                            <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
+                            <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
                                     <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
-                                    <button id="confirmer-blacklister" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
-                                    <button onclick="annulerBlacklister()">Annuler</button>
+                                    <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
+                                    <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
                                 </div>
 
                             </div>
