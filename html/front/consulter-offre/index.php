@@ -734,7 +734,6 @@ try {
             ?>
 
                     <div class="fond-blocs-avis">
-                    <div class="fond-blocs-avis">
 
                         <div class="display-ligne-espace">
                             
