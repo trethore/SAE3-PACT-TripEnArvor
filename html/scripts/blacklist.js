@@ -16,12 +16,13 @@ function afficherMenu(event, button, compteur) {
     menu.style.display = "block";
 }
 
-function confirmerBlacklister(element, compteur) {
+// BLACKLISTAGE
+function confirmerBlacklister(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idMembre = element.getAttribute("data-id-membre");
     document.getElementById("confirmation-popup").style.display = "block";
     document.getElementById("confirmer-blacklister").onclick = function() {
-        validerBlacklister(compteur, idOffre, idMembre);
+        validerBlacklister(identifiant, idOffre, idMembre);
     };
 }
 
@@ -50,6 +51,40 @@ document.addEventListener("click", function() {
     });
 });
 
+// SIGNALEMENT
+function confirmerSignaler(element, identifiant) {
+    const idOffre = element.getAttribute("data-id-offre");
+    const idSignale = element.getAttribute("data-id-signale");
+    const idSignalant = element.getAttribute("data-id-signalant");
+    document.getElementById("confirmation-popup-signaler").style.display = "block";
+    document.getElementById("confirmer-signaler").onclick = function() {
+        validerSignaler(identifiant, idOffre, idSignale, idSignalant);
+    };
+}
+
+function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
+    var selectedRadio = document.querySelector('input[name="motif"]:checked');
+    var motif = selectedRadio.value;
+    console.log(idOffre, idSignale, idSignalant, motif);
+    const blacklistUrl = "/utils/signaler.php";
+    fetch(blacklistUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id_offre=${idOffre}&id_signaler=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("confirmation-popup-signaler").style.display = "none";
+        location.reload();
+    })
+    .catch(error => console.error("Erreur :", error));
+}
+
+function annulerSignaler() {
+    document.getElementById("confirmation-popup-signaler").style.display = "none";
+}
+
+// UPDATE JETONS SI DATE PASSÉE
 document.addEventListener("DOMContentLoaded", function () {
     const id_offre = document.querySelector("#header").getAttribute("data-id-offre");
     fetch('/utils/checkJetons.php', {

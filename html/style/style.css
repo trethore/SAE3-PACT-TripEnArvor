@@ -918,6 +918,14 @@ h3 {
     border-radius: 15px 15px 10px 10px;
 }
 
+.offre, .en-relief-offre {
+    transition: transform 500ms ease;
+}
+
+.offre:hover, .en-relief-offre:hover {
+    transform: scale(1.05);
+}
+
 .liste-back .offre > a {
     border: 3px solid var(--orange-principale);
 }
@@ -4153,12 +4161,14 @@ h3 {
 
 .back .mes-avis .fond-blocs-avis {
     margin-top: 5px;
+    min-width: 800px;
 }
 
 .mes-avis article{
     position: relative;
 }
- 
+
+
 #infobulle {
     /* background-color:var(--orange-principale); */
     /* color: white; */
@@ -4193,7 +4203,9 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
+    max-width: 1200px;
 }
+
 
 .mes-avis h1 {
     font-family: "Poppins", sans-serif;
@@ -5292,7 +5304,7 @@ input[type="tel"] {
 }
 
 .progress.active::before{
-    animation: progress-right 3s linear forwards; /* Starts after 10s (5s left + 5s vertical) */
+    animation: progress-right 3s linear forwards 0.5s; /* Starts after 10s (5s left + 5s vertical) */
 }
 
 /* Bottom progress bar (LEFT) */
@@ -5316,7 +5328,7 @@ input[type="tel"] {
 }
 
 .progress-bottom.active::before {
-    animation: progress-left 3s linear forwards 4.5s; /* First animation (0s delay) */
+    animation: progress-left 3s linear forwards 5s; /* First animation (0s delay) */
 }
 
 /* Right progress bar (VERTICAL) */
@@ -5340,7 +5352,7 @@ input[type="tel"] {
 }
 
 .progress-right.active::before {
-    animation: progress-vertical 1.5s linear forwards 3s; /* Starts after 5s (left duration) */
+    animation: progress-vertical 1.5s linear forwards 3.5s; /* Starts after 5s (left duration) */
 }
 
 @keyframes progress-left {

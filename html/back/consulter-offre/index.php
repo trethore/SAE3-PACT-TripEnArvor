@@ -602,7 +602,7 @@ try {
                                         <?php
                                         if (isset($_SESSION['id'])) {
                                         ?>
-                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)">Signaler</li>
+                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                         <?php
                                         }
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
@@ -618,25 +618,27 @@ try {
                             ?>
 
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler" style="display: none;">
+
                                 <div>
                                     <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
                                     <form id="signalement-form">
                                         <label>
-                                            <input type="radio" name="motif" value="inapproprie" onclick="toggleTextarea(this)">Il contient des propos inappropriés
+                                            <input type="radio" name="motif" value="Il contient des propos inappropriés">Il contient des propos inappropriés
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="impersonnelle" onclick="toggleTextarea(this)">Il ne décrit pas une expérience personnelle
+                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle">Il ne décrit pas une expérience personnelle
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="doublon" onclick="toggleTextarea(this)">Il s'agit d'un doublon publié par le même membre
+                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre">Il s'agit d'un doublon publié par le même membre
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="motif" value="faux" onclick="toggleTextarea(this)">Il contient des informations fausses ou trompeuses
+                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses">Il contient des informations fausses ou trompeuses
                                         </label><br>
                                     </form>
-                                    <button id="confirmer-signalement" onclick="validerSignalement(<?php echo $identifiant; ?>)">Signaler</button>
-                                    <button onclick="annulerSignalement()">Annuler</button>
+                                    <button id="confirmer-signaler" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button onclick="annulerSignaler()">Annuler</button>
                                 </div>
+
                             </div>
 
                             <div class="confirmation-popup" id="confirmation-popup" style="display: none;">
@@ -813,82 +815,6 @@ try {
         </div>
         
     </footer>
-
-    <script>
-        // Ouvrir la popup et passer l'identifiant correct
-        function confirmerSignaler(element, identifiant) {
-            const popup = document.getElementById("confirmation-popup-signaler");
-
-            // Stocker dynamiquement l'identifiant du membre dans un attribut data
-            popup.setAttribute("data-identifiant", identifiant);
-
-            popup.style.display = "block";
-        }
-
-        // Masquer la popup de signalement
-        function annulerSignalement() {
-            let popup = document.getElementById("confirmation-popup-signaler");
-            popup.style.display = "none";
-
-            // Supprimer le textarea s'il est affiché
-            let existingTextarea = document.getElementById("dynamic-textarea");
-            if (existingTextarea) {
-                existingTextarea.remove();
-            }
-        }
-
-        // Ajouter un textarea sous le bouton radio sélectionné
-        function toggleTextarea(selectedRadio) {
-            // Supprime l'ancienne zone de texte s'il y en a une
-            let existingTextarea = document.getElementById("dynamic-textarea");
-            if (existingTextarea) {
-                existingTextarea.remove();
-            }
-
-            // Création du textarea
-            let textarea = document.createElement("textarea");
-            textarea.id = "dynamic-textarea";
-            textarea.name = "motif-details";
-            textarea.rows = 3;
-            textarea.cols = 30;
-            textarea.style.marginTop = "5px";
-            textarea.placeholder = "Veuillez préciser...";
-
-            // Ajout du textarea juste après le bouton radio sélectionné
-            selectedRadio.parentNode.appendChild(textarea);
-        }
-
-        // Envoyer le signalement avec l'identifiant correct
-        function validerSignalement() {
-            let popup = document.getElementById("confirmation-popup-signaler");
-            let identifiant = popup.getAttribute("data-identifiant"); // Récupération de l'identifiant stocké
-
-            // Récupérer le motif sélectionné
-            let selectedRadio = document.querySelector('input[name="motif"]:checked');
-            if (!selectedRadio) {
-                alert("Veuillez sélectionner un motif.");
-                return;
-            }
-
-            let motif = selectedRadio.value;
-
-            // Récupérer la valeur du textarea s'il existe
-            let textarea = document.getElementById("dynamic-textarea");
-            let details = textarea ? textarea.value.trim() : "";
-
-            // Vérifier si le champ texte doit être rempli
-            if (!details) {
-                alert("Veuillez préciser le motif.");
-                return;
-            }
-
-            // Simulation d'envoi du signalement (remplacer par une requête AJAX)
-            console.log("Signalement envoyé pour l'ID:", identifiant, "Motif:", motif, "Détails:", details);
-
-            // Fermer la popup après soumission
-            annulerSignalement();
-        }
-    </script>
 
 </body>
 
