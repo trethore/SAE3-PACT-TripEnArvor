@@ -86,20 +86,10 @@ try {
                         $remainingAvis++;
                     }
                 }
-            while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
-                $avisNonLus = getLu($row['id_offre']);
-
-                foreach ($avisNonLus as $avis) {
-                    if (!empty($avis) && empty($avis['lu'])) {
-                        $remainingAvis++;
-                    }
-                }
             }
         ?>
         <a href="/back/mon-compte" class="icon-container">
             <img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" />
-            <?php if ($remainingAvis > 0) { ?>
-                <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php if ($remainingAvis > 0) { ?>
                 <span class="notification-badge"><?php echo $remainingAvis; ?></span>
             <?php } ?>
@@ -495,7 +485,6 @@ try {
 
 
             $toastsDataJson = json_encode($toastsData);
-            ?>
             ?>
     </main>
     <footer>
