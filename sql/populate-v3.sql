@@ -212,6 +212,103 @@ BEGIN
         'WEB_restaurant_saint_guirec-34.jpg'
     );
 
+
+    /* ##################################################################### */
+    /*                              Le Koadenn                               */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '9 Rue Saint-Guillaume',
+        NULL,
+        '22000',
+        'Saint-Brieuc',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Martine',
+        'JULIE',
+        'lekoadenn@hotmail.fr',
+        '+33296619377',
+        '$2y$10$3MnsgiZZSTIPyKdvQVGRdOtyWBo0kYZIG2OnXeq3Sh9YfsKMBhGze', -- 'Mot de passe de Hotel Saint Guirec'
+        'SARL LES DELICES D''ANDRE',
+        'Hotel',
+        'https://la-krampouzerie-creperie-lannion.eatbu.com/',
+        var_id_adresse,
+        'FR48491552071'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_restauration (
+        "gamme_prix", 
+        "carte", 
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        '€€',
+        'https://www.alacarte.direct/menu-restaurant/menu/restaurant-le-coste-mor/58-restaurant-le-coste-mor',
+        'Le Koadenn',
+        'Restaurant',
+        'Saint-Brieuc',
+        '"Le Koadenn" est un restaurant qui sert 3 types de cuisine différentes concoctés par 3 cuisiniers ayant sa spécialité pour satisfaire les goûts de chacun. Une crêperie. Une cuisine traditionnelle. Des grillades sur une plancha. Un accueil chaleureux vous attend au restaurant Le Koadenn à ST BRIEUC ! Nous vous invitons à déguster notre cuisine française authentique. Une cuisine maison exceptionnelle, des produits régionaux et une cuisine traditionnelle sont servis par notre sympathique personnel. Amenez vos amis et votre famille pour déguster nos grillades savoureuses et notre carte aux 3 univers. Nous sommes en mesure de répondre à une multitude de préférences alimentaires, en proposant un large éventail d''options végétariennes. Dans un environnement calme et relaxant, savourez un déjeuner, un dîner et un goûter savoureux.',
+        'https://le-koadenn-st-brieuc.eatbu.com/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image (
+        "lien_fichier"
+    )
+    VALUES (
+        'Le-Koadenn-IMG-1615-jpeg.jpg'
+    );
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES (
+        var_id_offre,
+        'Le-Koadenn-IMG-1615-jpeg.jpg'
+    );
+
 END $$;
 
 
