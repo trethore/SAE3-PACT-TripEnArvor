@@ -622,21 +622,19 @@ h3 {
 ****************************/
 .liste-back .filtre-tri {
     position: relative;
-    margin: 1em 2.5em;
+    margin: auto auto;
     padding: 3em 2em 1em;
-
-    width: 95vw;
+    width: 85%;
     box-sizing: border-box;
-
     background: var(--blanc);
     border-radius: 15px;
-    border: 3px solid var(--orange-principale);
+    border: 3px solid var(--violet-principal);
 }
 
 .liste-back .filtre-tri>h2 {
     color: var(--blanc);
     text-align: center;
-    background-color: var(--orange-principale);
+    background-color: var(--violet-principal);
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
@@ -649,10 +647,10 @@ h3 {
 
 .liste-back .filtre-tri h2+div {
     display: flex;
-    flex-direction: column;
     color: var(--blanc);
     background-color: var(--blanc);
-    border-radius: 15px;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 
@@ -694,43 +692,6 @@ h3 {
 .liste-back .filtre-tri input[type="checkbox"]:not(:disabled):checked {
     border-color: var(--blanc);
     background-color: var(--blanc);
-}
-
-.liste-back .filtre-tri .categorie,
-.liste-back .filtre-tri .localisation,
-.liste-back .filtre-tri .disponibilite,
-.liste-back .filtre-tri .trier,
-.liste-back .filtre-tri .typeOffre,
-.liste-back .filtre-tri .date,
-.liste-back .filtre-tri .trier2 {
-    margin: 0 1em;
-    border-radius: 10px;
-}
-
-.liste-back .filtre-tri .disponibilite div,
-.liste-back .filtre-tri .localisation div,
-.liste-back .filtre-tri .typeOffre div,
-.liste-back .filtre-tri .date div {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-}
-
-.liste-back .filtre-tri h2+div>div,
-.liste-back .filtre-tri h2+div>div+div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0;
-}
-
-.liste-back .filtre-tri h2+div>div {
-    padding-top: 0.5em;
-}
-
-.liste-back .filtre-tri h2+div>div+div {
-    padding: 0 0 1em 0;
-
 }
 
 .liste-back .filtre-tri h3+div {
