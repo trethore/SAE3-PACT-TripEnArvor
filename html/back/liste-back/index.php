@@ -558,9 +558,9 @@ try {
                 const progress = document.createElement("div");
                 progress.classList.add("progress");
                 const progressbottom = document.createElement("div");
-                progress.classList.add("progress-bottom");
+                progressbottom.classList.add("progress-bottom");
                 const progressright = document.createElement("div");
-                progress.classList.add("progress-right");
+                progressright.classList.add("progress-right");
 
                 toast.appendChild(toastContent);
                 toast.appendChild(closeIcon);
