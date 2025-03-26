@@ -160,13 +160,14 @@ CREATE TABLE _offre (
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
     abonnement              VARCHAR(63) NOT NULL,
-    nb_jetons               INTEGER CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL)),
+    nb_jetons               INTEGER,
     jeton_perdu_le          TIMESTAMP,
     lat                     DOUBLE PRECISION,
     lon                     DOUBLE PRECISION,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement),
+    CONSTRAINT _offre_check_abonnement_jetons CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL))
 );
 
 
