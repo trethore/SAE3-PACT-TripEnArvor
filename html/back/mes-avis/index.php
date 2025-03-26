@@ -385,7 +385,7 @@ if ($typeCompte === 'proPrive') {
                 
                 foreach ($avis as $lavis) {
                     echo '<pre>';
-                    print_r($lavis['membre']);
+                    print_r($lavis);
                     echo '</pre>';
 
                     while ($compteur != count($avis)) {
