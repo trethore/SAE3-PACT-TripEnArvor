@@ -174,7 +174,7 @@ if ($typeCompte === 'proPrive') {
 
                 <?php
                 $nb_non_lu = 0;
-                $nb_offres = 0;
+                $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
                 
 
@@ -184,6 +184,14 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
                     $nb_avis = count($avis);
+
+                    foreach ($avis as $lavis) {
+                        if ($lavis['lu'] == false) {
+                            $nb_non_lu++;
+                        }elseif (!isset($reponses[$lavis['id_membre']])) {
+                            $nbrAvisNonRepondus++;
+                        }
+                    }
 
                     // ===== GESTION DES AVIS ===== //
 
