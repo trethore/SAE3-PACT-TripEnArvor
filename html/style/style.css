@@ -5390,7 +5390,33 @@ input[type="tel"] {
 /**************************************************************************************
                                     Media Query
 ***************************************************************************************/
-
+/* Default styles (for larger screens, perhaps) */
+.custom-popup-style .leaflet-popup-content-wrapper {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 400px; /* Or whatever your default width is */
+  }
+  
+  .custom-popup-style .leaflet-popup-content {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Styles for smaller screens (phones) */
+  @media (max-width: 600px) { /* Adjust the max-width value as needed */
+    .custom-popup-style .leaflet-popup-content-wrapper {
+      width: 90vw;  /* Use a percentage of the viewport width */
+      max-width: 300px; /*  Set a maximum width */
+      padding: 5px;      /* Adjust padding for smaller screens */
+    }
+  
+    .custom-popup-style .leaflet-popup-content {
+      font-size: 14px;  /* Adjust font size for smaller screens */
+    }
+  }
+  
 @media only screen and (max-width: 900px) {
     .telephone-nav {
         display: block;
