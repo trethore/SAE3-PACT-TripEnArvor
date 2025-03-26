@@ -45,8 +45,8 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
 
     }
 }
-?>
-    if ($trouve) {
+
+  /*  if ($trouve) {
         if (isIdMember($id)) {
             header('Location: /front/consulter-offres/');
         } else if (isIdProPrivee($id) || isIdProPublique($id)) {
@@ -59,7 +59,7 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
         $loginFailed = true;
     }
 }
-?>
+*/?>
 <!DOCTYPE html>
 <html lang="en">
 
