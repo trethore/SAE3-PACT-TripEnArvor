@@ -4052,13 +4052,15 @@ h3 {
 }
 
 #infobulle_non_repondu {
+    background-color: var(--blanc);
     color: var(--orange-principale);
-    font-weight: bold;
-    font-size: 15pt;
+    border: var(--blanc);
     padding: 5px 10px;
     border-radius: 5px;
-    border: 2px solid var(--orange-principale);
+    text-align: center;
     display: inline-block;
+    z-index: 1;
+    position: absolute;
 }
 
 
