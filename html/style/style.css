@@ -4076,13 +4076,14 @@ h3 {
     resize: none;
 }
 
-.consulter-offre-back .avis-form > button {
+.consulter-offre-back .avis-form > button  .bouton-reponse {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
     padding: 5px 15px;
     border-radius: 4px;
     border: 0;
+    width: 100px;
 }
 
 .consulter-offre-back .avis-form > button:hover {
