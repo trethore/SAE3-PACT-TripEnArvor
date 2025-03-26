@@ -14,7 +14,17 @@ redirectToConnexionIfNecessaryMembre($id_compte);
 require_once('../../utils/compte-utils.php');
 require_once('../../utils/site-utils.php');
 
-// Manually include OTPHP files (since autoload isn't available)
+if (!function_exists('OTPHP\trigger_deprecation')) {
+    function trigger_deprecation(string $package, string $version, string $message, ...$args): void {
+        @trigger_error("$package $version: $message", E_USER_DEPRECATED);
+    }
+}
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/symfony/deprecation-contracts/function.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/EncoderInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Base32.php');
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTPInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/ParameterTrait.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTP.php');
@@ -22,7 +32,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTPInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTP.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
 
-// Create an alias since we can't use the namespace
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/assert/lib/Assert/Assert.php');
+
 class_alias('OTPHP\TOTP', 'TOTP');
 
 try {
