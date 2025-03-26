@@ -599,8 +599,12 @@ try {
                             ?>
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
-                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)">Signaler</li>
                                         <?php
+                                        if (isset($_SESSION['id'])) {
+                                        ?>
+                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)">Signaler</li>
+                                        <?php
+                                        }
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
                                         ?>
                                             <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
@@ -811,6 +815,16 @@ try {
     </footer>
 
     <script>
+        // Ouvrir la popup et passer l'identifiant correct
+        function confirmerSignaler(element, identifiant) {
+            const popup = document.getElementById("confirmation-popup-signaler");
+
+            // Stocker dynamiquement l'identifiant du membre dans un attribut data
+            popup.setAttribute("data-identifiant", identifiant);
+
+            popup.style.display = "block";
+        }
+
         // Masquer la popup de signalement
         function annulerSignalement() {
             let popup = document.getElementById("confirmation-popup-signaler");
@@ -844,17 +858,11 @@ try {
             selectedRadio.parentNode.appendChild(textarea);
         }
 
-        function confirmerSignaler(element, identifiant) {
-            const idOffre = element.getAttribute("data-id-offre");
-            const idMembre = element.getAttribute("data-id-membre");
-            document.getElementById("confirmation-popup-signaler").style.display = "block";
-            document.getElementById("confirmer-signaler").onclick = function() {
-                validerBlacklister(compteur, idOffre, idMembre);
-            };
-        }
+        // Envoyer le signalement avec l'identifiant correct
+        function validerSignalement() {
+            let popup = document.getElementById("confirmation-popup-signaler");
+            let identifiant = popup.getAttribute("data-identifiant"); // Récupération de l'identifiant stocké
 
-        // Envoyer le signalement
-        function validerSignalement(identifiant) {
             // Récupérer le motif sélectionné
             let selectedRadio = document.querySelector('input[name="motif"]:checked');
             if (!selectedRadio) {
@@ -874,7 +882,7 @@ try {
                 return;
             }
 
-            // Simulation d'envoi du signalement (à remplacer par une requête AJAX vers le backend)
+            // Simulation d'envoi du signalement (remplacer par une requête AJAX)
             console.log("Signalement envoyé pour l'ID:", identifiant, "Motif:", motif, "Détails:", details);
 
             // Fermer la popup après soumission
