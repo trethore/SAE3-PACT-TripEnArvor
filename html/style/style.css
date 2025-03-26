@@ -634,7 +634,7 @@ h3 {
 .liste-back .filtre-tri>h2 {
     color: var(--blanc);
     text-align: center;
-    background-color: var(--orange-principal);
+    background-color: var(--orange-principale);
     border-radius: 15px;
     padding: 0.3em;
     position: absolute;
