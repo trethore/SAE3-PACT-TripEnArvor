@@ -57,7 +57,7 @@ function confirmerSignaler(element, identifiant) {
     const idSignale = element.getAttribute("data-id-signale");
     const idSignalant = element.getAttribute("data-id-signalant");
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "block";
-    document.getElementById("blur-overlay").style.display = "block"; 
+    document.getElementById("body").style.display = "block"; 
     document.getElementById(`confirmer-signaler-${identifiant}`).onclick = function() {
         validerSignaler(identifiant, idOffre, idSignale, idSignalant);
     };
@@ -75,7 +75,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     .then(response => response.text())
     .then(data => {
         document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
-        document.getElementById("blur-overlay").style.display = "none"; 
+        document.getElementById("body").style.display = "none"; 
         location.reload();
     })
     .catch(error => console.error("Erreur :", error));
@@ -83,7 +83,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
 
 function annulerSignaler(identifiant) {
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
-    document.getElementById("blur-overlay").style.display = "none"; 
+    document.getElementById("body").style.display = "none"; 
 }
 
 // UPDATE JETONS SI DATE PASSÉE
