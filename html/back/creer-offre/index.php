@@ -175,7 +175,7 @@ try {
                             <input id="photo" type="file" name="photo" required onchange="previewImage(event)" />
                             <div id="imagePreview" style="margin-top: 10px; display: none;">
                                 <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
-                            </div>
+                            </div> 
                         </div>
                     </td>
                 </tr>
