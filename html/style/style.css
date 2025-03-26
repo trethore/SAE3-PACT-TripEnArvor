@@ -3585,7 +3585,7 @@ h3 {
     padding: 30px 30px 0 24px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 900;
 }
 
 .consulter-offre-back .bouton-modifier {
