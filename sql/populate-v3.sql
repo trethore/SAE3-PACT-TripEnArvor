@@ -11,7 +11,17 @@ DECLARE
     var_id_compte   INTEGER;
     var_id_offre    INTEGER;
 BEGIN
-    /* La Krampouzerie Lannion */
+
+    INSERT INTO sae._abonnement (nom_abonnement) 
+    VALUES
+    ('gratuit'),
+    ('standard'),
+    ('premium');
+
+
+    /* ##################################################################### */
+    /*                        La Krampouzerie Lannion                        */
+    /* ##################################################################### */
 
     INSERT INTO sae._adresse (
         "num_et_nom_de_voie",
@@ -55,7 +65,6 @@ BEGIN
     )
     RETURNING "id_compte" INTO var_id_compte;
 
-
     INSERT INTO sae.offre_restauration (
         "gamme_prix", 
         "carte", 
@@ -82,10 +91,26 @@ BEGIN
     )
     RETURNING "id_offre" INTO var_id_offre;
 
+    INSERT INTO sae._image (
+        "lien_fichier"
+    )
+    VALUES (
+        'LA-KRAMPOUZERIE-IMG-0555-JPG.jpg'
+    );
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES (
+        var_id_offre,
+        'LA-KRAMPOUZERIE-IMG-0555-JPG.jpg'
+    );
+
 END $$;
 
 
 
--- COMMIT;
-ROLLBACK;
+COMMIT;
+-- ROLLBACK;
 
