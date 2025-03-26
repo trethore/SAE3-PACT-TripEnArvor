@@ -63,8 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
     
     if ($newAuthStatus) {
-        $totp = new TOTP(null);
-        $totp->setSecret($APIKey);
+        $totp = new TOTP($APIKey);
         $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
         $totp->setIssuer('PACT');
         $totp->setPeriod(30);
