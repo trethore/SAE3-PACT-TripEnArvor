@@ -585,7 +585,7 @@ try {
                     setTimeout(() => {
                         toastLink.remove();
                     }, 300);
-                }, 5000);
+                }, 7500);
 
                 setTimeout(() => {
                     progress.classList.remove("active");
