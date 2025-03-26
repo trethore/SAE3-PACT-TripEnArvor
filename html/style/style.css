@@ -5783,7 +5783,6 @@ input[type="tel"] {
         margin: auto;
         margin-top: 10%;
         padding: 9% 1% 1%;
-        width: 80%;
         background: var(--blanc);
     }
 
