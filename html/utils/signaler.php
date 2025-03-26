@@ -11,6 +11,7 @@ date_default_timezone_set('Europe/Paris');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    var_dump($_POST);
     $id_offre = $_POST['id_offre'] ?? null;
     $id_signale = $_POST['id_signale'] ?? null;
     $id_signalant = $_POST['id_signalant'] ?? null;
