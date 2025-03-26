@@ -311,7 +311,7 @@ if ($typeCompte === 'proPrive') {
                                                         } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
                                                             if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
-                                                                echo '<div role="tooltip" id="infobulle_non_repondu">Non répondu</div>';
+                                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                                             }
                                                         }
                                 ?>
