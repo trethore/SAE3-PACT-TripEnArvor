@@ -213,9 +213,9 @@ if ($typeCompte === 'proPrive') {
                 <?php } else { ?>
 
                     <h2> <?php
-                            echo "Vous avez " . $nb_non_lu . " avis non lus";
+                            echo  $nb_non_lu . " avis non lus";
                             echo "<br>";
-                            echo "Vous avez " . $nbrAvisNonRepondus . " avis non repondus"; ?>
+                            echo $nbrAvisNonRepondus . " avis non repondus"; ?>
                     </h2> <?php
                             echo 'tri par offre';
 
@@ -280,7 +280,9 @@ if ($typeCompte === 'proPrive') {
                                             ?>
 
                                         <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                        
+                                        <div>
+                                                    <p class="titre-avis"><?php echo htmlentities($offre['titre']);  echo ' '; ?></p>
+                                                </div>
 
 
                                             <div class="display-ligne-espace">
@@ -297,9 +299,7 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
-                                                <div>
-                                                    <p class="titre-avis"><?php echo htmlentities($offre['titre']);  echo ' '; ?></p>
-                                                </div>
+                                                
 
                                             </div>
 
