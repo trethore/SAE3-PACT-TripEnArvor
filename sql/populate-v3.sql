@@ -407,6 +407,125 @@ BEGIN
         'Le-Koadenn-IMG-1615-jpeg.jpg'
     );
 
+
+
+    /* ##################################################################### */
+    /*                              Armoripark                               */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        'Rue de Gwenezhan',
+        NULL,
+        '22140',
+        'Bégard',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Prénom',
+        'NOM',
+        'email@armoripark.com',
+        '+33296453636',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Armoripark',
+        'Dans un cadre idyllique, à Bégard, en plein cœur des Côtes d’Armor, Armoripark vous propose de nombreuses activités de plein air.',
+        'https://armoripark.com/',
+        var_id_adresse,
+        '0123456789'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_parc_attraction (
+        "nb_attractions", 
+        "age_min",
+        "plan",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        '30',
+        2,
+        'https://armoripark.com/#home_page-plan',
+        'Armoripark',
+        'Votre Parc de loisirs en Côtes d''Armor',
+        'Bégard',
+        'Sautez, grimpez, glissez ! Avec ses trampolines et ses structures gonflables, sa piste de luge d’été et son pentogliss, sa tyrolienne de 300m de long et ses 300m² de filets dans les arbres, Armoripark est le lieu idéal pour les aventuriers de tous âges. Pour des moments de convivialité et de complicité, vous pourrez vous initier au mini-golf et faire un tour en pédalo ! Et pour l’émerveillement des petits et des grands, admirez nos animaux de la ferme et notre volière !',
+        'https://armoripark.com/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image (
+        "lien_fichier"
+    )
+    VALUES 
+    ('bassins-chauffes.webp'),
+    ('toboggan1.webp'),
+    ('ventriglisse.webp'),
+    ('luge.webp'),
+    ('armoripark-glisser-pentogliss-2.jpg'),
+    ('glisse-aquatique.webp'),
+    ('pedalos.webp'),
+    ('1683040587428.jpg'),
+    ('armoripark-sevader-bateaux_mississipi.jpg'),
+    ('trampofilets.webp'),
+    ('homeball2024.webp'),
+    ('armoripark-tyrolienne.jpg');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'bassins-chauffes.webp'),
+    (var_id_offre, 'toboggan1.webp'),
+    (var_id_offre, 'ventriglisse.webp'),
+    (var_id_offre, 'luge.webp'),
+    (var_id_offre, 'armoripark-glisser-pentogliss-2.jpg'),
+    (var_id_offre, 'glisse-aquatique.webp'),
+    (var_id_offre, 'pedalos.webp'),
+    (var_id_offre, '1683040587428.jpg'),
+    (var_id_offre, 'armoripark-sevader-bateaux_mississipi.jpg'),
+    (var_id_offre, 'trampofilets.webp'),
+    (var_id_offre, 'homeball2024.webp'),
+    (var_id_offre, 'armoripark-tyrolienne.jpg');
+
 END $$;
 
 
