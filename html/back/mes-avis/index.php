@@ -219,7 +219,7 @@ if ($typeCompte === 'proPrive') {
                             echo 'tri par offre';
 
                             foreach ($touteslesoffres as $offre) {
-
+                                
                             ?>
                         <h3>
                             <?php
@@ -362,8 +362,7 @@ if ($typeCompte === 'proPrive') {
     <script> 
     const avisContainer = document.querySelectorAll("container_avis");
     const avis = document.querySelectorAll("article");
-    const date = document
-        // Sort Offers
+        // Sort avis
         const sortAvis = () => {
             const selectElement = document.querySelector(".tris");
             const selectedValue = selectElement.value;
@@ -375,11 +374,11 @@ if ($typeCompte === 'proPrive') {
                      return selectedValue === "ancien" ? dateA - dateB : dateB - dateA;
                 });
 
-                avis.forEach(lavis => offersContainer.appendChild(lavis));
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
             } if (selectedValue === "default") {
                 avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
-                avis.forEach(lavis => offersContainer.appendChild(lavis));
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
             }
         };
 
