@@ -4353,10 +4353,16 @@ h3 {
     align-self: baseline;
   }
 
-.back .mes-avis a > p {
+
+
+.mes-avis .titre-offre{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
+}
+
+.titre-offre a{
+    
 }
 
 .mes-avis h2 {
