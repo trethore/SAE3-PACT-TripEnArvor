@@ -3246,7 +3246,7 @@ h3 {
         BLOCS AVIS                                                   
 *************************/
 
-.consulter-offre-front form {
+.consulter-offre-front .avis-form {
     background: var(--blanc);
     border: 3px solid var(--violet-principal);
     border-radius: 15px;
@@ -3255,15 +3255,15 @@ h3 {
     padding: 30px;
 }
 
-.consulter-offre-front form>div {
+.consulter-offre-front .avis-form > div {
     text-align: left;
 }
 
-.consulter-offre-front form>h2 {
+.consulter-offre-front .avis-form > h2 {
     margin-bottom: 0;
 }
 
-.consulter-offre-front form>p {
+.consulter-offre-front .avis-form > p {
     padding: 0;
 }
 
