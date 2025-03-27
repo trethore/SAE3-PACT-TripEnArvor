@@ -15,30 +15,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to handle thumb clicks
     function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, activeImage, inactiveImage, otherActiveImage, otherInactiveImage) {
-        const id = thumb.getAttribute('data-id');
-        console.log(thumb);
-        console.log(otherThumb);
-        console.log(countElement);
-        console.log(otherCountElement);
+        const id_membre = thumb.getAttribute('data-id-membre');
+        const id_offre = thumb.getAttribute('data-id-offre');
+        var action = thumb.src.includes(activeImage) ? 'remove' : 'add';
+        var otherIsActive = otherThumb.src.includes(otherActiveImage);
+        var change = otherIsActive ? 'true' : 'false'; 
 
-        // If the thumb is already active, deactivate it
-        if (thumb.src.includes(activeImage)) {
-            thumb.src = inactiveImage;
-            countElement.textContent = parseInt(countElement.textContent) - 1;
-        } else {
-            // Activate the clicked thumb
-            thumb.src = activeImage;
-            countElement.textContent = parseInt(countElement.textContent) + 1;
-
-            // Deactivate the other thumb if it's active
-            if (otherThumb.src.includes(otherActiveImage)) {
-                otherThumb.src = otherInactiveImage;
-                otherCountElement.textContent = parseInt(otherCountElement.textContent) - 1;
-            }
-        }
-
-        // Optionally send an AJAX request to update the server
-        // updateThumbCount(id, thumb.classList.contains('pouceHaut') ? 'haut' : 'bas');
+        thumb.src = action === 'add' ? activeImage : inactiveImage;
+        if (otherIsActive) otherThumb.src = otherInactiveImage;
+        if (countElement) countElement.textContent = Math.max(0, parseInt(countElement.textContent) + (action === 'add' ? 1 : -1));
+        if (otherIsActive && otherCountElement) otherCountElement.textContent = Math.max(0, parseInt(otherCountElement.textContent) - 1);
+        
+        fetch('/utils/pouces.php', {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `id_membre=${id_membre}&id_offre=${id_offre}&type=${thumb.classList.contains('pouceHaut') ? 'like' : 'dislike'}&action=${action}&change=${change}`
+        })
+        .then(response => response.text()) 
+        .then(data => {
+            location.reload(); 
+        })
+        .catch(error => console.error("Erreur AJAX:", error));
     }
 
     // Add event listeners for thumbs up
