@@ -20,13 +20,14 @@ function afficherMenu(event, button, compteur) {
 function confirmerBlacklister(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idMembre = element.getAttribute("data-id-membre");
-    document.getElementById("confirmation-popup").style.display = "block";
-    document.getElementById("confirmer-blacklister").onclick = function() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById(`confirmation-popup-${identifiant}`).style.display = "block";
+    document.getElementById(`confirmer-blacklister-${identifiant}`).onclick = function() {
         validerBlacklister(identifiant, idOffre, idMembre);
     };
 }
 
-function validerBlacklister(compteur, idOffre, idMembre) {
+function validerBlacklister(identifiant, idOffre, idMembre) {
     const blacklistUrl = "/utils/blacklist.php";
     fetch(blacklistUrl, {
         method: "POST",
@@ -35,14 +36,16 @@ function validerBlacklister(compteur, idOffre, idMembre) {
     })
     .then(response => response.text())
     .then(data => {
-        document.getElementById("confirmation-popup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
         location.reload();
     })
     .catch(error => console.error("Erreur :", error));
 }
 
-function annulerBlacklister() {
-    document.getElementById("confirmation-popup").style.display = "none";
+function annulerBlacklister(identifiant) {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
 }
 
 document.addEventListener("click", function() {
@@ -56,9 +59,9 @@ function confirmerSignaler(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idSignale = element.getAttribute("data-id-signale");
     const idSignalant = element.getAttribute("data-id-signalant");
-    const motif = element.getAttribute("data-motif");
-    document.getElementById("confirmation-popup-signaler").style.display = "block";
-    document.getElementById("confirmer-signaler").onclick = function() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "block";
+    document.getElementById(`confirmer-signaler-${identifiant}`).onclick = function() {
         validerSignaler(identifiant, idOffre, idSignale, idSignalant);
     };
 }
@@ -66,22 +69,26 @@ function confirmerSignaler(element, identifiant) {
 function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     var selectedRadio = document.querySelector('input[name="motif"]:checked');
     var motif = selectedRadio.value;
-    const blacklistUrl = "/utils/signaler.php";
-    fetch(blacklistUrl, {
+    var justificationElement = document.getElementById(`justification-${identifiant}`);
+    var justification = justificationElement ? justificationElement.value.trim() : "";
+    const signalerUrl = "/utils/signaler.php";
+    fetch(signalerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id_offre=${idOffre}&id_signaler=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}&justification=${justification}`
     })
     .then(response => response.text())
     .then(data => {
-        document.getElementById("confirmation-popup-signaler").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
         location.reload();
     })
     .catch(error => console.error("Erreur :", error));
 }
 
-function annulerSignaler() {
-    document.getElementById("confirmation-popup-signaler").style.display = "none";
+function annulerSignaler(identifiant) {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
 }
 
 // UPDATE JETONS SI DATE PASSÉE

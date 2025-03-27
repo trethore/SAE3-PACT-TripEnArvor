@@ -575,6 +575,26 @@
         }
     }
 
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'un signalement d'un avis ===== //
+    function getSignaler($id_offre, $id_signale)  {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisSignaler = "SELECT id_signalant FROM sae._signaler WHERE id_offre = :id_offre AND id_signale = :id_signale ;";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisSignaler = $conn->prepare($reqAvisSignaler);
+            $stmtAvisSignaler->execute(['id_offre' => $id_offre, 'id_signale' => $id_signale]);
+            $signaler = $stmtAvisSignaler->fetchAll(PDO::FETCH_COLUMN);
+            $conn = null;
+            return $signaler;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     function getInformationsMembre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
