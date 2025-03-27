@@ -95,27 +95,27 @@ VALUES
 -- ####################################################################
 
 -- Insertion dans compte_professionnel_publique
-INSERT INTO compte_professionnel_publique(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web)
+INSERT INTO compte_professionnel_publique(nom_compte, prenom, email, tel, mot_de_passe, auth, id_adresse, denomination, a_propos, site_web)
 VALUES 
-('Dupont', 'Jean', 'jean.dupont@example.com', '0601020304', '$2y$10$0MSSzyBunt9Z84N/Uj91/.FSyx8eK4RyVdZDROVH035U1pSQIwHyW', 1, 'Entreprise Dupont', 'Spécialiste des services IT', 'https://www.dupont.com'), --password123
-('Martin', 'Claire', 'claire.martin@example.com', '0605060708', '$2y$10$IJCELaVzR4zVFjhbglwcFODJK.N4ZKQ5m1WhPA64WblaOmAw4p9Xa', 2, 'Consulting Martin', 'Expert en stratégie d''entreprise', 'https://www.martin-consulting.com'); --password456
+('Dupont', 'Jean', 'jean.dupont@example.com', '0601020304', '$2y$10$0MSSzyBunt9Z84N/Uj91/.FSyx8eK4RyVdZDROVH035U1pSQIwHyW',FALSE, 1, 'Entreprise Dupont', 'Spécialiste des services IT', 'https://www.dupont.com'), --password123
+('Martin', 'Claire', 'claire.martin@example.com', '0605060708', '$2y$10$IJCELaVzR4zVFjhbglwcFODJK.N4ZKQ5m1WhPA64WblaOmAw4p9Xa',FALSE, 2, 'Consulting Martin', 'Expert en stratégie d''entreprise', 'https://www.martin-consulting.com'); --password456
 
 -- ####################################################################
 -- INSERTION DE COMPTES MEMBRES
 -- ####################################################################
 
 -- Insertion dans compte_membre
-INSERT INTO compte_membre(nom_compte, prenom, email, tel, mot_de_passe, pseudo)
+INSERT INTO compte_membre(nom_compte, prenom, email, tel, mot_de_passe, auth, pseudo)
 VALUES 
-('Leclerc', 'Antoine', 'antoine.leclerc@example.com', '0708091011', '$2y$10$6lDiPqJbAcacgXfecLdDEuTgLz.L/xGq.IbId41o/ZeskeJTwh1Da', 'AntoineL'), --password789
-('Durand', 'Sophie', 'sophie.durand@example.com', '0611223344', '$2y$10$VQaHqRmTUDhykg3cxdvn1eYibleNDLs23eOFSbhVMrFI6SwTbYb6y', 'SophieD'), --password321
-('anonyme', 'anonyme', 'anonyme@ano.com', '9999999999', '', 'Ancien Utilisateur');
+('Leclerc', 'Antoine', 'antoine.leclerc@example.com', '0708091011', '$2y$10$6lDiPqJbAcacgXfecLdDEuTgLz.L/xGq.IbId41o/ZeskeJTwh1Da',FALSE, 'AntoineL'), --password789
+('Durand', 'Sophie', 'sophie.durand@example.com', '0611223344', '$2y$10$VQaHqRmTUDhykg3cxdvn1eYibleNDLs23eOFSbhVMrFI6SwTbYb6y',FALSE, 'SophieD'), --password321
+('anonyme', 'anonyme', 'anonyme@ano.com', '9999999999', '',FALSE, 'Ancien Utilisateur');
 
 -- ####################################################################
 -- INSERTION DE COMPTES PRO PRIVE
 -- ####################################################################
-INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) 
-VALUES ('Doe', 'John', 'john.doe@example.com', '0612345679', '$2y$10$5r8FbHDqbLm5KI/or207H.Tt/MJyzKurQftAF/Bhoi8SkoS2kl.5O', 5, 'John & Co.', 'Entreprise spécialisée dans le conseil en informatique.','https://www.john-co.fr', '123465789');
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, auth, id_adresse, denomination, a_propos, site_web, siren) 
+VALUES ('Doe', 'John', 'john.doe@example.com', '0612345679', '$2y$10$5r8FbHDqbLm5KI/or207H.Tt/MJyzKurQftAF/Bhoi8SkoS2kl.5O',FALSE, 5, 'John & Co.', 'Entreprise spécialisée dans le conseil en informatique.','https://www.john-co.fr', '123465789');
 
 
 -- ####################################################################
@@ -365,8 +365,8 @@ INSERT INTO _tarif_publique (nom_tarif, prix, id_offre) VALUES
 ('Tarif Réduit Soir', 18, 3);   
 
 
-INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren)
-VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!', 5, 
+INSERT INTO sae.compte_professionnel_prive(nom_compte, prenom, email, tel, mot_de_passe, auth, id_adresse, denomination, a_propos, site_web, siren)
+VALUES ('Durand', 'Alice', 'alice.durand@example.com', '0612345678', 'MotDePasse123!',FALSE, 5, 
 'Société Informatique Durand', 'Spécialisée dans le développement de logiciels personnalisés.', 
 'https://www.durand-informatique.com', '123456789');
 

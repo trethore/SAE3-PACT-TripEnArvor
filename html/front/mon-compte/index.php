@@ -78,12 +78,15 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 // Generate API key (used as secret)
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
+$truncatedKey = substr($APIKey, 0, 32);
+$AuthKey = Base32::encodeUpper($truncatedKey);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
     
     if ($newAuthStatus) {
         $totp = TOTP::create(
-            $APIKey,  // Secret
+            $AuthKey, // Secret
             30,       // Period (30 seconds)
             'sha1',   // Digest algorithm
             6,        // Digits
@@ -299,7 +302,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         }
 
         <?php if ($showQrModal): ?>
-        // Wait for DOM to be fully loaded before showing modal
         document.addEventListener('DOMContentLoaded', function() {
             showQrModal();
         });
