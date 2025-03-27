@@ -4259,7 +4259,8 @@ h3 {
     align-self: baseline;
   }
 
-.back .mes-avis a > p {
+.titre-offre{
+    display: inline;
 }
 
 .mes-avis .titre-offre{
@@ -4268,7 +4269,7 @@ h3 {
     font-weight: bold;
 }
 
-.titre-offre a{
+.titre-offre a > p{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
