@@ -760,7 +760,7 @@ try {
 
                             </div>
                             
-                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $identifiant; ?>)">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)">
                                 <img src="/images/universel/icones/trois-points-violet.png">
                             </button>
 
@@ -991,32 +991,6 @@ try {
             </a>
         </div>
     </div>
-
-    <script>
-        function toggleMenu(event, button, compteur) {
-            event.stopPropagation();
-            let menu = document.getElementById(`popup-menu-${compteur}`);
-            document.querySelectorAll(".popup-menu").forEach(m => {
-                if (m !== menu) m.style.display = "none";
-            });
-
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-                return;
-            }
-
-            let rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.top + window.scrollY - 18}px`;
-            menu.style.left = `${rect.left + window.scrollX - 100}px`;
-            menu.style.display = "block";
-        }
-
-        document.addEventListener("click", function() {
-            document.querySelectorAll(".popup-menu").forEach(menu => {
-                menu.style.display = "none";
-            });
-        });
-    </script>
 
 </body>
 
