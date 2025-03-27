@@ -522,8 +522,8 @@ h3 {
 #annulerModifCompte,
 #popupRetourAccueil,
 #popupRetourCompte,
-#validerDeleteCompte,
-#popup-supprimer-avis {
+#validerDeleteCompte
+{
     position: fixed;
     z-index: 11;
     flex-direction: column;
@@ -551,21 +551,13 @@ h3 {
     color: var(--noir);
 }
 
-#popup-supprimer-avis form {
-    background: unset;
-    border: unset;
-    border-radius: unset;
-    padding: unset;
-    align-items: unset;
-}
-
 /* Texte de la popup */
 #validerModifCompte p,
 #annulerModifCompte p,
 #popupRetourAccueil p,
 #popupRetourCompte p,
-#validerDeleteCompte p,
-#popup-supprimer-avis span {
+#validerDeleteCompte p
+{
     color: var(--noir);
     font-size: 14pt;
     margin-bottom: 20px;
@@ -1687,8 +1679,8 @@ h3 {
 .compte-front-modif #validerModifCompte button,
 .compte-front-modif #annulerModifCompte button,
 .compte-front-modif #popupRetourAccueil button,
-.compte-front-modif #popupRetourCompte button,
-.front #popup-supprimer-avis button {
+.compte-front-modif #popupRetourCompte button
+{
     background-color: var(--violet-principal);
     border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
@@ -1707,8 +1699,8 @@ h3 {
 .compte-front-modif #validerModifCompte button:hover,
 .compte-front-modif #annulerModifCompte button:hover,
 .compte-front-modif #popupRetourAccueil button:hover,
-.compte-front-modif #popupRetourCompte button:hover,
-.front #popup-supprimer-avis button:hover {
+.compte-front-modif #popupRetourCompte button:hover
+{
     color: var(--violet-principal);
     background-color: var(--blanc-leger);
     border: 2px solid var(--violet-principal);
