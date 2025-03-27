@@ -147,7 +147,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
         <h3>Configurer l'authentification à deux facteurs</h3>
         <p>Scannez ce QR code avec Google Authenticator:</p>
-        <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto;"></div>
+        <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
         <p>Ou entrez manuellement ce code:<br>
         <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
@@ -292,10 +292,17 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
             // Generate QR code
             const qrCodeContainer = document.getElementById('qrCodeContainer');
             qrCodeContainer.innerHTML = ''; // Clear previous QR code
-            new QRCode(qrCodeContainer, {
-                text: "<?= addslashes($qrCodeUri) ?>",
-                width: 200,
-                height: 200
+            
+            // Use the QRCode.js library properly
+            QRCode.toCanvas(qrCodeContainer, "<?= addslashes($qrCodeUri) ?>", {
+                width: 180,
+                margin: 1,
+                color: {
+                    dark: '#000000',
+                    light: '#ffffff'
+                }
+            }, function(error) {
+                if (error) console.error(error);
             });
         }
 
@@ -305,7 +312,10 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         }
 
         <?php if ($showQrModal): ?>
-        window.onload = showQrModal;
+        // Wait for DOM to be fully loaded before showing modal
+        document.addEventListener('DOMContentLoaded', function() {
+            showQrModal();
+        });
         <?php endif; ?>
     </script>
     <footer>
