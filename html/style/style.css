@@ -4259,17 +4259,17 @@ h3 {
     align-self: baseline;
   }
 
-.titre-offre{
+.titre_offre{
     display: inline;
 }
 
-.mes-avis .titre-offre{
+.mes-avis .titre_offre{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
 }
 
-.titre-offre a > p{
+.titre_offre a > p{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
