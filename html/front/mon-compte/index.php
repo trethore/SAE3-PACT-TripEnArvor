@@ -79,7 +79,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
 $truncatedKey = substr($APIKey, 0, 32);
-$encoder = new \Base32\Base32();
+$encoder = new \ParagonIE\ConstantTime\Base32();
 $AuthKey = $encoder->encode($truncatedKey);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
