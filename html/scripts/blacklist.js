@@ -100,7 +100,7 @@ function validerSupprimer() {
     document.getElementById("overlay").style.display = "none";
 }
 
-function confirmerSupprimer() {
+function annulerSupprimer() {
     document.getElementById("overlay").style.display = "none";
 }
 
