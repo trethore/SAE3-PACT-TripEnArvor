@@ -19,6 +19,104 @@ BEGIN
     ('premium');
 
 
+    -- /* ##################################################################### */
+    -- /*                                Example                                */
+    -- /* ##################################################################### */
+
+    -- INSERT INTO sae._adresse (
+    --     "num_et_nom_de_voie",
+    --     "complement_adresse",
+    --     "code_postal",
+    --     "ville",
+    --     "pays"
+    -- )
+    -- VALUES (
+    --     '1 rue Exemple',
+    --     NULL,
+    --     '22300',
+    --     'Lannion',
+    --     'France'
+    -- )
+    -- RETURNING "id_adresse" INTO var_id_adresse;
+
+    -- INSERT INTO sae.compte_professionnel_prive (
+    --     "nom_compte",
+    --     "prenom",
+    --     "email",
+    --     "tel",
+    --     "mot_de_passe",
+    --     "denomination",
+    --     "a_propos",
+    --     "site_web",
+    --     "id_adresse",
+    --     "siren"
+    -- )
+    -- VALUES (
+    --     'prénom',
+    --     'NOM',
+    --     'email@example.com',
+    --     '+33606060606',
+    --     '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+    --     'Exemple',
+    --     'exemple',
+    --     'https://example.com/',
+    --     var_id_adresse,
+    --     '0123456789'
+    -- )
+    -- RETURNING "id_compte" INTO var_id_compte;
+
+    -- INSERT INTO sae.offre_restauration (
+    --     "gamme_prix", 
+    --     "carte", 
+    --     "titre", 
+    --     "resume", 
+    --     "ville", 
+    --     "description_detaille", 
+    --     "site_web", 
+    --     "id_compte_professionnel", 
+    --     "id_adresse", 
+    --     "abonnement",
+    --     "nb_jetons",
+    --     "jeton_perdu_le",
+    --     "lat",
+    --     "lon"
+    -- )
+    -- VALUES (
+    --     '€€',
+    --     'https://www.alacarte.direct/menu-restaurant/menu/restaurant-le-coste-mor/58-restaurant-le-coste-mor',
+    --     'Example',
+    --     'Restaurant',
+    --     'Lannion',
+    --     'Laborum minim cillum veniam amet quis est anim pariatur quis. Irure qui est nulla exercitation elit ex et cillum magna eu voluptate. Laboris ad eiusmod eu veniam. Aute do ad cillum elit. Est in laboris ipsum aute reprehenderit.',
+    --     'https://example.com/',
+    --     var_id_compte,
+    --     var_id_adresse,
+    --     'standard',
+    --     NULL,
+    --     NULL,
+    --     NULL,
+    --     NULL
+    -- )
+    -- RETURNING "id_offre" INTO var_id_offre;
+
+    -- INSERT INTO sae._image (
+    --     "lien_fichier"
+    -- )
+    -- VALUES (
+    --     'example.jpg'
+    -- );
+
+    -- INSERT INTO sae._offre_contient_image (
+    --     "id_offre",
+    --     "id_image"
+    -- )
+    -- VALUES (
+    --     var_id_offre,
+    --     'example.jpg'
+    -- );
+
+
+
     /* ##################################################################### */
     /*                        La Krampouzerie Lannion                        */
     /* ##################################################################### */
