@@ -769,7 +769,7 @@ try {
                                     <?php 
                                     if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { 
                                     ?>
-                                        <li>Supprimer</li>
+                                        <li id="bouton-supprimer-avis">Supprimer</li>
                                     <?php 
                                     } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) { 
                                     ?>
