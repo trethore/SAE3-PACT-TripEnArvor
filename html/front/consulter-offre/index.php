@@ -271,40 +271,42 @@ try {
 </head>
 
 <body class="front consulter-offre-front">
+
+    <div id="overlay"></div>
     
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    <?php
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-    $stmt->execute();
-    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    $dbh = null;
-} catch (PDOException $e) { 
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-}
-?>
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+        $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+        $stmt->execute();
+        $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $dbh = null;
+    } catch (PDOException $e) { 
+        echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+    }
+    ?>
 
-<header>
-    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
-    <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
-        <datalist id="cont">
-            <?php foreach ($of as $o) { ?>
-                <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
-                    <?php echo htmlspecialchars($o['titre']); ?>
-                </option>
-            <?php } ?>
-        </datalist>
-    </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-</header>
+    <header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
+        <div class="search-box">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($of as $o) { ?>
+                    <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                        <?php echo htmlspecialchars($o['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
+        </div>
+        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    </header>
 
     <main id="body">
 
