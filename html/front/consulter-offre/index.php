@@ -798,7 +798,7 @@ try {
                                             <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
                                         </label><br>
                                         <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
-                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification" placeholder="Je trouve cet avis ..."></textarea><br>
+                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
                                     </form>
                                     <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
                                     <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
