@@ -3386,6 +3386,75 @@ h3 {
     display: none; /
 }
 
+.consulter-offre-front .confirmation-popup-signaler {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+    z-index: 1001;
+}
+
+.consulter-offre-front .confirmation-popup-signaler p {
+    font-size: 16px;
+    margin-bottom: 15px
+}
+
+.consulter-offre-front input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--noir);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.consulter-offre-front input[type="radio"]:checked {
+    border-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--noir);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.consulter-offre-front .confirmation-popup-signaler button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--violet-principal);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+    margin-top: 15px
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:first-of-type:hover {
+    background-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir); 
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:last-of-type:hover {
+    color: var(--violet-principal);
+}
+
 
 .consulter-offre-front #avis>button,
 .consulter-offre-front #avis>form>button {
