@@ -4353,6 +4353,12 @@ h3 {
     align-self: baseline;
   }
 
+.back .mes-avis a > p {
+    background-color:var(--blanc);
+    color: black;
+    font-weight: bold;
+}
+
 .mes-avis h2 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--medium);
