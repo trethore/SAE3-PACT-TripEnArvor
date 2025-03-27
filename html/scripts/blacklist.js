@@ -91,6 +91,19 @@ function annulerSignaler(identifiant) {
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
 }
 
+// SUPPRESSION
+function confirmerSupprimer() {
+    document.getElementById("overlay").style.display = "block";
+}
+
+function validerSupprimer() {
+    document.getElementById("overlay").style.display = "none";
+}
+
+function confirmerSupprimer() {
+    document.getElementById("overlay").style.display = "none";
+}
+
 // UPDATE JETONS SI DATE PASSÉE
 document.addEventListener("DOMContentLoaded", function () {
     const id_offre = document.querySelector("#header").getAttribute("data-id-offre");

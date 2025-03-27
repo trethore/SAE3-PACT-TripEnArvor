@@ -769,7 +769,7 @@ try {
                                     <?php 
                                     if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { 
                                     ?>
-                                        <li id="bouton-supprimer-avis">Supprimer</li>
+                                        <li onclick="confirmerSupprimer()" id="bouton-supprimer-avis">Supprimer</li>
                                     <?php 
                                     } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) { 
                                     ?>
@@ -812,8 +812,8 @@ try {
                                     <p>Êtes-vous sûr de vouloir supprimer votre avis ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <div>
-                                        <button type="button" id="bouton-fermer-popup">Annuler</button>
-                                        <button type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
+                                        <button onclick="annulerSupprimer()"type="button" id="bouton-fermer-popup">Annuler</button>
+                                        <button onclick="validerSupprimer()" type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
                                     </div>
                                 </form>
                             </div>
