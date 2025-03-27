@@ -122,7 +122,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="/scripts/header.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 
 <body class="front compte-front">
@@ -147,7 +146,11 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
         <h3>Configurer l'authentification à deux facteurs</h3>
         <p>Scannez ce QR code avec Google Authenticator:</p>
-        <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
+        <?php if ($showQrModal): ?>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= urlencode($qrCodeUri) ?>" alt="QR Code">
+        <?php else: ?>
+            <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
+        <?php endif; ?>
         <p>Ou entrez manuellement ce code:<br>
         <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
@@ -288,22 +291,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         function showQrModal() {
             document.getElementById('qrModalOverlay').style.display = 'block';
             document.getElementById('qrModal').style.display = 'block';
-            
-            // Generate QR code
-            const qrCodeContainer = document.getElementById('qrCodeContainer');
-            qrCodeContainer.innerHTML = ''; // Clear previous QR code
-            
-            // Use the QRCode.js library properly
-            QRCode.toCanvas(qrCodeContainer, "<?= addslashes($qrCodeUri) ?>", {
-                width: 180,
-                margin: 1,
-                color: {
-                    dark: '#000000',
-                    light: '#ffffff'
-                }
-            }, function(error) {
-                if (error) console.error(error);
-            });
         }
 
         function closeQrModal() {
