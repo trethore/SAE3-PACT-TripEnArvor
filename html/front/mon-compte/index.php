@@ -79,7 +79,7 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
 $truncatedKey = substr($APIKey, 0, 32);
-$AuthKey = Base32::encodeUpper($truncatedKey);
+$AuthKey = base32_encode($truncatedKey);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
@@ -155,7 +155,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
             <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
         <?php endif; ?>
         <p>Ou entrez manuellement ce code:<br>
-        <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
+        <strong><?= rtrim($AuthKey, '=') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
     </div>
 
