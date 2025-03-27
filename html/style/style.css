@@ -3478,6 +3478,46 @@ h3 {
     display: none; /
 }
 
+.consulter-offre-front .confirmation-popup {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--violet-principal);
+    z-index: 1001;
+}
+
+.consulter-offre-front .confirmation-popup p {
+    font-size: 16px;
+}
+
+.consulter-offre-front .confirmation-popup button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--violet-principal);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+
+.consulter-offre-front .confirmation-popup button:first-of-type:hover {
+    background-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front .confirmation-popup button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir);
+}
+
+.consulter-offre-front .confirmation-popup button:last-of-type:hover {
+    color: var(--violet-principal);
+}
+
 .consulter-offre-front .confirmation-popup-signaler {
     display: block;
     position: fixed;
