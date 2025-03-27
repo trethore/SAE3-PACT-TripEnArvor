@@ -80,6 +80,7 @@ try {
                     }
                     exit();
                  } else {
+                     error_log("code: 1");
                      $twoFaFailed = true;
                  }
             } catch (Exception $e) {
@@ -88,6 +89,7 @@ try {
             }
 
         } else {
+            error_log("code: 3");
             $twoFaFailed = true;
         }
     }
