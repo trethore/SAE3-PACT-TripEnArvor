@@ -297,6 +297,10 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
+                                                <div>
+                                                    <p class="titre-avis"><?php echo htmlentities($offre['titre']);  echo ' '; ?></p>
+                                                </div>
+
                                             </div>
 
                                             <div class="display-ligne">
