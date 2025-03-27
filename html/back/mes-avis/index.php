@@ -176,7 +176,7 @@ if ($typeCompte === 'proPrive') {
                 $nb_non_lu = 0;
                 $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                
+                $nb_avis_total = 0;
 
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
@@ -184,6 +184,7 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
                     $nb_avis = count($avis);
+                    $nb_avis_total += $nb_avis; 
 
                     foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
@@ -219,7 +220,10 @@ if ($typeCompte === 'proPrive') {
                             echo 'tri par offre';
 
                             foreach ($touteslesoffres as $offre) {
-                                
+                                if ($nb_avis_total == 0) {
+                                    print("Aucun avis n'a été laissé sur vos offres");
+                                    break;
+                                }
                             ?>
                         <h3>
                             <?php
@@ -227,14 +231,8 @@ if ($typeCompte === 'proPrive') {
                                 $id_offre = $offre['id_offre'];
                                 $avis = getAvis($id_offre);
                                 $nb_offres++;
-                                if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
-
-                                    if (count($touteslesoffres) == $nb_offres) {
-                                        print("Aucun avis n'a été laissé sur vos offres");
-                                        break;
-                                    } else {
-                                        continue;
-                                    }
+                                if (!$avis) { 
+                                    continue;  //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                                 }
  
                                     ?>
