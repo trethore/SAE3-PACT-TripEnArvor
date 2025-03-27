@@ -19,6 +19,42 @@ try {
     die();
 }
 
+function isAuthEnabled(
+    int $id,
+): bool {
+    $dbh = null; 
+    global $driver;
+    global $server;
+    global $dbname;
+    global $user;
+    global $pass;
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+
+
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        $dbh->exec("SET SCHEMA 'sae'");
+       
+        $sql = "SELECT auth FROM _compte WHERE id_compte = :id";
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+    
+        $authStatus = $stmt->fetchColumn();
+        return ($authStatus === true);
+
+    } catch (PDOException $e) {
+        error_log("Database Error in isAuthEnabled for ID $id: " . $e->getMessage());
+        return false;
+    } finally {
+        $dbh = null;
+    }
+}
+
 if (isset($_POST["email"]) && isset($_POST["mdp"])) {
     $trouve = false;
     $emailUtilisateur = $_POST["email"];
@@ -28,15 +64,26 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
         if ($emailUtilisateur == $entry['email'] && password_verify($mdpUtilisateur, $entry['mot_de_passe'])) {
             $id = $entry['id_compte'];
             $trouve = true;
-            $_SESSION['id'] = $id;
             break;
         }
     }
     if ($trouve) {
         if (isIdMember($id)) {
-            header("Location: /front/consulter-offres/");
+            if (isAuthEnabled($id)) {
+                header("Location: /se-connecter/authentifikator/");
+                $_SESSION['id_auth'] = $id;
+            }else {
+                header("Location: /front/consulter-offres/");
+                $_SESSION['id'] = $id;
+            }
         } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-            header("Location: /back/liste-back/");
+            if (isAuthEnabled($id)) {
+                header("Location: /se-connecter/authentifikator/");
+                $_SESSION['id_auth'] = $id;
+            }else {
+                header("Location: /back/liste-back/");
+                $_SESSION['id'] = $id;
+            }
         }
     } else {
         unset($_POST["email"]);
