@@ -79,7 +79,8 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
 $truncatedKey = substr($APIKey, 0, 32);
-$AuthKey = base32_encode($truncatedKey);
+$encoder = new \Base32\Base32();
+$AuthKey = $encoder->encode($truncatedKey);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
     $newAuthStatus = !$currentAuthStatus;
