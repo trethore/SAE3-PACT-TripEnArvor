@@ -3273,7 +3273,7 @@ h3 {
     text-align: center;
 }
 
-.consulter-offre-front label {
+.consulter-offre-front .avis-form > div > label {
     text-align: start;
     color: var(--noir);
     margin: 10px 0;
@@ -3308,8 +3308,8 @@ h3 {
 }
 
 
-.consulter-offre-front input,
-.consulter-offre-front select {
+.consulter-offre-front .avis-form > div > input,
+.consulter-offre-front .avis-form > div > select {
     padding: 5px;
     background: var(--blanc);
     border: 1px solid var(--gris);
