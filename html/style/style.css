@@ -4259,7 +4259,7 @@ h3 {
     align-self: baseline;
   }
 
-.titre_offre{
+.mes_avis .titre_offre{
     display: inline;
 }
 
@@ -4269,7 +4269,7 @@ h3 {
     font-weight: bold;
 }
 
-.titre_offre a > p{
+.mes_avis .titre_offre a > p{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
