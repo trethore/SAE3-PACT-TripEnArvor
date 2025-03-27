@@ -280,9 +280,7 @@ if ($typeCompte === 'proPrive') {
                                             ?>
 
                                         <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                        <div>
-                                                    <p class="titre-avis"><?php echo htmlentities($offre['titre']);  echo ' '; ?></p>
-                                                </div>
+                                        
 
 
                                             <div class="display-ligne-espace">
@@ -299,7 +297,11 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
-                                                
+                                                <div>
+                                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre ?> ">
+                                                    <p class="titre-avis"><?php echo htmlentities($offre['titre']);  echo ' '; ?></p> 
+                                                </a>
+                                                </div>
 
                                             </div>
 
