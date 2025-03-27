@@ -628,7 +628,7 @@ try {
                     if ($avisCount == 0) { 
                     ?>
                         <button id="showFormButton">Publier un avis</button>
-                        <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <div class="display-ligne-espace"> 
@@ -798,7 +798,7 @@ try {
                                             <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
                                         </label><br>
                                         <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
-                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
+                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification" placeholder="Je trouve cet avis ..."></textarea><br>
                                     </form>
                                     <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
                                     <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
