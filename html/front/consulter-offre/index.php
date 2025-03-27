@@ -267,6 +267,7 @@ try {
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
     <script src="/scripts/popupAvis.js"></script>
+    <script src="/scripts/blacklist.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -768,15 +769,41 @@ try {
                                     <?php 
                                     if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { 
                                     ?>
-                                        <li id="bouton-supprimer-avis">Supprimer</li>
+                                        <li>Supprimer</li>
                                     <?php 
-                                    } else { 
+                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) { 
                                     ?>
-                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                     <?php 
                                     } 
                                     ?>
                                 </ul>
+                            </div>
+
+                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
+
+                                <div>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <form id="signalement-form">
+                                        <label>
+                                            <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
+                                        </label><br>
+                                        <label> 
+                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle"> Il ne décrit pas une expérience personnelle
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre"> Il s'agit d'un doublon publié par le même membre
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
+                                        </label><br>
+                                        <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
+                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
+                                    </form>
+                                    <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
+                                </div>
+
                             </div>
 
                         </div>
