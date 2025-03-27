@@ -122,7 +122,7 @@ try {
         <h1>Vérification à deux facteurs</h1> 
         <h2>Entrez le code généré par votre application d'authentification.</h2>
 
-        <form action="" method="POST">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <label for="auth-code">Code d'authentification</label>
             <input
                 type="text"  
