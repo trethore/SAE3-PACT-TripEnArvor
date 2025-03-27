@@ -122,8 +122,8 @@ try {
         <h1>Vérification à deux facteurs</h1> 
         <h2>Entrez le code généré par votre application d'authentification.</h2>
 
-        <form action="/verify-2fa/" method="POST"> 
-            <label for="auth-code">Code d'authentification</label>
+        <form action="" method="POST">
+        <label for="auth-code">Code d'authentification</label>
             <input
                 type="text"  
                 id="auth-code"
