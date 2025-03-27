@@ -194,9 +194,9 @@ if (!$submitted) {
                     if ($name === '') $name = null;
                     if ($first_name === '') $first_name = null;
                     if ($tel === '') $tel = null;
-                    $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, pseudo) VALUES (?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $query = "INSERT INTO sae.compte_membre (nom_compte, prenom, email, tel, mot_de_passe, auth, pseudo) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                     $stmt = $dbh->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $pseudo]);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash,FALSE, $pseudo]);
                     $_SESSION['id'] = $stmt->fetch()['id_compte'];
                     break;
                 case 'pro-publique':
@@ -213,9 +213,9 @@ if (!$submitted) {
                     $stmt = $dbh->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
-                    $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $query = "INSERT INTO sae.compte_professionnel_publique (nom_compte, prenom, email, tel, mot_de_passe, auth, id_adresse, denomination, a_propos, site_web) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                     $stmt = $dbh->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web]);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash,FALSE, $id_adresse, $denomination, $a_propos, $site_web]);
                     $_SESSION['id'] = $stmt->fetch()['id_compte'];
                     break;
                 case 'pro-privé':
@@ -233,9 +233,9 @@ if (!$submitted) {
                     $stmt = $dbh->prepare($query);
                     $stmt->execute([$street, $address_complement, $code_postal, $city, $country]);
                     $id_adresse = $stmt->fetch()['id_adresse'];
-                    $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, id_adresse, denomination, a_propos, site_web, siren) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
+                    $query = "INSERT INTO sae.compte_professionnel_prive (nom_compte, prenom, email, tel, mot_de_passe, auth, id_adresse, denomination, a_propos, site_web, siren) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_compte;";
                     $stmt = $dbh->prepare($query);
-                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
+                    $stmt->execute([$name, $first_name, $email, $tel, $password_hash,FALSE, $id_adresse, $denomination, $a_propos, $site_web, $siren]);
                     $_SESSION['id'] = $stmt->fetch()['id_compte'];
                     break;
                 default:
