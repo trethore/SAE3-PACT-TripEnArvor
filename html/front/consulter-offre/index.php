@@ -812,8 +812,8 @@ try {
                                     <p>Êtes-vous sûr de vouloir supprimer votre avis ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <div>
-                                        <button onclick="annulerSupprimer()"type="button" id="bouton-fermer-popup">Annuler</button>
                                         <button onclick="validerSupprimer()" type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
+                                        <button onclick="annulerSupprimer()"type="button" id="bouton-fermer-popup">Annuler</button>
                                     </div>
                                 </form>
                             </div>
