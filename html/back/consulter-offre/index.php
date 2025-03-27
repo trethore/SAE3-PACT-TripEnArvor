@@ -148,6 +148,8 @@ try {
 </head>
 
 <body class="back consulter-offre-back">
+
+    <div id="overlay"></div>
     
     <header id="header" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>">
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
@@ -620,7 +622,7 @@ try {
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
-                                    <p>Signaler l'avis de <?php echo htmlentities($membre[$identifiant]['pseudo']) ?></p>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
                                     <form id="signalement-form">
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
@@ -634,6 +636,8 @@ try {
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
                                         </label><br>
+                                        <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
+                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
                                     </form>
                                     <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
                                     <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
@@ -644,7 +648,8 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
-                                    <p>Êtes-vous sûr de vouloir blacklister cet avis ?</p>
+                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Cette action ne peut pas être annulée.</p>
                                     <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
                                 </div>

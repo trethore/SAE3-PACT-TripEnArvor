@@ -3585,7 +3585,7 @@ h3 {
     padding: 30px 30px 0 24px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 900;
 }
 
 .consulter-offre-back .bouton-modifier {
@@ -3601,6 +3601,7 @@ h3 {
     border: 0;
     width: 145px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .bouton-modif-mise > button:hover {
@@ -3904,6 +3905,18 @@ h3 {
     color: var(--blanc);
 }
 
+.consulter-offre-back #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    z-index: 999; 
+    display: none; /
+}
+
 .consulter-offre-back .confirmation-popup {
     display: block;
     position: fixed;
@@ -3914,7 +3927,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
-    z-index: 9999;
+    z-index: 1001;
 }
 
 .consulter-offre-back .confirmation-popup p {
@@ -3928,6 +3941,7 @@ h3 {
     color: var(--blanc);
     font-size: 16px;
     padding: 4px 6px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .confirmation-popup button:first-of-type:hover {
@@ -3940,6 +3954,75 @@ h3 {
 }
 
 .consulter-offre-back .confirmation-popup button:last-of-type:hover {
+    color: var(--orange-principale);
+}
+
+.consulter-offre-back .confirmation-popup-signaler {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+    z-index: 1001;
+}
+
+.consulter-offre-back .confirmation-popup-signaler p {
+    font-size: 16px;
+    margin-bottom: 15px
+}
+
+.consulter-offre-back input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--noir);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.consulter-offre-back input[type="radio"]:checked {
+    border-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--noir);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.consulter-offre-back .confirmation-popup-signaler button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--orange-principale);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+    margin-top: 15px
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:first-of-type:hover {
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir); 
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type:hover {
     color: var(--orange-principale);
 }
 
@@ -4013,6 +4096,11 @@ h3 {
     border-radius: 4px;
     border: 0;
     width: 100px;
+    cursor: pointer;
+}
+
+.consulter-offre-back .avis-form > button:hover {
+    background-color: var(--orange-secondaire-2);
 }
 
 .consulter-offre-back .bouton-reponse {
@@ -4023,9 +4111,10 @@ h3 {
     border-radius: 4px;
     border: 0;
     width: 100px;   
+    cursor: pointer;
 }
 
-.consulter-offre-back .avis-form > button:hover {
+.consulter-offre-back .bouton-reponse:hover {
     background-color: var(--orange-secondaire-2);
 }
 

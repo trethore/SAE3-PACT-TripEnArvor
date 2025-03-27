@@ -34,9 +34,9 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
     }
     if ($trouve) {
         if (isIdMember($id)) {
-            header("/front/consulter-offres/");
+            header("Location: /front/consulter-offres/");
         } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-            header("/back/liste-back/");
+            header("Location: /back/liste-back/");
         }
     } else {
         unset($_POST["email"]);
@@ -45,20 +45,7 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
 
     }
 }
-?>
-    if ($trouve) {
-        if (isIdMember($id)) {
-            header('Location: /front/consulter-offres/');
-        } else if (isIdProPrivee($id) || isIdProPublique($id)) {
-            header('Location: /back/liste-back/');
-        }
-        exit();
-    } else {
-        unset($_POST["email"]);
-        unset($_POST["mdp"]);
-        $loginFailed = true;
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

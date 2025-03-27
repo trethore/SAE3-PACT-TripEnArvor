@@ -20,6 +20,7 @@ function afficherMenu(event, button, compteur) {
 function confirmerBlacklister(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idMembre = element.getAttribute("data-id-membre");
+    document.getElementById("overlay").style.display = "block";
     document.getElementById(`confirmation-popup-${identifiant}`).style.display = "block";
     document.getElementById(`confirmer-blacklister-${identifiant}`).onclick = function() {
         validerBlacklister(identifiant, idOffre, idMembre);
@@ -35,6 +36,7 @@ function validerBlacklister(identifiant, idOffre, idMembre) {
     })
     .then(response => response.text())
     .then(data => {
+        document.getElementById("overlay").style.display = "none";
         document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
         location.reload();
     })
@@ -42,6 +44,7 @@ function validerBlacklister(identifiant, idOffre, idMembre) {
 }
 
 function annulerBlacklister(identifiant) {
+    document.getElementById("overlay").style.display = "none";
     document.getElementById(`confirmation-popup-${identifiant}`).style.display = "none";
 }
 
@@ -56,6 +59,7 @@ function confirmerSignaler(element, identifiant) {
     const idOffre = element.getAttribute("data-id-offre");
     const idSignale = element.getAttribute("data-id-signale");
     const idSignalant = element.getAttribute("data-id-signalant");
+    document.getElementById("overlay").style.display = "block";
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "block";
     document.getElementById(`confirmer-signaler-${identifiant}`).onclick = function() {
         validerSignaler(identifiant, idOffre, idSignale, idSignalant);
@@ -65,14 +69,17 @@ function confirmerSignaler(element, identifiant) {
 function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
     var selectedRadio = document.querySelector('input[name="motif"]:checked');
     var motif = selectedRadio.value;
+    var justificationElement = document.getElementById(`justification-${identifiant}`);
+    var justification = justificationElement ? justificationElement.value.trim() : "";
     const signalerUrl = "/utils/signaler.php";
     fetch(signalerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}`
+        body: `id_offre=${idOffre}&id_signale=${idSignale}&id_signalant=${idSignalant}&motif=${motif}&justification=${justification}`
     })
     .then(response => response.text())
     .then(data => {
+        document.getElementById("overlay").style.display = "none";
         document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
         location.reload();
     })
@@ -80,6 +87,7 @@ function validerSignaler(identifiant, idOffre, idSignale, idSignalant) {
 }
 
 function annulerSignaler(identifiant) {
+    document.getElementById("overlay").style.display = "none";
     document.getElementById(`confirmation-popup-signaler-${identifiant}`).style.display = "none";
 }
 
