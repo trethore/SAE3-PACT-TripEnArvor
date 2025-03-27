@@ -122,6 +122,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="/scripts/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 
 <body class="front compte-front">
@@ -146,7 +147,7 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
         <h3>Configurer l'authentification à deux facteurs</h3>
         <p>Scannez ce QR code avec Google Authenticator:</p>
-        <img src="<?= htmlspecialchars($qrCodeImageUrl) ?>" alt="QR Code">
+        <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto;"></div>
         <p>Ou entrez manuellement ce code:<br>
         <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
@@ -284,10 +285,28 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         });
 
         // QR Code Modal functions
+        function showQrModal() {
+            document.getElementById('qrModalOverlay').style.display = 'block';
+            document.getElementById('qrModal').style.display = 'block';
+            
+            // Generate QR code
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            qrCodeContainer.innerHTML = ''; // Clear previous QR code
+            new QRCode(qrCodeContainer, {
+                text: "<?= addslashes($qrCodeUri) ?>",
+                width: 200,
+                height: 200
+            });
+        }
+
         function closeQrModal() {
             document.getElementById('qrModalOverlay').style.display = 'none';
             document.getElementById('qrModal').style.display = 'none';
         }
+
+        <?php if ($showQrModal): ?>
+        window.onload = showQrModal;
+        <?php endif; ?>
     </script>
     <footer>
         <div class="footer-top">
