@@ -50,8 +50,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-$reqCompte = "SELECT * from sae.compte_membre
-                where id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre where id_compte = :id_compte;";
 
 // auth toggle
 $stmt_get = $conn->prepare("SELECT auth FROM _compte WHERE id_compte = :id");
