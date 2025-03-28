@@ -4389,7 +4389,7 @@ h3 {
     display: inline;
 }
 
-.mes-avis .titre_offre{
+.mes-avis .titre_offre a {
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
