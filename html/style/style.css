@@ -6327,13 +6327,14 @@ input[type="tel"] {
 
 
 .titre_offre {
-    max-width: 100%; /* Adapte le parent à la largeur du conteneur */
-    overflow: hidden; /* Empêche le dépassement du contenu */
+    max-width: 50%; /* Adapte le parent à la largeur du conteneur */
+   
 }
 
 
 /* ici pour etre sur */
 .mes-avis .titre_offre > a { 
+    width: 100%;
     display: block ruby !important;
     color: #000 !important;
     font-weight: bold !important;
