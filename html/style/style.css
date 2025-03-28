@@ -6323,7 +6323,7 @@ input[type="tel"] {
 
 
 .titre_offre {
-    max-width: 50%; /* Adapte le parent à la largeur du conteneur */
+    width: 50%; /* Adapte le parent à la largeur du conteneur */
    
 }
 
