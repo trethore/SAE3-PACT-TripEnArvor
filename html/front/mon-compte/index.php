@@ -117,10 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
 
             if ($stmt_update->execute()) {
-                $message = "Authentification à deux facteurs activée avec succès!";
                 $currentAuthStatus = $newAuthStatus;
-            } else {
-                $message = "Erreur lors de l'activation de l'authentification.";
             }
         }
     } elseif (isset($_POST['show_qr'])) {
