@@ -12,11 +12,37 @@ DECLARE
     var_id_offre    INTEGER;
 BEGIN
 
-    INSERT INTO sae._abonnement (nom_abonnement) 
+    INSERT INTO sae._abonnement ("nom_abonnement") 
     VALUES
     ('gratuit'),
     ('standard'),
     ('premium');
+
+    INSERT INTO _tag ("nom_tag") 
+    VALUES 
+    ('Sport'),
+    ('Gastronomie'),
+    ('Bien-être'),
+    ('Aventure extrême'),
+    ('Histoire'),
+    ('Romantique'),
+    ('Relaxation'),
+    ('Plage'),
+    ('Montagne'),
+    ('Festif'),
+    ('Nocturne'),
+    ('Découverte'),
+    ('Artisanat'),
+    ('Tradition'),
+    ('Technologie'),
+    ('Innovation'),
+    ('Eco-responsable'),
+    ('Nature'),
+    ('Famille'),
+    ('Insolite'),
+    ('Groupe'),
+    ('Musique'),
+    ('Solo');
 
 
     -- /* ##################################################################### */
@@ -83,7 +109,7 @@ BEGIN
     -- )
     -- VALUES (
     --     '€€',
-    --     'https://www.alacarte.direct/menu-restaurant/menu/restaurant-le-coste-mor/58-restaurant-le-coste-mor',
+    --     'la carte',
     --     'Example',
     --     'Restaurant',
     --     'Lannion',
@@ -213,6 +239,18 @@ BEGIN
         'LA-KRAMPOUZERIE-IMG-0555-JPG.jpg'
     );
 
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Gastronomie'),
+    (var_id_offre, 'Tradition'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
+
 
     /* ##################################################################### */
     /*                             Le Coste Mor                              */
@@ -309,6 +347,18 @@ BEGIN
         var_id_offre,
         'WEB_restaurant_saint_guirec-34.jpg'
     );
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Gastronomie'),
+    (var_id_offre, 'Tradition'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
 
 
     /* ##################################################################### */
@@ -407,6 +457,17 @@ BEGIN
         'Le-Koadenn-IMG-1615-jpeg.jpg'
     );
 
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Gastronomie'),
+    (var_id_offre, 'Tradition'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
 
 
     /* ##################################################################### */
@@ -421,7 +482,7 @@ BEGIN
         "pays"
     )
     VALUES (
-        'Rue de Gwenezhan',
+        'Armoripark, Rue de Gwenezhan',
         NULL,
         '22140',
         'Bégard',
@@ -446,7 +507,7 @@ BEGIN
         'NOM',
         'email@armoripark.com',
         '+33296453636',
-        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        '$2y$10$NLe0ZT5LsAZpULI.u/hBj.n4Zr3rS6cJW5Ctu98OjVylsvkvoOKoi', -- 'Mot de passe Armoripark'
         'Armoripark',
         'Dans un cadre idyllique, à Bégard, en plein cœur des Côtes d’Armor, Armoripark vous propose de nombreuses activités de plein air.',
         'https://armoripark.com/',
@@ -525,6 +586,170 @@ BEGIN
     (var_id_offre, 'trampofilets.webp'),
     (var_id_offre, 'homeball2024.webp'),
     (var_id_offre, 'armoripark-tyrolienne.jpg');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Sport'),
+    (var_id_offre, 'Festif'),
+    (var_id_offre, 'Découverte'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
+
+    /* ##################################################################### */
+    /*                             Parc Aquarev                              */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '20 rue Notre-dame',
+        NULL,
+        '22600',
+        'Loudéac',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_publique (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse"
+    )
+    VALUES (
+        'Bruno',
+        'LE BESCAUT',
+        'mairie@ville-loudeac.fr',
+        '+33296668500',
+        '$2y$10$s18bwyAsQCTNOezoVEMTF.FTfq9cFuH6.WT5CsZekqmG21A/ALbmq', -- 'Mot de passe Mairie de Loudéac'
+        'Mairie de Loudéac',
+        'Mairie de Loudéac',
+        'https://www.ville-loudeac.fr/',
+        var_id_adresse
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        'Rue du Mène',
+        NULL,
+        '22600',
+        'Loudéac',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.offre_visite (
+        "duree", 
+        "date_evenement", 
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        NULL,
+        'Parc Aquarev',
+        'Découvrez le parc de loisirs Aquarev, véritable poumon vert de Loudéac.',
+        'Loudéac',
+        '30 hectares aménagés autour d’un étang pour le loisir et la détente : une plaine de jeux, un labyrinthe, une bambouseraie, des pontons de pêche, des aires de pique-nique, un parcours sportif, un terrain multi-sport, le tout dans une ambiance détendue, « zen »… Pour tous et en accès libre. Autour de son « tipi » emblématique, le site présente une nouvelle image d’un parc de loisirs, de promenades, de vie au cœur d’un espace vert rustique qui permet à chacun de trouver des lieux différents, pour se rencontrer, prendre du bon temps et du plaisir. Le site accueille régulièrement de nombreux événements municipaux et manifestations associatives. Chaque mercredi d’été, venez par exemple participer aux « Ateliers d’Aquarev » sous le tipi, des animations gratuite pour toute la famille proposées par des commerçant ou intervenants du territoire autour des plantes et de la nature.',
+        'https://www.ville-loudeac.fr/listes/parc-aquarev/',
+        var_id_compte,
+        var_id_adresse,
+        'gratuit',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image (
+        "lien_fichier"
+    )
+    VALUES
+    ('DSC_1891-Copier.jpg'),
+    ('aquarev-louvafilm-2018-6.jpg'),
+    ('DSC_1889-Copier.jpg'),
+    ('aquarev-louvafilm-2018-5.jpg'),
+    ('aquarev-louvafilm-2018-4.jpg'),
+    ('aquarev-louvafilm-2018-3.jpg'),
+    ('aquarev-louvafilm-2018-2.jpg'),
+    ('aquarev-louvafilm-2018-1.jpg'),
+    ('aquarev-louvafilm-2018-11.jpg'),
+    ('aquarev-louvafilm-2018-10.jpg'),
+    ('aquarev-louvafilm-2018-9.jpg'),
+    ('aquarev-louvafilm-2018-8.jpg'),
+    ('DSC_1913-Copier.jpg'),
+    ('DSC_1896-Copier.jpg'),
+    ('DSC_1902-Copier.jpg'),
+    ('aquarev-louvafilm-2018-7.jpg');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'DSC_1891-Copier.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-6.jpg'),
+    (var_id_offre, 'DSC_1889-Copier.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-5.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-4.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-3.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-2.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-1.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-11.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-10.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-9.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-8.jpg'),
+    (var_id_offre, 'DSC_1913-Copier.jpg'),
+    (var_id_offre, 'DSC_1896-Copier.jpg'),
+    (var_id_offre, 'DSC_1902-Copier.jpg'),
+    (var_id_offre, 'aquarev-louvafilm-2018-7.jpg');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Bien-être'),
+    (var_id_offre, 'Romantique'),
+    (var_id_offre, 'Relaxation'),
+    (var_id_offre, 'Eco-responsable'),
+    (var_id_offre, 'Nature'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
 
 END $$;
 

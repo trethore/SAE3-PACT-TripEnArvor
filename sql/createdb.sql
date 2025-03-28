@@ -194,7 +194,7 @@ CREATE VIEW offre_activite AS
 CREATE TABLE _offre_visite (
     id_offre        INTEGER,
     duree           INTEGER NOT NULL,
-    date_evenement  INTEGER NOT NULL,
+    date_evenement  INTEGER,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _offre_visite_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)
