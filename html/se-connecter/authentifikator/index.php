@@ -114,7 +114,7 @@ try {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body class="authenticator-verify"> 
+<body class="connecter authenticator-verify"> 
     <header>
         <a href="/front/accueil/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
