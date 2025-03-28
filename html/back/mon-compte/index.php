@@ -16,6 +16,35 @@ if (!isset($_SESSION["id"])) {
 $id_compte = $_SESSION["id"];
 redirectToConnexionIfNecessaryPro($id_compte);
 
+if (!function_exists('OTPHP\trigger_deprecation')) {
+    function trigger_deprecation(string $package, string $version, string $message, ...$args): void {
+        @trigger_error("$package $version: $message", E_USER_DEPRECATED);
+    }
+}
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/symfony/deprecation-contracts/function.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/psr/clock/ClockInterface.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Binary.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/EncoderInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Base32.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/ParameterTrait.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTPInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/HOTPInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTPInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/FactoryInterface.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/OTP.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/HOTP.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/TOTP.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Factory.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/InternalClock.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
+
+class_alias('OTPHP\TOTP', 'TOTP');
+
 try {
     $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -23,20 +52,33 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-startSession();
+// auth toggle
+$stmt_get = $conn->prepare("SELECT auth FROM _compte WHERE id_compte = :id");
+$stmt_get->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+$stmt_get->execute();
+$currentStatusRow = $stmt_get->fetch(PDO::FETCH_ASSOC);
+$currentAuthStatus = false;
+if (!$currentStatusRow) {
+    header("Location: /se-connecter/");
+}
+$currentAuthStatus = (bool)$currentStatusRow['auth'];
+
+$message = '';
+$qrCodeUri = '';
+$showQrModal = false;
+
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $dbh->prepare("SET SCHEMA 'sae';")->execute();
     $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre NATURAL JOIN sae._compte WHERE id_compte = ?');
     $stmt->execute([$_SESSION['id']]);
-    $offres = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+    $offres = $stmt->fetchAll();
     $dbh = null;
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des titres : " . $e->getMessage();
     print_r("y a un probleme");
 }
-
 
 $typeCompte = getTypeCompte($id_compte);
 
@@ -57,11 +99,67 @@ switch ($typeCompte) {
         break;
 }
 
-// Préparation et exécution de la requête
+// Get account details first since we need them for the API key
 $stmt = $conn->prepare($reqCompte);
-$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT); // Lié à l'ID du compte
+$stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
 $stmt->execute();
 $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Generate API key (used as secret)
+$APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
+
+$truncatedKey = substr($APIKey, 0, 32);
+$AuthKey = \ParagonIE\ConstantTime\Base32::encodeUpper($truncatedKey);
+
+// Generate TOTP object (needed for both activation and showing QR code)
+if ($currentAuthStatus) {
+    $totp = TOTP::create(
+        $AuthKey, // Secret
+        30,       // Period (30 seconds)
+        'sha1',   // Digest algorithm
+        6,        // Digits
+        0         // Epoch (0 means current time)
+    );
+    $totp->setLabel('PACT-' . $detailCompte["denomination"]);
+    $totp->setIssuer('PACT');
+    $qrCodeUri = $totp->getProvisioningUri();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['toggle_auth'])) {
+        // Only allow activation, not deactivation
+        if (!$currentAuthStatus) {
+            $newAuthStatus = true;
+            
+            $totp = TOTP::create(
+                $AuthKey, // Secret
+                30,       // Period (30 seconds)
+                'sha1',   // Digest algorithm
+                6,        // Digits
+                0         // Epoch (0 means current time)
+            );
+            $totp->setLabel('PACT-' . $detailCompte["denomination"]);
+            $totp->setIssuer('PACT');
+            $qrCodeUri = $totp->getProvisioningUri();
+            $showQrModal = true;
+            
+            $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
+            $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
+            $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+
+            if ($stmt_update->execute()) {
+                $currentAuthStatus = $newAuthStatus;
+            }
+        }
+    } elseif (isset($_POST['show_qr'])) {
+        // Show QR code again
+        $showQrModal = true;
+    }
+}
+
+$statusText = $currentAuthStatus ? "Activé" : "Desactivé";
+$buttonText = $currentAuthStatus ? "Afficher le QR Code" : "Activer Authentifikator";
+$buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
 
 $informationsBancaires;
 if ($typeCompte === 'proPrive') {
@@ -82,6 +180,21 @@ if ($typeCompte === 'proPrive') {
     <script src="/scripts/header.js"></script>
 </head>
 <body class="back compte-back">
+    <!-- QR Code Modal -->
+    <div class="modal-overlay" id="qrModalOverlay" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>"></div>
+    <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
+        <h3>Configurer l'authentification à deux facteurs</h3>
+        <p>Scannez ce QR code avec Google Authenticator:</p>
+        <?php if ($showQrModal): ?>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= urlencode($qrCodeUri) ?>" alt="QR Code">
+        <?php else: ?>
+            <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
+        <?php endif; ?>
+        <p>Ou entrez manuellement ce code:<br>
+        <strong><?= rtrim($AuthKey, '=') ?></strong></p>
+        <button onclick="closeQrModal()">Fermer</button>
+    </div>
+
     <header>
         <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
         <div class="text-wrapper-17"><a href="/back/liste-back">PACT Pro</a></div>
@@ -232,9 +345,6 @@ if ($typeCompte === 'proPrive') {
                 <a href="/back/modifier-compte">Modifier les informations</a>
             </div>
             <div>
-                <?php
-                    $APIKey = hash('sha256', $id_compte . $detailCompte["email"]. $detailCompte["mot_de_passe"]);
-                ?>
                 <script>
                     function copyAPIKey() {
                         var apiKey = "<?php echo addslashes($APIKey); ?>";
@@ -244,6 +354,18 @@ if ($typeCompte === 'proPrive') {
                 </script>
                 <h2>Clé d'accès au Tchatator : </h2>
                 <button onclick="copyAPIKey()" id="apibutton">Cliquez ici !</button>
+            </div>
+            <div class="container-authentificator">
+                <h2>Authentificateur</h2>
+                <p>L'Authentificateur est: <span class="status-<?php echo $currentAuthStatus ? 'enabled' : 'disabled'?>"> <?php echo htmlspecialchars($statusText); ?></span></p>
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <button type="submit" name="<?php echo $buttonName; ?>" id="auth_toggle_button">
+                        <?php echo htmlspecialchars($buttonText); ?>
+                    </button>
+                </form>
+                <?php if (!empty($message)): ?>
+                    <p class="message"><?php echo htmlspecialchars($message); ?></p>
+                <?php endif; ?>
             </div>
         </section>
     </main>
@@ -270,14 +392,28 @@ if ($typeCompte === 'proPrive') {
             </a>
             </div>
         </div>
-
-
-        <!-- Barre en bas du footer incluse ici -->
-
         </div>
         <div class="footer-bottom">
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
     </footer>
+    <script>
+        // QR Code Modal functions
+        function showQrModal() {
+            document.getElementById('qrModalOverlay').style.display = 'block';
+            document.getElementById('qrModal').style.display = 'block';
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModalOverlay').style.display = 'none';
+            document.getElementById('qrModal').style.display = 'none';
+        }
+
+        <?php if ($showQrModal): ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            showQrModal();
+        });
+        <?php endif; ?>
+    </script>
 </body>
 </html>
