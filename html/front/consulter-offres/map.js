@@ -173,6 +173,8 @@ async function addOfferWithAddress(offer) {
       }
     );
     const data = await response.json();
+    console.log(address);
+    console.log(data);
 
     if (data.length > 0) {
       offer.lat = parseFloat(data[0].lat);
