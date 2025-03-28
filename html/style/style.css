@@ -6339,8 +6339,5 @@ input[type="tel"] {
     font-weight: bold !important;
     background-color:var(--blanc) !important;
     white-space: nowrap !important; /* Empêche le retour à la ligne */
-    overflow: hidden !important; /* Cache le débordement */
-    text-overflow: ellipsis !important; /* Ajoute "..." si le texte dépasse */
-    display: block !important; /* Assure que l'élément prend toute la largeur disponible */
-    max-width: 100% !important; /* Empêche le dépassement du parent */
+    
 }
