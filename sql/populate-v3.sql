@@ -608,6 +608,22 @@ BEGIN
     (var_id_offre, 'Groupe'),
     (var_id_offre, 'Solo');
 
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('Mars → Juin : 11h - 18h : < 4 ans', 0, var_id_offre),
+    ('Mars → Juin : 11h - 18h : 4 - 17 ans', 11, var_id_offre),
+    ('Mars → Juin : 11h - 18h : 18 - 64 ans', 12, var_id_offre),
+    ('Mars → Juin : 14h - 18h : < 4 ans', 0, var_id_offre),
+    ('Mars → Juin : 14h - 18h : 4 - 17 ans', 5, var_id_offre),
+    ('Mars → Juin : 14h - 18h : 18 - 64 ans', 6, var_id_offre),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 0, var_id_offre),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 13, var_id_offre),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 15, var_id_offre);
+
 
     /* ##################################################################### */
     /*                             Parc Aquarev                              */
