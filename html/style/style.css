@@ -1538,11 +1538,6 @@ h3 {
     border: 2px solid var(--blanc-leger);
 }
 
-.container-authentificator p {
-    font-size: 34px;
-  }
-
-
 /********************
     DETAILS COMPTE
 *********************/
@@ -6242,6 +6237,10 @@ input[type="tel"] {
     .consulter-offre-front .carousel {
         width: fit-content;
       }
+
+    .container-authentificator p {
+        font-size: 34px;
+    }
 }
 
 @media screen and (max-width: 1100px) {
