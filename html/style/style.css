@@ -293,6 +293,9 @@ h3 {
     color: var(--violet-principal);
 }
 
+
+
+
 /**************************************************************************************
                                 BACK-OFFICE-COMPTE
 ***************************************************************************************/
@@ -313,7 +316,7 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton {
+.compte-back #apibutton, #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border: var(--orange-principale) 2px solid;
@@ -322,7 +325,7 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
-.compte-back #apibutton:hover {
+.compte-back #apibutton:hover, #auth_toggle_button:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
      border: var(--orange-principale) 2px solid;
@@ -1454,7 +1457,7 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover {
+.compte-front #apibutton:hover, #auth_toggle_button:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
@@ -4393,16 +4396,13 @@ h3 {
     display: inline;
 }
 
-.mes-avis .titre_offre a {
-    background-color:var(--blanc);
-    color: black;
-    font-weight: bold;
-}
 
 .mes_avis .titre_offre a > p{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
+    font-size: 15px;
+    max-width: 20px;
 }
 
 .mes-avis h2 {
@@ -5599,7 +5599,7 @@ input[type="tel"] {
 }
 .qr-modal button {
     padding: 8px 16px;
-    background: #007bff;
+    background: var(--violet-principal);
     color: white;
     border: none;
     border-radius: 4px;
@@ -6321,4 +6321,17 @@ input[type="tel"] {
 	.creer-compte #div-adresse .row div {
 		width: 100%;
 	}
+}
+
+
+
+
+
+
+/* ici pour etre sur */
+.mes-avis .titre_offre > a { 
+    display: block ruby !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    background-color:var(--blanc) !important;
 }

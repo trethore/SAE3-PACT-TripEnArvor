@@ -63,19 +63,20 @@ try {
 
     $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
     $truncatedKey = substr($APIKey, 0, 32); 
+    $AuthKey = \ParagonIE\ConstantTime\Base32::encodeUpper($truncatedKey);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $code = $_POST['auth_code'] ?? '';
 
         if (!empty($code) && preg_match('/^[0-9]{6}$/', $code)) {
             try {
-                 $otp = OTPHP\TOTP::createFromSecret($truncatedKey);
+                 $otp = OTPHP\TOTP::createFromSecret($AuthKey);
                  if ($otp->verify($code)) {
                      unset($_SESSION['id_auth']); 
                      $_SESSION['id'] = $id_compte; 
-                     if (isIdMember($id)) {
+                     if (isIdMember($id_compte)) {
                         header("Location: /front/consulter-offres/");
-                    } else if (isIdProPrivee($id) || isIdProPublique($id)) {
+                    } else if (isIdProPrivee($id_compte) || isIdProPublique($id_compte)) {
                         header("Location: /back/liste-back/");
                     }
                     exit();
@@ -114,7 +115,7 @@ try {
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
-<body class="authenticator-verify"> 
+<body class="connecter authenticator-verify"> 
     <header>
         <a href="/front/accueil/">
             <img src="/images/universel/logo/Logo_couleurs.png" alt="Logo de la PACT">
