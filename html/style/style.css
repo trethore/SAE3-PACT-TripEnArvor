@@ -316,7 +316,7 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton {
+.compte-back #apibutton, #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border: var(--orange-principale) 2px solid;
@@ -325,7 +325,7 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
-.compte-back #apibutton:hover {
+.compte-back #apibutton:hover, #auth_toggle_button:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
      border: var(--orange-principale) 2px solid;
@@ -1448,7 +1448,7 @@ h3 {
     margin: 2em;
 }
 
-.compte-front #apibutton {
+.compte-front #apibutton, .compte-front #auth_toggle_button {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1457,7 +1457,7 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover {
+.compte-front #apibutton:hover, #auth_toggle_button:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
@@ -1537,6 +1537,10 @@ h3 {
     background-color: var(--violet-principal);
     border: 2px solid var(--blanc-leger);
 }
+
+.container-authentificator p {
+    font-size: 34px;
+  }
 
 
 /********************
@@ -5595,7 +5599,7 @@ input[type="tel"] {
 }
 .qr-modal button {
     padding: 8px 16px;
-    background: #007bff;
+    background: var(--violet-principal);
     color: white;
     border: none;
     border-radius: 4px;
@@ -5604,10 +5608,10 @@ input[type="tel"] {
 .modal-overlay {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -50px;
+    left: -50px;
+    width: 120%;
+    height: 120%;
     background: rgba(0,0,0,0.5);
     z-index: 1000;
 }
@@ -5744,6 +5748,10 @@ input[type="tel"] {
     /****************************************************
                        COMPTE FRONT
     *****************************************************/
+    .qr-modal button {
+        font-size: 40px;
+        border-radius: 15px;
+    }
 
     :root {
         font-size: 100%;
@@ -5854,7 +5862,7 @@ input[type="tel"] {
         margin: 0;
     }
 
-    .compte-front #apibutton {
+    .compte-front #apibutton, .compte-front #auth_toggle_button {
         font-size: 34px;
     }
 
@@ -6322,6 +6330,7 @@ input[type="tel"] {
 
 
 
+
 .titre_offre {
     width: 50%; /* Adapte le parent à la largeur du conteneur */
    justify-content: end;
@@ -6338,3 +6347,4 @@ input[type="tel"] {
     white-space: nowrap !important; /* Empêche le retour à la ligne */
     
 }
+
