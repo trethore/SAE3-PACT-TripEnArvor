@@ -176,7 +176,7 @@ if ($typeCompte === 'proPrive') {
                 $nb_non_lu = 0;
                 $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                
+                $nb_avis_total = 0;
 
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
@@ -184,6 +184,7 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
                     $nb_avis = count($avis);
+                    $nb_avis_total += $nb_avis; 
 
                     foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
@@ -212,14 +213,17 @@ if ($typeCompte === 'proPrive') {
                 <?php } else { ?>
 
                     <h2> <?php
-                            echo "Vous avez " . $nb_non_lu . " avis non lus";
+                            echo  $nb_non_lu . " avis non lus";
                             echo "<br>";
-                            echo "Vous avez " . $nbrAvisNonRepondus . " avis non repondus"; ?>
+                            echo $nbrAvisNonRepondus . " avis non repondus"; ?>
                     </h2> <?php
                             echo 'tri par offre';
 
                             foreach ($touteslesoffres as $offre) {
-
+                                if ($nb_avis_total == 0) {
+                                    print("Aucun avis n'a été laissé sur vos offres");
+                                    break;
+                                }
                             ?>
                         <h3>
                             <?php
@@ -227,14 +231,8 @@ if ($typeCompte === 'proPrive') {
                                 $id_offre = $offre['id_offre'];
                                 $avis = getAvis($id_offre);
                                 $nb_offres++;
-                                if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
-
-                                    if (count($touteslesoffres) == $nb_offres) {
-                                        print("Aucun avis n'a été laissé sur vos offres");
-                                        break;
-                                    } else {
-                                        continue;
-                                    }
+                                if (!$avis) { 
+                                    continue;  //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                                 }
  
                                     ?>
@@ -297,6 +295,12 @@ if ($typeCompte === 'proPrive') {
                                                             <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
                                                         <?php } ?>
                                                     </div>
+                                                </div>
+
+                                                <div class="titre_offre">
+                                                <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                    <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                </a>
                                                 </div>
 
                                             </div>
@@ -362,8 +366,7 @@ if ($typeCompte === 'proPrive') {
     <script> 
     const avisContainer = document.querySelectorAll("container_avis");
     const avis = document.querySelectorAll("article");
-    const date = document
-        // Sort Offers
+        // Sort avis
         const sortAvis = () => {
             const selectElement = document.querySelector(".tris");
             const selectedValue = selectElement.value;
@@ -375,11 +378,11 @@ if ($typeCompte === 'proPrive') {
                      return selectedValue === "ancien" ? dateA - dateB : dateB - dateA;
                 });
 
-                avis.forEach(lavis => offersContainer.appendChild(lavis));
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
             } if (selectedValue === "default") {
                 avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
-                avis.forEach(lavis => offersContainer.appendChild(lavis));
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
             }
         };
 

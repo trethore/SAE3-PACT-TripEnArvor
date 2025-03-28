@@ -267,44 +267,47 @@ try {
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
     <script src="/scripts/popupAvis.js"></script>
+    <script src="/scripts/blacklist.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
 <body class="front consulter-offre-front">
+
+    <div id="overlay"></div>
     
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
+    <?php
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
-try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbh->prepare("SET SCHEMA 'sae';")->execute();
-    $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
-    $stmt->execute();
-    $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
-    $dbh = null;
-} catch (PDOException $e) { 
-    echo "Erreur lors de la récupération des titres : " . $e->getMessage();
-}
-?>
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->prepare("SET SCHEMA 'sae';")->execute();
+        $stmt = $dbh->prepare('SELECT titre, id_offre FROM sae._offre');
+        $stmt->execute();
+        $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
+        $dbh = null;
+    } catch (PDOException $e) { 
+        echo "Erreur lors de la récupération des titres : " . $e->getMessage();
+    }
+    ?>
 
-<header>
-    <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
-    <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
-    <div class="search-box">
-        <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
-        <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
-        <datalist id="cont">
-            <?php foreach ($of as $o) { ?>
-                <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
-                    <?php echo htmlspecialchars($o['titre']); ?>
-                </option>
-            <?php } ?>
-        </datalist>
-    </div>
-    <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
-    <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
-</header>
+    <header>
+        <img class="logo" src="/images/universel/logo/Logo_blanc.png" />
+        <div class="text-wrapper-17"><a href="/front/consulter-offres">PACT</a></div>
+        <div class="search-box">
+            <button class="btn-search"><img class="cherchero" src="/images/universel/icones/chercher.png" /></button>
+            <input type="text" list="cont" class="input-search" placeholder="Taper votre recherche...">
+            <datalist id="cont">
+                <?php foreach ($of as $o) { ?>
+                    <option value="<?php echo htmlspecialchars($o['titre']); ?>" data-id="<?php echo $o['id_offre']; ?>">
+                        <?php echo htmlspecialchars($o['titre']); ?>
+                    </option>
+                <?php } ?>
+            </datalist>
+        </div>
+        <a href="/front/accueil"><img class="ICON-accueil" src="/images/universel/icones/icon_accueil.png" /></a>
+        <a href="/front/mon-compte"><img class="ICON-utilisateur" src="/images/universel/icones/icon_utilisateur.png" /></a>
+    </header>
 
     <main id="body">
 
@@ -625,7 +628,7 @@ try {
                     if ($avisCount == 0) { 
                     ?>
                         <button id="showFormButton">Publier un avis</button>
-                        <form id="avisForm" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <div class="display-ligne-espace"> 
@@ -757,7 +760,7 @@ try {
 
                             </div>
                             
-                            <button class="menu-button" onclick="toggleMenu(event, this, <?php echo $identifiant; ?>)">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)">
                                 <img src="/images/universel/icones/trois-points-violet.png">
                             </button>
 
@@ -766,15 +769,53 @@ try {
                                     <?php 
                                     if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { 
                                     ?>
-                                        <li id="bouton-supprimer-avis">Supprimer</li>
+                                        <li onclick="confirmerSupprimer()" id="bouton-supprimer-avis">Supprimer</li>
                                     <?php 
-                                    } else { 
+                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) { 
                                     ?>
-                                        <li onclick="handleMenuAction('Signaler')">Signaler</li>
+                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                     <?php 
                                     } 
                                     ?>
                                 </ul>
+                            </div>
+
+                            <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
+
+                                <div>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <form id="signalement-form">
+                                        <label>
+                                            <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
+                                        </label><br>
+                                        <label> 
+                                            <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle"> Il ne décrit pas une expérience personnelle
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="Il s'agit d'un doublon publié par le même membre"> Il s'agit d'un doublon publié par le même membre
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
+                                        </label><br>
+                                        <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
+                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
+                                    </form>
+                                    <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
+                                    <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
+                                </div>
+
+                            </div>
+
+                            <div class="confirmation-popup" id="popup-supprimer-avis" style="display: none;">
+                                <form action="/front/supprimer-avis/" method="post">
+                                    <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
+                                    <p>Êtes-vous sûr de vouloir supprimer votre avis ?</p>
+                                    <p>Cette action ne peut pas être annulée.</p>
+                                    <div>
+                                        <button onclick="validerSupprimer()" type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
+                                        <button onclick="annulerSupprimer()"type="button" id="bouton-fermer-popup">Annuler</button>
+                                    </div>
+                                </form>
                             </div>
 
                         </div>
@@ -841,9 +882,9 @@ try {
 
                             <div class="display-ligne">
                                 <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $identifiant; ?>">
+                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $identifiant; ?>" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre="<?php echo $_SESSION['id']; ?>">
                                 <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $identifiant; ?>">
+                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $identifiant; ?>" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre="<?php echo $_SESSION['id']; ?>">
                             </div>
 
                         </div>
@@ -883,21 +924,6 @@ try {
                 $identifiant++; 
             } 
             ?>
-
-            <div id="popup-supprimer-avis" style="display: none;">
-                <form action="/front/supprimer-avis/" method="post">
-                    <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
-                    <h3>Supprimer un avis</h3>
-                    <p>
-                        Voulez-vous vraiment supprimer cet avis&nbsp;?<br>
-                        Cette action est définitive et ne peut pas être annulée.
-                    </p>
-                    <div>
-                        <button type="button" id="bouton-fermer-popup">Annuler</button>
-                        <button type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
-                    </div>
-                </form>
-            </div>
 
         </section>        
 
@@ -962,32 +988,6 @@ try {
             </a>
         </div>
     </div>
-
-    <script>
-        function toggleMenu(event, button, compteur) {
-            event.stopPropagation();
-            let menu = document.getElementById(`popup-menu-${compteur}`);
-            document.querySelectorAll(".popup-menu").forEach(m => {
-                if (m !== menu) m.style.display = "none";
-            });
-
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-                return;
-            }
-
-            let rect = button.getBoundingClientRect();
-            menu.style.top = `${rect.top + window.scrollY - 18}px`;
-            menu.style.left = `${rect.left + window.scrollX - 100}px`;
-            menu.style.display = "block";
-        }
-
-        document.addEventListener("click", function() {
-            document.querySelectorAll(".popup-menu").forEach(menu => {
-                menu.style.display = "none";
-            });
-        });
-    </script>
 
 </body>
 

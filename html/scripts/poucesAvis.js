@@ -13,73 +13,51 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     };
 
-    // Function to handle thumb clicks
     function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, activeImage, inactiveImage, otherActiveImage, otherInactiveImage) {
-        const id = thumb.getAttribute('data-id');
-        console.log(thumb);
-        console.log(otherThumb);
-        console.log(countElement);
-        console.log(otherCountElement);
+        const id_membre = thumb.getAttribute('data-id-membre');
+        const id_offre = thumb.getAttribute('data-id-offre');
+        var action = thumb.src.includes(activeImage) ? 'remove' : 'add';
+        var otherIsActive = otherThumb.src.includes(otherActiveImage);
+        var change = otherIsActive ? 'true' : 'false';
 
-        // If the thumb is already active, deactivate it
-        if (thumb.src.includes(activeImage)) {
-            thumb.src = inactiveImage;
-            countElement.textContent = parseInt(countElement.textContent) - 1;
-        } else {
-            // Activate the clicked thumb
-            thumb.src = activeImage;
-            countElement.textContent = parseInt(countElement.textContent) + 1;
-
-            // Deactivate the other thumb if it's active
-            if (otherThumb.src.includes(otherActiveImage)) {
-                otherThumb.src = otherInactiveImage;
-                otherCountElement.textContent = parseInt(otherCountElement.textContent) - 1;
+        thumb.src = action === 'add' ? activeImage : inactiveImage;
+        
+        if (otherIsActive) {
+            otherThumb.src = otherInactiveImage;
+            if (otherCountElement) {
+                otherCountElement.textContent = Math.max(0, parseInt(otherCountElement.textContent) - 1);
             }
         }
 
-        // Optionally send an AJAX request to update the server
-        // updateThumbCount(id, thumb.classList.contains('pouceHaut') ? 'haut' : 'bas');
+        if (countElement) {
+            countElement.textContent = Math.max(0, parseInt(countElement.textContent) + (action === 'add' ? 1 : -1));
+        }
+        
+        fetch('/utils/pouces.php', {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `id_membre=${id_membre}&id_offre=${id_offre}&type=${thumb.classList.contains('pouceHaut') ? 'like' : 'dislike'}&action=${action}&change=${change}`
+        })
+        .then(response => response.text())
+        .then(data => {})
+        .catch(error => console.error("Erreur AJAX:", error));
     }
 
-    // Add event listeners for thumbs up
     pouceHauts.forEach(pouceHaut => {
         pouceHaut.addEventListener('click', function () {
-            const id = pouceHaut.getAttribute('data-id');
-            const nbPouceHaut = pouceHaut.previousElementSibling; // Count for thumbs up
-            const pouceBas = pouceHaut.nextElementSibling.nextElementSibling; // Thumbs down button
-            const nbPouceBas = pouceBas.previousElementSibling; // Count for thumbs down
-
-            handleThumbClick(
-                pouceHaut,
-                pouceBas,
-                nbPouceHaut,
-                nbPouceBas,
-                images.haut.actif,
-                images.haut.inactif,
-                images.bas.actif,
-                images.bas.inactif
-            );
+            const nbPouceHaut = pouceHaut.previousElementSibling; 
+            const pouceBas = pouceHaut.nextElementSibling.nextElementSibling; 
+            const nbPouceBas = pouceBas.previousElementSibling;
+            handleThumbClick(pouceHaut, pouceBas, nbPouceHaut, nbPouceBas, images.haut.actif, images.haut.inactif, images.bas.actif, images.bas.inactif);
         });
     });
 
-    // Add event listeners for thumbs down
     pouceBas.forEach(pouceBas => {
         pouceBas.addEventListener('click', function () {
-            const id = pouceBas.getAttribute('data-id');
-            const nbPouceBas = pouceBas.previousElementSibling; // Count for thumbs down
-            const pouceHaut = pouceBas.previousElementSibling.previousElementSibling; // Thumbs up button
-            const nbPouceHaut = pouceHaut.previousElementSibling; // Count for thumbs up
-
-            handleThumbClick(
-                pouceBas,
-                pouceHaut,
-                nbPouceBas,
-                nbPouceHaut,
-                images.bas.actif,
-                images.bas.inactif,
-                images.haut.actif,
-                images.haut.inactif
-            );
+            const nbPouceBas = pouceBas.previousElementSibling; 
+            const pouceHaut = pouceBas.previousElementSibling.previousElementSibling; 
+            const nbPouceHaut = pouceHaut.previousElementSibling; 
+            handleThumbClick(pouceBas, pouceHaut, nbPouceBas, nbPouceHaut, images.bas.actif, images.bas.inactif, images.haut.actif, images.haut.inactif);
         });
     });
 });

@@ -24,6 +24,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/symfony/deprecation-contracts/fun
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/psr/clock/ClockInterface.php');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Binary.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/EncoderInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/constant_time_encoding/src/Base32.php');
 
@@ -40,8 +41,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Factory.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/InternalClock.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
 
-/*require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/assert/lib/Assert/Assert.php');*/
-
 class_alias('OTPHP\TOTP', 'TOTP');
 
 try {
@@ -51,8 +50,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-$reqCompte = "SELECT * from sae.compte_membre
-                where id_compte = :id_compte;";
+$reqCompte = "SELECT * from sae.compte_membre where id_compte = :id_compte;";
 
 // auth toggle
 $stmt_get = $conn->prepare("SELECT auth FROM _compte WHERE id_compte = :id");
@@ -78,38 +76,58 @@ $detailCompte = $stmt->fetch(PDO::FETCH_ASSOC);
 // Generate API key (used as secret)
 $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mot_de_passe"]);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
-    $newAuthStatus = !$currentAuthStatus;
-    
-    if ($newAuthStatus) {
-        $totp = TOTP::create(
-            $APIKey,  // Secret
-            30,       // Period (30 seconds)
-            'sha1',   // Digest algorithm
-            6,        // Digits
-            0         // Epoch (0 means current time)
-        );
-        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
-        $totp->setIssuer('PACT');
-        $qrCodeUri = $totp->getProvisioningUri();
-        $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=' . urlencode($qrCodeUri);
-        $showQrModal = true;
-    }
-    
-    $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
-    $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
-    $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+$truncatedKey = substr($APIKey, 0, 32);
+$AuthKey = \ParagonIE\ConstantTime\Base32::encodeUpper($truncatedKey);
 
-    if ($stmt_update->execute()) {
-        $message = "Authentication status updated successfully!";
-        $currentAuthStatus = $newAuthStatus;
-    } else {
-        $message = "Error updating authentication status.";
+// Generate TOTP object (needed for both activation and showing QR code)
+if ($currentAuthStatus) {
+    $totp = TOTP::create(
+        $AuthKey, // Secret
+        30,       // Period (30 seconds)
+        'sha1',   // Digest algorithm
+        6,        // Digits
+        0         // Epoch (0 means current time)
+    );
+    $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+    $totp->setIssuer('PACT');
+    $qrCodeUri = $totp->getProvisioningUri();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['toggle_auth'])) {
+        // Only allow activation, not deactivation
+        if (!$currentAuthStatus) {
+            $newAuthStatus = true;
+            
+            $totp = TOTP::create(
+                $AuthKey, // Secret
+                30,       // Period (30 seconds)
+                'sha1',   // Digest algorithm
+                6,        // Digits
+                0         // Epoch (0 means current time)
+            );
+            $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+            $totp->setIssuer('PACT');
+            $qrCodeUri = $totp->getProvisioningUri();
+            $showQrModal = true;
+            
+            $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
+            $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
+            $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+
+            if ($stmt_update->execute()) {
+                $currentAuthStatus = $newAuthStatus;
+            }
+        }
+    } elseif (isset($_POST['show_qr'])) {
+        // Show QR code again
+        $showQrModal = true;
     }
 }
 
 $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
-$buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authentifikator";
+$buttonText = $currentAuthStatus ? "Afficher le QR Code" : "Activer Authentifikator";
+$buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -122,7 +140,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <title>Mon compte</title>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <script src="/scripts/header.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 
 <body class="front compte-front">
@@ -147,9 +164,13 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
     <div class="qr-modal" id="qrModal" style="<?= $showQrModal ? 'display: block;' : 'display: none;' ?>">
         <h3>Configurer l'authentification à deux facteurs</h3>
         <p>Scannez ce QR code avec Google Authenticator:</p>
-        <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
+        <?php if ($showQrModal): ?>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= urlencode($qrCodeUri) ?>" alt="QR Code">
+        <?php else: ?>
+            <div id="qrCodeContainer" style="width: 200px; height: 200px; margin: 0 auto; background: white; padding: 10px;"></div>
+        <?php endif; ?>
         <p>Ou entrez manuellement ce code:<br>
-        <strong><?= chunk_split($APIKey, 4, ' ') ?></strong></p>
+        <strong><?= rtrim($AuthKey, '=') ?></strong></p>
         <button onclick="closeQrModal()">Fermer</button>
     </div>
 
@@ -220,10 +241,13 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
                 <h2>Authentificateur</h2>
                 <p>L'Authentificateur est: <span class="status-<?php echo $currentAuthStatus ? 'enabled' : 'disabled'?>"> <?php echo htmlspecialchars($statusText); ?></span></p>
                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <button type="submit" name="toggle_auth" id="auth_toggle_button">
+                    <button type="submit" name="<?php echo $buttonName; ?>" id="auth_toggle_button">
                         <?php echo htmlspecialchars($buttonText); ?>
                     </button>
                 </form>
+                <?php if (!empty($message)): ?>
+                    <p class="message"><?php echo htmlspecialchars($message); ?></p>
+                <?php endif; ?>
             </div>
             <button onclick="delCompteMembre(event, <?= $id_compte ?>)" id="delButton">Supprimer le compte</button>
         </section>
@@ -288,22 +312,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         function showQrModal() {
             document.getElementById('qrModalOverlay').style.display = 'block';
             document.getElementById('qrModal').style.display = 'block';
-            
-            // Generate QR code
-            const qrCodeContainer = document.getElementById('qrCodeContainer');
-            qrCodeContainer.innerHTML = ''; // Clear previous QR code
-            
-            // Use the QRCode.js library properly
-            QRCode.toCanvas(qrCodeContainer, "<?= addslashes($qrCodeUri) ?>", {
-                width: 180,
-                margin: 1,
-                color: {
-                    dark: '#000000',
-                    light: '#ffffff'
-                }
-            }, function(error) {
-                if (error) console.error(error);
-            });
         }
 
         function closeQrModal() {
@@ -312,7 +320,6 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
         }
 
         <?php if ($showQrModal): ?>
-        // Wait for DOM to be fully loaded before showing modal
         document.addEventListener('DOMContentLoaded', function() {
             showQrModal();
         });
