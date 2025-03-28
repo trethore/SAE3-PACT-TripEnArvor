@@ -1445,7 +1445,7 @@ h3 {
     margin: 2em;
 }
 
-.compte-front #apibutton {
+.compte-front #apibutton, #auth_toggle_button {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1454,7 +1454,7 @@ h3 {
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover {
+.compte-front #apibutton:hover, #auth_toggle_button:hover {
     background-color: var(--blanc-leger);
     color: var(--violet-principal);
     border: var(--violet-principal) 2px solid;
