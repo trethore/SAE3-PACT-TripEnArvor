@@ -3106,6 +3106,11 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-back .tag {
+    width: 35px;
+    height: 35px;
+}
+
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
 }
@@ -3117,7 +3122,6 @@ h3 {
 
 .consulter-offre-front .liste-caracteristique>li {
     color: var(--noir);
-    border-left: 3px solid var(--violet-principal);
     font-size: 24px;
     list-style: none;
     display: flex;
@@ -3792,13 +3796,6 @@ h3 {
 /**********************************
         PREMIER DOUBLE BLOC                               
 **********************************/
-
-.consulter-offre-back #map {
-    width: 200px;
-    height: 200px;              
-    border-radius: 4px;
-    box-sizing: border-box;       
-}
 
 /***********************************
         BLOC CARACTÉRISTIQUE                       
