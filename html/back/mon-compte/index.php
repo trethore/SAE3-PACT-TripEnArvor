@@ -120,7 +120,7 @@ if ($currentAuthStatus) {
         6,        // Digits
         0         // Epoch (0 means current time)
     );
-    $totp->setLabel('PACT-' . $detailCompte["denomination"]);
+    $totp->setLabel('PACT Pro-' . $detailCompte["denomination"]);
     $totp->setIssuer('PACT');
     $qrCodeUri = $totp->getProvisioningUri();
 }
