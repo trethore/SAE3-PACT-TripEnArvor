@@ -93,41 +93,34 @@ if ($currentAuthStatus) {
     $qrCodeUri = $totp->getProvisioningUri();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['toggle_auth'])) {
-        // Only allow activation, not deactivation
-        if (!$currentAuthStatus) {
-            $newAuthStatus = true;
-            
-            $totp = TOTP::create(
-                $AuthKey, // Secret
-                30,       // Period (30 seconds)
-                'sha1',   // Digest algorithm
-                6,        // Digits
-                0         // Epoch (0 means current time)
-            );
-            $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
-            $totp->setIssuer('PACT');
-            $qrCodeUri = $totp->getProvisioningUri();
-            $showQrModal = true;
-            
-            $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
-            $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
-            $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
-
-            if ($stmt_update->execute()) {
-                $currentAuthStatus = $newAuthStatus;
-            }
-        }
-    } elseif (isset($_POST['show_qr'])) {
-        // Show QR code again
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
+    // Only allow activation, not deactivation
+    if (!$currentAuthStatus) {
+        $newAuthStatus = true;
+        
+        $totp = TOTP::create(
+            $AuthKey, // Secret
+            30,       // Period (30 seconds)
+            'sha1',   // Digest algorithm
+            6,        // Digits
+            0         // Epoch (0 means current time)
+        );
+        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+        $totp->setIssuer('PACT');
+        $qrCodeUri = $totp->getProvisioningUri();
         $showQrModal = true;
+        
+        $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
+        $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
+        $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+
+        if ($stmt_update->execute()) {
+            $currentAuthStatus = $newAuthStatus;
+        }
     }
 }
 
 $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
-$buttonText = $currentAuthStatus ? "Afficher le QR Code" : "Activer Authentifikator";
-$buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -240,11 +233,13 @@ $buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
             <div class="container-authentificator">
                 <h2>Authentificateur</h2>
                 <p>L'Authentificateur est: <span class="status-<?php echo $currentAuthStatus ? 'enabled' : 'disabled'?>"> <?php echo htmlspecialchars($statusText); ?></span></p>
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <button type="submit" name="<?php echo $buttonName; ?>" id="auth_toggle_button">
-                        <?php echo htmlspecialchars($buttonText); ?>
-                    </button>
-                </form>
+                <?php if (!$currentAuthStatus): ?>
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <button type="submit" name="toggle_auth" id="auth_toggle_button">
+                            Activer Authentifikator
+                        </button>
+                    </form>
+                <?php endif; ?>
                 <?php if (!empty($message)): ?>
                     <p class="message"><?php echo htmlspecialchars($message); ?></p>
                 <?php endif; ?>
@@ -308,12 +303,6 @@ $buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
             popupValider.style.display = "none";
         });
 
-        // QR Code Modal functions
-        function showQrModal() {
-            document.getElementById('qrModalOverlay').style.display = 'block';
-            document.getElementById('qrModal').style.display = 'block';
-        }
-
         function closeQrModal() {
             document.getElementById('qrModalOverlay').style.display = 'none';
             document.getElementById('qrModal').style.display = 'none';
@@ -321,7 +310,8 @@ $buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
 
         <?php if ($showQrModal): ?>
         document.addEventListener('DOMContentLoaded', function() {
-            showQrModal();
+            document.getElementById('qrModalOverlay').style.display = 'block';
+            document.getElementById('qrModal').style.display = 'block';
         });
         <?php endif; ?>
     </script>
