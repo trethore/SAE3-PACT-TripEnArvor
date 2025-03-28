@@ -6590,3 +6590,55 @@ input[type="tel"] {
         box-sizing: border-box;
     }
 }
+
+/* --- Styles pour Mobiles et petits écrans (<= 900px) --- */
+@media (max-width: 900px) {
+
+    /* Affichage de la barre de navigation mobile */
+    .telephone-nav {
+        display: block;
+    }
+
+    /* Ajustements pour le Modal QR sur mobile */
+    .qr-modal {
+        width: 90vw;
+        max-width: 350px;
+        padding: 15px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* === AUGMENTATION DES TAILLES DE POLICE === */
+    .qr-modal h3 {
+        font-size: 1.4em; /* Augmenté (était 1.2em) */
+    }
+
+    .qr-modal p {
+        font-size: 1.05em; /* Augmenté (était 0.95em) */
+        line-height: 1.6; /* Augmenté pour plus d'espace vertical */
+        margin-bottom: 12px;
+    }
+
+     .qr-modal p strong {
+        font-size: 1.1em; /* Légèrement augmenté (était 1em) */
+        line-height: 1.4; /* Ajusté pour le code manuel */
+     }
+     /* ======================================= */
+
+    .qr-modal img,
+    .qr-modal #qrCodeContainer {
+        max-width: 150px; /* Garder 150px ou ajuster si besoin */
+        margin: 15px auto;
+    }
+    .qr-modal #qrCodeContainer {
+        width: 150px;
+        height: 150px;
+    }
+
+    .qr-modal button {
+        padding: 12px 25px;
+        font-size: 1.1em; /* Légèrement augmenté pour correspondre au texte */
+        width: auto;
+    }
+
+}
