@@ -1046,6 +1046,126 @@ BEGIN
     ('Groupe (+15 personnes) : Adulte et Enfant de + de 12 ans ', 9, var_id_offre),
     ('Journée soigneur', 60, var_id_offre);
 
+
+
+    /* ##################################################################### */
+    /*                   Musée de la Résistance en Argoat                    */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        'L’Étang Neuf',
+        NULL,
+        '22480',
+        'Saint-Connan',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'prénom',
+        'NOM',
+        'etangneuf.asso@orange.fr',
+        '+33296471766',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Exemple',
+        'exemple',
+        'https://www.musee-etangneuf.fr/',
+        var_id_adresse,
+        '0123456789'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_visite (
+        "duree", 
+        "date_evenement", 
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        NULL,
+        'Musée de la Résistance en Argoat',
+        'L’histoire de la Seconde Guerre mondiale et de la Résistance dans l’ouest des Côtes d’Armor vous est racontée à travers cinq espaces d’expositions et une salle de projection.',
+        'Saint-Connan',
+        'Le musée de la Résistance en Argoat s’inscrit dans un lieu porteur de mémoire. C’est au cœur de la forêt de Coatmallouen que se met en place, en juin 1944, le maquis de Plésidy à Saint-Connan. Fort de plusieurs centaines d’hommes, il affronte les troupes d’occupation lors des combats du 27 juillet 1944 puis participe à la Libération de Guingamp et de sa région. L’histoire de la Seconde Guerre mondiale et de la Résistance dans l’ouest des Côtes d’Armor vous est racontée à travers cinq espaces d’expositions et une salle de projection.',
+        'https://www.musee-etangneuf.fr/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('img-musee-inter1.jpg'),
+    ('img-musee-inter2.jpg');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'img-musee-inter1.jpg'),
+    (var_id_offre, 'img-musee-inter2.jpg');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Histoire'),
+    (var_id_offre, 'Découverte');
+
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('Moins de 7 ans', 0, var_id_offre),
+    ('7-18 ans', 3, var_id_offre),
+    ('Réduit', 5, var_id_offre),
+    ('Plein', 6, var_id_offre),
+    ('Groupe de 6 à 10 personnes', 50, var_id_offre),
+    ('Groupe de plus de 10 personnes', 6, var_id_offre),
+    ('Visite guidée pour les scolaires', 4, var_id_offre);
+
 END $$;
 
 
