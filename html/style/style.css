@@ -6327,5 +6327,5 @@ input[type="tel"] {
 /* ici pour etre sur */
 .mes-avis .titre_offre > a { 
     display: block ruby;
-    background-color:var(--blanc);
+    background-color:var(--blanc) !important;
 }
