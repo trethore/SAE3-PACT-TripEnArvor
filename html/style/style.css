@@ -6343,80 +6343,40 @@ input[type="tel"] {
 }
 
 
-/**************************************************************************************
-                                    QR Code Modal Styles
-***************************************************************************************/
-
-/* Base styles (you already have these, ensure text-align and margins are good) */
-.qr-modal {
-    display: none;
+/* Styles existants (vérifiez la valeur de height) */
+.telephone-nav {
+    display: none; /* Caché par défaut */
+    overflow: hidden;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    z-index: 1001;
-    text-align: center;
-    width: auto; /* Default width based on content */
-    max-width: 400px; /* Max width on larger screens */
-    color: var(--noir); /* Explicitly set text color */
+    max-width: 100%;
+    max-height: 100%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* === AJUSTEZ CE POURCENTAGE SELON VOS BESOINS === */
+    height: 8%; /* Par exemple, changé à 8%. Mettez le % que vous voulez */
+    /* =============================================== */
+    z-index: 99;
+    background-color: var(--violet-principal);
+    padding: 1% 2%;
+    box-sizing: border-box; /* Ajouté : Bonne pratique pour que le padding n'ajoute pas à la hauteur */
 }
 
-.qr-modal h3 {
-    margin-top: 0;
-    margin-bottom: 15px; /* Add space below heading */
-    font-size: 1.4em; /* Adjust as needed */
-    color: var(--violet-principal); /* Match theme */
+/* Styles existants de l'overlay principal */
+#popupOverlay {
+    display: none;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Opacité par défaut (peut-être pour mobile ou base) */
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease; /* Ajouté: Transition douce si l'opacité change */
 }
 
-.qr-modal p {
-   line-height: 1.5; /* Improve readability */
-   margin-bottom: 15px; /* Space between paragraphs */
-   font-size: 1em; /* Base font size */
-}
-
-.qr-modal p strong {
-    color: var(--violet-principal); /* Highlight the code */
-    word-break: break-all; /* Allow long codes to wrap if needed */
-    font-size: 1.1em;
-}
-
-/* Styles for the QR image and its container */
-.qr-modal img,
-.qr-modal #qrCodeContainer {
-    display: block; /* Crucial for auto margins to work */
-    margin: 20px auto; /* Center the image/container and add vertical space */
-    max-width: 200px; /* Default max size */
-    height: auto;     /* Maintain aspect ratio */
-    background: white; /* Ensure background for container div */
-}
-/* Style specifically for the placeholder div if needed */
-.qr-modal #qrCodeContainer {
-    width: 200px; /* Match image size if using div */
-    height: 200px;
-    padding: 10px; /* Optional padding if needed */
-    box-sizing: border-box;
-}
-
-.qr-modal button {
-    padding: 10px 20px; /* Good padding for desktop */
-    background: var(--violet-principal);
-    color: white;
-    border: none;
-    border-radius: 5px; /* Slightly larger radius */
-    cursor: pointer;
-    font-size: 1em;
-    margin-top: 10px; /* Space above button */
-    transition: background-color 0.3s ease;
-}
-
-.qr-modal button:hover {
-    background: var(--violet-secondaire); /* Add hover effect */
-}
-
+/* Styles existants de l'overlay du modal QR */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -6424,80 +6384,65 @@ input[type="tel"] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6); /* Slightly darker overlay */
+    /* Opacité par défaut (peut-être pour mobile ou base) */
+    background: rgba(0,0,0,0.6);
     z-index: 1000;
+    transition: background 0.3s ease; /* Ajouté: Transition douce */
 }
 
 
-/* --- Media Query for Mobile Phones --- */
-/* Using 900px to match your existing breakpoint. Adjust if needed (e.g., 600px) */
-@media (max-width: 900px) {
-    .qr-modal {
-        width: 90vw;       /* Use 90% of viewport width */
-        max-width: 350px;  /* Adjust max width for mobile */
-        padding: 15px;     /* Slightly reduce padding */
-
-        /* Add scroll for very small heights if content overflows */
-        max-height: 90vh;
-        overflow-y: auto;
+/* === NOUVELLE MEDIA QUERY POUR AJUSTER L'OPACITÉ SUR PC === */
+/* Applique ces styles UNIQUEMENT lorsque la largeur d'écran est > 900px */
+@media (min-width: 901px) {
+    #popupOverlay {
+        /* Opacité plus faible pour les écrans larges (PC) */
+        /* Ajustez la dernière valeur (0.3 ici) : 0 = transparent, 1 = opaque */
+        background-color: rgba(0, 0, 0, 0.3);
     }
 
-    .qr-modal h3 {
-        font-size: 1.2em; /* Adjust heading size */
-    }
-
-    .qr-modal p {
-        font-size: 0.95em;  /* Adjust paragraph size */
-        margin-bottom: 10px;
-    }
-
-     .qr-modal p strong {
-        font-size: 1em; /* Adjust code font size */
-     }
-
-    .qr-modal img,
-    .qr-modal #qrCodeContainer {
-        max-width: 150px; /* Display QR code smaller */
-        /* height: auto is inherited */
-        margin: 15px auto; /* Adjust margin */
-    }
-     /* Adjust container size if using the div */
-    .qr-modal #qrCodeContainer {
-        width: 150px;
-        height: 150px;
-    }
-
-    .qr-modal button {
-        padding: 12px 25px; /* Make button easier to tap */
-        font-size: 1em; /* Ensure text is readable */
+    .modal-overlay {
+        /* Opacité plus faible pour les écrans larges (PC) */
+        /* Ajustez la dernière valeur (0.4 ici) */
+        background: rgba(0, 0, 0, 0.4);
     }
 }
+/* ======================================================= */
 
-/* Optional: Further adjustments for very small screens */
-@media (max-width: 400px) {
-     .qr-modal {
-        width: 95vw; /* Use almost full width */
-        padding: 10px;
-     }
-     .qr-modal h3 {
-        font-size: 1.1em;
-     }
-     .qr-modal p {
-        font-size: 0.9em;
-     }
-     .qr-modal img,
-     .qr-modal #qrCodeContainer {
-         max-width: 120px; /* Even smaller QR display */
-         margin: 10px auto;
-     }
-      /* Adjust container size if using the div */
-    .qr-modal #qrCodeContainer {
-        width: 120px;
-        height: 120px;
+
+/* Media query existante qui affiche le nav mobile */
+@media only screen and (max-width: 900px) {
+    .telephone-nav {
+        display: block; /* Affiché sur mobile */
     }
-      .qr-modal button {
-        padding: 10px 20px; /* Adjust padding if needed */
-        width: 80%; /* Make button wider for easy tap */
-        box-sizing: border-box; /* Include padding in width */
-    }
+
+    /* ... (vos autres styles mobiles ici) ... */
+}
+
+/* Assurez-vous que le contenu interne du nav s'adapte aussi */
+.nav-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Ajouté: Centre verticalement les éléments */
+    width: 100%;
+    height: 100%;
+}
+
+.nav-content div {
+    /* Enlevé width et height ici pour laisser flex gérer */
+    display: flex; /* Utiliser flex pour centrer l'image */
+    justify-content: center; /* Centre horizontalement l'image */
+    align-items: center; /* Centre verticalement l'image */
+    height: 100%; /* Prend toute la hauteur dispo dans le lien */
+}
+
+.nav-content > a > div > img {
+    display: block;
+     /* Ajustez la taille de l'icône si nécessaire */
+    /* max-height: 80%; /* Limite la hauteur de l'icône pour laisser de l'espace */
+    /* width: auto; */
+
+    /* Alternative: taille fixe plus facile à gérer */
+    height: 28px; /* Ou une autre taille fixe */
+    width: 28px;  /* Ou une autre taille fixe */
+    object-fit: contain; /* S'assure que l'image entière est visible */
 }
