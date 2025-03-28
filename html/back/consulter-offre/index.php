@@ -145,7 +145,7 @@ try {
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
     <script src="/scripts/reponse.js"></script>
-    <script src="/front/consulter-offres/map.js"></script>
+    <script src="/map.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -360,9 +360,7 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-caracteristique">
-
-                <div id="map"></div>
-                
+                <div id="offer-map" style="height: 200px; width: 200px;"></div>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
