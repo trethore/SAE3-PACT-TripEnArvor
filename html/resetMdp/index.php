@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/email-utils.php'); // Inclure le fichier pour les fonctions d'email
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/email-utils.php');
 
 $reset_link_base = "https://redden.ventsdouest.dev/resetMdpForm.php";
 
