@@ -365,7 +365,7 @@ try {
                         foreach ($tags as $tag) { 
                     ?>
                             <div class="display-ligne">
-                                <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-violet.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                                <img class="tag" src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
                                 <li><?php echo htmlentities($tag['nom_tag']); ?></li>
                             </div>
                     <?php 
