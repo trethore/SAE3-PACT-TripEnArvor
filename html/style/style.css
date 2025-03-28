@@ -6333,6 +6333,7 @@ input[type="tel"] {
 
 .titre_offre {
     width: 50%; /* Adapte le parent à la largeur du conteneur */
+    display: flex;
    justify-content: end;
 }
 
@@ -6341,7 +6342,7 @@ input[type="tel"] {
 .mes-avis .titre_offre > a { 
     width: 100%;
     display: block ruby !important;
-    color: #000 !important;
+    color: var(--orange-principale) !important;
     font-weight: bold !important;
     background-color:var(--blanc) !important;
     white-space: nowrap !important; /* Empêche le retour à la ligne */
