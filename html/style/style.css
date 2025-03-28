@@ -5748,6 +5748,10 @@ input[type="tel"] {
     /****************************************************
                        COMPTE FRONT
     *****************************************************/
+    .qr-modal button {
+        font-size: 40px;
+        border-radius: 15px;
+    }
 
     :root {
         font-size: 100%;
