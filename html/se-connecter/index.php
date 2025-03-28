@@ -81,10 +81,10 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
                     <input type="checkbox" id="toggle" onclick="hidePassword()">
                     <label for="toggle">Afficher</label>
                 </article>
-                <a href="/resetMdp">Mot de passe oublié ?</a>
             </section>
             <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required />
-
+            <a href="/resetMdp">Mot de passe oublié ?</a>
+            
             <!-- Boutons -->
             <input type="submit" value="Connexion">
         </form>
