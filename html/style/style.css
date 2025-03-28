@@ -293,6 +293,9 @@ h3 {
     color: var(--violet-principal);
 }
 
+
+
+
 /**************************************************************************************
                                 BACK-OFFICE-COMPTE
 ***************************************************************************************/
@@ -4389,10 +4392,6 @@ h3 {
     display: inline;
 }
 
-.mes-avis .titre_offre > a {
-    display: block ruby;
-    background-color:var(--blanc);
-}
 
 .mes_avis .titre_offre a > p{
     background-color:var(--blanc);
@@ -6318,4 +6317,15 @@ input[type="tel"] {
 	.creer-compte #div-adresse .row div {
 		width: 100%;
 	}
+}
+
+
+
+
+
+
+/* ici pour etre sur */
+.mes-avis .titre_offre > a { 
+    display: block ruby;
+    background-color:var(--blanc);
 }
