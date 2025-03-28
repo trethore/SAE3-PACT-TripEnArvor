@@ -316,7 +316,7 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton {
+.compte-back #apibutton, #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border: var(--orange-principale) 2px solid;
@@ -325,7 +325,7 @@ h3 {
     font-size: 1.2em;
     cursor: pointer;
  }
-.compte-back #apibutton:hover {
+.compte-back #apibutton:hover, #auth_toggle_button:hover {
      background-color: var(--blanc-leger);
      color: var(--orange-principale);
      border: var(--orange-principale) 2px solid;
@@ -5595,7 +5595,7 @@ input[type="tel"] {
 }
 .qr-modal button {
     padding: 8px 16px;
-    background: #007bff;
+    background: var(--violet-principal);
     color: white;
     border: none;
     border-radius: 4px;
