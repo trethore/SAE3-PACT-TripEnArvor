@@ -4390,15 +4390,16 @@ h3 {
 }
 
 .mes-avis .titre_offre a {
+    display: inline-block;
     background-color:var(--blanc);
-    color: black;
-    font-weight: bold;
 }
 
 .mes_avis .titre_offre a > p{
     background-color:var(--blanc);
     color: black;
     font-weight: bold;
+    font-size: 15px;
+    max-width: 20px;
 }
 
 .mes-avis h2 {
