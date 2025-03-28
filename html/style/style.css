@@ -4389,8 +4389,8 @@ h3 {
     display: inline;
 }
 
-.mes-avis .titre_offre a {
-    display: inline-block;
+.mes-avis .titre_offre > a {
+    display: block ruby;
     background-color:var(--blanc);
 }
 
