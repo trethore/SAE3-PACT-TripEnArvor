@@ -145,7 +145,6 @@ try {
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
     <script src="/scripts/reponse.js"></script>
-    <script src="/map.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -360,7 +359,24 @@ try {
         <section class="double-blocs">
 
             <div class="fond-blocs bloc-caracteristique">
-                <div id="offer-map" style="height: 200px; width: 200px;"></div>
+                <ul class="liste-caracteristique">
+                    <?php 
+                    if (!empty($tags)) {
+                        foreach ($tags as $tag) { 
+                    ?>
+                            <div class="display-ligne">
+                                <img class="tag" src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                                <li><?php echo htmlentities($tag['nom_tag']); ?></li>
+                            </div>
+                    <?php 
+                        }
+                    } else { 
+                    ?>
+                    <p>Pas de tags disponibles</p>
+                    <?php 
+                    } 
+                    ?>
+                </ul>
             </div> 
 
             <div class="fond-blocs bloc-a-propos">
