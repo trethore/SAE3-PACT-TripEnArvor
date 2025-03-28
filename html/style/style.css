@@ -6336,7 +6336,8 @@ input[type="tel"] {
 .titre_offre {
     width: 50%; /* Adapte le parent à la largeur du conteneur */
     display: flex;
-   justify-content: end;
+   justify-content: space-around;
+
 }
 
 
