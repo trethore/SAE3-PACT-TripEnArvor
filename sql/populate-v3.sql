@@ -125,21 +125,30 @@ BEGIN
     -- )
     -- RETURNING "id_offre" INTO var_id_offre;
 
-    -- INSERT INTO sae._image (
+    -- INSERT INTO sae._image
+    -- (
     --     "lien_fichier"
     -- )
-    -- VALUES (
-    --     'example.jpg'
-    -- );
+    -- VALUES
+    -- ('image');
 
     -- INSERT INTO sae._offre_contient_image (
     --     "id_offre",
     --     "id_image"
     -- )
-    -- VALUES (
-    --     var_id_offre,
-    --     'example.jpg'
-    -- );
+    -- VALUES
+    -- (var_id_offre, 'image');
+
+    -- INSERT INTO sae._offre_possede_tag (
+    --     "id_offre",
+    --     "nom_tag"
+    -- )
+    -- VALUES
+    -- (var_id_offre, 'tag1'),
+    -- (var_id_offre, 'tag2'),
+    -- (var_id_offre, 'tag3'),
+    -- (var_id_offre, 'tag4'),
+    -- (var_id_offre, 'tag5');
 
 
 
@@ -746,6 +755,134 @@ BEGIN
     (var_id_offre, 'Romantique'),
     (var_id_offre, 'Relaxation'),
     (var_id_offre, 'Eco-responsable'),
+    (var_id_offre, 'Nature'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
+
+
+    /* ##################################################################### */
+    /*                        Château de Coat-an-Noz                         */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '50, avenue de Texier LabbeBourg',
+        NULL,
+        '22810',
+        'Belle-Isle-en-Terre',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Dilan',
+        'NUADJE',
+        'nuadjedidi@gmail.com',
+        '+33355176213',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Exemple',
+        'exemple',
+        'https://example.com/',
+        var_id_adresse,
+        '0123456789'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        'Allée du Château',
+        NULL,
+        '22810',
+        'Belle-Isle-en-Terre',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.offre_visite (
+        "duree", 
+        "date_evenement",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        '120',
+        NULL,
+        'Château de Coat-an-Noz',
+        'Vous aimez les vieilles pierres ? Vous allez adorer découvrir le château de Coat-an-Noz, devenu célèbre grâce à Lady Mond, cette fille de meunier qui est devenue riche en épousant le roi du nickel, Sir Robert Mond.',
+        'Lannion',
+        'Situé dans les Côtes d’Armor en Bretagne, ce château se trouve sur la commune de Belle-Isle-en-Terre, proche de la nationale 12. La commune compte moins de 1500 habitants et se trouve à une demi-heure de Guingamp. Coat an Noz est excentré au sud du bourg. Il est au milieu de la forêt, à environ 5 kilomètres. Cette dernière est traversée par une rivière : le Leguer. Cela a son importance dans l’évolution du château. Vous reconnaîtrez facilement le château. Sa forme est rectangulaire avec une tourelle à chaque angle. La pierre utilisée est évidemment locale avec le granit et le schiste. Quant au toit, il est fait d’ardoise, une construction typiquement bretonne.',
+        'https://www.ot-belle-isle-en-terre.com/chateau-coat-an-noz/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('Biet_chateau_coatannoz.jpg'),
+    ('valeur-Chateau-de-Coat-an-Noz-768x432.jpg');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'Biet_chateau_coatannoz.jpg'),
+    (var_id_offre, 'valeur-Chateau-de-Coat-an-Noz-768x432.jpg');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Histoire'),
+    (var_id_offre, 'Relaxation'),
+    (var_id_offre, 'Découverte'),
+    (var_id_offre, 'Tradition'),
     (var_id_offre, 'Nature'),
     (var_id_offre, 'Famille'),
     (var_id_offre, 'Groupe'),
