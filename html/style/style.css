@@ -6322,6 +6322,10 @@ input[type="tel"] {
 
 
 
+.titre_offre {
+    max-width: 100%; /* Adapte le parent à la largeur du conteneur */
+    overflow: hidden; /* Empêche le dépassement du contenu */
+}
 
 
 /* ici pour etre sur */
