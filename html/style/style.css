@@ -3791,13 +3791,20 @@ h3 {
         PREMIER DOUBLE BLOC                               
 **********************************/
 
+.consulter-offre-back #map {
+    width: 200px;
+    height: 200px;              
+    border-radius: 4px;
+    box-sizing: border-box;       
+}
+
 /***********************************
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
 .consulter-offre-back .tag {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 
 .consulter-offre-back .liste-caracteristique {
@@ -3811,7 +3818,6 @@ h3 {
 
 .consulter-offre-back .liste-caracteristique > div > li {
     color: var(--noir);
-    border-left: 3px solid var(--orange-principale);
     font-size: 24px;
     list-style: none;
     display: flex;
