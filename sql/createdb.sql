@@ -287,7 +287,7 @@ CREATE TABLE _avis (
     visite_le       INTEGER NOT NULL,
     lu              BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT _avis_pk PRIMARY KEY (id_membre, id_offre),
-    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte),
+    CONSTRAINT _avis_fk_membre FOREIGN KEY (id_membre) REFERENCES _compte_membre(id_compte) ON UPDATE CASCADE,
     CONSTRAINT _avis_fk_date_visite FOREIGN KEY (publie_le) REFERENCES _date(id_date),
     CONSTRAINT _avis_fk_id_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _avis_fk_date_publie FOREIGN KEY (visite_le) REFERENCES _date(id_date)
@@ -300,7 +300,7 @@ CREATE TABLE _reponse (
     texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
     CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
-    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre),
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE,
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
 
@@ -310,7 +310,7 @@ CREATE TABLE _blacklister (
     id_membre       INTEGER,
     blackliste_le   TIMESTAMP NOT NULL,
     CONSTRAINT _blacklister_pk PRIMARY KEY (id_membre, id_offre),
-    CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
+    CONSTRAINT _blacklister_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE
 );
 
 -- Fonction de suppression d'un avis
@@ -334,7 +334,7 @@ CREATE TABLE _note_detaillee (
     id_membre   INTEGER NOT NULL,
     id_offre    INTEGER NOT NULL,
     CONSTRAINT _note_pk PRIMARY KEY (id_note),
-    CONSTRAINT _note_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre)
+    CONSTRAINT _note_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE
 );
 
 
@@ -618,13 +618,23 @@ CREATE TABLE _avis_contient_image (
         PRIMARY KEY (id_membre, id_offre, lien_fichier),
     CONSTRAINT _avis_contient_image_fk_avis
         FOREIGN KEY (id_membre, id_offre)
-        REFERENCES _avis(id_membre, id_offre),
+        REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE,
     CONSTRAINT _avis_contient_image_fk_image
         FOREIGN KEY (lien_fichier)
         REFERENCES _image(lien_fichier)
 );
 
+/* ======================== password_reset_tokens ======================== */
 
+CREATE TABLE password_reset_tokens (
+    id SERIAL PRIMARY KEY,
+    id_compte INTEGER NOT NULL,
+    token VARCHAR(64) NOT NULL, 
+    expiry_date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte),
+    INDEX (token) 
+);
 
 /* ##################################################################### */
 /*                       TRIGGERS TABLES ABSTRAITES                      */
@@ -1572,26 +1582,43 @@ FOR EACH ROW
 EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
 
 -- Création de la fonction d'anonymisation
-CREATE OR REPLACE FUNCTION update_avis_before_delete() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION update_idmembre_before_delete()
+RETURNS TRIGGER AS $$
 DECLARE
-	new_id INT;
+    new_id INT;
 BEGIN
-	-- Utiliser le compte anonyme par défaut
-	SELECT id_compte INTO new_id FROM compte_membre
-	WHERE email = 'anonyme@ano.com';
+    -- Trouver l'ID du compte anonyme
+    SELECT id_compte INTO new_id FROM _compte_membre WHERE email = 'anonyme@ano.com';
 
-    -- update des avis concernés
-	UPDATE _avis SET id_membre = new_id WHERE id_membre = OLD.id_compte;
-	UPDATE _avis_contient_image SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+    -- Commencer une transaction implicite
+    PERFORM pg_advisory_xact_lock(1); -- Verrouillage pour éviter les conflits concurrents
 
-	RETURN NEW;
+    -- Mettre à jour toutes les tables concernées
+    UPDATE _avis SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+    UPDATE _blacklister SET id_membre = new_id WHERE id_membre = OLD.id_compte;
+
+    -- Assurer que l'ID est bien dans `_avis` avant la mise à jour de `_blacklister`
+    IF NOT EXISTS (SELECT 1 FROM _avis WHERE id_membre = new_id) THEN
+        INSERT INTO _avis (id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le, lu)
+        VALUES (new_id, 3, 5, 'Avis par défaut', 'Cet avis a été anonymisé', 0, 0, 'Visite', NOW(), NOW(), FALSE);
+    END IF;
+
+    -- Supprimer le compte une fois les mises à jour faites
+	DELETE FROM _compte_membre WHERE id_compte = OLD.id_compte;
+	DELETE FROM _compte WHERE id_compte = OLD.id_compte;
+
+    RETURN OLD;
+
+EXCEPTION WHEN OTHERS THEN
+    RAISE;
 END;
-$$ LANGUAGE 'plpgsql';
+$$ LANGUAGE plpgsql;
 
--- Création du trigger BEFORE DELETE sur _compte_membre
-CREATE TRIGGER trg_update_avis_on_delete
-BEFORE DELETE ON _compte_membre
+
+
+CREATE OR REPLACE TRIGGER trg_anonymisation
+INSTEAD OF DELETE ON compte_membre
 FOR EACH ROW
-EXECUTE FUNCTION update_avis_before_delete();
+EXECUTE FUNCTION update_idMembre_before_delete();
 
 COMMIT;
