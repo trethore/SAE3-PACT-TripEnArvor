@@ -3104,7 +3104,7 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
-.consulter-offre-back .tag {
+.consulter-offre-front .tag {
     width: 35px;
     height: 35px;
 }
@@ -3118,7 +3118,7 @@ h3 {
     margin: 30px 30px 0 30px;
 }
 
-.consulter-offre-front .liste-caracteristique>li {
+.consulter-offre-front .liste-caracteristique > div > li {
     color: var(--noir);
     font-size: 24px;
     list-style: none;
@@ -3128,7 +3128,7 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-front .liste-caracteristique li:last-child {
+.consulter-offre-front .liste-caracteristique > div > li:last-child {
     margin-bottom: 0;
 }
 
