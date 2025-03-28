@@ -176,8 +176,12 @@ if ($typeCompte === 'proPrive') {
                 $nb_non_lu = 0;
                 $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                $nb_avis_total = 0;
+                $nb_avis_total = 0; ?>
 
+                
+                <div class="container_avis">
+                
+                <?php
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
                     $reponses = getAllReponses($id_offre); // Récupère la réponse associée à l'offre
@@ -185,6 +189,7 @@ if ($typeCompte === 'proPrive') {
                     $nb_offres++;
                     $nb_avis = count($avis);
                     $nb_avis_total += $nb_avis; 
+                    
 
                     foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
@@ -258,7 +263,7 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                                <div class="container_avis">
+                                
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
