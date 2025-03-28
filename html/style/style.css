@@ -5608,10 +5608,10 @@ input[type="tel"] {
 .modal-overlay {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -50px;
+    left: -50px;
+    width: 120%;
+    height: 120%;
     background: rgba(0,0,0,0.5);
     z-index: 1000;
 }
