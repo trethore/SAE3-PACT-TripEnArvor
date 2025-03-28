@@ -19,21 +19,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Récupérer l'ID de l'utilisateur à partir du token
-            $stmt = $dbh->prepare("SELECT user_id FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+            $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
             $stmt->bindParam(':token', $token);
             $stmt->execute();
             $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($reset_token) {
-                $user_id = $reset_token['user_id'];
+                $id_compte = $reset_token['id_compte'];
 
                 // Hasher le nouveau mot de passe
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
                 // Mettre à jour le mot de passe dans la table `_compte`
-                $stmt = $dbh->prepare("UPDATE _compte SET mot_de_passe = :password WHERE id_compte = :user_id");
+                $stmt = $dbh->prepare("UPDATE _compte SET mot_de_passe = :password WHERE id_compte = :id_compte");
                 $stmt->bindParam(':password', $hashed_password);
-                $stmt->bindParam(':user_id', $user_id);
+                $stmt->bindParam(':id_compte', $id_compte);
                 $stmt->execute();
 
                 // Supprimer le token
@@ -67,13 +67,13 @@ elseif (isset($_GET['token'])) {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
         // Vérifier si le token est valide
-        $stmt = $dbh->prepare("SELECT user_id FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+        $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
         $stmt->bindParam(':token', $token);
         $stmt->execute();
         $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($reset_token) {
-            $user_id = $reset_token['user_id'];
+            $id_compte = $reset_token['id_compte'];
             // Formulaire pour le nouveau mot de passe
             ?>
             <!DOCTYPE html>

@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/email-utils.php'); // Inclure le fichier pour les fonctions d'email
 
-$reset_link_base = "localhost:8080/resetMdpForm.php";
+$reset_link_base = "https://redden.ventsdouest.dev/resetMdpForm.php";
 
 // Initialisation des variables
 $message = '';
@@ -28,14 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
-                $user_id = $user['id_compte'];
+                $id_compte = $user['id_compte'];
 
                 // Générer un token unique et le stocker en base de données
                 $token = bin2hex(random_bytes(32)); // Générer un token plus long et aléatoire
                 $expiry_date = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-                $stmt = $dbh->prepare("INSERT INTO password_reset_tokens (user_id, token, expiry_date) VALUES (:user_id, :token, :expiry_date)");
-                $stmt->bindParam(':user_id', $user_id);
+                $stmt = $dbh->prepare("INSERT INTO password_reset_tokens (id_compte, token, expiry_date) VALUES (:id_compte, :token, :expiry_date)");
+                $stmt->bindParam(':id_compte', $id_compte);
                 $stmt->bindParam(':token', $token);
                 $stmt->bindParam(':expiry_date', $expiry_date);
 
