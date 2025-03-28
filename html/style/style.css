@@ -1445,7 +1445,7 @@ h3 {
     margin: 2em;
 }
 
-.compte-front #apibutton {
+.compte-front #apibutton, .compte-front #auth_toggle_button {
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
    border: var(--violet-principal) 2px solid;
@@ -1534,6 +1534,10 @@ h3 {
     background-color: var(--violet-principal);
     border: 2px solid var(--blanc-leger);
 }
+
+.container-authentificator p {
+    font-size: 34px;
+  }
 
 
 /********************
@@ -5854,7 +5858,7 @@ input[type="tel"] {
         margin: 0;
     }
 
-    .compte-front #apibutton {
+    .compte-front #apibutton, .compte-front #auth_toggle_button {
         font-size: 34px;
     }
 
