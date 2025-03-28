@@ -904,6 +904,148 @@ BEGIN
     (var_id_offre, 'Groupe'),
     (var_id_offre, 'Solo');
 
+
+
+    /* ##################################################################### */
+    /*                   Terrarium & Vivarium de Kerdanet                    */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '38 Kerdanet',
+        NULL,
+        '22170',
+        'Châtelaudren-Plouagat',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Le serpentologue.............',
+        '',
+        'serpentologue@example.com',
+        '',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Le serpentologue.............',
+        'Attentif à toute la nature. Réellement Passionné par la faune sauvage Française et en particulier par les animaux soi-disant "mal aimés" : les reptiles et les amphibiens, rapaces, chauves souris, araignées et bien d''autres. Les fougères, les mousses...',
+        'https://example.com/',
+        var_id_adresse,
+        '0123456789'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_visite (
+        "duree", 
+        "date_evenement", 
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        NULL,
+        'Terrarium & Vivarium de Kerdanet',
+        'Le monde passionnant des reptiles et des amphibiens. REFUGE officiel pour reptiles venimeux ou non.',
+        'Lannion',
+        'Le monde passionnant des reptiles et des amphibiens. REFUGE officiel pour reptiles venimeux ou non. Identifications des serpents Français et étrangers. Interventions sur saisies judiciaires, Abandons et découvertes sur la voie publique de tous reptiles ou amphibiens.',
+        'https://terrariumdekerdanet.over-blog.com/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('ob_689004_dsc-1501.jpg'),
+    ('image_0576388_20221221_ob_42a684_mamba-vert-2.jpg'),
+    ('ob_88d14f_copie-de-1-36.JPG'),
+    ('ob_1d3168_bb-peliade-1.JPG'),
+    ('ob_52f788_naja-annulifera.jpg'),
+    ('ob_f2f582_boa-emeuraude-1.jpg'),
+    ('ob_32e44b_x-8.JPG'),
+    ('ob_d64060_verte.jpg'),
+    ('ob_7e23a8_rieuse.JPG'),
+    ('ob_9f537f_rainette-verte.jpg'),
+    ('ob_b907df_bufo.JPG');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'ob_689004_dsc-1501.jpg'),
+    (var_id_offre, 'image_0576388_20221221_ob_42a684_mamba-vert-2.jpg'),
+    (var_id_offre, 'ob_88d14f_copie-de-1-36.JPG'),
+    (var_id_offre, 'ob_1d3168_bb-peliade-1.JPG'),
+    (var_id_offre, 'ob_52f788_naja-annulifera.jpg'),
+    (var_id_offre, 'ob_f2f582_boa-emeuraude-1.jpg'),
+    (var_id_offre, 'ob_32e44b_x-8.JPG'),
+    (var_id_offre, 'ob_d64060_verte.jpg'),
+    (var_id_offre, 'ob_7e23a8_rieuse.JPG'),
+    (var_id_offre, 'ob_9f537f_rainette-verte.jpg'),
+    (var_id_offre, 'ob_b907df_bufo.JPG');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Découverte'),
+    (var_id_offre, 'Eco-responsable'),
+    (var_id_offre, 'Nature'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
+
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('3 ans et -', 0, var_id_offre),
+    ('Enfant de 4 à 12 ans', 8, var_id_offre),
+    ('Adulte et Enfant de + de 12 ans', 10, var_id_offre),
+    ('Groupe (+15 personnes) : Enfant de 4 à 12 ans', 7, var_id_offre),
+    ('Groupe (+15 personnes) : Adulte et Enfant de + de 12 ans ', 9, var_id_offre),
+    ('Journée soigneur', 60, var_id_offre);
+
 END $$;
 
 
