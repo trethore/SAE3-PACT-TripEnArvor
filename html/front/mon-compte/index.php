@@ -41,8 +41,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Factory.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/InternalClock.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/otphp/src/Url.php');
 
-/*require_once($_SERVER['DOCUMENT_ROOT'] . '/lib/assert/lib/Assert/Assert.php');*/
-
 class_alias('OTPHP\TOTP', 'TOTP');
 
 try {
@@ -82,38 +80,58 @@ $APIKey = hash('sha256', $id_compte . $detailCompte["email"] . $detailCompte["mo
 $truncatedKey = substr($APIKey, 0, 32);
 $AuthKey = \ParagonIE\ConstantTime\Base32::encodeUpper($truncatedKey);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_auth'])) {
-    $newAuthStatus = !$currentAuthStatus;
-    
-    if ($newAuthStatus) {
-        $totp = TOTP::create(
-            $AuthKey, // Secret
-            30,       // Period (30 seconds)
-            'sha1',   // Digest algorithm
-            6,        // Digits
-            0         // Epoch (0 means current time)
-        );
-        $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
-        $totp->setIssuer('PACT');
-        $qrCodeUri = $totp->getProvisioningUri();
-        $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=' . urlencode($qrCodeUri);
-        $showQrModal = true;
-    }
-    
-    $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
-    $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
-    $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+// Generate TOTP object (needed for both activation and showing QR code)
+if ($currentAuthStatus) {
+    $totp = TOTP::create(
+        $AuthKey, // Secret
+        30,       // Period (30 seconds)
+        'sha1',   // Digest algorithm
+        6,        // Digits
+        0         // Epoch (0 means current time)
+    );
+    $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+    $totp->setIssuer('PACT');
+    $qrCodeUri = $totp->getProvisioningUri();
+}
 
-    if ($stmt_update->execute()) {
-        $message = "Authentication status updated successfully!";
-        $currentAuthStatus = $newAuthStatus;
-    } else {
-        $message = "Error updating authentication status.";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['toggle_auth'])) {
+        // Only allow activation, not deactivation
+        if (!$currentAuthStatus) {
+            $newAuthStatus = true;
+            
+            $totp = TOTP::create(
+                $AuthKey, // Secret
+                30,       // Period (30 seconds)
+                'sha1',   // Digest algorithm
+                6,        // Digits
+                0         // Epoch (0 means current time)
+            );
+            $totp->setLabel('PACT-' . $detailCompte["pseudo"]);
+            $totp->setIssuer('PACT');
+            $qrCodeUri = $totp->getProvisioningUri();
+            $showQrModal = true;
+            
+            $stmt_update = $conn->prepare("UPDATE _compte SET auth = :new_auth WHERE id_compte = :id");
+            $stmt_update->bindParam(':new_auth', $newAuthStatus, PDO::PARAM_BOOL);
+            $stmt_update->bindParam(':id', $id_compte, PDO::PARAM_INT);
+
+            if ($stmt_update->execute()) {
+                $message = "Authentification à deux facteurs activée avec succès!";
+                $currentAuthStatus = $newAuthStatus;
+            } else {
+                $message = "Erreur lors de l'activation de l'authentification.";
+            }
+        }
+    } elseif (isset($_POST['show_qr'])) {
+        // Show QR code again
+        $showQrModal = true;
     }
 }
 
 $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
-$buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authentifikator";
+$buttonText = $currentAuthStatus ? "Afficher le QR Code" : "Activer Authentifikator";
+$buttonName = $currentAuthStatus ? "show_qr" : "toggle_auth";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -227,10 +245,13 @@ $buttonText = $currentAuthStatus ? "Desactiver Authentifikator" : "Activer Authe
                 <h2>Authentificateur</h2>
                 <p>L'Authentificateur est: <span class="status-<?php echo $currentAuthStatus ? 'enabled' : 'disabled'?>"> <?php echo htmlspecialchars($statusText); ?></span></p>
                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <button type="submit" name="toggle_auth" id="auth_toggle_button">
+                    <button type="submit" name="<?php echo $buttonName; ?>" id="auth_toggle_button">
                         <?php echo htmlspecialchars($buttonText); ?>
                     </button>
                 </form>
+                <?php if (!empty($message)): ?>
+                    <p class="message"><?php echo htmlspecialchars($message); ?></p>
+                <?php endif; ?>
             </div>
             <button onclick="delCompteMembre(event, <?= $id_compte ?>)" id="delButton">Supprimer le compte</button>
         </section>
