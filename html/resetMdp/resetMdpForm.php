@@ -106,6 +106,9 @@ elseif (isset($_GET['token'])) {
                         <input type="password" id="new_password" name="new_password" required>
                         <label for="confirm_password">Confirmer le mot de passe :</label>
                         <input type="password" id="confirm_password" name="confirm_password" required>
+                        <span id="passwordError" style="color: red; font-size: 0.9em; display: none;">
+                            Les mots de passe ne correspondent pas.
+                        </span>
                         <input type="submit" value="Modifier le mot de passe">
                     </form>
                 </main>
@@ -115,17 +118,22 @@ elseif (isset($_GET['token'])) {
                 const newPassword = document.getElementById("new_password");
                 const confirmPassword = document.getElementById("confirm_password");
                 const submitButton = document.querySelector("input[type='submit']");
+                const passwordError = document.getElementById("passwordError");
 
                 function checkPasswords() {
-                    submitButton.disabled = newPassword.value !== confirmPassword.value;
+                    if (newPassword.value !== confirmPassword.value) {
+                        submitButton.disabled = true;
+                        passwordError.style.display = "inline"; // Affiche le message
+                    } else {
+                        submitButton.disabled = false;
+                        passwordError.style.display = "none"; // Cache le message
+                    }
                 }
 
                 newPassword.addEventListener("input", checkPasswords);
                 confirmPassword.addEventListener("input", checkPasswords);
             });
             </script>
-
-
             </html>
             <?php
         } else {
