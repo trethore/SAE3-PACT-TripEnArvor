@@ -10,6 +10,7 @@ DECLARE
     var_id_adresse  INTEGER;
     var_id_compte   INTEGER;
     var_id_offre    INTEGER;
+    var_id_date    INTEGER;
 BEGIN
 
     INSERT INTO sae._abonnement ("nom_abonnement") 
@@ -1283,6 +1284,16 @@ BEGIN
     (var_id_offre, 'Groupe'),
     (var_id_offre, 'Solo');
 
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('Adultes', 8, var_id_offre),
+    ('Étudiants (jusqu''à 26 ans), lycéens, demandeurs d''emploi', 7, var_id_offre),
+    ('Enfants (moins de 12 ans)', 5, var_id_offre);
+
 
     /* ##################################################################### */
     /*                       THE JEFF PANACLOC COMPANY                       */
@@ -1346,6 +1357,10 @@ BEGIN
     )
     RETURNING "id_adresse" INTO var_id_adresse;
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-10-23')
+    RETURNING "id_date" INTO var_id_date;
+
     INSERT INTO sae.offre_spectacle (
         "duree", 
         "capacite",
@@ -1366,7 +1381,7 @@ BEGIN
     VALUES (
         120,
         1000,
-        2025-10-23,
+        var_id_date,
         'THE JEFF PANACLOC COMPANY',
         'Retrouvez Jeff Panacloc et Jean-Marc dans un tout nouveau spectacle explorant la condition humaine avec humour, irrévérence et interactivité.',
         'Lannion',
@@ -1403,11 +1418,23 @@ BEGIN
     VALUES
     (var_id_offre, 'Festif');
 
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('À partir de', 45, var_id_offre);
+
 
 
     /* ##################################################################### */
     /*                               WALY DIA                                */
     /* ##################################################################### */
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-10-03')
+    RETURNING "id_date" INTO var_id_date;
 
     INSERT INTO sae.offre_spectacle (
         "duree", 
@@ -1429,7 +1456,7 @@ BEGIN
     VALUES (
         60,
         1000,
-        2025-10-03,
+        var_id_date,
         'WALY DIA',
         'Waly Dia revient avec son nouveau one-man-show : ''Une heure à tuer''. Accordez-lui une heure, il se charge du reste avec son humour combatif et sans concession.',
         'Lannion',
@@ -1466,6 +1493,88 @@ BEGIN
     VALUES
     (var_id_offre, 'Festif');
 
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('À partir de', 42, var_id_offre);
+
+
+
+    /* ##################################################################### */
+    /*                               CALOGERO                                */
+    /* ##################################################################### */
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-10-11')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae.offre_spectacle (
+        "duree", 
+        "capacite",
+        "date_evenement",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        1000,
+        var_id_date,
+        'CALOGERO',
+        'Retrouvez Calogero en concert pour une soirée de variété et chanson française au Skope.',
+        'Lannion',
+        'Calogero, artiste majeur de la scène française, présente son répertoire lors d''un concert événement. Venez vibrer au son de ses plus grands titres et de ses nouvelles chansons dans l''ambiance intimiste du Skope.',
+        'https://www.ticketmaster.fr/fr/manifestation/calogero-billet/idmanif/615826',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('n_calogero_g.webp');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'n_calogero_g.webp');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Festif');
+
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('À partir de', 39, var_id_offre);
 
 END $$;
 
