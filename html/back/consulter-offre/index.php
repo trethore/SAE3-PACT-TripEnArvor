@@ -115,6 +115,7 @@ try {
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
+    $offre['categorie'] = $categorie;
 
 // ===== GESTION DES MISES HORS LIGNE ET EN LIGNE ===== //
 
