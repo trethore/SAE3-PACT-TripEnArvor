@@ -370,8 +370,8 @@ if ($typeCompte === 'proPrive') {
 
             if (selectedValue === "recent" || selectedValue === "ancien") {
                 avis.sort((a, b) => {
-                    const dateA = a.querySelector("em span").textContent.replace('/', '-').trim();
-                    const dateB = b.querySelector("em span").textContent.replace('/', '-').trim();
+                    const dateA = a.querySelector(".ladate").textContent.replace('/', '-').trim();
+                    const dateB = b.querySelector(".ladate").textContent.replace('/', '-').trim();
                      return selectedValue === "ancien" ? dateA - dateB : dateB - dateA;
                 });
 
