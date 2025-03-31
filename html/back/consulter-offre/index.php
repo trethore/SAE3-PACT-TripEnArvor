@@ -140,6 +140,10 @@ try {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
+    <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css" />
+    <script src="/lib/leaflet/leaflet.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
     <script src="/scripts/header.js"></script>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
