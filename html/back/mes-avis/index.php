@@ -176,12 +176,9 @@ if ($typeCompte === 'proPrive') {
                 $nb_non_lu = 0;
                 $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                $nb_avis_total = 0; ?>
+                $nb_avis_total = 0; 
+                $touslesavis = [];
 
-                
-                
-                
-                <?php
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
                     $reponses = getAllReponses($id_offre); // Récupère la réponse associée à l'offre
@@ -191,22 +188,34 @@ if ($typeCompte === 'proPrive') {
                     $nb_avis_total += $nb_avis; 
                     
 
-                    foreach ($avis as $lavis) {
+                    foreach ($avis as $index =>$lavis) {
                             if ($lavis['lu'] == false) {
                                 $nb_non_lu++;
                         }
+                        $touslesavis[] = $lavis;  
+                        
+                        $membre = getInformationsMembre($id_offre);
+                        $datePassage = getDatePassage($id_offre);
+                        $dateAvis = getDatePublication($id_offre);
+                        $noteDetaillee = getAvisDetaille($id_offre);
+
+                        $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
+                        $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+
+
+                        $touslesavis[$lavis] = $membre;
+                        $touslesavis[$lavis] = $datePassage;
+                        $touslesavis[$lavis] = $dateAvis;
+                        $touslesavis[$lavis] = $noteDetaillee;
+
+                        // ===== GESTION DES AVIS ===== //
+
+                        
+
                     }
-
-                    // ===== GESTION DES AVIS ===== //
-
-                    $membre = getInformationsMembre($id_offre);
-                    $datePassage = getDatePassage($id_offre);
-                    $dateAvis = getDatePublication($id_offre);
-                    $noteDetaillee = getAvisDetaille($id_offre);
-
-                    $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                    $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
                 }
+
+                print_r($touslesavis);
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
@@ -386,31 +395,28 @@ if ($typeCompte === 'proPrive') {
     
 
     <script> 
-    document.addEventListener("DOMContentLoaded", () => {
-    const avisContainer = document.querySelector(".container_avis");
-    const avis = Array.from(document.querySelectorAll("article")); // Convertir NodeList en tableau
-    const initialOrder = [...avis]; // Stocker l'ordre initial des avis
+    const avisContainer = document.querySelectorAll(".container_avis");
+    const avis = Array.from(document.querySelectorAll("article"))
+        // Sort avis
+        const sortAvis = () => {
+            const selectElement = document.querySelector(".tris");
+            const selectedValue = selectElement.value;
 
-    const sortAvis = () => {
-        const selectElement = document.querySelector(".tris");
-        const selectedValue = selectElement.value;
+            if (selectedValue === "recent" || selectedValue === "ancien") {
+                avis.sort((a, b) => {
+                    const dateA = a.querySelector(".ladate");
+                    const dateB = b.querySelector(".ladate");
+                    return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
 
-        if (selectedValue === "recent" || selectedValue === "ancien") {
-            avis.sort((a, b) => {
-                const dateA = a.querySelector(".ladate").textContent.trim().split("-").reverse().join("-");
-                const dateB = b.querySelector(".ladate").textContent.trim().split("-").reverse().join("-");
-                
-                return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
-            });
-        } else if (selectedValue === "default") {
-            avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
-        }
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
+            } if (selectedValue === "default") {
+                avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
-        avis.forEach(lavis => avisContainer.appendChild(lavis)); // Réinsérer les éléments triés
-    };
-
-    document.querySelector(".tris").addEventListener("change", sortAvis);
-});
+                avis.forEach(lavis => avisContainer.appendChild(lavis));
+            }
+            console.log('triage');
+            
+        };
 
     </script>
 </body>
