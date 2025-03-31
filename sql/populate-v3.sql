@@ -1166,6 +1166,123 @@ BEGIN
     ('Groupe de plus de 10 personnes', 6, var_id_offre),
     ('Visite guidée pour les scolaires', 4, var_id_offre);
 
+
+
+    /* ##################################################################### */
+    /*                           Le Fort la Latte                            */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '28 rue de la Latte',
+        NULL,
+        '22240',
+        'Plévenon',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Guénolé Joüon',
+        'Des Longrais',
+        'contact@lefortlalatte.com',
+        '+33296415711',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Guénolé Joüon Des Longrais',
+        'Guénolé Joüon Des Longrais',
+        'https://example.com/',
+        var_id_adresse,
+        '849249461 00021'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_visite (
+        "duree", 
+        "date_evenement", 
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        NULL,
+        'Le Fort la Latte',
+        'Monument historique privé',
+        'Lannion',
+        'La Roche Goyon tire son nom d’une des plus anciennes familles bretonnes. Une légende atteste qu’un premier château aurait été construit par un Goyon sous Alain Barbe-Torte en 937. Le château fort actuel, quant à lui, fut construit par Étienne III Goyon avant l’apparition du canon en Bretagne (1364) puis poursuivi au gré de la bonne fortune des Goyon dans la deuxième moitié du XIVème siècle. Il existait en 1379 puisque Du Guesclin envoya un détachement à la Roche Goyon qui résista vaillamment. La forteresse fut confisquée au profit de Charles V, puis restituée à son propriétaire par le traité de Guérande (1381). Au cours du XVème siècle, l’ascension sociale des Goyon se poursuivit. Ils figurent aux États de Bretagne. Un Goyon, chambellan du duc de Bretagne, épousera l’héritière de la baronnie de Thorigni-sur-Vire. La famille Goyon quitte le berceau breton et passe à l’histoire de France. Le château reçoit alors un gouverneur qui loge dans un logis aménagé à cet effet.',
+        'https://www.lefortlalatte.com/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('89228f_03c758e6d4a94c9a8a45217fe75e0c3b.png'),
+    ('89228f_7e27777e16884ed4a3faaea8bb493498.jpg'),
+    ('89228f_87eaf41cae6840e587e6a6b67fc5a664~mv2_d_4608_3456_s_4_2.jpg'),
+    ('89228f_288000e544714099a97085bc57c694f9~mv2_d_4096_2160_s_2.jpg'),
+    ('89228f_f26adfd36ca94af58f7779fd58a25eb9~mv2_d_5472_3648_s_4_2.png');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, '89228f_03c758e6d4a94c9a8a45217fe75e0c3b.png'),
+    (var_id_offre, '89228f_7e27777e16884ed4a3faaea8bb493498.jpg'),
+    (var_id_offre, '89228f_87eaf41cae6840e587e6a6b67fc5a664~mv2_d_4608_3456_s_4_2.jpg'),
+    (var_id_offre, '89228f_288000e544714099a97085bc57c694f9~mv2_d_4096_2160_s_2.jpg'),
+    (var_id_offre, '89228f_f26adfd36ca94af58f7779fd58a25eb9~mv2_d_5472_3648_s_4_2.png');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Histoire'),
+    (var_id_offre, 'Plage'),
+    (var_id_offre, 'Découverte'),
+    (var_id_offre, 'Tradition'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe'),
+    (var_id_offre, 'Solo');
+
 END $$;
 
 
