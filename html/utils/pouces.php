@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $_POST['type'] ?? null; 
     $action = $_POST['action'] ?? null;
 
-    if (isset($id_membre_reaction) && isset($id_membre_avis) && isset($id_offre) && isset($nb_pouce_bas) && isset($nb_pouce_haut)) {
+    if (isset($id_membre_reaction) && isset($id_membre_avis) && isset($id_offre)) {
 
         try {
             //Connexion à la base de données
