@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } catch (PDOException $e) {
                     // Log de l'erreur SQL
                     error_log("Erreur SQL lors de l'insertion du token : " . $e->getMessage());
-                    $message = "Erreur interne. Veuillez réessayer plus tard.";
+                    $message = "Erreur interne. Veuillez réessayer plus tard." . $e->getMessage();
                     $dbh = null;
                     // Afficher le message d'erreur à l'utilisateur
                     echo "<p>" . htmlspecialchars($message) . "</p>";
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (PDOException $e) {
             // Log de l'erreur de connexion à la base de données
             error_log("Erreur de connexion à la base de données : " . $e->getMessage());
-            $message = "Erreur interne. Veuillez réessayer plus tard.";
+            $message = "Erreur interne. Veuillez réessayer plus tard." . $e->getMessage();
         }
     }
 }
