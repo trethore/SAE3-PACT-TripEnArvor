@@ -230,7 +230,6 @@ if ($typeCompte === 'proPrive') {
                                     break;
                                 }
                             ?>
-                        <h3>
                             <?php
                                 // $offre = getOffre($id_offre_cible);
                                 $id_offre = $offre['id_offre'];
