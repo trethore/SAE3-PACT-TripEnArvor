@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Vérifier si l'email existe dans la base de données
-            $stmt = $dbh->prepare("SELECT id_compte FROM _compte WHERE email = :email");
+            $stmt = $dbh->prepare("SELECT id_compte FROM sae._compte WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -12,8 +12,8 @@ function sendEmail($to, $subject, $body, $altBody) {
 
     try {
         //Server settings
-        $mail->SMTPDebug = 0;                      //mettre à 2 pour déboguer, 0 en production
-        $mail->isSMTP();                                            
+        $mail->SMTPDebug = 2;
+        $mail->isSMTP();                                       
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'redden.pact@gmail.com';                    
