@@ -866,9 +866,29 @@ try {
 
                             <div class="display-ligne">
                                 <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                if (getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id'])['nb_pouce_haut'] == 1) {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-up-hover.png" class="pouce pouceHaut" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                } else {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                }
+                                ?>
                                 <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                if (getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id'])['nb_pouce_bas'] == 1) {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-down-hover.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                } else {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                }
+                                ?>
                             </div>
 
                         </div>
