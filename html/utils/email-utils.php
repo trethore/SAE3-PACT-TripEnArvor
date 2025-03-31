@@ -12,7 +12,7 @@ function sendEmail($to, $subject, $body, $altBody) {
 
     try {
         //Server settings
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;                                   
@@ -25,13 +25,13 @@ function sendEmail($to, $subject, $body, $altBody) {
         $mail->addAddress($to);               
 
         // Contenu
-        $mail->isHTML(true);                                  
+        $mail->isHTML(true);        
+        $mail->CharSet = 'UTF-8';                          
         $mail->Subject = $subject;
         $mail->Body    = $body;
         $mail->AltBody = $altBody;
 
         $mail->send();
-        echo '\n\ntest 2\n\n';
         return true;
     } catch (Exception $e) {
         error_log("Erreur lors de l'envoi de l'email : {$mail->ErrorInfo}");  
