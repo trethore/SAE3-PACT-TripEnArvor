@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Entrez votre adresse email pour réinitialiser votre mot de passe.</h2>
 
         <?php if ($message): ?>
-            <p><?php echo htmlspecialchars($message); ?></p>
+            <h2><?php echo htmlspecialchars($message); ?></h2>
         <?php endif; ?>
 
         <form action="#" method="POST">

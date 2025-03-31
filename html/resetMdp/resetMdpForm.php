@@ -122,5 +122,5 @@ else {
 }
 
 if ($message && !($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_POST['new_password']) && isset($_POST['confirm_password']))): ?>
-    <h2><?php echo $message; ?></h2>
+    <h2><?= htmlspecialchars($message); ?></h2>
 <?php endif; ?>
