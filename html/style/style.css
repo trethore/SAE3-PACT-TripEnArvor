@@ -3106,6 +3106,11 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-front #map {
+    width: 240px; 
+    height: 160px;
+}
+
 .consulter-offre-front .tag {
     width: 35px;
     height: 35px;
@@ -3800,6 +3805,11 @@ h3 {
 /***********************************
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
+
+.consulter-offre-back #map {
+    width: 240px; 
+    height: 160px;
+}
 
 .consulter-offre-back .tag {
     width: 35px;
