@@ -41,15 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
                 $stmt->bindParam(':token', $token);
                 $stmt->execute();
 
-                $message = "Votre mot de passe a été modifié avec succès."; ?>
-                <script>
-                    alert('$message'); 
-                    setTimeout(function() {
-                        window.location.href = '/se-connecter/';
-                    }, 3000);
-                 </script>
-                <?php // Rediriger vers la page de connexion
-                header("Location: /se-connecter/"); // Ajustez le chemin si nécessaire
+                $message = "Votre mot de passe a été modifié avec succès.";
+                echo "<script>
+                        alert('$message'); 
+                        setTimeout(function() {
+                            window.location.href = '/se-connecter/';
+                        }, 3000);
+                    </script>";
                 exit();
 
             } else {
