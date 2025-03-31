@@ -249,6 +249,8 @@ if ($typeCompte === 'proPrive') {
                 
                 $aviTriéPluRecent[] = array_merge([],$touslesavis);
                 $aviTriéPluAncien[] = array_merge([],$touslesavis);
+                print($aviTriéPluAncien);
+                
                 echo "<br>";
                 print("le tri plus recent");
                 print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
@@ -257,7 +259,7 @@ if ($typeCompte === 'proPrive') {
                 print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
                 
 
-                print_r($touslesavis);
+                //print_r($touslesavis);
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
