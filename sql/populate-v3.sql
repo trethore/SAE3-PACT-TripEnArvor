@@ -1404,6 +1404,69 @@ BEGIN
     (var_id_offre, 'Festif');
 
 
+
+    /* ##################################################################### */
+    /*                               WALY DIA                                */
+    /* ##################################################################### */
+
+    INSERT INTO sae.offre_spectacle (
+        "duree", 
+        "capacite",
+        "date_evenement",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        60,
+        1000,
+        2025-10-03,
+        'WALY DIA',
+        'Waly Dia revient avec son nouveau one-man-show : ''Une heure à tuer''. Accordez-lui une heure, il se charge du reste avec son humour combatif et sans concession.',
+        'Lannion',
+        'Après le succès de « Ensemble ou rien » dont la tournée affichant complet s’est achevée par un Zénith de Paris plein à craquer, Waly Dia est de retour sur scène avec un nouveau one-man-show : « Une heure à tuer ». Et il ne manque pas de choses à dire… Waly Dia monte sur scène comme sur un ring : combatif, provocateur, charmeur et plein de malice. Son sens aigu de l’observation du monde qui nous entoure et de l’actualité nourrissent ses punchlines aussi acides que percutantes. Une attitude et un humour sans concession qui ont fait sa marque de fabrique dans ses chroniques sur France Inter au côté de Charline Vanhoenacker depuis 2020. Ses interventions au débit mitraillette n’épargnant rien, mais surtout personne, ont fédéré un public toujours plus large.',
+        'https://www.ticketmaster.fr/fr/manifestation/waly-dia-billet/idmanif/609865',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('n_waly-dia_g.webp');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'n_waly-dia_g.webp');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Festif');
+
+
 END $$;
 
 
