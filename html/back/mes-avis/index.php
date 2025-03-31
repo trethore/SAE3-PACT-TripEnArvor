@@ -192,7 +192,7 @@ if ($typeCompte === 'proPrive') {
                             if ($lavis['lu'] == false) {
                                 $nb_non_lu++;
                         }
-                        $touslesavis[] = $lavis;  
+                         
                         
                         $membre = getInformationsMembre($id_offre);
                         $datePassage = getDatePassage($id_offre);
@@ -207,9 +207,7 @@ if ($typeCompte === 'proPrive') {
                         $lavis['dateAvis'] = $dateAvis;
                         $lavis['noteDetaillee'] = $noteDetaillee;
 
-                        // ===== GESTION DES AVIS ===== //
-
-                        
+                        $touslesavis[] = $lavis; 
 
                     }
                 }
@@ -394,28 +392,28 @@ if ($typeCompte === 'proPrive') {
     
 
     <script> 
-    const avisContainer = document.querySelectorAll(".container_avis");
-    const avis = Array.from(document.querySelectorAll("article"))
-        // Sort avis
-        const sortAvis = () => {
-            const selectElement = document.querySelector(".tris");
-            const selectedValue = selectElement.value;
+    // const avisContainer = document.querySelectorAll(".container_avis");
+    // const avis = Array.from(document.querySelectorAll("article"))
+    //     // Sort avis
+    //     const sortAvis = () => {
+    //         const selectElement = document.querySelector(".tris");
+    //         const selectedValue = selectElement.value;
 
-            if (selectedValue === "recent" || selectedValue === "ancien") {
-                avis.sort((a, b) => {
-                    const dateA = a.querySelector(".ladate");
-                    const dateB = b.querySelector(".ladate");
-                    return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
+    //         if (selectedValue === "recent" || selectedValue === "ancien") {
+    //             avis.sort((a, b) => {
+    //                 const dateA = a.querySelector(".ladate");
+    //                 const dateB = b.querySelector(".ladate");
+    //                 return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            } if (selectedValue === "default") {
-                avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+    //             avis.forEach(lavis => avisContainer.appendChild(lavis));
+    //         } if (selectedValue === "default") {
+    //             avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            }
-            console.log('triage');
+    //             avis.forEach(lavis => avisContainer.appendChild(lavis));
+    //         }
+    //         console.log('triage');
             
-        };
+    //     };
 
     </script>
 </body>
