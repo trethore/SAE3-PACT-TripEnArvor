@@ -36,7 +36,7 @@ function addMap(centerCoords, zoomLevel = 13) {
  */
 function getCustomIcon(categorie) {
   
-  const basePath = '../images/frontOffice/icones/map/';
+  const basePath = '../../images/frontOffice/icones/map/';
 
   switch (categorie) {
     case 'Restauration':
@@ -68,7 +68,7 @@ function getCustomIcon(categorie) {
       
       
       return L.icon({
-        iconUrl: '../images/default_icon.png', 
+        iconUrl: '../../images/default_icon.png', 
         iconSize: [40, 40], iconAnchor: [20, 40], popupAnchor: [0, -40]
       });
   }
