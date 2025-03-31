@@ -18,18 +18,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `id_offre=${idOffre}&id_membre_avis=${idMembreAvis}&id_membre_reaction=${idMembreReaction}&type=${type}&action=${action}`
             })
-            .then(response => response.text()) 
+            .then(response => response.text()) // Traitement de la réponse en texte brut
             .then(data => {
-                if (data.success) {
-                    if (type === "like") {
-                        nbPouceHaut.textContent = action === "add" ? 1 : 0;
-                        nbPouceBas.textContent = 0; // On enlève le dislike si présent
-                    } else {
-                        nbPouceBas.textContent = action === "add" ? 1 : 0;
-                        nbPouceHaut.textContent = 0; // On enlève le like si présent
+                console.log("Réponse serveur :", data);
+                
+                if (data.includes("Succès")) {
+                    // Extraction des valeurs mises à jour
+                    const matches = data.match(/Pouce Haut: (\d+), Pouce Bas: (\d+)/);
+                    if (matches) {
+                        nbPouceHaut.textContent = matches[1];
+                        nbPouceBas.textContent = matches[2];
                     }
                 } else {
-                    console.error("Erreur serveur :", data.error);
+                    console.error("Erreur serveur :", data);
                 }
             })
             .catch(error => console.error("Erreur :", error));
