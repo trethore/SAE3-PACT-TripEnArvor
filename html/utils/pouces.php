@@ -98,18 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
         }
 
-        // Mise à jour du total des pouces dans _avis si un changement a eu lieu
-        if ($likeChange !== 0 || $dislikeChange !== 0) {
-            $reqUpdateAvis = "UPDATE sae._avis 
-                              SET nb_pouce_haut = nb_pouce_haut + :likeChange, 
-                                  nb_pouce_bas = nb_pouce_bas + :dislikeChange 
-                              WHERE id_offre = :id_offre AND id_membre = :id_membre_avis";
-            $stmtUpdateAvis = $dbh->prepare($reqUpdateAvis);
-            $stmtUpdateAvis->execute([
-                ':likeChange' => $likeChange,
-                ':dislikeChange' => $dislikeChange,
+        // Si plus aucun pouce actif, supprimer la ligne
+        if ($updatePouceHaut == 0 && $updatePouceBas == 0) {
+            $reqDeleteReaction = "DELETE FROM sae._reaction_avis WHERE id_offre = :id_offre 
+                                  AND id_membre_avis = :id_membre_avis 
+                                  AND id_membre_reaction = :id_membre_reaction";
+            $stmtDeleteReaction = $dbh->prepare($reqDeleteReaction);
+            $stmtDeleteReaction->execute([
                 ':id_offre' => $id_offre,
-                ':id_membre_avis' => $id_membre_avis
+                ':id_membre_avis' => $id_membre_avis,
+                ':id_membre_reaction' => $id_membre_reaction
             ]);
         }
 
