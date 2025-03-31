@@ -2,44 +2,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const pouceHauts = document.querySelectorAll('.pouceHaut');
     const pouceBas = document.querySelectorAll('.pouceBas');
 
-    const images = {
-        haut: {
-            actif: '/images/universel/icones/pouce-up-hover.png',
-            inactif: '/images/universel/icones/pouce-up.png',
-        },
-        bas: {
-            actif: '/images/universel/icones/pouce-down-hover.png',
-            inactif: '/images/universel/icones/pouce-down.png',
-        },
-    };
-
-    function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, activeImage, inactiveImage, otherActiveImage, otherInactiveImage) {
-        const id_membre = thumb.getAttribute('data-id-membre');
+    function handleThumbClick(thumb, otherThumb, countElement, otherCountElement, type) {
         const id_offre = thumb.getAttribute('data-id-offre');
-        var action = thumb.src.includes(activeImage) ? 'remove' : 'add';
-        var otherIsActive = otherThumb.src.includes(otherActiveImage);
-        var change = otherIsActive ? 'true' : 'false';
+        const id_membre_avis = thumb.getAttribute('data-id-membre-avis');
+        const id_membre_reaction = thumb.getAttribute('data-id-membre-reaction');
 
-        thumb.src = action === 'add' ? activeImage : inactiveImage;
-        
-        if (otherIsActive) {
-            otherThumb.src = otherInactiveImage;
-            if (otherCountElement) {
-                otherCountElement.textContent = Math.max(0, parseInt(otherCountElement.textContent) - 1);
-            }
-        }
+        const action = thumb.src.includes("hover") ? "remove" : "add";
 
-        if (countElement) {
-            countElement.textContent = Math.max(0, parseInt(countElement.textContent) + (action === 'add' ? 1 : -1));
-        }
-        
         fetch('/utils/pouces.php', {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `id_membre=${id_membre}&id_offre=${id_offre}&type=${thumb.classList.contains('pouceHaut') ? 'like' : 'dislike'}&action=${action}&change=${change}`
+            body: `id_offre=${id_offre}&id_membre_avis=${id_membre_avis}&id_membre_reaction=${id_membre_reaction}&type=${type}&action=${action}`
         })
-        .then(response => response.text())
-        .then(data => {})
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                countElement.textContent = data.nb_pouce_haut;
+                otherCountElement.textContent = data.nb_pouce_bas;
+
+                thumb.src = data.nb_pouce_haut == 1 ? "/images/universel/icones/pouce-up-hover.png" : "/images/universel/icones/pouce-up.png";
+                otherThumb.src = data.nb_pouce_bas == 1 ? "/images/universel/icones/pouce-down-hover.png" : "/images/universel/icones/pouce-down.png";
+            }
+        })
         .catch(error => console.error("Erreur AJAX:", error));
     }
 
@@ -48,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const nbPouceHaut = pouceHaut.previousElementSibling; 
             const pouceBas = pouceHaut.nextElementSibling.nextElementSibling; 
             const nbPouceBas = pouceBas.previousElementSibling;
-            handleThumbClick(pouceHaut, pouceBas, nbPouceHaut, nbPouceBas, images.haut.actif, images.haut.inactif, images.bas.actif, images.bas.inactif);
+            handleThumbClick(pouceHaut, pouceBas, nbPouceHaut, nbPouceBas, "like");
         });
     });
 
@@ -57,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const nbPouceBas = pouceBas.previousElementSibling; 
             const pouceHaut = pouceBas.previousElementSibling.previousElementSibling; 
             const nbPouceHaut = pouceHaut.previousElementSibling; 
-            handleThumbClick(pouceBas, pouceHaut, nbPouceBas, nbPouceHaut, images.bas.actif, images.bas.inactif, images.haut.actif, images.haut.inactif);
+            handleThumbClick(pouceBas, pouceHaut, nbPouceBas, nbPouceHaut, "dislike");
         });
     });
 });
