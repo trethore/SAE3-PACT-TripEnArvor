@@ -432,26 +432,7 @@ try {
 
         <section class="double-blocs">
 
-            <div class="bloc-caracteristique">
-                <ul class="liste-caracteristique">
-                    <?php 
-                    if (!empty($tags)) {
-                        foreach ($tags as $tag) { 
-                    ?>
-                            <div class="display-ligne">
-                                <img class="tag" src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-violet.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
-                                <li><?php echo htmlentities($tag['nom_tag']); ?></li>
-                            </div>
-                    <?php 
-                        }
-                    } else { 
-                    ?>
-                        <p>Pas de tags disponibles</p>
-                    <?php 
-                    } 
-                    ?>
-                </ul>
-            </div> 
+            <div id="map"></div>
 
             <div class="fond-blocs bloc-a-propos">
                 
