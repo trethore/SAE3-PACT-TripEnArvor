@@ -29,15 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
         // Vérification de la présence d'une réaction existante
-        $reqCheck = "SELECT nb_pouce_haut, nb_pouce_bas FROM sae._reaction_avis 
-                     WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis 
-                     AND id_membre_reaction = :id_membre_reaction";
+        $reqCheck = "SELECT nb_pouce_haut, nb_pouce_bas FROM sae._reaction_avis WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis AND id_membre_reaction = :id_membre_reaction";
         $stmtCheck = $dbh->prepare($reqCheck);
-        $stmtCheck->execute([
-            ':id_offre' => $id_offre,
-            ':id_membre_avis' => $id_membre_avis,
-            ':id_membre_reaction' => $id_membre_reaction
-        ]);
+        $stmtCheck->execute([':id_offre' => $id_offre, ':id_membre_avis' => $id_membre_avis, ':id_membre_reaction' => $id_membre_reaction]);
         $check = $stmtCheck->fetch();
 
         $likeChange = 0;
@@ -71,44 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Mise à jour ou insertion de la réaction
         if (!$check) {
-            $reqInsert = "INSERT INTO sae._reaction_avis (id_offre, id_membre_avis, id_membre_reaction, nb_pouce_haut, nb_pouce_bas) 
-                          VALUES (:id_offre, :id_membre_avis, :id_membre_reaction, :nb_pouce_haut, :nb_pouce_bas)";
+            $reqInsert = "INSERT INTO sae._reaction_avis (id_offre, id_membre_avis, id_membre_reaction, nb_pouce_haut, nb_pouce_bas) VALUES (:id_offre, :id_membre_avis, :id_membre_reaction, :nb_pouce_haut, :nb_pouce_bas)";
             $stmtInsert = $dbh->prepare($reqInsert);
-            $stmtInsert->execute([
-                ':id_offre' => $id_offre,
-                ':id_membre_avis' => $id_membre_avis,
-                ':id_membre_reaction' => $id_membre_reaction,
-                ':nb_pouce_haut' => $updatePouceHaut,
-                ':nb_pouce_bas' => $updatePouceBas
-            ]);
+            $stmtInsert->execute([':id_offre' => $id_offre, ':id_membre_avis' => $id_membre_avis, ':id_membre_reaction' => $id_membre_reaction, ':nb_pouce_haut' => $updatePouceHaut, ':nb_pouce_bas' => $updatePouceBas]);
         } else {
-            $reqUpdate = "UPDATE sae._reaction_avis 
-                          SET nb_pouce_haut = :nb_pouce_haut, nb_pouce_bas = :nb_pouce_bas 
-                          WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis 
-                          AND id_membre_reaction = :id_membre_reaction";
+            $reqUpdate = "UPDATE sae._reaction_avis SET nb_pouce_haut = :nb_pouce_haut, nb_pouce_bas = :nb_pouce_bas WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis AND id_membre_reaction = :id_membre_reaction";
             $stmtUpdate = $dbh->prepare($reqUpdate);
-            $stmtUpdate->execute([
-                ':nb_pouce_haut' => $updatePouceHaut,
-                ':nb_pouce_bas' => $updatePouceBas,
-                ':id_offre' => $id_offre,
-                ':id_membre_avis' => $id_membre_avis,
-                ':id_membre_reaction' => $id_membre_reaction
-            ]);
+            $stmtUpdate->execute([':nb_pouce_haut' => $updatePouceHaut, ':nb_pouce_bas' => $updatePouceBas, ':id_offre' => $id_offre, ':id_membre_avis' => $id_membre_avis, ':id_membre_reaction' => $id_membre_reaction]);
         }
-
-        // Si plus aucun pouce actif, supprimer la ligne
-        if ($updatePouceHaut == 0 && $updatePouceBas == 0) {
-            $reqDeleteReaction = "DELETE FROM sae._reaction_avis WHERE id_offre = :id_offre 
-                                  AND id_membre_avis = :id_membre_avis 
-                                  AND id_membre_reaction = :id_membre_reaction";
-            $stmtDeleteReaction = $dbh->prepare($reqDeleteReaction);
-            $stmtDeleteReaction->execute([
-                ':id_offre' => $id_offre,
-                ':id_membre_avis' => $id_membre_avis,
-                ':id_membre_reaction' => $id_membre_reaction
-            ]);
+        if ($likeChange !== 0 || $dislikeChange !== 0) {
+            $reqUpdateAvis = "UPDATE sae._avis SET nb_pouce_haut = nb_pouce_haut + :likeChange, nb_pouce_bas = nb_pouce_bas + :dislikeChange WHERE id_offre = :id_offre AND id_membre = :id_membre_avis";
+            $stmtUpdateAvis = $dbh->prepare($reqUpdateAvis);
+            $stmtUpdateAvis->execute([':likeChange' => $likeChange, ':dislikeChange' => $dislikeChange, ':id_offre' => $id_offre, ':id_membre_avis' => $id_membre_avis]);
         }
 
         echo json_encode([
