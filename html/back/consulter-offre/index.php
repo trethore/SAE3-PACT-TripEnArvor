@@ -145,6 +145,7 @@ try {
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
     <script src="/scripts/reponse.js"></script>
+    <script src="/scripts/consulter-offre.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -359,6 +360,7 @@ try {
         <section class="double-blocs">
 
             <div id="map"></div>
+            <script>displayOfferOnMap(<?php echo json_encode($offre)?>);</script>
 
             <div class="fond-blocs bloc-a-propos">
 
