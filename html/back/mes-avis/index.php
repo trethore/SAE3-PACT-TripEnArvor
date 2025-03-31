@@ -275,6 +275,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
+                                    
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -305,12 +306,6 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
-                                                <div class="titre_offre">
-                                                <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                    <?php echo htmlentities($offre['titre']);  echo ' '; ?>
-                                                </a>
-                                                </div>
-
                                             </div>
 
                                             <div class="display-ligne">
@@ -319,39 +314,17 @@ if ($typeCompte === 'proPrive') {
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
-                                            <div class="display-ligne-espace"> <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                                        
-
-
                                             <div class="display-ligne-espace">
-                                                <div class="display-ligne">
-                                                    <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
-                                                                            echo ' '; ?></p>
-                                                    <div class="display-ligne">
-                                                        <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                                        <?php }
-                                                                    for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-
-                                                <div class="titre_offre">
-                                                <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                    <?php echo htmlentities($offre['titre']);  echo ' '; ?>
-                                                </a>
                                                 <div class="petite-mention">
                                                     <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
                                                                     $datePub = explode('-', $publication[0]); ?>
-                                                                    <span class="ladate"> <?php echo $datePub[0] . "-" . $datePub[1]. "-" .$datePub[2];?> </span>
                                                     <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
                                                 </div>
                                             </div>
                                             <br>
                                             <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                        
+                                        <
                                     <?php $compteur++; ?>
                                     </article> 
                                     <?php
