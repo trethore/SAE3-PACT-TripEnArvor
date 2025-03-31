@@ -215,7 +215,7 @@ if ($typeCompte === 'proPrive') {
                     }
                 }
 
-                print_r($touslesavis)
+                print_r($touslesavis);
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
