@@ -264,9 +264,9 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                                    <article>
+                                    
                                     <?php foreach ($avis as $lavis) {  ?>
-                                        
+                                        <article>
                                         <?php if ($lavis['lu'] == false) {
                                                                         echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                                     } else { //si l'avis a ete lu on met sil a une reponse ou pas
@@ -321,9 +321,10 @@ if ($typeCompte === 'proPrive') {
                                             <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
                                         
-                                    <?php $compteur++;
-                                    
-                                    } ?> </article> <?php
+                                    <?php $compteur++; ?>
+                                    </article> 
+                                    <?php
+                                    }   
                                      }}?>
                         </div>
                     
@@ -384,6 +385,7 @@ if ($typeCompte === 'proPrive') {
 
                 avis.forEach(lavis => avisContainer.appendChild(lavis));
             }
+            console.log('triage');
         };
 
     </script>
