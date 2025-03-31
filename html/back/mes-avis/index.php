@@ -188,7 +188,7 @@ if ($typeCompte === 'proPrive') {
                     $nb_avis_total += $nb_avis; 
                     
 
-                    foreach ($avis as $index =>$lavis) {
+                    foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
                                 $nb_non_lu++;
                         }
@@ -215,7 +215,7 @@ if ($typeCompte === 'proPrive') {
                     }
                 }
 
-                print_r($touslesavis);
+                print_r($touslesavis)
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
