@@ -309,7 +309,28 @@ if ($typeCompte === 'proPrive') {
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
+                                            <div class="display-ligne-espace"> <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                        
+
+
                                             <div class="display-ligne-espace">
+                                                <div class="display-ligne">
+                                                    <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
+                                                                            echo ' '; ?></p>
+                                                    <div class="display-ligne">
+                                                        <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                                        <?php }
+                                                                    for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="titre_offre">
+                                                <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                    <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                </a>
                                                 <div class="petite-mention">
                                                     <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
                                                                     $datePub = explode('-', $publication[0]); ?>
@@ -365,28 +386,31 @@ if ($typeCompte === 'proPrive') {
     
 
     <script> 
-    const avisContainer = document.querySelectorAll("container_avis");
-    const avis = document.querySelectorAll("article");
-        // Sort avis
-        const sortAvis = () => {
-            const selectElement = document.querySelector(".tris");
-            const selectedValue = selectElement.value;
+    document.addEventListener("DOMContentLoaded", () => {
+    const avisContainer = document.querySelector(".container_avis");
+    const avis = Array.from(document.querySelectorAll("article")); // Convertir NodeList en tableau
+    const initialOrder = [...avis]; // Stocker l'ordre initial des avis
 
-            if (selectedValue === "recent" || selectedValue === "ancien") {
-                avis.sort((a, b) => {
-                    const dateA = a.querySelector(".ladate").textContent.replace('/', '-').trim();
-                    const dateB = b.querySelector(".ladate").textContent.replace('/', '-').trim();
-                     return selectedValue === "ancien" ? dateA - dateB : dateB - dateA;
-                });
+    const sortAvis = () => {
+        const selectElement = document.querySelector(".tris");
+        const selectedValue = selectElement.value;
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            } if (selectedValue === "default") {
-                avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+        if (selectedValue === "recent" || selectedValue === "ancien") {
+            avis.sort((a, b) => {
+                const dateA = a.querySelector(".ladate").textContent.trim().split("-").reverse().join("-");
+                const dateB = b.querySelector(".ladate").textContent.trim().split("-").reverse().join("-");
+                
+                return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
+            });
+        } else if (selectedValue === "default") {
+            avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+        }
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            }
-            console.log('triage');
-        };
+        avis.forEach(lavis => avisContainer.appendChild(lavis)); // Réinsérer les éléments triés
+    };
+
+    document.querySelector(".tris").addEventListener("change", sortAvis);
+});
 
     </script>
 </body>
