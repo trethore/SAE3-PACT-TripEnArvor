@@ -212,6 +212,10 @@ if ($typeCompte === 'proPrive') {
                     }
                 }
 
+                foreach ($touslesavis as $key => $lavis) {
+                    //on tri les avis en fonction de la date de publi de l'article
+                }
+
                 print_r($touslesavis);
 
                 $nb_offres = 0;
