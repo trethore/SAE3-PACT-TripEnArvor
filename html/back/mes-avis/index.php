@@ -179,7 +179,7 @@ if ($typeCompte === 'proPrive') {
                 $nb_avis_total = 0; ?>
 
                 
-                <div class="container_avis">
+                
                 
                 <?php
                 foreach ($touteslesoffres as $offre) {
@@ -222,9 +222,10 @@ if ($typeCompte === 'proPrive') {
                             echo "<br>";
                             echo $nbrAvisNonRepondus . " avis non repondus"; ?>
                     </h2> <?php
-                            echo 'tri par offre'; ?>
+                            echo 'tri par offre';
 
-                            <article> <?php
+                            ?> <div class="container_avis"> <?php
+
                             foreach ($touteslesoffres as $offre) {
                                 if ($nb_avis_total == 0) {
                                     print("Aucun avis n'a été laissé sur vos offres");
@@ -265,7 +266,7 @@ if ($typeCompte === 'proPrive') {
                                 $compteur = 0; ?>
                                 
                                     <?php foreach ($avis as $lavis) {  ?>
-                                        
+                                        <article>
                                         <?php if ($lavis['lu'] == false) {
                                                                         echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                                     } else { //si l'avis a ete lu on met sil a une reponse ou pas
