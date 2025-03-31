@@ -202,10 +202,10 @@ if ($typeCompte === 'proPrive') {
                         $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
-                        $lavis['membre'] = $membre;
-                        $lavis['datePassage'] = $datePassage;
-                        $lavis['dateAvis'] = $dateAvis;
-                        $lavis['noteDetaillee'] = $noteDetaillee;
+                        $lavis['pseudo'] = $membre['pseudo'];
+                        $lavis['id_membre'] = $membre['id_membre'];
+                        $lavis['datePassage'] = $datePassage['date'];
+                        $lavis['dateAvis'] = $dateAvis['date'];
 
                         $touslesavis[] = $lavis; 
 
