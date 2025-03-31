@@ -1283,6 +1283,127 @@ BEGIN
     (var_id_offre, 'Groupe'),
     (var_id_offre, 'Solo');
 
+
+    /* ##################################################################### */
+    /*                       THE JEFF PANACLOC COMPANY                       */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '28 allée d’Aquitaine',
+        NULL,
+        '92000',
+        'Nanterre',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'François',
+        'THOMINET',
+        'email@ticketmaster.fr',
+        '+33606060606',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Exemple',
+        'exemple',
+        'https://www.ticketmaster.fr',
+        var_id_adresse,
+        '0123456789'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        '4 Rue Louis de Broglie',
+        NULL,
+        '22300',
+        'Lannion',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.offre_spectacle (
+        "duree", 
+        "capacite",
+        "date_evenement",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        1000,
+        2025-10-23,
+        'THE JEFF PANACLOC COMPANY',
+        'Retrouvez Jeff Panacloc et Jean-Marc dans un tout nouveau spectacle explorant la condition humaine avec humour, irrévérence et interactivité.',
+        'Lannion',
+        'L’humour fait son entrée en grande pompe à Lannion avec la première édition du festival LE RIROSKOPE ! Du 22 au 26 octobre 2025, la salle SKOPE se transforme en temple du rire pour cinq soirées exceptionnelles. Pour cette grande première, nous avons réuni cinq artistes incontournables (Sellig, Jeff Panacloc, Guihome, Marie S''infiltre et Laura Laune), chacun avec son style unique, prêts à vous offrir des spectacles mémorables. Préparez-vous à franchir les portes du bureau secret de Jeff Panacloc et à plonger dans un univers où l''humour flirte avec l''absurde. Dans « The Jeff Panacloc Company », chaque personnage détraqué vous promet une soirée délirante et inoubliable. Rejoignez cette troupe fantastique et vivez une expérience immersive unique qui vous laissera transformé et léger.',
+        'https://www.ticketmaster.fr/fr/manifestation/the-jeff-panacloc-company-billet/idmanif/613153',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('n_the-jeff-panacloc-company_g.webp');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'n_the-jeff-panacloc-company_g.webp');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Festif');
+
+
 END $$;
 
 
