@@ -497,7 +497,7 @@
             $stmtReactionAvis->bindParam(':id_membre_avis', $id_membre_avis, PDO::PARAM_INT);
             $stmtReactionAvis->bindParam(':id_membre_reaction', $id_membre_reaction, PDO::PARAM_INT);
             $stmtReactionAvis->execute();
-            $reactionAvis = $stmtReactionAvis->fetchAll(PDO::FETCH_ASSOC);
+            $reactionAvis = $stmtReactionAvis->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $reactionAvis;
         } catch (Exception $e) {
