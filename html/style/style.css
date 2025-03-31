@@ -3107,8 +3107,9 @@ h3 {
 ***********************************/
 
 .consulter-offre-front #map {
-    width: 240px; 
-    height: 160px;
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 3rem;
 }
 
 .consulter-offre-front .tag {
@@ -3807,8 +3808,9 @@ h3 {
 ***********************************/
 
 .consulter-offre-back #map {
-    width: 240px; 
-    height: 160px;
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 3rem;
 }
 
 .consulter-offre-back .tag {
