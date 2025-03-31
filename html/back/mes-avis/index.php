@@ -311,8 +311,8 @@ if ($typeCompte === 'proPrive') {
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
                                                     <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                                                                    $datePub = explode('-', $publication[0]); 
-                                                                    print($datePub . " date pub") ?>
+                                                                    $datePub = explode('-', $publication[0]); ?>
+                                                                    <span class="ladate"> <?php echo $datePub[0] . "-" . $datePub[1]. "-" .$datePub[2];?> </span>
                                                     <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
                                                 </div>
                                             </div>
