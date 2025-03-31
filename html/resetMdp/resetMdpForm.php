@@ -96,7 +96,7 @@ elseif (isset($_GET['token'])) {
                     <?php if ($message): ?>
                         <p><?php echo $message; ?></p>
                     <?php endif; ?>
-                    <form action="/resetMdpForm.php?token=<?php echo htmlspecialchars($token); ?>" method="post">
+                    <form action="/resetMdp/resetMdpForm.php?token=<?php echo htmlspecialchars($token); ?>" method="post">
                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                         <label for="new_password">Nouveau mot de passe :</label>
                         <input type="password" id="new_password" name="new_password" required>

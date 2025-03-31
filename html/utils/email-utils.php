@@ -30,10 +30,8 @@ function sendEmail($to, $subject, $body, $altBody) {
         $mail->Body    = $body;
         $mail->AltBody = $altBody;
 
-        print_r($mail->SMTPDebug);
         $mail->send();
         echo '\n\ntest 2\n\n';
-        print_r($mail->SMTPDebug);
         return true;
     } catch (Exception $e) {
         error_log("Erreur lors de l'envoi de l'email : {$mail->ErrorInfo}");  

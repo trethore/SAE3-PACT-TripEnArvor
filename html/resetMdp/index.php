@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/email-utils.php');
 
-$reset_link_base = "https://redden.ventsdouest.dev/resetMdpForm.php";
+$reset_link_base = "https://redden.ventsdouest.dev/resetMdp/resetMdpForm.php";
 
 // Initialisation des variables
 $message = '';
