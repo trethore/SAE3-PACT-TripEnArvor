@@ -264,9 +264,9 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                                
+                                    <article>
                                     <?php foreach ($avis as $lavis) {  ?>
-                                        <article>
+                                        
                                         <?php if ($lavis['lu'] == false) {
                                                                         echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                                     } else { //si l'avis a ete lu on met sil a une reponse ou pas
