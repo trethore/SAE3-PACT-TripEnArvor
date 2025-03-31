@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $token = bin2hex(random_bytes(32)); // Générer un token plus long et aléatoire
                 $expiry_date = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-                $stmt = $dbh->prepare("INSERT INTO password_reset_tokens (id_compte, token, expiry_date) VALUES (:id_compte, :token, :expiry_date)");
+                $stmt = $dbh->prepare("INSERT INTO _password_reset_tokens (id_compte, token, expiry_date) VALUES (:id_compte, :token, :expiry_date)");
                 $stmt->bindParam(':id_compte', $id_compte);
                 $stmt->bindParam(':token', $token);
                 $stmt->bindParam(':expiry_date', $expiry_date);

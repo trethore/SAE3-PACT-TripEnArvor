@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Récupérer l'ID de l'utilisateur à partir du token
-            $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+            $stmt = $dbh->prepare("SELECT id_compte FROM _password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
             $stmt->bindParam(':token', $token);
             $stmt->execute();
             $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
                 $stmt->execute();
 
                 // Supprimer le token
-                $stmt = $dbh->prepare("DELETE FROM password_reset_tokens WHERE token = :token");
+                $stmt = $dbh->prepare("DELETE FROM _password_reset_tokens WHERE token = :token");
                 $stmt->bindParam(':token', $token);
                 $stmt->execute();
 
@@ -67,7 +67,7 @@ elseif (isset($_GET['token'])) {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
         // Vérifier si le token est valide
-        $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+        $stmt = $dbh->prepare("SELECT id_compte FROM _password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
         $stmt->bindParam(':token', $token);
         $stmt->execute();
         $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
