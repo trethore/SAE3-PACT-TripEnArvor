@@ -12,8 +12,8 @@ function sendEmail($to, $subject, $body, $altBody) {
 
     try {
         //Server settings
-        $mail->SMTPDebug = 0;                      //mettre à 2 pour déboguer, 0 en production
-        $mail->isSMTP();                                            
+        $mail->SMTPDebug = 2;
+        $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'redden.pact@gmail.com';                    
@@ -21,17 +21,19 @@ function sendEmail($to, $subject, $body, $altBody) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
         $mail->Port       = 587;                                    
 
-        //Recipients
         $mail->setFrom('redden.pact@gmail.com');
         $mail->addAddress($to);               
 
-        //Content
+        // Contenu
         $mail->isHTML(true);                                  
         $mail->Subject = $subject;
         $mail->Body    = $body;
         $mail->AltBody = $altBody;
 
+        print_r($mail->SMTPDebug);
         $mail->send();
+        echo '\n\ntest 2\n\n';
+        print_r($mail->SMTPDebug);
         return true;
     } catch (Exception $e) {
         error_log("Erreur lors de l'envoi de l'email : {$mail->ErrorInfo}");  
