@@ -624,17 +624,19 @@ CREATE TABLE _avis_contient_image (
         REFERENCES _image(lien_fichier)
 );
 
-/* ======================== password_reset_tokens ======================== */
+/* ======================== _password_reset_tokens ======================== */
 
-CREATE TABLE password_reset_tokens (
+CREATE TABLE _password_reset_tokens (
     id SERIAL PRIMARY KEY,
     id_compte INTEGER NOT NULL,
     token VARCHAR(64) NOT NULL, 
     expiry_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte),
-    INDEX (token) 
+    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
+
+CREATE INDEX idx_token ON _password_reset_tokens (token);
+
 
 /* ##################################################################### */
 /*                       TRIGGERS TABLES ABSTRAITES                      */
