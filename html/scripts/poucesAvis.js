@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `id_offre=${id_offre}&id_membre_avis=${id_membre_avis}&id_membre_reaction=${id_membre_reaction}&type=${type}&action=${action}`
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
             if (data.success) {
                 countElement.textContent = data.nb_pouce_haut;
