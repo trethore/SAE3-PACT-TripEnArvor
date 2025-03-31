@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
     <main>
         <h1>Mot de passe oublié ?</h1>
-        <p>Entrez votre adresse email pour réinitialiser votre mot de passe.</p>
+        <h2>Entrez votre adresse email pour réinitialiser votre mot de passe.</h2>
 
         <?php if ($message): ?>
             <p><?php echo htmlspecialchars($message); ?></p>
