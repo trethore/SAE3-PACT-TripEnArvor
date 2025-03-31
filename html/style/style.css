@@ -4341,7 +4341,7 @@ h3 {
 }
 
 .back .mes-avis .fond-blocs-avis {
-    margin-top: 5px;
+    margin-top: 7px;
     min-width: 800px;
 }
 
@@ -4364,7 +4364,7 @@ h3 {
     display: inline-block;
     z-index: 1;
     position: absolute;
-    top: -2rem;
+    top: -1.75rem;
     left: 1rem;
 
 }
