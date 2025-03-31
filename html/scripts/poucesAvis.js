@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `id_offre=${idOffre}&id_membre_avis=${idMembreAvis}&id_membre_reaction=${idMembreReaction}&type=${type}&action=${action}`
             })
-            .then(response => response.json()) 
+            .then(response => response.text()) 
             .then(data => {
                 if (data.success) {
                     if (type === "like") {
