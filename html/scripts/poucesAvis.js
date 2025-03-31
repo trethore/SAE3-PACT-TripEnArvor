@@ -21,17 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.text()) // Traitement de la réponse en texte brut
             .then(data => {
                 console.log("Réponse serveur :", data);
-                
-                if (data.includes("Succès")) {
-                    // Extraction des valeurs mises à jour
-                    const matches = data.match(/Pouce Haut: (\d+), Pouce Bas: (\d+)/);
-                    if (matches) {
-                        nbPouceHaut.textContent = matches[1];
-                        nbPouceBas.textContent = matches[2];
-                    }
-                } else {
-                    console.error("Erreur serveur :", data);
-                }
+                location.reload();
             })
             .catch(error => console.error("Erreur :", error));
         });
