@@ -110,6 +110,22 @@ elseif (isset($_GET['token'])) {
                     </form>
                 </main>
             </body>
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const newPassword = document.getElementById("new_password");
+                const confirmPassword = document.getElementById("confirm_password");
+                const submitButton = document.querySelector("input[type='submit']");
+
+                function checkPasswords() {
+                    submitButton.disabled = newPassword.value !== confirmPassword.value;
+                }
+
+                newPassword.addEventListener("input", checkPasswords);
+                confirmPassword.addEventListener("input", checkPasswords);
+            });
+            </script>
+
+
             </html>
             <?php
         } else {
