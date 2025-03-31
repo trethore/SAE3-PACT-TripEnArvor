@@ -268,6 +268,7 @@ try {
     <script src="/scripts/formulaireAvis.js"></script>
     <script src="/scripts/popupAvis.js"></script>
     <script src="/scripts/blacklist.js"></script>
+    <script src="/scripts/consulter-offre.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -433,6 +434,7 @@ try {
         <section class="double-blocs">
 
             <div id="map"></div>
+            <script>displayOfferOnMap(<?php echo json_encode($offre)?>);</script>
 
             <div class="fond-blocs bloc-a-propos">
                 
