@@ -320,10 +320,11 @@ if ($typeCompte === 'proPrive') {
                                             <br>
                                             <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                        </article>
+                                        
                                     <?php $compteur++;
                                     
-                                    } }}?>
+                                    } ?> </article> <?php
+                                     }}?>
                         </div>
                     
         </section>
