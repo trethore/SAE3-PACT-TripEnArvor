@@ -362,23 +362,7 @@ try {
 
         </section>
 
-        <section class="fond-blocs">
-            <div class="display-ligne-tag">
-                <?php 
-                if (!empty($tags)) {
-                    foreach ($tags as $tag) { 
-                ?>
-                        <p class="tag"><?php echo htmlentities($tag['nom_tag']); ?></p>
-                <?php 
-                    }
-                } else { 
-                ?>
-                    <p>Pas de tags disponibles</p>
-                <?php 
-                } 
-                ?>
-            </div>
-        </section>
+        
 
         <section class="double-blocs">
 
