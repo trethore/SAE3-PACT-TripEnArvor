@@ -160,15 +160,22 @@ if ($typeCompte === 'proPrive') {
 
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
-            <h3>Trier</h3>
-            <div>
-                <select id="tris">
-                    <option value="">Trier par :</option>
-                    <option value="recent">Plus récent</option>
-                    <option value="ancien">Plus ancient</option>
-                    <option value="tri_offre">Offre</option>
-                </select>
-            </div>
+            <article class="filtre-tri">
+                <h2>Filtres et tris</h2>
+                <div class="fond-filtres hidden">
+            
+                    <div>
+                        <select id="tris">
+                            <option value="">Trier par :</option>
+                            <option value="recent">Plus récent</option>
+                            <option value="ancien">Plus ancient</option>
+                            <option value="tri_offre">Offre</option>
+                        </select>
+                    </div>
+
+                </div>
+            </article>
+            
             <div class="contenu-aligne-gauche">
 
 
