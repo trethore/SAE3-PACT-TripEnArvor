@@ -676,7 +676,7 @@ try {
                                 </div>
 
                                 <div class="display-ligne">
-                                    <label for="contexte">Saisissez un contexte <span>*</span></label>
+                                    <label for="contexte">Contexte <span>*</span></label>
                                     <select id="contexte" name="contexte" required>
                                         <option value="" disabled selected>Choisissez un contexte</option>
                                         <option value="affaires">Affaires</option>
@@ -748,18 +748,15 @@ try {
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                             
-                            <div class="display-ligne-espace">
-                                
-                                
-
-                                <div>
-                                    <label id="photo" for="photo">Importez une photo</label> 
-                                    <input type="file" id="photo" name="photo"/><br>
-                                </div>
-
+                            <div>
+                                <label id="photo" for="photo">Importez une photo</label> 
+                                <input type="file" id="photo" name="photo"/><br>
                             </div>
 
-                            <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                            <div class="petite-mention">
+                                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                            </div>
+
                             <button type="submit">Publier</button>
                             <button type="button" id="cancelFormButton">Annuler</button>
                         </form>
