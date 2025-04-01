@@ -697,13 +697,12 @@
     // ==== Fonction qui la date de publication d'un avis avec l'id du membre et de l'offre
     function getDatePublicationAvecIDMembre($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDatePublication = "SELECT * FROM _avis  JOIN _date on  _avis.publie_le = _date.id_date where id_offre = :id_offre and id_membre = :id_membre;";
+        $reqDatePublication = "SELECT * FROM _avis  JOIN _date on  _avis.publie_le = _date.id_date where id_offre = ? and id_membre = ?;";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDatePublication = $conn->prepare($reqDatePublication);
-            $stmtDatePublication->bindParam(':id_offre', $id_offre, ':id_membre', $id_membre, PDO::PARAM_INT);
-            $stmtDatePublication->execute();
+            $stmtDatePublication->execute([$id_offre, $id_membre]);
             $datePublication = $stmtDatePublication->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $datePublication;
