@@ -680,13 +680,13 @@ try {
                 <?php 
                 if ($categorie == "Restauration") { 
                 ?>
-                    <div class="display-ligne">
+                    <div class="display-ligne-note-detaille">
                         <?php 
                         foreach ($noteDetaillee as $n) {
                             if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
                         ?>
                                 <div class="display-ligne">
-                                    <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
+                                    <p><?php echo htmlentities($n['nom_note']) . " "; ?></p>
                                     <?php 
                                     for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
                                     ?>
