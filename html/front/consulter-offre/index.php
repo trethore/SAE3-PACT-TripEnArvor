@@ -877,28 +877,24 @@ try {
                                     $userReaction = getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id']);
                                 ?>
                                     <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                    <img src="/images/universel/icones/pouce-up<?php echo ($userReaction && $userReaction['nb_pouce_haut'] == 1) ? '-hover' : ''; ?>.png" 
+                                    <img src="/images/universel/icones/pouce-up<?= ($userReaction && $userReaction['nb_pouce_haut'] == 1) ? '-hover' : '' ?>.png" 
                                         class="pouce pouceHaut" 
-                                        data-id-offre="<?php echo $id_offre_cible; ?>" 
-                                        data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" 
-                                        data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                        data-id-offre="<?= $id_offre_cible ?>" 
+                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>" 
+                                        data-id-membre-reaction="<?= $_SESSION['id'] ?>">
                                     
                                     <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                    <img src="/images/universel/icones/pouce-down<?php echo ($userReaction && $userReaction['nb_pouce_bas'] == 1) ? '-hover' : ''; ?>.png" 
+                                    <img src="/images/universel/icones/pouce-down<?= ($userReaction && $userReaction['nb_pouce_bas'] == 1) ? '-hover' : '' ?>.png" 
                                         class="pouce pouceBas" 
-                                        data-id-offre="<?php echo $id_offre_cible; ?>" 
-                                        data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" 
-                                        data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
-                                <?php
-                                } else {
-                                ?>
+                                        data-id-offre="<?= $id_offre_cible ?>" 
+                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>" 
+                                        data-id-membre-reaction="<?= $_SESSION['id'] ?>">
+                                <?php } else { ?>
                                     <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
                                     <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut">
                                     <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
                                     <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas">
-                                <?php
-                                }
-                                ?>
+                                <?php } ?>
                             </div>
 
                         </div>
