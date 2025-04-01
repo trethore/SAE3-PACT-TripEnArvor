@@ -219,11 +219,11 @@ try {
                             }
                         ?>
                         <div>
-                            <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jeton(s) de blacklistage restant(s)</em></p>
+                            <p class="nombre-blacklistage"><em><?php echo htmlentities($offre['nb_jetons']); ?> blacklistage restant(s)</em></p>
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
                             ?>
-                                <p>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</p>
+                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</em></p>
                             <?php
                             }
                             ?>
@@ -338,7 +338,7 @@ try {
                 setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                $ouverture = "Indéterminé";
                 foreach ($horaire as $h) {
                     if (!empty($horaire)) {
                         $ouvert_ferme = date('H:i');
@@ -360,6 +360,27 @@ try {
                  <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
             </div>
 
+        </section>
+
+        <section class="fond-blocs bloc-tags">
+            <div class="display-ligne-tag">
+                <?php 
+                if (!empty($tags)) {
+                    foreach ($tags as $tag) { 
+                ?>
+                        <div class="display-ligne tag">
+                            <p><?php echo htmlentities($tag['nom_tag']); ?></p>
+                            <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                        </div>
+                <?php 
+                    }
+                } else { 
+                ?>
+                    <p>Pas de tags disponibles</p>
+                <?php 
+                } 
+                ?>
+            </div>
         </section>
 
         <section class="double-blocs">
@@ -411,7 +432,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']); ?> ans</p>
-                            <a href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a class="fichier" href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -423,7 +444,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a class="fichier" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                 <?php 

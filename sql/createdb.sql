@@ -321,6 +321,7 @@ BEGIN
     DELETE FROM sae._note_detaillee WHERE id_membre = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._avis_contient_image WHERE id_membre = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._signaler WHERE id_signale = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._reaction_avis WHERE id_membre_avis = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._avis WHERE id_membre = _id_membre AND id_offre = _id_offre;
 END;
 $$ LANGUAGE 'plpgsql';
@@ -347,6 +348,17 @@ CREATE TABLE _signaler (
     date_signalement    TIMESTAMP NOT NULL,
     CONSTRAINT _signaler_pk PRIMARY KEY (id_signale, id_offre),
     CONSTRAINT _signaler_fk_avis FOREIGN KEY (id_signale, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
+
+
+CREATE TABLE _reaction_avis (
+    id_offre                  INTEGER,
+    id_membre_avis            INTEGER,
+    id_membre_reaction        INTEGER,
+    nb_pouce_haut             INTEGER CHECK (nb_pouce_haut IN (0, 1)),
+    nb_pouce_bas              INTEGER CHECK (nb_pouce_bas IN (0, 1)),
+    CONSTRAINT _reaction_avis_pk PRIMARY KEY (id_membre_avis, id_offre),
+    CONSTRAINT _reaction_avis_fk_avis FOREIGN KEY (id_membre_avis, id_offre) REFERENCES _avis(id_membre, id_offre)
 );
 
 
