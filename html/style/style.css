@@ -3297,7 +3297,7 @@ h3 {
 .consulter-offre-front ::placeholder {
     font-style: italic;
     color: var(--gris);
-    text-align: center;
+    text-align: left;
 }
 
 .consulter-offre-front .avis-form > div > label {
@@ -3598,6 +3598,17 @@ h3 {
     transform: translate(-50%, -50%);
 }
 
+.consulter-offre-front textarea:first-of-type {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    width: 200px;
+    height: 20px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
 .consulter-offre-front textarea:last-of-type {
     background: var(--blanc);
     border: 1px solid var(--noir);
@@ -3631,6 +3642,14 @@ h3 {
 
 .consulter-offre-front .confirmation-popup-signaler button:last-of-type:hover {
     color: var(--violet-principal);
+}
+
+.consulter-offre-front .fond-blocs-avis > h2 {
+    text-align: center;
+} 
+
+.consulter-offre-front .fond-blocs-avis > .petite-mention {
+    margin: 20px 0;
 }
 
 .consulter-offre-front .label-avis {
