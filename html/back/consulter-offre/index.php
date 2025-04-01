@@ -338,7 +338,7 @@ try {
                 setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                $ouverture = "Pas d'informations sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
                     if (!empty($horaire)) {
                         $ouvert_ferme = date('H:i');
@@ -432,7 +432,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']); ?> ans</p>
-                            <a href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a class="fichier" href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -444,7 +444,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a class="fichier" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                 <?php 

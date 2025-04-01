@@ -3843,6 +3843,8 @@ h3 {
 
 .consulter-offre-back .bloc-tags {
     border: none;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .consulter-offre-back .liste-caracteristique {
@@ -3901,6 +3903,16 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
+    text-align: center;
+}
+
+.consulter-offre-back .fichier {
+    color: var(--blanc);
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 20px;
+    border-radius: 8px;
+    width: 205px;
     text-align: center;
 }
 
