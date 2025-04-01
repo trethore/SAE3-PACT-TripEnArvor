@@ -133,7 +133,7 @@ CREATE TABLE _compte_membre (
     id_compte   INTEGER,
     pseudo      VARCHAR(255) UNIQUE NOT NULL,
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
-    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
+    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte) ON DELETE CASCADE
 );
 
 CREATE VIEW compte_membre AS
@@ -1474,24 +1474,20 @@ BEGIN
 
     -- Vérifier qu'on ne supprime pas le compte anonyme lui-même
     IF OLD.id_compte = ano_id THEN
-        RAISE EXCEPTION 'Tentative de suppression du compte anonyme (id=%) interdite.', anon_id;
+        RAISE EXCEPTION 'Tentative de suppression du compte anonyme (id=%) interdite.', ano_id;
     END IF;
 
     -- Commencer une transaction implicite
     PERFORM pg_advisory_xact_lock(1); -- Verrouillage pour éviter les conflits concurrents
 
     -- Mettre à jour toutes les tables concernées
-    UPDATE sae._avis SET id_membre = anon_id WHERE id_membre = OLD.id_compte;
-    UPDATE sae._blacklister SET id_membre = anon_id WHERE id_membre = OLD.id_compte;
-    UPDATE sae._reaction_avis SET id_membre_avis = anon_id WHERE id_membre_avis = OLD.id_compte;
-    UPDATE sae._reaction_avis SET id_membre_reaction = anon_id WHERE id_membre_reaction = OLD.id_compte;
-    UPDATE sae._signaler SET id_signale = anon_id WHERE id_signale = OLD.id_compte;
-    UPDATE sae._signaler SET id_signalant = anon_id WHERE id_signalant = OLD.id_compte;
-    UPDATE sae._avis_contient_image SET id_membre = anon_id WHERE id_membre = OLD.id_compte;
-
-
-    DELETE FROM sae._compte_membre
-    WHERE id_compte = OLD.id_compte;
+    UPDATE sae._avis SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+    UPDATE sae._blacklister SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+    UPDATE sae._reaction_avis SET id_membre_avis = ano_id WHERE id_membre_avis = OLD.id_compte;
+    UPDATE sae._reaction_avis SET id_membre_reaction = ano_id WHERE id_membre_reaction = OLD.id_compte;
+    UPDATE sae._signaler SET id_signale = ano_id WHERE id_signale = OLD.id_compte;
+    UPDATE sae._signaler SET id_signalant = ano_id WHERE id_signalant = OLD.id_compte;
+    UPDATE sae._avis_contient_image SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
 
     DELETE FROM sae._compte
     WHERE id_compte = OLD.id_compte;
