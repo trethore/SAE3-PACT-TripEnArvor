@@ -223,46 +223,6 @@ if ($typeCompte === 'proPrive') {
                     
                 }
 
-                function array_sort($array, $on, $order=SORT_ASC)
-                {
-                    $new_array = array();
-                    $sortable_array = array();
-
-                    if (count($array) > 0) {
-                        foreach ($array as $k => $v) {
-                            if (is_array($v)) {
-                                foreach ($v as $k2 => $v2) {
-                                    if ($k2 == $on) {
-                                        $sortable_array[$k] = $v2;
-                                    }
-                                }
-                            } else {
-                                $sortable_array[$k] = $v;
-                            }
-                        }
-
-                        switch ($order) {
-                            case SORT_ASC:
-                                asort($sortable_array);
-                            break;
-                            case SORT_DESC:
-                                arsort($sortable_array);
-                            break;
-                        }
-
-                        foreach ($sortable_array as $k => $v) {
-                            $new_array[$k] = $array[$k];
-                        }
-                    }
-
-                    return $new_array;
-                }
-
-                foreach($touslesavis as $key => $lavis){
-                    $aviTriPluRecent[] = $lavis;
-                    $aviTriPluAncien[] = $lavis;
-                    $avitrioffre[] = $lavis;
-                }
 
                 usort($aviTriPluRecent, function ($a, $b) {
                     return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
@@ -409,8 +369,7 @@ if ($typeCompte === 'proPrive') {
 
                         <div class="recent">
                         <?php foreach ($aviTriPluAncien as $lavis) { 
-                            $id_offre = $lavis['id_offre'];
-                            $categorie = getTypeOffre($id_offre);  ?>
+                            $id_offre = $lavis['id_offre'];  ?>
 
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -443,7 +402,7 @@ if ($typeCompte === 'proPrive') {
 
                                                 <div class="titre_offre">
                                                  <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                     <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                     <?php echo htmlentities($lavis['titre']);  echo ' '; ?>
                                                  </a>
                                                  </div>
  
@@ -451,14 +410,14 @@ if ($typeCompte === 'proPrive') {
                                             </div>
 
                                             <div class="display-ligne">
-                                                <?php $passage = explode(' ', $lavis['dateAvis']);
+                                                <?php $passage = explode(' ', $lavis['datePassage']);
                                                                     $datePass = explode('-', $passage[0]); ?>
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
-                                                    <?php $publication = explode(' ', $lavis['datePassage']);
+                                                    <?php $publication = explode(' ', $lavis['dateAvis']);
                                                                     $datePub = explode('-', $publication[0]); ?>
                                                     <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
                                                 </div>
