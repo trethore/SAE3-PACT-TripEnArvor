@@ -208,7 +208,7 @@ if ($typeCompte === 'proPrive') {
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
                         echo "<pre>";
                         echo "print r membre";
-                        print_r($membre);
+                        print_r($membre[0]);
                         echo "</pre>";
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
