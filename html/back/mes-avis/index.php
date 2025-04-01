@@ -187,14 +187,17 @@ if ($typeCompte === 'proPrive') {
                     $nb_avis = count($avis);
                     $nb_avis_total += $nb_avis; 
                     
+                    $i=0;
 
                     foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
                                 $nb_non_lu++;
                         }
+
+                        
                          
                         
-                        $membre = getInformationsMembre($id_offre);
+                        $membre = getInformationsMembre($id_offre)[$i];
                         $datePassage = getDatePassage($id_offre);
                         $dateAvis = getDatePublicationAvecIDMembre($id_offre, $membre[0]['id_membre']);
                         $noteDetaillee = getAvisDetaille($id_offre);
@@ -208,8 +211,9 @@ if ($typeCompte === 'proPrive') {
                         $lavis['dateAvis'] = $dateAvis[0]['date'];
 
                         $touslesavis[] = $lavis; 
-
+                        $i++;
                     }
+                    
                 }
 
                 function array_sort($array, $on, $order=SORT_ASC)
@@ -361,6 +365,13 @@ if ($typeCompte === 'proPrive') {
                                                         <?php } ?>
                                                     </div>
                                                 </div>
+
+                                                <div class="titre_offre">
+                                                 <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                     <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                 </a>
+                                                 </div>
+ 
 
                                             </div>
 
