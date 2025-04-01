@@ -215,7 +215,7 @@ if ($typeCompte === 'proPrive') {
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
-                        $lavis['dateAvis'] = $dateAvis[$i]['date'];
+                        $lavis['dateAvis'] = $dateAvis['date'];
 
                         $touslesavis[] = $lavis; 
                         $i++;
