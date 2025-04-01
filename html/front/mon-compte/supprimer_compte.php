@@ -24,7 +24,7 @@ try {
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
-    echo "Compte supprimé avec succès.";
+    echo "Compte supprimé avec succès";
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
 }
