@@ -4486,9 +4486,11 @@ h3 {
     justify-content: space-around;
 }
 
-.mes-avis .filtre-tri select {
-    margin-left: 0; /* Assure-toi qu'il n'y a pas d'espaces à gauche */
-    padding-left: 0; /* Si nécessaire, ajuste aussi le padding */
+.mes-avis .filtre-tri .tris {
+        width: 110px;
+        height: 31px;
+        border: none;
+        border-radius: 10px;
 }
 
 .mes-avis .filtre-tri .div-tri {
