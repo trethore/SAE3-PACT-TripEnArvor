@@ -550,9 +550,7 @@ if ($typeCompte === 'proPrive') {
 
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
-        triRecent.style.display = 'none';
-        triAncien.style.display = 'none';
-        triOffre.style.display = 'inline';
+        
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
@@ -566,17 +564,17 @@ if ($typeCompte === 'proPrive') {
             if (triChoisi === "recent") {
                 triAncien.style.display = 'none';
                 triOffre.style.display = 'none';
-                triRecent.style.display = 'inline';
+                triRecent.style.display = 'block';
 
             } else if (triChoisi === "ancien") {
                 triOffre.style.display = 'none';
                 triRecent.style.display = 'none';
-                triAncien.style.display = 'inline';
+                triAncien.style.display = 'block';
 
             } else if (triChoisi === "tri_offre") {
                 triAncien.style.display = 'none';
                 triRecent.style.display = 'none';
-                triOffre.style.display = 'inline';
+                triOffre.style.display = 'block';
                 
 
             }
