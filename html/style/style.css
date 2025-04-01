@@ -4536,7 +4536,7 @@ h3 {
     justify-content: space-around;
 }
 
-.mes-avis .filtre-tri .tris {
+.mes-avis .filtre-tri #tris {
         width: 110px;
         height: 31px;
         border: none;

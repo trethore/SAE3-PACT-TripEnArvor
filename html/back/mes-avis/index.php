@@ -548,44 +548,46 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-         document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
     const selectElement = document.getElementById('tris');
 
     if (triRecent && triAncien && triOffre && selectElement) {
-        // Masquer recent et ancien au chargement, afficher tri_offre par défaut
+        // Cacher tout sauf l'offre au chargement
         triRecent.style.display = 'none';
         triAncien.style.display = 'none';
         triOffre.style.display = 'block';
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
+            console.log("Tri choisi:", triChoisi);
 
-            console.log("Option sélectionnée :", triChoisi); // Vérification console
-
-            // Tout cacher par défaut
+            // Cacher tous les divs d'abord
             triRecent.style.display = 'none';
-            // triAncien.style.display = 'none';
+            triAncien.style.display = 'none';
             triOffre.style.display = 'none';
 
-            // Afficher la bonne div
+            // Afficher le bon tri
             if (triChoisi === "recent") {
-                console.log("Affichage de tri_recent");
                 triRecent.style.display = 'block';
             } else if (triChoisi === "ancien") {
-                console.log("Affichage de tri_ancien");
                 triAncien.style.display = 'block';
             } else if (triChoisi === "tri_offre") {
-                console.log("Affichage de tri_offre");
                 triOffre.style.display = 'block';
             }
         });
-    } else {
-        console.error("❌ Un ou plusieurs éléments sont introuvables !");
     }
 });
+
+setInterval(() => {
+    console.log("État des divs :",
+        "tri_recent:", triRecent.style.display,
+        "tri_ancien:", triAncien.style.display,
+        "tri_offre:", triOffre.style.display
+    );
+}, 2000);
 
 
 
