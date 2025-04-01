@@ -409,7 +409,7 @@ if ($typeCompte === 'proPrive') {
 
                         <div class="recent">
                         <?php foreach ($aviTriPluAncien as $lavis) { 
-                            $id_offre = $lavis[$compteur]['id_offre'];
+                            $id_offre = $lavis['id_offre'];
                             $categorie = getTypeOffre($id_offre);  ?>
 
                                         <article>
@@ -417,7 +417,7 @@ if ($typeCompte === 'proPrive') {
                                                                         echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
                                                                     } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
-                                                                        if (empty(getReponse($id_offre, $lavis[$compteur]['id_membre']))) {
+                                                                        if (empty(getReponse($id_offre, $lavis['id_membre']))) {
                                                                             echo '<div role="tooltip" id="infobulle">Non répondu</div>';
                                                                         }
                                                                     }
@@ -429,7 +429,7 @@ if ($typeCompte === 'proPrive') {
 
                                             <div class="display-ligne-espace">
                                                 <div class="display-ligne">
-                                                    <p class="titre-avis"><?php echo htmlentities($lavis[$compteur]['pseudo']);
+                                                    <p class="titre-avis"><?php echo htmlentities($lavis['pseudo']);
                                                                             echo ' '; ?></p>
                                                     <div class="display-ligne">
                                                         <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
@@ -451,14 +451,14 @@ if ($typeCompte === 'proPrive') {
                                             </div>
 
                                             <div class="display-ligne">
-                                                <?php $passage = explode(' ', $lavis[$compteur]['date']);
+                                                <?php $passage = explode(' ', $lavis['date']);
                                                                     $datePass = explode('-', $passage[0]); ?>
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
-                                                    <?php $publication = explode(' ', $lavis[$compteur]['date']);
+                                                    <?php $publication = explode(' ', $lavis['date']);
                                                                     $datePub = explode('-', $publication[0]); ?>
                                                     <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
                                                 </div>
@@ -466,7 +466,6 @@ if ($typeCompte === 'proPrive') {
                                             <br>
                                             <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                    <?php $compteur++; ?>
                                     </article> 
                                     <?php
                                     }  ?>
