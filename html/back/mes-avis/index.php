@@ -195,6 +195,8 @@ if ($typeCompte === 'proPrive') {
                         }
 
                         
+
+                        //select id_membre, pseudo from _avis natural join _membre where id_membre = $session['id'] and id_offre = $id_offre
                          
                         
                         $membre = getInformationsMembre($id_offre);
@@ -204,9 +206,10 @@ if ($typeCompte === 'proPrive') {
 
                         $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
-
+                        echo "<pre>";
+                        echo "print r membre";
                         print_r($membre);
-
+                        echo "</pre>";
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
