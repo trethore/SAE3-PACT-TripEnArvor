@@ -305,7 +305,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
-                                    <div class='tri_offre'>
+                                    <div id='tri_offre'>
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -368,7 +368,7 @@ if ($typeCompte === 'proPrive') {
                                      }}?>
                         </div>
 
-                        <div class="tri_recent">
+                        <div id="tri_recent">
                         <h3>
                                 tri pqr plus recent
                             </h3>
@@ -434,7 +434,7 @@ if ($typeCompte === 'proPrive') {
                                     }  ?>
                         </div>
 
-                        <div class="tri_ancien">
+                        <div id="tri_ancien">
                             <h3>
                                 tri pqr plus ancien
                             </h3>
@@ -540,76 +540,36 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     // Masquer uniquement "recent" et "ancien" au départ, mais laisser "tri_offre" visible
-    //     document.getElementById('tri_recent').style.display = 'none';
-    //     document.getElementById('tri_ancien').style.display = 'none';
-    //     document.getElementById('tri_offre').style.display = 'inline'; // Visible par défaut
-
-    //     const selectElement = document.getElementById('tris');
-
-    //     if (selectElement) { 
-    //         selectElement.addEventListener('change', function() {
-    //             // Récupérer la valeur sélectionnée
-    //             const triChoisi = this.value;
-
-    //             // Masquer tous les éléments sauf tri_offre
-    //             document.getElementById('tri_recent').style.display = 'none';
-    //             document.getElementById('tri_ancien').style.display = 'none';
-    //             document.getElementById('tri_offre').style.display = 'none';
-
-    //             // Afficher l'élément correspondant au tri choisi
-    //             if (triChoisi === "recent") {
-    //                 document.getElementById('tri_recent').style.display = 'inline';
-    //             } else if (triChoisi === "ancien") {
-    //                 document.getElementById('tri_ancien').style.display = 'inline';
-    //             } else if (triChoisi === "tri_offre") {
-    //                 document.getElementById('tri_offre').style.display = 'inline';
-    //             }
-    //         });
-    //     }
-    // });
+document.addEventListener("DOMContentLoaded", function() {
+    // Masquer uniquement "recent" et "ancien" au départ, mais laisser "tri_offre" visible
     document.getElementById('tri_recent').style.display = 'none';
-    //document.getElementById('tri_ancien').style.display = 'none';
+    document.getElementById('tri_ancien').style.display = 'none';
+    document.getElementById('tri_offre').style.display = 'inline'; // Visible par défaut
 
-    document.addEventListener("DOMContentLoaded", function() {
-        // Récupérer les éléments
-        const recent = document.getElementById('recent');
-        const ancien = document.getElementById('ancien');
-        const triOffre = document.getElementById('tri_offre');
-        const selectElement = document.getElementById('tris');
+    const selectElement = document.getElementById('tris');
 
-        // Vérifier que les éléments existent avant d'accéder à leurs styles
-        if (recent && ancien && triOffre) {
-            // Masquer "recent" et "ancien" au départ, laisser "tri_offre" visible
-            recent.style.display = 'none';
-            ancien.style.display = 'none';
-            triOffre.style.display = 'inline';
-        }
+    if (selectElement) { 
+        selectElement.addEventListener('change', function() {
+            // Récupérer la valeur sélectionnée
+            const triChoisi = this.value;
 
-        if (selectElement) {
-            selectElement.addEventListener('change', function() {
-                const triChoisi = this.value;
+            // Masquer tous les éléments sauf tri_offre
+            document.getElementById('tri_recent').style.display = 'none';
+            document.getElementById('tri_ancien').style.display = 'none';
+            document.getElementById('tri_offre').style.display = 'none';
 
-                // Vérifier encore une fois l'existence des éléments avant de modifier leur style
-                if (recent && ancien && triOffre) {
-                    // Tout masquer par défaut
-                    recent.style.display = 'none';
-                    ancien.style.display = 'none';
-                    triOffre.style.display = 'none';
-
-                    // Afficher l'élément correspondant
-                    if (triChoisi === "recent") {
-                        recent.style.display = 'inline';
-                    } else if (triChoisi === "ancien") {
-                        ancien.style.display = 'inline';
-                    } else if (triChoisi === "tri_offre") {
-                        triOffre.style.display = 'inline';
-                    }
-                }
-            });
-        }
-    });
+            // Afficher l'élément correspondant au tri choisi
+            if (triChoisi === "recent") {
+                document.getElementById('tri_recent').style.display = 'inline';
+            } else if (triChoisi === "ancien") {
+                document.getElementById('tri_ancien').style.display = 'inline';
+            } else if (triChoisi === "tri_offre") {
+                document.getElementById('tri_offre').style.display = 'inline';
+            }
+        });
+    }
+});
+   
 
 
 </script>
