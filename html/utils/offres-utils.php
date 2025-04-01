@@ -382,6 +382,24 @@
         }
     }
 
+    // ===== Requête SQL pour récupérer le pseudonyme d'un compte membre ===== //
+    function getCompteMembre($id_compte) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqCompteMembre = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_compte";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtCompteMembre = $conn->prepare($reqCompteMembre);
+            $stmtCompteMembre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtCompteMembre->execute();
+            $compteMembre = $stmtCompteMembre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $compteMembre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 // ===== GESTION DES TAGS ===== //
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les tags d'une offre ===== //
