@@ -444,7 +444,7 @@ try {
                 ?>
                         <div class="display-ligne tag">
                             <p><?php echo htmlentities($tag['nom_tag']); ?></p>
-                            <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                            <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-violet.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
                         </div>
                 <?php 
                     }
