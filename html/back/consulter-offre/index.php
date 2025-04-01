@@ -432,7 +432,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']); ?> ans</p>
-                            <a href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a class="fichier" href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -444,7 +444,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a class="fichier" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                 <?php 
