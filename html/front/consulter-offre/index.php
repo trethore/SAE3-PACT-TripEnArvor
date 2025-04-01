@@ -242,6 +242,7 @@ try {
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
+    $offre['categorie'] = $categorie;
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -262,6 +263,10 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
+    <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css" />
+    <script src="/lib/leaflet/leaflet.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
     <script src="/scripts/header.js"></script>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/poucesAvis.js"></script>
