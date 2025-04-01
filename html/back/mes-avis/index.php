@@ -550,10 +550,10 @@ if ($typeCompte === 'proPrive') {
     <script>
 
     document.addEventListener("DOMContentLoaded", function () {
-        const triRecent = document.getElementById('tri_recent');
-        const triAncien = document.getElementById('tri_ancien');
-        const triOffre = document.getElementById('tri_offre');
-        const selectElement = document.getElementById('tris');
+        const triRecent = document.getElementById("tri_recent");
+        const triAncien = document.getElementById("tri_ancien");
+        const triOffre = document.getElementById("tri_offre");
+        const selectElement = document.getElementById("tris");
 
         // Au chargement, n'afficher que le tri "offre"
         triRecent.style.display = 'none';
