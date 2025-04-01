@@ -685,19 +685,21 @@ try {
                         foreach ($noteDetaillee as $n) {
                             if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
                         ?>
-                                <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
-                                <?php 
-                                for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
-                                ?>
-                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php 
-                                }
-                                for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { 
-                                ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                <?php 
-                                } 
-                                ?>
+                                <div class="display-ligne">
+                                    <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
+                                    <?php 
+                                    for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
+                                    ?>
+                                        <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                    <?php 
+                                    }
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { 
+                                    ?>
+                                        <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                    <?php 
+                                    } 
+                                    ?>
+                                </div>
                         <?php 
                             }
                         } 

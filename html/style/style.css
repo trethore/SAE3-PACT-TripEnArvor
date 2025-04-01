@@ -3014,13 +3014,13 @@ h3 {
 }
 
 .consulter-offre-front .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .double-blocs {
@@ -3707,13 +3707,13 @@ h3 {
 }
 
 .consulter-offre-back .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .double-blocs {
@@ -4236,7 +4236,7 @@ h3 {
 }
 
 .consulter-offre-back .titre-avis {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -4273,7 +4273,7 @@ h3 {
 
 .consulter-offre-back .titre-reponse {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
