@@ -305,7 +305,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
-                                    
+                                    <div class='tri_offre'>
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
