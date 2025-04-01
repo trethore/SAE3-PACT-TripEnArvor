@@ -305,7 +305,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
-                                    <div id="tri_offre"  style="display: inline;">
+                                    <div id="tri_offre" >
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -369,7 +369,7 @@ if ($typeCompte === 'proPrive') {
                                      }}?>
                         </div>
 
-                        <div id="tri_recent"  style="display: none;">
+                        <div id="tri_recent"  >
                         <h3>
                                 tri pqr plus recent
                             </h3>
@@ -435,7 +435,7 @@ if ($typeCompte === 'proPrive') {
                                     }  ?>
                         </div>
 
-                        <div id="tri_ancien"  style="display: none;">
+                        <div id="tri_ancien"  >
                             <h3>
                                 tri pqr plus ancien
                             </h3>
