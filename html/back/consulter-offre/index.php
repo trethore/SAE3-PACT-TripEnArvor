@@ -219,11 +219,11 @@ try {
                             }
                         ?>
                         <div>
-                            <p class="petite-mention"><em><?php echo htmlentities($offre['nb_jetons']); ?> jeton(s) de blacklistage restant(s)</em></p>
+                            <p class="nombre-blacklistage"><em><?php echo htmlentities($offre['nb_jetons']); ?> blacklistage restant(s)</em></p>
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
                             ?>
-                                <p>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</p>
+                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</em></p>
                             <?php
                             }
                             ?>
