@@ -430,11 +430,7 @@ $reqPrix = "SELECT prix_offre from sae._offre where id_offre = :id_offre;";
         $toastsData = [];
         $remainingAvis = 0;
         $remainingOffres = 0;
-
-        $toastsData = [];
-        $remainingAvis = 0;
-        $remainingOffres = 0;
-
+        
         while ($row = $stmtOffre->fetch(PDO::FETCH_ASSOC)) {
             $avisNonLus = getLu($row['id_offre']);
 
