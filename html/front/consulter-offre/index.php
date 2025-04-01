@@ -665,11 +665,11 @@ try {
                                 <div>
                                     <label>Saisissez une note générale <span>*</span></label>
                                     <div class="rating">
-                                        <input type="radio" name="note" id="star5" value="5" required><label for="star5"></label>
-                                        <input type="radio" name="note" id="star4" value="4" required><label for="star4"></label>
-                                        <input type="radio" name="note" id="star3" value="3" required><label for="star3"></label>
-                                        <input type="radio" name="note" id="star2" value="2" required><label for="star2"></label>
-                                        <input type="radio" name="note" id="star1" value="1" required><label for="star1"></label>
+                                        <input type="radio" name="note" id="star5_g" value="5" required><label for="star5"></label>
+                                        <input type="radio" name="note" id="star4_g" value="4" required><label for="star4"></label>
+                                        <input type="radio" name="note" id="star3_g" value="3" required><label for="star3"></label>
+                                        <input type="radio" name="note" id="star2_g" value="2" required><label for="star2"></label>
+                                        <input type="radio" name="note" id="star1_g" value="1" required><label for="star1"></label>
                                     </div>
                                 </div>
 
@@ -683,22 +683,22 @@ try {
                                     <div>
                                         <label for="note_cuisine">Saisissez une note pour la cuisine <span>*</span></label>
                                         <div class="rating">
-                                            <input type="radio" name="note_cuisine" id="star5" value="5" required><label for="star5"></label>
-                                            <input type="radio" name="note_cuisine" id="star4" value="4" required><label for="star4"></label>
-                                            <input type="radio" name="note_cuisine" id="star3" value="3" required><label for="star3"></label>
-                                            <input type="radio" name="note_cuisine" id="star2" value="2" required><label for="star2"></label>
-                                            <input type="radio" name="note_cuisine" id="star1" value="1" required><label for="star1"></label>
+                                            <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_cuisine" id="star3_c" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_cuisine" id="star2_c" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_cuisine" id="star1_c" value="1" required><label for="star1"></label>
                                         </div>
                                     </div>
 
                                     <div>
                                         <label for="note_service">Saisissez une note pour le service <span>*</span></label>
                                         <div class="rating">
-                                            <input type="radio" name="note_service" id="star5" value="5" required><label for="star5"></label>
-                                            <input type="radio" name="note_service" id="star4" value="4" required><label for="star4"></label>
-                                            <input type="radio" name="note_service" id="star3" value="3" required><label for="star3"></label>
-                                            <input type="radio" name="note_service" id="star2" value="2" required><label for="star2"></label>
-                                            <input type="radio" name="note_service" id="star1" value="1" required><label for="star1"></label>
+                                            <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_service" id="star3_s" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_service" id="star2_s" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_service" id="star1_s" value="1" required><label for="star1"></label>
                                         </div>                                    
                                     </div>
 
@@ -709,22 +709,22 @@ try {
                                     <div>
                                         <label for="note_ambiance">Saisissez une note pour l'ambiance <span>*</span></label>
                                         <div class="rating">
-                                            <input type="radio" name="note_ambiance" id="star5" value="5" required><label for="star5"></label>
-                                            <input type="radio" name="note_ambiance" id="star4" value="4" required><label for="star4"></label>
-                                            <input type="radio" name="note_ambiance" id="star3" value="3" required><label for="star3"></label>
-                                            <input type="radio" name="note_ambiance" id="star2" value="2" required><label for="star2"></label>
-                                            <input type="radio" name="note_ambiance" id="star1" value="1" required><label for="star1"></label>
+                                            <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_ambiance" id="star3_a" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_ambiance" id="star2_a" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_ambiance" id="star1_a" value="1" required><label for="star1"></label>
                                         </div>              
                                     </div>
 
                                     <div>
                                         <label for="note_rapport">Saisissez une note pour le rapport qualité prix <span>*</span></label>
                                         <div class="rating">
-                                            <input type="radio" name="note_rapport" id="star5" value="5" required><label for="star5"></label>
-                                            <input type="radio" name="note_rapport" id="star4" value="4" required><label for="star4"></label>
-                                            <input type="radio" name="note_rapport" id="star3" value="3" required><label for="star3"></label>
-                                            <input type="radio" name="note_rapport" id="star2" value="2" required><label for="star2"></label>
-                                            <input type="radio" name="note_rapport" id="star1" value="1" required><label for="star1"></label>
+                                            <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_rapport" id="star3_r" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_rapport" id="star2_r" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_rapport" id="star1_r" value="1" required><label for="star1"></label>
                                         </div>                                                  
                                     </div>
 
@@ -873,14 +873,15 @@ try {
                         <?php 
                         if ($categorie == "Restauration") { 
                         ?>
-                            <div class="display-ligne">
+                            <div class="display-ligne-note-detaille">
                                 <?php 
                                 foreach ($noteDetaillee as $n) { 
                                 ?>
+                                    <div class="display-ligne">
                                     <?php 
                                     if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
                                     ?>
-                                        <p><?php echo htmlentities($n['nom_note']) . " : "; ?></p>
+                                        <p><?php echo htmlentities($n['nom_note']) . " "; ?></p>
                                         <?php 
                                         for ($etoileJaune = 0 ; $etoileJaune != $n['note'] ; $etoileJaune++) { 
                                         ?>
@@ -894,6 +895,7 @@ try {
                                         } 
                                         ?>
                                         <br>
+                                </div>
                                 <?php 
                                     } 
                                 } ?>

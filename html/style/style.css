@@ -3397,6 +3397,13 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
+.consulter-offre-front .display-ligne-note-detaille {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+}
+
 .consulter-offre-front .titre-avis {
     font-size: 20px;
     font-weight: bold;
@@ -3628,32 +3635,31 @@ h3 {
 
 
 
-.rating {
+.consulter-offre-front .rating {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-start;
     gap: 5px;
 }
 
-.rating input {
+.consulter-offre-front .rating input {
     display: none;
 }
 
-.rating label {
-    width: 32px; /* Taille des étoiles */
-    height: 32px;
+.consulter-offre-front .rating label {
     background: url('/images/frontOffice/etoile-vide.png') no-repeat center;
     background-size: contain;
     cursor: pointer;
     transition: 0.2s;
+    width: 20px;
+    height: 20px;
 }
 
-/* Étoiles pleines pour les étoiles sélectionnées */
-.rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
+.consulter-offre-front .rating input:checked ~ label, .rating label:hover, .rating label:hover ~ label {
     background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
     background-size: contain;
+    width: 20px;
+    height: 20px;
 }
 
 
