@@ -368,7 +368,7 @@ try {
                 if (!empty($tags)) {
                     foreach ($tags as $tag) { 
                 ?>
-                        <p><?php echo htmlentities($tag['nom_tag']); ?></p>
+                        <p class="tag"><?php echo htmlentities($tag['nom_tag']); ?></p>
                 <?php 
                     }
                 } else { 
