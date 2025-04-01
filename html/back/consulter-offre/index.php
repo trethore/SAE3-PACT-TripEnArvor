@@ -115,6 +115,7 @@ try {
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
+    $offre['categorie'] = $categorie;
 
 // ===== GESTION DES MISES HORS LIGNE ET EN LIGNE ===== //
 
@@ -140,11 +141,16 @@ try {
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
+    <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css" />
+    <script src="/lib/leaflet/leaflet.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
     <script src="/scripts/header.js"></script>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/popupOffreBack.js"></script>
     <script src="/scripts/blacklist.js"></script>
     <script src="/scripts/reponse.js"></script>
+    <script src="/scripts/consulter-offre.js"></script>
 </head>
 
 <body class="back consulter-offre-back">
@@ -358,23 +364,8 @@ try {
 
         <section class="double-blocs">
 
-            <div class="fond-blocs bloc-caracteristique">
-                <ul class="liste-caracteristique">
-                    <?php 
-                    if (!empty($tags)) {
-                        foreach ($tags as $tag) { 
-                    ?>
-                            <li><?php echo htmlentities($tag['nom_tag']) ?></li>
-                    <?php 
-                        }
-                    } else { 
-                    ?>
-                    <p>Pas de tags disponibles</p>
-                    <?php 
-                    } 
-                    ?>
-                </ul>
-            </div> 
+            <div id="map"></div>
+            <script>displayOfferOnMap(<?php echo json_encode($offre)?>);</script>
 
             <div class="fond-blocs bloc-a-propos">
 

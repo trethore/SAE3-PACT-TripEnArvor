@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/file_paths-utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . CONNECT_PARAMS);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/email-utils.php');
 
-$reset_link_base = "https://redden.ventsdouest.dev/resetMdpForm.php";
+$reset_link_base = "https://redden.ventsdouest.dev/resetMdp/resetMdpForm.php";
 
 // Initialisation des variables
 $message = '';
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Vérifier si l'email existe dans la base de données
-            $stmt = $dbh->prepare("SELECT id_compte FROM _compte WHERE email = :email");
+            $stmt = $dbh->prepare("SELECT id_compte FROM sae._compte WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $token = bin2hex(random_bytes(32)); // Générer un token plus long et aléatoire
                 $expiry_date = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-                $stmt = $dbh->prepare("INSERT INTO password_reset_tokens (id_compte, token, expiry_date) VALUES (:id_compte, :token, :expiry_date)");
+                $stmt = $dbh->prepare("INSERT INTO _password_reset_tokens (id_compte, token, expiry_date) VALUES (:id_compte, :token, :expiry_date)");
                 $stmt->bindParam(':id_compte', $id_compte);
                 $stmt->bindParam(':token', $token);
                 $stmt->bindParam(':expiry_date', $expiry_date);
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } catch (PDOException $e) {
                     // Log de l'erreur SQL
                     error_log("Erreur SQL lors de l'insertion du token : " . $e->getMessage());
-                    $message = "Erreur interne. Veuillez réessayer plus tard.";
+                    $message = "Erreur interne. Veuillez réessayer plus tard." . $e->getMessage();
                     $dbh = null;
                     // Afficher le message d'erreur à l'utilisateur
                     echo "<p>" . htmlspecialchars($message) . "</p>";
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (PDOException $e) {
             // Log de l'erreur de connexion à la base de données
             error_log("Erreur de connexion à la base de données : " . $e->getMessage());
-            $message = "Erreur interne. Veuillez réessayer plus tard.";
+            $message = "Erreur interne. Veuillez réessayer plus tard." . $e->getMessage();
         }
     }
 }
@@ -99,10 +99,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
     <main>
         <h1>Mot de passe oublié ?</h1>
-        <p>Entrez votre adresse email pour réinitialiser votre mot de passe.</p>
+        <h2>Entrez votre adresse email pour réinitialiser votre mot de passe.</h2>
 
         <?php if ($message): ?>
-            <p><?php echo htmlspecialchars($message); ?></p>
+            <h2><?php echo htmlspecialchars($message); ?></h2>
         <?php endif; ?>
 
         <form action="#" method="POST">

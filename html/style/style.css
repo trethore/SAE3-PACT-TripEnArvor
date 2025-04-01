@@ -1077,7 +1077,7 @@ h3 {
 }
 
 
-#map {
+.liste-front #map {
     width: 95vw;
     height: 400px;
     margin: auto auto;              
@@ -3031,7 +3031,7 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
-#map {
+.liste-front #map {
     width: 85%;
     margin-top: 2rem;
     border: 3px solid var(--violet-principal);
@@ -3106,6 +3106,17 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-front #map {
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 3rem;
+}
+
+.consulter-offre-front .tag {
+    width: 35px;
+    height: 35px;
+}
+
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
 }
@@ -3115,9 +3126,8 @@ h3 {
     margin: 30px 30px 0 30px;
 }
 
-.consulter-offre-front .liste-caracteristique>li {
+.consulter-offre-front .liste-caracteristique > div > li {
     color: var(--noir);
-    border-left: 3px solid var(--violet-principal);
     font-size: 24px;
     list-style: none;
     display: flex;
@@ -3126,7 +3136,7 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-front .liste-caracteristique li:last-child {
+.consulter-offre-front .liste-caracteristique > div > li:last-child {
     margin-bottom: 0;
 }
 
@@ -3797,6 +3807,17 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-back #map {
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 3rem;
+}
+
+.consulter-offre-back .tag {
+    width: 35px;
+    height: 35px;
+}
+
 .consulter-offre-back .liste-caracteristique {
     align-items: center;
 }
@@ -3806,9 +3827,8 @@ h3 {
     margin: 30px 30px 0 30px;
 }
 
-.consulter-offre-back .liste-caracteristique>li {
+.consulter-offre-back .liste-caracteristique > div > li {
     color: var(--noir);
-    border-left: 3px solid var(--orange-principale);
     font-size: 24px;
     list-style: none;
     display: flex;
@@ -3817,7 +3837,7 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-back .liste-caracteristique li:last-child {
+.consulter-offre-back .liste-caracteristique > div > li:last-child {
     margin-bottom: 0;
 }
 
@@ -4287,10 +4307,6 @@ h3 {
     text-decoration: none;
 }
 
-.consulter-offre-back #map {
-    display: none;
-}
-
 /**************************************************************************************
                                     BACK MES AVIS
 ***************************************************************************************/
@@ -4327,7 +4343,7 @@ h3 {
 }
 
 .back .mes-avis .fond-blocs-avis {
-    margin-top: 5px;
+    margin-top: 7px;
     min-width: 800px;
 }
 
@@ -4350,6 +4366,8 @@ h3 {
     display: inline-block;
     z-index: 1;
     position: absolute;
+    top: -1rem;
+    left: 1rem;
 
 }
 
@@ -4370,7 +4388,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
-    max-width: 1200px;
+    max-width: 1000px;
 }
 
 
@@ -6041,7 +6059,7 @@ input[type="tel"] {
         background: var(--blanc);
     }
 
-    #map {
+    .liste-front #map {
         width: 75%;
     }
 
@@ -6324,5 +6342,28 @@ input[type="tel"] {
 	.creer-compte #div-adresse .row div {
 		width: 100%;
 	}
+}
+
+
+
+
+
+.titre_offre {
+    width: 50%; /* Adapte le parent à la largeur du conteneur */
+    display: flex;
+   justify-content: space-around;
+
+}
+
+
+/* ici pour etre sur */
+.mes-avis .titre_offre > a { 
+    width: 100%;
+    display: block ruby !important;
+    color: var(--orange-principale) !important;
+    font-weight: bold !important;
+    background-color:var(--blanc) !important;
+    white-space: nowrap !important; /* Empêche le retour à la ligne */
+    
 }
 

@@ -130,7 +130,7 @@ if (isset($_POST["email"]) && isset($_POST["mdp"])) {
                 </article>
             </section>
             <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required />
-            <a href="/resetMdp">Mot de passe oublié ?</a>
+            <h2><a href="/resetMdp">Mot de passe oublié ?</a></h2>
             
             <!-- Boutons -->
             <input type="submit" value="Connexion">

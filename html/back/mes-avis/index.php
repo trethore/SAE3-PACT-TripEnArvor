@@ -176,7 +176,8 @@ if ($typeCompte === 'proPrive') {
                 $nb_non_lu = 0;
                 $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                $nb_avis_total = 0;
+                $nb_avis_total = 0; 
+                $touslesavis = [];
 
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
@@ -185,23 +186,81 @@ if ($typeCompte === 'proPrive') {
                     $nb_offres++;
                     $nb_avis = count($avis);
                     $nb_avis_total += $nb_avis; 
+                    
 
                     foreach ($avis as $lavis) {
                             if ($lavis['lu'] == false) {
                                 $nb_non_lu++;
                         }
+                         
+                        
+                        $membre = getInformationsMembre($id_offre);
+                        $datePassage = getDatePassage($id_offre);
+                        $dateAvis = getDatePublication($id_offre);
+                        $noteDetaillee = getAvisDetaille($id_offre);
+
+                        $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
+                        $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+
+                        $lavis['pseudo'] = $membre[0]['pseudo'];
+                        $lavis['id_membre'] = $membre[0]['id_membre'];
+                        $lavis['datePassage'] = $datePassage[0]['date'];
+                        $lavis['dateAvis'] = $dateAvis[0]['date'];
+
+                        $touslesavis[] = $lavis; 
+
+                    }
+                }
+
+                function array_sort($array, $on, $order=SORT_ASC)
+                {
+                    $new_array = array();
+                    $sortable_array = array();
+
+                    if (count($array) > 0) {
+                        foreach ($array as $k => $v) {
+                            if (is_array($v)) {
+                                foreach ($v as $k2 => $v2) {
+                                    if ($k2 == $on) {
+                                        $sortable_array[$k] = $v2;
+                                    }
+                                }
+                            } else {
+                                $sortable_array[$k] = $v;
+                            }
+                        }
+
+                        switch ($order) {
+                            case SORT_ASC:
+                                asort($sortable_array);
+                            break;
+                            case SORT_DESC:
+                                arsort($sortable_array);
+                            break;
+                        }
+
+                        foreach ($sortable_array as $k => $v) {
+                            $new_array[$k] = $array[$k];
+                        }
                     }
 
-                    // ===== GESTION DES AVIS ===== //
-
-                    $membre = getInformationsMembre($id_offre);
-                    $datePassage = getDatePassage($id_offre);
-                    $dateAvis = getDatePublication($id_offre);
-                    $noteDetaillee = getAvisDetaille($id_offre);
-
-                    $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                    $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+                    return $new_array;
                 }
+                foreach($touslesavis as $key => $lavis){
+                    $aviTriéPluRecent[] = $lavis;
+                    $aviTriéPluAncien[] = $lavis;
+                }
+                print_r($aviTriéPluAncien);
+                
+                echo "<br>";
+                print("le tri plus recent");
+                print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
+                echo "<br>";
+                print("le tri plus ancien");
+                print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
+                
+
+                //print_r($touslesavis);
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
@@ -219,13 +278,14 @@ if ($typeCompte === 'proPrive') {
                     </h2> <?php
                             echo 'tri par offre';
 
+                            ?> <div class="container_avis"> <?php
+
                             foreach ($touteslesoffres as $offre) {
                                 if ($nb_avis_total == 0) {
                                     print("Aucun avis n'a été laissé sur vos offres");
                                     break;
                                 }
                             ?>
-                        <h3>
                             <?php
                                 // $offre = getOffre($id_offre_cible);
                                 $id_offre = $offre['id_offre'];
@@ -237,15 +297,7 @@ if ($typeCompte === 'proPrive') {
  
                                     ?>
 
-                                    <h3>
-                                        <?php if ($nb_non_lu == 0) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>
-                                        <?php } else if ($nb_non_lu == 1) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
-                                        <?php } else { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
-                                        <?php } ?>
-                                    </h3>
+                        
 
 
 
@@ -266,7 +318,8 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                                <div class="container_avis">
+                                    
+                                    
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -297,12 +350,6 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
-                                                <div class="titre_offre">
-                                                <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                    <?php echo htmlentities($offre['titre']);  echo ' '; ?>
-                                                </a>
-                                                </div>
-
                                             </div>
 
                                             <div class="display-ligne">
@@ -321,10 +368,11 @@ if ($typeCompte === 'proPrive') {
                                             <br>
                                             <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                        </article>
-                                    <?php $compteur++;
-                                    
-                                    } }}?>
+                                    <?php $compteur++; ?>
+                                    </article> 
+                                    <?php
+                                    }   
+                                     }}?>
                         </div>
                     
         </section>
@@ -364,27 +412,28 @@ if ($typeCompte === 'proPrive') {
     
 
     <script> 
-    const avisContainer = document.querySelectorAll("container_avis");
-    const avis = document.querySelectorAll("article");
-        // Sort avis
-        const sortAvis = () => {
-            const selectElement = document.querySelector(".tris");
-            const selectedValue = selectElement.value;
+    // const avisContainer = document.querySelectorAll(".container_avis");
+    // const avis = Array.from(document.querySelectorAll("article"))
+    //     // Sort avis
+    //     const sortAvis = () => {
+    //         const selectElement = document.querySelector(".tris");
+    //         const selectedValue = selectElement.value;
 
-            if (selectedValue === "recent" || selectedValue === "ancien") {
-                avis.sort((a, b) => {
-                    const dateA = a.querySelector("em span").textContent.replace('/', '-').trim();
-                    const dateB = b.querySelector("em span").textContent.replace('/', '-').trim();
-                     return selectedValue === "ancien" ? dateA - dateB : dateB - dateA;
-                });
+    //         if (selectedValue === "recent" || selectedValue === "ancien") {
+    //             avis.sort((a, b) => {
+    //                 const dateA = a.querySelector(".ladate");
+    //                 const dateB = b.querySelector(".ladate");
+    //                 return selectedValue === "ancien" ? new Date(dateA) - new Date(dateB) : new Date(dateB) - new Date(dateA);
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            } if (selectedValue === "default") {
-                avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+    //             avis.forEach(lavis => avisContainer.appendChild(lavis));
+    //         } if (selectedValue === "default") {
+    //             avis.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
 
-                avis.forEach(lavis => avisContainer.appendChild(lavis));
-            }
-        };
+    //             avis.forEach(lavis => avisContainer.appendChild(lavis));
+    //         }
+    //         console.log('triage');
+            
+    //     };
 
     </script>
 </body>

@@ -485,6 +485,28 @@
         }
     }
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la réaction d'un membre à un avis ===== //
+    function getReactionAvis($id_offre, $id_membre_avis, $id_membre_reaction) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReactionAvis = "SELECT nb_pouce_haut, nb_pouce_bas FROM sae._reaction_avis WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis AND id_membre_reaction = :id_membre_reaction";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtReactionAvis = $conn->prepare($reqReactionAvis);
+            $stmtReactionAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtReactionAvis->bindParam(':id_membre_avis', $id_membre_avis, PDO::PARAM_INT);
+            $stmtReactionAvis->bindParam(':id_membre_reaction', $id_membre_reaction, PDO::PARAM_INT);
+            $stmtReactionAvis->execute();
+            $reactionAvis = $stmtReactionAvis->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reactionAvis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+
     // ===== Fonction qui exécute une requête SQL pour vérifier si un avis est blacklisté ===== //
     function isAvisBlackliste($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;

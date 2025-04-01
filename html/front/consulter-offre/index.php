@@ -242,6 +242,7 @@ try {
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
+    $offre['categorie'] = $categorie;
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
@@ -262,12 +263,17 @@ try {
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></title>
+    <link rel="stylesheet" href="/lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="/lib/cluster/src/MarkerCluster.css" />
+    <script src="/lib/leaflet/leaflet.js"></script>
+    <script src="/lib/cluster/dist/leaflet.markercluster.js"></script>
     <script src="/scripts/header.js"></script>
     <script src="/scripts/carousel.js"></script>
     <script src="/scripts/poucesAvis.js"></script>
     <script src="/scripts/formulaireAvis.js"></script>
     <script src="/scripts/popupAvis.js"></script>
     <script src="/scripts/blacklist.js"></script>
+    <script src="/scripts/consulter-offre.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -432,23 +438,8 @@ try {
 
         <section class="double-blocs">
 
-            <div class="bloc-caracteristique">
-                <ul class="liste-caracteristique">
-                    <?php 
-                    if (!empty($tags)) {
-                        foreach ($tags as $tag) { 
-                    ?>
-                            <li><?php echo htmlentities($tag['nom_tag']); ?></li>
-                    <?php 
-                        }
-                    } else { 
-                    ?>
-                        <p>Pas de tags disponibles</p>
-                    <?php 
-                    } 
-                    ?>
-                </ul>
-            </div> 
+            <div id="map"></div>
+            <script>displayOfferOnMap(<?php echo json_encode($offre)?>);</script>
 
             <div class="fond-blocs bloc-a-propos">
                 
@@ -882,9 +873,29 @@ try {
 
                             <div class="display-ligne">
                                 <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id="<?php echo $identifiant; ?>" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                if (getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id'])['nb_pouce_haut'] == 1) {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-up-hover.png" class="pouce pouceHaut" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                } else {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                }
+                                ?>
                                 <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id="<?php echo $identifiant; ?>" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                if (getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id'])['nb_pouce_bas'] == 1) {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-down-hover.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                } else {
+                                ?>
+                                    <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
+                                <?php
+                                }
+                                ?>
                             </div>
 
                         </div>

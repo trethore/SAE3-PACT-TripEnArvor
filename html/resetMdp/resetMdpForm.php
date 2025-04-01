@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
             $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
             // Récupérer l'ID de l'utilisateur à partir du token
-            $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+            $stmt = $dbh->prepare("SELECT id_compte FROM _password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
             $stmt->bindParam(':token', $token);
             $stmt->execute();
             $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,13 +37,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_PO
                 $stmt->execute();
 
                 // Supprimer le token
-                $stmt = $dbh->prepare("DELETE FROM password_reset_tokens WHERE token = :token");
+                $stmt = $dbh->prepare("DELETE FROM _password_reset_tokens WHERE token = :token");
                 $stmt->bindParam(':token', $token);
                 $stmt->execute();
 
                 $message = "Votre mot de passe a été modifié avec succès.";
-                // Rediriger vers la page de connexion
-                header("Location: /se-connecter/"); // Ajustez le chemin si nécessaire
+                echo "<script>
+                        alert('$message'); 
+                        setTimeout(function() {
+                            window.location.href = '/se-connecter/';
+                        }, 3000);
+                    </script>";
                 exit();
 
             } else {
@@ -67,7 +71,7 @@ elseif (isset($_GET['token'])) {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
         // Vérifier si le token est valide
-        $stmt = $dbh->prepare("SELECT id_compte FROM password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
+        $stmt = $dbh->prepare("SELECT id_compte FROM _password_reset_tokens WHERE token = :token AND expiry_date > NOW()");
         $stmt->bindParam(':token', $token);
         $stmt->execute();
         $reset_token = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -96,16 +100,40 @@ elseif (isset($_GET['token'])) {
                     <?php if ($message): ?>
                         <p><?php echo $message; ?></p>
                     <?php endif; ?>
-                    <form action="/resetMdpForm.php?token=<?php echo htmlspecialchars($token); ?>" method="post">
+                    <form action="/resetMdp/resetMdpForm.php?token=<?php echo htmlspecialchars($token); ?>" method="post">
                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                         <label for="new_password">Nouveau mot de passe :</label>
                         <input type="password" id="new_password" name="new_password" required>
                         <label for="confirm_password">Confirmer le mot de passe :</label>
                         <input type="password" id="confirm_password" name="confirm_password" required>
+                        <span id="passwordError" style="color: red; font-size: 0.9em; display: none;">
+                            Les mots de passe ne correspondent pas.
+                        </span>
                         <input type="submit" value="Modifier le mot de passe">
                     </form>
                 </main>
             </body>
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const newPassword = document.getElementById("new_password");
+                const confirmPassword = document.getElementById("confirm_password");
+                const submitButton = document.querySelector("input[type='submit']");
+                const passwordError = document.getElementById("passwordError");
+
+                function checkPasswords() {
+                    if (newPassword.value !== confirmPassword.value) {
+                        submitButton.disabled = true;
+                        passwordError.style.display = "inline"; // Affiche le message
+                    } else {
+                        submitButton.disabled = false;
+                        passwordError.style.display = "none"; // Cache le message
+                    }
+                }
+
+                newPassword.addEventListener("input", checkPasswords);
+                confirmPassword.addEventListener("input", checkPasswords);
+            });
+            </script>
             </html>
             <?php
         } else {
@@ -122,5 +150,5 @@ else {
 }
 
 if ($message && !($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['token']) && isset($_POST['new_password']) && isset($_POST['confirm_password']))): ?>
-    <p><?php echo $message; ?></p>
+    <h2><?= htmlspecialchars($message); ?></h2>
 <?php endif; ?>

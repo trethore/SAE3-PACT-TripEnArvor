@@ -350,6 +350,17 @@ CREATE TABLE _signaler (
 );
 
 
+CREATE TABLE _reaction_avis (
+    id_offre                  INTEGER,
+    id_membre_avis            INTEGER,
+    id_membre_reaction        INTEGER,
+    nb_pouce_haut             INTEGER CHECK (nb_pouce_haut IN (0, 1)),
+    nb_pouce_bas              INTEGER CHECK (nb_pouce_bas IN (0, 1)),
+    CONSTRAINT _reaction_avis_pk PRIMARY KEY (id_membre_avis, id_offre),
+    CONSTRAINT _reaction_avis_fk_avis FOREIGN KEY (id_membre_avis, id_offre) REFERENCES _avis(id_membre, id_offre)
+);
+
+
 /* ##################################################################### */
 /*                              UTILITAIRES                              */
 /* ##################################################################### */
@@ -624,17 +635,19 @@ CREATE TABLE _avis_contient_image (
         REFERENCES _image(lien_fichier)
 );
 
-/* ======================== password_reset_tokens ======================== */
+/* ======================== _password_reset_tokens ======================== */
 
-CREATE TABLE password_reset_tokens (
+CREATE TABLE _password_reset_tokens (
     id SERIAL PRIMARY KEY,
     id_compte INTEGER NOT NULL,
     token VARCHAR(64) NOT NULL, 
     expiry_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte),
-    INDEX (token) 
+    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
 );
+
+CREATE INDEX idx_token ON _password_reset_tokens (token);
+
 
 /* ##################################################################### */
 /*                       TRIGGERS TABLES ABSTRAITES                      */
