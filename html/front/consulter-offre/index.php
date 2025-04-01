@@ -662,12 +662,13 @@ try {
                                     </select><br>
                                 </div>
 
+                                <label>Saisissez une note générale <span>*</span></label>
                                 <div class="rating">
-                                    <input type="radio" name="note" id="star5" value="5" required><label for="star5">★</label>
-                                    <input type="radio" name="note" id="star4" value="4" required><label for="star4">★</label>
-                                    <input type="radio" name="note" id="star3" value="3" required><label for="star3">★</label>
-                                    <input type="radio" name="note" id="star2" value="2" required><label for="star2">★</label>
-                                    <input type="radio" name="note" id="star1" value="1" required><label for="star1">★</label>
+                                    <input type="radio" name="note" id="star5" value="5" required><label for="star5"></label>
+                                    <input type="radio" name="note" id="star4" value="4" required><label for="star4"></label>
+                                    <input type="radio" name="note" id="star3" value="3" required><label for="star3"></label>
+                                    <input type="radio" name="note" id="star2" value="2" required><label for="star2"></label>
+                                    <input type="radio" name="note" id="star1" value="1" required><label for="star1"></label>
                                 </div>
 
                             </div>

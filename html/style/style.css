@@ -3628,31 +3628,34 @@ h3 {
 
 
 
-.consulter-offre-front .rating {
+.rating {
     display: flex;
-    flex-direction: row-reverse; /* Inverse l'ordre des étoiles */
+    flex-direction: row-reverse;
     justify-content: flex-start;
     gap: 5px;
 }
 
-.consulter-offre-front .rating input {
-    display: none; /* Cache les boutons radio */
+.rating input {
+    display: none;
 }
 
-.consulter-offre-front .rating label {
-    font-size: 30px;
+.rating label {
+    width: 32px; /* Taille des étoiles */
+    height: 32px;
+    background: url('/images/frontOffice/etoile-vide.png') no-repeat center;
+    background-size: contain;
     cursor: pointer;
-    color: #ccc; /* Couleur par défaut des étoiles */
-    transition: color 0.2s;
+    transition: 0.2s;
 }
 
-.consulter-offre-front .rating input:checked ~ label {
-    color: gold; /* Étoiles dorées quand sélectionnées */
+/* Étoiles pleines pour les étoiles sélectionnées */
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
+    background-size: contain;
 }
 
-.consulter-offre-front .rating label:hover, .rating label:hover ~ label {
-    color: gold; /* Change la couleur au survol */
-}
 
 
 
