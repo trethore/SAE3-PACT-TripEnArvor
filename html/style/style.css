@@ -4536,6 +4536,19 @@ h3 {
     justify-content: space-around;
 }
 
+.mes-avis .filtre-tri .tris {
+        width: 110px;
+        height: 31px;
+        border: none;
+        border-radius: 10px;
+}
+
+.mes-avis .filtre-tri .div-tri {
+    display: flex;
+    justify-content: flex-start;  /* Aligne le contenu à gauche */
+    width: 100%; /* Si tu veux que la div prenne toute la largeur disponible */
+}
+
 
 #infobulle {
     /* background-color:var(--orange-principale); */
