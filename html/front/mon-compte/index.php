@@ -282,7 +282,7 @@ $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
         // Supprime le compte en AJAX
         boutonValider.addEventListener("click", function() {
             if (compteId != null) {
-                alert(test);
+                console.error(error);
                 fetch("supprimer_compte.php", {
                         method: "POST",
                         headers: {
