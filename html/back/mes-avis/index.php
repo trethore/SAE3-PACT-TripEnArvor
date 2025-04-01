@@ -469,8 +469,7 @@ if ($typeCompte === 'proPrive') {
                                     <?php $compteur++; ?>
                                     </article> 
                                     <?php
-                                    }   
-                                     }}?>
+                                    }  ?>
                         </div>
 
 
