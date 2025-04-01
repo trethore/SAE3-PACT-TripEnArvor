@@ -557,17 +557,27 @@ if ($typeCompte === 'proPrive') {
             const triChoisi = this.value;
 
             // Tout masquer avant d'afficher le bon
-            triRecent.style.display = 'none';
-            triAncien.style.display = 'none';
-            triOffre.style.display = 'none';
+            
+            
+            
 
             // Afficher l'élément sélectionné
             if (triChoisi === "recent") {
+                triAncien.style.display = 'none';
+                triOffre.style.display = 'none';
                 triRecent.style.display = 'inline';
+
             } else if (triChoisi === "ancien") {
+                triOffre.style.display = 'none';
+                triRecent.style.display = 'none';
                 triAncien.style.display = 'inline';
+
             } else if (triChoisi === "tri_offre") {
+                triAncien.style.display = 'none';
+                triRecent.style.display = 'none';
                 triOffre.style.display = 'inline';
+                
+
             }
         });
     }
