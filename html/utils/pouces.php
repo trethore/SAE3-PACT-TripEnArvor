@@ -40,30 +40,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updatePouceBas = $check['nb_pouce_bas'] ?? 0;
 
         if ($type === 'like') {
-            if ($action === 'add' && $updatePouceHaut == 0) {
-                $likeChange = 1;
-                if ($updatePouceBas == 1) {
-                    $dislikeChange = -1;  
+            if ($action === 'add') {
+                if ($updatePouceHaut == 0) { // Ajout du like uniquement s'il n'est pas déjà présent
+                    $likeChange = 1;
+                    $updatePouceHaut = 1;
                 }
-                $updatePouceHaut = 1;
-                $updatePouceBas = 0;
-            } elseif ($action === 'remove' && $updatePouceHaut == 1) {
-                $likeChange = -1;
-                $updatePouceHaut = 0;
-            }
-        } elseif ($type === 'dislike') {
-            if ($action === 'add' && $updatePouceBas == 0) {
-                $dislikeChange = 1;
-                if ($updatePouceHaut == 1) {
-                    $likeChange = -1;  
+                if ($updatePouceBas == 1) { // Enlever le dislike si déjà présent
+                    $dislikeChange = -1;
+                    $updatePouceBas = 0;
                 }
-                $updatePouceHaut = 0;
-                $updatePouceBas = 1;
-            } elseif ($action === 'remove' && $updatePouceBas == 1) {
-                $dislikeChange = -1;
-                $updatePouceBas = 0;
+            } elseif ($action === 'remove') {
+                if ($updatePouceHaut == 1) { // Suppression uniquement si déjà un like
+                    $likeChange = -1;
+                    $updatePouceHaut = 0;
+                }
             }
         }
+        
+        if ($type === 'dislike') {
+            if ($action === 'add') {
+                if ($updatePouceBas == 0) {
+                    $dislikeChange = 1;
+                    $updatePouceBas = 1;
+                }
+                if ($updatePouceHaut == 1) { // Enlever le like si déjà présent
+                    $likeChange = -1;
+                    $updatePouceHaut = 0;
+                }
+            } elseif ($action === 'remove') {
+                if ($updatePouceBas == 1) { // Suppression uniquement si déjà un dislike
+                    $dislikeChange = -1;
+                    $updatePouceBas = 0;
+                }
+            }
+        }        
 
         if (!$check) {
             $reqInsert = "INSERT INTO sae._reaction_avis (id_offre, id_membre_avis, id_membre_reaction, nb_pouce_haut, nb_pouce_bas) VALUES (:id_offre, :id_membre_avis, :id_membre_reaction, :nb_pouce_haut, :nb_pouce_bas)";
