@@ -436,6 +436,27 @@ try {
 
         </section>  
 
+        <section class="fond-blocs bloc-tags">
+            <div class="display-ligne-tag">
+                <?php 
+                if (!empty($tags)) {
+                    foreach ($tags as $tag) { 
+                ?>
+                        <div class="display-ligne tag">
+                            <p><?php echo htmlentities($tag['nom_tag']); ?></p>
+                            <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                        </div>
+                <?php 
+                    }
+                } else { 
+                ?>
+                    <p>Pas de tags disponibles</p>
+                <?php 
+                } 
+                ?>
+            </div>
+        </section>
+
         <section class="double-blocs">
 
             <div id="map"></div>
@@ -485,7 +506,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']) ?> ans</p>
-                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan du parc</a>
+                            <a href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -497,7 +518,7 @@ try {
                     ?>
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte du restaurant</a>
+                            <a href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                         <?php 
