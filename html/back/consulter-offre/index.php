@@ -338,7 +338,7 @@ try {
                 setlocale(LC_TIME, 'fr_FR.UTF-8'); 
                 $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                 $jour_actuel = $jours[date('w')];
-                $ouverture = "Pas d'information sur les créneaux d'ouverture";
+                $ouverture = "Pas d'informations sur les créneaux d'ouverture";
                 foreach ($horaire as $h) {
                     if (!empty($horaire)) {
                         $ouvert_ferme = date('H:i');
