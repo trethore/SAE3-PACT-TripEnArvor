@@ -540,29 +540,29 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-document.getElementById('recent').style.display = 'none';
-            document.getElementById("ancien").style.display = 'none';
+document.getElementById('tri_recent').style.display = 'none';
+            document.getElementById("tri_ancien").style.display = 'none';
 
             document.getElementById('tris').addEventListener('change', function() {
                 const triChoisi = this.value;
 
                 if (triChoisi === "recent") {
-                    document.getElementById('recent').style.display = 'inline';
+                    document.getElementById('tri_recent').style.display = 'inline';
                 } else {
-                    document.getElementById('recent').style.display = 'none';
+                    document.getElementById('tri_recent').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
                 }
                 if (triChoisi === "ancien") {
-                    document.getElementById('ancien').style.display = 'inline';
+                    document.getElementById('tri_ancien').style.display = 'inline';
                 } else {
-                    document.getElementById('ancien').style.display = 'none';
+                    document.getElementById('tri_ancien').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
                 }
                 if (triChoisi === "tri_offre") {
                     document.getElementById('tri_offre').style.display = 'inline';
                 } else {
-                    document.getElementById('ancien').style.display = 'none';
-                    document.getElementById('recent').style.display = 'none';
+                    document.getElementById('tri_ancien').style.display = 'none';
+                    document.getElementById('tri_recent').style.display = 'none';
                 }
 
             });
