@@ -321,6 +321,7 @@ BEGIN
     DELETE FROM sae._note_detaillee WHERE id_membre = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._avis_contient_image WHERE id_membre = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._signaler WHERE id_signale = _id_membre AND id_offre = _id_offre;
+    DELETE FROM sae._reaction_avis WHERE id_membre_avis = _id_membre AND id_offre = _id_offre;
     DELETE FROM sae._avis WHERE id_membre = _id_membre AND id_offre = _id_offre;
 END;
 $$ LANGUAGE 'plpgsql';
