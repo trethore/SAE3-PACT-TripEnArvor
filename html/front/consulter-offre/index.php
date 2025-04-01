@@ -897,16 +897,16 @@ try {
                                         } else {
                                         ?>
                                             <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas" data-id-offre="<?php echo $id_offre_cible; ?>" data-id-membre-avis="<?php echo $unAvis['id_membre']; ?>" data-id-membre-reaction="<?php echo $_SESSION['id']; ?>">
-                                    <?php
-                                        }
-                                    } else {
-                                    ?>
-                                        <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                        <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut">
-                                        <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                        <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas">
                                 <?php
-                                    }
+                                        }
+                                    } 
+                                } else {
+                                ?>
+                                    <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
+                                    <img src="/images/universel/icones/pouce-up.png" class="pouce pouceHaut">
+                                    <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
+                                    <img src="/images/universel/icones/pouce-down.png" class="pouce pouceBas">
+                                <?php
                                 }
                                 ?>
                             </div>
