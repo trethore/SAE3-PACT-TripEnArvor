@@ -549,55 +549,41 @@ if ($typeCompte === 'proPrive') {
 
     <script>
 
-        let triRecent = document.getElementById('tri_recent');
-        triRecent.style.setProperty('display', 'block', 'important');
-        triRecent.style.backgroundColor = 'yellow'; // Pour voir clairement l'élément
-        triRecent.style.minHeight = '50px'; // Forcer une hauteur minimale
-
-        document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
     const selectElement = document.getElementById('tris');
 
-
     if (triRecent && triAncien && triOffre && selectElement) {
-        // Cacher tout sauf l'offre au chargement
-        triRecent.style.display = 'none';
-        triAncien.style.display = 'none';
-        triOffre.style.display = 'block';
+        // Affichage initial : masquer tri_recent et tri_ancien, afficher tri_offre
+        triRecent.style.setProperty('display', 'none', 'important');
+        triAncien.style.setProperty('display', 'none', 'important');
+        triOffre.style.setProperty('display', 'block', 'important');
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
             console.log("Tri choisi:", triChoisi);
 
-            // Cacher tous les divs d'abord
-            triRecent.style.display = 'none';
-            triAncien.style.display = 'none';
-            triOffre.style.display = 'none';
+            // Tout masquer d'abord
+            triRecent.style.setProperty('display', 'none', 'important');
+            triAncien.style.setProperty('display', 'none', 'important');
+            triOffre.style.setProperty('display', 'none', 'important');
 
-            // Afficher le bon tri
+            // Afficher l'élément correspondant
             if (triChoisi === "recent") {
-                triRecent.style.display = 'block';
+                triRecent.style.setProperty('display', 'block', 'important');
             } else if (triChoisi === "ancien") {
-                triAncien.style.display = 'block';
+                triAncien.style.setProperty('display', 'block', 'important');
             } else if (triChoisi === "tri_offre") {
-                triOffre.style.display = 'block';
+                triOffre.style.setProperty('display', 'block', 'important');
             }
         });
+    } else {
+        console.error("Un ou plusieurs éléments sont introuvables !");
     }
-
-    
-
-
-    setInterval(() => {
-    console.log("État des divs :",
-        "tri_recent:", triRecent.style.display,
-        "tri_ancien:", triAncien.style.display,
-        "tri_offre:", triOffre.style.display
-    );
-}, 2000);
 });
+
 
 
 
