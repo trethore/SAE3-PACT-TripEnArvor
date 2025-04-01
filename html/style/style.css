@@ -3112,9 +3112,32 @@ h3 {
     margin: 30px 0 0 60px;
 }
 
+.consulter-offre-front .display-ligne-tag {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+    padding: 15px 0;
+}
+
+.consulter-offre-front .display-ligne-tag > div > img {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+}
+
 .consulter-offre-front .tag {
-    width: 35px;
-    height: 35px;
+    text-align: center; 
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 2px solid var(--orange-principale);
+    min-width: fit-content; 
+}
+
+.consulter-offre-front .bloc-tags {
+    border: none;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .consulter-offre-front .liste-caracteristique {
@@ -3813,6 +3836,12 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-back #map {
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 60px;
+}
+
 .consulter-offre-back .display-ligne-tag {
     display: flex;
     flex-wrap: wrap; 
@@ -3833,12 +3862,6 @@ h3 {
     border-radius: 30px;
     border: 2px solid var(--orange-principale);
     min-width: fit-content; 
-}
-
-.consulter-offre-back #map {
-    width: 300px;
-    height: 250px;
-    margin: 30px 0 0 60px;
 }
 
 .consulter-offre-back .bloc-tags {
