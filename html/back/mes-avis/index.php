@@ -162,7 +162,7 @@ if ($typeCompte === 'proPrive') {
             <h1>Mes Avis</h1>
             <h3>Trier</h3>
             <div>
-                <select class="tris">
+                <select id="tris">
                     <option value="default">Trier par :</option>
                     <option value="recent">Plus récent</option>
                     <option value="ancien">Plus ancient</option>
@@ -545,7 +545,7 @@ if ($typeCompte === 'proPrive') {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
-    const selectElement = document.getElementById('tris');
+    const selectElement = document.getElementsById('tris');
 
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
