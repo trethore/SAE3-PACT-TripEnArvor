@@ -209,6 +209,8 @@ if ($typeCompte === 'proPrive') {
                         echo "<pre>";
                         echo "print r membre";
                         print_r($membre[0]);
+                        echo 'print r dateavis  <br>';
+                        print_r($dateAvis);
                         echo "</pre>";
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
