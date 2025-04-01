@@ -251,8 +251,15 @@ if ($typeCompte === 'proPrive') {
                     $aviTriéPluRecent[] = $lavis;
                     $aviTriéPluAncien[] = $lavis;
                     $avitrioffre[] = $lavis;
-                    $temp[] = $lavis;
                 }
+
+                usort($aviTriéPluAncien, function ($a, $b) {
+                    return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
+                });
+
+
+
+                
                 print_r($aviTriéPluAncien);
                 
                 $min = $touslesavis[0]['dateAvis'];
@@ -268,13 +275,13 @@ if ($typeCompte === 'proPrive') {
                     $aviTriéPluAncien = $lavis;
                 }
 
-                echo "<br>";
+                echo "<br> <pre>";
                 print("le tri plus recent");
                 print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
                 echo "<br>";
                 print("le tri plus ancien");
                 print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
-                
+                echo "</pre>";
 
                 //print_r($touslesavis);
 
