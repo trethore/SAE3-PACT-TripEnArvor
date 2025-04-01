@@ -224,6 +224,12 @@ if ($typeCompte === 'proPrive') {
                 }
 
 
+                foreach($touslesavis as $key => $lavis){
+                    $aviTriPluRecent[] = $lavis;
+                    $aviTriPluAncien[] = $lavis;
+                    $avitrioffre[] = $lavis;
+                }
+
                 usort($aviTriPluRecent, function ($a, $b) {
                     return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
                 });
@@ -231,7 +237,6 @@ if ($typeCompte === 'proPrive') {
                 usort($aviTriPluAncien, function ($a, $b) {
                     return strtotime($b['dateAvis']) - strtotime($a['dateAvis']); 
                 });
-
 
 
                 // echo "<br> <pre>";
