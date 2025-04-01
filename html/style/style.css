@@ -3633,12 +3633,13 @@ h3 {
     color: var(--violet-principal);
 }
 
-.consulter-offre-front .fond-blocs-avis > h2 {
-    text-align: center;
-}
-
 .consulter-offre-front .label-avis {
     margin-right: 10px;
+}
+
+.consulter-offre-front .label-avis-champs {
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .consulter-offre-front .rating {
