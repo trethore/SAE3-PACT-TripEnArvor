@@ -3014,13 +3014,13 @@ h3 {
 }
 
 .consulter-offre-front .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .double-blocs {
@@ -3626,6 +3626,39 @@ h3 {
     color: var(--violet-principal);
 }
 
+
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    width: 32px; /* Taille des étoiles */
+    height: 32px;
+    background: url('/images/frontOffice/etoile-vide.png') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Étoiles pleines pour les étoiles sélectionnées */
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
+    background-size: contain;
+}
+
+
+
+
 /*************************
         NAVIGATION                                            
 *************************/
@@ -3707,13 +3740,13 @@ h3 {
 }
 
 .consulter-offre-back .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .double-blocs {
@@ -4029,6 +4062,13 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
+.consulter-offre-back .display-ligne-note-detaille {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+}
+
 .consulter-offre-back .fond-blocs-avis-blackliste {
     filter: grayscale(1);
     background-color: #d3d3d3;
@@ -4236,7 +4276,7 @@ h3 {
 }
 
 .consulter-offre-back .titre-avis {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -4273,7 +4313,7 @@ h3 {
 
 .consulter-offre-back .titre-reponse {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
