@@ -3821,12 +3821,12 @@ h3 {
 }
 
 .consulter-offre-back .display-ligne-tag > div > img {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
 }
 
 .consulter-offre-back .tag {
-    flex-grow: 1; 
     text-align: center; 
     padding: 5px 8px;
     border-radius: 30px;
