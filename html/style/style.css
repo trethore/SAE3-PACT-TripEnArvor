@@ -3598,7 +3598,7 @@ h3 {
     transform: translate(-50%, -50%);
 }
 
-.consulter-offre-front textarea:first-of-type {
+.consulter-offre-front .input[name="titre"] {
     background: var(--blanc);
     border: 1px solid var(--noir);
     border-radius: 6px;
@@ -3607,7 +3607,7 @@ h3 {
     font-family: "Poppins", sans-serif;
     padding: 5px;
     resize: none;
-}
+  }
 
 .consulter-offre-front textarea:last-of-type {
     background: var(--blanc);

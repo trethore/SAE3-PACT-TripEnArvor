@@ -667,7 +667,7 @@ try {
 
                                 <div class="display-ligne">
                                     <label class="label-avis" for="titre">Titre <span>*</span></label>
-                                    <textarea id="titre" name="titre" placeholder="Super expérience ..."required></textarea><br>
+                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 </div>
 
                                 <div class="display-ligne"> 
