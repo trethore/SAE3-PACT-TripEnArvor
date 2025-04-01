@@ -647,24 +647,51 @@ try {
                             
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities($_SESSION['id']); ?></p>
-                                    <div class="rating">
-                                        <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
-                                        <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
-                                        <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
-                                        <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
-                                        <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
+                                    <div>
+                                        <label>Note générale <span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
+                                            <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
+                                            <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
+                                            <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
+                                            <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
+                                        </div>
                                     </div>
+                                    
                                </div>
                                <img src="/images/universel/icones/trois-points-violet.png">
                                
                             </div>
 
-                            <div class="display-ligne-espace"> 
+                            <div class="display-ligne">
 
-                                <div>
-                                    <label for="titre">Saisissez un titre <span>*</span></label>
+                                <div class="display-ligne">
+                                    <label for="titre">Titre <span>*</span></label>
                                     <input   type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 </div>
+
+                                <div class="display-ligne"> 
+                                    <label for="date">Date de visite <span>*</span></label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                </div>
+
+                                <div class="display-ligne">
+                                    <label for="contexte">Saisissez un contexte <span>*</span></label>
+                                    <select id="contexte" name="contexte" required>
+                                        <option value="" disabled selected>Choisissez un contexte</option>
+                                        <option value="affaires">Affaires</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="famille">Famille</option>
+                                        <option value="amis">Amis</option>
+                                        <option value="solo">Solo</option>
+                                    </select><br>
+                                </div>
+
+                            </div>
+
+                            <div class="display-ligne-espace"> 
+
+                                
 
                                 <div>
                                     <label for="contexte">Saisissez un contexte <span>*</span></label>
@@ -757,10 +784,7 @@ try {
                             
                             <div class="display-ligne-espace">
                                 
-                                <div> 
-                                    <label for="date">Saisissez la date de votre visite <span>*</span></label>
-                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
-                                </div>
+                                
 
                                 <div>
                                     <label id="photo" for="photo">Importez une photo</label> 
