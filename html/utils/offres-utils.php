@@ -389,7 +389,7 @@
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmtCompteMembre = $conn->prepare($reqCompteMembre);
-            $stmtCompteMembre->bindParam(':id_offre', $id_compte, PDO::PARAM_INT);
+            $stmtCompteMembre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
             $stmtCompteMembre->execute();
             $compteMembre = $stmtCompteMembre->fetch(PDO::FETCH_ASSOC);
             $conn = null;
