@@ -4029,6 +4029,13 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
+.consulter-offre-back .display-ligne-note-detaille {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+}
+
 .consulter-offre-back .fond-blocs-avis-blackliste {
     filter: grayscale(1);
     background-color: #d3d3d3;
