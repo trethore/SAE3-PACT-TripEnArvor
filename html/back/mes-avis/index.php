@@ -581,6 +581,12 @@ if ($typeCompte === 'proPrive') {
         });
     }
 
+    let triRecent = document.getElementById('tri_recent');
+    triRecent.style.setProperty('display', 'block', 'important');
+    triRecent.style.backgroundColor = 'yellow'; // Pour voir clairement l'élément
+    triRecent.style.minHeight = '50px'; // Forcer une hauteur minimale
+
+
     setInterval(() => {
     console.log("État des divs :",
         "tri_recent:", triRecent.style.display,
