@@ -246,10 +246,11 @@ if ($typeCompte === 'proPrive') {
 
                     return $new_array;
                 }
-                
-                $aviTriéPluRecent[] = array_merge([],$touslesavis);
-                $aviTriéPluAncien[] = array_merge([],$touslesavis);
-                print($aviTriéPluAncien);
+                foreach($touslesavis as $key => $lavis){
+                    $aviTriéPluRecent[] = $lavis;
+                    $aviTriéPluAncien[] = $lavis;
+                }
+                print_r($aviTriéPluAncien);
                 
                 echo "<br>";
                 print("le tri plus recent");
