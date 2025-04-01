@@ -163,7 +163,7 @@ if ($typeCompte === 'proPrive') {
             <h3>Trier</h3>
             <div>
                 <select id="tris">
-                    <option value="default">Trier par :</option>
+                    <option value="">Trier par :</option>
                     <option value="recent">Plus récent</option>
                     <option value="ancien">Plus ancient</option>
                     <option value="tri_offre">Offre</option>
@@ -305,7 +305,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
-                                    <div id='tri_offre'>
+                                    <div id="tri_offre"  style="display: inline;">
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -369,7 +369,7 @@ if ($typeCompte === 'proPrive') {
                                      }}?>
                         </div>
 
-                        <div id="tri_recent">
+                        <div id="tri_recent"  style="display: none;">
                         <h3>
                                 tri pqr plus recent
                             </h3>
@@ -435,7 +435,7 @@ if ($typeCompte === 'proPrive') {
                                     }  ?>
                         </div>
 
-                        <div id="tri_ancien">
+                        <div id="tri_ancien"  style="display: none;">
                             <h3>
                                 tri pqr plus ancien
                             </h3>
@@ -541,8 +541,7 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-           document.addEventListener("DOMContentLoaded", function () {
-    // S'assurer que les éléments existent avant d'y accéder
+         document.addEventListener("DOMContentLoaded", function () {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
@@ -550,35 +549,34 @@ if ($typeCompte === 'proPrive') {
 
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
-        
+        triRecent.style.display = 'none';
+        triAncien.style.display = 'none';
+        triOffre.style.display = 'block';
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
 
-           console.log(triChoisi);
-            
-            
-            
+            console.log("Option sélectionnée :", triChoisi); // Vérification console
 
-            // Afficher l'élément sélectionné
+            // Tout cacher par défaut
+            triRecent.style.display = 'none';
+            triAncien.style.display = 'none';
+            triOffre.style.display = 'none';
+
+            // Afficher la bonne div
             if (triChoisi === "recent") {
-                triAncien.style.display = 'none';
-                triOffre.style.display = 'none';
+                console.log("Affichage de tri_recent");
                 triRecent.style.display = 'block';
-
             } else if (triChoisi === "ancien") {
-                triOffre.style.display = 'none';
-                triRecent.style.display = 'none';
+                console.log("Affichage de tri_ancien");
                 triAncien.style.display = 'block';
-
             } else if (triChoisi === "tri_offre") {
-                triAncien.style.display = 'none';
-                triRecent.style.display = 'none';
+                console.log("Affichage de tri_offre");
                 triOffre.style.display = 'block';
-                
-
             }
         });
+    } else {
+        console.error("❌ Un ou plusieurs éléments sont introuvables !");
     }
 });
 
