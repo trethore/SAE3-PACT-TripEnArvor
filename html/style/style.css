@@ -3598,16 +3598,36 @@ h3 {
     transform: translate(-50%, -50%);
 }
 
-.consulter-offre-front .input[name="titre"] {
+.consulter-offre-front input[name="titre"] {
     background: var(--blanc);
     border: 1px solid var(--noir);
     border-radius: 6px;
     width: 200px;
-    height: 20px;
+    height: 30px;
     font-family: "Poppins", sans-serif;
     padding: 5px;
     resize: none;
-  }
+}
+
+.consulter-offre-front input[name="date"] {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
+.consulter-offre-front select[name="contexte"] {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
 
 .consulter-offre-front textarea:last-of-type {
     background: var(--blanc);
