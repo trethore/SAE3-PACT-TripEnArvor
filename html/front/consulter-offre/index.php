@@ -648,7 +648,7 @@ try {
                                 <div class="display-ligne-espace">
                                 
                                     <div class="display-ligne">
-                                        <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])); ?></p>
+                                        <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
                                         <div class="display-ligne">
                                             <label>Note générale <span>*</span></label>
                                             <div class="rating">
