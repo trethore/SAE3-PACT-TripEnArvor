@@ -3188,21 +3188,15 @@ h3 {
     flex-wrap: nowrap;
 }
 
-.consulter-offre-front .display-ligne-espace>a,
-.consulter-offre-front .fond-blocs>a {
-    color: var(--blanc);
-    text-decoration: none;
-    background-color: var(--violet-principal);
-    padding: 5px 20px;
-    border-radius: 8px;
-    width: 180px;
-    text-align: center;
+.consulter-offre-front .lien {
+    color: var(--violet-principal);
+    text-decoration: underline;
 }
 
-.consulter-offre-front .display-ligne-espace>a:hover,
-.consulter-offre-front .fond-blocs>a:hover {
-    background: var(--violet-secondaire);
-} 
+.consulter-offre-front .lien:hover {
+    color: var(--violet-secondaire);
+    text-decoration: underline;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
