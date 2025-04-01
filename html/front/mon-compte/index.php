@@ -293,6 +293,7 @@ $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
                     .then(response => response.text())
                     .then(data => {
                         if (data.includes("Compte supprimé avec succès")) {
+                            console.error("test2");
                             alert(data);
                             window.location.href = "https://redden.ventsdouest.dev/front/accueil/";
                         }
