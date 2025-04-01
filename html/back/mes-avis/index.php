@@ -554,6 +554,7 @@ if ($typeCompte === 'proPrive') {
     const triOffre = document.getElementById('tri_offre');
     const selectElement = document.getElementById('tris');
 
+
     if (triRecent && triAncien && triOffre && selectElement) {
         // Cacher tout sauf l'offre au chargement
         triRecent.style.display = 'none';
@@ -579,15 +580,17 @@ if ($typeCompte === 'proPrive') {
             }
         });
     }
-});
 
-setInterval(() => {
+    setInterval(() => {
     console.log("État des divs :",
         "tri_recent:", triRecent.style.display,
         "tri_ancien:", triAncien.style.display,
         "tri_offre:", triOffre.style.display
     );
 }, 2000);
+});
+
+
 
 
 

@@ -4491,6 +4491,7 @@ h3 {
         height: 31px;
         border: none;
         border-radius: 10px;
+        background-color: var(--orange-principale);
 }
 
 .mes-avis .filtre-tri .div-tri {
