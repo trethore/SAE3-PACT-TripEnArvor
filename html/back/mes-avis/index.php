@@ -550,9 +550,7 @@ if ($typeCompte === 'proPrive') {
 
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
-        triRecent.style.display = 'none';
-        triAncien.style.display = 'none';
-        triOffre.style.display = 'block';
+        
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
