@@ -3820,9 +3820,9 @@ h3 {
 }
 
 .consulter-offre-back .tag {
-    padding: 5px;
+    padding: 5px 8px;
     border-radius: 30px;
-    border: 2px solid var(--blanc-leger);
+    border: 2px solid var(--orange-principale);
 }
 
 .consulter-offre-back .liste-caracteristique {
