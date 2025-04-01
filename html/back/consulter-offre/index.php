@@ -362,6 +362,27 @@ try {
 
         </section>
 
+        <section>
+            <div class="display-ligne"">
+                <?php 
+                if (!empty($tags)) {
+                    foreach ($tags as $tag) { 
+                ?>
+                    <div>
+                        <img class="tag" src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                        <p><?php echo htmlentities($tag['nom_tag']); ?></p>
+                    </div>
+                <?php 
+                    }
+                } else { 
+                ?>
+                    <p>Pas de tags disponibles</p>
+                <?php 
+                } 
+                ?>
+            </div>
+        </section>
+
         <section class="double-blocs">
 
             <div id="map"></div>
