@@ -282,7 +282,6 @@ $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
         // Supprime le compte en AJAX
         boutonValider.addEventListener("click", function() {
             if (compteId != null) {
-                console.error("test");
                 fetch("supprimer_compte.php", {
                         method: "POST",
                         headers: {
@@ -293,7 +292,6 @@ $statusText = $currentAuthStatus ? "Activé" : "Desactivé";
                     .then(response => response.text())
                     .then(data => {
                         if (data.includes("Compte supprimé avec succès")) {
-                            console.error("test2");
                             alert(data);
                             window.location.href = "https://redden.ventsdouest.dev/front/accueil/";
                         }
