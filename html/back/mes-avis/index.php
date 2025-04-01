@@ -539,37 +539,38 @@ if ($typeCompte === 'proPrive') {
     </footer>
     
 
-    <script> 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Masquer uniquement "recent" et "ancien" au départ, mais laisser "tri_offre" visible
+        document.getElementById('recent').style.display = 'none';
+        document.getElementById('ancien').style.display = 'none';
+        document.getElementById('tri_offre').style.display = 'inline'; // Visible par défaut
 
-            document.getElementById('recent').style.display = 'none';
-            document.getElementById("ancien").style.display = 'none';
+        const selectElement = document.getElementById('tris');
 
-            document.getElementById('tris').addEventListener('change', function() {
+        if (selectElement) {
+            selectElement.addEventListener('change', function() {
+                // Récupérer la valeur sélectionnée
                 const triChoisi = this.value;
 
+                // Masquer tous les éléments sauf tri_offre
+                document.getElementById('recent').style.display = 'none';
+                document.getElementById('ancien').style.display = 'none';
+                document.getElementById('tri_offre').style.display = 'none';
+
+                // Afficher l'élément correspondant au tri choisi
                 if (triChoisi === "recent") {
                     document.getElementById('recent').style.display = 'inline';
-                } else {
-                    document.getElementById('recent').style.display = 'none';
-                    document.getElementById('tri_offre').style.display = 'none';
-                }
-                if (triChoisi === "ancien") {
+                } else if (triChoisi === "ancien") {
                     document.getElementById('ancien').style.display = 'inline';
-                } else {
-                    document.getElementById('ancien').style.display = 'none';
-                    document.getElementById('tri_offre').style.display = 'none';
-                }
-                if (triChoisi === "tri_offre") {
+                } else if (triChoisi === "tri_offre") {
                     document.getElementById('tri_offre').style.display = 'inline';
-                } else {
-                    document.getElementById('ancien').style.display = 'none';
-                    document.getElementById('recent').style.display = 'none';
                 }
-
             });
-                
+        }
+    });
+</script>
 
-    </script>
 </body>
 
 </html>
