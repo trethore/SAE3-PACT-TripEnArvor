@@ -368,7 +368,10 @@ try {
                 if (!empty($tags)) {
                     foreach ($tags as $tag) { 
                 ?>
-                        <p class="tag"><?php echo htmlentities($tag['nom_tag']); ?></p>
+                        <div class="display-ligne-espace">
+                            <p class="tag"><?php echo htmlentities($tag['nom_tag']); ?></p>
+                            <img src="/images/universel/incones/<?php echo htmlentities($tag['nom_tag']); ?>-orange.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
+                        </div>
                 <?php 
                     }
                 } else { 
