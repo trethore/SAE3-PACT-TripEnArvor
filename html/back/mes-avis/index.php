@@ -206,16 +206,12 @@ if ($typeCompte === 'proPrive') {
 
                         $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
-                        echo "<pre>";
-                        echo "print r membre";
-                        print_r($membre[0]);
-                        echo 'print r dateavis  <br>';
-                        print_r($dateAvis);
-                        echo "</pre>";
+                        
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
                         $lavis['dateAvis'] = $dateAvis[0]['date'];
+                        $lavis['titre_offre'] = $offre['titre'];
 
                         $touslesavis[] = $lavis; 
                         $i++;
@@ -373,8 +369,11 @@ if ($typeCompte === 'proPrive') {
                         </div>
 
                         <div class="recent">
+                        <h3>
+                                tri pqr plus recent
+                            </h3>
                         <?php foreach ($aviTriPluRecent as $lavis) { 
-                            $id_offre = $lavis['id_offre'];  ?>
+                            $id_offre = $lavis['id_offre']; ?>
 
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -407,7 +406,7 @@ if ($typeCompte === 'proPrive') {
 
                                                 <div class="titre_offre">
                                                  <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                     <?php echo htmlentities($lavis['titre']);  echo ' '; ?>
+                                                     <?php echo htmlentities($lavis['titre_offre']);  echo ' '; ?>
                                                  </a>
                                                  </div>
  
@@ -436,6 +435,9 @@ if ($typeCompte === 'proPrive') {
                         </div>
 
                         <div class="ancien">
+                            <h3>
+                                tri pqr plus ancien
+                            </h3>
                         <?php foreach ($aviTriPluAncien as $lavis) { 
                             $id_offre = $lavis['id_offre'];  ?>
 
