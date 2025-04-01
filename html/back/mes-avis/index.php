@@ -570,7 +570,7 @@ if ($typeCompte === 'proPrive') {
     //     }
     // });
     document.getElementById('tri_recent').style.display = 'none';
-    document.getElementById('tri_ancien').style.display = 'none';
+    //document.getElementById('tri_ancien').style.display = 'none';
 
     document.addEventListener("DOMContentLoaded", function() {
         // Récupérer les éléments
