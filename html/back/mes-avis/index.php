@@ -246,12 +246,28 @@ if ($typeCompte === 'proPrive') {
 
                     return $new_array;
                 }
+
                 foreach($touslesavis as $key => $lavis){
                     $aviTriéPluRecent[] = $lavis;
                     $aviTriéPluAncien[] = $lavis;
+                    $avitrioffre[] = $lavis;
+                    $temp[] = $lavis;
                 }
                 print_r($aviTriéPluAncien);
                 
+                $min = $touslesavis[0]['dateAvis'];
+                foreach ($temp as $key => $lavis) {
+                    
+                    foreach ($temp as $key => $lavis) {
+                        if($lavis['dateAvis'] < $min){
+                            $lavis['dateAvis'] = $min;
+                            $avispluancien = $lavis;
+                        }
+                    }
+                    unset($temp[$key]);
+                    $aviTriéPluAncien = $lavis;
+                }
+
                 echo "<br>";
                 print("le tri plus recent");
                 print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
