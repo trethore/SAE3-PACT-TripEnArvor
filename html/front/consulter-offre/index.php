@@ -640,129 +640,125 @@ try {
                     if ($avisCount == 0) { 
                     ?>
                         <button id="showFormButton">Publier un avis</button>
-                        <form id="avisForm" class="fond-bloc-avis" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <form id="avisForm" class="fond-blocs-avis" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
-                            <div class="fond-bloc-avis">
-
-                                <div class="display-ligne-espace">
+                            <div class="display-ligne-espace">
                                 
+                                <div class="display-ligne">
+                                    <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
                                     <div class="display-ligne">
-                                        <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
-                                        <div class="display-ligne">
-                                            <label>Note générale <span>*</span></label>
-                                            <div class="rating">
-                                                <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
-                                                <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
-                                                <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
-                                                <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
-                                                <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
-                                            </div>
+                                        <label class="label-avis-champs">Note générale <span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
+                                            <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
+                                            <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
+                                            <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
+                                            <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
                                         </div>
+                                    </div>
                                         
                                 </div>
                                 <img src="/images/universel/icones/trois-points-violet.png">
                                 
+                            </div>
+
+                            <div class="display-ligne">
+
+                                <div class="display-ligne">
+                                    <label class="label-avis" for="titre">Titre <span>*</span></label>
+                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                </div>
+
+                                <div class="display-ligne"> 
+                                    <label class="label-avis-champs" for="date">Date de visite <span>*</span></label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                                 </div>
 
                                 <div class="display-ligne">
-
-                                    <div class="display-ligne">
-                                        <label for="titre">Titre <span>*</span></label>
-                                        <input   type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
-                                    </div>
-
-                                    <div class="display-ligne"> 
-                                        <label for="date">Date de visite <span>*</span></label>
-                                        <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
-                                    </div>
-
-                                    <div class="display-ligne">
-                                        <label for="contexte">Contexte <span>*</span></label>
-                                        <select id="contexte" name="contexte" required>
-                                            <option value="" disabled selected>Contexte</option>
-                                            <option value="affaires">Affaires</option>
-                                            <option value="couple">Couple</option>
-                                            <option value="famille">Famille</option>
-                                            <option value="amis">Amis</option>
-                                            <option value="solo">Solo</option>
-                                        </select><br>
-                                    </div>
-
+                                    <label class="label-avis-champs" for="contexte">Contexte <span>*</span></label>
+                                    <select id="contexte" name="contexte" required>
+                                        <option value="" disabled selected>Contexte</option>
+                                        <option value="affaires">Affaires</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="famille">Famille</option>
+                                        <option value="amis">Amis</option>
+                                        <option value="solo">Solo</option>
+                                    </select><br>
                                 </div>
-
-                                <?php 
-                                if ($categorie == "Restauration") { 
-                                ?>
-                                    <div class="display-ligne-note-detaille">
-
-                                        <div class="display-ligne">
-                                            <label for="note_cuisine">Cuisine<span>*</span></label>
-                                            <div class="rating">
-                                                <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5_c"></label>
-                                                <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4_c"></label>
-                                                <input type="radio" name="note_cuisine" id="star3_c" value="3" required><label for="star3_c"></label>
-                                                <input type="radio" name="note_cuisine" id="star2_c" value="2" required><label for="star2_c"></label>
-                                                <input type="radio" name="note_cuisine" id="star1_c" value="1" required><label for="star1_c"></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="display-ligne">
-                                            <label for="note_service">Service<span>*</span></label>
-                                            <div class="rating">
-                                                <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5_s"></label>
-                                                <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4_s"></label>
-                                                <input type="radio" name="note_service" id="star3_s" value="3" required><label for="star3_s"></label>
-                                                <input type="radio" name="note_service" id="star2_s" value="2" required><label for="star2_s"></label>
-                                                <input type="radio" name="note_service" id="star1_s" value="1" required><label for="star1_s"></label>
-                                            </div>                                    
-                                        </div>
-
-                                        <div class="display-ligne">
-                                            <label for="note_ambiance">Ambiance<span>*</span></label>
-                                            <div class="rating">
-                                                <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5_a"></label>
-                                                <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4_a"></label>
-                                                <input type="radio" name="note_ambiance" id="star3_a" value="3" required><label for="star3_a"></label>
-                                                <input type="radio" name="note_ambiance" id="star2_a" value="2" required><label for="star2_a"></label>
-                                                <input type="radio" name="note_ambiance" id="star1_a" value="1" required><label for="star1_a"></label>
-                                            </div>              
-                                        </div>
-
-                                        <div class="display-ligne">
-                                            <label for="note_rapport">Rapport qualité prix<span>*</span></label>
-                                            <div class="rating">
-                                                <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5_r"></label>
-                                                <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4_r"></label>
-                                                <input type="radio" name="note_rapport" id="star3_r" value="3" required><label for="star3_r"></label>
-                                                <input type="radio" name="note_rapport" id="star2_r" value="2" required><label for="star2_r"></label>
-                                                <input type="radio" name="note_rapport" id="star1_r" value="1" required><label for="star1_r"></label>
-                                            </div>                                                  
-                                        </div>
-
-                                    </div>
-                                <?php 
-                                } 
-                                ?>
-                                        
-                                <div>
-                                    <label for="avis">Décrivez votre expérience <span>*</span></label>
-                                    <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
-                                </div>
-                                
-                                <div>
-                                    <label id="photo" for="photo">Importez une photo</label> 
-                                    <input type="file" id="photo" name="photo"/><br>
-                                </div>
-
-                                <div class="petite-mention">
-                                    <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
-                                </div>
-
-                                <button type="submit">Publier</button>
-                                <button type="button" id="cancelFormButton">Annuler</button>
 
                             </div>
+
+                            <?php 
+                            if ($categorie == "Restauration") { 
+                            ?>
+                                <div class="display-ligne-note-detaille">
+
+                                    <div class="display-ligne">
+                                        <label class="label-avis" for="note_cuisine">Cuisine<span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5_c"></label>
+                                            <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4_c"></label>
+                                            <input type="radio" name="note_cuisine" id="star3_c" value="3" required><label for="star3_c"></label>
+                                            <input type="radio" name="note_cuisine" id="star2_c" value="2" required><label for="star2_c"></label>
+                                            <input type="radio" name="note_cuisine" id="star1_c" value="1" required><label for="star1_c"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="display-ligne">
+                                        <label class="label-avis" for="note_service">Service<span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5_s"></label>
+                                            <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4_s"></label>
+                                            <input type="radio" name="note_service" id="star3_s" value="3" required><label for="star3_s"></label>
+                                            <input type="radio" name="note_service" id="star2_s" value="2" required><label for="star2_s"></label>
+                                            <input type="radio" name="note_service" id="star1_s" value="1" required><label for="star1_s"></label>
+                                        </div>                                    
+                                    </div>
+
+                                    <div class="display-ligne">
+                                        <label class="label-avis" for="note_ambiance">Ambiance<span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5_a"></label>
+                                            <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4_a"></label>
+                                            <input type="radio" name="note_ambiance" id="star3_a" value="3" required><label for="star3_a"></label>
+                                            <input type="radio" name="note_ambiance" id="star2_a" value="2" required><label for="star2_a"></label>
+                                            <input type="radio" name="note_ambiance" id="star1_a" value="1" required><label for="star1_a"></label>
+                                        </div>              
+                                    </div>
+
+                                    <div class="display-ligne">
+                                        <label class="label-avis" for="note_rapport">Rapport qualité prix<span>*</span></label>
+                                        <div class="rating">
+                                            <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5_r"></label>
+                                            <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4_r"></label>
+                                            <input type="radio" name="note_rapport" id="star3_r" value="3" required><label for="star3_r"></label>
+                                            <input type="radio" name="note_rapport" id="star2_r" value="2" required><label for="star2_r"></label>
+                                            <input type="radio" name="note_rapport" id="star1_r" value="1" required><label for="star1_r"></label>
+                                        </div>                                                  
+                                    </div>
+
+                                </div>
+                            <?php 
+                            } 
+                            ?>
+                                        
+                            <div>
+                                <label for="avis">Décrivez votre expérience <span>*</span></label>
+                                <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
+                            </div>
+                                
+                            <div>
+                                <label id="photo" for="photo">Importez une photo</label> 
+                                <input type="file" id="photo" name="photo"/><br>
+                            </div>
+
+                            <div class="petite-mention">
+                                <p><em>En publiant cet avis, vous certifiez qu’il reflète votre propre expérience et opinion sur cette offre, que vous n’avez aucun lien avec le professionnel de cette offre et que vous n’avez reçu aucune compensation financière ou autre de sa part pour rédiger cet avis.</em></p>
+                            </div>
+
+                            <button type="submit">Publier</button>
+                            <button type="button" id="cancelFormButton">Annuler</button>
 
                         </form>
 
