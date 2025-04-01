@@ -164,7 +164,7 @@ if ($typeCompte === 'proPrive') {
                 <h2>Filtres et tris</h2>
                 <div class="fond-filtres hidden">
             
-                    <div>
+                    <div class='div-tri'>
                         <select id="tris">
                             <option value="">Trier par :</option>
                             <option value="recent">Plus récent</option>
@@ -175,7 +175,7 @@ if ($typeCompte === 'proPrive') {
 
                 </div>
             </article>
-            
+
             <div class="contenu-aligne-gauche">
 
 
