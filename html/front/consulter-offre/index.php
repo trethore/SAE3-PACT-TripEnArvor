@@ -647,7 +647,7 @@ try {
                             
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities($_SESSION['id']); ?></p>
-                                    <div>
+                                    <div class="display-ligne">
                                         <label>Note générale <span>*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
@@ -689,42 +689,13 @@ try {
 
                             </div>
 
-                            <div class="display-ligne-espace"> 
-
-                                
-
-                                <div>
-                                    <label for="contexte">Saisissez un contexte <span>*</span></label>
-                                    <select id="contexte" name="contexte" required>
-                                        <option value="" disabled selected>Choisissez un contexte</option>
-                                        <option value="affaires">Affaires</option>
-                                        <option value="couple">Couple</option>
-                                        <option value="famille">Famille</option>
-                                        <option value="amis">Amis</option>
-                                        <option value="solo">Solo</option>
-                                    </select><br>
-                                </div>
-
-                                <div>
-                                    <label>Saisissez une note générale <span>*</span></label>
-                                    <div class="rating">
-                                        <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
-                                        <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
-                                        <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
-                                        <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
-                                        <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
-                                    </div>
-                                </div>
-
-                            </div>
-
                             <?php 
                             if ($categorie == "Restauration") { 
                             ?>
-                                <div class="display-ligne">
+                                <div class="display-ligne-note-detaille">
 
-                                    <div>
-                                        <label for="note_cuisine">Saisissez une note pour la cuisine <span>*</span></label>
+                                    <div class="display-ligne">
+                                        <label for="note_cuisine">Cuisine<span>*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5_c"></label>
                                             <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4_c"></label>
@@ -734,8 +705,8 @@ try {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label for="note_service">Saisissez une note pour le service <span>*</span></label>
+                                    <div class="display-ligne">
+                                        <label for="note_service">Service<span>*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5_s"></label>
                                             <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4_s"></label>
@@ -745,12 +716,8 @@ try {
                                         </div>                                    
                                     </div>
 
-                                </div>
-
-                                <div class="display-ligne">
-
-                                    <div>
-                                        <label for="note_ambiance">Saisissez une note pour l'ambiance <span>*</span></label>
+                                    <div class="display-ligne">
+                                        <label for="note_ambiance">Ambiance<span>*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5_a"></label>
                                             <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4_a"></label>
@@ -760,8 +727,8 @@ try {
                                         </div>              
                                     </div>
 
-                                    <div>
-                                        <label for="note_rapport">Saisissez une note pour le rapport qualité prix <span>*</span></label>
+                                    <div class="display-ligne">
+                                        <label for="note_rapport">Rapport qualité prix<span>*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5_r"></label>
                                             <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4_r"></label>
@@ -772,11 +739,10 @@ try {
                                     </div>
 
                                 </div>
-
                             <?php 
                             } 
                             ?>
-                
+                                      
                             <div>
                                 <label for="avis">Décrivez votre expérience <span>*</span></label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
