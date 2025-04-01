@@ -667,7 +667,7 @@ try {
 
                                 <div class="display-ligne">
                                     <label class="label-avis" for="titre">Titre <span>*</span></label>
-                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                    <textarea id="titre" name="titre" placeholder="Super expérience ..."required></textarea><br>
                                 </div>
 
                                 <div class="display-ligne"> 
@@ -739,6 +739,7 @@ try {
                                     </div>
 
                                 </div>
+                                <br>
                             <?php 
                             } 
                             ?>
