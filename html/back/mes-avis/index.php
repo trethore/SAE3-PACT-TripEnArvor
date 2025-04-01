@@ -197,7 +197,8 @@ if ($typeCompte === 'proPrive') {
                         
                          
                         
-                        $membre = getInformationsMembre($id_offre)[$i];
+                        $membre = getInformationsMembre($id_offre);
+                        //$membre = $membre[$i];
                         $datePassage = getDatePassage($id_offre);
                         $dateAvis = getDatePublicationAvecIDMembre($id_offre, $membre[0]['id_membre']);
                         $noteDetaillee = getAvisDetaille($id_offre);
@@ -263,9 +264,9 @@ if ($typeCompte === 'proPrive') {
 
 
 
-                
+                echo "<br> <pre>";
                 print_r($aviTriéPluAncien);
-                
+                echo "</pre>";
                 $min = $touslesavis[0]['dateAvis'];
                 
                 echo "<br> <pre>";
