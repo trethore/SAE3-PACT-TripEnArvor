@@ -640,8 +640,24 @@ try {
                     if ($avisCount == 0) { 
                     ?>
                         <button id="showFormButton">Publier un avis</button>
-                        <form id="avisForm" class="avis-form" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
+                        <form id="avisForm" class="fond-bloc-avis" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
+
+                            <div class="display-ligne-espace">
+                            
+                                <div class="display-ligne">
+                                    <p class="titre-avis"><?php echo htmlentities($_SESSION['id']); ?></p>
+                                    <div class="rating">
+                                        <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
+                                        <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
+                                        <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
+                                        <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
+                                        <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
+                                    </div>
+                               </div>
+                               <img src="/images/universel/icones/trois-points-violet.png">
+                               
+                            </div>
 
                             <div class="display-ligne-espace"> 
 
