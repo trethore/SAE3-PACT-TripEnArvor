@@ -545,7 +545,7 @@ if ($typeCompte === 'proPrive') {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
-    const selectElement = document.getElementsById('tris');
+    const selectElement = document.getElementById('tris');
 
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
