@@ -226,11 +226,11 @@ if ($typeCompte === 'proPrive') {
                     $avitrioffre[] = $lavis;
                 }
 
-                usort($aviTriPluRecent, function ($a, $b) {
+                usort($aviTriPluAncien, function ($a, $b) {
                     return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
                 });
 
-                usort($aviTriPluAncien, function ($a, $b) {
+                usort($aviTriPluRecent, function ($a, $b) {
                     return strtotime($b['dateAvis']) - strtotime($a['dateAvis']); 
                 });
 
