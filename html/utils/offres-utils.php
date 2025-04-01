@@ -162,10 +162,7 @@
 
     function getNombreNotes($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT COUNT(*)
-            FROM sae._avis
-            WHERE id_offre = :id_offre";
-        
+        $reqNote = "SELECT COUNT(*) FROM sae._avis LEFT JOIN sae._blacklister ON _avis.id_membre = _blacklister.id_membre AND _avis.id_offre = _blacklister.id_offre WHERE _avis.id_offre = :id_offre  AND _blacklister.id_membre IS NULL";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
