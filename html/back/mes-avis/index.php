@@ -362,6 +362,13 @@ if ($typeCompte === 'proPrive') {
                                                     </div>
                                                 </div>
 
+                                                <div class="titre_offre">
+                                                 <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                     <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                 </a>
+                                                 </div>
+ 
+
                                             </div>
 
                                             <div class="display-ligne">
