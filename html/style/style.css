@@ -3626,6 +3626,36 @@ h3 {
     color: var(--violet-principal);
 }
 
+
+
+.consulter-offre-front .rating {
+    display: flex;
+    flex-direction: row-reverse; /* Inverse l'ordre des étoiles */
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.consulter-offre-front .rating input {
+    display: none; /* Cache les boutons radio */
+}
+
+.consulter-offre-front .rating label {
+    font-size: 30px;
+    cursor: pointer;
+    color: #ccc; /* Couleur par défaut des étoiles */
+    transition: color 0.2s;
+}
+
+.consulter-offre-front .rating input:checked ~ label {
+    color: gold; /* Étoiles dorées quand sélectionnées */
+}
+
+.consulter-offre-front .rating label:hover, .rating label:hover ~ label {
+    color: gold; /* Change la couleur au survol */
+}
+
+
+
 /*************************
         NAVIGATION                                            
 *************************/
