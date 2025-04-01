@@ -3640,6 +3640,7 @@ h3 {
     flex-direction: row-reverse;
     justify-content: flex-start;
     gap: 5px;
+    position: relative;
 }
 
 .consulter-offre-front .rating input {
@@ -3655,12 +3656,16 @@ h3 {
     height: 20px;
 }
 
-.consulter-offre-front .rating input:checked ~ label, .rating label:hover, .rating label:hover ~ label {
+.consulter-offre-front .rating input:checked + label, .consulter-offre-front .rating input:checked + label ~ label {
     background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
     background-size: contain;
-    width: 20px;
-    height: 20px;
 }
+
+.consulter-offre-front .rating label:hover, .consulter-offre-front .rating label:hover ~ label {
+    background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
+    background-size: contain;
+}
+
 
 
 
