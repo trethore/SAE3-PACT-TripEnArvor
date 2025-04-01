@@ -678,7 +678,7 @@ try {
                                 <div class="display-ligne">
                                     <label for="contexte">Contexte <span>*</span></label>
                                     <select id="contexte" name="contexte" required>
-                                        <option value="" disabled selected>Choisissez un contexte</option>
+                                        <option value="" disabled selected>Contexte</option>
                                         <option value="affaires">Affaires</option>
                                         <option value="couple">Couple</option>
                                         <option value="famille">Famille</option>
