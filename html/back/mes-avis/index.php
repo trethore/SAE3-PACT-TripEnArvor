@@ -472,7 +472,7 @@ if ($typeCompte === 'proPrive') {
 
                                                 <div class="titre_offre">
                                                  <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
-                                                     <?php echo htmlentities($lavis['titre']);  echo ' '; ?>
+                                                     <?php echo htmlentities($lavis['titre_offre']);  echo ' '; ?>
                                                  </a>
                                                  </div>
  
