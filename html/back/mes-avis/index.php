@@ -365,6 +365,7 @@ if ($typeCompte === 'proPrive') {
                                     </article> 
                                     <?php
                                     }   
+                                     echo "<br>";
                                      }}?>
                         </div>
 
@@ -556,7 +557,7 @@ if ($typeCompte === 'proPrive') {
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
 
-            // Tout masquer avant d'afficher le bon
+           console.log(triChoisi);
             
             
             
