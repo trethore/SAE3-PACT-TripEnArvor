@@ -548,6 +548,12 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
+
+        let triRecent = document.getElementById('tri_recent');
+        triRecent.style.setProperty('display', 'block', 'important');
+        triRecent.style.backgroundColor = 'yellow'; // Pour voir clairement l'élément
+        triRecent.style.minHeight = '50px'; // Forcer une hauteur minimale
+
         document.addEventListener("DOMContentLoaded", function () {
     const triRecent = document.getElementById('tri_recent');
     const triAncien = document.getElementById('tri_ancien');
@@ -581,10 +587,7 @@ if ($typeCompte === 'proPrive') {
         });
     }
 
-    let triRecent = document.getElementById('tri_recent');
-    triRecent.style.setProperty('display', 'block', 'important');
-    triRecent.style.backgroundColor = 'yellow'; // Pour voir clairement l'élément
-    triRecent.style.minHeight = '50px'; // Forcer une hauteur minimale
+    
 
 
     setInterval(() => {
