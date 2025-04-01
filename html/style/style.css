@@ -3001,7 +3001,7 @@ h3 {
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
     margin: 0 30px 0 30px;
-    padding: 30px;
+    padding: 30px 30px 15px 30px;
 }
 
 .consulter-offre-front a:hover {
@@ -3130,7 +3130,7 @@ h3 {
     text-align: center; 
     padding: 5px 8px;
     border-radius: 30px;
-    border: 2px solid var(--orange-principale);
+    border: 2px solid var(--violet-principal);
     min-width: fit-content; 
 }
 
@@ -3466,7 +3466,7 @@ h3 {
     color: var(--noir);
     border-radius: 4px;
     border-radius: 4px;
-    z-index: 1000; 
+    z-index: 8000; 
     text-align: none;
 }
 
@@ -3502,7 +3502,7 @@ h3 {
     height: 100%;
     background: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(5px); 
-    z-index: 999; 
+    z-index: 7000; 
     display: none; /
 }
 
@@ -3516,7 +3516,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--violet-principal);
-    z-index: 1001;
+    z-index: 8000;
 }
 
 .consulter-offre-front .confirmation-popup p {
@@ -3556,7 +3556,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--violet-principal);
-    z-index: 1001;
+    z-index: 8000;
 }
 
 .consulter-offre-front .confirmation-popup-signaler p {
