@@ -540,7 +540,7 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-document.getElementById('tri_recent').style.display = 'none';
+            document.getElementById('tri_recent').style.display = 'none';
             document.getElementById("tri_ancien").style.display = 'none';
 
             document.getElementById('tris').addEventListener('change', function() {
@@ -548,11 +548,11 @@ document.getElementById('tri_recent').style.display = 'none';
 
                 if (triChoisi === "recent") {
                     document.getElementById('tri_recent').style.display = 'inline';
-                    document.getElementById('tri_recent').style.display = 'none';
+                    document.getElementById('tri_ancien').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
                 } else if(triChoisi === "ancien"){
                     document.getElementById('tri_ancien').style.display = 'inline';
-                    document.getElementById('tri_ancien').style.display = 'none';
+                    document.getElementById('tri_recent').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
                     
                 }
