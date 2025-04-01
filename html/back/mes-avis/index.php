@@ -548,23 +548,19 @@ document.getElementById('tri_recent').style.display = 'none';
 
                 if (triChoisi === "recent") {
                     document.getElementById('tri_recent').style.display = 'inline';
-                } else {
                     document.getElementById('tri_recent').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
-                }
-                if (triChoisi === "ancien") {
+                } else if(triChoisi === "ancien"){
                     document.getElementById('tri_ancien').style.display = 'inline';
-                } else {
                     document.getElementById('tri_ancien').style.display = 'none';
                     document.getElementById('tri_offre').style.display = 'none';
+                    
                 }
-                if (triChoisi === "tri_offre") {
+                else if(triChoisi === "tri_offre")  {
                     document.getElementById('tri_offre').style.display = 'inline';
-                } else {
                     document.getElementById('tri_ancien').style.display = 'none';
                     document.getElementById('tri_recent').style.display = 'none';
                 }
-
             });
                 
 
