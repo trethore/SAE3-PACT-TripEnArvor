@@ -435,7 +435,7 @@ if ($typeCompte === 'proPrive') {
                                     }  ?>
                         </div>
 
-                        <div id="tri_ancien"  >
+                        <div id="tri_ancien"  style="display: none;">
                             <h3>
                                 tri pqr plus ancien
                             </h3>
@@ -543,7 +543,6 @@ if ($typeCompte === 'proPrive') {
     <script>
          document.addEventListener("DOMContentLoaded", function () {
     const triRecent = document.getElementById('tri_recent');
-    triAncien.color = pink;
     const triAncien = document.getElementById('tri_ancien');
     const triOffre = document.getElementById('tri_offre');
     const selectElement = document.getElementById('tris');
@@ -551,7 +550,7 @@ if ($typeCompte === 'proPrive') {
     if (triRecent && triAncien && triOffre && selectElement) {
         // Masquer recent et ancien au chargement, afficher tri_offre par défaut
         triRecent.style.display = 'none';
-        // triAncien.style.display = 'none';
+        triAncien.style.display = 'none';
         triOffre.style.display = 'block';
 
         selectElement.addEventListener('change', function () {
