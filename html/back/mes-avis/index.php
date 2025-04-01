@@ -573,9 +573,9 @@ if ($typeCompte === 'proPrive') {
             if (triChoisi === "recent") {
                 triRecent.style.display = 'block';
             } else if (triChoisi === "ancien") {
-                triAncien.style.display = 'block';
-            } else if (triChoisi === "tri_offre") {
                 triOffre.style.display = 'block';
+            } else if (triChoisi === "tri_offre") {
+                triAncien.style.display = 'block';
             }
         });
     });
