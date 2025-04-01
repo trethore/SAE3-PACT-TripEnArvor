@@ -3724,7 +3724,7 @@ h3 {
     padding: 30px 30px 30px 24px;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 8000;
 }
 
 .consulter-offre-back .bouton-modifier {
@@ -3820,8 +3820,9 @@ h3 {
 }
 
 .consulter-offre-back .tag {
-    width: 35px;
-    height: 35px;
+    padding: 5px;
+    border-radius: 30px;
+    border: 2px solid var(--blanc-leger);
 }
 
 .consulter-offre-back .liste-caracteristique {
@@ -4081,7 +4082,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
-    z-index: 1001;
+    z-index: 9000;
 }
 
 .consulter-offre-back .confirmation-popup p {
@@ -4121,7 +4122,7 @@ h3 {
     padding: 15px;
     border-radius: 8px;
     border: 2px solid var(--orange-principale);
-    z-index: 1001;
+    z-index: 9000;
 }
 
 .consulter-offre-back .confirmation-popup-signaler p {
