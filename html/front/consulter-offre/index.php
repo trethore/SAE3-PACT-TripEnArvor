@@ -662,13 +662,15 @@ try {
                                     </select><br>
                                 </div>
 
-                                <label>Saisissez une note générale <span>*</span></label>
-                                <div class="rating">
-                                    <input type="radio" name="note" id="star5" value="5" required><label for="star5"></label>
-                                    <input type="radio" name="note" id="star4" value="4" required><label for="star4"></label>
-                                    <input type="radio" name="note" id="star3" value="3" required><label for="star3"></label>
-                                    <input type="radio" name="note" id="star2" value="2" required><label for="star2"></label>
-                                    <input type="radio" name="note" id="star1" value="1" required><label for="star1"></label>
+                                <div>
+                                    <label>Saisissez une note générale <span>*</span></label>
+                                    <div class="rating">
+                                        <input type="radio" name="note" id="star5" value="5" required><label for="star5"></label>
+                                        <input type="radio" name="note" id="star4" value="4" required><label for="star4"></label>
+                                        <input type="radio" name="note" id="star3" value="3" required><label for="star3"></label>
+                                        <input type="radio" name="note" id="star2" value="2" required><label for="star2"></label>
+                                        <input type="radio" name="note" id="star1" value="1" required><label for="star1"></label>
+                                    </div>
                                 </div>
 
                             </div>
@@ -680,12 +682,24 @@ try {
 
                                     <div>
                                         <label for="note_cuisine">Saisissez une note pour la cuisine <span>*</span></label>
-                                        <input type="number" id="note_cuisine" name="note_cuisine" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                        <div class="rating">
+                                            <input type="radio" name="note_cuisine" id="star5" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_cuisine" id="star4" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_cuisine" id="star3" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_cuisine" id="star2" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_cuisine" id="star1" value="1" required><label for="star1"></label>
+                                        </div>
                                     </div>
 
                                     <div>
                                         <label for="note_service">Saisissez une note pour le service <span>*</span></label>
-                                        <input type="number" id="note_service" name="note_service" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                        <div class="rating">
+                                            <input type="radio" name="note_service" id="star5" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_service" id="star4" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_service" id="star3" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_service" id="star2" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_service" id="star1" value="1" required><label for="star1"></label>
+                                        </div>                                    
                                     </div>
 
                                 </div>
@@ -694,12 +708,24 @@ try {
 
                                     <div>
                                         <label for="note_ambiance">Saisissez une note pour l'ambiance <span>*</span></label>
-                                        <input type="number" id="note_ambiance" name="note_ambiance" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                        <div class="rating">
+                                            <input type="radio" name="note_ambiance" id="star5" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_ambiance" id="star4" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_ambiance" id="star3" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_ambiance" id="star2" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_ambiance" id="star1" value="1" required><label for="star1"></label>
+                                        </div>              
                                     </div>
 
                                     <div>
                                         <label for="note_rapport">Saisissez une note pour le rapport qualité prix <span>*</span></label>
-                                        <input type="number" id="note_rapport" name="note_rapport" min="1" max="5" oninvalid="this.setCustomValidity('Veuillez saisir un nombre entre 1 et 5.')" oninput="this.setCustomValidity('')" placeholder="1 à 5" required/><br>
+                                        <div class="rating">
+                                            <input type="radio" name="note_rapport" id="star5" value="5" required><label for="star5"></label>
+                                            <input type="radio" name="note_rapport" id="star4" value="4" required><label for="star4"></label>
+                                            <input type="radio" name="note_rapport" id="star3" value="3" required><label for="star3"></label>
+                                            <input type="radio" name="note_rapport" id="star2" value="2" required><label for="star2"></label>
+                                            <input type="radio" name="note_rapport" id="star1" value="1" required><label for="star1"></label>
+                                        </div>                                                  
                                     </div>
 
                                 </div>
