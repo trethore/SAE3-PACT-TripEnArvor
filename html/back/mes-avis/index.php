@@ -540,29 +540,39 @@ if ($typeCompte === 'proPrive') {
     
 
     <script>
-            document.getElementById('tri_recent').style.display = 'none';
-            document.getElementById("tri_ancien").style.display = 'none';
+           document.addEventListener("DOMContentLoaded", function () {
+    // S'assurer que les éléments existent avant d'y accéder
+    const triRecent = document.getElementById('tri_recent');
+    const triAncien = document.getElementById('tri_ancien');
+    const triOffre = document.getElementById('tri_offre');
+    const selectElement = document.getElementById('tris');
 
-            document.getElementById('tris').addEventListener('change', function() {
-                const triChoisi = this.value;
+    if (triRecent && triAncien && triOffre && selectElement) {
+        // Masquer recent et ancien au chargement, afficher tri_offre par défaut
+        triRecent.style.display = 'none';
+        triAncien.style.display = 'none';
+        triOffre.style.display = 'inline';
 
-                if (triChoisi === "recent") {
-                    document.getElementById('tri_recent').style.display = 'inline';
-                    document.getElementById('tri_ancien').style.display = 'none';
-                    document.getElementById('tri_offre').style.display = 'none';
-                } else if(triChoisi === "ancien"){
-                    document.getElementById('tri_ancien').style.display = 'inline';
-                    document.getElementById('tri_recent').style.display = 'none';
-                    document.getElementById('tri_offre').style.display = 'none';
-                    
-                }
-                else if(triChoisi === "tri_offre")  {
-                    document.getElementById('tri_offre').style.display = 'inline';
-                    document.getElementById('tri_ancien').style.display = 'none';
-                    document.getElementById('tri_recent').style.display = 'none';
-                }
-            });
-                
+        selectElement.addEventListener('change', function () {
+            const triChoisi = this.value;
+
+            // Tout masquer avant d'afficher le bon
+            triRecent.style.display = 'none';
+            triAncien.style.display = 'none';
+            triOffre.style.display = 'none';
+
+            // Afficher l'élément sélectionné
+            if (triChoisi === "recent") {
+                triRecent.style.display = 'inline';
+            } else if (triChoisi === "ancien") {
+                triAncien.style.display = 'inline';
+            } else if (triChoisi === "tri_offre") {
+                triOffre.style.display = 'inline';
+            }
+        });
+    }
+});
+
 
 
    
