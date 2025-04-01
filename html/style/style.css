@@ -3724,7 +3724,7 @@ h3 {
     padding: 30px 30px 30px 24px;
     position: sticky;
     top: 0;
-    z-index: 8000;
+    z-index: 998;
 }
 
 .consulter-offre-back .bouton-modifier {
@@ -3895,6 +3895,16 @@ h3 {
     flex-wrap: nowrap;
 }
 
+.consulter-offre-back .fichier {
+    color: var(--blanc);
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 20px;
+    border-radius: 8px;
+    width: 205px;
+    text-align: center;
+}
+
 .consulter-offre-back .display-ligne-espace>a,
 .consulter-offre-back .fond-blocs>a {
     color: var(--blanc);
@@ -3903,16 +3913,6 @@ h3 {
     padding: 5px 20px;
     border-radius: 8px;
     width: 180px;
-    text-align: center;
-}
-
-.consulter-offre-back .fichier {
-    color: var(--blanc);
-    text-decoration: none;
-    background-color: var(--orange-principale);
-    padding: 5px 20px;
-    border-radius: 8px;
-    width: 205px;
     text-align: center;
 }
 
@@ -4060,7 +4060,7 @@ h3 {
     color: var(--noir);
     border-radius: 4px;
     border-radius: 4px;
-    z-index: 10000; 
+    z-index: 9000; 
 }
 
 .consulter-offre-back .popup-menu ul {
