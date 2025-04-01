@@ -196,7 +196,7 @@ if ($typeCompte === 'proPrive') {
                         
                         $membre = getInformationsMembre($id_offre);
                         $datePassage = getDatePassage($id_offre);
-                        $dateAvis = getDatePublication($id_offre);
+                        $dateAvis = getDatePublicationAvecIDMembre($id_offre, $membre[0]['id_membre']);
                         $noteDetaillee = getAvisDetaille($id_offre);
 
                         $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
