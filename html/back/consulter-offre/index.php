@@ -363,7 +363,7 @@ try {
         </section>
 
         <section class="fond-blocs">
-            <div class="display-ligne-tag">
+            <div class="display-ligne">
                 <?php 
                 if (!empty($tags)) {
                     foreach ($tags as $tag) { 
