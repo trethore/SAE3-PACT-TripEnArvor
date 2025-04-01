@@ -548,7 +548,7 @@ if ($typeCompte === 'proPrive') {
 
         const selectElement = document.getElementById('tris');
 
-        if (selectElement) {
+        if (selectElement) { 
             selectElement.addEventListener('change', function() {
                 // Récupérer la valeur sélectionnée
                 const triChoisi = this.value;
