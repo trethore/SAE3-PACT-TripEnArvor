@@ -451,14 +451,14 @@ if ($typeCompte === 'proPrive') {
                                             </div>
 
                                             <div class="display-ligne">
-                                                <?php $passage = explode(' ', $lavis['date']);
+                                                <?php $passage = explode(' ', $lavis['dateAvis']);
                                                                     $datePass = explode('-', $passage[0]); ?>
                                                 <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
                                             </div>
 
                                             <div class="display-ligne-espace">
                                                 <div class="petite-mention">
-                                                    <?php $publication = explode(' ', $lavis['date']);
+                                                    <?php $publication = explode(' ', $lavis['datePassage']);
                                                                     $datePub = explode('-', $publication[0]); ?>
                                                     <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
                                                 </div>
