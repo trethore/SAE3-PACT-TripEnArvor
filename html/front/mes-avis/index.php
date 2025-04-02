@@ -177,7 +177,7 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
                                     preg_match('/"(\d{4}-\d{2}-\d{2})/', $lavis['date_publication'], $matches);
                                     $date = DateTime::createFromFormat('Y-m-d', $matches[1])->format('d/m/Y');
                                     ?>
-                                    <p><span class="titre-avis"><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_offre']))) ?></span> - Écrit le <?php echo htmlentities($date); ?></p>
+                                    <p><span class="titre-avis"><a class="lienVersOffre" href="/front/consulter-offre/index.php?id= <?php echo $lavis['id_offre'] ?> "> <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_offre']))) ?> </a></span> - Écrit le <?php echo htmlentities($date); ?></p>
                                     <div class="display-ligne">
                                         <div class="display-ligne">
                                             <?php for ($etoileJaune = 0; $etoileJaune < $lavis['note']; $etoileJaune++) { ?>
@@ -193,7 +193,7 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
 
                                 <div class="display-ligne">
                                     
-                                    <span><strong><a class="lienVersOffre" href="/front/consulter-offre/index.php?id= <?php echo $lavis['id_offre'] ?> "> <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?> </a> </strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
+                                    <span><strong> <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?>  </strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
                                 
                                 </div>
                                 <div class="display-ligne-espace">
