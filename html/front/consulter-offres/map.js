@@ -11,7 +11,7 @@ function addMap() {
     minZoom: 5,
     maxBounds: bounds, 
     maxBoundsViscosity: 1.0 
-  }).setView([48.8566, 2.3522], 5);
+  }).setView([48.52, -2.7], 8);
 
   markerCluster = L.markerClusterGroup({
     iconCreateFunction: function (cluster) {

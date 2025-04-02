@@ -160,27 +160,17 @@ if ($typeCompte === 'proPrive') {
 
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
-            <h3>Trier</h3>
-            <div>
-                <select class="tris">
-                    <option value="default">Trier par :</option>
-                    <option value="recent">Plus récent</option>
-                    <option value="ancien">Plus ancient</option>
-                    <option value="tri_offre">Offre</option>
-                </select>
-            </div>
+            
+
             <div class="contenu-aligne-gauche">
 
 
                 <?php
                 $nb_non_lu = 0;
-                $nb_offres = 0;
-                $avis_lu = [];
-                $avis_non_lu = [];
-
+                $nb_offres = count($touteslesoffres);
                 $nbrAvisNonRepondus = 0;
-                $avis_repondu = [];
-                $avis_non_repondu = [];
+                $nb_avis_total = 0; 
+                $touslesavis = [];
 
                 foreach ($touteslesoffres as $offre) {
                     $id_offre = $offre['id_offre'];
@@ -188,48 +178,73 @@ if ($typeCompte === 'proPrive') {
                     $avis = getAvis($id_offre);
                     $nb_offres++;
                     $nb_avis = count($avis);
-
-                    // ===== GESTION DES AVIS ===== //
-
-                    $membre = getInformationsMembre($id_offre);
-                    $datePassage = getDatePassage($id_offre);
-                    $dateAvis = getDatePublication($id_offre);
-                    $noteDetaillee = getAvisDetaille($id_offre);
+                    $nb_avis_total += $nb_avis; 
+                    
+                    $i=0;
 
                     foreach ($avis as $lavis) {
-                        $lavis['membre'] = $membre;
-                        $lavis['datePassage'] = $datePassage;
-                        $lavis['dateAvis'] = $dateAvis;
-                        $lavis['noteDetaillee'] = $noteDetaillee;
-
-                        if (!$lavis['lu']) {
-                            $nb_non_lu++;
-                            $avis_non_lu[] = $lavis;
-                            $avis_non_repondu[] = $lavis; // On suppose qu'il n'a pas de réponse
-                        } else {
-                            $avis_lu[] = $lavis;
-
-                            // Vérifie s'il y a une réponse pour cet avis
-                            if ($reponses && isset($reponses[$lavis['id_membre']])) {
-                                $avis_repondu[] = $lavis;
-                            } else {
-                                $avis_non_repondu[] = $lavis;
-                            }
+                            if ($lavis['lu'] == false) {
+                                $nb_non_lu++;
                         }
+
+                        
+
+                        //select id_membre, pseudo from _avis natural join _membre where id_membre = $session['id'] and id_offre = $id_offre
+                         
+                        
+                        $membre = getInformationsMembre($id_offre);
+                        $datePassage = getDatePassage($id_offre);
+                        $dateAvis = getDatePublicationAvecIDMembre($id_offre, $membre[0]['id_membre']);
+                        $noteDetaillee = getAvisDetaille($id_offre);
+
+                        
+
+                        $lavis['pseudo'] = $membre[$i]['pseudo'];
+                        $lavis['id_membre'] = $membre[$i]['id_membre'];
+                        $lavis['datePassage'] = $datePassage[$i]['date'];
+                        $lavis['dateAvis'] = getDatePublicationAvecIDMembre($id_offre, $membre[$i]['id_membre'])[0]['date'];
+                        $lavis['titre_offre'] = $offre['titre'];
+
+                        $touslesavis[] = $lavis; 
+                        $i++;
                     }
 
-
-
-
-
-
-
-
-
-
                     $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                    $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+                        $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+
+                    
                 }
+
+
+                foreach($touslesavis as $key => $lavis){
+                    $aviTriPluRecent[] = $lavis;
+                    $aviTriPluAncien[] = $lavis;
+                    $avitrioffre[] = $lavis;
+                }
+
+                usort($aviTriPluAncien, function ($a, $b) {
+                    return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
+                });
+
+                usort($aviTriPluRecent, function ($a, $b) {
+                    return strtotime($b['dateAvis']) - strtotime($a['dateAvis']); 
+                });
+
+
+                // echo "<br> <pre>";
+                // print_r($aviTriPluAncien);
+                // print_r($dateAvis);
+                // echo "</pre>";
+                
+                // echo "<br> <pre>";
+                // print("le tri plus recent");
+                // print_r(array_sort($aviTriPluRecent, 'dateAvis', SORT_DESC));
+                // echo "<br>";
+                // print("le tri plus ancien");
+                // print_r(array_sort($aviTriPluAncien, 'dateAvis', SORT_DESC));
+                // echo "</pre>";
+
+                //print_r($touslesavis);
 
                 $nb_offres = 0;
                 if (!$touteslesoffres) { ?>
@@ -240,50 +255,54 @@ if ($typeCompte === 'proPrive') {
 
                 <?php } else { ?>
 
-                    <h2> <?php
-                            echo "Vous avez " . $nb_non_lu . " avis non lus";
+                    <h2> 
+                        <?php
+                        if ($nb_non_lu!= 0 ) {
+                            echo  $nb_non_lu . " avis non lus";
                             echo "<br>";
-                            echo "Vous avez " . $nbrAvisNonRepondus . " avis non repondus"; ?>
-                    </h2> <?php
-                            echo 'tri par offre';
+                        }
+                        
+                        if ($nbrAvisNonRepondus != 0) {
+                            echo $nbrAvisNonRepondus . " avis non répondus";
+                        } ?>
+
+                    </h2> 
+                    <article class="filtre-tri">
+                        <h2>Tris</h2>
+                        <div class="fond-filtres hidden">
+                    
+                            <div class='div-tri'>
+                                <select id="tris">
+                                    <option value="">Trier par :</option>
+                                    <option value="recent">Plus récent</option>
+                                    <option value="ancien">Plus ancient</option>
+                                    <option value="tri_offre">Offre</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </article>
+                    <div id="tri_offre" >
+                    <?php
 
                             foreach ($touteslesoffres as $offre) {
-
+                                if ($nb_avis_total == 0) {
+                                    print("Aucun avis n'a été laissé sur vos offres");
+                                    break;
+                                }
                             ?>
-                        <h3>
                             <?php
                                 // $offre = getOffre($id_offre_cible);
                                 $id_offre = $offre['id_offre'];
                                 $avis = getAvis($id_offre);
                                 $nb_offres++;
-                                if (!$avis) { //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
-
-                                    if (count($touteslesoffres) == $nb_offres) {
-                                        print("Aucun avis n'a été laissé sur vos offres");
-                                        break;
-                                    } else {
-                                        continue;
-                                    }
+                                if (!$avis) { 
+                                    continue;  //si l'offre n'a pas d'avis (vide) on pase a l'offre suivante
                                 }
  
-                                
-                                    $nb_non_lu = 0;
-                                    foreach ($avis as $lavis) { // Compter le nombre d'avis non lus sur l'offre
-                                        if ($lavis['lu'] == false) {
-                                            $nb_non_lu++;
-                                        }
-                                    }
                                     ?>
 
-                                    <h3>
-                                        <?php if ($nb_non_lu == 0) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>
-                                        <?php } else if ($nb_non_lu == 1) { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouvel avis sur l'offre
-                                        <?php } else { ?>
-                                            <span class="offre-titre"><?php echo $offre['titre']; ?></span>  <?php echo $nb_non_lu; ?> nouveaux avis sur l'offre
-                                        <?php } ?>
-                                    </h3>
+                        
 
 
 
@@ -304,246 +323,200 @@ if ($typeCompte === 'proPrive') {
 
 
                                 $compteur = 0; ?>
-                        <?php foreach ($avis as $lavis) {  ?>
-                            <article>
-                            <?php if ($lavis['lu'] == false) {
-                                                            echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
-                                                        } else { //si l'avis a ete lu on met sil a une reponse ou pas
+                                    
+                                    
+                                    <?php foreach ($avis as $lavis) {  ?>
+                                        <article>
+                                        <?php if ($lavis['lu'] == false) {
+                                                                        echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
+                                                                    } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
-                                                            if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
-                                                                echo '<div role="tooltip" id="infobulle">Non répondu</div>';
-                                                            }
-                                                        }
-                                ?>
+                                                                        if (empty(getReponse($id_offre, $membre[$compteur]['id_membre']))) {
+                                                                            echo '<div role="tooltip" id="infobulle">Non répondu</div>';
+                                                                        }
+                                                                    }
+                                            ?>
 
-                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-                            
+                                        <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                        
 
 
-                                <div class="display-ligne-espace">
-                                    <div class="display-ligne">
-                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
-                                                                echo ' '; ?></p>
-                                        <div class="display-ligne">
-                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                            <?php }
-                                                        for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                            <?php } ?>
+                                            <div class="display-ligne-espace">
+                                                <div class="display-ligne">
+                                                    <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
+                                                                            echo ' '; ?></p>
+                                                    <div class="display-ligne">
+                                                        <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                                        <?php }
+                                                                    for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="titre_offre">
+                                                 <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                     <?php echo htmlentities($offre['titre']);  echo ' '; ?>
+                                                 </a>
+                                                 </div>
+ 
+
+                                            </div>
+
+                                            <div class="display-ligne">
+                                                <?php $passage = explode(' ', $datePassage[$compteur]['date']);
+                                                                    $datePass = explode('-', $passage[0]); ?>
+                                                <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                            </div>
+
+                                            <div class="display-ligne-espace">
+                                                <div class="petite-mention">
+                                                    <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
+                                                                    $datePub = explode('-', $publication[0]); ?>
+                                                    <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                    </div>
+                                    <?php $compteur++; ?>
+                                    </article> 
+                                    <?php
+                                    } 
+                                     echo "<br>";
+                                     }}?>
+                        </div> 
 
-                                </div>
+                        <div id="tri_recent"  >
+                        <?php foreach ($aviTriPluRecent as $lavis) { 
+                            $id_offre = $lavis['id_offre']; ?>
 
-                                <div class="display-ligne">
-                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                                                        $datePass = explode('-', $passage[0]); ?>
-                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
-                                </div>
+                                        <article>
+                                        <?php if ($lavis['lu'] == false) {
+                                                                        echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
+                                                                    } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
-                                <?php  ?>
+                                                                        if (empty(getReponse($id_offre, $lavis['id_membre']))) {
+                                                                            echo '<div role="tooltip" id="infobulle">Non répondu</div>';
+                                                                        }
+                                                                    }
+                                            ?>
 
-
-                                <div class="display-ligne-espace">
-                                    <div class="petite-mention">
-                                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                                                        $datePub = explode('-', $publication[0]); ?>
-                                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                                    </div>
-                                </div>
-                                <br>
-                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
-                            </div>
-                            </article>
-                        <?php $compteur++;
-                        } ?>
-                    <br>
-            <?php       }
-                        } 
-                        echo "<pre>";
-                        print_r($avis_non_lu);
-                        echo "</pre>";
-                        ?>
-
-                        
-            <?php
-            foreach ($touteslesoffres as $offre) {
-                $id_offre = $offre['id_offre'];
-                $categorie = getTypeOffre($id_offre);
-
-                // ===== GESTION DES AVIS ===== //
-
-                $membre = getInformationsMembre($id_offre);
-                $datePassage = getDatePassage($id_offre);
-                $dateAvis = getDatePublication($id_offre);
-                $noteDetaillee = getAvisDetaille($id_offre);
-
-                $reponses = getAllReponses($id_offre);
-                $compteur = 0;
-                echo "avis non lu";
-                
-                foreach ($avis as $lavis) {
-                    echo '<pre>';
-                    print_r($lavis);
-                    echo '</pre>';
-
-                    while ($compteur != count($avis)) {
-                        if (in_array($lavis['id_membre'], $avis_non_lu['id_membre'])) {
-                            echo "avis non lus";
-            ?>
-                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                        <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                        
 
 
-                                <div class="display-ligne-espace">
-                                    <div class="display-ligne">
-                                        <p class="titre-avis"><?php echo htmlentities($lavis['membre']['pseudo']);
-                                                                echo ' '; ?></p>
-                                        <div class="display-ligne">
-                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                            <?php }
-                                            for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                            <?php } ?>
+                                            <div class="display-ligne-espace">
+                                                <div class="display-ligne">
+                                                    <p class="titre-avis"><?php echo htmlentities($lavis['pseudo']);
+                                                                            echo ' '; ?></p>
+                                                    <div class="display-ligne">
+                                                        <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                                        <?php }
+                                                                    for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="titre_offre">
+                                                 <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                     <?php echo htmlentities($lavis['titre_offre']);  echo ' '; ?>
+                                                 </a>
+                                                 </div>
+ 
+
+                                            </div>
+
+                                            <div class="display-ligne">
+                                                <?php $passage = explode(' ', $lavis['datePassage']);
+                                                                    $datePass = explode('-', $passage[0]); ?>
+                                                <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                            </div>
+
+                                            <div class="display-ligne-espace">
+                                                <div class="petite-mention">
+                                                    <?php $publication = explode(' ', $lavis['dateAvis']);
+                                                                    $datePub = explode('-', $publication[0]); ?>
+                                                    <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="display-ligne">
-                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                                    $datePass = explode('-', $passage[0]); ?>
-                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
-                                </div>
-
-                                <?php  ?>
-
-
-                                <div class="display-ligne-espace">
-                                    <div class="petite-mention">
-                                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                                        $datePub = explode('-', $publication[0]); ?>
-                                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                                    </div>
-                                </div>
-                                <br>
-                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
-                            </div>
-                        <?php $compteur++;
-                        }
-                    }
-                }
-                echo "avis non repondu";
-                foreach ($avis as $lavis) {
-                    $id_offre = $offre['id_offre'];
-                $categorie = getTypeOffre($id_offre);
-
-                // ===== GESTION DES AVIS ===== //
-
-                $membre = getInformationsMembre($id_offre);
-                $datePassage = getDatePassage($id_offre);
-                $dateAvis = getDatePublication($id_offre);
-                $noteDetaillee = getAvisDetaille($id_offre);
-
-                    while ($compteur != count($avis)) {
-                        if (in_array($lavis['id_membre'], $avis_non_repondu['id_membre'])) {
-                            echo "avis non lus";
-                        ?>
-                            <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
-
-
-                                <div class="display-ligne-espace">
-                                    <div class="display-ligne">
-                                        <p class="titre-avis"><?php echo htmlentities($membre[$compteur]['pseudo']);
-                                                                echo ' '; ?></p>
-                                        <div class="display-ligne">
-                                            <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                                <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                            <?php }
-                                            for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                                <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="display-ligne">
-                                    <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                                    $datePass = explode('-', $passage[0]); ?>
-                                    <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
-                                </div>
-
-                                <?php  ?>
-
-
-                                <div class="display-ligne-espace">
-                                    <div class="petite-mention">
-                                        <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                                        $datePub = explode('-', $publication[0]); ?>
-                                        <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
-                                    </div>
-                                </div>
-                                <br>
-                                <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
-                            </div>
-            <?php $compteur++;
-                        }
-                    }
-                }
-            }
-
-            ?>
-            <?php
-            echo "avis non repondus";
-
-            $compteur = 0;
-            foreach ($avis_non_repondu as $lavis) {
-
-            ?>
-                <div class="fond-blocs-avis ">
-                    <div class="display-ligne-espace">
-                        <div class="display-ligne">
-                            <p class="titre-avis"><?php echo htmlentities($lavis[$compteur]['pseudo']);
-                                                    echo ' '; ?></p>
-                            <div class="display-ligne">
-                                <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
-                                    <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                <?php }
-                                for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
-                                    <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                <?php } ?>
-                            </div>
+                                    </article> 
+                                    <?php
+                                    }  ?>
                         </div>
 
-                    </div>
+                        <div id="tri_ancien"  >
+                        <?php foreach ($aviTriPluAncien as $lavis) { 
+                            $id_offre = $lavis['id_offre'];  ?>
 
-                    <div class="display-ligne">
-                        <?php $passage = explode(' ', $datePassage[$compteur]['date']);
-                        $datePass = explode('-', $passage[0]); ?>
-                        <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
-                    </div>
+                                        <article>
+                                        <?php if ($lavis['lu'] == false) {
+                                                                        echo '<div role="tooltip" id="infobulle">Nouveau !</div>';
+                                                                    } else { //si l'avis a ete lu on met sil a une reponse ou pas
 
-                    <?php  ?>
+                                                                        if (empty(getReponse($id_offre, $lavis['id_membre']))) {
+                                                                            echo '<div role="tooltip" id="infobulle">Non répondu</div>';
+                                                                        }
+                                                                    }
+                                            ?>
+
+                                        <div class="fond-blocs-avis <?php echo ($lavis['lu'] == false) ? 'avis-en-exergue' : ''; ?>">
+                                        
 
 
-                    <div class="display-ligne-espace">
-                        <div class="petite-mention">
-                            <?php $publication = explode(' ', $dateAvis[$compteur]['date']);
-                            $datePub = explode('-', $publication[0]); ?>
-                            <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
+                                            <div class="display-ligne-espace">
+                                                <div class="display-ligne">
+                                                    <p class="titre-avis"><?php echo htmlentities($lavis['pseudo']);
+                                                                            echo ' '; ?></p>
+                                                    <div class="display-ligne">
+                                                        <?php for ($etoileJaune = 0; $etoileJaune != $lavis['note']; $etoileJaune++) { ?>
+                                                            <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
+                                                        <?php }
+                                                                    for ($etoileGrise = 0; $etoileGrise != (5 - $lavis['note']); $etoileGrise++) { ?>
+                                                            <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="titre_offre">
+                                                 <a class="titre-avis" href="/back/consulter-offre/index.php?id= <?php  echo $id_offre ?> ">
+                                                     <?php echo htmlentities($lavis['titre_offre']);  echo ' '; ?>
+                                                 </a>
+                                                 </div>
+ 
+
+                                            </div>
+
+                                            <div class="display-ligne">
+                                                <?php $passage = explode(' ', $lavis['datePassage']);
+                                                                    $datePass = explode('-', $passage[0]); ?>
+                                                <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre']))) ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></strong></p>
+                                            </div>
+
+                                            <div class="display-ligne-espace">
+                                                <div class="petite-mention">
+                                                    <?php $publication = explode(' ', $lavis['dateAvis']);
+                                                                    $datePub = explode('-', $publication[0]); ?>
+                                                    <p><em>Écrit le <span><?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></span></em></p>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                                        </div>
+                                    </article> 
+                                    <?php
+                                    }  ?>
                         </div>
-                    </div>
-                    <br>
-                    <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Accéder à l&#39;avis </a>
-                </div>
-            <?php $compteur++;
-            }
 
-            ?>
-            </div>
 
+                    
+                    
         </section>
     </main>
     <footer>
@@ -580,31 +553,66 @@ if ($typeCompte === 'proPrive') {
     </footer>
     
 
-    <script> 
-    const avisContainer = document.querySelectorAll("contenu-aligne-gauche");
-    const avis = document.querySelectorAll("article");
-        // Sort Offers
-        const sortAvis = () => {
-            const selectElement = document.querySelector(".tris");
-            const selectedValue = selectElement.value;
+    <script>
 
-            if (selectedValue === "recent" || selectedValue === "ancien") {
-                avis.sort((a, b) => {
-                    const dateA = json_encode($datePub)
-                    const priceA = parseFloat(a.querySelector(".prix span").textContent.replace('€', '0').trim());
-                    const priceB = parseFloat(b.querySelector(".prix span").textContent.replace('€', '0').trim());
-                    return selectedValue === "price-asc" ? priceA - priceB : priceB - priceA;
-                });
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("tri_offre").style.display = 'block';
+        document.getElementById("tri_recent").style.display = 'none';
+        document.getElementById("tri_ancien").style.display = 'none';
 
-                offers.forEach(offer => offersContainer.appendChild(offer));
-            } if (selectedValue === "default") {
-                offers.sort((a, b) => initialOrder.indexOf(a) - initialOrder.indexOf(b));
+        const triRecent = document.getElementById("tri_recent");
+        const triAncien = document.getElementById("tri_ancien");
+        const triOffre = document.getElementById("tri_offre");
+        const selectElement = document.getElementById("tris");
 
-                offers.forEach(offer => offersContainer.appendChild(offer));
+        
+
+        // Au chargement, n'afficher que le tri "offre"
+        
+
+        selectElement.addEventListener('change', function () {
+            const triChoisi = this.value;
+
+            if (triChoisi === "") {
+                return;
             }
-        };
+            console.log("Tri choisi:", triChoisi);
 
-    </script>
+            // Cacher tous les divs
+            document.getElementById("tri_recent").style.display = 'none';
+            document.getElementById("tri_ancien").style.display = 'none';
+            document.getElementById("tri_offre").style.display = 'none';
+
+            // Afficher le div correspondant à la valeur sélectionnée
+            if (triChoisi === "recent") {
+                document.getElementById("tri_recent").style.display = 'block';
+            } else if (triChoisi === "ancien") {
+                document.getElementById("tri_ancien").style.display = 'block';
+            } else if (triChoisi === "tri_offre") {
+                document.getElementById("tri_offre").style.display = 'block';
+            }
+        });
+    });
+
+    
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
+
+            h2.addEventListener("click", () => {
+                fondFiltres.classList.toggle("hidden");
+            });
+        });
+
+
+
+   
+
+
+</script>
+
 </body>
 
 </html>

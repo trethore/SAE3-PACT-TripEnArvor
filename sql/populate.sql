@@ -3241,8 +3241,6 @@ BEGIN
 
 END $$;
 
-
-
 COMMIT;
 -- ROLLBACK;
 

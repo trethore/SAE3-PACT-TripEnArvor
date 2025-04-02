@@ -16,7 +16,7 @@
     --violet-secondaire: rgba(145, 115, 225, 1);
     --marron: rgba(191, 140, 44, 1);
     --orange-principale: rgba(217, 102, 54, 1);
-    --orange-secondaire-1: rgba(217, 111, 50, 1);
+    --orange-secondaire-2: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
     --jaune-relief: #ffbf00;
 
@@ -159,6 +159,12 @@ h3 {
     transform: translateX(25%);
 }
 
+.connecter a:hover,
+.creer-compte a:hover {
+    color: var(--violet-secondaire);
+    text-decoration: underline;
+}
+
 .connecter form {
     display: flex;
     flex-direction: column;
@@ -289,9 +295,11 @@ h3 {
 .connecter button:hover,
 .connecter input[type="submit"]:hover,
 .creer-compte input[type="submit"]:hover {
-    background: var(--blanc-leger);
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
+
+
+
 
 /**************************************************************************************
                                 BACK-OFFICE-COMPTE
@@ -313,19 +321,17 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton {
+.compte-back #apibutton, .compte-back #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
-    border: var(--orange-principale) 2px solid;
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
+    border: none;
  }
-.compte-back #apibutton:hover {
-     background-color: var(--blanc-leger);
-     color: var(--orange-principale);
-     border: var(--orange-principale) 2px solid;
+.compte-back #apibutton:hover, .compte-back #auth_toggle_button:hover {
+     background-color: var(--orange-secondaire-2);
      border-radius: 15px;
      padding: 0.2em 1em;
      font-size: 1.2em;
@@ -356,7 +362,7 @@ h3 {
     justify-content: center;
 
     text-align: center;
-    background-color: var(--blanc-leger);
+    background-color: var(--blanc);
     color: var(--orange-principale);
     margin: 1em 0.5em 1em;
     padding: 0.5em 1em;
@@ -442,7 +448,6 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
     border-radius: 15px;
     margin: 1em 0;
     padding: 0.2em 1em;
@@ -450,9 +455,7 @@ h3 {
 
 .compte-back section a:hover,
 .compte-back-modif section a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 .compte-back table+div,
@@ -495,7 +498,6 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
     font-size: 12pt;
     border-radius: 15px;
     padding: 0.2em 1em;
@@ -504,9 +506,7 @@ h3 {
 
 .compte-back-modif table+div input:hover,
 .compte-back-modif table+div a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 .compte-back-modif .error {
@@ -522,8 +522,8 @@ h3 {
 #annulerModifCompte,
 #popupRetourAccueil,
 #popupRetourCompte,
-#validerDeleteCompte,
-#popup-supprimer-avis {
+#validerDeleteCompte
+{
     position: fixed;
     z-index: 11;
     flex-direction: column;
@@ -536,7 +536,6 @@ h3 {
     height: 250px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Titre de la popup */
@@ -551,21 +550,13 @@ h3 {
     color: var(--noir);
 }
 
-#popup-supprimer-avis form {
-    background: unset;
-    border: unset;
-    border-radius: unset;
-    padding: unset;
-    align-items: unset;
-}
-
 /* Texte de la popup */
 #validerModifCompte p,
 #annulerModifCompte p,
 #popupRetourAccueil p,
 #popupRetourCompte p,
-#validerDeleteCompte p,
-#popup-supprimer-avis span {
+#validerDeleteCompte p
+{
     color: var(--noir);
     font-size: 14pt;
     margin-bottom: 20px;
@@ -578,7 +569,6 @@ h3 {
 .compte-back-modif #popupRetourCompte button,
 .compte-back #validerDeleteCompte button {
     background-color: var(--orange-principale);
-    border: 2px solid var(--orange-principale);
     color: var(--blanc-leger);
     font-weight: var(--bold);
     font-size: 12pt;
@@ -588,7 +578,7 @@ h3 {
     margin: 0 10px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
     transition: background-color 0.3s ease;
 }
 
@@ -597,9 +587,7 @@ h3 {
 .compte-back-modif #popupRetourAccueil button:hover,
 .compte-back-modif #popupRetourCompte button:hover,
 .compte-back #validerDeleteCompte button:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 /**************************************************************************************
@@ -622,12 +610,10 @@ h3 {
 ****************************/
 .liste-back .filtre-tri {
     position: relative;
-    margin: 1em 2.5em;
+    margin: auto auto;
     padding: 3em 2em 1em;
-
-    width: 95vw;
+    width: 85%;
     box-sizing: border-box;
-
     background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--orange-principale);
@@ -647,12 +633,16 @@ h3 {
     cursor: pointer;
 }
 
+.liste-back .filtre-tri>h2:hover {
+    background-color: var(--orange-secondaire-2);
+}
+
 .liste-back .filtre-tri h2+div {
     display: flex;
-    flex-direction: column;
     color: var(--blanc);
     background-color: var(--blanc);
-    border-radius: 15px;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 
@@ -694,43 +684,6 @@ h3 {
 .liste-back .filtre-tri input[type="checkbox"]:not(:disabled):checked {
     border-color: var(--blanc);
     background-color: var(--blanc);
-}
-
-.liste-back .filtre-tri .categorie,
-.liste-back .filtre-tri .localisation,
-.liste-back .filtre-tri .disponibilite,
-.liste-back .filtre-tri .trier,
-.liste-back .filtre-tri .typeOffre,
-.liste-back .filtre-tri .date,
-.liste-back .filtre-tri .trier2 {
-    margin: 0 1em;
-    border-radius: 10px;
-}
-
-.liste-back .filtre-tri .disponibilite div,
-.liste-back .filtre-tri .localisation div,
-.liste-back .filtre-tri .typeOffre div,
-.liste-back .filtre-tri .date div {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-}
-
-.liste-back .filtre-tri h2+div>div,
-.liste-back .filtre-tri h2+div>div+div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0;
-}
-
-.liste-back .filtre-tri h2+div>div {
-    padding-top: 0.5em;
-}
-
-.liste-back .filtre-tri h2+div>div+div {
-    padding: 0 0 1em 0;
-
 }
 
 .liste-back .filtre-tri h3+div {
@@ -852,35 +805,6 @@ h3 {
     height: 23px;
     text-align: center;
     font-size: 16px;
-}
-
-
-.liste-back .filtre-tri .categorie {
-    flex: 5;
-}
-
-.liste-back .filtre-tri .disponibilite {
-    flex: 2;
-}
-
-.liste-back .filtre-tri .trier {
-    flex: 6;
-}
-
-.liste-back .filtre-tri .trier2 {
-    flex: 2;
-}
-
-.liste-back .filtre-tri .localisation {
-    flex: 1;
-}
-
-.liste-back .filtre-tri .typeOffre {
-    flex: 2.2;
-}
-
-.liste-back .filtre-tri .date {
-    flex: 6;
 }
 
 
@@ -1139,18 +1063,16 @@ h3 {
     font-size: 30px;
     width: 300px;
     border-radius: 15px;
-    border: 2px solid var(--orange-principale);
     margin: 0.5em 2em 1em auto;
 }
 
 .liste-back section+a:hover {
-    background: var(--blanc);
-    color: var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
 
-#map {
+.liste-front #map {
     width: 95vw;
     height: 400px;
     margin: auto auto;              
@@ -1259,9 +1181,7 @@ h3 {
 }
 
 .factures nav a:hover {
-    color: var(--blanc-leger);
-    background-color: var(--orange-principale);
-    border: 2px solid var(--blanc-leger);
+    background-color: var(--orange-secondaire-2);
 }
 
 /********************
@@ -1521,19 +1441,17 @@ h3 {
     margin: 2em;
 }
 
-.compte-front #apibutton {
+.compte-front #apibutton, .compte-front #auth_toggle_button {
+   border: none;
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
-   border: var(--violet-principal) 2px solid;
    border-radius: 15px;
    padding: 0.2em 1em;
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover {
-    background-color: var(--blanc-leger);
-    color: var(--violet-principal);
-    border: var(--violet-principal) 2px solid;
+.compte-front #apibutton:hover, .compte-front #auth_toggle_button:hover {
+    background-color: var(--violet-secondaire);
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
@@ -1563,6 +1481,13 @@ h3 {
     cursor: pointer;
 }
 
+.status-enabled {
+    color: green;
+}
+
+.status-disabled {
+    color: red;
+}
 /********************
         NAV
 *********************/
@@ -1603,7 +1528,6 @@ h3 {
     background-color: var(--violet-principal);
     border: 2px solid var(--blanc-leger);
 }
-
 
 /********************
     DETAILS COMPTE
@@ -1673,7 +1597,7 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
+    border: none;
     border-radius: 15px;
     margin: 1em 0;
     padding: 0.2em 1em;
@@ -1681,18 +1605,12 @@ h3 {
 
 .compte-front main>section a:hover,
 .compte-front-modif main>section a:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .compte-front table+div,
 .compte-front-modif table+div {
     text-align: right;
-}
-
-.compte-front div {
-    margin: 1em;
 }
 
 .compte-front table+div>a,
@@ -1730,7 +1648,7 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
+    border: none;
     font-size: 12pt;
     border-radius: 15px;
     padding: 0.2em 1em;
@@ -1739,19 +1657,16 @@ h3 {
 
 .compte-front-modif table+div input:hover,
 .compte-front-modif table+div a:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 /* Style des boutons */
 .compte-front-modif #validerModifCompte button,
 .compte-front-modif #annulerModifCompte button,
 .compte-front-modif #popupRetourAccueil button,
-.compte-front-modif #popupRetourCompte button,
-.front #popup-supprimer-avis button {
+.compte-front-modif #popupRetourCompte button
+{
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
     font-weight: var(--bold);
     font-size: 12pt;
@@ -1761,18 +1676,16 @@ h3 {
     margin: 0 10px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
     transition: background-color 0.3s ease;
 }
 
 .compte-front-modif #validerModifCompte button:hover,
 .compte-front-modif #annulerModifCompte button:hover,
 .compte-front-modif #popupRetourAccueil button:hover,
-.compte-front-modif #popupRetourCompte button:hover,
-.front #popup-supprimer-avis button:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+.compte-front-modif #popupRetourCompte button:hover
+{
+    background-color: var(--violet-secondaire);
 }
 
 #validerDeleteCompte button {
@@ -1904,7 +1817,6 @@ h3 {
 }
 
 .creer-compte input[type="submit"]:enabled {
-    border: var(--violet-principal) 2px solid;
     cursor: pointer;
     background-color: var(--violet-principal);
     color: white;
@@ -1913,7 +1825,7 @@ h3 {
 
 .creer-compte input[type="submit"]:enabled:hover {
     background-color: white;
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .creer-compte textarea {
@@ -2975,9 +2887,7 @@ h3 {
 }
 
 .modifier-offre input::file-selector-button:hover {
-    background: #fff;
-    color: var(--orange-principale);
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    background-color: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -3002,14 +2912,12 @@ h3 {
     font-size: 40px;
     width: 517px;
     height: 97px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     margin-left: 0;
 }
 
 .modifier-offre .valider:hover {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
+    background: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -3018,15 +2926,13 @@ h3 {
     height: 50px;
     background: var(--orange-principale);
     border-radius: 5px;
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
 }
 
 .modifier-offre .valider+a :hover {
-    background: var(--blanc-leger);
+    background: var(--orange-secondaire-2);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -3068,7 +2974,7 @@ h3 {
 .consulter-offre-front .fond-blocs {
     background: var(--blanc);
     margin: 0 30px 0 30px;
-    padding: 30px;
+    padding: 30px 30px 15px 30px;
 }
 
 .consulter-offre-front a:hover {
@@ -3081,13 +2987,13 @@ h3 {
 }
 
 .consulter-offre-front .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-front .double-blocs {
@@ -3098,8 +3004,8 @@ h3 {
     border-bottom: 3px solid var(--violet-principal);
 }
 
-#map {
-    width: 82%;
+.liste-front #map {
+    width: 85%;
     margin-top: 2rem;
     border: 3px solid var(--violet-principal);
     border-radius: 15px;
@@ -3173,6 +3079,40 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-front #map {
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 60px;
+}
+
+.consulter-offre-front .display-ligne-tag {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+    padding: 15px 0;
+}
+
+.consulter-offre-front .display-ligne-tag > div > img {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+}
+
+.consulter-offre-front .tag {
+    text-align: center; 
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 2px solid var(--violet-principal);
+    min-width: fit-content; 
+}
+
+.consulter-offre-front .bloc-tags {
+    border: none;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
 .consulter-offre-front .liste-caracteristique {
     align-items: center;
 }
@@ -3182,9 +3122,8 @@ h3 {
     margin: 30px 30px 0 30px;
 }
 
-.consulter-offre-front .liste-caracteristique>li {
+.consulter-offre-front .liste-caracteristique > div > li {
     color: var(--noir);
-    border-left: 3px solid var(--violet-principal);
     font-size: 24px;
     list-style: none;
     display: flex;
@@ -3193,7 +3132,7 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-front .liste-caracteristique li:last-child {
+.consulter-offre-front .liste-caracteristique > div > li:last-child {
     margin-bottom: 0;
 }
 
@@ -3205,7 +3144,7 @@ h3 {
     flex: 6;
     border-left: 3px solid var(--violet-principal);
     background: var(--blanc);
-    margin: 30px 30px 0 0;
+    margin: 30px 30px 0 30px;
     padding: 0 0 0 30px;
 }
 
@@ -3222,21 +3161,15 @@ h3 {
     flex-wrap: nowrap;
 }
 
-.consulter-offre-front .display-ligne-espace>a,
-.consulter-offre-front .fond-blocs>a {
-    color: var(--blanc);
-    text-decoration: none;
-    background-color: var(--violet-principal);
-    padding: 5px 20px;
-    border-radius: 8px;
-    width: 180px;
-    text-align: center;
+.consulter-offre-front .lien {
+    color: var(--violet-principal);
+    text-decoration: underline;
 }
 
-.consulter-offre-front .display-ligne-espace>a:hover,
-.consulter-offre-front .fond-blocs>a:hover {
-    background: var(--violet-secondaire);
-} 
+.consulter-offre-front .lien:hover {
+    color: var(--violet-secondaire);
+    text-decoration: underline;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
@@ -3307,7 +3240,7 @@ h3 {
         BLOCS AVIS                                                   
 *************************/
 
-.consulter-offre-front form {
+.consulter-offre-front .avis-form {
     background: var(--blanc);
     border: 3px solid var(--violet-principal);
     border-radius: 15px;
@@ -3316,25 +3249,25 @@ h3 {
     padding: 30px;
 }
 
-.consulter-offre-front form>div {
+.consulter-offre-front .avis-form > div {
     text-align: left;
 }
 
-.consulter-offre-front form>h2 {
+.consulter-offre-front .avis-form > h2 {
     margin-bottom: 0;
 }
 
-.consulter-offre-front form>p {
+.consulter-offre-front .avis-form > p {
     padding: 0;
 }
 
 .consulter-offre-front ::placeholder {
     font-style: italic;
     color: var(--gris);
-    text-align: center;
+    text-align: left;
 }
 
-.consulter-offre-front label {
+.consulter-offre-front .avis-form > div > label {
     text-align: start;
     color: var(--noir);
     margin: 10px 0;
@@ -3369,8 +3302,8 @@ h3 {
 }
 
 
-.consulter-offre-front input,
-.consulter-offre-front select {
+.consulter-offre-front .avis-form > div > input,
+.consulter-offre-front .avis-form > div > select {
     padding: 5px;
     background: var(--blanc);
     border: 1px solid var(--gris);
@@ -3398,41 +3331,6 @@ h3 {
     border: 0;
     cursor: pointer;
 }
-
-/**/
-
-.consulter-offre-front .popup-menu {
-    width: 120px;
-    display: none;
-    position: absolute;
-    background: var(--violet-principal);
-    color: var(--blanc);
-    border-radius: 8px;
-    z-index: 1000; 
-}
-
-.consulter-offre-front .popup-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 5px 0;
-}
-
-.consulter-offre-front .popup-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-    text-align: left;
-    font-size: 14px;
-    border-radius: 2px;
-    border-radius: 2px;
-}
-
-
-
-.consulter-offre-front .popup-menu li:hover {
-    background: var(--violet-secondaire);
-    color: var(--blanc);
-}
-/**/
 
 .consulter-offre-front #avis>button,
 .consulter-offre-front #avis>form>button {
@@ -3466,6 +3364,13 @@ h3 {
     border: 3px solid var(--violet-principal);
 }
 
+.consulter-offre-front .display-ligne-note-detaille {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+}
+
 .consulter-offre-front .titre-avis {
     font-size: 20px;
     font-weight: bold;
@@ -3493,6 +3398,7 @@ h3 {
     width: 20px;
     height: 20px;
     margin: 0 5px 0 2px;
+    cursor: pointer;
 }
 
 /* Style réponse avis */
@@ -3524,6 +3430,261 @@ h3 {
     font-size: 14px;
     margin: 5px 0 5px 0;
 }
+
+.consulter-offre-front .popup-menu {
+    width: 85px;
+    width: 85px;
+    display: none;
+    position: absolute;
+    background: var(--blanc);
+    color: var(--noir);
+    border-radius: 4px;
+    border-radius: 4px;
+    z-index: 8000; 
+    text-align: none;
+}
+
+.consulter-offre-front .popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.consulter-offre-front .popup-menu li {
+    padding: 4px 6px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--gris);
+}
+
+.consulter-offre-front .popup-menu li:last-of-type {
+    border-top: 0;
+}
+
+.consulter-offre-front .popup-menu li:hover {
+    background: var(--violet-secondaire);
+    color: var(--blanc);
+}
+
+.consulter-offre-front #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    z-index: 7000; 
+    display: none; /
+}
+
+.consulter-offre-front .confirmation-popup {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--violet-principal);
+    z-index: 8000;
+}
+
+.consulter-offre-front .confirmation-popup p {
+    font-size: 16px;
+}
+
+.consulter-offre-front .confirmation-popup button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--violet-principal);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+
+.consulter-offre-front .confirmation-popup button:first-of-type:hover {
+    background-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front .confirmation-popup button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir);
+}
+
+.consulter-offre-front .confirmation-popup button:last-of-type:hover {
+    color: var(--violet-principal);
+}
+
+.consulter-offre-front .confirmation-popup-signaler {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--violet-principal);
+    z-index: 8000;
+}
+
+.consulter-offre-front .confirmation-popup-signaler p {
+    font-size: 16px;
+    margin-bottom: 15px
+}
+
+.consulter-offre-front input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--noir);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.consulter-offre-front input[type="radio"]:checked {
+    border-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--noir);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.consulter-offre-front input[name="titre"] {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    width: 200px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
+.consulter-offre-front input[name="date"] {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
+.consulter-offre-front select[name="contexte"] {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
+.consulter-offre-front textarea:last-of-type {
+    background: var(--blanc);
+    border: 1px solid var(--noir);
+    border-radius: 6px;
+    width: 100%;
+    height: 60px;
+    font-family: "Poppins", sans-serif;
+    padding: 5px;
+    resize: none;
+}
+
+.consulter-offre-front .confirmation-popup-signaler button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--violet-principal);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+    margin-top: 15px
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:first-of-type:hover {
+    background-color: var(--violet-secondaire);
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir); 
+}
+
+.consulter-offre-front .confirmation-popup-signaler button:last-of-type:hover {
+    color: var(--violet-principal);
+}
+
+.consulter-offre-front .fond-blocs-avis > h2 {
+    text-align: center;
+} 
+
+.consulter-offre-front .fond-blocs-avis > .petite-mention {
+    margin: 20px 0;
+}
+
+.consulter-offre-front .requis { 
+    color: red;
+}
+
+.consulter-offre-front .label-avis {
+    margin-right: 10px;
+}
+
+.consulter-offre-front .label-avis-champs {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.consulter-offre-front .rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.consulter-offre-front .rating input {
+    display: none;
+}
+
+.consulter-offre-front .rating label {
+    background: url('/images/frontOffice/etoile-vide.png') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 25px;
+    height: 25px;
+}
+
+.consulter-offre-front .rating input:checked + label, .consulter-offre-front .rating input:checked + label ~ label {
+    background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
+    background-size: contain;
+}
+
+.consulter-offre-front .rating label:hover, .consulter-offre-front .rating label:hover ~ label {
+    background: url('/images/frontOffice/etoile-pleine.png') no-repeat center;
+    background-size: contain;
+}
+
+
+
+
 
 /*************************
         NAVIGATION                                            
@@ -3574,7 +3735,7 @@ h3 {
     color: var(--orange-principale);
     background: var(--blanc);
     border-radius: 15px;
-    margin: 0.5em 0.2em;
+    margin: 0 0.2em 0.5em;
     text-align: center;
     font-size: 40px;
 }
@@ -3593,7 +3754,7 @@ h3 {
 .consulter-offre-back .fond-blocs {
     background: var(--blanc);
     margin: 0 30px 0 30px;
-    padding: 30px;
+    padding: 30px 30px 15px 30px;
 }
 
 .consulter-offre-back a:hover {
@@ -3606,13 +3767,13 @@ h3 {
 }
 
 .consulter-offre-back .etoile {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .etoile_detail {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .consulter-offre-back .double-blocs {
@@ -3643,10 +3804,10 @@ h3 {
         BOUTONS POP-UP                
 ******************************/
 .consulter-offre-back .zone-boutons {
-    padding: 30px 30px 0 24px;
+    padding: 30px 30px 30px 24px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 9997;
 }
 
 .consulter-offre-back .bouton-modifier {
@@ -3662,11 +3823,17 @@ h3 {
     border: 0;
     width: 145px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .bouton-modif-mise > button:hover {
     background: var(--orange-secondaire-2);
 }
+
+.consulter-offre-back .nombre-blacklistage {
+    font-size: 10px;
+    margin: 0 0 0 10px;
+  }
 
 .consulter-offre-back .bloc-presentation>div>p {
     font-size: 32px;
@@ -3729,6 +3896,40 @@ h3 {
         BLOC CARACTÉRISTIQUE                       
 ***********************************/
 
+.consulter-offre-back #map {
+    width: 300px;
+    height: 250px;
+    margin: 30px 0 0 60px;
+}
+
+.consulter-offre-back .display-ligne-tag {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+    padding: 15px 0;
+}
+
+.consulter-offre-back .display-ligne-tag > div > img {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+}
+
+.consulter-offre-back .tag {
+    text-align: center; 
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 2px solid var(--orange-principale);
+    min-width: fit-content; 
+}
+
+.consulter-offre-back .bloc-tags {
+    border: none;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
 .consulter-offre-back .liste-caracteristique {
     align-items: center;
 }
@@ -3738,9 +3939,8 @@ h3 {
     margin: 30px 30px 0 30px;
 }
 
-.consulter-offre-back .liste-caracteristique>li {
+.consulter-offre-back .liste-caracteristique > div > li {
     color: var(--noir);
-    border-left: 3px solid var(--orange-principale);
     font-size: 24px;
     list-style: none;
     display: flex;
@@ -3749,7 +3949,7 @@ h3 {
     padding-left: 10px;
 }
 
-.consulter-offre-back .liste-caracteristique li:last-child {
+.consulter-offre-back .liste-caracteristique > div > li:last-child {
     margin-bottom: 0;
 }
 
@@ -3761,7 +3961,7 @@ h3 {
     flex: 6;
     border-left: 3px solid var(--orange-principale);
     background: var(--blanc);
-    margin: 30px 30px 0 0;
+    margin: 30px 30px 0 30px;
     padding: 0 0 0 30px;
 }
 
@@ -3778,21 +3978,25 @@ h3 {
     flex-wrap: nowrap;
 }
 
-.consulter-offre-back .display-ligne-espace>a,
-.consulter-offre-back .fond-blocs>a {
+.consulter-offre-back .fichier {
     color: var(--blanc);
     text-decoration: none;
     background-color: var(--orange-principale);
     padding: 5px 20px;
     border-radius: 8px;
-    width: 180px;
+    width: 205px;
     text-align: center;
 }
 
-.consulter-offre-back .display-ligne-espace>a:hover,
-.consulter-offre-back .fond-blocs>a:hover {
-    background: var(--orange-secondaire-2);
-} 
+.consulter-offre-back .lien {
+    color: var(--orange-principale);
+    text-decoration: underline;
+}
+
+.consulter-offre-back .lien:hover {
+    color: var(--orange-secondaire-2);
+    text-decoration: underline;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
@@ -3880,6 +4084,13 @@ h3 {
     border: 3px solid var(--orange-principale);
 }
 
+.consulter-offre-back .display-ligne-note-detaille {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: space-between; 
+}
+
 .consulter-offre-back .fond-blocs-avis-blackliste {
     filter: grayscale(1);
     background-color: #d3d3d3;
@@ -3933,7 +4144,7 @@ h3 {
     color: var(--noir);
     border-radius: 4px;
     border-radius: 4px;
-    z-index: 1000; 
+    z-index: 9999; 
 }
 
 .consulter-offre-back .popup-menu ul {
@@ -3965,6 +4176,18 @@ h3 {
     color: var(--blanc);
 }
 
+.consulter-offre-back #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    z-index: 9998; 
+    display: none; /
+}
+
 .consulter-offre-back .confirmation-popup {
     display: block;
     position: fixed;
@@ -3989,6 +4212,7 @@ h3 {
     color: var(--blanc);
     font-size: 16px;
     padding: 4px 6px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .confirmation-popup button:first-of-type:hover {
@@ -4004,8 +4228,77 @@ h3 {
     color: var(--orange-principale);
 }
 
+.consulter-offre-back .confirmation-popup-signaler {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--blanc);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid var(--orange-principale);
+    z-index: 9999;
+}
+
+.consulter-offre-back .confirmation-popup-signaler p {
+    font-size: 16px;
+    margin-bottom: 15px
+}
+
+.consulter-offre-back input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--noir);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.consulter-offre-back input[type="radio"]:checked {
+    border-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--noir);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.consulter-offre-back .confirmation-popup-signaler button {
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--orange-principale);
+    color: var(--blanc);
+    font-size: 16px;
+    padding: 4px 6px;
+    cursor: pointer;
+    margin-top: 15px
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:first-of-type:hover {
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type {
+    background-color: var(--blanc);
+    color: var(--noir); 
+}
+
+.consulter-offre-back .confirmation-popup-signaler button:last-of-type:hover {
+    color: var(--orange-principale);
+}
+
 .consulter-offre-back .titre-avis {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -4031,6 +4324,7 @@ h3 {
     width: 20px;
     height: 20px;
     margin: 0 5px 0 2px;
+    cursor: pointer;
 }
 
 /* Style réponse avis */
@@ -4041,7 +4335,7 @@ h3 {
 
 .consulter-offre-back .titre-reponse {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -4073,9 +4367,26 @@ h3 {
     padding: 5px 15px;
     border-radius: 4px;
     border: 0;
+    width: 100px;
+    cursor: pointer;
 }
 
 .consulter-offre-back .avis-form > button:hover {
+    background-color: var(--orange-secondaire-2);
+}
+
+.consulter-offre-back .bouton-reponse {
+    color: var(--blanc);
+    text-decoration: none;
+    background-color: var(--orange-principale);
+    padding: 5px 15px;
+    border-radius: 4px;
+    border: 0;
+    width: 100px;   
+    cursor: pointer;
+}
+
+.consulter-offre-back .bouton-reponse:hover {
     background-color: var(--orange-secondaire-2);
 }
 
@@ -4120,10 +4431,6 @@ h3 {
     text-decoration: none;
 }
 
-.consulter-offre-back #carte {
-    display: none;
-}
-
 /**************************************************************************************
                                     BACK MES AVIS
 ***************************************************************************************/
@@ -4159,13 +4466,89 @@ h3 {
     justify-content: space-between; /* Répartit les avis */
 }
 
+.mes-avis .fond-filtres {
+    overflow: hidden;
+    /* Permet l'effet de rétractation */
+    max-height: 100px;
+    /* Grande valeur initiale */
+    transition: max-height 0.5s ease-out;
+    /* Animation fluide */
+}
+
+.mes-avis .fond-filtres.hidden {
+    max-height: 0;
+    /* Rétractation */
+    transition: max-height 0.5s ease-out;
+}
+
 .back .mes-avis .fond-blocs-avis {
-    margin-top: 5px;
+    margin-top: 7px;
+    min-width: 800px;
 }
 
 .mes-avis article{
     position: relative;
 }
+
+.mes-avis .filtre-tri {
+    position: relative;
+    margin: 3rem auto;
+    padding: 3em 2em 1em;
+    width: 85%;
+    box-sizing: border-box;
+    background: var(--blanc);
+    border-radius: 15px;
+    border: 3px solid var(--orange-principale);
+}
+
+.mes-avis .filtre-tri>h2 {
+    color: var(--blanc);
+    text-align: center;
+    background-color: var(--orange-principale);
+    border-radius: 15px;
+    padding: 0.3em;
+    position: absolute;
+    left: 2%;
+    top: -2.75rem;
+    min-width: auto;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.mes-avis .filtre-tri h2+div {
+    display: flex;
+    color: var(--blanc);
+    background-color: var(--blanc);
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.mes-avis .filtre-tri #tris {
+        width: 110px;
+        height: 31px;
+        border: none;
+        border-radius: 10px;
+        background-color: var(--blanc);
+}
+
+.mes-avis .filtre-tri .div-tri {
+    display: flex;
+    justify-content: flex-start;  /* Aligne le contenu à gauche */
+    background: var(--orange-principale);
+    padding: 0.5em;
+    border-radius: 15px;
+    width: fit-content;
+
+}
+
+
+.front .mes-avis .lienVersOffre {
+    background-color: var(--blanc);
+    color: var(--violet-principal);
+    font-weight: bold;
+    padding: 0;
+}
+
 
 
 #infobulle {
@@ -4182,6 +4565,8 @@ h3 {
     display: inline-block;
     z-index: 1;
     position: absolute;
+    top: -1rem;
+    left: 1rem;
 
 }
 
@@ -4202,7 +4587,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Tout aligne à gauche */
-    max-width: 1200px;
+    max-width: 1000px;
 }
 
 
@@ -4219,12 +4604,25 @@ h3 {
     align-self: baseline;
   }
 
+.mes_avis .titre_offre{
+    display: inline;
+}
+
+
+.mes_avis .titre_offre a > p{
+    background-color:var(--blanc);
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    max-width: 20px;
+}
+
 .mes-avis h2 {
     font-family: "Poppins", sans-serif;
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    margin-top: 5px;
+    margin: 10px;
 }
 
 .back .mes-avis .fond-blocs-avis a {
@@ -4492,10 +4890,6 @@ h3 {
     height: fit-content;
 }
 
-.creer-offre input[type="url"],
-input[type="tel"] {
-    width: 65%;
-}
 
 /****Tarif****/
 
@@ -4517,9 +4911,7 @@ input[type="tel"] {
 }
 
 .creer-offre input::file-selector-button:hover {
-    background: #fff;
-    color: var(--orange-principale);
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    background-color: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -4546,16 +4938,12 @@ input[type="tel"] {
     border: 0;
     text-align: center;
     font-size: 40px;
-    width: 517px;
-    height: 97px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
+    border-radius: 15px;
     margin-left: 0;
 }
 
 .creer-offre .valider:hover {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
+    background: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -4564,15 +4952,13 @@ input[type="tel"] {
     height: 50px;
     background: var(--orange-principale);
     border-radius: 5px;
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
 }
 
 .creer-offre .valider+a :hover {
-    background: var(--blanc-leger);
+    background-color: var(--orange-secondaire-2);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -4620,12 +5006,10 @@ input[type="tel"] {
 ****************************/
 .liste-front .filtre-tri {
     position: relative;
-    margin: 1em 2.5em;
+    margin: auto auto;
     padding: 3em 2em 1em;
-
-    width: 95vw;
+    width: 85%;
     box-sizing: border-box;
-
     background: var(--blanc);
     border-radius: 15px;
     border: 3px solid var(--violet-principal);
@@ -4646,17 +5030,15 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2:hover {
-    background-color: var(--blanc);
-    border: solid 2px var(--violet-principal);
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .liste-front .filtre-tri h2+div {
     display: flex;
-    flex-direction: column;
     color: var(--blanc);
     background-color: var(--blanc);
-    border-radius: 15px;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 
@@ -4700,57 +5082,27 @@ input[type="tel"] {
     background-color: var(--blanc);
 }
 
-.liste-front .filtre-tri .categorie,
-.liste-front .filtre-tri .localisation,
-.liste-front .filtre-tri .disponibilite,
-.liste-front .filtre-tri .trier,
-.liste-front .filtre-tri .typeOffre,
-.liste-front .filtre-tri .date,
-.liste-front .filtre-tri .trier2 {
-    margin: 0 1em;
-    border-radius: 10px;
-}
-
-.liste-front .filtre-tri .disponibilite div,
-.liste-front .filtre-tri .localisation div,
-.liste-front .filtre-tri .typeOffre div,
-.liste-front .filtre-tri .date div {
+.filtre-tri .fond-filtres > div {
+    width: 90%;
     display: flex;
-    flex-wrap: nowrap;
     flex-direction: column;
-}
-
-.liste-front .filtre-tri h2+div>div,
-.liste-front .filtre-tri h2+div>div+div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0;
-}
-
-.liste-front .filtre-tri h2+div>div {
-    padding-top: 0.5em;
-}
-
-.liste-front .filtre-tri h2+div>div+div {
-    padding: 0 0 1em 0;
-
+    max-width: 15rem;
+    margin: 0 1rem;
 }
 
 .liste-front .filtre-tri h3+div {
     background: var(--violet-principal);
     border-radius: 15px;
     padding: 0.5em;
-    padding-left: 1em;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: space-around;
+    flex-direction: column;
+    align-self: auto;
 }
 
 .liste-front .filtre-tri h3 {
     margin: 0 0 0.1em;
     color: var(--violet-principal);
+    text-align: center;
 }
 
 .liste-front .filtre-tri label {
@@ -4856,39 +5208,6 @@ input[type="tel"] {
     height: 23px;
     text-align: center;
     font-size: 16px;
-}
-
-
-.liste-front .filtre-tri .categorie {
-    flex: 5;
-}
-
-.filtre-tri .disponibilite {
-    flex: 2;
-}
-
-.liste-front .filtre-tri .trier {
-    flex: 3;
-}
-
-.liste-front .filtre-tri .trier2 {
-    flex: 2;
-}
-
-.liste-front .filtre-tri .localisation {
-    flex: 1;
-}
-
-.liste-front .filtre-tri .typeOffre {
-    flex: 2.2;
-}
-
-.liste-front .filtre-tri .date {
-    flex: 6;
-}
-
-.liste-front .filtre-tri .contient_avis {
-    flex: 2;
 }
 
 .liste-front .section-offres {
@@ -5286,15 +5605,18 @@ input[type="tel"] {
     padding: 0;
 }
 
+/**************************************************************************************
+                                    Toasts
+***************************************************************************************/
+
 .toast-container {
     position: fixed;
-    top: 110px;
     top: 110px;
     right: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between toasts */
-    z-index: 1000; /* Ensure toasts are on top */
+    gap: 10px;
+    z-index: 1000;
 }
 
 .toast {
@@ -5303,7 +5625,6 @@ input[type="tel"] {
     background: #fff;
     padding: 20px 35px 20px 25px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-left: 8px solid var(--orange-principale);
     overflow: hidden;
     transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);
@@ -5373,7 +5694,7 @@ input[type="tel"] {
 }
 
 .progress.active::before{
-    animation: progress-right 3s linear forwards; /* Starts after 10s (5s left + 5s vertical) */
+    animation: progress-right 3s linear forwards 0.5s; /* Starts after 10s (5s left + 5s vertical) */
 }
 
 /* Bottom progress bar (LEFT) */
@@ -5397,7 +5718,7 @@ input[type="tel"] {
 }
 
 .progress-bottom.active::before {
-    animation: progress-left 3s linear forwards 4.5s; /* First animation (0s delay) */
+    animation: progress-left 3s linear forwards 5s; /* First animation (0s delay) */
 }
 
 /* Right progress bar (VERTICAL) */
@@ -5421,7 +5742,7 @@ input[type="tel"] {
 }
 
 .progress-right.active::before {
-    animation: progress-vertical 1.5s linear forwards 3s; /* Starts after 5s (left duration) */
+    animation: progress-vertical 1.5s linear forwards 3.5s; /* Starts after 5s (left duration) */
 }
 
 @keyframes progress-left {
@@ -5455,10 +5776,84 @@ input[type="tel"] {
 }
 
 /**************************************************************************************
-                                    Media Query
+                                    QR Code
 ***************************************************************************************/
 
+.qr-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    z-index: 1001;
+    text-align: center;
+}
+.qr-modal h3 {
+    margin-top: 0;
+}
+.qr-modal img {
+    margin: 15px 0;
+}
+.qr-modal button {
+    padding: 8px 16px;
+    background: var(--violet-principal);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: -50px;
+    left: -50px;
+    width: 120%;
+    height: 120%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+/**************************************************************************************
+                                    Media Query
+***************************************************************************************/
+/* Default styles (for larger screens, perhaps) */
+.custom-popup-style .leaflet-popup-content-wrapper {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 400px; /* Or whatever your default width is */
+  }
+  
+  .custom-popup-style .leaflet-popup-content {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Styles for smaller screens (phones) */
+  @media (max-width: 600px) { /* Adjust the max-width value as needed */
+    .custom-popup-style .leaflet-popup-content-wrapper {
+      width: 90vw;  /* Use a percentage of the viewport width */
+      max-width: 300px; /*  Set a maximum width */
+      padding: 5px;      /* Adjust padding for smaller screens */
+    }
+  
+    .custom-popup-style .leaflet-popup-content {
+      font-size: 14px;  /* Adjust font size for smaller screens */
+    }
+  }
+  
 @media only screen and (max-width: 900px) {
+    .consulter-offre-front #map {
+        width: 75%;
+        height: 250px;
+        margin: auto;
+    }
+
     .telephone-nav {
         display: block;
     }
@@ -5560,6 +5955,10 @@ input[type="tel"] {
     /****************************************************
                        COMPTE FRONT
     *****************************************************/
+    .qr-modal button {
+        font-size: 40px;
+        border-radius: 15px;
+    }
 
     :root {
         font-size: 100%;
@@ -5670,20 +6069,13 @@ input[type="tel"] {
         margin: 0;
     }
 
-    .compte-front #apibutton {
+    .compte-front #apibutton, .compte-front #auth_toggle_button {
         font-size: 34px;
     }
 
     .liste-front .filtre-tri {
         margin: 0;
     }
-
-    .fond-filtres {
-        margin-left: 1.1rem;
-        margin-right: 1.1rem;
-    }
-
-
 
     .compte-front nav a:first-of-type {
         display: none;
@@ -5857,8 +6249,12 @@ input[type="tel"] {
         margin: auto;
         margin-top: 10%;
         padding: 9% 1% 1%;
-        width: 80%;
+        width: 75%;
         background: var(--blanc);
+    }
+
+    .liste-front #map {
+        width: 75%;
     }
 
     .liste-front .filtre-tri>h2:hover {
@@ -6053,6 +6449,10 @@ input[type="tel"] {
     .consulter-offre-front .carousel {
         width: fit-content;
       }
+
+    .container-authentificator p {
+        font-size: 34px;
+    }
 }
 
 @media screen and (max-width: 1100px) {
@@ -6137,3 +6537,27 @@ input[type="tel"] {
 		width: 100%;
 	}
 }
+
+
+
+
+
+.titre_offre {
+    width: 50%; /* Adapte le parent à la largeur du conteneur */
+    display: flex;
+   justify-content: space-around;
+
+}
+
+
+/* ici pour etre sur */
+.mes-avis .titre_offre > a { 
+    width: 100%;
+    display: block ruby !important;
+    color: var(--orange-principale) !important;
+    font-weight: bold !important;
+    background-color:var(--blanc) !important;
+    white-space: nowrap !important; /* Empêche le retour à la ligne */
+    
+}
+

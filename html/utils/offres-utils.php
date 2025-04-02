@@ -162,10 +162,7 @@
 
     function getNombreNotes($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT COUNT(*)
-            FROM sae._avis
-            WHERE id_offre = :id_offre";
-        
+        $reqNote = "SELECT COUNT(*) FROM sae._avis LEFT JOIN sae._blacklister ON _avis.id_membre = _blacklister.id_membre AND _avis.id_offre = _blacklister.id_offre WHERE _avis.id_offre = :id_offre  AND _blacklister.id_membre IS NULL";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -382,6 +379,24 @@
         }
     }
 
+    // ===== Requête SQL pour récupérer le pseudonyme d'un compte membre ===== //
+    function getCompteMembre($id_compte) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqCompteMembre = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_compte";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtCompteMembre = $conn->prepare($reqCompteMembre);
+            $stmtCompteMembre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtCompteMembre->execute();
+            $compteMembre = $stmtCompteMembre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $compteMembre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 // ===== GESTION DES TAGS ===== //
 
     // ===== Fonction qui exécute une requête SQL pour récupérer les tags d'une offre ===== //
@@ -447,6 +462,25 @@
 
 // ===== GESTION DES AVIS ===== //
 
+    // ===== Fonction qui exécute une requête SQL pour récupérer la date restante avant la récupération du jeton ===== //
+    function getDateRestante($id_offre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDateRestante = "SELECT EXTRACT(DAY FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS jours_restants, EXTRACT(HOUR FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS heures_restantes, EXTRACT(MINUTE FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS minutes_restantes FROM sae._offre WHERE id_offre = :id_offre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDateRestante = $conn->prepare($reqDateRestante);
+            $stmtDateRestante->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtDateRestante->execute();
+            $dateRestante = $stmtDateRestante->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $dateRestante;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les avis d'une offre ===== //
     function getAvis($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -484,6 +518,28 @@
             die();
         }
     }
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer la réaction d'un membre à un avis ===== //
+    function getReactionAvis($id_offre, $id_membre_avis, $id_membre_reaction) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqReactionAvis = "SELECT nb_pouce_haut, nb_pouce_bas FROM sae._reaction_avis WHERE id_offre = :id_offre AND id_membre_avis = :id_membre_avis AND id_membre_reaction = :id_membre_reaction";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtReactionAvis = $conn->prepare($reqReactionAvis);
+            $stmtReactionAvis->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
+            $stmtReactionAvis->bindParam(':id_membre_avis', $id_membre_avis, PDO::PARAM_INT);
+            $stmtReactionAvis->bindParam(':id_membre_reaction', $id_membre_reaction, PDO::PARAM_INT);
+            $stmtReactionAvis->execute();
+            $reactionAvis = $stmtReactionAvis->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $reactionAvis;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
 
     // ===== Fonction qui exécute une requête SQL pour vérifier si un avis est blacklisté ===== //
     function isAvisBlackliste($id_offre, $id_membre) {
@@ -575,6 +631,26 @@
         }
     }
 
+
+    // ===== Fonction qui exécute une requête SQL pour récupérer les informations d'un signalement d'un avis ===== //
+    function getSignaler($id_offre, $id_signale)  {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqAvisSignaler = "SELECT id_signalant FROM sae._signaler WHERE id_offre = :id_offre AND id_signale = :id_signale ;";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtAvisSignaler = $conn->prepare($reqAvisSignaler);
+            $stmtAvisSignaler->execute(['id_offre' => $id_offre, 'id_signale' => $id_signale]);
+            $signaler = $stmtAvisSignaler->fetchAll(PDO::FETCH_COLUMN);
+            $conn = null;
+            return $signaler;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+
     // ===== Fonction qui exécute une requête SQL pour récupérer les informations des membres ayant publié un avis sur l'offre ===== //
     function getInformationsMembre($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
@@ -651,6 +727,27 @@
         }
     }
 
+    
+
+
+    // ==== Fonction qui la date de publication d'un avis avec l'id du membre et de l'offre
+    function getDatePublicationAvecIDMembre($id_offre, $id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqDatePublication = "SELECT date FROM _avis  JOIN _date on  _avis.publie_le = _date.id_date where id_offre = ? and id_membre = ?;";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtDatePublication = $conn->prepare($reqDatePublication);
+            $stmtDatePublication->execute([$id_offre, $id_membre]);
+            $datePublication = $stmtDatePublication->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $datePublication;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     function getDateBlacklistage($id_offre, $id_membre) {
         global $driver, $server, $dbname, $user, $pass;
         $reqDateBlacklistage = "SELECT * FROM _avis NATURAL JOIN _blacklister WHERE _blacklister.id_membre = :id_membre AND _blacklister.id_offre = :id_offre";
@@ -661,7 +758,7 @@
             $stmtDateBlacklistage->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDateBlacklistage->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
             $stmtDateBlacklistage->execute();
-            $DateBlacklistage = $stmtDateBlacklistage->fetchAll(PDO::FETCH_ASSOC);
+            $DateBlacklistage = $stmtDateBlacklistage->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $DateBlacklistage;
         } catch (Exception $e) {
@@ -1056,6 +1153,24 @@
             $datePublicationOffre = $stmtDatePublicationOffre->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $datePublicationOffre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getPseudoFromId($id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqPseudo = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_membre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtPseudo = $conn->prepare($reqPseudo);
+            $stmtPseudo->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtPseudo->execute();
+            $pseudo = $stmtPseudo->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $pseudo['pseudo'];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();

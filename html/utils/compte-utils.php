@@ -79,4 +79,27 @@
             die();
         }
     }
+
+    function generateOTP($length = 6) {
+        $otp = '';
+        for ($i = 0; $i < $length; $i++) {
+            $otp .= random_int(0, 9);
+        }
+        return password_hash($otp, PASSWORD_DEFAULT);;
+    }
+
+    function saveOTP(PDO $pdo, $id_compte, $hashedOTP) {
+        // Définir l'expiration, 1 minutes
+        $expire_le = date("Y-m-d H:i:s", strtotime("+1 minutes"));
+    
+        $sql = "INSERT INTO _compte_otp (id_compte, code_otp, expire_le) VALUES (:id_compte, :code_otp, :expire_le)";
+        $stmt = $pdo->prepare($sql);
+    
+        $stmt->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+        $stmt->bindParam(':code_otp', $hashedOTP, PDO::PARAM_STR);
+        $stmt->bindParam(':expire_le', $expire_le, PDO::PARAM_STR);
+    
+        $stmt->execute();
+    }
+    
 ?>
