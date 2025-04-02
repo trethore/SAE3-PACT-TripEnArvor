@@ -274,6 +274,7 @@ try {
     <script src="/scripts/popupAvis.js"></script>
     <script src="/scripts/blacklist.js"></script>
     <script src="/scripts/consulter-offre.js"></script>
+    <script src="/scripts/preview.js"></script>
     <link rel="icon" type="image/jpeg" href="/images/universel/logo/Logo_icone.jpg">
 </head>
 
@@ -752,6 +753,10 @@ try {
                             <div>
                                 <label id="photo" for="photo">Importez une photo</label> 
                                 <input type="file" id="photo" name="photo"/><br>
+
+                                <div id="imagePreview" style="margin-top: 10px; display: none;">
+                                    <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
+                                </div>
                             </div>
 
                             <div class="petite-mention">
