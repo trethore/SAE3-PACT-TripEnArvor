@@ -4483,8 +4483,7 @@ h3 {
 
 .mes-avis .filtre-tri {
     position: relative;
-    margin: auto auto;
-    margin-top: 3rem;
+    margin: 3rem auto;
     padding: 3em 2em 1em;
     width: 85%;
     box-sizing: border-box;
@@ -4512,7 +4511,7 @@ h3 {
     color: var(--blanc);
     background-color: var(--blanc);
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: left;
 }
 
 .mes-avis .filtre-tri #tris {
@@ -4527,6 +4526,9 @@ h3 {
     display: flex;
     justify-content: flex-start;  /* Aligne le contenu à gauche */
     width: 100%; /* Si tu veux que la div prenne toute la largeur disponible */
+    background: var(--orange-principale);
+    padding: 0.5em;
+    border-radius: 15px;
 }
 
 
@@ -4919,8 +4921,6 @@ h3 {
     border: 0;
     text-align: center;
     font-size: 40px;
-    width: 517px;
-    height: 97px;
     border-radius: 30px;
     margin-left: 0;
 }
@@ -4931,6 +4931,7 @@ h3 {
 }
 
 .creer-offre .valider+a {
+    font-size: 32px;
     width: 50px;
     height: 50px;
     background: var(--orange-principale);
