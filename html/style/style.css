@@ -4892,10 +4892,6 @@ h3 {
     height: fit-content;
 }
 
-.creer-offre input[type="url"],
-input[type="tel"] {
-    width: 65%;
-}
 
 /****Tarif****/
 
