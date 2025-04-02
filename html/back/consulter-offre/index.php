@@ -221,9 +221,17 @@ try {
                             <p class="nombre-blacklistage"><em><?php echo htmlentities($offre['nb_jetons']); ?> blacklistage restant(s)</em></p>
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
-                            ?>
-                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities($jours_restants = max(0, ceil((strtotime($offre['jeton_perdu_le']) + 6 * 86400 - time()) / 86400))); ?> jour(s)</em></p>
-                            <?php
+                                $dateRestante = getDateRestante($id_offre);
+                                $jours_restants = $dateRestante[0]['jours_restants'];
+                                $heures_restantes = $dateRestante[0]['heures_restantes'];
+                                $minutes_restantes = $dateRestante[0]['minutes_restantes'];
+                                if ($jours_restants > 0) {
+                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $jours_restants jour(s)</em></p>";
+                                } elseif ($jours_restants = 0) {
+                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $heures_restantes heure(s)</em></p>";
+                                } elseif ($jours_restants = 0 && $heures_restantes = 0) {
+                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $minutes_restantes minute(s)</em></p>";
+                                }
                             }
                             ?>
                         </div>
