@@ -475,7 +475,7 @@ try {
 
                 <div class="display-ligne-espace">
                     <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2>
-                    <a class="lien" href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <a class="lien" href="<?php echo htmlentities(getCompte($id_offre_cible)['site_web']); ?>">Lien vers le site</a>
                 </div>
 
                 <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
@@ -651,41 +651,37 @@ try {
                         <button id="showFormButton">Publier un avis</button>
                         <form id="avisForm" class="fond-blocs-avis" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
+                                
+                            <div class="display-ligne">
 
-                            <div class="display-ligne-espace">
-
+                                <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
                                 <div class="display-ligne">
-                                    <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
-                                    <div class="display-ligne">
-                                        <label class="label-avis-champs">Note générale <span>*</span></label>
-                                        <div class="rating">
-                                            <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
-                                            <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
-                                            <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
-                                            <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
-                                            <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
-                                        </div>
+                                    <label class="label-avis-champs">Note générale <span class="requis">*</span></label>
+                                    <div class="rating">
+                                        <input type="radio" name="note" id="star5_g" value="5" required><label for="star5_g"></label>
+                                        <input type="radio" name="note" id="star4_g" value="4" required><label for="star4_g"></label>
+                                        <input type="radio" name="note" id="star3_g" value="3" required><label for="star3_g"></label>
+                                        <input type="radio" name="note" id="star2_g" value="2" required><label for="star2_g"></label>
+                                        <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
                                     </div>
-
                                 </div>
-                                <img src="/images/universel/icones/trois-points-violet.png">
 
                             </div>
 
                             <div class="display-ligne">
 
                                 <div class="display-ligne">
-                                    <label class="label-avis" for="titre">Titre <span>*</span></label>
-                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..." required></input><br>
+                                    <label class="label-avis" for="titre">Titre <span class="requis">*</span></label>
+                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                </div>
+
+                                <div class="display-ligne"> 
+                                    <label class="label-avis-champs" for="date">Date de visite <span class="requis">*</span></label>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                                 </div>
 
                                 <div class="display-ligne">
-                                    <label class="label-avis-champs" for="date">Date de visite <span>*</span></label>
-                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required /><br>
-                                </div>
-
-                                <div class="display-ligne">
-                                    <label class="label-avis-champs" for="contexte">Contexte <span>*</span></label>
+                                    <label class="label-avis-champs" for="contexte">Contexte <span class="requis">*</span></label>
                                     <select id="contexte" name="contexte" required>
                                         <option value="" disabled selected>Contexte</option>
                                         <option value="affaires">Affaires</option>
@@ -704,7 +700,7 @@ try {
                                 <div class="display-ligne-note-detaille">
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_cuisine">Cuisine<span>*</span></label>
+                                        <label class="label-avis" for="note_cuisine">Cuisine<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5_c"></label>
                                             <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4_c"></label>
@@ -715,7 +711,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_service">Service<span>*</span></label>
+                                        <label class="label-avis" for="note_service">Service<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5_s"></label>
                                             <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4_s"></label>
@@ -726,7 +722,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_ambiance">Ambiance<span>*</span></label>
+                                        <label class="label-avis" for="note_ambiance">Ambiance<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5_a"></label>
                                             <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4_a"></label>
@@ -737,7 +733,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_rapport">Rapport qualité prix<span>*</span></label>
+                                        <label class="label-avis" for="note_rapport">Rapport qualité prix<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5_r"></label>
                                             <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4_r"></label>
@@ -754,7 +750,7 @@ try {
                             ?>
 
                             <div>
-                                <label for="avis">Décrivez votre expérience <span>*</span></label>
+                                <label for="avis">Décrivez votre expérience <span class="requis">*</span></label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
 

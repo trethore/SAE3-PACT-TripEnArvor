@@ -219,13 +219,6 @@ try {
                         ?>
                         <div>
                             <p class="nombre-blacklistage"><em><?php echo htmlentities($offre['nb_jetons']); ?> blacklistage restant(s)</em></p>
-                            <?php
-                            if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
-                            ?>
-                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities(ceil(max(0, (strtotime($offre['jeton_perdu_le']) + 30 * 86400 - time()) / 86400))); ?> jour(s)</em></p>
-                            <?php
-                            }
-                            ?>
                         </div>
                     </div>
                 <?php
@@ -401,7 +394,7 @@ try {
 
                 <div class="display-ligne-espace">
                     <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2>
-                    <a class="lien" href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <a class="lien" href="<?php echo htmlentities(getCompte($id_offre_cible)['site_web']); ?>">Lien vers le site</a>
                 </div>
 
                 <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
