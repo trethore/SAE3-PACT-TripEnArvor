@@ -4484,6 +4484,7 @@ h3 {
 .mes-avis .filtre-tri {
     position: relative;
     margin: auto auto;
+    margin-top: 3rem;
     padding: 3em 2em 1em;
     width: 85%;
     box-sizing: border-box;
@@ -4504,6 +4505,7 @@ h3 {
     min-width: auto;
     z-index: 1;
     cursor: pointer;
+    margin-top: 10rem;
 }
 
 .mes-avis .filtre-tri h2+div {

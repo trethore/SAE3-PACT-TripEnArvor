@@ -261,7 +261,7 @@ if ($typeCompte === 'proPrive') {
                             echo $nbrAvisNonRepondus . " avis non repondus"; ?>
                     </h2> 
                     <article class="filtre-tri">
-                        <h2>Filtres et tris</h2>
+                        <h2>Tris</h2>
                         <div class="fond-filtres hidden">
                     
                             <div class='div-tri'>
