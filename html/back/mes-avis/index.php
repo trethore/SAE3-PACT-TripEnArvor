@@ -242,9 +242,9 @@ if ($typeCompte === 'proPrive') {
                 });
 
 
-                echo "<br> <pre>";
-                print_r($aviTriPluAncien);
-                echo "</pre>";
+                // echo "<br> <pre>";
+                // print_r($aviTriPluAncien);
+                // echo "</pre>";
                 
                 // echo "<br> <pre>";
                 // print("le tri plus recent");
@@ -567,9 +567,9 @@ if ($typeCompte === 'proPrive') {
             if (triChoisi === "recent") {
                 document.getElementById("tri_recent").style.display = 'block';
             } else if (triChoisi === "ancien") {
-                document.getElementById("tri_offre").style.display = 'block';
-            } else if (triChoisi === "tri_offre") {
                 document.getElementById("tri_ancien").style.display = 'block';
+            } else if (triChoisi === "tri_offre") {
+                document.getElementById("tri_offre").style.display = 'block';
             }
         });
     });
