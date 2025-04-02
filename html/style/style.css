@@ -4921,7 +4921,7 @@ h3 {
     border: 0;
     text-align: center;
     font-size: 40px;
-    border-radius: 30px;
+    border-radius: 15px;
     margin-left: 0;
 }
 
@@ -4931,7 +4931,6 @@ h3 {
 }
 
 .creer-offre .valider+a {
-    font-size: 32px;
     width: 50px;
     height: 50px;
     background: var(--orange-principale);
