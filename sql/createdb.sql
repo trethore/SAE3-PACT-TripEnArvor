@@ -133,7 +133,7 @@ CREATE TABLE _compte_membre (
     id_compte   INTEGER,
     pseudo      VARCHAR(255) UNIQUE NOT NULL,
     CONSTRAINT _compte_membre_pk PRIMARY KEY (id_compte),
-    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
+    CONSTRAINT _compte_membre_fk_compte FOREIGN KEY (id_compte) REFERENCES _compte(id_compte) ON DELETE CASCADE
 );
 
 CREATE VIEW compte_membre AS
@@ -635,20 +635,6 @@ CREATE TABLE _avis_contient_image (
         FOREIGN KEY (lien_fichier)
         REFERENCES _image(lien_fichier)
 );
-
-/* ======================== _password_reset_tokens ======================== */
-
-CREATE TABLE _password_reset_tokens (
-    id SERIAL PRIMARY KEY,
-    id_compte INTEGER NOT NULL,
-    token VARCHAR(64) NOT NULL, 
-    expiry_date TIMESTAMP NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_compte) REFERENCES _compte(id_compte)
-);
-
-CREATE INDEX idx_token ON _password_reset_tokens (token);
-
 
 /* ##################################################################### */
 /*                       TRIGGERS TABLES ABSTRAITES                      */
@@ -1465,23 +1451,41 @@ EXECUTE PROCEDURE update_compte_membre();
 
 -- DELETE
 
-CREATE OR REPLACE FUNCTION delete_compte_membre() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION sae.delete_compte_membre() RETURNS TRIGGER AS $$
+DECLARE
+    ano_id INT;
 BEGIN
-    DELETE FROM _compte_membre
+    -- Trouver l'ID du compte anonyme
+    SELECT id_compte INTO ano_id FROM sae.compte_membre WHERE email = 'anonyme@ano.com';
+
+    -- Vérifier qu'on ne supprime pas le compte anonyme lui-même
+    IF OLD.id_compte = ano_id THEN
+        RAISE EXCEPTION 'Tentative de suppression du compte anonyme (id=%) interdite.', ano_id;
+    END IF;
+
+    -- Commencer une transaction implicite
+    PERFORM pg_advisory_xact_lock(1); -- Verrouillage pour éviter les conflits concurrents
+
+    -- Mettre à jour toutes les tables concernées
+    UPDATE sae._avis SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+    UPDATE sae._blacklister SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+    UPDATE sae._reaction_avis SET id_membre_avis = ano_id WHERE id_membre_avis = OLD.id_compte;
+    UPDATE sae._reaction_avis SET id_membre_reaction = ano_id WHERE id_membre_reaction = OLD.id_compte;
+    UPDATE sae._signaler SET id_signale = ano_id WHERE id_signale = OLD.id_compte;
+    UPDATE sae._signaler SET id_signalant = ano_id WHERE id_signalant = OLD.id_compte;
+    UPDATE sae._avis_contient_image SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+
+    DELETE FROM sae._compte
     WHERE id_compte = OLD.id_compte;
 
-    DELETE FROM _compte
-    WHERE id_compte = OLD.id_compte;
-
-    RETURN NEW;
+    RETURN OLD;
 END;
 $$ LANGUAGE 'plpgsql';
 
 CREATE OR REPLACE TRIGGER tg_delete_compte_membre
-INSTEAD OF DELETE
-ON compte_membre
+INSTEAD OF DELETE ON sae.compte_membre
 FOR EACH ROW
-EXECUTE PROCEDURE delete_compte_membre();
+EXECUTE PROCEDURE sae.delete_compte_membre();
 
 
 /* ##################################################################### */
@@ -1594,45 +1598,5 @@ AFTER INSERT ON _avis
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW
 EXECUTE PROCEDURE avis_sur_offre_restauration_possede_4_notes_detaillees();
-
--- Création de la fonction d'anonymisation
-CREATE OR REPLACE FUNCTION update_idmembre_before_delete()
-RETURNS TRIGGER AS $$
-DECLARE
-    new_id INT;
-BEGIN
-    -- Trouver l'ID du compte anonyme
-    SELECT id_compte INTO new_id FROM _compte_membre WHERE email = 'anonyme@ano.com';
-
-    -- Commencer une transaction implicite
-    PERFORM pg_advisory_xact_lock(1); -- Verrouillage pour éviter les conflits concurrents
-
-    -- Mettre à jour toutes les tables concernées
-    UPDATE _avis SET id_membre = new_id WHERE id_membre = OLD.id_compte;
-    UPDATE _blacklister SET id_membre = new_id WHERE id_membre = OLD.id_compte;
-
-    -- Assurer que l'ID est bien dans `_avis` avant la mise à jour de `_blacklister`
-    IF NOT EXISTS (SELECT 1 FROM _avis WHERE id_membre = new_id) THEN
-        INSERT INTO _avis (id_membre, id_offre, note, titre, commentaire, nb_pouce_haut, nb_pouce_bas, contexte_visite, publie_le, visite_le, lu)
-        VALUES (new_id, 3, 5, 'Avis par défaut', 'Cet avis a été anonymisé', 0, 0, 'Visite', NOW(), NOW(), FALSE);
-    END IF;
-
-    -- Supprimer le compte une fois les mises à jour faites
-	DELETE FROM _compte_membre WHERE id_compte = OLD.id_compte;
-	DELETE FROM _compte WHERE id_compte = OLD.id_compte;
-
-    RETURN OLD;
-
-EXCEPTION WHEN OTHERS THEN
-    RAISE;
-END;
-$$ LANGUAGE plpgsql;
-
-
-
-CREATE OR REPLACE TRIGGER trg_anonymisation
-INSTEAD OF DELETE ON compte_membre
-FOR EACH ROW
-EXECUTE FUNCTION update_idMembre_before_delete();
 
 COMMIT;

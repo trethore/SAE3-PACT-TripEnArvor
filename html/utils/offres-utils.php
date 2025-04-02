@@ -162,10 +162,7 @@
 
     function getNombreNotes($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqNote = "SELECT COUNT(*)
-            FROM sae._avis
-            WHERE id_offre = :id_offre";
-        
+        $reqNote = "SELECT COUNT(*) FROM sae._avis LEFT JOIN sae._blacklister ON _avis.id_membre = _blacklister.id_membre AND _avis.id_offre = _blacklister.id_offre WHERE _avis.id_offre = :id_offre  AND _blacklister.id_membre IS NULL";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
@@ -376,6 +373,24 @@
             $compte = $stmtCompte->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $compte;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    // ===== Requête SQL pour récupérer le pseudonyme d'un compte membre ===== //
+    function getCompteMembre($id_compte) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqCompteMembre = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_compte";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $stmtCompteMembre = $conn->prepare($reqCompteMembre);
+            $stmtCompteMembre->bindParam(':id_compte', $id_compte, PDO::PARAM_INT);
+            $stmtCompteMembre->execute();
+            $compteMembre = $stmtCompteMembre->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $compteMembre;
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
@@ -1119,6 +1134,24 @@
             $datePublicationOffre = $stmtDatePublicationOffre->fetchAll(PDO::FETCH_ASSOC);
             $conn = null;
             return $datePublicationOffre;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
+    function getPseudoFromId($id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqPseudo = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_membre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtPseudo = $conn->prepare($reqPseudo);
+            $stmtPseudo->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtPseudo->execute();
+            $pseudo = $stmtPseudo->fetch(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $pseudo['pseudo'];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
