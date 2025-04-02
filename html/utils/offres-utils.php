@@ -1151,7 +1151,7 @@
             $stmtPseudo->execute();
             $pseudo = $stmtPseudo->fetch(PDO::FETCH_ASSOC);
             $conn = null;
-            return $pseudo;
+            return $pseudo[pseudo];
         } catch (Exception $e) {
             print "Erreur !: " . $e->getMessage() . "<br>";
             die();
