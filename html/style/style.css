@@ -4011,20 +4011,15 @@ h3 {
     text-align: center;
 }
 
-.consulter-offre-back .display-ligne-espace>a,
-.consulter-offre-back .fond-blocs>a {
-    color: var(--blanc);
-    text-decoration: none;
-    background-color: var(--orange-principale);
-    padding: 5px 20px;
-    border-radius: 8px;
-    text-align: center;
+.consulter-offre-back .lien {
+    color: var(--orange-principale);
+    text-decoration: underline;
 }
 
-.consulter-offre-back .display-ligne-espace>a:hover,
-.consulter-offre-back .fond-blocs>a:hover {
-    background: var(--orange-secondaire-2);
-} 
+.consulter-offre-back .lien:hover {
+    color: var(--orange-secondaire-2);
+    text-decoration: underline;
+}
 
 /***********************************
         DEUXIÈME DOUBLE BLOC                                       
