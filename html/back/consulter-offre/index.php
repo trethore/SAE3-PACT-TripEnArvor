@@ -230,12 +230,12 @@ try {
                                     <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($jours_restantes); ?> jour(s)</em></p>
                                 <?php
                                 } 
-                                if ($jours_restants == 0) {
+                                if ($jours_restants == 0 && $heures_restantes > 0) {
                                 ?>
                                     <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($heures_restantes); ?> heure(s)</em></p>
                                 <?php
                                 } 
-                                if ($jours_restants == 0 && $heures_restantes == 0) {
+                                if ($jours_restants == 0 && $heures_restantes == 0 && $minutes_restantes > 0) {
                                 ?>
                                     <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($minutes_restantes); ?> minute(s)</em></p>
                             <?php
