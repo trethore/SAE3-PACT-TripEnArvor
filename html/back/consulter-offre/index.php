@@ -227,11 +227,19 @@ try {
                                 $heures_restantes = $dateRestante[0]['heures_restantes'];
                                 $minutes_restantes = $dateRestante[0]['minutes_restantes'];
                                 if ($jours_restants > 0) {
-                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $jours_restants jour(s)</em></p>";
-                                } elseif ($jours_restants = 0) {
-                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $heures_restantes heure(s)</em></p>";
-                                } elseif ($jours_restants = 0 && $heures_restantes = 0) {
-                                    echo "<p class='nombre-blacklistage'><em>Prochain jeton dans $minutes_restantes minute(s)</em></p>";
+                                ?>
+                                    <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($jours_restantes); ?> jour(s)</em></p>
+                                <?php
+                                } 
+                                if ($jours_restants = 0) {
+                                ?>
+                                    <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($heures_restantes); ?> heure(s)</em></p>
+                                <?php
+                                } 
+                                if ($jours_restants = 0 && $heures_restantes = 0) {
+                                ?>
+                                    <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($minutes_restantes); ?> minute(s)</em></p>
+                            <?php
                                 }
                             }
                             ?>
