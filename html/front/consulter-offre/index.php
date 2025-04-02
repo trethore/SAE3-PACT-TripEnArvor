@@ -783,6 +783,9 @@ try {
                 echo '<pre>';
                 print_r($avis);
                 echo '</pre>';
+                echo '<pre>';
+                print_r($membre);
+                echo '</pre>';
                 if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte'])) || getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']) == $_SESSION['id']) { 
             ?>
 
