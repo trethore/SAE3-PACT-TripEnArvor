@@ -211,8 +211,7 @@ if ($typeCompte === 'proPrive') {
                         $dateAvis = getDatePublicationAvecIDMembre($id_offre, $membre[0]['id_membre']);
                         $noteDetaillee = getAvisDetaille($id_offre);
 
-                        $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                        $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+                        
 
 
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
@@ -224,6 +223,9 @@ if ($typeCompte === 'proPrive') {
                         $touslesavis[] = $lavis; 
                         $i++;
                     }
+
+                    $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
+                    $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
                     
                 }
 
@@ -402,7 +404,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
                                         </div>
                                     <?php $compteur++; ?>
                                     </article> 
@@ -468,7 +470,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
                                         </div>
                                     </article> 
                                     <?php
@@ -531,7 +533,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
                                         </div>
                                     </article> 
                                     <?php
@@ -616,6 +618,12 @@ if ($typeCompte === 'proPrive') {
                 document.getElementById("tri_offre").style.display = 'block';
             }
         });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
     });
 
     
