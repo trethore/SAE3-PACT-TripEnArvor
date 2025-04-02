@@ -551,17 +551,19 @@ if ($typeCompte === 'proPrive') {
         const triOffre = document.getElementById("tri_offre");
         const selectElement = document.getElementById("tris");
 
-        if (triChoisi === "") {
-        return;
-        }
+        
 
         // Au chargement, n'afficher que le tri "offre"
         document.getElementById("tri_recent").style.display = 'none';
         document.getElementById("tri_ancien").display = 'none';
-        document.getElementById("tri_offre").style.display = 'none';
+        document.getElementById("tri_offre").style.display = 'block';
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
+
+            if (triChoisi === "") {
+                return;
+            }
             console.log("Tri choisi:", triChoisi);
 
             // Cacher tous les divs
