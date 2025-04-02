@@ -5813,6 +5813,12 @@ h3 {
   }
   
 @media only screen and (max-width: 900px) {
+    .consulter-offre-front #map {
+        width: 75%;
+        height: 250px;
+        margin: auto;
+    }
+
     .telephone-nav {
         display: block;
     }
