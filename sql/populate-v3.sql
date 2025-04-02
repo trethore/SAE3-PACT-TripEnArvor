@@ -10,6 +10,7 @@ DECLARE
     var_id_adresse      INTEGER;
     var_id_compte       INTEGER;
     var_id_date         INTEGER;
+    var_id_date2         INTEGER;
     var_nom_prestation  VARCHAR(128);
 
     var_id_offre_krampouzerie                   INTEGER;
@@ -1756,6 +1757,68 @@ BEGIN
         'AlexD42'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-25')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-20')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_armoripark,
+        4,
+        'Super journée en famille !',
+        'Nous avons passé une superbe journée à Armoripark avec nos enfants ! Ils ont adoré les structures gonflables et la luge d’été. La tyrolienne est impressionnante, mais bien sécurisée. Seul petit bémol : un peu d’attente sur certaines attractions en pleine saison.',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-05')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-02')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_aquarev,
+        5,
+        'Un superbe espace vert',
+        'Un vrai bol d’air frais ! J’ai adoré l’ambiance du parc, notamment la bambouseraie et les pontons de pêche. C’est un lieu parfait pour une balade tranquille, et en plus, c’est gratuit. Vraiment un bel atout pour la région.',
+        'affaires',
+        var_id_date,
+        var_id_date2
+    );
+
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -1773,6 +1836,38 @@ BEGIN
         '$2y$10$SaQApdiFBqhSe8JaCmnSq./vdHhiK9UvNRAXgMJ4n05S8myD8JXOK', -- M4rie!Lgn
         'Marie_Lgn'
     ) RETURNING "id_compte" INTO var_id_compte;
+
+
+   INSERT INTO sae._date ("date")
+    VALUES ('2025-03-10')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-08')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_aquarev,
+        5,
+        'Idéal pour une balade en famille !',
+        'Un lieu magnifique pour une sortie avec les enfants. Ils ont adoré la plaine de jeux et le labyrinthe ! L’endroit est propre, spacieux et accessible à tous. Et en plus, c’est gratuit ! Je recommande vivement.',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -1792,6 +1887,68 @@ BEGIN
         'JPaul_75'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-18')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-15')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_armoripark,
+        3,
+        'Sympa mais peut mieux faire',
+        'L’endroit est agréable, mais certaines attractions mériteraient un peu de rénovation. J’ai trouvé le tarif correct pour la diversité des activités proposées, mais il pourrait y avoir plus de zones ombragées pour les journées très chaudes.',
+        'solo',
+        var_id_date,
+        var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-28')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-25')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_labyrinthe_malido,
+        4,
+        'Une activité originale et fun',
+        'Une belle découverte ! Le labyrinthe est bien conçu, avec des passages vraiment déroutants. On s’est pris au jeu et on a mis plus de temps que prévu à sortir 😅. L’ambiance est bonne, et le parcours d’adresse est un petit plus sympa à la fin. À faire au moins une fois !',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -1809,6 +1966,8 @@ BEGIN
         '$2y$10$OgS0DP2jh9hh0aeHw7AWduVOIcHU2Yy7fhjOcs771/Ij4hMdkE/LW', -- Xg@mer2024
         'GamerX'
     ) RETURNING "id_compte" INTO var_id_compte;
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -1828,6 +1987,68 @@ BEGIN
         'Clara_Moon'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-10')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-07')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_armoripark,
+        5,
+        'Génial pour une sortie entre amis !',
+        'On a passé un après-midi génial avec des amis ! Le pentogliss est super fun, et la tyrolienne est impressionnante ! Le cadre est sympa, et le mini-golf a bien conclu la journée. Vraiment un endroit à recommander pour une sortie détente et fun.',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-01')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-30')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_labyrinthe_malido,
+        5,
+        'Super expérience en famille !',
+        'Nous avons passé un excellent moment dans le labyrinthe ! Les enfants se sont bien amusés à essayer de trouver la sortie, et les petites énigmes sur la Coupe du Monde étaient une touche sympa. En plus, les structures gonflables à la fin ont fait leur bonheur ! Un très bon rapport qualité/prix.',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -1845,6 +2066,68 @@ BEGIN
         '$2y$10$6FZrrLizgd/eHAz6zCaAXu7OeftTTMu0wa4LqRfB2XmffhFCb7HiO', -- RoxKev!n99
         'Kevin_Rox'
     ) RETURNING "id_compte" INTO var_id_compte;
+
+
+   INSERT INTO sae._date ("date")
+    VALUES ('2025-03-15')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-12')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_aquarev,
+        4,
+        'Belle découverte !',
+        'Le parc est vraiment agréable et bien entretenu. On a apprécié le parcours sportif et le terrain multi-sport. Seul petit regret, j’aurais aimé plus d’animations en dehors des mercredis d’été, mais sinon, c’est top !',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-10')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-08')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_labyrinthe_malido,
+        5,
+        'Génial, on a adoré !',
+        'Une activité originale qui change des parcs classiques. Le thème de la Coupe du Monde ajoute une touche fun, et les petits jeux à l’intérieur du labyrinthe rendent le parcours encore plus intéressant. On a bien rigolé entre amis, et les structures gonflables à la fin étaient la cerise sur le gâteau !',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -1864,6 +2147,68 @@ BEGIN
         'SophieC'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-02-28')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-02-25')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_armoripark,
+        5,
+        'Parfait pour les petits et les grands !',
+        'Nous avons emmené nos enfants (5 et 8 ans), et ils se sont éclatés ! L’espace est sécurisé, bien pensé, et les activités sont variées. Coup de cœur pour la volière et les animaux de la ferme qui apportent une belle touche nature au parc.',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-20')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-18')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_labyrinthe_malido,
+        3,
+        'Bien mais un peu court',
+        'Le concept est chouette et l’ambiance familiale est agréable, mais j’ai trouvé que l’activité était un peu courte. On est sortis assez rapidement, et j’aurais aimé plus de défis ou d’interactions dans le labyrinthe. Malgré ça, ça reste une sortie sympa, surtout pour les enfants.',
+        'couple',
+        var_id_date,
+        var_id_date2
+    );
+
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -1882,6 +2227,37 @@ BEGIN
         'DarkWolf89'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-05')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-01')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_armoripark,
+        2,
+        'Déçu par l’entretien du parc',
+        'Honnêtement, je m’attendais à mieux. Certaines attractions étaient fermées sans explication, et l’attente était longue pour celles ouvertes. Dommage, car l’endroit a du potentiel, mais il faudrait vraiment améliorer l’organisation.',
+        'couple',
+        var_id_date,
+        var_id_date2
+    );
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -1899,6 +2275,38 @@ BEGIN
         '$2y$10$NHkJYGAnJLNwvHAq9PgpS.jiK7ovVRRDcGLBvTY9tsVIgyo5626k2', -- Eli$e2023
         'EliseB'
     ) RETURNING "id_compte" INTO var_id_compte;
+
+
+   INSERT INTO sae._date ("date")
+    VALUES ('2025-03-22')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-20')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_aquarev,
+        5,
+        'Un endroit parfait pour se ressourcer',
+        'J’adore cet endroit ! C’est calme, bien aménagé et parfait pour une promenade en pleine nature. La bambouseraie est superbe et les aires de pique-nique sont bien pensées. C’est un vrai plaisir d’y passer du temps en famille ou même seule pour se détendre.',
+        'solo',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
