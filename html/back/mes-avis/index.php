@@ -371,10 +371,10 @@ if ($typeCompte === 'proPrive') {
                                     <?php $compteur++; ?>
                                     </article> 
                                     <?php
-                                    }   
+                                    } ?>  </div>  <?php
                                      echo "<br>";
                                      }}?>
-                        </div>
+                        </div> 
 
                         <div id="tri_recent"  >
                         <h3>
@@ -549,7 +549,36 @@ if ($typeCompte === 'proPrive') {
 
     <script>
 
-    
+    document.addEventListener("DOMContentLoaded", function () {
+        const triRecent = document.getElementById("tri_recent");
+        const triAncien = document.getElementById("tri_ancien");
+        const triOffre = document.getElementById("tri_offre");
+        const selectElement = document.getElementById("tris");
+
+        // Au chargement, n'afficher que le tri "offre"
+        document.getElementById("tri_recent").style.display = 'none';
+        document.getElementById("tri_ancien").display = 'none';
+        document.getElementById("tri_offre").style.display = 'block';
+
+        selectElement.addEventListener('change', function () {
+            const triChoisi = this.value;
+            console.log("Tri choisi:", triChoisi);
+
+            // Cacher tous les divs
+            document.getElementById("tri_recent").style.display = 'none';
+            document.getElementById("tri_ancien").style.display = 'none';
+            document.getElementById("tri_offre").style.display = 'none';
+
+            // Afficher le div correspondant à la valeur sélectionnée
+            if (triChoisi === "recent") {
+                document.getElementById("tri_recent").style.display = 'block';
+            } else if (triChoisi === "ancien") {
+                document.getElementById("tri_offre").style.display = 'block';
+            } else if (triChoisi === "tri_offre") {
+                document.getElementById("tri_ancien").style.display = 'block';
+            }
+        });
+    });
 
     
 
