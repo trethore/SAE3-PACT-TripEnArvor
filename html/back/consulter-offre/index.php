@@ -222,6 +222,7 @@ try {
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
                                 $dateRestante = getDateRestante($id_offre_cible);
+                                print_r($dateRestante);
                                 $jours_restants = $dateRestante['jours_restants'];
                                 $heures_restantes = $dateRestante['heures_restantes'];
                                 $minutes_restantes = $dateRestante['minutes_restantes'];
