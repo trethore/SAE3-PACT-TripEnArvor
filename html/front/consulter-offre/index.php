@@ -790,6 +790,8 @@ try {
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
 
+                                <?php print_r($membre[$identifiant]['id_compte']); ?>
+
                                 <div class="display-ligne">
                                     <?php 
                                     for ($etoileJaune = 0 ; $etoileJaune != $unAvis['note'] ; $etoileJaune++) { 
