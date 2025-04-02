@@ -242,9 +242,9 @@ if ($typeCompte === 'proPrive') {
                 });
 
 
-                // echo "<br> <pre>";
-                // print_r($aviTriPluAncien);
-                // echo "</pre>";
+                echo "<br> <pre>";
+                print_r($aviTriPluAncien);
+                echo "</pre>";
                 
                 // echo "<br> <pre>";
                 // print("le tri plus recent");
