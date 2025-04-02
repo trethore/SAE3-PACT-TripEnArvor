@@ -4525,10 +4525,11 @@ h3 {
 .mes-avis .filtre-tri .div-tri {
     display: flex;
     justify-content: flex-start;  /* Aligne le contenu à gauche */
-    width: 100%; /* Si tu veux que la div prenne toute la largeur disponible */
     background: var(--orange-principale);
     padding: 0.5em;
     border-radius: 15px;
+    width: fit-content;
+
 }
 
 
