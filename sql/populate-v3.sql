@@ -1818,6 +1818,36 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-10')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-08')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        5,
+        'Une visite captivante et bien documentée',
+        'Un musée qui vaut vraiment le détour. Les témoignages des résistants et les explications historiques sont très bien présentés. J’ai particulièrement apprécié le film projeté, qui apporte un éclairage poignant sur cette période. Bravo aux organisateurs pour ce travail de mémoire.',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -1838,7 +1868,7 @@ BEGIN
     ) RETURNING "id_compte" INTO var_id_compte;
 
 
-   INSERT INTO sae._date ("date")
+    INSERT INTO sae._date ("date")
     VALUES ('2025-03-10')
     RETURNING "id_date" INTO var_id_date;
 
@@ -1948,6 +1978,36 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-28')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-25')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        4,
+        'Un musée instructif et bien documenté',
+        'Très bonne visite ! Les espaces d’exposition sont bien agencés et les explications sont claires. On sent que l’histoire du lieu est mise en valeur avec soin. Petit bémol : j’aurais aimé plus d’objets d’époque exposés.',
+        'affaires',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -1966,6 +2026,36 @@ BEGIN
         '$2y$10$OgS0DP2jh9hh0aeHw7AWduVOIcHU2Yy7fhjOcs771/Ij4hMdkE/LW', -- Xg@mer2024
         'GamerX'
     ) RETURNING "id_compte" INTO var_id_compte;
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-01')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-29')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        5,
+        'Très immersif et bien expliqué',
+        'J’ai été vraiment pris par l’histoire racontée dans ce musée. La scénographie est bien pensée et les documents exposés sont fascinants. On ressort avec une meilleure compréhension de cette période et un profond respect pour ceux qui ont combattu. Un must pour les passionnés d’histoire.',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
 
 
 
@@ -2208,6 +2298,36 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-20')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-18')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        5,
+        'Un devoir de mémoire essentiel',
+        'Ce musée est un lieu de mémoire très important. Les récits des résistants et les documents d’époque sont bouleversants. J’y suis allée avec mes enfants et ils ont été captivés. Une visite à faire absolument pour ne pas oublier.',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -2277,7 +2397,7 @@ BEGIN
     ) RETURNING "id_compte" INTO var_id_compte;
 
 
-   INSERT INTO sae._date ("date")
+    INSERT INTO sae._date ("date")
     VALUES ('2025-03-22')
     RETURNING "id_date" INTO var_id_date;
 
@@ -2307,6 +2427,36 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-01')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-30')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        5,
+        'Un musée passionnant et émouvant',
+        'Une visite riche en émotions et en enseignements. L’exposition est bien conçue et permet de mieux comprendre le rôle du maquis de Plésidy pendant la Seconde Guerre mondiale. Mention spéciale à la salle de projection qui apporte un vrai plus à l’expérience. À voir absolument !',
+        'solo',
+        var_id_date,
+        var_id_date2
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -2326,6 +2476,35 @@ BEGIN
         'Max_Power'
     ) RETURNING "id_compte" INTO var_id_compte;
 
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-04')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-31')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_musee_resistance_argoat,
+        4,
+        'Un lieu chargé d’histoire',
+        'Un musée très intéressant qui permet de mieux comprendre la Résistance locale. Les documents d’archives et les témoignages sont bien mis en valeur. J’aurais aimé un peu plus d’animations interactives, mais l’ensemble est très bien fait. Un bel hommage aux résistants.',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
 
 END $$;
 
