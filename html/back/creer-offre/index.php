@@ -234,7 +234,7 @@ try {
                 <br>
                 <!-- restaurant -->
                 <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> <input type="file" id="carte" name="carte" onchange="previewImage(event)" />
-                <label for="preview"> Preview </label>
+                <br>
                 <div id="imagePreview" style="margin-top: 10px; display: none;">
                     <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
                 </div> 
