@@ -292,7 +292,7 @@ try {
                             }
                         } 
                         ?>
-                        <p><a href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
+                        <p><a class="lien" href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
                     </div>
 
                 </div>
@@ -357,7 +357,7 @@ try {
                     } 
                 } 
                 ?>
-                 <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
+                 <p class="<?php echo htmlentities($result); ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
             </div>
 
         </section>
@@ -392,7 +392,7 @@ try {
 
                 <div class="display-ligne-espace">
                     <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
-                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <a class="lien" href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
 
                 <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
@@ -432,7 +432,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']); ?> ans</p>
-                            <a class="fichier" href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
+                            <a class="lien" href="/images/universel/photos/<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -444,7 +444,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a class="fichier" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
+                            <a class="lien" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                 <?php 
