@@ -160,21 +160,7 @@ if ($typeCompte === 'proPrive') {
 
         <section class="back consulter-offre-back">
             <h1>Mes Avis</h1>
-            <article class="filtre-tri">
-                <h2>Filtres et tris</h2>
-                <div class="fond-filtres hidden">
             
-                    <div class='div-tri'>
-                        <select id="tris">
-                            <option value="">Trier par :</option>
-                            <option value="recent">Plus récent</option>
-                            <option value="ancien">Plus ancient</option>
-                            <option value="tri_offre">Offre</option>
-                        </select>
-                    </div>
-
-                </div>
-            </article>
 
             <div class="contenu-aligne-gauche">
 
@@ -274,6 +260,22 @@ if ($typeCompte === 'proPrive') {
                             echo "<br>";
                             echo $nbrAvisNonRepondus . " avis non repondus"; ?>
                     </h2> 
+                    <article class="filtre-tri">
+                        <h2>Filtres et tris</h2>
+                        <div class="fond-filtres hidden">
+                    
+                            <div class='div-tri'>
+                                <h3>Tri</h3>
+                                <select id="tris">
+                                    <option value="">Trier par :</option>
+                                    <option value="recent">Plus récent</option>
+                                    <option value="ancien">Plus ancient</option>
+                                    <option value="tri_offre">Offre</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </article>
                     <div id="tri_offre" >
                     <?php
 
