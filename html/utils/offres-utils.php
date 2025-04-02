@@ -1149,7 +1149,7 @@
             $stmtPseudo = $conn->prepare($reqPseudo);
             $stmtPseudo->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
             $stmtPseudo->execute();
-            $pseudo = $stmtPseudo->fetchAll(PDO::FETCH_ASSOC);
+            $pseudo = $stmtPseudo->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $pseudo;
         } catch (Exception $e) {
