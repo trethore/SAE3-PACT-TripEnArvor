@@ -574,6 +574,10 @@ try {
                     $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
                     $updateStmt->execute(['id_membre' => $unAvis['id_membre'],'id_offre' => $unAvis['id_offre']]);
                 }
+                echo '<pre>';
+                print_r($unAvis['id_membre']);
+                print_r($membre[$identifiant]['id_compte']);
+                echo '</spre>';
                 if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
         ?>
                     <div class="fond-blocs-avis">
