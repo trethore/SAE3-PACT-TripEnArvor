@@ -315,15 +315,16 @@ h3 {
     margin: 1em;
 }
 
-.compte-back #apibutton, #auth_toggle_button {
+.compte-back #apibutton, .compte-back #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
+    border: none;
  }
-.compte-back #apibutton:hover, #auth_toggle_button:hover {
+.compte-back #apibutton:hover, .compte-back #auth_toggle_button:hover {
      background-color: var(--orange-secondaire-2);
      border-radius: 15px;
      padding: 0.2em 1em;
@@ -529,7 +530,6 @@ h3 {
     height: 250px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Titre de la popup */
@@ -572,6 +572,7 @@ h3 {
     margin: 0 10px;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
     transition: background-color 0.3s ease;
 }
 
@@ -1431,15 +1432,15 @@ h3 {
 }
 
 .compte-front #apibutton, .compte-front #auth_toggle_button {
+   border: none;
    color:var(--blanc-leger);
    background-color: var(--violet-principal);
-   border: var(--violet-principal) 2px solid;
    border-radius: 15px;
    padding: 0.2em 1em;
    font-size: 1.2em;
    cursor: pointer;
 }
-.compte-front #apibutton:hover, #auth_toggle_button:hover {
+.compte-front #apibutton:hover, .compte-front #auth_toggle_button:hover {
     background-color: var(--violet-secondaire);
     border-radius: 15px;
     padding: 0.2em 1em;
@@ -1660,7 +1661,6 @@ h3 {
 .compte-front-modif #popupRetourCompte button
 {
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
     color: var(--blanc-leger);
     font-weight: var(--bold);
     font-size: 12pt;
@@ -1670,7 +1670,7 @@ h3 {
     margin: 0 10px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
     transition: background-color 0.3s ease;
 }
 
