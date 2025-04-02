@@ -265,7 +265,6 @@ if ($typeCompte === 'proPrive') {
                         <div class="fond-filtres hidden">
                     
                             <div class='div-tri'>
-                                <h3>Tri</h3>
                                 <select id="tris">
                                     <option value="">Trier par :</option>
                                     <option value="recent">Plus récent</option>
