@@ -136,11 +136,21 @@ if (!isset($_SESSION)) {
                     <?php
                     }
                     ?>
+                      
                 </div>
-                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-            </div>
+                <?php
+                // On affiche les boutons seulement s'il y a plus d'une offre
+                if (count($ids) > 1) {
+                ?>
+                    <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                    <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <?php
+                }
+                ?>
+            </div> 
         </section>
+
+    
 
         <h1><a href="/front/consulter-offres">Découvrir la Liste des Offres Disponibles</a></h1>
 
@@ -193,11 +203,17 @@ if (!isset($_SESSION)) {
                     <?php
                     }
                     ?>
-                </div>
-                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
-            </div>
-
+                                </div>
+                <?php
+                // On affiche les boutons seulement s'il y a plus d'une offre
+                if (count($ids_nouv) > 1) {
+                ?>
+                    <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                    <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <?php
+                }
+                ?>
+            </div> <!-- Fin de carousel -->
         </section>
 
         <?php
@@ -252,9 +268,16 @@ if (!isset($_SESSION)) {
                     <?php
                     }
                     ?>
-                </div>
-                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                                </div>
+                <?php
+                // On affiche les boutons seulement s'il y a plus d'une offre consultée
+                if (count($ids_consulte) > 1) {
+                ?>
+                    <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                    <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <?php
+                }
+                ?>
             </div>
         </section>
         <?php
