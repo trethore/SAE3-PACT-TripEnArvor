@@ -9,9 +9,23 @@ DECLARE
     -- Le `var_` permet de lever les ambiguïtés entre le nom des variables et le nom des colonnes des tables.
     var_id_adresse      INTEGER;
     var_id_compte       INTEGER;
-    var_id_offre        INTEGER;
     var_id_date         INTEGER;
     var_nom_prestation  VARCHAR(128);
+
+    var_id_offre_krampouzerie                   INTEGER;
+    var_id_offre_coste_mor                      INTEGER;
+    var_id_offre_koadenn                        INTEGER;
+    var_id_offre_armoripark                     INTEGER;
+    var_id_offre_aquarev                        INTEGER;
+    var_id_offre_coat_an_noz                    INTEGER;
+    var_id_offre_terrarium_vivarium_kerdanet    INTEGER;
+    var_id_offre_musee_resistance_argoat        INTEGER;
+    var_id_offre_fort_latte                     INTEGER;
+    var_id_offre_THE_JEFF_PANACLOC_COMPANY      INTEGER;
+    var_id_offre_WALY_DIA                       INTEGER;
+    var_id_offre_CALOGERO                       INTEGER;
+    var_id_offre_labyrinthe_malido              INTEGER;
+
 BEGIN
 
     INSERT INTO sae._abonnement ("nom_abonnement") 
@@ -232,7 +246,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_krampouzerie;
 
     INSERT INTO sae._image (
         "lien_fichier"
@@ -246,7 +260,7 @@ BEGIN
         "id_image"
     )
     VALUES (
-        var_id_offre,
+        var_id_offre_krampouzerie,
         'LA-KRAMPOUZERIE-IMG-0555-JPG.jpg'
     );
 
@@ -255,11 +269,11 @@ BEGIN
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Gastronomie'),
-    (var_id_offre, 'Tradition'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_krampouzerie, 'Gastronomie'),
+    (var_id_offre_krampouzerie, 'Tradition'),
+    (var_id_offre_krampouzerie, 'Famille'),
+    (var_id_offre_krampouzerie, 'Groupe'),
+    (var_id_offre_krampouzerie, 'Solo');
 
 
 
@@ -341,7 +355,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_coste_mor;
 
     INSERT INTO sae._image (
         "lien_fichier"
@@ -355,7 +369,7 @@ BEGIN
         "id_image"
     )
     VALUES (
-        var_id_offre,
+        var_id_offre_coste_mor,
         'WEB_restaurant_saint_guirec-34.jpg'
     );
 
@@ -364,11 +378,11 @@ BEGIN
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Gastronomie'),
-    (var_id_offre, 'Tradition'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_coste_mor, 'Gastronomie'),
+    (var_id_offre_coste_mor, 'Tradition'),
+    (var_id_offre_coste_mor, 'Famille'),
+    (var_id_offre_coste_mor, 'Groupe'),
+    (var_id_offre_coste_mor, 'Solo');
 
 
 
@@ -450,7 +464,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_koadenn;
 
     INSERT INTO sae._image (
         "lien_fichier"
@@ -464,7 +478,7 @@ BEGIN
         "id_image"
     )
     VALUES (
-        var_id_offre,
+        var_id_offre_koadenn,
         'Le-Koadenn-IMG-1615-jpeg.jpg'
     );
 
@@ -473,11 +487,11 @@ BEGIN
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Gastronomie'),
-    (var_id_offre, 'Tradition'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_koadenn, 'Gastronomie'),
+    (var_id_offre_koadenn, 'Tradition'),
+    (var_id_offre_koadenn, 'Famille'),
+    (var_id_offre_koadenn, 'Groupe'),
+    (var_id_offre_koadenn, 'Solo');
 
 
 
@@ -561,7 +575,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_armoripark;
 
     INSERT INTO sae._image (
         "lien_fichier"
@@ -585,30 +599,30 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'bassins-chauffes.webp'),
-    (var_id_offre, 'toboggan1.webp'),
-    (var_id_offre, 'ventriglisse.webp'),
-    (var_id_offre, 'luge.webp'),
-    (var_id_offre, 'armoripark-glisser-pentogliss-2.jpg'),
-    (var_id_offre, 'glisse-aquatique.webp'),
-    (var_id_offre, 'pedalos.webp'),
-    (var_id_offre, '1683040587428.jpg'),
-    (var_id_offre, 'armoripark-sevader-bateaux_mississipi.jpg'),
-    (var_id_offre, 'trampofilets.webp'),
-    (var_id_offre, 'homeball2024.webp'),
-    (var_id_offre, 'armoripark-tyrolienne.jpg');
+    (var_id_offre_armoripark, 'bassins-chauffes.webp'),
+    (var_id_offre_armoripark, 'toboggan1.webp'),
+    (var_id_offre_armoripark, 'ventriglisse.webp'),
+    (var_id_offre_armoripark, 'luge.webp'),
+    (var_id_offre_armoripark, 'armoripark-glisser-pentogliss-2.jpg'),
+    (var_id_offre_armoripark, 'glisse-aquatique.webp'),
+    (var_id_offre_armoripark, 'pedalos.webp'),
+    (var_id_offre_armoripark, '1683040587428.jpg'),
+    (var_id_offre_armoripark, 'armoripark-sevader-bateaux_mississipi.jpg'),
+    (var_id_offre_armoripark, 'trampofilets.webp'),
+    (var_id_offre_armoripark, 'homeball2024.webp'),
+    (var_id_offre_armoripark, 'armoripark-tyrolienne.jpg');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Sport'),
-    (var_id_offre, 'Festif'),
-    (var_id_offre, 'Découverte'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_armoripark, 'Sport'),
+    (var_id_offre_armoripark, 'Festif'),
+    (var_id_offre_armoripark, 'Découverte'),
+    (var_id_offre_armoripark, 'Famille'),
+    (var_id_offre_armoripark, 'Groupe'),
+    (var_id_offre_armoripark, 'Solo');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -616,15 +630,15 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('Mars → Juin : 11h - 18h : < 4 ans', 0, var_id_offre),
-    ('Mars → Juin : 11h - 18h : 4 - 17 ans', 11, var_id_offre),
-    ('Mars → Juin : 11h - 18h : 18 - 64 ans', 12, var_id_offre),
-    ('Mars → Juin : 14h - 18h : < 4 ans', 0, var_id_offre),
-    ('Mars → Juin : 14h - 18h : 4 - 17 ans', 5, var_id_offre),
-    ('Mars → Juin : 14h - 18h : 18 - 64 ans', 6, var_id_offre),
-    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 0, var_id_offre),
-    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 13, var_id_offre),
-    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 15, var_id_offre);
+    ('Mars → Juin : 11h - 18h : < 4 ans', 0, var_id_offre_armoripark),
+    ('Mars → Juin : 11h - 18h : 4 - 17 ans', 11, var_id_offre_armoripark),
+    ('Mars → Juin : 11h - 18h : 18 - 64 ans', 12, var_id_offre_armoripark),
+    ('Mars → Juin : 14h - 18h : < 4 ans', 0, var_id_offre_armoripark),
+    ('Mars → Juin : 14h - 18h : 4 - 17 ans', 5, var_id_offre_armoripark),
+    ('Mars → Juin : 14h - 18h : 18 - 64 ans', 6, var_id_offre_armoripark),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 0, var_id_offre_armoripark),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 13, var_id_offre_armoripark),
+    ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 15, var_id_offre_armoripark);
 
 
     /* ##################################################################### */
@@ -719,7 +733,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_aquarev;
 
     INSERT INTO sae._image (
         "lien_fichier"
@@ -747,36 +761,36 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'DSC_1891-Copier.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-6.jpg'),
-    (var_id_offre, 'DSC_1889-Copier.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-5.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-4.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-3.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-2.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-1.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-11.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-10.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-9.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-8.jpg'),
-    (var_id_offre, 'DSC_1913-Copier.jpg'),
-    (var_id_offre, 'DSC_1896-Copier.jpg'),
-    (var_id_offre, 'DSC_1902-Copier.jpg'),
-    (var_id_offre, 'aquarev-louvafilm-2018-7.jpg');
+    (var_id_offre_aquarev, 'DSC_1891-Copier.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-6.jpg'),
+    (var_id_offre_aquarev, 'DSC_1889-Copier.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-5.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-4.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-3.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-2.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-1.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-11.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-10.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-9.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-8.jpg'),
+    (var_id_offre_aquarev, 'DSC_1913-Copier.jpg'),
+    (var_id_offre_aquarev, 'DSC_1896-Copier.jpg'),
+    (var_id_offre_aquarev, 'DSC_1902-Copier.jpg'),
+    (var_id_offre_aquarev, 'aquarev-louvafilm-2018-7.jpg');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Bien-être'),
-    (var_id_offre, 'Romantique'),
-    (var_id_offre, 'Relaxation'),
-    (var_id_offre, 'Eco-responsable'),
-    (var_id_offre, 'Nature'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_aquarev, 'Bien-être'),
+    (var_id_offre_aquarev, 'Romantique'),
+    (var_id_offre_aquarev, 'Relaxation'),
+    (var_id_offre_aquarev, 'Eco-responsable'),
+    (var_id_offre_aquarev, 'Nature'),
+    (var_id_offre_aquarev, 'Famille'),
+    (var_id_offre_aquarev, 'Groupe'),
+    (var_id_offre_aquarev, 'Solo');
 
 
 
@@ -874,7 +888,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_coat_an_noz;
 
     INSERT INTO sae._image
     (
@@ -889,22 +903,22 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'Biet_chateau_coatannoz.jpg'),
-    (var_id_offre, 'valeur-Chateau-de-Coat-an-Noz-768x432.jpg');
+    (var_id_offre_coat_an_noz, 'Biet_chateau_coatannoz.jpg'),
+    (var_id_offre_coat_an_noz, 'valeur-Chateau-de-Coat-an-Noz-768x432.jpg');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Histoire'),
-    (var_id_offre, 'Relaxation'),
-    (var_id_offre, 'Découverte'),
-    (var_id_offre, 'Tradition'),
-    (var_id_offre, 'Nature'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_coat_an_noz, 'Histoire'),
+    (var_id_offre_coat_an_noz, 'Relaxation'),
+    (var_id_offre_coat_an_noz, 'Découverte'),
+    (var_id_offre_coat_an_noz, 'Tradition'),
+    (var_id_offre_coat_an_noz, 'Nature'),
+    (var_id_offre_coat_an_noz, 'Famille'),
+    (var_id_offre_coat_an_noz, 'Groupe'),
+    (var_id_offre_coat_an_noz, 'Solo');
 
 
 
@@ -986,7 +1000,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_terrarium_vivarium_kerdanet;
 
     INSERT INTO sae._image
     (
@@ -1010,29 +1024,29 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'ob_689004_dsc-1501.jpg'),
-    (var_id_offre, 'image_0576388_20221221_ob_42a684_mamba-vert-2.jpg'),
-    (var_id_offre, 'ob_88d14f_copie-de-1-36.JPG'),
-    (var_id_offre, 'ob_1d3168_bb-peliade-1.JPG'),
-    (var_id_offre, 'ob_52f788_naja-annulifera.jpg'),
-    (var_id_offre, 'ob_f2f582_boa-emeuraude-1.jpg'),
-    (var_id_offre, 'ob_32e44b_x-8.JPG'),
-    (var_id_offre, 'ob_d64060_verte.jpg'),
-    (var_id_offre, 'ob_7e23a8_rieuse.JPG'),
-    (var_id_offre, 'ob_9f537f_rainette-verte.jpg'),
-    (var_id_offre, 'ob_b907df_bufo.JPG');
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_689004_dsc-1501.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'image_0576388_20221221_ob_42a684_mamba-vert-2.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_88d14f_copie-de-1-36.JPG'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_1d3168_bb-peliade-1.JPG'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_52f788_naja-annulifera.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_f2f582_boa-emeuraude-1.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_32e44b_x-8.JPG'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_d64060_verte.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_7e23a8_rieuse.JPG'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_9f537f_rainette-verte.jpg'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'ob_b907df_bufo.JPG');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Découverte'),
-    (var_id_offre, 'Eco-responsable'),
-    (var_id_offre, 'Nature'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Découverte'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Eco-responsable'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Nature'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Famille'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Groupe'),
+    (var_id_offre_terrarium_vivarium_kerdanet, 'Solo');
 
 
     INSERT INTO sae._tarif_publique (
@@ -1041,12 +1055,12 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('3 ans et -', 0, var_id_offre),
-    ('Enfant de 4 à 12 ans', 8, var_id_offre),
-    ('Adulte et Enfant de + de 12 ans', 10, var_id_offre),
-    ('Groupe (+15 personnes) : Enfant de 4 à 12 ans', 7, var_id_offre),
-    ('Groupe (+15 personnes) : Adulte et Enfant de + de 12 ans ', 9, var_id_offre),
-    ('Journée soigneur', 60, var_id_offre);
+    ('3 ans et -', 0, var_id_offre_terrarium_vivarium_kerdanet),
+    ('Enfant de 4 à 12 ans', 8, var_id_offre_terrarium_vivarium_kerdanet),
+    ('Adulte et Enfant de + de 12 ans', 10, var_id_offre_terrarium_vivarium_kerdanet),
+    ('Groupe (+15 personnes) : Enfant de 4 à 12 ans', 7, var_id_offre_terrarium_vivarium_kerdanet),
+    ('Groupe (+15 personnes) : Adulte et Enfant de + de 12 ans ', 9, var_id_offre_terrarium_vivarium_kerdanet),
+    ('Journée soigneur', 60, var_id_offre_terrarium_vivarium_kerdanet);
 
 
 
@@ -1128,7 +1142,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_musee_resistance_argoat;
 
     INSERT INTO sae._image
     (
@@ -1143,16 +1157,16 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'img-musee-inter1.jpg'),
-    (var_id_offre, 'img-musee-inter2.jpg');
+    (var_id_offre_musee_resistance_argoat, 'img-musee-inter1.jpg'),
+    (var_id_offre_musee_resistance_argoat, 'img-musee-inter2.jpg');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Histoire'),
-    (var_id_offre, 'Découverte');
+    (var_id_offre_musee_resistance_argoat, 'Histoire'),
+    (var_id_offre_musee_resistance_argoat, 'Découverte');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1160,13 +1174,13 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('Moins de 7 ans', 0, var_id_offre),
-    ('7-18 ans', 3, var_id_offre),
-    ('Réduit', 5, var_id_offre),
-    ('Plein', 6, var_id_offre),
-    ('Groupe de 6 à 10 personnes', 50, var_id_offre),
-    ('Groupe de plus de 10 personnes', 6, var_id_offre),
-    ('Visite guidée pour les scolaires', 4, var_id_offre);
+    ('Moins de 7 ans', 0, var_id_offre_musee_resistance_argoat),
+    ('7-18 ans', 3, var_id_offre_musee_resistance_argoat),
+    ('Réduit', 5, var_id_offre_musee_resistance_argoat),
+    ('Plein', 6, var_id_offre_musee_resistance_argoat),
+    ('Groupe de 6 à 10 personnes', 50, var_id_offre_musee_resistance_argoat),
+    ('Groupe de plus de 10 personnes', 6, var_id_offre_musee_resistance_argoat),
+    ('Visite guidée pour les scolaires', 4, var_id_offre_musee_resistance_argoat);
 
 
 
@@ -1248,7 +1262,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_fort_latte;
 
     INSERT INTO sae._image
     (
@@ -1266,24 +1280,24 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, '89228f_03c758e6d4a94c9a8a45217fe75e0c3b.png'),
-    (var_id_offre, '89228f_7e27777e16884ed4a3faaea8bb493498.jpg'),
-    (var_id_offre, '89228f_87eaf41cae6840e587e6a6b67fc5a664~mv2_d_4608_3456_s_4_2.jpg'),
-    (var_id_offre, '89228f_288000e544714099a97085bc57c694f9~mv2_d_4096_2160_s_2.jpg'),
-    (var_id_offre, '89228f_f26adfd36ca94af58f7779fd58a25eb9~mv2_d_5472_3648_s_4_2.png');
+    (var_id_offre_fort_latte, '89228f_03c758e6d4a94c9a8a45217fe75e0c3b.png'),
+    (var_id_offre_fort_latte, '89228f_7e27777e16884ed4a3faaea8bb493498.jpg'),
+    (var_id_offre_fort_latte, '89228f_87eaf41cae6840e587e6a6b67fc5a664~mv2_d_4608_3456_s_4_2.jpg'),
+    (var_id_offre_fort_latte, '89228f_288000e544714099a97085bc57c694f9~mv2_d_4096_2160_s_2.jpg'),
+    (var_id_offre_fort_latte, '89228f_f26adfd36ca94af58f7779fd58a25eb9~mv2_d_5472_3648_s_4_2.png');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Histoire'),
-    (var_id_offre, 'Plage'),
-    (var_id_offre, 'Découverte'),
-    (var_id_offre, 'Tradition'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe'),
-    (var_id_offre, 'Solo');
+    (var_id_offre_fort_latte, 'Histoire'),
+    (var_id_offre_fort_latte, 'Plage'),
+    (var_id_offre_fort_latte, 'Découverte'),
+    (var_id_offre_fort_latte, 'Tradition'),
+    (var_id_offre_fort_latte, 'Famille'),
+    (var_id_offre_fort_latte, 'Groupe'),
+    (var_id_offre_fort_latte, 'Solo');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1291,9 +1305,9 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('Adultes', 8, var_id_offre),
-    ('Étudiants (jusqu''à 26 ans), lycéens, demandeurs d''emploi', 7, var_id_offre),
-    ('Enfants (moins de 12 ans)', 5, var_id_offre);
+    ('Adultes', 8, var_id_offre_fort_latte),
+    ('Étudiants (jusqu''à 26 ans), lycéens, demandeurs d''emploi', 7, var_id_offre_fort_latte),
+    ('Enfants (moins de 12 ans)', 5, var_id_offre_fort_latte);
 
 
     /* ##################################################################### */
@@ -1396,7 +1410,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_THE_JEFF_PANACLOC_COMPANY;
 
     INSERT INTO sae._image
     (
@@ -1410,14 +1424,14 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'n_the-jeff-panacloc-company_g.webp');
+    (var_id_offre_THE_JEFF_PANACLOC_COMPANY, 'n_the-jeff-panacloc-company_g.webp');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Festif');
+    (var_id_offre_THE_JEFF_PANACLOC_COMPANY, 'Festif');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1425,7 +1439,7 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('À partir de', 45, var_id_offre);
+    ('À partir de', 45, var_id_offre_THE_JEFF_PANACLOC_COMPANY);
 
 
 
@@ -1471,7 +1485,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_WALY_DIA;
 
     INSERT INTO sae._image
     (
@@ -1485,14 +1499,14 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'n_waly-dia_g.webp');
+    (var_id_offre_WALY_DIA, 'n_waly-dia_g.webp');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Festif');
+    (var_id_offre_WALY_DIA, 'Festif');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1500,7 +1514,7 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('À partir de', 42, var_id_offre);
+    ('À partir de', 42, var_id_offre_WALY_DIA);
 
 
 
@@ -1546,7 +1560,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_CALOGERO;
 
     INSERT INTO sae._image
     (
@@ -1560,14 +1574,14 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'n_calogero_g.webp');
+    (var_id_offre_CALOGERO, 'n_calogero_g.webp');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Festif');
+    (var_id_offre_CALOGERO, 'Festif');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1575,7 +1589,7 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('À partir de', 39, var_id_offre);
+    ('À partir de', 39, var_id_offre_CALOGERO);
 
 
 
@@ -1657,7 +1671,7 @@ BEGIN
         NULL,
         NULL
     )
-    RETURNING "id_offre" INTO var_id_offre;
+    RETURNING "id_offre" INTO var_id_offre_labyrinthe_malido;
 
     INSERT INTO sae._image
     (
@@ -1674,22 +1688,22 @@ BEGIN
         "id_image"
     )
     VALUES
-    (var_id_offre, 'banner.jpg'),
-    (var_id_offre, 'slider1.jpg'),
-    (var_id_offre, 'slider2.jpg'),
-    (var_id_offre, 'slider3.jpg');
+    (var_id_offre_labyrinthe_malido, 'banner.jpg'),
+    (var_id_offre_labyrinthe_malido, 'slider1.jpg'),
+    (var_id_offre_labyrinthe_malido, 'slider2.jpg'),
+    (var_id_offre_labyrinthe_malido, 'slider3.jpg');
 
     INSERT INTO sae._offre_possede_tag (
         "id_offre",
         "nom_tag"
     )
     VALUES
-    (var_id_offre, 'Sport'),
-    (var_id_offre, 'Découverte'),
-    (var_id_offre, 'Artisanat'),
-    (var_id_offre, 'Nature'),
-    (var_id_offre, 'Famille'),
-    (var_id_offre, 'Groupe');
+    (var_id_offre_labyrinthe_malido, 'Sport'),
+    (var_id_offre_labyrinthe_malido, 'Découverte'),
+    (var_id_offre_labyrinthe_malido, 'Artisanat'),
+    (var_id_offre_labyrinthe_malido, 'Nature'),
+    (var_id_offre_labyrinthe_malido, 'Famille'),
+    (var_id_offre_labyrinthe_malido, 'Groupe');
 
     INSERT INTO sae._tarif_publique (
         "nom_tarif",
@@ -1697,11 +1711,11 @@ BEGIN
         "id_offre"
     )
     VALUES
-    ('Adultes', 9, var_id_offre),
-    ('Enfants', 8, var_id_offre),
-    ('Gratuit en dessous de 4 ans', 0, var_id_offre),
-    ('Prix de groupes (15 minimum) : Adultes', 8, var_id_offre),
-    ('Prix de groupes (15 minimum) : Enfants', 7, var_id_offre);
+    ('Adultes', 9, var_id_offre_labyrinthe_malido),
+    ('Enfants', 8, var_id_offre_labyrinthe_malido),
+    ('Gratuit en dessous de 4 ans', 0, var_id_offre_labyrinthe_malido),
+    ('Prix de groupes (15 minimum) : Adultes', 8, var_id_offre_labyrinthe_malido),
+    ('Prix de groupes (15 minimum) : Enfants', 7, var_id_offre_labyrinthe_malido);
 
     INSERT INTO sae._prestation ("nom_prestation", "description")
     VALUES (
@@ -1716,7 +1730,7 @@ BEGIN
     )
     VALUES (
         var_nom_prestation,
-        var_id_offre
+        var_id_offre_labyrinthe_malido
     );
 
 
