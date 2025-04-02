@@ -215,13 +215,13 @@ if ($typeCompte === 'proPrive') {
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
                         $id_membre = $membre[$i]['id_membre'];
-                        $dateAvis = getDatePublicationAvecIDMembre($id_membre, $id_offre)[0]['date'];
+                        $dateAvis = getDatePublicationAvecIDMembre($id_membre, $id_offre)['date'];
 
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
-                        $lavis['dateAvis'] = getDatePublicationAvecIDMembre($membre[$i]['id_membre'], $id_offre)[0]['date'];
-                        print_r($dateAvis);
+                        $lavis['dateAvis'] = getDatePublicationAvecIDMembre($membre[$i]['id_membre'], $id_offre)['date'];
+                        print_r($getDatePublicationAvecIDMembre($id_membre, $id_offre));
                         $lavis['titre_offre'] = $offre['titre'];
 
                         $touslesavis[] = $lavis; 
