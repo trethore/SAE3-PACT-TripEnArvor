@@ -230,16 +230,17 @@ try {
                 <!-- parc -->
                 <label id="labelnbattractions" for="nbattraction">Nombre d'attractions <span class="required">*</span> </label> <input type="number"  min="0" id="nbattraction" name="attractions" />
                 <br>
-                <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label> <input type="file" id="plan" name="plan" />
+                <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>
+                <input type="file" id="plan" name="plan" onchange="previewPlan(event)" />
+                <div id="planPreviewContainer" style="margin-top: 5px; display: none;">
+                     <img id="planPreview" src="#" alt="Preview du plan" style="max-width: 200px; max-height: 200px;" />
+                </div>
                 <br>
-                <div id="imagePreview" style="margin-top: 10px;">
-                    <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
-                </div> 
                 <!-- restaurant -->
-                <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> </label> <input type="file" id="carte" name="carte" onchange="previewImage(event)" />
-                <br>
-                <div id="imagePreview" style="margin-top: 10px;">
-                    <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
+                <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> </label>
+                <input type="file" id="carte" name="carte" onchange="previewCarte(event)" />
+                <div id="cartePreviewContainer" style="margin-top: 5px; display: none;">
+                     <img id="cartePreview" src="#" alt="Preview de la carte" style="max-width: 200px; max-height: 200px;" />
                 </div>
             </div>
                 <br>
@@ -1050,12 +1051,12 @@ try {
             });
 
             let lacategorie = document.getElementById('categorie');
-            let catRestauration = ["carte", "labelcarte", "imagePreview"];
+            let catRestauration = ["carte", "labelcarte"];
             let catVisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
             let catActivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
             let catSpectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
             let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan"];
-            let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event", "imagePreview"];
+            let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event"];
 
             obligatoireSelonCat.forEach(element => {
                 document.getElementById(element).style.display = 'none';
