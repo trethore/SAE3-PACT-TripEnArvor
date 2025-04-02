@@ -222,7 +222,7 @@ if ($typeCompte === 'proPrive') {
                         $touslesavis[] = $lavis; 
                         $i++;
                     }
-                    
+
                     $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
                         $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
 
@@ -589,7 +589,14 @@ if ($typeCompte === 'proPrive') {
     
 
 
+    document.addEventListener("DOMContentLoaded", () => {
+            const h2 = document.querySelector(".filtre-tri h2");
+            const fondFiltres = document.querySelector(".fond-filtres");
 
+            h2.addEventListener("click", () => {
+                fondFiltres.classList.toggle("hidden");
+            });
+        });
 
 
 
