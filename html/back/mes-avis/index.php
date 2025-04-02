@@ -262,7 +262,7 @@ if ($typeCompte === 'proPrive') {
                         }
                         echo "<br>";
                         if ($nbrAvisNonRepondus != 0) {
-                            echo $nbrAvisNonRepondus . " avis non repondus";
+                            echo $nbrAvisNonRepondus . " avis non répondus";
                         } ?>
 
                     </h2> 
