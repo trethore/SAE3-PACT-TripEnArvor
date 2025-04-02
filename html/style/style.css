@@ -4453,6 +4453,54 @@ h3 {
     position: relative;
 }
 
+.mes-avis .filtre-tri {
+    position: relative;
+    margin: auto auto;
+    padding: 3em 2em 1em;
+    width: 85%;
+    box-sizing: border-box;
+    background: var(--blanc);
+    border-radius: 15px;
+    border: 3px solid var(--orange-principale);
+}
+
+.mes-avis .filtre-tri>h2 {
+    color: var(--blanc);
+    text-align: center;
+    background-color: var(--orange-principale);
+    border-radius: 15px;
+    padding: 0.3em;
+    position: absolute;
+    left: 2%;
+    transform: translate(0, -3.5em);
+    min-width: auto;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.mes-avis .filtre-tri h2+div {
+    display: flex;
+    color: var(--blanc);
+    background-color: var(--blanc);
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.mes-avis .filtre-tri #tris {
+        width: 110px;
+        height: 31px;
+        border: none;
+        border-radius: 10px;
+        background-color: var(--orange-principale);
+}
+
+.mes-avis .filtre-tri .div-tri {
+    display: flex;
+    justify-content: flex-start;  /* Aligne le contenu à gauche */
+    width: 100%; /* Si tu veux que la div prenne toute la largeur disponible */
+}
+
+
 
 
 #infobulle {
@@ -4526,7 +4574,7 @@ h3 {
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    margin-top: 5px;
+    margin: 10px;
 }
 
 .back .mes-avis .fond-blocs-avis a {
