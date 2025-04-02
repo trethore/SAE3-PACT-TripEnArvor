@@ -3666,6 +3666,10 @@ h3 {
     margin: 20px 0;
 }
 
+.consulter-offre-front .requis { 
+    color: red;
+}
+
 .consulter-offre-front .label-avis {
     margin-right: 10px;
 }
@@ -3691,8 +3695,8 @@ h3 {
     background-size: contain;
     cursor: pointer;
     transition: 0.2s;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .consulter-offre-front .rating input:checked + label, .consulter-offre-front .rating input:checked + label ~ label {
