@@ -1613,10 +1613,6 @@ h3 {
     text-align: right;
 }
 
-.compte-front div {
-    margin: 1em;
-}
-
 .compte-front table+div>a,
 .compte-front-modif table+div>a {
     display: inline-block;
@@ -1652,7 +1648,7 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
+    border: none;
     font-size: 12pt;
     border-radius: 15px;
     padding: 0.2em 1em;
