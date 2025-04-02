@@ -159,6 +159,12 @@ h3 {
     transform: translateX(25%);
 }
 
+.connecter a:hover,
+.creer-compte a:hover {
+    color: var(--violet-secondaire);
+    text-decoration: underline;
+}
+
 .connecter form {
     display: flex;
     flex-direction: column;
@@ -625,6 +631,10 @@ h3 {
     min-width: auto;
     z-index: 1;
     cursor: pointer;
+}
+
+.liste-back .filtre-tri>h2:hover {
+    background-color: var(--orange-secondaire-2);
 }
 
 .liste-back .filtre-tri h2+div {
@@ -2906,7 +2916,6 @@ h3 {
     font-size: 40px;
     width: 517px;
     height: 97px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     margin-left: 0;
 }
@@ -4934,7 +4943,6 @@ h3 {
     height: 50px;
     background: var(--orange-principale);
     border-radius: 5px;
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
 }
