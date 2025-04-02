@@ -300,7 +300,7 @@ CREATE TABLE _reponse (
     texte       VARCHAR(1024) NOT NULL,
     publie_le   INTEGER NOT NULL,
     CONSTRAINT _reponse_pk PRIMARY KEY (id_membre, id_offre),
-    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE,
+    CONSTRAINT _reponse_fk_avis FOREIGN KEY (id_membre, id_offre) REFERENCES _avis(id_membre, id_offre) ON UPDATE CASCADE DEFERRABLE INITIALLY IMMEDIATE,
     CONSTRAINT _reponse_fk_date FOREIGN KEY (publie_le) REFERENCES _date(id_date)
 );
 
@@ -1470,32 +1470,43 @@ CREATE OR REPLACE FUNCTION sae.delete_compte_membre() RETURNS TRIGGER AS $$
 DECLARE
     ano_id INT;
 BEGIN
-    -- Trouver l'ID du compte anonyme
     SELECT id_compte INTO ano_id FROM sae.compte_membre WHERE email = 'anonyme@ano.com';
 
-    -- Vérifier qu'on ne supprime pas le compte anonyme lui-même
     IF OLD.id_compte = ano_id THEN
         RAISE EXCEPTION 'Tentative de suppression du compte anonyme (id=%) interdite.', ano_id;
     END IF;
 
-    -- Commencer une transaction implicite
-    PERFORM pg_advisory_xact_lock(1); -- Verrouillage pour éviter les conflits concurrents
+    PERFORM pg_advisory_xact_lock(1);
+    SET CONSTRAINTS ALL DEFERRED;
 
-    -- Mettre à jour toutes les tables concernées
-    UPDATE sae._avis SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
-    UPDATE sae._blacklister SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
-    UPDATE sae._reaction_avis SET id_membre_avis = ano_id WHERE id_membre_avis = OLD.id_compte;
-    UPDATE sae._reaction_avis SET id_membre_reaction = ano_id WHERE id_membre_reaction = OLD.id_compte;
-    UPDATE sae._signaler SET id_signale = ano_id WHERE id_signale = OLD.id_compte;
-    UPDATE sae._signaler SET id_signalant = ano_id WHERE id_signalant = OLD.id_compte;
-    UPDATE sae._avis_contient_image SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+    UPDATE sae._reaction_avis
+        SET id_membre_avis = ano_id WHERE id_membre_avis = OLD.id_compte;
+    UPDATE sae._reaction_avis
+        SET id_membre_reaction = ano_id WHERE id_membre_reaction = OLD.id_compte;
 
-    DELETE FROM sae._compte
-    WHERE id_compte = OLD.id_compte;
+    UPDATE sae._avis_contient_image
+        SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+
+    UPDATE sae._avis
+        SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+
+    UPDATE sae._reponse
+        SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+
+    UPDATE sae._blacklister
+        SET id_membre = ano_id WHERE id_membre = OLD.id_compte;
+
+    UPDATE sae._signaler
+        SET id_signalant = ano_id WHERE id_signalant = OLD.id_compte;
+
+    UPDATE sae._signaler
+        SET id_signale = ano_id WHERE id_signale = OLD.id_compte;
+
+    DELETE FROM sae._compte WHERE id_compte = OLD.id_compte;
 
     RETURN OLD;
 END;
-$$ LANGUAGE 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE TRIGGER tg_delete_compte_membre
 INSTEAD OF DELETE ON sae.compte_membre
