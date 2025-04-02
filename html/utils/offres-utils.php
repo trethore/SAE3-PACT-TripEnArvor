@@ -465,14 +465,14 @@
     // ===== Fonction qui exécute une requête SQL pour récupérer la date restante avant la récupération du jeton ===== //
     function getDateRestante($id_offre) {
         global $driver, $server, $dbname, $user, $pass;
-        $reqDateRestante = "SELECT EXTRACT(DAY FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS jours_restants, EXTRACT(HOUR FROM (jeton_perdu_le + INTERVAL '6 days' - NOW() AT TIME ZONE 'Europe/Paris')) AS heures_restantes, EXTRACT(MINUTE FROM (jeton_perdu_le + INTERVAL '6 days' - NOW() AT TIME ZONE 'Europe/Paris')) AS minutes_restantes FROM sae._offre WHERE id_offre = :id_offre";
+        $reqDateRestante = "SELECT EXTRACT(DAY FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS jours_restants, EXTRACT(HOUR FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS heures_restantes, EXTRACT(MINUTE FROM (jeton_perdu_le + INTERVAL '6 MINUTE' - NOW() AT TIME ZONE 'Europe/Paris')) AS minutes_restantes FROM sae._offre WHERE id_offre = :id_offre";
         try {
             $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $conn->prepare("SET SCHEMA 'sae';")->execute();
             $stmtDateRestante = $conn->prepare($reqDateRestante);
             $stmtDateRestante->bindParam(':id_offre', $id_offre, PDO::PARAM_INT);
             $stmtDateRestante->execute();
-            $dateRestante = $stmtDateRestante->fetchAll(PDO::FETCH_ASSOC);
+            $dateRestante = $stmtDateRestante->fetch(PDO::FETCH_ASSOC);
             $conn = null;
             return $dateRestante;
         } catch (Exception $e) {
