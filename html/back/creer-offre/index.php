@@ -1055,7 +1055,7 @@ try {
             let catVisite = ["labelduree", "duree", "labelduree2","labeldate_event", "date_event"];
             let catActivite = ["labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "descpresta", "labeldescpresta","presta", "labelpresta"];
             let catSpectacle = ["labelduree", "duree", "labelduree2", "labelcapacite", "capacite", "labelcapacite2","labeldate_event", "date_event"];
-            let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan", "imagePreviewParc"];
+            let catParc = ["labelnbattractions", "nbattraction", "labelplan", "plan", "imagePreviewPlan"];
             let obligatoireSelonCat = ["descpresta", "labeldescpresta","presta", "labelpresta", "carte", "labelcarte", "labelgammedeprix", "gammedeprix", "labelage", "age", "labelage2", "labelduree", "duree", "labelduree2", "labelnbattractions", "nbattraction", "labelplan", "plan", "labelcapacite", "capacite", "labelcapacite2","labeldate_event",  "date_event", "imagePreviewCarte", "imagePreviewPlan"];
 
             obligatoireSelonCat.forEach(element => {
