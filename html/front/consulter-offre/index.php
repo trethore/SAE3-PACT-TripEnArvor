@@ -779,13 +779,7 @@ try {
             <?php 
             }
             $identifiant = 0;
-            foreach ($avis as $unAvis) { 
-                echo '<pre>';
-                print_r($avis);
-                echo '</pre>';
-                echo '<pre>';
-                print_r(getPseudoFromId($unAvis['id_membre']));
-                echo '</pre>';
+            foreach ($avis as $unAvis) {
                 if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre'])) || getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']) == $_SESSION['id']) { 
             ?>
 
