@@ -1734,6 +1734,191 @@ BEGIN
     );
 
 
+
+
+
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Durand',
+        'Alex',
+        'alex.d42@email.com',
+        '+33645781234',
+        '$2y$10$ezFow.R8vj0D717cODruuOuJfzhtWx8U3Zgt2iizrjlsNneBrgnrm', -- P@ssword123
+        'AlexD42'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Lemoine',
+        'Marie',
+        'marie.lgn@email.com',
+        '+33723569810',
+        '$2y$10$SaQApdiFBqhSe8JaCmnSq./vdHhiK9UvNRAXgMJ4n05S8myD8JXOK', -- M4rie!Lgn
+        'Marie_Lgn'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Paulin',
+        'Jean',
+        'jpaul75@email.com',
+        '+33698743215',
+        '$2y$10$r2gIggXMjklQHIc8Xo8Gl.DIlc9WhmJM5b//3oKEyXvkujnYwtxMi', -- Jp@ul_1975
+        'JPaul_75'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        NULL,
+        NULL,
+        'gamerx@email.com',
+        NULL,
+        '$2y$10$OgS0DP2jh9hh0aeHw7AWduVOIcHU2Yy7fhjOcs771/Ij4hMdkE/LW', -- Xg@mer2024
+        'GamerX'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Martin',
+        'Clara',
+        'clara.moon@email.com',
+        '+33677123456',
+        '$2y$10$nnBrhiWyQzKDdgDseDcm1ueAlj9AtfJI6GDAUd53TPeACEyWE5udG', -- MoonCl@r4
+        'Clara_Moon'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Robert',
+        'Kévin',
+        'kevin.rox@email.com',
+        NULL,
+        '$2y$10$6FZrrLizgd/eHAz6zCaAXu7OeftTTMu0wa4LqRfB2XmffhFCb7HiO', -- RoxKev!n99
+        'Kevin_Rox'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Chevalier',
+        'Sophie',
+        'sophie.c@email.com',
+        '+33788991122',
+        '$2y$10$mQ/IBSvjLHSlv8QI1QNyTunGGhCwdj2x1xUcw5A4BUJgbIapLDGtC', -- SophC1234
+        'SophieC'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        NULL,
+        NULL,
+        'darkwolf89@email.com',
+        NULL,
+        '$2y$10$mb8cpiaX1dIF3ItpuUD0TOK15SqW5Jaev9KYvNnhZTqu2OK.33G1O', -- DWolfP@ss
+        'DarkWolf89'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        'Bernard',
+        'Elise',
+        'elise.b@email.com',
+        '+33611223344',
+        '$2y$10$NHkJYGAnJLNwvHAq9PgpS.jiK7ovVRRDcGLBvTY9tsVIgyo5626k2', -- Eli$e2023
+        'EliseB'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.compte_membre (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "pseudo"
+    )
+    VALUES 
+    (
+        NULL,
+        'Maxime',
+        'max.power@email.com',
+        '+33666778899',
+        '$2y$10$WkCo858k9ANxae.TrQV12.PS6WZFZOgbbK78qAT7shxWD.wOYQL1C', -- M@x!mumP0wer
+        'Max_Power'
+    ) RETURNING "id_compte" INTO var_id_compte;
+
+
 END $$;
 
 
