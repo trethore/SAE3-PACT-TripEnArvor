@@ -4593,7 +4593,7 @@ h3 {
     font-weight: var(--medium);
     font-size: 23pt;
     color: var(--noir);
-    margin-top: 5px;
+    margin: 10px;
 }
 
 .back .mes-avis .fond-blocs-avis a {
