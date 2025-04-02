@@ -222,7 +222,7 @@ try {
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
                             ?>
-                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities(max(0, floor((strtotime($offre['jeton_perdu_le']) + 2 * 60 - time()) / 86400))); ?> jour(s)</em></p>
+                                <p class="nombre-blacklistage"><em>prochain jeton dans <?php echo htmlentities($jours_restants = max(0, ceil((strtotime($offre['jeton_perdu_le']) + 6 * 86400 - time()) / 86400))); ?> jour(s)</em></p>
                             <?php
                             }
                             ?>
