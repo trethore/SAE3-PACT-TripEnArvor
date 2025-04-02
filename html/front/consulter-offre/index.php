@@ -784,7 +784,7 @@ try {
                 print_r($avis);
                 echo '</pre>';
                 echo '<pre>';
-                print_r($membre);
+                print_r($unAvis['id_membre']);
                 echo '</pre>';
                 if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre'])) || getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']) == $_SESSION['id']) { 
             ?>
