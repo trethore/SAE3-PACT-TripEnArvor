@@ -19,7 +19,7 @@ function previewImage(event) {
 }
 
 function previewImagePlan(event) {
-    const preview = document.getElementById('preview');
+    const preview = document.getElementById('planPreview');
     const imagePreview = document.getElementById('imagePreviewPlan');
     const file = event.target.files[0];
     
@@ -39,7 +39,7 @@ function previewImagePlan(event) {
 }
 
 function previewImageCarte(event) {
-    const preview = document.getElementById('preview');
+    const preview = document.getElementById('cartePreview');
     const imagePreview = document.getElementById('imagePreviewCarte');
     const file = event.target.files[0];
     
