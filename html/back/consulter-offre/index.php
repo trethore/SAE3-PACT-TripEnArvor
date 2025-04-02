@@ -577,8 +577,8 @@ try {
                 echo '<pre>';
                 print_r($unAvis['id_membre']);
                 print_r($membre[$identifiant]['id_compte']);
-                echo '</spre>';
-                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                echo '</pre>';
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
         ?>
                     <div class="fond-blocs-avis">
                 <?php 
@@ -608,24 +608,24 @@ try {
                                 </div>
                             </div>
 
-                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$identifiant]['id_compte']; ?>">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $unAvis['id_membre']; ?>">
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
                             <?php
-                            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                            if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
                             ?>
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
                                         <?php
-                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) {
+                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $unAvis['id_membre']))) {
                                         ?>
-                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
+                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($unAvis['id_membre']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                         <?php
                                         }
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
                                         ?>
-                                            <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                            <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($unAvis['id_membre']); ?>">Blacklister</li>
                                         <?php 
                                         }
                                         ?>
@@ -767,7 +767,7 @@ try {
 
                     <?php 
                     } else { 
-                        if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                        if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
                     ?>
                             <button class="bouton-reponse" onclick="afficherFormReponse(event, this, <?php echo $identifiant; ?>)">Répondre</button>
                                 
