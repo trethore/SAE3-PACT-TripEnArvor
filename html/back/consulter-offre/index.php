@@ -221,7 +221,7 @@ try {
                             <p class="nombre-blacklistage"><em><?php echo htmlentities($offre['nb_jetons']); ?> blacklistage restant(s)</em></p>
                             <?php
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
-                                $dateRestante = getDateRestante($id_offre);
+                                $dateRestante = getDateRestante($id_offre_cible);
                                 $jours_restants = $dateRestante[0]['jours_restants'];
                                 $heures_restantes = $dateRestante[0]['heures_restantes'];
                                 $minutes_restantes = $dateRestante[0]['minutes_restantes'];
