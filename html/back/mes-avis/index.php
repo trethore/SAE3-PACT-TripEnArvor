@@ -255,10 +255,16 @@ if ($typeCompte === 'proPrive') {
 
                 <?php } else { ?>
 
-                    <h2> <?php
+                    <h2> 
+                        <?php
+                        if ($nb_non_lu!= 0 ) {
                             echo  $nb_non_lu . " avis non lus";
-                            echo "<br>";
-                            echo $nbrAvisNonRepondus . " avis non repondus"; ?>
+                        }
+                        echo "<br>";
+                        if ($nbrAvisNonRepondus != 0) {
+                            echo $nbrAvisNonRepondus . " avis non repondus";
+                        } ?>
+
                     </h2> 
                     <article class="filtre-tri">
                         <h2>Tris</h2>
