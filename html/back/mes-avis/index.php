@@ -219,7 +219,7 @@ if ($typeCompte === 'proPrive') {
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
                         $lavis['dateAvis'] = getDatePublicationAvecIDMembre($membre[$i]['id_membre'], $id_offre)[0]['date'];
-                        print($lavis['dateAvis']);
+                        print_r(getDatePublicationAvecIDMembre($membre[$i]['id_membre'], $id_offre));
                         $lavis['titre_offre'] = $offre['titre'];
 
                         $touslesavis[] = $lavis; 
