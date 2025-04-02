@@ -4550,6 +4550,11 @@ h3 {
     width: 100%; /* Si tu veux que la div prenne toute la largeur disponible */
 }
 
+.mes-avis #tri_recent, .mes-avis #tri_ancien, .mes-avis #tri_offre {
+    border: 2px solid red;
+}
+
+
 
 #infobulle {
     /* background-color:var(--orange-principale); */

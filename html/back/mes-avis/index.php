@@ -556,26 +556,26 @@ if ($typeCompte === 'proPrive') {
         const selectElement = document.getElementById("tris");
 
         // Au chargement, n'afficher que le tri "offre"
-        triRecent.style.display = 'none';
-        triAncien.style.display = 'none';
-        triOffre.style.display = 'block';
+        document.getElementById("tri_recent").style.display = 'none';
+        document.getElementById("tri_ancien").display = 'none';
+        document.getElementById("tri_offre").style.display = 'block';
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
             console.log("Tri choisi:", triChoisi);
 
             // Cacher tous les divs
-            triRecent.style.display = 'none';
-            triAncien.style.display = 'none';
-            triOffre.style.display = 'none';
+            document.getElementById("tri_recent").style.display = 'none';
+            document.getElementById("tri_ancien").style.display = 'none';
+            document.getElementById("tri_offre").style.display = 'none';
 
             // Afficher le div correspondant à la valeur sélectionnée
             if (triChoisi === "recent") {
-                triRecent.style.display = 'block';
+                document.getElementById("tri_recent").style.display = 'block';
             } else if (triChoisi === "ancien") {
-                triOffre.style.display = 'block';
+                document.getElementById("tri_offre").style.display = 'block';
             } else if (triChoisi === "tri_offre") {
-                triAncien.style.display = 'block';
+                document.getElementById("tri_ancien").style.display = 'block';
             }
         });
     });
