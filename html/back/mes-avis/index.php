@@ -242,10 +242,9 @@ if ($typeCompte === 'proPrive') {
                 });
 
 
-                // echo "<br> <pre>";
-                // print_r($aviTriPluAncien);
-                // echo "</pre>";
-                // $min = $touslesavis[0]['dateAvis'];
+                echo "<br> <pre>";
+                print_r($aviTriPluAncien);
+                echo "</pre>";
                 
                 // echo "<br> <pre>";
                 // print("le tri plus recent");
@@ -273,7 +272,6 @@ if ($typeCompte === 'proPrive') {
                     </h2> 
                     <div id="tri_offre" >
                     <?php
-                            echo 'tri par offre';
 
                             foreach ($touteslesoffres as $offre) {
                                 if ($nb_avis_total == 0) {
@@ -379,9 +377,6 @@ if ($typeCompte === 'proPrive') {
                         </div> 
 
                         <div id="tri_recent"  >
-                        <h3>
-                                tri pqr plus recent
-                            </h3>
                         <?php foreach ($aviTriPluRecent as $lavis) { 
                             $id_offre = $lavis['id_offre']; ?>
 
@@ -445,9 +440,6 @@ if ($typeCompte === 'proPrive') {
                         </div>
 
                         <div id="tri_ancien"  >
-                            <h3>
-                                tri pqr plus ancien
-                            </h3>
                         <?php foreach ($aviTriPluAncien as $lavis) { 
                             $id_offre = $lavis['id_offre'];  ?>
 
