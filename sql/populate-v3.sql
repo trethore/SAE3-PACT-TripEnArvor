@@ -276,6 +276,25 @@ BEGIN
     (var_id_offre_krampouzerie, 'Groupe'),
     (var_id_offre_krampouzerie, 'Solo');
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-01'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_krampouzerie,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -385,6 +404,25 @@ BEGIN
     (var_id_offre_coste_mor, 'Groupe'),
     (var_id_offre_coste_mor, 'Solo');
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-02'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_coste_mor,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -493,6 +531,25 @@ BEGIN
     (var_id_offre_koadenn, 'Famille'),
     (var_id_offre_koadenn, 'Groupe'),
     (var_id_offre_koadenn, 'Solo');
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-03'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_koadenn,
+        var_id_date
+    );
 
 
 
@@ -640,6 +697,25 @@ BEGIN
     ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 0, var_id_offre_armoripark),
     ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 13, var_id_offre_armoripark),
     ('Juillet → Août : 14h - 18h30 : 18 - 64 ans', 15, var_id_offre_armoripark);
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-04'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_armoripark,
+        var_id_date
+    );
 
 
     /* ##################################################################### */
@@ -793,6 +869,25 @@ BEGIN
     (var_id_offre_aquarev, 'Groupe'),
     (var_id_offre_aquarev, 'Solo');
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-05'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_aquarev,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -920,6 +1015,25 @@ BEGIN
     (var_id_offre_coat_an_noz, 'Famille'),
     (var_id_offre_coat_an_noz, 'Groupe'),
     (var_id_offre_coat_an_noz, 'Solo');
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-06'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_coat_an_noz,
+        var_id_date
+    );
 
 
 
@@ -1063,6 +1177,25 @@ BEGIN
     ('Groupe (+15 personnes) : Adulte et Enfant de + de 12 ans ', 9, var_id_offre_terrarium_vivarium_kerdanet),
     ('Journée soigneur', 60, var_id_offre_terrarium_vivarium_kerdanet);
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-07'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_terrarium_vivarium_kerdanet,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -1182,6 +1315,25 @@ BEGIN
     ('Groupe de 6 à 10 personnes', 50, var_id_offre_musee_resistance_argoat),
     ('Groupe de plus de 10 personnes', 6, var_id_offre_musee_resistance_argoat),
     ('Visite guidée pour les scolaires', 4, var_id_offre_musee_resistance_argoat);
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-08'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_musee_resistance_argoat,
+        var_id_date
+    );
 
 
 
@@ -1309,6 +1461,25 @@ BEGIN
     ('Adultes', 8, var_id_offre_fort_latte),
     ('Étudiants (jusqu''à 26 ans), lycéens, demandeurs d''emploi', 7, var_id_offre_fort_latte),
     ('Enfants (moins de 12 ans)', 5, var_id_offre_fort_latte);
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-09'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_fort_latte,
+        var_id_date
+    );
 
 
     /* ##################################################################### */
@@ -1442,6 +1613,25 @@ BEGIN
     VALUES
     ('À partir de', 45, var_id_offre_THE_JEFF_PANACLOC_COMPANY);
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-10'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_THE_JEFF_PANACLOC_COMPANY,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -1517,6 +1707,25 @@ BEGIN
     VALUES
     ('À partir de', 42, var_id_offre_WALY_DIA);
 
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-10'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_WALY_DIA,
+        var_id_date
+    );
+
 
 
     /* ##################################################################### */
@@ -1591,6 +1800,25 @@ BEGIN
     )
     VALUES
     ('À partir de', 39, var_id_offre_CALOGERO);
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-10'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_CALOGERO,
+        var_id_date
+    );
 
 
 
@@ -1732,6 +1960,25 @@ BEGIN
     VALUES (
         var_nom_prestation,
         var_id_offre_labyrinthe_malido
+    );
+
+    INSERT INTO _date
+    (
+        "date"
+    )
+    VALUES (
+        '2025-01-11'
+    )
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO _offre_dates_mise_en_ligne
+    (
+        "id_offre",
+        "id_date"
+    )
+    VALUES (
+        var_id_offre_labyrinthe_malido,
+        var_id_date
     );
 
 
