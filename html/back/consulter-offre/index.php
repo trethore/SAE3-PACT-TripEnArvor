@@ -292,7 +292,7 @@ try {
                             }
                         } 
                         ?>
-                        <p><a href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
+                        <p><a class="lien" href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
                     </div>
 
                 </div>
@@ -357,7 +357,7 @@ try {
                     } 
                 } 
                 ?>
-                 <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
+                 <p class="<?php echo htmlentities($result); ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
             </div>
 
         </section>
@@ -392,7 +392,7 @@ try {
 
                 <div class="display-ligne-espace">
                     <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
-                    <a href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
+                    <a class="lien" href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
 
                 <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
@@ -432,7 +432,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Âge minimum : <?php echo htmlentities($attraction['age_min']); ?> ans</p>
-                            <a class="fichier" href="<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
+                            <a class="lien" href="/images/universel/photos/<?php echo htmlentities($attraction['plan']); ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
                         <?php 
@@ -444,7 +444,7 @@ try {
 
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
-                            <a class="fichier" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
+                            <a class="lien" href="/images/universel/photos/<?php echo htmlentities($restaurant['carte']); ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
                 <?php 
@@ -574,7 +574,7 @@ try {
                     $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
                     $updateStmt->execute(['id_membre' => $unAvis['id_membre'],'id_offre' => $unAvis['id_offre']]);
                 }
-                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
         ?>
                     <div class="fond-blocs-avis">
                 <?php 
@@ -587,7 +587,7 @@ try {
                         <div class="display-ligne-espace">
 
                             <div class="display-ligne">
-                                <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
+                                <p class="titre-avis"><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])); ?></p>
                                 <div class="display-ligne">
                                     <?php 
                                     for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { 
@@ -604,24 +604,24 @@ try {
                                 </div>
                             </div>
 
-                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $membre[$identifiant]['id_compte']; ?>">
+                            <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)"  data-id-offre="<?php echo $unAvis['id_offre'] ?>"data-id-membre="<?php echo $unAvis['id_membre']; ?>">
                                 <img src="/images/universel/icones/trois-points-orange.png">
                             </button>
 
                             <?php
-                            if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                            if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
                             ?>
                                 <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                     <ul>
                                         <?php
-                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) {
+                                        if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $unAvis['id_membre']))) {
                                         ?>
-                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
+                                            <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($unAvis['id_membre']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                         <?php
                                         }
                                         if ((getCompteTypeAbonnement(intval($_GET['id'])) == 'premium') && (getOffre($id_offre_cible)['nb_jetons'] > 0)) {
                                         ?>
-                                            <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>">Blacklister</li>
+                                            <li onclick="confirmerBlacklister(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-membre="<?php echo htmlentities($unAvis['id_membre']); ?>">Blacklister</li>
                                         <?php 
                                         }
                                         ?>
@@ -634,7 +634,7 @@ try {
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
-                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])) ?></strong> ?</p>
                                     <form id="signalement-form">
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
@@ -660,7 +660,7 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
-                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])) ?></strong> ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
@@ -763,13 +763,13 @@ try {
 
                     <?php 
                     } else { 
-                        if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']))) { 
+                        if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
                     ?>
                             <button class="bouton-reponse" onclick="afficherFormReponse(event, this, <?php echo $identifiant; ?>)">Répondre</button>
                                 
                             <div id="reponse-form-<?php echo $identifiant; ?>" style="display: none;">
                                 <form class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
-                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo $membre[$identifiant]['pseudo']; ?></span></p>
+                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo getPseudoFromId($unAvis['id_membre']); ?></span></p>
                                     <div class="display-ligne">
                                         <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>

@@ -779,14 +779,8 @@ try {
             <?php 
             }
             $identifiant = 0;
-            foreach ($avis as $unAvis) { 
-                echo '<pre>';
-                print_r($avis);
-                echo '</pre>';
-                echo '<pre>';
-                print_r($membre);
-                echo '</pre>';
-                if (empty(getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte'])) || getDateBlacklistage($unAvis['id_offre'], $membre[$identifiant]['id_compte']) == $_SESSION['id']) { 
+            foreach ($avis as $unAvis) {
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre'])) || getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']) == $_SESSION['id']) { 
             ?>
 
                     <div class="fond-blocs-avis">
@@ -794,9 +788,7 @@ try {
                         <div class="display-ligne-espace">
                             
                             <div class="display-ligne">
-                                <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
-
-                                <?php print_r($membre[$identifiant]['id_compte']); ?>
+                                <p class="titre-avis"><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])); ?></p>
 
                                 <div class="display-ligne">
                                     <?php 
@@ -826,9 +818,9 @@ try {
                                     ?>
                                         <li onclick="confirmerSupprimer()" id="bouton-supprimer-avis">Supprimer</li>
                                     <?php 
-                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $membre[$identifiant]['id_compte']))) { 
+                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $unAvis['id_membre']))) { 
                                     ?>
-                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($membre[$identifiant]['id_compte']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
+                                        <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($unAvis['id_membre']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
                                     <?php 
                                     } 
                                     ?>
@@ -838,7 +830,7 @@ try {
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
-                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])) ?></strong> ?</p>
                                     <form id="signalement-form">
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
