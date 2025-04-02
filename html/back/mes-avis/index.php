@@ -259,8 +259,9 @@ if ($typeCompte === 'proPrive') {
                         <?php
                         if ($nb_non_lu!= 0 ) {
                             echo  $nb_non_lu . " avis non lus";
+                            echo "<br>";
                         }
-                        echo "<br>";
+                        
                         if ($nbrAvisNonRepondus != 0) {
                             echo $nbrAvisNonRepondus . " avis non répondus";
                         } ?>
