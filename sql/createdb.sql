@@ -161,13 +161,14 @@ CREATE TABLE _offre (
     id_compte_professionnel INTEGER NOT NULL,
     id_adresse              INTEGER,
     abonnement              VARCHAR(63) NOT NULL,
-    nb_jetons               INTEGER CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL)),
+    nb_jetons               INTEGER,
     jeton_perdu_le          TIMESTAMP,
     lat                     DOUBLE PRECISION,
     lon                     DOUBLE PRECISION,
     CONSTRAINT _offre_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_fk_compte_professionnel FOREIGN KEY (id_compte_professionnel) REFERENCES _compte_professionnel(id_compte),
-    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement)
+    CONSTRAINT _offre_fk_abonnement FOREIGN KEY (abonnement) REFERENCES _abonnement(nom_abonnement),
+    CONSTRAINT _offre_check_abonnement_jetons CHECK ((abonnement = 'premium' AND nb_jetons IS NOT NULL) OR (abonnement != 'premium' AND nb_jetons IS NULL))
 );
 
 
@@ -194,7 +195,7 @@ CREATE VIEW offre_activite AS
 CREATE TABLE _offre_visite (
     id_offre        INTEGER,
     duree           INTEGER NOT NULL,
-    date_evenement  INTEGER NOT NULL,
+    date_evenement  INTEGER,
     CONSTRAINT _offre_visite_pk PRIMARY KEY (id_offre),
     CONSTRAINT _offre_visite_fk_offre FOREIGN KEY (id_offre) REFERENCES _offre(id_offre),
     CONSTRAINT _offre_visite_fk_date FOREIGN KEY (date_evenement) REFERENCES _date(id_date)

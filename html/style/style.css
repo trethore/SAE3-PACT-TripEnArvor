@@ -5420,9 +5420,10 @@ h3 {
 
 .liste-front .nom-offre {
     position: absolute;
-    left: 73%;
+    right: 0;
     top: 45%;
-
+    width: 6rem;
+    
     margin-top: 1em;
     margin-right: 1em;
 
@@ -5434,6 +5435,8 @@ h3 {
     display: flex;
     align-items: center;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
 
     color: var(--noir);
 }
