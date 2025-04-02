@@ -68,6 +68,24 @@ BEGIN
     ('Solo');
 
 
+    INSERT INTO compte_membre (
+        "nom_compte", 
+        "prenom", 
+        "email", 
+        "tel", 
+        "mot_de_passe", 
+        "pseudo"
+    )
+    VALUES (
+        'anonyme', 
+        'anonyme', 
+        'anonyme@ano.com', 
+        '9999999999', 
+        '', 
+        'Ancien Utilisateur'
+    );
+
+
     -- /* ##################################################################### */
     -- /*                                Example                                */
     -- /* ##################################################################### */
@@ -321,8 +339,6 @@ BEGIN
         'En Relief',
         var_id_date_souscription
     );
-
-
 
 
 
