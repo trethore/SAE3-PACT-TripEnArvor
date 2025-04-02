@@ -752,7 +752,7 @@ try {
                                 
                             <div>
                                 <label id="photo" for="photo">Importez une photo</label> 
-                                <input type="file" id="photo" name="photo"/><br>
+                                <input type="file" id="photo" name="photo" onchange="previewImage(event)" /><br>
 
                                 <div id="imagePreview" style="margin-top: 10px; display: none;">
                                     <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
