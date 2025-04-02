@@ -554,9 +554,9 @@ if ($typeCompte === 'proPrive') {
         
 
         // Au chargement, n'afficher que le tri "offre"
+        document.getElementById("tri_offre").style.display = 'block';
         document.getElementById("tri_recent").style.display = 'none';
         document.getElementById("tri_ancien").display = 'none';
-        document.getElementById("tri_offre").style.display = 'block';
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
