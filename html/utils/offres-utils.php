@@ -1140,6 +1140,24 @@
         }
     }
 
+    function getPseudoFromId($id_membre) {
+        global $driver, $server, $dbname, $user, $pass;
+        $reqPseudo = "SELECT pseudo FROM sae._compte_membre WHERE id_compte = :id_membre";
+        try {
+            $conn = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $conn->prepare("SET SCHEMA 'sae';")->execute();
+            $stmtPseudo = $conn->prepare($reqPseudo);
+            $stmtPseudo->bindParam(':id_membre', $id_membre, PDO::PARAM_INT);
+            $stmtPseudo->execute();
+            $pseudo = $stmtPseudo->fetchAll(PDO::FETCH_ASSOC);
+            $conn = null;
+            return $pseudo;
+        } catch (Exception $e) {
+            print "Erreur !: " . $e->getMessage() . "<br>";
+            die();
+        }
+    }
+
     function getNbSemaine($date, $today) {
         // Convertir la date de la base de données en objet DateTime
         $dateFromDbObj = new DateTime($date);
