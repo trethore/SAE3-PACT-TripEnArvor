@@ -529,8 +529,8 @@ BEGIN
         "siren"
     )
     VALUES (
-        'Prénom',
-        'NOM',
+        'Jean',
+        'DUPONT',
         'email@armoripark.com',
         '+33296453636',
         '$2y$10$NLe0ZT5LsAZpULI.u/hBj.n4Zr3rS6cJW5Ctu98OjVylsvkvoOKoi', -- 'Mot de passe Armoripark'
@@ -1098,8 +1098,8 @@ BEGIN
         "siren"
     )
     VALUES (
-        'prénom',
-        'NOM',
+        'Jean',
+        'DUPOND',
         'etangneuf.asso@orange.fr',
         '+33296471766',
         '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
@@ -1898,6 +1898,65 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-05')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-01')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        5,
+        'Un incontournable pour les amateurs de fruits de mer',
+        'Tout était parfait ! Les plateaux de fruits de mer sont généreux et d’une qualité irréprochable. Le personnel est très accueillant et l’ambiance maritime rend l’expérience encore plus plaisante. Une adresse que je recommande à 100 % !',
+        'famille',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -2055,6 +2114,65 @@ BEGIN
         'amis',
         var_id_date,
         var_id_date2
+    );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-01')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-30')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        5,
+        'Excellent restaurant, je reviendrai !',
+        'Une vraie pépite ! J’ai goûté un plateau de fruits de mer et c’était un régal. Les huîtres étaient ultra fraîches et le poisson cuit à la perfection. Le personnel était super accueillant et l’ambiance très agréable. Hâte d’y retourner !',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
     );
 
 
@@ -2218,6 +2336,65 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-28')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-25')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        4,
+        'Très bon mais un peu cher',
+        'Le cadre est idyllique et l’ambiance agréable. Les plats sont très bons, surtout le poisson qui était parfaitement cuit. Par contre, les prix sont un peu élevés pour les portions. Le service était correct, même si un peu lent en heure de pointe.',
+        'amis',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        3,
+        var_id_compte,
+        var_id_offre_coste_mor
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -2378,6 +2555,66 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-15')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-12')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        3,
+        'Bon repas, mais service à revoir',
+        'La cuisine est bonne, mais l’attente était interminable. Nous avons attendu presque 30 minutes pour être servis, et le personnel semblait débordé. Dommage, car le cadre est magnifique et les plats bien préparés.',
+        'solo',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        2,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        3,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        3,
+        var_id_compte,
+        var_id_offre_coste_mor
+    );
+
+
+
     INSERT INTO sae.compte_membre (
         "nom_compte",
         "prenom",
@@ -2457,6 +2694,65 @@ BEGIN
     );
 
 
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-02')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-30')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        5,
+        'Un régal face à la mer !',
+        'Un superbe restaurant avec une vue magnifique sur la plage et le château de Costaérès. Les fruits de mer étaient d’une fraîcheur exceptionnelle et les moules-frites absolument délicieuses. Service aux petits soins, ambiance chaleureuse… une très belle découverte !',
+        'couple',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    );
+
+
 
     INSERT INTO sae.compte_membre (
         "nom_compte",
@@ -2505,6 +2801,66 @@ BEGIN
         var_id_date,
         var_id_date2
     );
+
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-04-01')
+    RETURNING "id_date" INTO var_id_date;
+
+    INSERT INTO sae._date ("date")
+    VALUES ('2025-03-29')
+    RETURNING "id_date" INTO var_id_date2;
+
+    INSERT INTO sae._avis (
+        "id_membre",
+        "id_offre",
+        "note",
+        "titre",
+        "commentaire",
+        "contexte_visite",
+        "publie_le",
+        "visite_le"
+    )
+    VALUES (
+        var_id_compte,
+        var_id_offre_coste_mor,
+        4,
+        'Très bon restaurant avec une vue incroyable',
+        'J’ai adoré la localisation du restaurant, juste en face du château de Costaérès. Les fruits de mer étaient frais et bien préparés. Mention spéciale au service, très professionnel et sympathique. Une belle adresse pour un repas en bord de mer !',
+        'affaires',
+        var_id_date,
+        var_id_date2
+    );
+
+    INSERT INTO _note_detaillee
+    (
+        "nom_note",
+        "note",
+        "id_membre",
+        "id_offre"
+    )
+    VALUES (
+        'Cuisine',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Service',
+        5,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Ambiance',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    ), (
+        'Rapport qualité prix',
+        4,
+        var_id_compte,
+        var_id_offre_coste_mor
+    );
+
 
 END $$;
 
