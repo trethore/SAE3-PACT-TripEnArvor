@@ -662,17 +662,17 @@ try {
                             <div class="display-ligne">
 
                                 <div class="display-ligne">
-                                    <label class="label-avis" for="titre">Titre <span>*</span></label>
+                                    <label class="label-avis" for="titre">Titre <span class="requis">*</span></label>
                                     <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
                                 </div>
 
                                 <div class="display-ligne"> 
-                                    <label class="label-avis-champs" for="date">Date de visite <span>*</span></label>
+                                    <label class="label-avis-champs" for="date">Date de visite <span class="requis">*</span></label>
                                     <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
                                 </div>
 
                                 <div class="display-ligne">
-                                    <label class="label-avis-champs" for="contexte">Contexte <span>*</span></label>
+                                    <label class="label-avis-champs" for="contexte">Contexte <span class="requis">*</span></label>
                                     <select id="contexte" name="contexte" required>
                                         <option value="" disabled selected>Contexte</option>
                                         <option value="affaires">Affaires</option>
@@ -691,7 +691,7 @@ try {
                                 <div class="display-ligne-note-detaille">
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_cuisine">Cuisine<span>*</span></label>
+                                        <label class="label-avis" for="note_cuisine">Cuisine<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_cuisine" id="star5_c" value="5" required><label for="star5_c"></label>
                                             <input type="radio" name="note_cuisine" id="star4_c" value="4" required><label for="star4_c"></label>
@@ -702,7 +702,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_service">Service<span>*</span></label>
+                                        <label class="label-avis" for="note_service">Service<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_service" id="star5_s" value="5" required><label for="star5_s"></label>
                                             <input type="radio" name="note_service" id="star4_s" value="4" required><label for="star4_s"></label>
@@ -713,7 +713,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_ambiance">Ambiance<span>*</span></label>
+                                        <label class="label-avis" for="note_ambiance">Ambiance<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_ambiance" id="star5_a" value="5" required><label for="star5_a"></label>
                                             <input type="radio" name="note_ambiance" id="star4_a" value="4" required><label for="star4_a"></label>
@@ -724,7 +724,7 @@ try {
                                     </div>
 
                                     <div class="display-ligne">
-                                        <label class="label-avis" for="note_rapport">Rapport qualité prix<span>*</span></label>
+                                        <label class="label-avis" for="note_rapport">Rapport qualité prix<span class="requis">*</span></label>
                                         <div class="rating">
                                             <input type="radio" name="note_rapport" id="star5_r" value="5" required><label for="star5_r"></label>
                                             <input type="radio" name="note_rapport" id="star4_r" value="4" required><label for="star4_r"></label>
@@ -741,7 +741,7 @@ try {
                             ?>
                                         
                             <div>
-                                <label for="avis">Décrivez votre expérience <span>*</span></label>
+                                <label for="avis">Décrivez votre expérience <span class="requis">*</span></label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
                                 
