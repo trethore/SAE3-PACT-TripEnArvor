@@ -4457,6 +4457,21 @@ h3 {
     justify-content: space-between; /* Répartit les avis */
 }
 
+.mes-avis .fond-filtres {
+    overflow: hidden;
+    /* Permet l'effet de rétractation */
+    max-height: 100px;
+    /* Grande valeur initiale */
+    transition: max-height 0.5s ease-out;
+    /* Animation fluide */
+}
+
+.mes-avis .fond-filtres.hidden {
+    max-height: 0;
+    /* Rétractation */
+    transition: max-height 0.5s ease-out;
+}
+
 .back .mes-avis .fond-blocs-avis {
     margin-top: 7px;
     min-width: 800px;
