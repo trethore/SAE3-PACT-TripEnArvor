@@ -574,10 +574,6 @@ try {
                     $updateStmt = $pdo->prepare("UPDATE sae._avis SET lu = true WHERE id_membre = :id_membre AND id_offre = :id_offre");
                     $updateStmt->execute(['id_membre' => $unAvis['id_membre'],'id_offre' => $unAvis['id_offre']]);
                 }
-                echo '<pre>';
-                print_r($unAvis['id_membre']);
-                print_r($membre[$identifiant]['id_compte']);
-                echo '</pre>';
                 if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']))) { 
         ?>
                     <div class="fond-blocs-avis">
@@ -591,7 +587,7 @@ try {
                         <div class="display-ligne-espace">
 
                             <div class="display-ligne">
-                                <p class="titre-avis"><?php echo htmlentities($membre[$identifiant]['pseudo']); ?></p>
+                                <p class="titre-avis"><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])); ?></p>
                                 <div class="display-ligne">
                                     <?php 
                                     for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) { 
@@ -638,7 +634,7 @@ try {
                             <div class="confirmation-popup-signaler" id="confirmation-popup-signaler-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div>
-                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Quel est le problème avec l'avis de <strong><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])) ?></strong> ?</p>
                                     <form id="signalement-form">
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
@@ -664,7 +660,7 @@ try {
                             <div class="confirmation-popup" id="confirmation-popup-<?php echo $identifiant; ?>" style="display: none;">
 
                                 <div class="confirmation-content">
-                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities($membre[$identifiant]['pseudo']) ?></strong> ?</p>
+                                    <p>Êtes-vous sûr de vouloir blacklister l'avis de <strong><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])) ?></strong> ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <button id="confirmer-blacklister-<?php echo $identifiant; ?>" onclick="validerBlacklister(<?php echo $identifiant; ?>)">Blacklister</button>
                                     <button onclick="annulerBlacklister(<?php echo $identifiant; ?>)">Annuler</button>
@@ -773,7 +769,7 @@ try {
                                 
                             <div id="reponse-form-<?php echo $identifiant; ?>" style="display: none;">
                                 <form class="avis-form" onsubmit="validerReponse(event, <?php echo $identifiant; ?>, <?php echo $id_offre_cible; ?>, <?php echo $unAvis['id_membre']; ?>)">
-                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo $membre[$identifiant]['pseudo']; ?></span></p>
+                                    <p class="titre-avis">Répondre à <span id="pseudo-membre"><?php echo getPseudoFromId($unAvis['id_membre']); ?></span></p>
                                     <div class="display-ligne">
                                         <textarea id="texte-reponse-<?php echo $identifiant; ?>" name="reponse" placeholder="Merci pour votre retour ..." required></textarea><br>
                                     </div>
