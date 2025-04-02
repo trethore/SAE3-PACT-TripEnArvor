@@ -270,7 +270,9 @@ if ($typeCompte === 'proPrive') {
                             echo  $nb_non_lu . " avis non lus";
                             echo "<br>";
                             echo $nbrAvisNonRepondus . " avis non repondus"; ?>
-                    </h2> <?php
+                    </h2> 
+                    <div id="tri_offre" >
+                    <?php
                             echo 'tri par offre';
 
                             foreach ($touteslesoffres as $offre) {
@@ -312,7 +314,7 @@ if ($typeCompte === 'proPrive') {
 
                                 $compteur = 0; ?>
                                     
-                                    <div id="tri_offre" >
+                                    
                                     <?php foreach ($avis as $lavis) {  ?>
                                         <article>
                                         <?php if ($lavis['lu'] == false) {
@@ -371,7 +373,7 @@ if ($typeCompte === 'proPrive') {
                                     <?php $compteur++; ?>
                                     </article> 
                                     <?php
-                                    } ?>  </div>  <?php
+                                    } 
                                      echo "<br>";
                                      }}?>
                         </div> 
