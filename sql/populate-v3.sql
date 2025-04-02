@@ -7,11 +7,12 @@ START TRANSACTION;
 DO $$
 DECLARE
     -- Le `var_` permet de lever les ambiguïtés entre le nom des variables et le nom des colonnes des tables.
-    var_id_adresse      INTEGER;
-    var_id_compte       INTEGER;
-    var_id_date         INTEGER;
-    var_id_date2         INTEGER;
-    var_nom_prestation  VARCHAR(128);
+    var_id_adresse              INTEGER;
+    var_id_compte               INTEGER;
+    var_id_date                 INTEGER;
+    var_id_date2                INTEGER;
+    var_id_date_souscription    INTEGER;
+    var_nom_prestation          VARCHAR(128);
 
     var_id_offre_krampouzerie                   INTEGER;
     var_id_offre_coste_mor                      INTEGER;
@@ -34,6 +35,11 @@ BEGIN
     ('gratuit'),
     ('standard'),
     ('premium');
+
+    INSERT INTO _option ("nom_option")
+    VALUES 
+    ('En Relief'), 
+    ('À la Une');
 
     INSERT INTO _tag ("nom_tag") 
     VALUES 
@@ -295,6 +301,29 @@ BEGIN
         var_id_date
     );
 
+    INSERT INTO _date_souscription_option (
+        "date_debut",
+        "nb_semaines"
+    )
+    VALUES (
+        '2025-03-31',
+        4
+    )
+    RETURNING "id_date_souscription" INTO var_id_date_souscription;
+
+    INSERT INTO _offre_souscrit_option (
+        "id_offre",
+        "nom_option",
+        "id_date_souscription"
+    )
+    VALUES (
+        var_id_offre_krampouzerie,
+        'En Relief',
+        var_id_date_souscription
+    );
+
+
+
 
 
     /* ##################################################################### */
@@ -423,6 +452,28 @@ BEGIN
         var_id_date
     );
 
+    INSERT INTO _date_souscription_option (
+        "date_debut",
+        "nb_semaines"
+    )
+    VALUES (
+        '2025-03-28',
+        4
+    )
+    RETURNING "id_date_souscription" INTO var_id_date_souscription;
+
+    INSERT INTO _offre_souscrit_option (
+        "id_offre",
+        "nom_option",
+        "id_date_souscription"
+    )
+    VALUES (
+        var_id_offre_coste_mor,
+        'À la Une',
+        var_id_date_souscription
+    );
+
+
 
 
     /* ##################################################################### */
@@ -549,6 +600,27 @@ BEGIN
     VALUES (
         var_id_offre_koadenn,
         var_id_date
+    );
+
+    INSERT INTO _date_souscription_option (
+        "date_debut",
+        "nb_semaines"
+    )
+    VALUES (
+        '2025-03-30',
+        4
+    )
+    RETURNING "id_date_souscription" INTO var_id_date_souscription;
+
+    INSERT INTO _offre_souscrit_option (
+        "id_offre",
+        "nom_option",
+        "id_date_souscription"
+    )
+    VALUES (
+        var_id_offre_koadenn,
+        'En Relief',
+        var_id_date_souscription
     );
 
 
@@ -715,6 +787,27 @@ BEGIN
     VALUES (
         var_id_offre_armoripark,
         var_id_date
+    );
+
+    INSERT INTO _date_souscription_option (
+        "date_debut",
+        "nb_semaines"
+    )
+    VALUES (
+        '2025-03-29',
+        4
+    )
+    RETURNING "id_date_souscription" INTO var_id_date_souscription;
+
+    INSERT INTO _offre_souscrit_option (
+        "id_offre",
+        "nom_option",
+        "id_date_souscription"
+    )
+    VALUES (
+        var_id_offre_armoripark,
+        'À la Une',
+        var_id_date_souscription
     );
 
 
@@ -1333,6 +1426,27 @@ BEGIN
     VALUES (
         var_id_offre_musee_resistance_argoat,
         var_id_date
+    );
+
+    INSERT INTO _date_souscription_option (
+        "date_debut",
+        "nb_semaines"
+    )
+    VALUES (
+        '2025-03-31',
+        4
+    )
+    RETURNING "id_date_souscription" INTO var_id_date_souscription;
+
+    INSERT INTO _offre_souscrit_option (
+        "id_offre",
+        "nom_option",
+        "id_date_souscription"
+    )
+    VALUES (
+        var_id_offre_musee_resistance_argoat,
+        'En Relief',
+        var_id_date_souscription
     );
 
 
