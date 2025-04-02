@@ -16,7 +16,7 @@
     --violet-secondaire: rgba(145, 115, 225, 1);
     --marron: rgba(191, 140, 44, 1);
     --orange-principale: rgba(217, 102, 54, 1);
-    --orange-secondaire-1: rgba(217, 111, 50, 1);
+    --orange-secondaire-2: rgba(217, 111, 50, 1);
     --orange-secondaire-2: rgba(242, 139, 48, 1);
     --jaune-relief: #ffbf00;
 
@@ -289,8 +289,7 @@ h3 {
 .connecter button:hover,
 .connecter input[type="submit"]:hover,
 .creer-compte input[type="submit"]:hover {
-    background: var(--blanc-leger);
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 
@@ -319,16 +318,13 @@ h3 {
 .compte-back #apibutton, #auth_toggle_button {
     color:var(--blanc-leger);
     background-color: var(--orange-principale);
-    border: var(--orange-principale) 2px solid;
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
     cursor: pointer;
  }
 .compte-back #apibutton:hover, #auth_toggle_button:hover {
-     background-color: var(--blanc-leger);
-     color: var(--orange-principale);
-     border: var(--orange-principale) 2px solid;
+     background-color: var(--orange-secondaire-2);
      border-radius: 15px;
      padding: 0.2em 1em;
      font-size: 1.2em;
@@ -453,9 +449,7 @@ h3 {
 
 .compte-back section a:hover,
 .compte-back-modif section a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 .compte-back table+div,
@@ -507,9 +501,7 @@ h3 {
 
 .compte-back-modif table+div input:hover,
 .compte-back-modif table+div a:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 .compte-back-modif .error {
@@ -592,9 +584,7 @@ h3 {
 .compte-back-modif #popupRetourAccueil button:hover,
 .compte-back-modif #popupRetourCompte button:hover,
 .compte-back #validerDeleteCompte button:hover {
-    color: var(--orange-principale);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--orange-principale);
+    background-color: var(--orange-secondaire-2);
 }
 
 /**************************************************************************************
@@ -1186,9 +1176,7 @@ h3 {
 }
 
 .factures nav a:hover {
-    color: var(--blanc-leger);
-    background-color: var(--orange-principale);
-    border: 2px solid var(--blanc-leger);
+    background-color: var(--orange-secondaire-2);
 }
 
 /********************
@@ -1458,9 +1446,7 @@ h3 {
    cursor: pointer;
 }
 .compte-front #apibutton:hover, #auth_toggle_button:hover {
-    background-color: var(--blanc-leger);
-    color: var(--violet-principal);
-    border: var(--violet-principal) 2px solid;
+    background-color: var(--violet-secondaire);
     border-radius: 15px;
     padding: 0.2em 1em;
     font-size: 1.2em;
@@ -1614,9 +1600,7 @@ h3 {
 
 .compte-front main>section a:hover,
 .compte-front-modif main>section a:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .compte-front table+div,
@@ -1672,9 +1656,7 @@ h3 {
 
 .compte-front-modif table+div input:hover,
 .compte-front-modif table+div a:hover {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 /* Style des boutons */
@@ -1703,9 +1685,7 @@ h3 {
 .compte-front-modif #popupRetourAccueil button:hover,
 .compte-front-modif #popupRetourCompte button:hover
 {
-    color: var(--violet-principal);
-    background-color: var(--blanc-leger);
-    border: 2px solid var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 #validerDeleteCompte button {
@@ -1837,7 +1817,6 @@ h3 {
 }
 
 .creer-compte input[type="submit"]:enabled {
-    border: var(--violet-principal) 2px solid;
     cursor: pointer;
     background-color: var(--violet-principal);
     color: white;
@@ -1846,7 +1825,7 @@ h3 {
 
 .creer-compte input[type="submit"]:enabled:hover {
     background-color: white;
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .creer-compte textarea {
@@ -2908,9 +2887,7 @@ h3 {
 }
 
 .modifier-offre input::file-selector-button:hover {
-    background: #fff;
-    color: var(--orange-principale);
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    background-color: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -2941,8 +2918,7 @@ h3 {
 }
 
 .modifier-offre .valider:hover {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
+    background: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -2951,15 +2927,13 @@ h3 {
     height: 50px;
     background: var(--orange-principale);
     border-radius: 5px;
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
 }
 
 .modifier-offre .valider+a :hover {
-    background: var(--blanc-leger);
+    background: var(--orange-secondaire-2);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -4917,9 +4891,7 @@ input[type="tel"] {
 }
 
 .creer-offre input::file-selector-button:hover {
-    background: #fff;
-    color: var(--orange-principale);
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    background-color: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -4948,14 +4920,12 @@ input[type="tel"] {
     font-size: 40px;
     width: 517px;
     height: 97px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     margin-left: 0;
 }
 
 .creer-offre .valider:hover {
-    background: var(--blanc-leger);
-    color: var(--orange-principale);
+    background: var(--orange-secondaire-2);
     transition: 0.3s ease-in-out;
 }
 
@@ -4970,9 +4940,8 @@ input[type="tel"] {
 }
 
 .creer-offre .valider+a :hover {
-    background: var(--blanc-leger);
+    background-color: var(--orange-secondaire-2);
     content: url("../images/backOffice/icones/fleche-vers-le-haut-orange.png");
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 100%;
     border-radius: 5px;
@@ -5044,9 +5013,7 @@ input[type="tel"] {
 }
 
 .liste-front .filtre-tri>h2:hover {
-    background-color: var(--blanc);
-    border: solid 2px var(--violet-principal);
-    color: var(--violet-principal);
+    background-color: var(--violet-secondaire);
 }
 
 .liste-front .filtre-tri h2+div {
