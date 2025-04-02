@@ -29,12 +29,14 @@ function previewImagePlan(event) {
         reader.onload = function(e) {
             preview.src = e.target.result;
             imagePreview.style.display = 'block';
+            preview.style.display = 'block';
         }
         
         reader.readAsDataURL(file);
     } else {
         preview.src = '#';
         imagePreview.style.display = 'none';
+        preview.style.display = 'none';
     }
 }
 
@@ -49,11 +51,13 @@ function previewImageCarte(event) {
         reader.onload = function(e) {
             preview.src = e.target.result;
             imagePreview.style.display = 'block';
+            preview.style.display = 'block';
         }
         
         reader.readAsDataURL(file);
     } else {
         preview.src = '#';
         imagePreview.style.display = 'none';
+        preview.style.display = 'none';
     }
 }
