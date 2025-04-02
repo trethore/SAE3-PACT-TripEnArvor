@@ -7,10 +7,11 @@ START TRANSACTION;
 DO $$
 DECLARE
     -- Le `var_` permet de lever les ambiguïtés entre le nom des variables et le nom des colonnes des tables.
-    var_id_adresse  INTEGER;
-    var_id_compte   INTEGER;
-    var_id_offre    INTEGER;
-    var_id_date    INTEGER;
+    var_id_adresse      INTEGER;
+    var_id_compte       INTEGER;
+    var_id_offre        INTEGER;
+    var_id_date         INTEGER;
+    var_nom_prestation  VARCHAR(128);
 BEGIN
 
     INSERT INTO sae._abonnement ("nom_abonnement") 
@@ -1575,6 +1576,149 @@ BEGIN
     )
     VALUES
     ('À partir de', 39, var_id_offre);
+
+
+
+    /* ##################################################################### */
+    /*                         Labyrinthe de Malido                          */
+    /* ##################################################################### */
+
+    INSERT INTO sae._adresse (
+        "num_et_nom_de_voie",
+        "complement_adresse",
+        "code_postal",
+        "ville",
+        "pays"
+    )
+    VALUES (
+        'Malido',
+        NULL,
+        '22400',
+        'Saint-Alban',
+        'France'
+    )
+    RETURNING "id_adresse" INTO var_id_adresse;
+
+    INSERT INTO sae.compte_professionnel_prive (
+        "nom_compte",
+        "prenom",
+        "email",
+        "tel",
+        "mot_de_passe",
+        "denomination",
+        "a_propos",
+        "site_web",
+        "id_adresse",
+        "siren"
+    )
+    VALUES (
+        'Sebastien',
+        'LEGRAND',
+        'contact@malido.fr',
+        '+33664144287',
+        '$2y$10$SbQvvySpoZnHYdiVcIeoKulh.VCDsnpzSZRQZnkcg.KEHjxyvyLAe', -- 'Mot de passe'
+        'Ferme de Malido',
+        'Culture et élevage associés',
+        'https://www.malido.fr/',
+        var_id_adresse,
+        '83327330300010'
+    )
+    RETURNING "id_compte" INTO var_id_compte;
+
+    INSERT INTO sae.offre_activite (
+        "duree", 
+        "age_min",
+        "titre", 
+        "resume", 
+        "ville", 
+        "description_detaille", 
+        "site_web", 
+        "id_compte_professionnel", 
+        "id_adresse", 
+        "abonnement",
+        "nb_jetons",
+        "jeton_perdu_le",
+        "lat",
+        "lon"
+    )
+    VALUES (
+        120,
+        3,
+        'Labyrinthe de Malido',
+        'Au cœur des Côtes d’Armor, profitez de vos vacances ou de vos week-ends sur la côte d’Émeraude pour découvrir un endroit unique et y vivre un moment agréable entre amis ou en famille.',
+        'Saint-Alban',
+        '" À droite ou à gauche, zut... un cul de sac ! La sortie, on verra plus tard. Pour l''instant une seule idée : pénétrer dans ce champ de maïs et voir de ses propres yeux ce qui s''y passe". Parsemé d''embûches, d''impasses et autres subterfuges, le labyrinthe de la Ferme de Malido à Saint-Alban dans les Côtes d’Armor vous emmène dans de nouvelles péripéties : cette année, cap sur la Coupe du monde de football. Profitez d''un passage en Bretagne pour venir au Labyrinthe de la Ferme de Malido à Saint-Alban et y vivre un moment agréable entre amis ou en famille. En plus du Labyrinthe, vous pouvez également apprécier un parcours d’adresse ainsi qu’un parc de structures gonflables.',
+        'https://www.malido.fr/',
+        var_id_compte,
+        var_id_adresse,
+        'standard',
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+    RETURNING "id_offre" INTO var_id_offre;
+
+    INSERT INTO sae._image
+    (
+        "lien_fichier"
+    )
+    VALUES
+    ('banner.jpg'),
+    ('slider1.jpg'),
+    ('slider2.jpg'),
+    ('slider3.jpg');
+
+    INSERT INTO sae._offre_contient_image (
+        "id_offre",
+        "id_image"
+    )
+    VALUES
+    (var_id_offre, 'banner.jpg'),
+    (var_id_offre, 'slider1.jpg'),
+    (var_id_offre, 'slider2.jpg'),
+    (var_id_offre, 'slider3.jpg');
+
+    INSERT INTO sae._offre_possede_tag (
+        "id_offre",
+        "nom_tag"
+    )
+    VALUES
+    (var_id_offre, 'Sport'),
+    (var_id_offre, 'Découverte'),
+    (var_id_offre, 'Artisanat'),
+    (var_id_offre, 'Nature'),
+    (var_id_offre, 'Famille'),
+    (var_id_offre, 'Groupe');
+
+    INSERT INTO sae._tarif_publique (
+        "nom_tarif",
+        "prix",
+        "id_offre"
+    )
+    VALUES
+    ('Adultes', 9, var_id_offre),
+    ('Enfants', 8, var_id_offre),
+    ('Gratuit en dessous de 4 ans', 0, var_id_offre),
+    ('Prix de groupes (15 minimum) : Adultes', 8, var_id_offre),
+    ('Prix de groupes (15 minimum) : Enfants', 7, var_id_offre);
+
+    INSERT INTO sae._prestation ("nom_prestation", "description")
+    VALUES (
+        'Labyrinthe',
+        '" À droite ou à gauche, zut... un cul de sac ! La sortie, on verra plus tard. Pour l''instant une seule idée : pénétrer dans ce champ de maïs et voir de ses propres yeux ce qui s''y passe". Parsemé d''embûches, d''impasses et autres subterfuges, le labyrinthe de la Ferme de Malido à Saint-Alban dans les Côtes d’Armor vous emmène dans de nouvelles péripéties : cette année, cap sur la Coupe du monde de football. Profitez d''un passage en Bretagne pour venir au Labyrinthe de la Ferme de Malido à Saint-Alban et y vivre un moment agréable entre amis ou en famille. En plus du Labyrinthe, vous pouvez également apprécier un parcours d’adresse ainsi qu’un parc de structures gonflables.'
+    )
+    RETURNING "nom_prestation" INTO var_nom_prestation;
+
+    INSERT INTO sae._offre_activite_propose_prestation (
+        "nom_prestation",
+        "id_offre_activite"
+    )
+    VALUES (
+        var_nom_prestation,
+        var_id_offre
+    );
+
 
 END $$;
 
