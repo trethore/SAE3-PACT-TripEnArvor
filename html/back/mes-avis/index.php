@@ -243,10 +243,10 @@ if ($typeCompte === 'proPrive') {
                 });
 
 
-                echo "<br> <pre>";
-                print_r($aviTriPluAncien);
-                print_r($dateAvis);
-                echo "</pre>";
+                // echo "<br> <pre>";
+                // print_r($aviTriPluAncien);
+                // print_r($dateAvis);
+                // echo "</pre>";
                 
                 // echo "<br> <pre>";
                 // print("le tri plus recent");
@@ -550,6 +550,10 @@ if ($typeCompte === 'proPrive') {
         const triAncien = document.getElementById("tri_ancien");
         const triOffre = document.getElementById("tri_offre");
         const selectElement = document.getElementById("tris");
+
+        if (triChoisi === "") {
+        return;
+        }
 
         // Au chargement, n'afficher que le tri "offre"
         document.getElementById("tri_recent").style.display = 'none';
