@@ -232,14 +232,14 @@ try {
                 <br>
                 <label id="labelplan" for="plan">Importer le plan du parc <span class="required">*</span> </label>
                 <input type="file" id="plan" name="plan" onchange="previewImage(event)" />
-                <div id="planPreviewContainer" style="margin-top: 5px; display: none;">
+                <div id="imagePreview" style="margin-top: 5px; display: none;">
                      <img id="planPreview" src="#" alt="Preview du plan" style="max-width: 200px; max-height: 200px;" />
                 </div>
                 <br>
                 <!-- restaurant -->
                 <label id="labelcarte" for="carte">Importer la carte du restaurant <span class="required">*</span> </label>
                 <input type="file" id="carte" name="carte" onchange="previewImage(event)" />
-                <div id="cartePreviewContainer" style="margin-top: 5px; display: none;">
+                <div id="imagePreview" style="margin-top: 5px; display: none;">
                      <img id="cartePreview" src="#" alt="Preview de la carte" style="max-width: 200px; max-height: 200px;" />
                 </div>
             </div>
