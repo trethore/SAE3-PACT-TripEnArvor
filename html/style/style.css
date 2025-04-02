@@ -4541,6 +4541,13 @@ h3 {
 }
 
 
+.front .mes-avis .lienVersOffre {
+    background-color: var(--blanc);
+    color: var(--violet-principal);
+    font-weight: bold;
+    padding: 0;
+}
+
 
 
 #infobulle {
