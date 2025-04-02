@@ -193,7 +193,7 @@ $membre = $stmt->fetch(PDO::FETCH_ASSOC);
 
                                 <div class="display-ligne">
                                     
-                                    <span><strong><a href="/front/consulter-offre/index.php?id= <?php echo $lavis['id_offre'] ?> > <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?> </a> </strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
+                                    <span><strong><a href="/front/consulter-offre/index.php?id= <?php echo $lavis['id_offre'] ?> "> <?php echo htmlentities(html_entity_decode(ucfirst($lavis['titre_avis']))) ?> </a> </strong> - <?php echo htmlentities(ucfirst($lavis['contexte_visite'])); ?></span>
                                 
                                 </div>
                                 <div class="display-ligne-espace">
