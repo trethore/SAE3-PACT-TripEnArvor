@@ -546,6 +546,10 @@ if ($typeCompte === 'proPrive') {
     <script>
 
     document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("tri_offre").style.display = 'block';
+        document.getElementById("tri_recent").style.display = 'none';
+        document.getElementById("tri_ancien").display = 'none';
+        
         const triRecent = document.getElementById("tri_recent");
         const triAncien = document.getElementById("tri_ancien");
         const triOffre = document.getElementById("tri_offre");
@@ -554,9 +558,7 @@ if ($typeCompte === 'proPrive') {
         
 
         // Au chargement, n'afficher que le tri "offre"
-        document.getElementById("tri_offre").style.display = 'block';
-        document.getElementById("tri_recent").style.display = 'none';
-        document.getElementById("tri_ancien").display = 'none';
+        
 
         selectElement.addEventListener('change', function () {
             const triChoisi = this.value;
