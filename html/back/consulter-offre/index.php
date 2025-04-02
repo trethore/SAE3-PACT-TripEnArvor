@@ -223,9 +223,9 @@ try {
                             if (getOffre($id_offre_cible)['nb_jetons'] < 3) {
                                 $dateRestante = getDateRestante($id_offre_cible);
                                 print_r($dateRestante);
-                                $jours_restants = $dateRestante[0]['jours_restants'];
-                                $heures_restantes = $dateRestante[0]['heures_restantes'];
-                                $minutes_restantes = $dateRestante[0]['minutes_restantes'];
+                                $jours_restants = $dateRestante['jours_restants'];
+                                $heures_restantes = $dateRestante['heures_restantes'];
+                                $minutes_restantes = $dateRestante['minutes_restantes'];
                                 if ($jours_restants > 0) {
                                 ?>
                                     <p class='nombre-blacklistage'><em>Prochain jeton dans <?php echo htmlentities($jours_restantes); ?> jour(s)</em></p>
