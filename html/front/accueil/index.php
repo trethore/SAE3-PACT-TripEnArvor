@@ -137,7 +137,7 @@ if (!isset($_SESSION)) {
                     }
                     ?>
                       
-                </div> <!-- Fin de carousel-slides -->
+                </div>
                 <?php
                 // On affiche les boutons seulement s'il y a plus d'une offre
                 if (count($ids) > 1) {
@@ -147,7 +147,7 @@ if (!isset($_SESSION)) {
                 <?php
                 }
                 ?>
-            </div> <!-- Fin de carousel -->
+            </div> 
         </section>
 
     
@@ -203,7 +203,7 @@ if (!isset($_SESSION)) {
                     <?php
                     }
                     ?>
-                                </div> <!-- Fin de carousel-slides -->
+                                </div>
                 <?php
                 // On affiche les boutons seulement s'il y a plus d'une offre
                 if (count($ids_nouv) > 1) {
@@ -268,11 +268,9 @@ if (!isset($_SESSION)) {
                     <?php
                     }
                     ?>
-                                </div> <!-- Fin de carousel-slides -->
+                                </div>
                 <?php
                 // On affiche les boutons seulement s'il y a plus d'une offre consultée
-                // Note: La section entière est déjà conditionnée par count($ids_consulte) != 0
-                // donc ici on vérifie juste si c'est strictement supérieur à 1.
                 if (count($ids_consulte) > 1) {
                 ?>
                     <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
@@ -280,7 +278,7 @@ if (!isset($_SESSION)) {
                 <?php
                 }
                 ?>
-            </div> <!-- Fin de carousel -->
+            </div>
         </section>
         <?php
             }

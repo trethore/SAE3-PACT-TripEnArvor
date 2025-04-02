@@ -327,8 +327,6 @@ try {
 
                 <div class="carousel-slides">
                     <?php
-                    // $images est déjà défini plus haut dans votre code
-                    // $images = getIMGbyId($id_offre_cible);
 
                     foreach ($images as $image) {
                     ?>
@@ -341,13 +339,12 @@ try {
                 </div>
 
                 <?php
-                // On vérifie s'il y a plus d'une image dans le tableau $images
                 if (count($images) > 1) {
                 ?>
                     <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
                     <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
                 <?php
-                } // Fin de la condition if
+                }
                 ?>
 
             </div>
