@@ -548,8 +548,8 @@ if ($typeCompte === 'proPrive') {
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("tri_offre").style.display = 'block';
         document.getElementById("tri_recent").style.display = 'none';
-        document.getElementById("tri_ancien").display = 'none';
-        
+        document.getElementById("tri_ancien").style.display = 'none';
+
         const triRecent = document.getElementById("tri_recent");
         const triAncien = document.getElementById("tri_ancien");
         const triOffre = document.getElementById("tri_offre");
