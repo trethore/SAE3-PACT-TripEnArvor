@@ -10,14 +10,15 @@ session_start();
 $id_offre_cible = intval($_GET['id']);
 $categorie;
 
-if (isset($_POST['titre'])) { 
+if (isset($_POST['titre'])) {
     $submitted = true;
 } else {
     $submitted = false;
 }
 
 // ===== GESTION DES EXTENSIONS DES FICHIERS ===== //
-function get_file_extension($type) {
+function get_file_extension($type)
+{
     $extension = '';
     switch ($type) {
         case 'image/png':
@@ -50,7 +51,7 @@ if ($submitted) {
     }
     if (isset($_POST['avis'])) {
         $commentaire = htmlspecialchars($_POST['avis']);
-    } 
+    }
     if (isset($_POST['note'])) {
         $note = intval($_POST['note']);
     }
@@ -74,10 +75,10 @@ if ($submitted) {
     if (isset($_POST['date'])) {
         $visite_le = explode('T', $_POST['date']);
         $dateParts = explode('-', $visite_le[0]);
-        $anneeUpdate = $dateParts[0]; 
-        $moisUpdate = $dateParts[1]; 
-        $jourUpdate = $dateParts[2]; 
-        $heureMinute = $visite_le[1]; 
+        $anneeUpdate = $dateParts[0];
+        $moisUpdate = $dateParts[1];
+        $jourUpdate = $dateParts[2];
+        $heureMinute = $visite_le[1];
         $visite_le = $anneeUpdate . "-" . $moisUpdate . "-" . $jourUpdate . " " . $heureMinute . ":00";
     }
     if (isset($_SESSION['id'])) {
@@ -96,7 +97,7 @@ if ($submitted) {
         $dbh->prepare("SET SCHEMA 'sae';")->execute();
 
         $dbh->prepare("START TRANSACTION;")->execute();
-        
+
         $reqInsertionDatePublication = "INSERT INTO sae._date(date) VALUES (?) RETURNING id_date";
         $stmtInsertionDatePublication = $dbh->prepare($reqInsertionDatePublication);
         $stmtInsertionDatePublication->execute([$publie_le]);
@@ -151,7 +152,7 @@ if ($submitted) {
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
         die();
-    } 
+    }
 }
 
 
@@ -163,7 +164,7 @@ try {
 
     addConsultedOffer($id_offre_cible);
 
-// ===== GESTION DES OFFRES ===== //
+    // ===== GESTION DES OFFRES ===== //
 
     // ===== Requête SQL pour récupérer les informations d'une offre ===== //
     $offre = getOffre($id_offre_cible);
@@ -183,45 +184,45 @@ try {
     // ===== Requête SQL pour récupérer les informations d'une offre si l'offre est un restaurant ===== //
     $restaurant = getRestaurant($id_offre_cible);
 
-// ===== GESTION DES ADRESSES ===== //
+    // ===== GESTION DES ADRESSES ===== //
 
     // ===== Requête SQL pour récupérer les informations de l'adresse d'une offre ===== //
-    $adresse = getAdresse($id_offre_cible);    
+    $adresse = getAdresse($id_offre_cible);
 
-// ===== GESTION DES COMPTES PROFESSIONNELS ===== //
+    // ===== GESTION DES COMPTES PROFESSIONNELS ===== //
 
     // ===== Requête SQL pour récupérer les informations du compte du propriétaire de l'offre ===== //
     $compte = getCompte($id_offre_cible);
 
-// ===== GESTION DES IMAGES ===== //
+    // ===== GESTION DES IMAGES ===== //
 
     // ===== Requête SQL pour récuéprer les images d'une offre ===== //
     $images = getIMGbyId($id_offre_cible);
 
-// ===== GESTION DES NOTES ===== //
+    // ===== GESTION DES NOTES ===== //
 
     // ===== Requête SQL pour récupérer le nombre de notes d'une offre ===== //
     $nombreNote = getNombreNotes($id_offre_cible);
 
     // ===== Requête SQL pour récupérer la note moyenne d'une offre ===== //
     $noteMoyenne = getNoteMoyenne($id_offre_cible);
-    
-// ===== GESTION DES TAGS ===== //
+
+    // ===== GESTION DES TAGS ===== //
 
     // ===== Requête SQL pour récupérer les tags d'une offre ===== //
     $tags = getTags($id_offre_cible);
 
-// ===== GESTION DES TARIFS ===== //
+    // ===== GESTION DES TARIFS ===== //
 
     // ===== Requête SQL pour récupérer les différents tarifs d'une offre ===== //
     $tarifs = getTarifs($id_offre_cible);
 
-// ===== GESTION DE L'OUVERTURE ===== //
-    
+    // ===== GESTION DE L'OUVERTURE ===== //
+
     // ===== Requête SQL pour récupérer les horaires d'ouverture d'une offre ===== //
     $horaire = getHorairesOuverture($id_offre_cible);
 
-// ===== GESTION DES AVIS ===== //
+    // ===== GESTION DES AVIS ===== //
 
     // ===== Requête SQL pour récupérer les avis d'une offre ===== //
     $avis = getAvis($id_offre_cible);
@@ -238,12 +239,11 @@ try {
     // ===== Requête SQL pour récupérer la date de visite d'une personne yant rédigé un avis sur une offre ===== //
     $datePassage = getDatePassage($id_offre_cible);
 
-// ===== GESTION DES TYPES ===== //
+    // ===== GESTION DES TYPES ===== //
 
     // ===== Requête SQL pour récupérer le type d'une offre ===== //
     $categorie = getTypeOffre($id_offre_cible);
     $offre['categorie'] = $categorie;
-
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
     die();
@@ -255,9 +255,9 @@ try {
 <html>
 
 <head>
-    <meta charset="utf-8" />    
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="/style/style.css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/style/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Seymour+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=SeoulNamsan&display=swap" rel="stylesheet">
@@ -281,7 +281,7 @@ try {
 <body class="front consulter-offre-front">
 
     <div id="overlay"></div>
-    
+
     <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . '/php/connect_params.php');
 
@@ -293,7 +293,7 @@ try {
         $stmt->execute();
         $of = $stmt->fetchAll(); // Récupère uniquement la colonne "titre"
         $dbh = null;
-    } catch (PDOException $e) { 
+    } catch (PDOException $e) {
         echo "Erreur lors de la récupération des titres : " . $e->getMessage();
     }
     ?>
@@ -319,13 +319,17 @@ try {
     <main id="body">
 
         <section class="fond-blocs bordure pur">
-            
+
             <h1><?php echo htmlentities(html_entity_decode(ucfirst($offre['titre'] ?? "Pas de titre disponible"))) ?></h1>
+
 
             <div class="carousel">
 
                 <div class="carousel-slides">
                     <?php
+                    // $images est déjà défini plus haut dans votre code
+                    // $images = getIMGbyId($id_offre_cible);
+
                     foreach ($images as $image) {
                     ?>
                         <div class="slide">
@@ -336,61 +340,66 @@ try {
                     ?>
                 </div>
 
-                <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
-                <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <?php
+                // On vérifie s'il y a plus d'une image dans le tableau $images
+                if (count($images) > 1) {
+                ?>
+                    <button type="button" class="prev-slide"><img src="/images/universel/icones/fleche-gauche.png" alt="←"></button>
+                    <button type="button" class="next-slide"><img src="/images/universel/icones/fleche-droite.png" alt="→"></button>
+                <?php
+                } // Fin de la condition if
+                ?>
 
             </div>
-
-
             <div class="display-ligne-espace">
 
                 <div class="display-ligne">
                     <p><?php echo htmlentities($categorie ?? "Pas de catégorie disponible") . ' - '; ?></p>
 
                     <div class="display-ligne">
-                        <?php 
+                        <?php
                         if ($noteMoyenne !== null) {
                             $etoilesPleines = floor($noteMoyenne);
                             $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
                             $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-                            for ($i = 0; $i < $etoilesPleines; $i++) { 
+                            for ($i = 0; $i < $etoilesPleines; $i++) {
                         ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
-                            <?php 
+                            <?php
                             }
-                            if ($demiEtoile) { 
+                            if ($demiEtoile) {
                             ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                            <?php 
+                            <?php
                             }
-                            for ($i = 0; $i < $etoilesVides; $i++) { 
+                            for ($i = 0; $i < $etoilesVides; $i++) {
                             ?>
                                 <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                        <?php 
+                        <?php
                             }
-                        } 
+                        }
                         ?>
                         <p><a class="lien" href="#avis"><?php echo htmlentities($nombreNote) . " avis"; ?></a></p>
                     </div>
 
                 </div>
 
-                <?php 
-                if (!empty($compte['denomination'])) { 
+                <?php
+                if (!empty($compte['denomination'])) {
                 ?>
                     <p class="information-offre">Proposée par <?php echo htmlentities($compte['denomination']); ?></p>
-                <?php 
-                } else { 
+                <?php
+                } else {
                 ?>
                     <p>Pas d'information sur le propriétaire de l'offre</p>
-                <?php 
-                } 
-                ?> 
+                <?php
+                }
+                ?>
 
             </div>
 
             <div class="display-ligne">
-                <?php 
+                <?php
                 if (!empty($adresse['num_et_nom_de_voie']) || !empty($adresse['complement_adresse']) || !empty($adresse['code_postal']) || !empty($offre['ville'])) {
                     $adresseComplete = [];
                     if (!empty($adresse['num_et_nom_de_voie'])) {
@@ -405,55 +414,55 @@ try {
                     if (!empty($offre['ville'])) {
                         $adresseComplete[] = htmlentities($offre['ville']);
                     } ?>
-                    <p><?php echo implode(' ', $adresseComplete) . " - "; 
-                } else { ?>
+                    <p><?php echo implode(' ', $adresseComplete) . " - ";
+                    } else { ?>
                     <p>Pas d'adresse disponible</p>
-                <?php 
-                }  
-                setlocale(LC_TIME, 'fr_FR.UTF-8'); 
-                $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                $jour_actuel = $jours[date('w')];
-                $ouverture = "Indéterminé";
-                foreach ($horaire as $h) {
-                    if (!empty($horaire)) {
-                        $ouvert_ferme = date('H:i');
-                        $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
-                        $ouverture = "Fermé";
-                        $result = "F";
-                        if ($h['nom_jour'] == $jour_actuel) {
-                            if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
-                                $ouverture = "Ouvert";
-                                $result = "O";
-                            } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
-                                $ouverture = "Ferme bientôt";
-                                $result = "FB";
+                <?php
+                    }
+                    setlocale(LC_TIME, 'fr_FR.UTF-8');
+                    $jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                    $jour_actuel = $jours[date('w')];
+                    $ouverture = "Indéterminé";
+                    foreach ($horaire as $h) {
+                        if (!empty($horaire)) {
+                            $ouvert_ferme = date('H:i');
+                            $fermeture_bientot = date('H:i', strtotime($h['fermeture'] . ' -1 hour'));
+                            $ouverture = "Fermé";
+                            $result = "F";
+                            if ($h['nom_jour'] == $jour_actuel) {
+                                if ($h['ouverture'] < $ouvert_ferme && $ouvert_ferme < $fermeture_bientot) {
+                                    $ouverture = "Ouvert";
+                                    $result = "O";
+                                } elseif ($fermeture_bientot <= $ouvert_ferme && $ouvert_ferme < $h['fermeture']) {
+                                    $ouverture = "Ferme bientôt";
+                                    $result = "FB";
+                                }
                             }
                         }
-                    } 
-                } 
+                    }
                 ?>
                 <p class="<?php echo htmlentities($result) ?> ouverture-decalage"><?php echo htmlentities($ouverture); ?></p>
             </div>
 
-        </section>  
+        </section>
 
         <section class="fond-blocs bloc-tags">
             <div class="display-ligne-tag">
-                <?php 
+                <?php
                 if (!empty($tags)) {
-                    foreach ($tags as $tag) { 
+                    foreach ($tags as $tag) {
                 ?>
                         <div class="display-ligne tag">
                             <p><?php echo htmlentities($tag['nom_tag']); ?></p>
                             <img src="/images/universel/icones/<?php echo htmlentities($tag['nom_tag']); ?>-violet.png" alt="<?php echo htmlentities($tag['nom_tag']); ?>">
                         </div>
-                <?php 
+                    <?php
                     }
-                } else { 
-                ?>
+                } else {
+                    ?>
                     <p>Pas de tags disponibles</p>
-                <?php 
-                } 
+                <?php
+                }
                 ?>
             </div>
         </section>
@@ -461,47 +470,49 @@ try {
         <section class="double-blocs">
 
             <div id="map"></div>
-            <script>displayOfferOnMap(<?php echo json_encode($offre)?>);</script>
+            <script>
+                displayOfferOnMap(<?php echo json_encode($offre) ?>);
+            </script>
 
             <div class="fond-blocs bloc-a-propos">
-                
+
                 <div class="display-ligne-espace">
-                    <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2> 
+                    <h2>À propos de <?php echo htmlentities($offre['titre'] ?? "Pas de titre disponible"); ?></h2>
                     <a class="lien" href="<?php echo htmlentities($offre['site_web']); ?>">Lien vers le site</a>
                 </div>
 
                 <p><?php echo htmlentities($offre['resume'] ?? "Pas de résumé disponible"); ?></p>
 
-                <?php 
+                <?php
                 switch ($categorie) {
-                    case "Activité": 
+                    case "Activité":
                 ?>
-                        <p>Durée de l'activité : <?php echo htmlentities( floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"; ?></p>
+                        <p>Durée de l'activité : <?php echo htmlentities(floor($activite['duree'] / 60) . "h " . $activite['duree'] % 60) . "min"; ?></p>
                         <p>Âge minimum : <?php echo htmlentities($activite['age_min']); ?> ans</p>
-                        <?php 
-                        break; 
+                        <?php
+                        break;
                         ?>
-                    <?php 
-                    case "Visite": 
+                    <?php
+                    case "Visite":
                     ?>
-                        <p>Durée de la visite : <?php echo htmlentities( floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"; ?></p>
-                    <?php 
-                        break; 
-                    case "Spectacle": 
+                        <p>Durée de la visite : <?php echo htmlentities(floor($visite['duree'] / 60) . "h " . $visite['duree'] % 60) . "min"; ?></p>
+                    <?php
+                        break;
+                    case "Spectacle":
                     ?>
-                        <p>Durée du spectacle : <?php echo htmlentities( floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"; ?></p>
+                        <p>Durée du spectacle : <?php echo htmlentities(floor($spectacle['duree'] / 60) . "h " . $spectacle['duree'] % 60) . "min"; ?></p>
                         <p>Capacité de la salle : <?php echo htmlentities($spectacle['capacite']); ?> personnes</p>
-                        <?php 
+                        <?php
                         $event = explode(' ', $spectacle['date']);
-                        $dateEvent = explode('-', $event[0]); 
+                        $dateEvent = explode('-', $event[0]);
                         ?>
                         <p>Date de l'évènement : <?php echo htmlentities($dateEvent[2] . "/" . $dateEvent[1] . "/" . $dateEvent[0]) ?></p>
-                        <?php 
-                        break; 
+                        <?php
+                        break;
                         ?>
 
-                    <?php 
-                    case "Parc attraction": 
+                    <?php
+                    case "Parc attraction":
                     ?>
                         <p>Nombre d'attractions : <?php echo htmlentities($attraction['nb_attractions']); ?></p>
 
@@ -510,25 +521,25 @@ try {
                             <a class="lien" href="<?php echo htmlentities($attraction['plan']) ?>" download="Plan" target="blank">Télécharger le plan</a>
                         </div>
 
-                        <?php 
-                        break; 
+                        <?php
+                        break;
                         ?>
 
-                    <?php 
-                    case "Restauration": 
+                    <?php
+                    case "Restauration":
                     ?>
                         <div class="display-ligne-espace">
                             <p>Gamme de prix : <?php echo htmlentities($restaurant['gamme_prix']) ?></p>
                             <a class="lien" href="<?php echo htmlentities($restaurant['carte']) ?>" download="Carte" target="blank">Télécharger la carte</a>
                         </div>
 
-                        <?php 
+                <?php
                         break;
-                } 
+                }
                 ?>
                 <p>Numéro de téléphone : <?php echo preg_replace('/(\d{2})(?=\d)/', '$1 ', htmlentities($compte['tel'] ?? "Pas de numéro de téléphone disponible")); ?></p>
             </div>
-    
+
         </section>
 
         <section class="fond-blocs bordure">
@@ -542,88 +553,88 @@ try {
 
             <div class="fond-blocs bloc-tarif">
                 <h2>Tarifs</h2>
-                <?php 
-                if (!empty($tarifs)) { 
+                <?php
+                if (!empty($tarifs)) {
                 ?>
                     <table>
-                        <?php 
-                        foreach ($tarifs as $t) { 
-                            if ($t['nom_tarif'] != "nomtarif1") { 
+                        <?php
+                        foreach ($tarifs as $t) {
+                            if ($t['nom_tarif'] != "nomtarif1") {
                                 if (!empty($t['nom_tarif'])) {
                         ?>
                                     <tr>
                                         <td><?php echo htmlentities($t['nom_tarif']) ?></td>
-                                        <td><?php echo htmlentities($t['prix']) . " €"?></td>
+                                        <td><?php echo htmlentities($t['prix']) . " €" ?></td>
                                     </tr>
-                        <?php  
+                        <?php
                                 }
                             }
-                        } 
+                        }
                         ?>
                     </table>
-                <?php 
+                <?php
                 } else {
                 ?>
                     <p>Pas de tarifs diponibles</p>
-                <?php 
-                } 
+                <?php
+                }
                 ?>
             </div>
 
             <div class="fond-blocs bloc-ouverture">
                 <h2>Ouverture</h2>
-                <?php 
+                <?php
                 if (!empty($horaire)) {
-                    foreach ($horaire as $h) { 
+                    foreach ($horaire as $h) {
                 ?>
                         <p><?php echo htmlentities($h['nom_jour'] . " : " . $h['ouverture'] . " - " . $h['fermeture'] . "\t"); ?></p>
-                <?php 
-                    } 
-                } else { 
-                ?>
+                    <?php
+                    }
+                } else {
+                    ?>
                     <p>Pas d'informations sur les jours et les horaires d'ouverture disponibles</p>
-                <?php 
-                } 
+                <?php
+                }
                 ?>
-            </div> 
-            
+            </div>
+
         </section>
 
         <section id="avis" class="fond-blocs bordure-top">
 
             <div class="display-ligne">
-                <?php 
-                if ($noteMoyenne !== null) { 
+                <?php
+                if ($noteMoyenne !== null) {
                 ?>
-                    <h2>Note moyenne     </h2>
-                    <?php 
+                    <h2>Note moyenne </h2>
+                    <?php
                     $etoilesPleines = floor($noteMoyenne);
-                        $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
-                        $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
-                    for ($i = 0; $i < $etoilesPleines; $i++) { 
+                    $demiEtoile = ($noteMoyenne - $etoilesPleines) == 0.5 ? 1 : 0;
+                    $etoilesVides = 5 - $etoilesPleines - $demiEtoile;
+                    for ($i = 0; $i < $etoilesPleines; $i++) {
                     ?>
                         <img class="etoile" src="/images/frontOffice/etoile-pleine.png">
                     <?php }
-                    if ($demiEtoile) { 
+                    if ($demiEtoile) {
                     ?>
                         <img class="etoile" src="/images/frontOffice/etoile-moitie.png">
-                    <?php 
+                    <?php
                     }
-                    for ($i = 0; $i < $etoilesVides; $i++) { 
+                    for ($i = 0; $i < $etoilesVides; $i++) {
                     ?>
                         <img class="etoile" src="/images/frontOffice/etoile-vide.png">
-                <?php 
+                <?php
                     }
-                } 
+                }
                 ?>
                 <p> (<?php echo htmlentities($nombreNote) . ' avis'; ?>)</p>
             </div>
 
             <div class="petite-mention margin-0">
                 <p><em>Ces avis sont l'opinion subjective des membre de la PACT et non les avis de la PACT. Les avis sont soumis à des vérifications de la part de la PACT.</em></p>
-            </div> 
+            </div>
 
-            <?php 
+            <?php
             if (isset($_SESSION['id']) && isset($_GET['id'])) {
                 $id_membre = intval($_SESSION['id']);
                 $id_offre = intval($_GET['id']);
@@ -637,15 +648,15 @@ try {
                     $stmtCheckAvis = $dbh->prepare($reqCheckAvis);
                     $stmtCheckAvis->execute([$id_membre, $id_offre]);
                     $avisCount = $stmtCheckAvis->fetch(PDO::FETCH_ASSOC)['avis_count']; ?>
-                    <?php 
-                    if ($avisCount == 0) { 
+                    <?php
+                    if ($avisCount == 0) {
                     ?>
                         <button id="showFormButton">Publier un avis</button>
                         <form id="avisForm" class="fond-blocs-avis" action="index.php?id=<?php echo htmlentities($_GET['id']); ?>" method="post" enctype="multipart/form-data" style="display: none;">
                             <h2 for="creation-avis">Création d'avis</h2><br>
 
                             <div class="display-ligne-espace">
-                                
+
                                 <div class="display-ligne">
                                     <p class="titre-avis"><?php echo htmlentities(getCompteMembre($_SESSION['id'])['pseudo']); ?></p>
                                     <div class="display-ligne">
@@ -658,22 +669,22 @@ try {
                                             <input type="radio" name="note" id="star1_g" value="1" required><label for="star1_g"></label>
                                         </div>
                                     </div>
-                                        
+
                                 </div>
                                 <img src="/images/universel/icones/trois-points-violet.png">
-                                
+
                             </div>
 
                             <div class="display-ligne">
 
                                 <div class="display-ligne">
                                     <label class="label-avis" for="titre">Titre <span>*</span></label>
-                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..."required></input><br>
+                                    <input type="text" id="titre" name="titre" placeholder="Super expérience ..." required></input><br>
                                 </div>
 
-                                <div class="display-ligne"> 
+                                <div class="display-ligne">
                                     <label class="label-avis-champs" for="date">Date de visite <span>*</span></label>
-                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required/><br>
+                                    <input type="datetime-local" id="date" name="date" max="<?php echo date('Y-m-d\TH:i'); ?>" required /><br>
                                 </div>
 
                                 <div class="display-ligne">
@@ -690,8 +701,8 @@ try {
 
                             </div>
 
-                            <?php 
-                            if ($categorie == "Restauration") { 
+                            <?php
+                            if ($categorie == "Restauration") {
                             ?>
                                 <div class="display-ligne-note-detaille">
 
@@ -714,7 +725,7 @@ try {
                                             <input type="radio" name="note_service" id="star3_s" value="3" required><label for="star3_s"></label>
                                             <input type="radio" name="note_service" id="star2_s" value="2" required><label for="star2_s"></label>
                                             <input type="radio" name="note_service" id="star1_s" value="1" required><label for="star1_s"></label>
-                                        </div>                                    
+                                        </div>
                                     </div>
 
                                     <div class="display-ligne">
@@ -725,7 +736,7 @@ try {
                                             <input type="radio" name="note_ambiance" id="star3_a" value="3" required><label for="star3_a"></label>
                                             <input type="radio" name="note_ambiance" id="star2_a" value="2" required><label for="star2_a"></label>
                                             <input type="radio" name="note_ambiance" id="star1_a" value="1" required><label for="star1_a"></label>
-                                        </div>              
+                                        </div>
                                     </div>
 
                                     <div class="display-ligne">
@@ -736,23 +747,23 @@ try {
                                             <input type="radio" name="note_rapport" id="star3_r" value="3" required><label for="star3_r"></label>
                                             <input type="radio" name="note_rapport" id="star2_r" value="2" required><label for="star2_r"></label>
                                             <input type="radio" name="note_rapport" id="star1_r" value="1" required><label for="star1_r"></label>
-                                        </div>                                                  
+                                        </div>
                                     </div>
 
                                 </div>
                                 <br>
-                            <?php 
-                            } 
+                            <?php
+                            }
                             ?>
-                                        
+
                             <div>
                                 <label for="avis">Décrivez votre expérience <span>*</span></label>
                                 <textarea id="avis" name="avis" placeholder="J'ai vraiment adoré ..." required></textarea><br>
                             </div>
-                                
+
                             <div>
-                                <label id="photo" for="photo">Importez une photo</label> 
-                                <input type="file" id="photo" name="photo"/><br>
+                                <label id="photo" for="photo">Importez une photo</label>
+                                <input type="file" id="photo" name="photo" /><br>
 
                                 <div id="imagePreview" style="margin-top: 10px; display: none;">
                                     <img id="preview" src="#" alt="Preview de l'image ajoutée." style="max-width: 200px; max-height: 200px;" />
@@ -768,66 +779,66 @@ try {
 
                         </form>
 
-                    <?php 
-                    } else { 
+                    <?php
+                    } else {
                     ?>
                         <p>Vous avez déjà publié un avis pour cette offre.</p>
-                    <?php
-                    } 
+                <?php
+                    }
                 } catch (PDOException $e) {
                     echo "Erreur : " . $e->getMessage();
                     die();
                 }
-            } else { 
-            ?>
+            } else {
+                ?>
                 <p><a class="lien" href="/se-connecter">Connexion</a> requise pour publier un avis</p>
-            <?php 
+                <?php
             }
             $identifiant = 0;
             foreach ($avis as $unAvis) {
-                if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre'])) || getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']) == $_SESSION['id']) { 
-            ?>
+                if (empty(getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre'])) || getDateBlacklistage($unAvis['id_offre'], $unAvis['id_membre']) == $_SESSION['id']) {
+                ?>
 
                     <div class="fond-blocs-avis">
 
                         <div class="display-ligne-espace">
-                            
+
                             <div class="display-ligne">
                                 <p class="titre-avis"><?php echo htmlentities(getPseudoFromId($unAvis['id_membre'])); ?></p>
 
                                 <div class="display-ligne">
-                                    <?php 
-                                    for ($etoileJaune = 0 ; $etoileJaune != $unAvis['note'] ; $etoileJaune++) { 
+                                    <?php
+                                    for ($etoileJaune = 0; $etoileJaune != $unAvis['note']; $etoileJaune++) {
                                     ?>
                                         <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                    <?php 
-                                    } 
-                                    for ($etoileGrise = 0 ; $etoileGrise != (5 - $unAvis['note']) ; $etoileGrise++) {
+                                    <?php
+                                    }
+                                    for ($etoileGrise = 0; $etoileGrise != (5 - $unAvis['note']); $etoileGrise++) {
                                     ?>
                                         <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                    <?php 
-                                    } 
+                                    <?php
+                                    }
                                     ?>
                                 </div>
 
                             </div>
-                            
+
                             <button class="menu-button" onclick="afficherMenu(event, this, <?php echo $identifiant; ?>)">
                                 <img src="/images/universel/icones/trois-points-violet.png">
                             </button>
 
                             <div class="popup-menu" id="popup-menu-<?php echo $identifiant; ?>">
                                 <ul>
-                                    <?php 
-                                    if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) { 
+                                    <?php
+                                    if (isset($_SESSION['id']) && $unAvis['id_membre'] == $_SESSION['id']) {
                                     ?>
                                         <li onclick="confirmerSupprimer()" id="bouton-supprimer-avis">Supprimer</li>
-                                    <?php 
-                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $unAvis['id_membre']))) { 
+                                    <?php
+                                    } else if (isset($_SESSION['id']) && !in_array($_SESSION['id'], getSignaler($id_offre_cible, $unAvis['id_membre']))) {
                                     ?>
                                         <li onclick="confirmerSignaler(this, <?php echo $identifiant; ?>)" data-id-offre="<?php echo htmlentities($id_offre_cible); ?>" data-id-signale="<?php echo htmlentities($unAvis['id_membre']); ?>" data-id-signalant="<?php echo htmlentities($_SESSION['id']); ?>">Signaler</li>
-                                    <?php 
-                                    } 
+                                    <?php
+                                    }
                                     ?>
                                 </ul>
                             </div>
@@ -840,7 +851,7 @@ try {
                                         <label>
                                             <input type="radio" name="motif" value="Il contient des propos inappropriés"> Il contient des propos inappropriés
                                         </label><br>
-                                        <label> 
+                                        <label>
                                             <input type="radio" name="motif" value="Il ne décrit pas une expérience personnelle"> Il ne décrit pas une expérience personnelle
                                         </label><br>
                                         <label>
@@ -850,7 +861,7 @@ try {
                                             <input type="radio" name="motif" value="Il contient des informations fausses ou trompeuses"> Il contient des informations fausses ou trompeuses
                                         </label><br>
                                         <label for="justification-<?php echo $identifiant; ?>">Pouvez-vous décrire davantage le problème (facultatif) ?</label><br>
-                                            <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
+                                        <textarea id="justification-<?php echo $identifiant; ?>" name="justification"></textarea><br>
                                     </form>
                                     <button id="confirmer-signaler-<?php echo $identifiant; ?>" onclick="validerSignaler(<?php echo $identifiant; ?>)">Signaler</button>
                                     <button onclick="annulerSignaler(<?php echo $identifiant; ?>)">Annuler</button>
@@ -860,12 +871,12 @@ try {
 
                             <div class="confirmation-popup" id="popup-supprimer-avis" style="display: none;">
                                 <form action="/front/supprimer-avis/" method="post">
-                                    <input type="hidden" name="id-offre" value="<?php echo($_GET['id']); ?>">
+                                    <input type="hidden" name="id-offre" value="<?php echo ($_GET['id']); ?>">
                                     <p>Êtes-vous sûr de vouloir supprimer votre avis ?</p>
                                     <p>Cette action ne peut pas être annulée.</p>
                                     <div>
                                         <button onclick="validerSupprimer()" type="submit" id="bouton-confirmer-supprimer-avis">Supprimer</button>
-                                        <button onclick="annulerSupprimer()"type="button" id="bouton-fermer-popup">Annuler</button>
+                                        <button onclick="annulerSupprimer()" type="button" id="bouton-fermer-popup">Annuler</button>
                                     </div>
                                 </form>
                             </div>
@@ -873,61 +884,61 @@ try {
                         </div>
 
                         <div class="display-ligne">
-                            <?php 
+                            <?php
                             $passage = explode(' ', $datePassage[$identifiant]['date']);
-                            $datePass = explode('-', $passage[0]); 
+                            $datePass = explode('-', $passage[0]);
                             ?>
                             <p><strong><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['titre']))); ?> - Visité le <?php echo htmlentities($datePass[2] . "/" . $datePass[1] . "/" . $datePass[0]); ?> - <?php echo htmlentities(ucfirst($unAvis['contexte_visite'])); ?></strong></p>
                         </div>
 
-                        <?php 
-                        if ($categorie == "Restauration") { 
+                        <?php
+                        if ($categorie == "Restauration") {
                         ?>
                             <div class="display-ligne-note-detaille">
-                                <?php 
+                                <?php
                                 foreach ($noteDetaillee as $n) {
-                                    if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) { 
+                                    if (($n['id_membre'] == $unAvis['id_membre']) && ($n['id_offre'] == $unAvis['id_offre'])) {
                                 ?>
                                         <div class="display-ligne">
                                             <p><?php echo htmlentities($n['nom_note']) . " "; ?></p>
-                                            <?php 
-                                            for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) { 
+                                            <?php
+                                            for ($etoileJaune = 0; $etoileJaune != $n['note']; $etoileJaune++) {
                                             ?>
                                                 <img src="/images/universel/icones/etoile-jaune.png" class="etoile_detail">
-                                            <?php 
+                                            <?php
                                             }
-                                            for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) { 
+                                            for ($etoileGrise = 0; $etoileGrise != (5 - $n['note']); $etoileGrise++) {
                                             ?>
                                                 <img src="/images/universel/icones/etoile-grise.png" class="etoile_detail">
-                                            <?php 
-                                            } 
+                                            <?php
+                                            }
                                             ?>
                                         </div>
-                                <?php 
+                                <?php
                                     }
-                                } 
+                                }
                                 ?>
                             </div>
-                        <?php 
-                        } 
+                        <?php
+                        }
                         ?>
 
-                        <div class="display-ligne">                        
-                            <?php 
-                            if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) { 
+                        <div class="display-ligne">
+                            <?php
+                            if (isset(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier'])) {
                             ?>
                                 <img class="image-avis" src="/images/universel/photos/<?php echo htmlentities(getImageAvis($id_offre_cible, $unAvis['id_membre'])[0]['lien_fichier']); ?>">
-                            <?php 
-                            } 
+                            <?php
+                            }
                             ?>
                             <p><?php echo htmlentities(html_entity_decode(ucfirst($unAvis['commentaire']))); ?></p>
                         </div>
 
                         <div class="display-ligne-espace">
                             <div class="petite-mention">
-                                <?php 
+                                <?php
                                 $publication = explode(' ', $dateAvis[$identifiant]['date']);
-                                $datePub = explode('-', $publication[0]); 
+                                $datePub = explode('-', $publication[0]);
                                 ?>
                                 <p><em>Écrit le <?php echo htmlentities($datePub[2] . "/" . $datePub[1] . "/" . $datePub[0]); ?></em></p>
                             </div>
@@ -938,17 +949,17 @@ try {
                                     $userReaction = getReactionAvis($id_offre_cible, $unAvis['id_membre'], $_SESSION['id']);
                                 ?>
                                     <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
-                                    <img src="/images/universel/icones/pouce-up<?= ($userReaction && $userReaction['nb_pouce_haut'] == 1) ? '-hover' : '' ?>.png" 
-                                        class="pouce pouceHaut" 
-                                        data-id-offre="<?= $id_offre_cible ?>" 
-                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>" 
+                                    <img src="/images/universel/icones/pouce-up<?= ($userReaction && $userReaction['nb_pouce_haut'] == 1) ? '-hover' : '' ?>.png"
+                                        class="pouce pouceHaut"
+                                        data-id-offre="<?= $id_offre_cible ?>"
+                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>"
                                         data-id-membre-reaction="<?= $_SESSION['id'] ?>">
-                                    
+
                                     <p class="nbPouceBas"><?php echo htmlentities($unAvis['nb_pouce_bas']); ?></p>
-                                    <img src="/images/universel/icones/pouce-down<?= ($userReaction && $userReaction['nb_pouce_bas'] == 1) ? '-hover' : '' ?>.png" 
-                                        class="pouce pouceBas" 
-                                        data-id-offre="<?= $id_offre_cible ?>" 
-                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>" 
+                                    <img src="/images/universel/icones/pouce-down<?= ($userReaction && $userReaction['nb_pouce_bas'] == 1) ? '-hover' : '' ?>.png"
+                                        class="pouce pouceBas"
+                                        data-id-offre="<?= $id_offre_cible ?>"
+                                        data-id-membre-avis="<?= $unAvis['id_membre'] ?>"
                                         data-id-membre-reaction="<?= $_SESSION['id'] ?>">
                                 <?php } else { ?>
                                     <p class="nbPouceHaut"><?php echo htmlentities($unAvis['nb_pouce_haut']); ?></p>
@@ -960,9 +971,9 @@ try {
 
                         </div>
 
-                        <?php 
-                        if(!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) { 
-                        $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])
+                        <?php
+                        if (!empty(getReponse($unAvis['id_offre'], $unAvis['id_membre']))) {
+                            $reponse = getReponse($unAvis['id_offre'], $unAvis['id_membre'])
                         ?>
                             <div class="reponse">
 
@@ -974,29 +985,29 @@ try {
                                 <p><?php echo htmlentities(html_entity_decode(ucfirst($reponse['texte']))) ?></p>
 
                                 <div class="display-ligne marge-reponse petite-mention">
-                                    <?php 
+                                    <?php
                                     $rep = explode(' ', $reponse['date']);
-                                    $dateRep = explode('-', $rep[0]); 
-                                    $heureRep = explode(':', $rep[1]); 
+                                    $dateRep = explode('-', $rep[0]);
+                                    $heureRep = explode(':', $rep[1]);
                                     ?>
                                     <p class="indentation"><em>Répondu le <?php echo htmlentities($dateRep[2] . "/" . $dateRep[1] . "/" . $dateRep[0]); ?></em></p>
                                 </div>
 
                             </div>
 
-                        <?php 
-                        } 
+                        <?php
+                        }
                         ?>
 
-                    </div>  
+                    </div>
 
-            <?php 
+            <?php
                 }
-                $identifiant++; 
-            } 
+                $identifiant++;
+            }
             ?>
 
-        </section>        
+        </section>
 
         <div class="navigation display-ligne-espace">
             <button onclick="location.href='../../front/consulter-offres/'">Retour à la liste des offres</button>
@@ -1017,27 +1028,27 @@ try {
             <div class="footer-top-right">
                 <span class="footer-connect">Restons connectés !</span>
                 <div class="social-icons">
-                <a href="https://x.com/?locale=fr">
-                    <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
-                </a>
-                <a href="https://www.facebook.com/?locale=fr_FR">
-                    <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
-                </a>
-                <a href="https://www.youtube.com/">
-                    <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
-                </a>
-                <a href="https://www.instagram.com/">
-                    <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
-                </a>
+                    <a href="https://x.com/?locale=fr">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/x.png');"></div>
+                    </a>
+                    <a href="https://www.facebook.com/?locale=fr_FR">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/facebook.png');"></div>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/youtube.png');"></div>
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <div class="social-icon" style="background-image: url('/images/universel/icones/instagram.png');"></div>
+                    </a>
                 </div>
             </div>
 
         </div>
-        
+
         <div class="footer-bottom">
             <a href="../../droit/CGU-1.pdf">Conditions Générales d'Utilisation</a> - <a href="../../droit/CGV.pdf">Conditions Générales de Vente</a> - <a href="../../droit/Mentions legales.pdf">Mentions légales</a> - ©Redden's, Inc.
         </div>
-        
+
     </footer>
 
     <div class="telephone-nav">
