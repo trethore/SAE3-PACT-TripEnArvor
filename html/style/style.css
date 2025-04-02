@@ -1597,7 +1597,7 @@ h3 {
     text-decoration: none;
     color: var(--blanc-leger);
     background-color: var(--violet-principal);
-    border: 2px solid var(--violet-principal);
+    border: none;
     border-radius: 15px;
     margin: 1em 0;
     padding: 0.2em 1em;
