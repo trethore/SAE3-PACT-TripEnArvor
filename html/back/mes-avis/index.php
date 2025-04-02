@@ -213,7 +213,6 @@ if ($typeCompte === 'proPrive') {
 
                         
 
-
                         $lavis['pseudo'] = $membre[$i]['pseudo'];
                         $lavis['id_membre'] = $membre[$i]['id_membre'];
                         $lavis['datePassage'] = $datePassage[$i]['date'];
@@ -223,54 +222,21 @@ if ($typeCompte === 'proPrive') {
                         $touslesavis[] = $lavis; 
                         $i++;
                     }
-
+                    
                     $nbrAvisNonRepondus_offre = $nb_avis - count($reponses);
-                    $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+                        $nbrAvisNonRepondus += $nbrAvisNonRepondus_offre;
+
                     
                 }
 
-                function array_sort($array, $on, $order=SORT_ASC)
-                {
-                    $new_array = array();
-                    $sortable_array = array();
-
-                    if (count($array) > 0) {
-                        foreach ($array as $k => $v) {
-                            if (is_array($v)) {
-                                foreach ($v as $k2 => $v2) {
-                                    if ($k2 == $on) {
-                                        $sortable_array[$k] = $v2;
-                                    }
-                                }
-                            } else {
-                                $sortable_array[$k] = $v;
-                            }
-                        }
-
-                        switch ($order) {
-                            case SORT_ASC:
-                                asort($sortable_array);
-                            break;
-                            case SORT_DESC:
-                                arsort($sortable_array);
-                            break;
-                        }
-
-                        foreach ($sortable_array as $k => $v) {
-                            $new_array[$k] = $array[$k];
-                        }
-                    }
-
-                    return $new_array;
-                }
 
                 foreach($touslesavis as $key => $lavis){
-                    $aviTriéPluRecent[] = $lavis;
-                    $aviTriéPluAncien[] = $lavis;
+                    $aviTriPluRecent[] = $lavis;
+                    $aviTriPluAncien[] = $lavis;
                     $avitrioffre[] = $lavis;
                 }
 
-                usort($aviTriéPluAncien, function ($a, $b) {
+                usort($aviTriPluAncien, function ($a, $b) {
                     return strtotime($a['dateAvis']) - strtotime($b['dateAvis']); 
                 });
 
@@ -284,13 +250,13 @@ if ($typeCompte === 'proPrive') {
                 // print_r($dateAvis);
                 // echo "</pre>";
                 
-                echo "<br> <pre>";
-                print("le tri plus recent");
-                print_r(array_sort($aviTriéPluRecent, 'dateAvis', SORT_DESC));
-                echo "<br>";
-                print("le tri plus ancien");
-                print_r(array_sort($aviTriéPluAncien, 'dateAvis', SORT_DESC));
-                echo "</pre>";
+                // echo "<br> <pre>";
+                // print("le tri plus recent");
+                // print_r(array_sort($aviTriPluRecent, 'dateAvis', SORT_DESC));
+                // echo "<br>";
+                // print("le tri plus ancien");
+                // print_r(array_sort($aviTriPluAncien, 'dateAvis', SORT_DESC));
+                // echo "</pre>";
 
                 //print_r($touslesavis);
 
@@ -404,7 +370,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
                                     <?php $compteur++; ?>
                                     </article> 
@@ -470,7 +436,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
                                     </article> 
                                     <?php
@@ -533,7 +499,7 @@ if ($typeCompte === 'proPrive') {
                                                 </div>
                                             </div>
                                             <br>
-                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir l&#39;avis </a>
+                                            <a href="/back/consulter-offre/index.php?id= <?php echo $id_offre . '#avis' ?>"> Voir à l&#39;avis </a>
                                         </div>
                                     </article> 
                                     <?php
@@ -620,12 +586,6 @@ if ($typeCompte === 'proPrive') {
         });
     });
 
-
-    document.addEventListener("DOMContentLoaded", () => {
-            const h2 = document.querySelector(".filtre-tri h2");
-            const fondFiltres = document.querySelector(".fond-filtres");
-    });
-
     
 
 
@@ -636,7 +596,8 @@ if ($typeCompte === 'proPrive') {
    
 
 
-    </script>
+</script>
+
 </body>
 
 </html>
